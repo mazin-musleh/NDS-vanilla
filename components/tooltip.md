@@ -19,56 +19,57 @@ last_edit: "17/07/2026 - 06:24 PM"
             <p class="nds-section-description">Click the icon trigger to reveal a balloon with a title, message, and leading icon chip. Click again, click outside, scroll, or press Escape to dismiss. Add <code class="nds-inline-code lang-html">data-tooltip-hover</code> to open on hover and visible keyboard focus instead.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Click the help icon below</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
-                            <span class="nds-tooltip">
-                                <button type="button" class="nds-tooltip-trigger" aria-label="What is this?">
-                                    <span class="nds-feedback nds-sm" data-status="help">
-                                        <span class="nds-feedback-icon">
-                                            <i class="nds-icon" aria-hidden="true"></i>
-                                        </span>
-                                    </span>
-                                </button>
-                                <div class="nds-tooltip-balloon" hidden>
-                                    <span class="nds-feedback nds-sm" data-status="help">
-                                        <span class="nds-feedback-icon">
-                                            <i class="nds-icon" aria-hidden="true"></i>
-                                        </span>
-                                    </span>
-                                    <span class="nds-tooltip-body">
-                                        <span class="nds-tooltip-title">Tooltip title</span>
-                                        <p class="nds-tooltip-message">Max width of tooltips is 240px - text will wrap automatically</p>
-                                    </span>
-                                </div>
-                            </span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Click the help icon below</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-tooltip-overview-1" id="tab-tooltip-overview-1">
-                                        <span class="nds-tab-label">HTML</span>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
+                                <span class="nds-tooltip">
+                                    <button type="button" class="nds-tooltip-trigger" aria-label="What is this?">
+                                        <span class="nds-feedback nds-sm" data-status="help">
+                                            <span class="nds-feedback-icon">
+                                                <i class="nds-icon" aria-hidden="true"></i>
+                                            </span>
+                                        </span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-overview-1"
-                                    aria-labelledby="tab-tooltip-overview-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                                    <div class="nds-tooltip-balloon" hidden>
+                                        <span class="nds-feedback nds-sm" data-status="help">
+                                            <span class="nds-feedback-icon">
+                                                <i class="nds-icon" aria-hidden="true"></i>
+                                            </span>
+                                        </span>
+                                        <span class="nds-tooltip-body">
+                                            <span class="nds-tooltip-title">Tooltip title</span>
+                                            <p class="nds-tooltip-message">Max width of tooltips is 240px - text will wrap automatically</p>
+                                        </span>
                                     </div>
-                                    <code class="lang-html code">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-tooltip-overview-1" id="tab-tooltip-overview-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-overview-1"
+                                        aria-labelledby="tab-tooltip-overview-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;span class="nds-tooltip"&gt;
   &lt;button type="button" class="nds-tooltip-trigger" aria-label="What is this?"&gt;
     &lt;span class="nds-feedback nds-sm" data-status="help"&gt;
@@ -90,6 +91,7 @@ last_edit: "17/07/2026 - 06:24 PM"
   &lt;/div&gt;
 &lt;/span&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -108,86 +110,87 @@ last_edit: "17/07/2026 - 06:24 PM"
             <p class="nds-section-description">Skip the inner DOM. Put <code class="nds-inline-code lang-html">data-tooltip-title</code> and <code class="nds-inline-code lang-html">data-tooltip-message</code> on a <code class="nds-inline-code lang-html">.nds-tooltip</code> element. If the element is empty, the JS generates a chip trigger. If it already has text or children, the element itself acts as the trigger and only the balloon is generated.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <!-- Empty wrapper → chip trigger -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Empty wrapper — chip trigger is generated</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
-                            <span class="nds-tooltip"
-                                  data-tooltip-title="Declarative tooltip"
-                                  data-tooltip-message="This balloon was generated from data-tooltip-title/message by the JS."></span>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <!-- Empty wrapper → chip trigger -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Empty wrapper — chip trigger is generated</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-tooltip-declarative-1" id="tab-tooltip-declarative-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
+                                <span class="nds-tooltip"
+                                      data-tooltip-title="Declarative tooltip"
+                                      data-tooltip-message="This balloon was generated from data-tooltip-title/message by the JS."></span>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-declarative-1"
-                                    aria-labelledby="tab-tooltip-declarative-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-tooltip-declarative-1" id="tab-tooltip-declarative-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-declarative-1"
+                                        aria-labelledby="tab-tooltip-declarative-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;span class="nds-tooltip"
       data-tooltip-title="Declarative tooltip"
       data-tooltip-message="This balloon was generated from data-tooltip-title/message by the JS."&gt;&lt;/span&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Element with content → element is the trigger -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Element with content — element itself is the trigger</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
-                            <p style="margin: 0; font-size: var(--typo-text-md-FS); line-height: var(--typo-text-md-LH);">
-                                The
-                                <span class="nds-tooltip nds-term" data-tooltip-hover
-                                      data-tooltip-message="A 10-digit identifier issued to Saudi citizens by the Ministry of Interior.">National ID</span>
-                                field is required.
-                            </p>
+                    <!-- Element with content → element is the trigger -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Element with content — element itself is the trigger</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-tooltip-declarative-2" id="tab-tooltip-declarative-2">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
+                                <p style="margin: 0; font-size: var(--typo-text-md-FS); line-height: var(--typo-text-md-LH);">
+                                    The
+                                    <span class="nds-tooltip nds-term" data-tooltip-hover
+                                          data-tooltip-message="A 10-digit identifier issued to Saudi citizens by the Ministry of Interior.">National ID</span>
+                                    field is required.
+                                </p>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-declarative-2"
-                                    aria-labelledby="tab-tooltip-declarative-2">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-tooltip-declarative-2" id="tab-tooltip-declarative-2">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-declarative-2"
+                                        aria-labelledby="tab-tooltip-declarative-2">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;p&gt;
   The
   &lt;span class="nds-tooltip nds-term" data-tooltip-hover
@@ -195,6 +198,7 @@ last_edit: "17/07/2026 - 06:24 PM"
   field is required.
 &lt;/p&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -213,50 +217,51 @@ last_edit: "17/07/2026 - 06:24 PM"
             <p class="nds-section-description">Omit the title when a single short sentence is enough. The icon chip can also be dropped for a minimal body-only balloon.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Body-only tooltip</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
-                            <span class="nds-tooltip">
-                                <button type="button" class="nds-tooltip-trigger" aria-label="More info">
-                                    <span class="nds-feedback nds-sm" data-status="help">
-                                        <span class="nds-feedback-icon">
-                                            <i class="nds-icon" aria-hidden="true"></i>
-                                        </span>
-                                    </span>
-                                </button>
-                                <div class="nds-tooltip-balloon" hidden>
-                                    <span class="nds-tooltip-body">
-                                        <p class="nds-tooltip-message">Saudi residents can enter either their National ID or their Iqama number.</p>
-                                    </span>
-                                </div>
-                            </span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Body-only tooltip</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-tooltip-message-1" id="tab-tooltip-message-1">
-                                        <span class="nds-tab-label">HTML</span>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
+                                <span class="nds-tooltip">
+                                    <button type="button" class="nds-tooltip-trigger" aria-label="More info">
+                                        <span class="nds-feedback nds-sm" data-status="help">
+                                            <span class="nds-feedback-icon">
+                                                <i class="nds-icon" aria-hidden="true"></i>
+                                            </span>
+                                        </span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-message-1"
-                                    aria-labelledby="tab-tooltip-message-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                                    <div class="nds-tooltip-balloon" hidden>
+                                        <span class="nds-tooltip-body">
+                                            <p class="nds-tooltip-message">Saudi residents can enter either their National ID or their Iqama number.</p>
+                                        </span>
                                     </div>
-                                    <code class="lang-html code">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-tooltip-message-1" id="tab-tooltip-message-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-message-1"
+                                        aria-labelledby="tab-tooltip-message-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;span class="nds-tooltip"&gt;
   &lt;button type="button" class="nds-tooltip-trigger" aria-label="More info"&gt;
     &lt;span class="nds-feedback nds-sm" data-status="help"&gt;
@@ -272,6 +277,7 @@ last_edit: "17/07/2026 - 06:24 PM"
   &lt;/div&gt;
 &lt;/span&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -289,62 +295,64 @@ last_edit: "17/07/2026 - 06:24 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-tooltip</code> in the DOM wires itself up on page load. Interaction handlers, aria-describedby, and unique IDs are applied automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Declarative Markup</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-tooltip-title</code> and <code class="nds-inline-code lang-html">data-tooltip-message</code> to an empty <code class="nds-inline-code lang-html">.nds-tooltip</code> and the JS generates the trigger chip and balloon for you.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01"></i>
-                        <span class="nds-label">Smart Positioning</span>
-                    </span>
-                    <p class="nds-item-desc">Balloons use fixed positioning so they escape clipping parents. They flip above the trigger when there is not enough room below and clamp horizontally to stay fully visible.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors"></i>
-                        <span class="nds-label">Status-Driven Icon</span>
-                    </span>
-                    <p class="nds-item-desc">The feedback chip picks up its glyph and color from <code class="nds-inline-code lang-html">data-status</code>: help, info, success, warning, error, or neutral.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-dark-mode"></i>
-                        <span class="nds-label">Theme-Aware Colors</span>
-                    </span>
-                    <p class="nds-item-desc">Balloon surface, heading, and body text all swap to the inverse token set when the page is in dark theme, with no markup changes required.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard"></i>
-                        <span class="nds-label">Multiple Dismissal Paths</span>
-                    </span>
-                    <p class="nds-item-desc">Close by clicking the trigger again, clicking anywhere outside, pressing Escape, or scrolling the page. Hover-enabled tooltips also close when the pointer leaves. Only one tooltip stays open at a time.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Open, close, and observe any tooltip through the <code class="nds-inline-code lang-js">NDS.Tooltip</code> API or the instance attached to each element.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye"></i>
-                        <span class="nds-label">Auto-Linked Description</span>
-                    </span>
-                    <p class="nds-item-desc">Each balloon gets a unique id and the trigger's <code class="nds-inline-code lang-html">aria-describedby</code> points to it, so screen readers announce the content when focus lands on the trigger.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-tooltip</code> in the DOM wires itself up on page load. Interaction handlers, aria-describedby, and unique IDs are applied automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Declarative Markup</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-tooltip-title</code> and <code class="nds-inline-code lang-html">data-tooltip-message</code> to an empty <code class="nds-inline-code lang-html">.nds-tooltip</code> and the JS generates the trigger chip and balloon for you.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layers-01"></i>
+                            <span class="nds-label">Smart Positioning</span>
+                        </span>
+                        <p class="nds-item-desc">Balloons use fixed positioning so they escape clipping parents. They flip above the trigger when there is not enough room below and clamp horizontally to stay fully visible.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-colors"></i>
+                            <span class="nds-label">Status-Driven Icon</span>
+                        </span>
+                        <p class="nds-item-desc">The feedback chip picks up its glyph and color from <code class="nds-inline-code lang-html">data-status</code>: help, info, success, warning, error, or neutral.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-dark-mode"></i>
+                            <span class="nds-label">Theme-Aware Colors</span>
+                        </span>
+                        <p class="nds-item-desc">Balloon surface, heading, and body text all swap to the inverse token set when the page is in dark theme, with no markup changes required.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-keyboard"></i>
+                            <span class="nds-label">Multiple Dismissal Paths</span>
+                        </span>
+                        <p class="nds-item-desc">Close by clicking the trigger again, clicking anywhere outside, pressing Escape, or scrolling the page. Hover-enabled tooltips also close when the pointer leaves. Only one tooltip stays open at a time.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Open, close, and observe any tooltip through the <code class="nds-inline-code lang-js">NDS.Tooltip</code> API or the instance attached to each element.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-eye"></i>
+                            <span class="nds-label">Auto-Linked Description</span>
+                        </span>
+                        <p class="nds-item-desc">Each balloon gets a unique id and the trigger's <code class="nds-inline-code lang-html">aria-describedby</code> points to it, so screen readers announce the content when focus lands on the trigger.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -359,7 +367,7 @@ last_edit: "17/07/2026 - 06:24 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use tooltips to <strong>clarify unfamiliar terms</strong> or offer short, optional context next to the element they explain (form field labels, table headers, policy terms)</li>
@@ -375,7 +383,7 @@ last_edit: "17/07/2026 - 06:24 PM"
                 </ul>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Structure</h3>
                 <p>A tooltip has three structural parts inside a <code class="nds-inline-code lang-html">&lt;span class="nds-tooltip"&gt;</code> root.</p>
                 <table class="nds-table nds-responsive">
@@ -429,7 +437,7 @@ last_edit: "17/07/2026 - 06:24 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Tooltip</strong> namespace exposes initialization and factory methods. Every initialized tooltip also attaches an instance to its root element at <code class="nds-inline-code lang-js">el.ndsTooltip</code>, with <code class="nds-inline-code lang-js">open()</code>, <code class="nds-inline-code lang-js">close()</code>, and <code class="nds-inline-code lang-js">destroy()</code> methods. Tooltips dispatch <code class="nds-inline-code lang-js">nds:tooltip:opened</code> and <code class="nds-inline-code lang-js">nds:tooltip:closed</code> events that bubble to the document.</p>
                 <div class="nds-code nds-expandable">

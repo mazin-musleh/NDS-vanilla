@@ -19,75 +19,76 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">A fixed bottom banner by default, with an optional compact desktop card and a programmatic entry point for re-opening</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-compact", ".nds-cookie-popup.demo-preview", "cookieLayout"]'>
-                                <span class="nds-label">Compact on desktop</span>
-                            </button>
-                            <button class="nds-btn nds-primary demo-action-btn" data-action="cookie-show">
-                                <span class="nds-label">Show real popup</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="min-height: 360px; padding: 0;">
-                            <div class="nds-cookie-popup nds-card demo-preview" style="position: relative; inset: auto; animation: none;">
-                                <div class="nds-card-header">
-                                    <span class="nds-featured-icon nds-circle">
-                                        <i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i>
-                                    </span>
-                                    <button class="nds-close nds-btn nds-subtle" aria-label="Close">
-                                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">Cookies</span>
-                                        <p class="nds-card-description">This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</p>
-                                    </div>
-                                    <div class="nds-cookie-popup-links">
-                                        <a href="/terms-and-conditions">Terms &amp; Conditions</a>
-                                        <span>|</span>
-                                        <a href="/privacy-policy">Privacy Policy</a>
-                                    </div>
-                                    <div class="nds-card-actions">
-                                        <button class="nds-btn nds-primary nds-full" data-accept-title="Accepted" data-accept-message="Cookies have been accepted">
-                                            <span class="nds-label">Accept</span>
-                                        </button>
-                                        <button class="nds-btn nds-secondary nds-full" data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected">
-                                            <span class="nds-label">Reject Non-Essential</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-cookies-overview-1" id="tab-cookies-overview-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-compact", ".nds-cookie-popup.demo-preview", "cookieLayout"]'>
+                                    <span class="nds-label">Compact on desktop</span>
+                                </button>
+                                <button class="nds-btn nds-primary demo-action-btn" data-action="cookie-show">
+                                    <span class="nds-label">Show real popup</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-cookies-overview-1"
-                                    aria-labelledby="tab-cookies-overview-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="min-height: 360px; padding: 0;">
+                                <div class="nds-cookie-popup nds-card demo-preview" style="position: relative; inset: auto; animation: none;">
+                                    <div class="nds-card-header">
+                                        <span class="nds-featured-icon nds-circle">
+                                            <i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i>
+                                        </span>
+                                        <button class="nds-close nds-btn nds-subtle" aria-label="Close">
+                                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                         </button>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title">Cookies</span>
+                                            <p class="nds-card-description">This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</p>
+                                        </div>
+                                        <div class="nds-cookie-popup-links">
+                                            <a href="/terms-and-conditions">Terms &amp; Conditions</a>
+                                            <span>|</span>
+                                            <a href="/privacy-policy">Privacy Policy</a>
+                                        </div>
+                                        <div class="nds-card-actions">
+                                            <button class="nds-btn nds-primary nds-full" data-accept-title="Accepted" data-accept-message="Cookies have been accepted">
+                                                <span class="nds-label">Accept</span>
+                                            </button>
+                                            <button class="nds-btn nds-secondary nds-full" data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected">
+                                                <span class="nds-label">Reject Non-Essential</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-cookies-overview-1" id="tab-cookies-overview-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-cookies-overview-1"
+                                        aria-labelledby="tab-cookies-overview-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-cookie-popup nds-card" id="ndsCookiesPopup" hidden&gt;
   &lt;div class="nds-card-header"&gt;
     &lt;span class="nds-featured-icon nds-circle"&gt;
@@ -120,6 +121,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +142,7 @@ last_edit: "28/06/2026 - 01:27 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Wire up gtag with consent denied by default</h3>
                 <p>NDS does not load Google Analytics for you, and it sends no consent signal until a choice is stored. Set Consent Mode to <code class="nds-inline-code lang-js">denied</code> before gtag.js loads, then register your property ID so the banner can disable it on reject. Place this in the document <code class="nds-inline-code lang-html">&lt;head&gt;</code>, before the NDS scripts.</p>
                 <div class="nds-code">
@@ -169,7 +171,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </div>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">What the banner does after</h3>
                 <ul>
                     <li><strong>On Accept</strong>: emits <code class="nds-inline-code lang-js">gtag('consent', 'update', ...)</code> with <code class="nds-inline-code lang-js">analytics_storage</code> and <code class="nds-inline-code lang-js">ad_storage</code> granted.</li>
@@ -190,55 +192,57 @@ last_edit: "28/06/2026 - 01:27 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Opens six seconds after first load when no consent is stored. Re-visits skip the banner until you clear the saved preference.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-floppy-disk"></i>
-                        <span class="nds-label">Consent Persistence</span>
-                    </span>
-                    <p class="nds-item-desc">Saves the choice for 365 days with SameSite=Lax, and falls back to localStorage when the site runs from a file:// URL.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-01"></i>
-                        <span class="nds-label">Analytics Gating</span>
-                    </span>
-                    <p class="nds-item-desc">On decline, clears _ga, _gid, _gat, _fbp, _fbc cookies and sets the Google Analytics ga-disable flag for every configured tracking ID.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">gtag Consent Signals</span>
-                    </span>
-                    <p class="nds-item-desc">Emits gtag('consent', 'update', ...) with granted or denied values on every decision, so downstream Google tags react immediately without a page reload.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
-                        <span class="nds-label">Compact Layout</span>
-                    </span>
-                    <p class="nds-item-desc">Adding nds-compact re-centers the banner as a capped-width card on tablet and up, staying full-width on mobile.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-toggle-on"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Call NDS.Cookies.show() from any trigger (footer link, settings button) to re-open the banner after a decision has been made.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-motion-01"></i>
-                        <span class="nds-label">Reduced Motion</span>
-                    </span>
-                    <p class="nds-item-desc">The slideUp entrance animation is suppressed automatically when the user has enabled the prefers-reduced-motion system setting.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Opens six seconds after first load when no consent is stored. Re-visits skip the banner until you clear the saved preference.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-floppy-disk"></i>
+                            <span class="nds-label">Consent Persistence</span>
+                        </span>
+                        <p class="nds-item-desc">Saves the choice for 365 days with SameSite=Lax, and falls back to localStorage when the site runs from a file:// URL.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-shield-01"></i>
+                            <span class="nds-label">Analytics Gating</span>
+                        </span>
+                        <p class="nds-item-desc">On decline, clears _ga, _gid, _gat, _fbp, _fbc cookies and sets the Google Analytics ga-disable flag for every configured tracking ID.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">gtag Consent Signals</span>
+                        </span>
+                        <p class="nds-item-desc">Emits gtag('consent', 'update', ...) with granted or denied values on every decision, so downstream Google tags react immediately without a page reload.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
+                            <span class="nds-label">Compact Layout</span>
+                        </span>
+                        <p class="nds-item-desc">Adding nds-compact re-centers the banner as a capped-width card on tablet and up, staying full-width on mobile.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-toggle-on"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Call NDS.Cookies.show() from any trigger (footer link, settings button) to re-open the banner after a decision has been made.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-motion-01"></i>
+                            <span class="nds-label">Reduced Motion</span>
+                        </span>
+                        <p class="nds-item-desc">The slideUp entrance animation is suppressed automatically when the user has enabled the prefers-reduced-motion system setting.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,7 +257,7 @@ last_edit: "28/06/2026 - 01:27 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Let the component auto-open on the first visit. A 6000 ms delay keeps the banner from fighting with first-paint content, and the saved consent means return visitors never see it again unnecessarily</li>
@@ -295,7 +299,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Required Element IDs</h3>
                 <p>The JS wires events and updates text by ID, so renaming or removing these on your copy of the markup will break the component. If you translate the banner server-side, edit the text nodes inside these IDs but keep the IDs themselves intact.</p>
                 <table class="nds-table nds-responsive">
@@ -309,7 +313,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Cookies</strong> namespace exposes both the consent lifecycle and a generic cookie read/write utility. <strong>NDS.Cookies.init()</strong> is called automatically by the loader, so most integrations only need <strong>show</strong>, <strong>getConsent</strong>, and the cookie helpers. Consent is persisted in a cookie named <code class="nds-inline-code lang-js">cookieConsent</code> for 365 days (or in <code class="nds-inline-code lang-js">localStorage</code> under <code class="nds-inline-code lang-js">nds_cookieConsent</code> when the site is served from <code class="nds-inline-code lang-js">file://</code>).</p>
                 <div class="nds-code nds-expandable">

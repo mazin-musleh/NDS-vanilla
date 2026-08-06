@@ -19,25 +19,27 @@ last_edit: "04/08/2026 - 01:01 AM"
             <p class="nds-section-description">One wrapper class on the content region. Everything inside stays classless: the markup a rich-text editor or CMS body field produces is the markup you render.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Component Tree</div>
-                    </div>
-                    <div class="demo-container nds-noBg">
-                        <div class="nds-code nds-expandable">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Component Tree</div>
+                        </div>
+                        <div class="demo-container nds-noBg">
+                            <div class="nds-code nds-expandable">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 div.nds-prose   (or article.nds-prose)
 &#9500;&#9472;&#9472; h2, h3, h4...   (classless headings)
 &#9500;&#9472;&#9472; p, ul, ol, blockquote, figure, table, hr
 &#9492;&#9472;&#9472; any NDS component   (keeps its own look untouched)
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -55,58 +57,59 @@ div.nds-prose   (or article.nds-prose)
             <p class="nds-section-description">A complete classless article: every element below is styled by the system with no classes in the markup.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Classless Article</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-prose">
-                                <h2>Service Overview</h2>
-                                <p>This paragraph carries a <a href="#">regular link</a>, <strong>strong text</strong>, and <em>emphasized text</em>, all styled without a single class attribute.</p>
-                                <p>A second paragraph demonstrates the vertical rhythm between consecutive blocks of flowing text.</p>
-                                <h3>Eligibility</h3>
-                                <ul>
-                                    <li>First requirement</li>
-                                    <li>Second requirement
-                                        <ul>
-                                            <li>Nested detail</li>
-                                            <li>Another nested detail</li>
-                                        </ul>
-                                    </li>
-                                    <li>Third requirement</li>
-                                </ul>
-                                <ol>
-                                    <li>Submit the application</li>
-                                    <li>Track the request</li>
-                                </ol>
-                                <blockquote>A flowing citation renders with a side bar and secondary tone; for a featured pull-quote card, use the Quote component instead.</blockquote>
-                                <figure>
-                                    <img src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" alt="Flag of Saudi Arabia" width="120" height="84">
-                                    <figcaption>A caption in smaller, secondary type below the image</figcaption>
-                                </figure>
-                                <table>
-                                    <thead><tr><th>Stage</th><th>Duration</th></tr></thead>
-                                    <tbody>
-                                        <tr><td>Review</td><td>3 days</td></tr>
-                                        <tr><td>Approval</td><td>1 day</td></tr>
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <p>A closing paragraph after the divider ends the article with no trailing margin.</p>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Classless Article</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-prose">
+                                    <h2>Service Overview</h2>
+                                    <p>This paragraph carries a <a href="#">regular link</a>, <strong>strong text</strong>, and <em>emphasized text</em>, all styled without a single class attribute.</p>
+                                    <p>A second paragraph demonstrates the vertical rhythm between consecutive blocks of flowing text.</p>
+                                    <h3>Eligibility</h3>
+                                    <ul>
+                                        <li>First requirement</li>
+                                        <li>Second requirement
+                                            <ul>
+                                                <li>Nested detail</li>
+                                                <li>Another nested detail</li>
+                                            </ul>
+                                        </li>
+                                        <li>Third requirement</li>
+                                    </ul>
+                                    <ol>
+                                        <li>Submit the application</li>
+                                        <li>Track the request</li>
+                                    </ol>
+                                    <blockquote>A flowing citation renders with a side bar and secondary tone; for a featured pull-quote card, use the Quote component instead.</blockquote>
+                                    <figure>
+                                        <img src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" alt="Flag of Saudi Arabia" width="120" height="84">
+                                        <figcaption>A caption in smaller, secondary type below the image</figcaption>
+                                    </figure>
+                                    <table>
+                                        <thead><tr><th>Stage</th><th>Duration</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Review</td><td>3 days</td></tr>
+                                            <tr><td>Approval</td><td>1 day</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <hr>
+                                    <p>A closing paragraph after the divider ends the article with no trailing margin.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-code nds-expandable">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                        <div class="demo-code">
+                            <div class="nds-code nds-expandable">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;div class="nds-prose"&gt;
     &lt;h2&gt;Service Overview&lt;/h2&gt;
     &lt;p&gt;This paragraph carries a &lt;a href="#"&gt;regular link&lt;/a&gt;, &lt;strong&gt;strong text&lt;/strong&gt;, and &lt;em&gt;emphasized text&lt;/em&gt;, all styled without a single class attribute.&lt;/p&gt;
@@ -142,6 +145,7 @@ div.nds-prose   (or article.nds-prose)
     &lt;p&gt;A closing paragraph after the divider ends the article with no trailing margin.&lt;/p&gt;
 &lt;/div&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -159,16 +163,18 @@ div.nds-prose   (or article.nds-prose)
             <p class="nds-section-description">Classless styling is layered: some elements are styled everywhere, some only inside the wrapper, and richer treatments stay opt-in components.</p>
         </div>
         <div class="nds-section-body">
-            <table class="nds-table nds-responsive">
-                <thead><tr><th>Elements</th><th>Scope</th><th>Richer tier</th></tr></thead>
-                <tbody>
-                    <tr><td><code class="nds-inline-code lang-html">h1</code> to <code class="nds-inline-code lang-html">h6</code>, list indent, <code class="nds-inline-code lang-html">img</code></td><td>Global: styled everywhere</td><td>Section and Block titles for composed layouts</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">a</code></td><td>Global: every bare link</td><td><code class="nds-inline-code lang-html">.nds-link</code> variants</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">hr</code></td><td>Global: renders as the system divider</td><td><code class="nds-inline-code lang-html">.nds-divider</code> with text content</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">table</code></td><td>Global: renders as the system table</td><td><code class="nds-inline-code lang-html">.nds-table</code> with sorting, sub-rows, responsive modes</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">p</code>, list rhythm, <code class="nds-inline-code lang-html">blockquote</code>, <code class="nds-inline-code lang-html">figcaption</code></td><td>Prose only: inside the wrapper</td><td>Quote component for featured pull-quotes</td></tr>
-                </tbody>
-            </table>
+            <div class="nds-block">
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Elements</th><th>Scope</th><th>Richer tier</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">h1</code> to <code class="nds-inline-code lang-html">h6</code>, list indent, <code class="nds-inline-code lang-html">img</code></td><td>Global: styled everywhere</td><td>Section and Block titles for composed layouts</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">a</code></td><td>Global: every bare link</td><td><code class="nds-inline-code lang-html">.nds-link</code> variants</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">hr</code></td><td>Global: renders as the system divider</td><td><code class="nds-inline-code lang-html">.nds-divider</code> with text content</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">table</code></td><td>Global: renders as the system table</td><td><code class="nds-inline-code lang-html">.nds-table</code> with sorting, sub-rows, responsive modes</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">p</code>, list rhythm, <code class="nds-inline-code lang-html">blockquote</code>, <code class="nds-inline-code lang-html">figcaption</code></td><td>Prose only: inside the wrapper</td><td>Quote component for featured pull-quotes</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -181,48 +187,50 @@ div.nds-prose   (or article.nds-prose)
             <p class="nds-section-description">What the wrapper provides before you write any CSS.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-font"></i>
-                        <span class="nds-label">Classless by Default</span>
-                    </span>
-                    <p class="nds-item-desc">Editor and CMS output renders correctly as-is, with no classes added to the markup.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-01"></i>
-                        <span class="nds-label">Components Keep Their Look</span>
-                    </span>
-                    <p class="nds-item-desc">Any NDS component dropped inside the region renders untouched; prose rules never outrank component styling.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-edit-02"></i>
-                        <span class="nds-label">Editor Preview Parity</span>
-                    </span>
-                    <p class="nds-item-desc">The NDS editor's typing surface shares the same rhythm, so drafts preview the way published content renders.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-border-full"></i>
-                        <span class="nds-label">Strictly Scoped</span>
-                    </span>
-                    <p class="nds-item-desc">Everything applies inside the wrapper only: pages and markup outside a prose region render exactly as they did before.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01"></i>
-                        <span class="nds-label">Edge-Trimmed Rhythm</span>
-                    </span>
-                    <p class="nds-item-desc">Consistent spacing between blocks, with first and last margins trimmed so the region sits flush inside cards, section bodies, and the editor.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-quote-down"></i>
-                        <span class="nds-label">Linked Rich Tiers</span>
-                    </span>
-                    <p class="nds-item-desc">Quotes, tables, and dividers share tokens with their full components, so upgrading an element to its component keeps the design consistent.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-text-font"></i>
+                            <span class="nds-label">Classless by Default</span>
+                        </span>
+                        <p class="nds-item-desc">Editor and CMS output renders correctly as-is, with no classes added to the markup.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-shield-01"></i>
+                            <span class="nds-label">Components Keep Their Look</span>
+                        </span>
+                        <p class="nds-item-desc">Any NDS component dropped inside the region renders untouched; prose rules never outrank component styling.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-edit-02"></i>
+                            <span class="nds-label">Editor Preview Parity</span>
+                        </span>
+                        <p class="nds-item-desc">The NDS editor's typing surface shares the same rhythm, so drafts preview the way published content renders.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-border-full"></i>
+                            <span class="nds-label">Strictly Scoped</span>
+                        </span>
+                        <p class="nds-item-desc">Everything applies inside the wrapper only: pages and markup outside a prose region render exactly as they did before.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layers-01"></i>
+                            <span class="nds-label">Edge-Trimmed Rhythm</span>
+                        </span>
+                        <p class="nds-item-desc">Consistent spacing between blocks, with first and last margins trimmed so the region sits flush inside cards, section bodies, and the editor.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-quote-down"></i>
+                            <span class="nds-label">Linked Rich Tiers</span>
+                        </span>
+                        <p class="nds-item-desc">Quotes, tables, and dividers share tokens with their full components, so upgrading an element to its component keeps the design consistent.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -237,7 +245,7 @@ div.nds-prose   (or article.nds-prose)
             <p class="nds-section-description">When to reach for prose, and how to combine it with the rest of the layout system.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use prose for content you do not author element by element: CMS body fields, rich-text editor output, long-form articles, and help or policy text.</li>

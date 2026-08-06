@@ -19,82 +19,83 @@ last_edit: "31/07/2026 - 05:32 AM"
             <p class="nds-section-description">The default arrangement: reporting widgets on the leading edge, controls pushed to the trailing edge, and the content as an independent sibling below</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Start and end clusters</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="nds-toolbar">
-                            <div class="nds-bar-start">
-                                <span class="nds-bar-text">3 orders</span>
-                            </div>
-                            <div class="nds-bar-end">
-                                <div class="nds-export nds-btn-group">
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="csv" data-export-target="#toolbarOrders">
-                                        <span class="nds-label">CSV</span>
-                                    </button>
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="xls" data-export-target="#toolbarOrders">
-                                        <span class="nds-label">Excel</span>
-                                    </button>
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="pdf" data-export-target="#toolbarOrders">
-                                        <span class="nds-label">PDF</span>
-                                    </button>
-                                </div>
-                            </div>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Start and end clusters</div>
                         </div>
-                        <table id="toolbarOrders" class="nds-table" data-export-name="orders">
-                            <thead>
-                                <tr>
-                                    <th>Reference</th>
-                                    <th>Entity</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1041</td>
-                                    <td>Ministry of Interior</td>
-                                    <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Completed</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>1042</td>
-                                    <td>Ministry of Health</td>
-                                    <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label">In Review</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>1043</td>
-                                    <td>Ministry of Education</td>
-                                    <td><span class="nds-tag nds-yellow nds-sm"><span class="nds-label">Pending</span></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-toolbar-basic-1" id="tab-toolbar-basic-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-toolbar-basic-1"
-                                    aria-labelledby="tab-toolbar-basic-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-container">
+                            <div class="nds-toolbar">
+                                <div class="nds-bar-start">
+                                    <span class="nds-bar-text">3 orders</span>
+                                </div>
+                                <div class="nds-bar-end">
+                                    <div class="nds-export nds-btn-group">
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="csv" data-export-target="#toolbarOrders">
+                                            <span class="nds-label">CSV</span>
+                                        </button>
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="xls" data-export-target="#toolbarOrders">
+                                            <span class="nds-label">Excel</span>
+                                        </button>
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="pdf" data-export-target="#toolbarOrders">
+                                            <span class="nds-label">PDF</span>
                                         </button>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                </div>
+                            </div>
+                            <table id="toolbarOrders" class="nds-table" data-export-name="orders">
+                                <thead>
+                                    <tr>
+                                        <th>Reference</th>
+                                        <th>Entity</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1041</td>
+                                        <td>Ministry of Interior</td>
+                                        <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Completed</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1042</td>
+                                        <td>Ministry of Health</td>
+                                        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label">In Review</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1043</td>
+                                        <td>Ministry of Education</td>
+                                        <td><span class="nds-tag nds-yellow nds-sm"><span class="nds-label">Pending</span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-toolbar-basic-1" id="tab-toolbar-basic-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-toolbar-basic-1"
+                                        aria-labelledby="tab-toolbar-basic-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;div class="nds-bar-start"&gt;
     &lt;span class="nds-bar-text"&gt;3 orders&lt;/span&gt;
@@ -143,6 +144,7 @@ last_edit: "31/07/2026 - 05:32 AM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -162,105 +164,106 @@ last_edit: "31/07/2026 - 05:32 AM"
             <p class="nds-section-description">Pick this when the bar carries more controls than one line can hold, or when you want counts and actions on a line of their own regardless of viewport width</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Search a row, then watch the applied-filters row appear</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="nds-toolbar">
-                            <div class="nds-bar-row">
-                                <div class="nds-bar-start">
-                                    <span class="nds-bar-text" data-filter-target="toolbarRowsBody"><span data-filter-count>3</span> of 3 orders</span>
-                                </div>
-                                <div class="nds-bar-end">
-                                    <div class="nds-export nds-btn-group">
-                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                            data-export="csv" data-export-target="#toolbarRowsTable">
-                                            <span class="nds-label">CSV</span>
-                                        </button>
-                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                            data-export="pdf" data-export-target="#toolbarRowsTable">
-                                            <span class="nds-label">PDF</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-bar-row">
-                                <div class="nds-form-container nds-search-box" data-filter-target="toolbarRowsBody">
-                                    <div class="nds-search-content">
-                                        <div class="nds-form-control">
-                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <input type="text" class="nds-search-input" placeholder="Search orders...">
-                                            <div class="nds-form-action">
-                                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
-                                            </div>
-                                        </div>
-                                        <button class="nds-btn nds-primary nds-search-btn" type="button">
-                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <span class="nds-label" data-hidden="sm sr">Search</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-bar-row">
-                                <div class="nds-bar-start">
-                                    <div class="nds-filter-applied" data-filter-target="toolbarRowsBody" hidden>
-                                        <span class="nds-label">Applied Filters:</span>
-                                        <div class="nds-chips"></div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Search a row, then watch the applied-filters row appear</div>
                         </div>
-                        <table id="toolbarRowsTable" class="nds-table" data-export-name="orders">
-                            <thead>
-                                <tr>
-                                    <th>Reference</th>
-                                    <th>Entity</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="toolbarRowsBody" data-filter-items="tr">
-                                <tr>
-                                    <td>1041</td>
-                                    <td>Ministry of Interior</td>
-                                    <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Completed</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>1042</td>
-                                    <td>Ministry of Health</td>
-                                    <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label">In Review</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>1043</td>
-                                    <td>Ministry of Education</td>
-                                    <td><span class="nds-tag nds-yellow nds-sm"><span class="nds-label">Pending</span></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-toolbar-rows-1" id="tab-toolbar-rows-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-toolbar-rows-1"
-                                    aria-labelledby="tab-toolbar-rows-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        <div class="demo-container">
+                            <div class="nds-toolbar">
+                                <div class="nds-bar-row">
+                                    <div class="nds-bar-start">
+                                        <span class="nds-bar-text" data-filter-target="toolbarRowsBody"><span data-filter-count>3</span> of 3 orders</span>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    <div class="nds-bar-end">
+                                        <div class="nds-export nds-btn-group">
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                data-export="csv" data-export-target="#toolbarRowsTable">
+                                                <span class="nds-label">CSV</span>
+                                            </button>
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                data-export="pdf" data-export-target="#toolbarRowsTable">
+                                                <span class="nds-label">PDF</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-bar-row">
+                                    <div class="nds-form-container nds-search-box" data-filter-target="toolbarRowsBody">
+                                        <div class="nds-search-content">
+                                            <div class="nds-form-control">
+                                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                                <input type="text" class="nds-search-input" placeholder="Search orders...">
+                                                <div class="nds-form-action">
+                                                    <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                            <button class="nds-btn nds-primary nds-search-btn" type="button">
+                                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                                <span class="nds-label" data-hidden="sm sr">Search</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-bar-row">
+                                    <div class="nds-bar-start">
+                                        <div class="nds-filter-applied" data-filter-target="toolbarRowsBody" hidden>
+                                            <span class="nds-label">Applied Filters:</span>
+                                            <div class="nds-chips"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="toolbarRowsTable" class="nds-table" data-export-name="orders">
+                                <thead>
+                                    <tr>
+                                        <th>Reference</th>
+                                        <th>Entity</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="toolbarRowsBody" data-filter-items="tr">
+                                    <tr>
+                                        <td>1041</td>
+                                        <td>Ministry of Interior</td>
+                                        <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Completed</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1042</td>
+                                        <td>Ministry of Health</td>
+                                        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label">In Review</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1043</td>
+                                        <td>Ministry of Education</td>
+                                        <td><span class="nds-tag nds-yellow nds-sm"><span class="nds-label">Pending</span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-toolbar-rows-1" id="tab-toolbar-rows-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-toolbar-rows-1"
+                                        aria-labelledby="tab-toolbar-rows-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;!-- Row 1: counts lead, controls trail --&gt;
   &lt;div class="nds-bar-row"&gt;
@@ -339,6 +342,7 @@ last_edit: "31/07/2026 - 05:32 AM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -357,48 +361,50 @@ last_edit: "31/07/2026 - 05:32 AM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
-                        <span class="nds-label">Leading and Trailing Clusters</span>
-                    </span>
-                    <p class="nds-item-desc">Anything you place in <code class="nds-inline-code lang-html">nds-bar-start</code> sits at the leading edge, and <code class="nds-inline-code lang-html">nds-bar-end</code> is pushed to the trailing edge at any bar width.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-distribute-vertical-center"></i>
-                        <span class="nds-label">Stackable Rows</span>
-                    </span>
-                    <p class="nds-item-desc">Wrap items in <code class="nds-inline-code lang-html">nds-bar-row</code> to pin them to their own line. A row lays out exactly like the bar, so clusters and search fields behave the same inside one.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
-                        <span class="nds-label">Empty-Slot Collapse</span>
-                    </span>
-                    <p class="nds-item-desc">A row whose widgets are all hidden takes no space at all, so an applied-filters row leaves no gap above the content until a filter lands.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-search-01"></i>
-                        <span class="nds-label">Search Field Growth</span>
-                    </span>
-                    <p class="nds-item-desc">A search box dropped into the bar stretches to fill the free space on its line instead of rendering as the centered panel it is by default.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-                        <span class="nds-label">Responsive Labels</span>
-                    </span>
-                    <p class="nds-item-desc">Search and filter button labels collapse to icons on small screens, keeping the bar's controls on one line without truncating them.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-ruler"></i>
-                        <span class="nds-label">Per-Instance Spacing</span>
-                    </span>
-                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--toolbar-margin-block</code> on any bar to change the space it clears above and below itself, without touching the component.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
+                            <span class="nds-label">Leading and Trailing Clusters</span>
+                        </span>
+                        <p class="nds-item-desc">Anything you place in <code class="nds-inline-code lang-html">nds-bar-start</code> sits at the leading edge, and <code class="nds-inline-code lang-html">nds-bar-end</code> is pushed to the trailing edge at any bar width.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-distribute-vertical-center"></i>
+                            <span class="nds-label">Stackable Rows</span>
+                        </span>
+                        <p class="nds-item-desc">Wrap items in <code class="nds-inline-code lang-html">nds-bar-row</code> to pin them to their own line. A row lays out exactly like the bar, so clusters and search fields behave the same inside one.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
+                            <span class="nds-label">Empty-Slot Collapse</span>
+                        </span>
+                        <p class="nds-item-desc">A row whose widgets are all hidden takes no space at all, so an applied-filters row leaves no gap above the content until a filter lands.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-search-01"></i>
+                            <span class="nds-label">Search Field Growth</span>
+                        </span>
+                        <p class="nds-item-desc">A search box dropped into the bar stretches to fill the free space on its line instead of rendering as the centered panel it is by default.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
+                            <span class="nds-label">Responsive Labels</span>
+                        </span>
+                        <p class="nds-item-desc">Search and filter button labels collapse to icons on small screens, keeping the bar's controls on one line without truncating them.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-ruler"></i>
+                            <span class="nds-label">Per-Instance Spacing</span>
+                        </span>
+                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--toolbar-margin-block</code> on any bar to change the space it clears above and below itself, without touching the component.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -413,7 +419,7 @@ last_edit: "31/07/2026 - 05:32 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use a <strong>toolbar</strong> directly above the content it controls: a <a class="nds-color" href="{{ 'components/tables' | relative_url }}">Table</a>, a card grid, or any list. Keep the content and its <a class="nds-color" href="{{ 'components/pagination' | relative_url }}">Pagination</a> as independent siblings below</li>

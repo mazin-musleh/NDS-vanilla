@@ -19,89 +19,90 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Standard verification code input with automatic focus advance and hidden field sync</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
                         
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">MD</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
-                            <fieldset class="nds-form-group nds-otp-group">
-                                <legend><span class="nds-label">Verification Code</span></legend>
-                                <div class="nds-otp">
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" autofocus aria-label="Digit 1 of 4">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 4">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 4">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 4">
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="hidden" class="nds-otp-value" name="otp">
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-otp-4digit-1" id="tab-otp-4digit-1">
-                                        <span class="nds-tab-label">HTML</span>
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">MD</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-otp-group", "sizeToggle"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-otp-group", "sizeToggle"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", ".nds-otp-group", "sizeToggle"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-4digit-1"
-                                    aria-labelledby="tab-otp-4digit-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
+                                <fieldset class="nds-form-group nds-otp-group">
+                                    <legend><span class="nds-label">Verification Code</span></legend>
+                                    <div class="nds-otp">
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" autofocus aria-label="Digit 1 of 4">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 4">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 4">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 4">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <code class="lang-html code">
+                                    <input type="hidden" class="nds-otp-value" name="otp">
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-otp-4digit-1" id="tab-otp-4digit-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-4digit-1"
+                                        aria-labelledby="tab-otp-4digit-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;fieldset class="nds-form-group nds-otp-group"&gt;
   &lt;legend&gt;&lt;span class="nds-label"&gt;Verification Code&lt;/span&gt;&lt;/legend&gt;
   &lt;div class="nds-otp"&gt;
@@ -129,6 +130,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;input type="hidden" class="nds-otp-value" name="otp"&gt;
 &lt;/fieldset&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -147,99 +149,100 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Use the separator element to visually group digits, commonly used for 6-digit verification codes split into two groups of three.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">MD</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", ".nds-otp-group", "sizeToggle"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
-                            <fieldset class="nds-form-group nds-otp-group">
-                                <legend><span class="nds-label">Verification Code</span></legend>
-                                <div class="nds-otp">
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" aria-label="Digit 1 of 6">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 6">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 6">
-                                        </div>
-                                    </div>
-                                    <span class="nds-otp-separator"></span>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 6">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-5" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 5 of 6">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-6" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 6 of 6">
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="hidden" class="nds-otp-value" name="otp">
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-otp-separator-1" id="tab-otp-separator-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">MD</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-otp-group", "sizeToggle"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-otp-group", "sizeToggle"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", ".nds-otp-group", "sizeToggle"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-separator-1"
-                                    aria-labelledby="tab-otp-separator-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
+                                <fieldset class="nds-form-group nds-otp-group">
+                                    <legend><span class="nds-label">Verification Code</span></legend>
+                                    <div class="nds-otp">
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" aria-label="Digit 1 of 6">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 6">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 6">
+                                            </div>
+                                        </div>
+                                        <span class="nds-otp-separator"></span>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 6">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-5" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 5 of 6">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-6" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 6 of 6">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <code class="lang-html code">
+                                    <input type="hidden" class="nds-otp-value" name="otp">
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-otp-separator-1" id="tab-otp-separator-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-separator-1"
+                                        aria-labelledby="tab-otp-separator-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;fieldset class="nds-form-group nds-otp-group"&gt;
   &lt;legend&gt;&lt;span class="nds-label"&gt;Verification Code&lt;/span&gt;&lt;/legend&gt;
   &lt;div class="nds-otp"&gt;
@@ -278,6 +281,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;input type="hidden" class="nds-otp-value" name="otp"&gt;
 &lt;/fieldset&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -296,54 +300,55 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">OTP groups support validation states through the standard form data-status attribute. Status is automatically cleared when the user starts typing.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
-                            <fieldset class="nds-form-group nds-otp-group" id="otp-validate-demo">
-                                <legend><span class="nds-label">Enter code 1234</span></legend>
-                                <div class="nds-otp">
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" aria-label="Digit 1 of 4">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 4">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 4">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-otp-container">
-                                        <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 4">
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="hidden" class="nds-otp-value" name="otp-validate">
-                                <div class="nds-form-footer" data-feedback-target hidden></div>
-                            </fieldset>
-                            <div class="nds-flex" style="--justify:center">
-                                <button class="nds-btn nds-primary nds-sm" id="otp-validate-btn">
-                                    <span class="nds-label">Verify</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-sm" id="otp-clear-btn">
-                                    <span class="nds-label">Clear</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <script>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
+                                <fieldset class="nds-form-group nds-otp-group" id="otp-validate-demo">
+                                    <legend><span class="nds-label">Enter code 1234</span></legend>
+                                    <div class="nds-otp">
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" aria-label="Digit 1 of 4">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 4">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 4">
+                                            </div>
+                                        </div>
+                                        <div class="nds-form-container nds-otp-container">
+                                            <div class="nds-form-control">
+                                                <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" class="nds-otp-value" name="otp-validate">
+                                    <div class="nds-form-footer" data-feedback-target hidden></div>
+                                </fieldset>
+                                <div class="nds-flex" style="--justify:center">
+                                    <button class="nds-btn nds-primary nds-sm" id="otp-validate-btn">
+                                        <span class="nds-label">Verify</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-sm" id="otp-clear-btn">
+                                        <span class="nds-label">Clear</span>
+                                    </button>
+                                </div>
+                                <script>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     var otpGroup = document.getElementById('otp-validate-demo');
                                     document.getElementById('otp-validate-btn').addEventListener('click', function() {
@@ -362,33 +367,33 @@ last_edit: "28/06/2026 - 01:27 PM"
                                     });
                                 });
                             </script>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-otp-validate-1" id="tab-otp-validate-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-otp-validate-2" id="tab-otp-validate-2">
-                                        <span class="nds-tab-label">JavaScript</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-validate-1"
-                                    aria-labelledby="tab-otp-validate-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-otp-validate-1" id="tab-otp-validate-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-otp-validate-2" id="tab-otp-validate-2">
+                                            <span class="nds-tab-label">JavaScript</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-validate-1"
+                                        aria-labelledby="tab-otp-validate-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;fieldset class="nds-form-group nds-otp-group" id="my-otp"&gt;
   &lt;legend&gt;&lt;span class="nds-label"&gt;Enter code 1234&lt;/span&gt;&lt;/legend&gt;
   &lt;div class="nds-otp"&gt;
@@ -417,16 +422,16 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/fieldset&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-otp-validate-2"
-                                    aria-labelledby="tab-otp-validate-2" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-javascript code">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-otp-validate-2"
+                                        aria-labelledby="tab-otp-validate-2" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-javascript code">
 var otpGroup = document.getElementById('my-otp');
 
 // Verify button click
@@ -448,6 +453,7 @@ document.getElementById('clear-btn').addEventListener('click', function() {
     NDS.Forms.clearStatus(otpGroup);
 });
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -467,55 +473,57 @@ document.getElementById('clear-btn').addEventListener('click', function() {
             <p class="nds-section-description">What you get out of the box with zero configuration</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Initializes on page load and detects dynamically added groups via MutationObserver. No manual setup needed.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
-                        <span class="nds-label">Auto-focus</span>
-                    </span>
-                    <p class="nds-item-desc">Opt-in via <code class="nds-inline-code lang-html">autofocus</code> on any digit input. The component restores focus after init to recover from cases where the browser's native autofocus is lost to staggered component initialization.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard"></i>
-                        <span class="nds-label">Keyboard Navigation</span>
-                    </span>
-                    <p class="nds-item-desc">Arrow keys move between inputs (RTL-aware). Backspace clears and moves back. Delete clears and moves forward. Auto-advances on digit entry.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-clipboard"></i>
-                        <span class="nds-label">Paste Support</span>
-                    </span>
-                    <p class="nds-item-desc">Pasting a multi-digit string distributes digits across all inputs from the first position. Non-numeric characters are stripped automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
-                        <span class="nds-label">Hidden Field Sync</span>
-                    </span>
-                    <p class="nds-item-desc">A hidden input with <code class="nds-inline-code lang-html">nds-otp-value</code> class stays in sync with the concatenated value for form submission.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-03"></i>
-                        <span class="nds-label">Custom Events</span>
-                    </span>
-                    <p class="nds-item-desc">Fires <code class="nds-inline-code lang-js">nds:otpChange</code> on any input change, <code class="nds-inline-code lang-js">nds:otpComplete</code> when all digits are filled, and <code class="nds-inline-code lang-js">nds:otpClear</code> on clear.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
-                        <span class="nds-label">Accessibility</span>
-                    </span>
-                    <p class="nds-item-desc">High-contrast mode thickens input borders. Reduced motion disables transitions. <code class="nds-inline-code lang-html">autocomplete="one-time-code"</code> enables autofill on mobile.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Initializes on page load and detects dynamically added groups via MutationObserver. No manual setup needed.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
+                            <span class="nds-label">Auto-focus</span>
+                        </span>
+                        <p class="nds-item-desc">Opt-in via <code class="nds-inline-code lang-html">autofocus</code> on any digit input. The component restores focus after init to recover from cases where the browser's native autofocus is lost to staggered component initialization.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-keyboard"></i>
+                            <span class="nds-label">Keyboard Navigation</span>
+                        </span>
+                        <p class="nds-item-desc">Arrow keys move between inputs (RTL-aware). Backspace clears and moves back. Delete clears and moves forward. Auto-advances on digit entry.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-clipboard"></i>
+                            <span class="nds-label">Paste Support</span>
+                        </span>
+                        <p class="nds-item-desc">Pasting a multi-digit string distributes digits across all inputs from the first position. Non-numeric characters are stripped automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+                            <span class="nds-label">Hidden Field Sync</span>
+                        </span>
+                        <p class="nds-item-desc">A hidden input with <code class="nds-inline-code lang-html">nds-otp-value</code> class stays in sync with the concatenated value for form submission.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-notification-03"></i>
+                            <span class="nds-label">Custom Events</span>
+                        </span>
+                        <p class="nds-item-desc">Fires <code class="nds-inline-code lang-js">nds:otpChange</code> on any input change, <code class="nds-inline-code lang-js">nds:otpComplete</code> when all digits are filled, and <code class="nds-inline-code lang-js">nds:otpClear</code> on clear.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
+                            <span class="nds-label">Accessibility</span>
+                        </span>
+                        <p class="nds-item-desc">High-contrast mode thickens input borders. Reduced motion disables transitions. <code class="nds-inline-code lang-html">autocomplete="one-time-code"</code> enables autofill on mobile.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -530,7 +538,7 @@ document.getElementById('clear-btn').addEventListener('click', function() {
             <p class="nds-section-description">When and how to use OTP inputs effectively</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Verification codes sent via SMS, email, or authenticator apps</li>

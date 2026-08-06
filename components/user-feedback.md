@@ -20,16 +20,17 @@ hideFeedback: true
             <p class="nds-section-description">The widget starts with a Yes/No question. Selecting an answer reveals a tailored follow-up form specific to that choice, then submission replaces the form with a confirmation message.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Page Satisfaction Survey</div>
-                    </div>
-                    <div class="demo-container" style="padding: 0;">
-                        <div class="state-demo" id="uf-demo">
-                            {% include user-feedback.html %}
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Page Satisfaction Survey</div>
                         </div>
-                        <script>
+                        <div class="demo-container" style="padding: 0;">
+                            <div class="state-demo" id="uf-demo">
+                                {% include user-feedback.html %}
+                            </div>
+                            <script>
                             // Demo only: opt this instance out of cookie persistence so the
                             // form returns on reload instead of the saved confirmation. Runs
                             // at parse time, before the loader initializes the component.
@@ -37,29 +38,29 @@ hideFeedback: true
                                 ?.querySelector('.nds-user-feedback')
                                 ?.setAttribute('data-no-persist', '');
                         </script>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-uf-overview-1" id="tab-uf-overview-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-uf-overview-1"
-                                    aria-labelledby="tab-uf-overview-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-uf-overview-1" id="tab-uf-overview-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-uf-overview-1"
+                                        aria-labelledby="tab-uf-overview-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;section id="user-feedback" class="nds-user-feedback-section nds-content-section"&gt;
   &lt;div class="nds-section-body"&gt;
     &lt;form class="nds-form" action="/submit" method="POST"&gt;
@@ -226,6 +227,7 @@ hideFeedback: true
   &lt;/div&gt;
 &lt;/section&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -244,48 +246,50 @@ hideFeedback: true
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates on every <code class="nds-inline-code lang-html">.nds-user-feedback</code> element on the page. All click handlers and state transitions wire up without any JavaScript calls.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-flow"></i>
-                        <span class="nds-label">Guided Answer Flow</span>
-                    </span>
-                    <p class="nds-item-desc">Clicking Yes or No reveals a tailored follow-up form for that answer, hiding the other branch. Closing resets the entire widget back to the initial question state.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cookie"></i>
-                        <span class="nds-label">Submission Memory</span>
-                    </span>
-                    <p class="nds-item-desc">Saves a cookie keyed to the current page path for 365 days. Returning visitors see the confirmation message instead of being presented the survey again.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-translate"></i>
-                        <span class="nds-label">Bilingual Feedback Messages</span>
-                    </span>
-                    <p class="nds-item-desc">Reads the page language from the <code class="nds-inline-code lang-html">lang</code> attribute and delivers success and error messages in Arabic or English automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-task-done-01"></i>
-                        <span class="nds-label">Form Validation</span>
-                    </span>
-                    <p class="nds-item-desc">Uses <code class="nds-inline-code lang-html">data-required</code> and <code class="nds-inline-code lang-html">data-min-checked</code> on fieldsets to validate before submission. Inline error messages surface directly below the failing field.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-bottom"></i>
-                        <span class="nds-label">Page Section Wrapper</span>
-                    </span>
-                    <p class="nds-item-desc">The <code class="nds-inline-code lang-html">nds-user-feedback-section</code> class on the enclosing section applies a primary-color top border and neutral background for standard bottom-of-page placement.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates on every <code class="nds-inline-code lang-html">.nds-user-feedback</code> element on the page. All click handlers and state transitions wire up without any JavaScript calls.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-flow"></i>
+                            <span class="nds-label">Guided Answer Flow</span>
+                        </span>
+                        <p class="nds-item-desc">Clicking Yes or No reveals a tailored follow-up form for that answer, hiding the other branch. Closing resets the entire widget back to the initial question state.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cookie"></i>
+                            <span class="nds-label">Submission Memory</span>
+                        </span>
+                        <p class="nds-item-desc">Saves a cookie keyed to the current page path for 365 days. Returning visitors see the confirmation message instead of being presented the survey again.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-translate"></i>
+                            <span class="nds-label">Bilingual Feedback Messages</span>
+                        </span>
+                        <p class="nds-item-desc">Reads the page language from the <code class="nds-inline-code lang-html">lang</code> attribute and delivers success and error messages in Arabic or English automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-task-done-01"></i>
+                            <span class="nds-label">Form Validation</span>
+                        </span>
+                        <p class="nds-item-desc">Uses <code class="nds-inline-code lang-html">data-required</code> and <code class="nds-inline-code lang-html">data-min-checked</code> on fieldsets to validate before submission. Inline error messages surface directly below the failing field.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-bottom"></i>
+                            <span class="nds-label">Page Section Wrapper</span>
+                        </span>
+                        <p class="nds-item-desc">The <code class="nds-inline-code lang-html">nds-user-feedback-section</code> class on the enclosing section applies a primary-color top border and neutral background for standard bottom-of-page placement.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -300,7 +304,7 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Copy the markup from the HTML tab above and place it inside a <code class="nds-inline-code lang-html">&lt;form&gt;</code> near the bottom of the page, after the main content, so it reads as a closing prompt</li>
@@ -368,7 +372,7 @@ hideFeedback: true
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The component auto-initializes on page load. The methods below cover re-initializing or wiring up a widget added to the DOM after load.</p>
                 <div class="nds-code">

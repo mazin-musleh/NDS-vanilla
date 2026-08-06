@@ -19,96 +19,97 @@ last_edit: "30/06/2026 - 11:50 PM"
             <p class="nds-section-description">Three size tiers scale the avatar and all text slots together. The centered layout modifier suits profile card contexts. Add an action row only when account or contact actions are directly relevant.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Default</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-persona", "personaSize"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-persona", "personaSize"]'>
-                                            <span class="nds-label">Medium</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-persona", "personaSize"]'>
-                                            <span class="nds-label">Small</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-colView", ".nds-persona", "personaLayout"]'>
-                                <span class="nds-label">Column</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-persona", "personaAlign"]'>
-                                <span class="nds-label">Centered</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-persona">
-                                <div class="nds-avatar">
-                                    <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                </div>
-                                <div class="nds-persona-info">
-                                    <span class="nds-persona-name">Ahmed Mohammed</span>
-                                    <span class="nds-persona-role nds-truncate">System Administrator</span>
-                                    <span class="nds-persona-desc">ahmed@example.gov.sa</span>
-                                </div>
-                                <hr class="nds-divider">
-                                <div class="nds-persona-action">
-                                    <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
-                                        <i class="nds-icon nds-hgi-identity-card" aria-hidden="true"></i>
-                                        <span class="nds-label">Portal</span>
-                                    </a>
-                                    <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
-                                        <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-                                        <span class="nds-label">Change Password</span>
-                                    </a>
-                                    <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
-                                        <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
-                                        <span class="nds-label">Change Number</span>
-                                    </a>
-                                    <a href="#" class="nds-btn nds-subtle nds-destructive nds-dropdown-item">
-                                        <i class="nds-icon nds-hgi-door-01" aria-hidden="true"></i>
-                                        <span class="nds-label">Logout</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-persona-overview-1" id="tab-persona-overview-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Default</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-persona", "personaSize"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-persona", "personaSize"]'>
+                                                <span class="nds-label">Medium</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-persona", "personaSize"]'>
+                                                <span class="nds-label">Small</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-colView", ".nds-persona", "personaLayout"]'>
+                                    <span class="nds-label">Column</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-center", ".nds-persona", "personaAlign"]'>
+                                    <span class="nds-label">Centered</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-persona-overview-1"
-                                    aria-labelledby="tab-persona-overview-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-persona">
+                                    <div class="nds-avatar">
+                                        <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    <div class="nds-persona-info">
+                                        <span class="nds-persona-name">Ahmed Mohammed</span>
+                                        <span class="nds-persona-role nds-truncate">System Administrator</span>
+                                        <span class="nds-persona-desc">ahmed@example.gov.sa</span>
+                                    </div>
+                                    <hr class="nds-divider">
+                                    <div class="nds-persona-action">
+                                        <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+                                            <i class="nds-icon nds-hgi-identity-card" aria-hidden="true"></i>
+                                            <span class="nds-label">Portal</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+                                            <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+                                            <span class="nds-label">Change Password</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+                                            <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
+                                            <span class="nds-label">Change Number</span>
+                                        </a>
+                                        <a href="#" class="nds-btn nds-subtle nds-destructive nds-dropdown-item">
+                                            <i class="nds-icon nds-hgi-door-01" aria-hidden="true"></i>
+                                            <span class="nds-label">Logout</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-persona-overview-1" id="tab-persona-overview-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-persona-overview-1"
+                                        aria-labelledby="tab-persona-overview-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-persona"&gt;
   &lt;div class="nds-avatar"&gt;
     &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
@@ -139,6 +140,7 @@ last_edit: "30/06/2026 - 11:50 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -158,108 +160,109 @@ last_edit: "30/06/2026 - 11:50 PM"
             <p class="nds-section-description">Swap the action row for a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">Definition List</a> to present contact fields, attributes, or metadata. Suits profile cards and team directory tiles where viewing identity matters more than acting on it.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Default</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-persona", "personaDetailsSize"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-persona", "personaDetailsSize"]'>
-                                            <span class="nds-label">Medium</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-persona", "personaDetailsSize"]'>
-                                            <span class="nds-label">Small</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-colView", ".nds-persona", "personaDetailsLayout"]'>
-                                <span class="nds-label">Column</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-persona", "personaDetailsAlign"]'>
-                                <span class="nds-label">Centered</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-persona">
-                                <div class="nds-avatar">
-                                    <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                </div>
-                                <div class="nds-persona-info">
-                                    <span class="nds-persona-name">Ahmed Mohammed</span>
-                                    <span class="nds-persona-role nds-truncate">System Administrator</span>
-                                    <span class="nds-persona-desc">ahmed@example.gov.sa</span>
-                                </div>
-                                <hr class="nds-divider">
-                                <dl class="nds-definition-list nds-divided nds-grid" style="flex: 1 100%; --max-col:2; --mid-col:2; --min-col:1;">
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-building-02"></i>
-                                            <span class="nds-label">Department</span>
-                                        </dt>
-                                        <dd>Digital Services</dd>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-id"></i>
-                                            <span class="nds-label">Employee ID</span>
-                                        </dt>
-                                        <dd>DGA-4827</dd>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-location-01"></i>
-                                            <span class="nds-label">Location</span>
-                                        </dt>
-                                        <dd>Riyadh</dd>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-calendar-01"></i>
-                                            <span class="nds-label">Joined</span>
-                                        </dt>
-                                        <dd>March 2021</dd>
-                                    </div>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-persona-details-1" id="tab-persona-details-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Default</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-persona", "personaDetailsSize"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-persona", "personaDetailsSize"]'>
+                                                <span class="nds-label">Medium</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-persona", "personaDetailsSize"]'>
+                                                <span class="nds-label">Small</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-colView", ".nds-persona", "personaDetailsLayout"]'>
+                                    <span class="nds-label">Column</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-center", ".nds-persona", "personaDetailsAlign"]'>
+                                    <span class="nds-label">Centered</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-persona-details-1"
-                                    aria-labelledby="tab-persona-details-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-persona">
+                                    <div class="nds-avatar">
+                                        <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    <div class="nds-persona-info">
+                                        <span class="nds-persona-name">Ahmed Mohammed</span>
+                                        <span class="nds-persona-role nds-truncate">System Administrator</span>
+                                        <span class="nds-persona-desc">ahmed@example.gov.sa</span>
+                                    </div>
+                                    <hr class="nds-divider">
+                                    <dl class="nds-definition-list nds-divided nds-grid" style="flex: 1 100%; --max-col:2; --mid-col:2; --min-col:1;">
+                                        <div class="nds-definition-item">
+                                            <dt>
+                                                <i class="hgi hgi-stroke hgi-building-02"></i>
+                                                <span class="nds-label">Department</span>
+                                            </dt>
+                                            <dd>Digital Services</dd>
+                                        </div>
+                                        <div class="nds-definition-item">
+                                            <dt>
+                                                <i class="hgi hgi-stroke hgi-id"></i>
+                                                <span class="nds-label">Employee ID</span>
+                                            </dt>
+                                            <dd>DGA-4827</dd>
+                                        </div>
+                                        <div class="nds-definition-item">
+                                            <dt>
+                                                <i class="hgi hgi-stroke hgi-location-01"></i>
+                                                <span class="nds-label">Location</span>
+                                            </dt>
+                                            <dd>Riyadh</dd>
+                                        </div>
+                                        <div class="nds-definition-item">
+                                            <dt>
+                                                <i class="hgi hgi-stroke hgi-calendar-01"></i>
+                                                <span class="nds-label">Joined</span>
+                                            </dt>
+                                            <dd>March 2021</dd>
+                                        </div>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-persona-details-1" id="tab-persona-details-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-persona-details-1"
+                                        aria-labelledby="tab-persona-details-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-persona"&gt;
   &lt;div class="nds-avatar"&gt;
     &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
@@ -302,6 +305,7 @@ last_edit: "30/06/2026 - 11:50 PM"
   &lt;/dl&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -320,48 +324,50 @@ last_edit: "30/06/2026 - 11:50 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-expand"></i>
-                        <span class="nds-label">Three Display Sizes</span>
-                    </span>
-                    <p class="nds-item-desc">Default, medium, and small tiers scale the avatar and all three text slots together, letting you match the component to any layout density from a full profile page to a compact navigation dropmenu.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-variable"></i>
-                        <span class="nds-label">CSS Token Overrides</span>
-                    </span>
-                    <p class="nds-item-desc">Every visual slot exposes a public CSS custom property (such as <code class="nds-inline-code lang-html">--persona-name-color</code>) so you can reskin a single line without touching the size variants or writing new SCSS.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-user-circle"></i>
-                        <span class="nds-label">Avatar Size Inheritance</span>
-                    </span>
-                    <p class="nds-item-desc">The wrapper sets <code class="nds-inline-code lang-html">--avatar-size</code> via CSS custom-property inheritance so any child <code class="nds-inline-code lang-html">.nds-avatar</code> automatically matches the size tier, while explicit size modifiers on the avatar element still win.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-settings-02"></i>
-                        <span class="nds-label">Optional Action Row</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">.nds-persona-action</code> with any buttons or links and the row fills the full width below the divider automatically, with each button sized to fit its label.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-hierarchy"></i>
-                        <span class="nds-label">Centered Alignment</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-center</code> to the <code class="nds-inline-code lang-html">.nds-persona</code> wrapper to switch to a column layout with all content centered: avatar, text block, divider, and action row stack vertically with center alignment.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-contact"></i>
-                        <span class="nds-label">Flexible Description Slot</span>
-                    </span>
-                    <p class="nds-item-desc">The <code class="nds-inline-code lang-html">.nds-persona-desc</code> field accepts any short secondary identifier: an email address, department, job code, location, or any other supporting label.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-arrow-expand"></i>
+                            <span class="nds-label">Three Display Sizes</span>
+                        </span>
+                        <p class="nds-item-desc">Default, medium, and small tiers scale the avatar and all three text slots together, letting you match the component to any layout density from a full profile page to a compact navigation dropmenu.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-variable"></i>
+                            <span class="nds-label">CSS Token Overrides</span>
+                        </span>
+                        <p class="nds-item-desc">Every visual slot exposes a public CSS custom property (such as <code class="nds-inline-code lang-html">--persona-name-color</code>) so you can reskin a single line without touching the size variants or writing new SCSS.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-user-circle"></i>
+                            <span class="nds-label">Avatar Size Inheritance</span>
+                        </span>
+                        <p class="nds-item-desc">The wrapper sets <code class="nds-inline-code lang-html">--avatar-size</code> via CSS custom-property inheritance so any child <code class="nds-inline-code lang-html">.nds-avatar</code> automatically matches the size tier, while explicit size modifiers on the avatar element still win.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-settings-02"></i>
+                            <span class="nds-label">Optional Action Row</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">.nds-persona-action</code> with any buttons or links and the row fills the full width below the divider automatically, with each button sized to fit its label.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-hierarchy"></i>
+                            <span class="nds-label">Centered Alignment</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-center</code> to the <code class="nds-inline-code lang-html">.nds-persona</code> wrapper to switch to a column layout with all content centered: avatar, text block, divider, and action row stack vertically with center alignment.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-contact"></i>
+                            <span class="nds-label">Flexible Description Slot</span>
+                        </span>
+                        <p class="nds-item-desc">The <code class="nds-inline-code lang-html">.nds-persona-desc</code> field accepts any short secondary identifier: an email address, department, job code, location, or any other supporting label.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -376,7 +382,7 @@ last_edit: "30/06/2026 - 11:50 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the default size for standalone profile sections, account pages, and team directory cards where space allows the full 80px avatar</li>

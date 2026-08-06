@@ -24,51 +24,55 @@ last_edit: "20/07/2026 - 12:48 AM"
             <p class="nds-section-description">For icons you write into content. The Stroke Rounded font ships with the system, so any glyph it carries works by class name: <code class="nds-inline-code lang-html">hgi hgi-stroke</code> plus <code class="nds-inline-code lang-html">hgi-{name}</code>, where the name is the icon's name on <a class="nds-color" href="https://hugeicons.com/" target="_blank" rel="noopener">hugeicons.com</a>.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-alert nds-card nds-inline nds-block" data-status="warning" role="alert">
-                <span class="nds-feedback nds-alert-icon">
-                    <span class="nds-feedback-icon">
-                        <i class="nds-icon" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
+                    <span class="nds-feedback nds-alert-icon">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
                     </span>
-                </span>
-                <div class="nds-alert-content">
-                    <div class="nds-alert-text">
-                        <span class="nds-alert-title">The font trails the catalog</span>
-                        <p class="nds-alert-description">The font carries 4,126 glyphs while <a class="nds-color" href="https://hugeicons.com/icons/stroke-rounded" target="_blank" rel="noopener">hugeicons.com</a> lists close to 6,000, so not every icon on the site has a class. If <code class="nds-inline-code lang-html">hgi-{name}</code> renders nothing, pick another icon or use its SVG directly.</p>
+                    <div class="nds-alert-content">
+                        <div class="nds-alert-text">
+                            <span class="nds-alert-title">The font trails the catalog</span>
+                            <p class="nds-alert-description">The font carries 4,126 glyphs while <a class="nds-color" href="https://hugeicons.com/icons/stroke-rounded" target="_blank" rel="noopener">hugeicons.com</a> lists close to 6,000, so not every icon on the site has a class. If <code class="nds-inline-code lang-html">hgi-{name}</code> renders nothing, pick another icon or use its SVG directly.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Font Icon</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <i class="hgi hgi-stroke hgi-search-01" style="font-size: 32px"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Font Icon</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-icons-content-1" id="tab-icons-content-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <i class="hgi hgi-stroke hgi-search-01" style="font-size: 32px"></i>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-content-1"
-                                    aria-labelledby="tab-icons-content-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-icons-content-1" id="tab-icons-content-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-content-1"
+                                        aria-labelledby="tab-icons-content-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;i class="hgi hgi-stroke hgi-search-01" style="font-size: 32px"&gt;&lt;/i&gt;</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -87,44 +91,46 @@ last_edit: "20/07/2026 - 12:48 AM"
             <p class="nds-section-description">For icons inside controls and chrome. These are inlined in the stylesheet as SVG masks, so a close button or a validation mark paints with its CSS instead of waiting on the font. The class is <code class="nds-inline-code lang-html">nds-icon</code> plus <code class="nds-inline-code lang-html">nds-hgi-{name}</code>, and only the names in the catalog below exist.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Inline SVG Icon</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-secondary-outline">
-                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                <span class="nds-label">Search</span>
-                            </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Inline SVG Icon</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-icons-ui-1" id="tab-icons-ui-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-secondary-outline">
+                                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Search</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-ui-1"
-                                    aria-labelledby="tab-icons-ui-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-icons-ui-1" id="tab-icons-ui-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-ui-1"
+                                        aria-labelledby="tab-icons-ui-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-secondary-outline"&gt;
   &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
   &lt;span class="nds-label"&gt;Search&lt;/span&gt;
 &lt;/button&gt;</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +160,7 @@ last_edit: "20/07/2026 - 12:48 AM"
                     {%- endfor %}
                 </div>
             </div>
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Brand and Bespoke Marks</h3>
                 <p>Glyphs outside the HugeIcons set, so they carry an <code class="nds-inline-code lang-html">nds-icon-</code> name: the store logos, the Saudi riyal symbol, and the small marks components paint themselves, such as the avatar placeholder and the checkbox tick.</p>
                 <div class="nds-grid nds-doc-icons">
@@ -178,42 +184,44 @@ last_edit: "20/07/2026 - 12:48 AM"
             <p class="nds-section-description">Both layers behave like text: an icon is one em square and paints in the current text color, so it matches whatever it sits in. Change either with <code class="nds-inline-code lang-css">font-size</code> and <code class="nds-inline-code lang-css">color</code>, on the icon or on an ancestor.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Inherited Size and Color</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 16px"></i>
-                            <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 24px"></i>
-                            <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 40px; color: var(--icon-primary)"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Inherited Size and Color</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-icons-sizing-1" id="tab-icons-sizing-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 16px"></i>
+                                <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 24px"></i>
+                                <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 40px; color: var(--icon-primary)"></i>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-sizing-1"
-                                    aria-labelledby="tab-icons-sizing-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-icons-sizing-1" id="tab-icons-sizing-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-sizing-1"
+                                        aria-labelledby="tab-icons-sizing-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;i class="hgi hgi-stroke hgi-notification-02" style="font-size: 16px"&gt;&lt;/i&gt;
 &lt;i class="hgi hgi-stroke hgi-notification-02" style="font-size: 24px"&gt;&lt;/i&gt;
 &lt;i class="hgi hgi-stroke hgi-notification-02" style="font-size: 40px; color: var(--icon-primary)"&gt;&lt;/i&gt;</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -232,48 +240,50 @@ last_edit: "20/07/2026 - 12:48 AM"
             <p class="nds-section-description">What you get from the class alone</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-hard-drive"></i>
-                        <span class="nds-label">Self-Hosted</span>
-                    </span>
-                    <p class="nds-item-desc">The font ships with the system and is served from your own domain. No third-party request, nothing to break if a CDN does.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-rocket-01"></i>
-                        <span class="nds-label">Off the Critical Path</span>
-                    </span>
-                    <p class="nds-item-desc">Icon styles and the font load after the page paints, so content never waits on glyphs.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye"></i>
-                        <span class="nds-label">Flash-Free Rendering</span>
-                    </span>
-                    <p class="nds-item-desc">Icons stay hidden until they can paint, so you never see a fallback box or a late shift in the layout.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-exchange-01"></i>
-                        <span class="nds-label">Direction-Aware Arrows</span>
-                    </span>
-                    <p class="nds-item-desc">Use <code class="nds-inline-code lang-html">nds-hgi-arrow-next-01</code> and <code class="nds-inline-code lang-html">nds-hgi-arrow-prev-01</code> for forward and back: they follow reading direction, so one class is correct in Arabic and English. The left and right classes stay literal.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board"></i>
-                        <span class="nds-label">Color and Size Inheritance</span>
-                    </span>
-                    <p class="nds-item-desc">Icons follow the surrounding type and re-tint in dark mode with everything else.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-svg-01"></i>
-                        <span class="nds-label">Custom Marks</span>
-                    </span>
-                    <p class="nds-item-desc">Marks outside HugeIcons, such as the riyal symbol and the store badges, use the same classes.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-hard-drive"></i>
+                            <span class="nds-label">Self-Hosted</span>
+                        </span>
+                        <p class="nds-item-desc">The font ships with the system and is served from your own domain. No third-party request, nothing to break if a CDN does.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-rocket-01"></i>
+                            <span class="nds-label">Off the Critical Path</span>
+                        </span>
+                        <p class="nds-item-desc">Icon styles and the font load after the page paints, so content never waits on glyphs.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-eye"></i>
+                            <span class="nds-label">Flash-Free Rendering</span>
+                        </span>
+                        <p class="nds-item-desc">Icons stay hidden until they can paint, so you never see a fallback box or a late shift in the layout.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-exchange-01"></i>
+                            <span class="nds-label">Direction-Aware Arrows</span>
+                        </span>
+                        <p class="nds-item-desc">Use <code class="nds-inline-code lang-html">nds-hgi-arrow-next-01</code> and <code class="nds-inline-code lang-html">nds-hgi-arrow-prev-01</code> for forward and back: they follow reading direction, so one class is correct in Arabic and English. The left and right classes stay literal.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-paint-board"></i>
+                            <span class="nds-label">Color and Size Inheritance</span>
+                        </span>
+                        <p class="nds-item-desc">Icons follow the surrounding type and re-tint in dark mode with everything else.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-svg-01"></i>
+                            <span class="nds-label">Custom Marks</span>
+                        </span>
+                        <p class="nds-item-desc">Marks outside HugeIcons, such as the riyal symbol and the store badges, use the same classes.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -288,7 +298,7 @@ last_edit: "20/07/2026 - 12:48 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the <strong>font</strong> (<code class="nds-inline-code lang-html">hgi hgi-stroke hgi-{name}</code>) for content: cards, lists, feature grids, editorial copy</li>
@@ -359,7 +369,7 @@ last_edit: "20/07/2026 - 12:48 AM"
                     </tbody>
                 </table>
             </div>
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Before You Add an Icon</h3>
                 <ul>
                     <li>Take icons from the <strong>free Stroke Rounded</strong> style only. The paid styles carry a different license</li>

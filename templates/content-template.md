@@ -28,7 +28,7 @@ sidemenu_mode: false
             </nav>
         </aside>
         <div class="nds-info-content">
-            <article>
+            <article class="nds-prose">
 
                 <h2 id="section-1" class="nds-section-title">Section 1</h2>
                 <p>This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections. This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections. This is an example of the paragraph style followed by the design system.</p>

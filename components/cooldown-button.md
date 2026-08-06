@@ -19,45 +19,46 @@ last_edit: "29/07/2026 - 02:47 AM"
             <p class="nds-section-description">The full featured pattern for OTP, verification email, and password reset flows where the user needs explicit confirmation the action happened before the cooldown starts counting</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Resend Code</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
-                            <button type="button" class="nds-btn nds-primary nds-cooldown"
-                                data-cooldown="15"
-                                data-cooldown-loading="1"
-                                data-cooldown-label="Resend in {s}s"
-                                data-resend-label="Resend"
-                                data-sent-title="Verification code sent"
-                                data-sent-message="A new code has been sent to your mobile number.">
-                                <span class="nds-label">Send code</span>
-                            </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Resend Code</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-cooldown-resend-1" id="tab-cooldown-resend-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
+                                <button type="button" class="nds-btn nds-primary nds-cooldown"
+                                    data-cooldown="15"
+                                    data-cooldown-loading="1"
+                                    data-cooldown-label="Resend in {s}s"
+                                    data-resend-label="Resend"
+                                    data-sent-title="Verification code sent"
+                                    data-sent-message="A new code has been sent to your mobile number.">
+                                    <span class="nds-label">Send code</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-cooldown-resend-1"
-                                    aria-labelledby="tab-cooldown-resend-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-cooldown-resend-1" id="tab-cooldown-resend-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-cooldown-resend-1"
+                                        aria-labelledby="tab-cooldown-resend-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button type="button" class="nds-btn nds-primary nds-cooldown"
         data-cooldown="15"
         data-cooldown-loading="1"
@@ -68,6 +69,7 @@ last_edit: "29/07/2026 - 02:47 AM"
   &lt;span class="nds-label"&gt;Send code&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,47 +88,49 @@ last_edit: "29/07/2026 - 02:47 AM"
             <p class="nds-section-description">For rate-limited retry buttons where you just need to prevent rapid repeats without a confirmation step</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Retry</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
-                            <button type="button" class="nds-btn nds-secondary nds-cooldown"
-                                data-cooldown="10"
-                                data-cooldown-label="Try again in {s}s">
-                                <span class="nds-label">Try again</span>
-                            </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Retry</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-cooldown-simple-1" id="tab-cooldown-simple-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
+                                <button type="button" class="nds-btn nds-secondary nds-cooldown"
+                                    data-cooldown="10"
+                                    data-cooldown-label="Try again in {s}s">
+                                    <span class="nds-label">Try again</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-cooldown-simple-1"
-                                    aria-labelledby="tab-cooldown-simple-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-cooldown-simple-1" id="tab-cooldown-simple-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-cooldown-simple-1"
+                                        aria-labelledby="tab-cooldown-simple-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button type="button" class="nds-btn nds-secondary nds-cooldown"
         data-cooldown="10"
         data-cooldown-label="Try again in {s}s"&gt;
   &lt;span class="nds-label"&gt;Try again&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -144,48 +148,50 @@ last_edit: "29/07/2026 - 02:47 AM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates on every <code class="nds-inline-code lang-html">.nds-cooldown</code> on the page and on any element added later. No wiring code required.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-loading-03"></i>
-                        <span class="nds-label">Optional Loading Phase</span>
-                    </span>
-                    <p class="nds-item-desc">Holds the button in the standard <code class="nds-inline-code lang-html">data-state="loading"</code> style for the configured number of seconds before the countdown starts.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-timer-02"></i>
-                        <span class="nds-label">Live Countdown Label</span>
-                    </span>
-                    <p class="nds-item-desc">Swaps the button label to your template every second, with <code class="nds-inline-code lang-html">{s}</code> replaced by the seconds remaining, until the cooldown ends.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-square"></i>
-                        <span class="nds-label">Built-in Success Toast</span>
-                    </span>
-                    <p class="nds-item-desc">Fires a success toast at the top of the viewport when the cooldown begins if <code class="nds-inline-code lang-html">data-sent-title</code> or <code class="nds-inline-code lang-html">data-sent-message</code> is set.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-reload"></i>
-                        <span class="nds-label">Post-send Label Swap</span>
-                    </span>
-                    <p class="nds-item-desc">After the first completed cycle the button can show a different label (for example "Send code" becomes "Resend"). Abort during the loading phase keeps the original label.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Trigger the cycle from JS, abort a cooldown in flight, and hook four lifecycle events to wire your own side effects around the built-in behavior.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates on every <code class="nds-inline-code lang-html">.nds-cooldown</code> on the page and on any element added later. No wiring code required.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-loading-03"></i>
+                            <span class="nds-label">Optional Loading Phase</span>
+                        </span>
+                        <p class="nds-item-desc">Holds the button in the standard <code class="nds-inline-code lang-html">data-state="loading"</code> style for the configured number of seconds before the countdown starts.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-timer-02"></i>
+                            <span class="nds-label">Live Countdown Label</span>
+                        </span>
+                        <p class="nds-item-desc">Swaps the button label to your template every second, with <code class="nds-inline-code lang-html">{s}</code> replaced by the seconds remaining, until the cooldown ends.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-notification-square"></i>
+                            <span class="nds-label">Built-in Success Toast</span>
+                        </span>
+                        <p class="nds-item-desc">Fires a success toast at the top of the viewport when the cooldown begins if <code class="nds-inline-code lang-html">data-sent-title</code> or <code class="nds-inline-code lang-html">data-sent-message</code> is set.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-reload"></i>
+                            <span class="nds-label">Post-send Label Swap</span>
+                        </span>
+                        <p class="nds-item-desc">After the first completed cycle the button can show a different label (for example "Send code" becomes "Resend"). Abort during the loading phase keeps the original label.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Trigger the cycle from JS, abort a cooldown in flight, and hook four lifecycle events to wire your own side effects around the built-in behavior.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -200,7 +206,7 @@ last_edit: "29/07/2026 - 02:47 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use for <strong>resend flows</strong> where the backend imposes a per-user rate limit (OTP, verification email, password reset) and you want the UI to match that limit exactly</li>
@@ -231,7 +237,7 @@ last_edit: "29/07/2026 - 02:47 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Events</h3>
                 <p>All events bubble and fire on the button element. Listen for them to add custom behavior (analytics, alternate toasts, parallel UI updates) without replacing the built-in flow.</p>
                 <table class="nds-table nds-responsive">
@@ -245,7 +251,7 @@ last_edit: "29/07/2026 - 02:47 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.CooldownButton</strong> API provides programmatic control for dynamically added buttons and for aborting a cooldown in flight. Auto-initialization handles everything for static markup; no JS call is needed for the common case.</p>
                 <div class="nds-code nds-expandable">

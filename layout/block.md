@@ -19,26 +19,28 @@ last_edit: "31/07/2026 - 05:11 AM"
             <p class="nds-section-description">Blocks live inside <code class="nds-inline-code lang-html">.nds-section-body</code> and hold flow content directly. An optional <code class="nds-inline-code lang-html">.nds-block-title</code> heading sits at the top of the block.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Component Tree</div>
-                    </div>
-                    <div class="demo-container nds-noBg">
-                        <div class="nds-code nds-expandable">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Component Tree</div>
+                        </div>
+                        <div class="demo-container nds-noBg">
+                            <div class="nds-code nds-expandable">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 section.nds-content-section nds-demo-section
 &#9492;&#9472;&#9472; div.nds-section-body
     &#9492;&#9472;&#9472; div.nds-block
         &#9500;&#9472;&#9472; h3.nds-block-title   (optional)
         &#9492;&#9472;&#9472; p, ul, ol, table, img...   (direct flow content)
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,55 +58,56 @@ section.nds-content-section nds-demo-section
             <p class="nds-section-description">Group related paragraphs, lists, or tables under a shared heading. Blocks stack vertically inside the section body with consistent spacing.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Titled and Untitled Blocks</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <section class="nds-content-section nds-demo-section" style="width: 100%;">
-                                <div class="nds-section-body">
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Block Title</h3>
-                                        <p>First paragraph of content inside the block. Paragraphs, lists, and media get their spacing from the surrounding <code class="nds-inline-code lang-html">.nds-section-body</code>, which a block sits inside.</p>
-                                        <p>Second paragraph to demonstrate spacing between content elements.</p>
-                                    </div>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Another Block</h3>
-                                        <ul>
-                                            <li>List items work inside blocks</li>
-                                            <li>With automatic padding and spacing</li>
-                                        </ul>
-                                    </div>
-                                    <div class="nds-block">
-                                        <p>Blocks without a title work too. The title is optional.</p>
-                                    </div>
-                                </div>
-                            </section>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Titled and Untitled Blocks</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-block-standard-1" id="tab-block-standard-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-block-standard-1"
-                                    aria-labelledby="tab-block-standard-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <section class="nds-content-section nds-demo-section" style="width: 100%;">
+                                    <div class="nds-section-body">
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Block Title</h3>
+                                            <p>First paragraph of content inside the block. Paragraphs, lists, and media get their spacing from the surrounding <code class="nds-inline-code lang-html">.nds-section-body</code>, which a block sits inside.</p>
+                                            <p>Second paragraph to demonstrate spacing between content elements.</p>
+                                        </div>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Another Block</h3>
+                                            <ul>
+                                                <li>List items work inside blocks</li>
+                                                <li>With automatic padding and spacing</li>
+                                            </ul>
+                                        </div>
+                                        <div class="nds-block">
+                                            <p>Blocks without a title work too. The title is optional.</p>
+                                        </div>
                                     </div>
-                                    <code class="lang-html code">
+                                </section>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-block-standard-1" id="tab-block-standard-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-block-standard-1"
+                                        aria-labelledby="tab-block-standard-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;div class="nds-section-body"&gt;
         &lt;div class="nds-block"&gt;
@@ -125,6 +128,7 @@ section.nds-content-section nds-demo-section
     &lt;/div&gt;
 &lt;/section&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -142,41 +146,43 @@ section.nds-content-section nds-demo-section
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-align-left"></i>
-                        <span class="nds-label">Auto Flow Styling</span>
-                    </span>
-                    <p class="nds-item-desc">Paragraphs, images, and video nested inside a block pick up primary paragraph color, pretty wrapping, and responsive media caps automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-menu-square"></i>
-                        <span class="nds-label">Optional Titled Heading</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">.nds-block-title</code> when the block needs a heading. Every title token is overridable through CSS custom properties.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-distribute-vertical-center"></i>
-                        <span class="nds-label">Consistent Vertical Rhythm</span>
-                    </span>
-                    <p class="nds-item-desc">Blocks carry a 2rem bottom margin that collapses on the last child, so stacks of blocks inside a section body breathe without extra classes.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
-                        <span class="nds-label">Works Anywhere</span>
-                    </span>
-                    <p class="nds-item-desc">Drop blocks inside any section body — default, color-themed, horizontal, or full-width. Positioning and spacing stay consistent across layouts.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-frame"></i>
-                        <span class="nds-label">Container Query Anchor</span>
-                    </span>
-                    <p class="nds-item-desc">Each block establishes a named <code class="nds-inline-code lang-html">block</code> CSS container. Descendants like <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">grids</a> and <a class="nds-color" href="{{ 'components/quote' | relative_url }}">quotes</a> respond to the block's actual width, not the viewport — correct sizing in multi-column layouts where the block is narrower than the section.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-text-align-left"></i>
+                            <span class="nds-label">Auto Flow Styling</span>
+                        </span>
+                        <p class="nds-item-desc">Paragraphs, images, and video nested inside a block pick up primary paragraph color, pretty wrapping, and responsive media caps automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-menu-square"></i>
+                            <span class="nds-label">Optional Titled Heading</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">.nds-block-title</code> when the block needs a heading. Every title token is overridable through CSS custom properties.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-distribute-vertical-center"></i>
+                            <span class="nds-label">Consistent Vertical Rhythm</span>
+                        </span>
+                        <p class="nds-item-desc">Blocks carry a 2rem bottom margin that collapses on the last child, so stacks of blocks inside a section body breathe without extra classes.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-grid"></i>
+                            <span class="nds-label">Works Anywhere</span>
+                        </span>
+                        <p class="nds-item-desc">Drop blocks inside any section body — default, color-themed, horizontal, or full-width. Positioning and spacing stay consistent across layouts.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-frame"></i>
+                            <span class="nds-label">Container Query Anchor</span>
+                        </span>
+                        <p class="nds-item-desc">Each block establishes a named <code class="nds-inline-code lang-html">block</code> CSS container. Descendants like <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">grids</a> and <a class="nds-color" href="{{ 'components/quote' | relative_url }}">quotes</a> respond to the block's actual width, not the viewport — correct sizing in multi-column layouts where the block is narrower than the section.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -191,7 +197,7 @@ section.nds-content-section nds-demo-section
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>blocks</strong> to subdivide content inside a single <a class="nds-color" href="{{ 'layout/section' | relative_url }}">section</a> instead of starting a new section — they share the same visual container but group related paragraphs under their own heading</li>

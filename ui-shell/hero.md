@@ -19,49 +19,50 @@ last_edit: "25/07/2026 - 08:40 PM"
             <p class="nds-section-description">The sub hero sits below the header on every content page and displays the page title and description. The flat variant removes the gradient background for pages where a neutral, image-free header is more appropriate.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Default</div>
-                    </div>
-                    <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">UI Shell</a></li>
-                                    <li aria-current="page">Service Portal</li>
-                                </ol>
-                            </nav>
-                            <div class="nds-section-wrapper">
-                                <div class="nds-section-head">
-                                    <h2 class="nds-section-title">Service Portal</h2>
-                                    <p class="nds-section-description">Access government services, track applications, and manage your digital identity in one place.</p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hero-sub-1" id="tab-hero-sub-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Default</div>
+                        </div>
+                        <div class="demo-container" style="padding: 0; overflow: hidden;">
+                            <section class="nds-hero-section nds-sub">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="#">UI Shell</a></li>
+                                        <li aria-current="page">Service Portal</li>
+                                    </ol>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-sub-1"
-                                    aria-labelledby="tab-hero-sub-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <h2 class="nds-section-title">Service Portal</h2>
+                                        <p class="nds-section-description">Access government services, track applications, and manage your digital identity in one place.</p>
                                     </div>
-                                    <code class="lang-html code">
+                                </div>
+                            </section>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hero-sub-1" id="tab-hero-sub-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-sub-1"
+                                        aria-labelledby="tab-hero-sub-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
@@ -78,80 +79,80 @@ last_edit: "25/07/2026 - 08:40 PM"
   &lt;/div&gt;
 &lt;/section&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Flat</div>
-                    </div>
-                    <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub nds-flat">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">UI Shell</a></li>
-                                    <li aria-current="page">Service Portal</li>
-                                </ol>
-                            </nav>
-                            <div class="nds-section-wrapper">
-                                <div class="nds-section-head">
-                                    <div class="nds-section-action nds-minimal">
-                                        <div class="nds-share nds-dropmenu">
-                                            <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
-                                                <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-                                                <span class="nds-label">Share Page</span>
-                                            </button>
-                                            <div class="nds-dropmenu-menu" hidden>
-                                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
-                                                    <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                                                    <span class="nds-label">X</span>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Flat</div>
+                        </div>
+                        <div class="demo-container" style="padding: 0; overflow: hidden;">
+                            <section class="nds-hero-section nds-sub nds-flat">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="#">UI Shell</a></li>
+                                        <li aria-current="page">Service Portal</li>
+                                    </ol>
+                                </nav>
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <div class="nds-section-action nds-minimal">
+                                            <div class="nds-share nds-dropmenu">
+                                                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
+                                                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+                                                    <span class="nds-label">Share Page</span>
                                                 </button>
-                                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
-                                                    <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                                                    <span class="nds-label">LinkedIn</span>
-                                                </button>
-                                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
-                                                    <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
-                                                    <span class="nds-label">WhatsApp</span>
-                                                </button>
-                                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                                                    data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close>
-                                                    <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
-                                                    <span class="nds-label">Copy Link</span>
-                                                </button>
+                                                <div class="nds-dropmenu-menu" hidden>
+                                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
+                                                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                                                        <span class="nds-label">X</span>
+                                                    </button>
+                                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
+                                                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                                                        <span class="nds-label">LinkedIn</span>
+                                                    </button>
+                                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
+                                                        <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+                                                        <span class="nds-label">WhatsApp</span>
+                                                    </button>
+                                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
+                                                        data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close>
+                                                        <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+                                                        <span class="nds-label">Copy Link</span>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
+                                        <h2 class="nds-section-title">Service Portal</h2>
+                                        <p class="nds-section-description">Access government services, track applications, and manage your digital identity in one place.</p>
                                     </div>
-                                    <h2 class="nds-section-title">Service Portal</h2>
-                                    <p class="nds-section-description">Access government services, track applications, and manage your digital identity in one place.</p>
                                 </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hero-flat-1" id="tab-hero-flat-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-flat-1"
-                                    aria-labelledby="tab-hero-flat-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                            </section>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hero-flat-1" id="tab-hero-flat-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-flat-1"
+                                        aria-labelledby="tab-hero-flat-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub nds-flat"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
@@ -195,54 +196,54 @@ last_edit: "25/07/2026 - 08:40 PM"
   &lt;/div&gt;
 &lt;/section&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">With Brief</div>
-                    </div>
-                    <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">UI Shell</a></li>
-                                    <li aria-current="page">Digital Identity</li>
-                                </ol>
-                            </nav>
-                            <div class="nds-section-wrapper">
-                                <div class="nds-section-head">
-                                    <h2 class="nds-section-title">Digital Identity</h2>
-                                    <p class="nds-section-brief">Your unified gateway to all government services</p>
-                                    <p class="nds-section-description">Manage your national ID, verify documents, and access personalized services from a single secure account linked to your identity.</p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hero-brief-1" id="tab-hero-brief-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">With Brief</div>
+                        </div>
+                        <div class="demo-container" style="padding: 0; overflow: hidden;">
+                            <section class="nds-hero-section nds-sub">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="#">UI Shell</a></li>
+                                        <li aria-current="page">Digital Identity</li>
+                                    </ol>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-brief-1"
-                                    aria-labelledby="tab-hero-brief-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <h2 class="nds-section-title">Digital Identity</h2>
+                                        <p class="nds-section-brief">Your unified gateway to all government services</p>
+                                        <p class="nds-section-description">Manage your national ID, verify documents, and access personalized services from a single secure account linked to your identity.</p>
                                     </div>
-                                    <code class="lang-html code">
+                                </div>
+                            </section>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hero-brief-1" id="tab-hero-brief-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-brief-1"
+                                        aria-labelledby="tab-hero-brief-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
@@ -260,6 +261,7 @@ last_edit: "25/07/2026 - 08:40 PM"
   &lt;/div&gt;
 &lt;/section&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -278,49 +280,50 @@ last_edit: "25/07/2026 - 08:40 PM"
             <p class="nds-section-description">Set the <code class="nds-inline-code lang-html">--hero_image</code> CSS custom property to place a branded photograph behind the sub hero. A CSS mask fades the image from the start edge toward the content area — the background color shows through where the image fades out, so the fade adapts automatically to any theme or color token.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">With Background Image</div>
-                    </div>
-                    <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub" style="--hero_image: url('{{ '/assets/img/riyadhcenter_ai.webp' | relative_url }}')">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li aria-current="page">About the Authority</li>
-                                </ol>
-                            </nav>
-                            <div class="nds-section-wrapper">
-                                <div class="nds-section-head">
-                                    <h2 class="nds-section-title">About the Authority</h2>
-                                    <p class="nds-section-description">The Digital Government Authority leads digital transformation across Saudi government services and establishes national standards.</p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hero-bg-1" id="tab-hero-bg-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">With Background Image</div>
+                        </div>
+                        <div class="demo-container" style="padding: 0; overflow: hidden;">
+                            <section class="nds-hero-section nds-sub" style="--hero_image: url('{{ '/assets/img/riyadhcenter_ai.webp' | relative_url }}')">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="#">About</a></li>
+                                        <li aria-current="page">About the Authority</li>
+                                    </ol>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-bg-1"
-                                    aria-labelledby="tab-hero-bg-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <h2 class="nds-section-title">About the Authority</h2>
+                                        <p class="nds-section-description">The Digital Government Authority leads digital transformation across Saudi government services and establishes national standards.</p>
                                     </div>
-                                    <code class="lang-html code">
+                                </div>
+                            </section>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hero-bg-1" id="tab-hero-bg-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-bg-1"
+                                        aria-labelledby="tab-hero-bg-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub" style="--hero_image: url('assets/img/hero.webp')"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
@@ -337,6 +340,7 @@ last_edit: "25/07/2026 - 08:40 PM"
   &lt;/div&gt;
 &lt;/section&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -355,62 +359,63 @@ last_edit: "25/07/2026 - 08:40 PM"
             <p class="nds-section-description">The sub hero provides two action slots: a float action placed inline-end inside the heading area for contextual tools such as share or bookmark, and a standard action block below the description for primary calls-to-action.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">With Actions</div>
-                    </div>
-                    <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li aria-current="page">Digital Services Portal</li>
-                                </ol>
-                            </nav>
-                            <div class="nds-section-wrapper">
-                                <div class="nds-section-head">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">With Actions</div>
+                        </div>
+                        <div class="demo-container" style="padding: 0; overflow: hidden;">
+                            <section class="nds-hero-section nds-sub">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="#">Services</a></li>
+                                        <li aria-current="page">Digital Services Portal</li>
+                                    </ol>
+                                </nav>
+                                <div class="nds-section-wrapper">
+                                    <div class="nds-section-head">
+                                        <div class="nds-section-action">
+                                            <a class="nds-btn nds-secondary-outline" href="#">
+                                                <span class="nds-label">Help Center</span>
+                                            </a>
+                                        </div>
+                                        <h2 class="nds-section-title">Digital Services Portal</h2>
+                                        <p class="nds-section-description">Browse and apply for government services from one centralized portal available around the clock.</p>
+                                    </div>
                                     <div class="nds-section-action">
+                                        <a class="nds-btn nds-primary" href="#">
+                                            <span class="nds-label">Browse Services</span>
+                                        </a>
                                         <a class="nds-btn nds-secondary-outline" href="#">
-                                            <span class="nds-label">Help Center</span>
+                                            <span class="nds-label">Learn More</span>
                                         </a>
                                     </div>
-                                    <h2 class="nds-section-title">Digital Services Portal</h2>
-                                    <p class="nds-section-description">Browse and apply for government services from one centralized portal available around the clock.</p>
                                 </div>
-                                <div class="nds-section-action">
-                                    <a class="nds-btn nds-primary" href="#">
-                                        <span class="nds-label">Browse Services</span>
-                                    </a>
-                                    <a class="nds-btn nds-secondary-outline" href="#">
-                                        <span class="nds-label">Learn More</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hero-actions-1" id="tab-hero-actions-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-actions-1"
-                                    aria-labelledby="tab-hero-actions-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                            </section>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hero-actions-1" id="tab-hero-actions-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-actions-1"
+                                        aria-labelledby="tab-hero-actions-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
@@ -442,6 +447,7 @@ last_edit: "25/07/2026 - 08:40 PM"
   &lt;/div&gt;
 &lt;/section&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -460,33 +466,34 @@ last_edit: "25/07/2026 - 08:40 PM"
             <p class="nds-section-description">The main hero is a full-viewport-height banner used on home and hub pages. It wraps a <a class="nds-color" href="{{ 'components/swiper' | relative_url }}">Swiper</a> carousel so multiple slides can rotate with pagination controls. Each slide has its own background image, overlay opacity, and content area.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Main Hero Slider</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hero-main-1" id="tab-hero-main-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-hero-main-1"
-                                    aria-labelledby="tab-hero-main-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Main Hero Slider</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hero-main-1" id="tab-hero-main-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-hero-main-1"
+                                        aria-labelledby="tab-hero-main-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;section class="nds-hero-section"&gt;
   &lt;div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: 2"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
@@ -542,6 +549,7 @@ last_edit: "25/07/2026 - 08:40 PM"
   &lt;/div&gt;
 &lt;/section&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -560,48 +568,50 @@ last_edit: "25/07/2026 - 08:40 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-image-02"></i>
-                        <span class="nds-label">Background Image Support</span>
-                    </span>
-                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--hero_image</code> on the sub hero to place a branded photograph behind the gradient with no additional markup.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-blend"></i>
-                        <span class="nds-label">CSS Mask Image Fade</span>
-                    </span>
-                    <p class="nds-item-desc">A CSS mask fades the background image to transparent on the content side so the page background color shows through — no gradient color matching needed when the theme or background token changes.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-03"></i>
-                        <span class="nds-label">Flat Variant</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-flat</code> to switch to a plain page background with no gradient, suited for utility and documentation pages.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-sidebar-right"></i>
-                        <span class="nds-label">Aside Layout Mode</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-aside</code> to narrow the hero content area to leave room for a <a class="nds-color" href="{{ 'ui-shell/sideinfo' | relative_url }}">Side Info</a> panel sitting alongside on desktop.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-01"></i>
-                        <span class="nds-label">Dual Action Slots</span>
-                    </span>
-                    <p class="nds-item-desc">The sub hero has a float action slot inside the heading for contextual tools and a standard action slot below the description for primary calls-to-action.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-flip-horizontal"></i>
-                        <span class="nds-label">Bidirectional Mask</span>
-                    </span>
-                    <p class="nds-item-desc">The mask fade direction flips automatically between RTL (Arabic) and LTR (English), so the image always appears on the correct edge and text remains readable in both directions.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-image-02"></i>
+                            <span class="nds-label">Background Image Support</span>
+                        </span>
+                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--hero_image</code> on the sub hero to place a branded photograph behind the gradient with no additional markup.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-blend"></i>
+                            <span class="nds-label">CSS Mask Image Fade</span>
+                        </span>
+                        <p class="nds-item-desc">A CSS mask fades the background image to transparent on the content side so the page background color shows through — no gradient color matching needed when the theme or background token changes.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-03"></i>
+                            <span class="nds-label">Flat Variant</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-flat</code> to switch to a plain page background with no gradient, suited for utility and documentation pages.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-sidebar-right"></i>
+                            <span class="nds-label">Aside Layout Mode</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-aside</code> to narrow the hero content area to leave room for a <a class="nds-color" href="{{ 'ui-shell/sideinfo' | relative_url }}">Side Info</a> panel sitting alongside on desktop.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cursor-01"></i>
+                            <span class="nds-label">Dual Action Slots</span>
+                        </span>
+                        <p class="nds-item-desc">The sub hero has a float action slot inside the heading for contextual tools and a standard action slot below the description for primary calls-to-action.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-flip-horizontal"></i>
+                            <span class="nds-label">Bidirectional Mask</span>
+                        </span>
+                        <p class="nds-item-desc">The mask fade direction flips automatically between RTL (Arabic) and LTR (English), so the image always appears on the correct edge and text remains readable in both directions.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -616,7 +626,7 @@ last_edit: "25/07/2026 - 08:40 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the sub hero on every content page as the primary title area. Pair it with the <a class="nds-color" href="{{ 'ui-shell/header' | relative_url }}">Header</a> for complete shell structure</li>
@@ -691,7 +701,7 @@ last_edit: "25/07/2026 - 08:40 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Jekyll Front Matter</h3>
                 <p>When using the <code class="nds-inline-code lang-html">page</code> layout, the sub hero renders automatically from these front matter fields. No HTML required.</p>
                 <table class="nds-table nds-responsive">

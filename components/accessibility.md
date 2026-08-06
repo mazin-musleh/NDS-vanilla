@@ -19,52 +19,53 @@ last_edit: "02/08/2026 - 09:52 AM"
             <p class="nds-section-description">A circular FAB in the corner opens the disclosure panel. The button ships with the default layout, so every page on the site exposes the same controls without per-page wiring.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Open the global panel</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display:flex; flex-direction:column; align-items:center; gap: var(--spacing-md); padding: var(--spacing-2xl);">
-                            <button class="nds-btn nds-primary nds-circle nds-icon-only nds-accessibility-toggle"
-                                    type="button"
-                                    data-accessibility-demo-open
-                                    aria-label="Open accessibility panel"
-                                    style="--btn-size: 56px; box-shadow: var(--shadow-lg);">
-                                <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
-                            </button>
-                            <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
-                                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                                The same button is also pinned to the corner of every page.
-                            </span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Open the global panel</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-a11y-trigger-1" id="tab-a11y-trigger-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-a11y-trigger-fouc" id="tab-a11y-trigger-fouc">
-                                        <span class="nds-tab-label">Head</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display:flex; flex-direction:column; align-items:center; gap: var(--spacing-md); padding: var(--spacing-2xl);">
+                                <button class="nds-btn nds-primary nds-circle nds-icon-only nds-accessibility-toggle"
+                                        type="button"
+                                        data-accessibility-demo-open
+                                        aria-label="Open accessibility panel"
+                                        style="--btn-size: 56px; box-shadow: var(--shadow-lg);">
+                                    <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
                                 </button>
+                                <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
+                                    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                    The same button is also pinned to the corner of every page.
+                                </span>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-1"
-                                    aria-labelledby="tab-a11y-trigger-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-a11y-trigger-1" id="tab-a11y-trigger-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-a11y-trigger-fouc" id="tab-a11y-trigger-fouc">
+                                            <span class="nds-tab-label">Head</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-1"
+                                        aria-labelledby="tab-a11y-trigger-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;button class="nds-btn nds-primary nds-circle nds-fab nds-accessibility-toggle"
         type="button"
         aria-label="Accessibility settings"
@@ -417,17 +418,17 @@ last_edit: "02/08/2026 - 09:52 AM"
     &lt;/div&gt;
 &lt;/aside&gt;
                                         </code>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-fouc"
-                                    aria-labelledby="tab-a11y-trigger-fouc" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-fouc"
+                                        aria-labelledby="tab-a11y-trigger-fouc" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;!-- Inline and synchronous inside &lt;head&gt; so the cached tokens land on
      &lt;html&gt; before first paint. Place after &lt;link rel="preload"&gt; tags so
      stylesheet fetches start first. The bundle table mirrors MODE_BUNDLES
@@ -457,6 +458,7 @@ last_edit: "02/08/2026 - 09:52 AM"
 } catch {} })();
 &lt;/script&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -476,56 +478,58 @@ last_edit: "02/08/2026 - 09:52 AM"
             <p class="nds-section-description">Wire a footer link, header menu item, or in-page CTA to open the same panel by calling <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code> from your own click handler. The <code class="nds-inline-code lang-html">data-accessibility-toggle</code> attribute is only honored on the first match in the DOM, so use the JS API for every additional trigger.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Programmatic open</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display:flex; align-items:center; gap: var(--spacing-md); padding: var(--spacing-2xl);">
-                            <a href="#" class="nds-link" data-accessibility-demo-open>Accessibility settings</a>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Programmatic open</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-a11y-custom-1" id="tab-a11y-custom-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-a11y-custom-js" id="tab-a11y-custom-js">
-                                        <span class="nds-tab-label">JS</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display:flex; align-items:center; gap: var(--spacing-md); padding: var(--spacing-2xl);">
+                                <a href="#" class="nds-link" data-accessibility-demo-open>Accessibility settings</a>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-a11y-custom-1"
-                                    aria-labelledby="tab-a11y-custom-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-a11y-custom-1" id="tab-a11y-custom-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-a11y-custom-js" id="tab-a11y-custom-js">
+                                            <span class="nds-tab-label">JS</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-a11y-custom-1"
+                                        aria-labelledby="tab-a11y-custom-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;a href="#" class="nds-link" id="open-a11y"&gt;Accessibility settings&lt;/a&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-a11y-custom-js"
-                                    aria-labelledby="tab-a11y-custom-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">document.getElementById('open-a11y').addEventListener('click', (e) =&gt; {
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-a11y-custom-js"
+                                        aria-labelledby="tab-a11y-custom-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">document.getElementById('open-a11y').addEventListener('click', (e) =&gt; {
     e.preventDefault();
     e.stopPropagation();   // Panel's outside-click-close listener also lives on document.
     NDS.Accessibility.open();
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -544,13 +548,15 @@ last_edit: "02/08/2026 - 09:52 AM"
             <p class="nds-section-description">Anchor the FAB and the panel to whichever edge suits the layout, so neither collides with chat widgets, cookie banners, or content already pinned to a corner. The two attributes are set separately and should name the same side.</p>
         </div>
         <div class="nds-section-body">
-            <table class="nds-table nds-responsive">
-                <thead><tr><th>Attribute</th><th>Set on</th><th>Behavior</th></tr></thead>
-                <tbody>
-                    <tr><td><code class="nds-inline-code lang-html">data-fab-pos="auto"</code></td><td>FAB</td><td>What the panel ships. Follows the panel it names in <code class="nds-inline-code lang-html">aria-controls</code>, so changing the side below moves both. Pin an edge instead with <code class="nds-inline-code lang-html">end</code> or <code class="nds-inline-code lang-html">start</code> (logical), or physical <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">data-panel-side="end"</code></td><td>Panel</td><td>Which edge the panel slides from. Same logical and physical vocabulary as the FAB, plus <code class="nds-inline-code lang-html">top</code>. Set it to match the FAB so the pair reads as one control.</td></tr>
-                </tbody>
-            </table>
+            <div class="nds-block">
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Set on</th><th>Behavior</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-fab-pos="auto"</code></td><td>FAB</td><td>What the panel ships. Follows the panel it names in <code class="nds-inline-code lang-html">aria-controls</code>, so changing the side below moves both. Pin an edge instead with <code class="nds-inline-code lang-html">end</code> or <code class="nds-inline-code lang-html">start</code> (logical), or physical <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-panel-side="end"</code></td><td>Panel</td><td>Which edge the panel slides from. Same logical and physical vocabulary as the FAB, plus <code class="nds-inline-code lang-html">top</code>. Set it to match the FAB so the pair reads as one control.</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -563,18 +569,20 @@ last_edit: "02/08/2026 - 09:52 AM"
             <p class="nds-section-description">Bundle switches in the first accordion section. Each one is a recipe of primitives plus an optional opening typography stance, so a single tap covers the most common access needs without forcing visitors to compose the controls themselves.</p>
         </div>
         <div class="nds-section-body">
-            <table class="nds-table nds-responsive">
-                <thead><tr><th>Bundle</th><th>WCAG</th><th>What it activates</th></tr></thead>
-                <tbody>
-                    <tr><td><code class="nds-inline-code lang-html">epilepsy-safe</code></td><td>2.3.1</td><td>Pauses motion and drops saturation to half so flashing media and oversaturated palettes cannot trigger seizures.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">visually-impaired</code></td><td>1.4.6</td><td>Forces a high-contrast palette swap and bumps font sizing to 1.30×, the AAA contrast plus large-text combination.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">cognitive-disability</code></td><td>2.2, 2.3</td><td>Highlights every heading and pauses motion so the page reads as a clear, static outline.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">motor-impaired</code></td><td>2.5.5</td><td>Promotes every button, link, and form control to a 48×48px hit-target.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">colorblind</code></td><td>1.4.1</td><td>Applies a deuteranopia simulation filter for designer empathy QA. Color-deficient users themselves should rely on OS-level daltonization.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">dyslexia-friendly</code></td><td>1.4.8, 1.4.12</td><td>Swaps the font stack to OpenDyslexic plus Maqroo, underlines every link, and applies the WCAG 1.4.8 spacing recipe (1.6 line-height, 0.12em letter-spacing in non-cursive scripts, 0.16em word-spacing).</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">adhd-friendly</code></td><td>2.2, 2.3</td><td>Pauses motion, highlights titles, and turns on the reading mask so the visitor controls focus one paragraph at a time.</td></tr>
-                </tbody>
-            </table>
+            <div class="nds-block">
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Bundle</th><th>WCAG</th><th>What it activates</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">epilepsy-safe</code></td><td>2.3.1</td><td>Pauses motion and drops saturation to half so flashing media and oversaturated palettes cannot trigger seizures.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">visually-impaired</code></td><td>1.4.6</td><td>Forces a high-contrast palette swap and bumps font sizing to 1.30×, the AAA contrast plus large-text combination.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">cognitive-disability</code></td><td>2.2, 2.3</td><td>Highlights every heading and pauses motion so the page reads as a clear, static outline.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">motor-impaired</code></td><td>2.5.5</td><td>Promotes every button, link, and form control to a 48×48px hit-target.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">colorblind</code></td><td>1.4.1</td><td>Applies a deuteranopia simulation filter for designer empathy QA. Color-deficient users themselves should rely on OS-level daltonization.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">dyslexia-friendly</code></td><td>1.4.8, 1.4.12</td><td>Swaps the font stack to OpenDyslexic plus Maqroo, underlines every link, and applies the WCAG 1.4.8 spacing recipe (1.6 line-height, 0.12em letter-spacing in non-cursive scripts, 0.16em word-spacing).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">adhd-friendly</code></td><td>2.2, 2.3</td><td>Pauses motion, highlights titles, and turns on the reading mask so the visitor controls focus one paragraph at a time.</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -587,21 +595,23 @@ last_edit: "02/08/2026 - 09:52 AM"
             <p class="nds-section-description">Tile grid in the second accordion section. Each tile is an independent control: cycling tiles step through 4 levels (default plus 3) and toggle tiles flip on or off. Every change writes a token onto <code class="nds-inline-code lang-html">&lt;html data-a11y&gt;</code> so author CSS can react.</p>
         </div>
         <div class="nds-section-body">
-            <table class="nds-table nds-responsive">
-                <thead><tr><th>Tile</th><th>Mechanism</th><th>Effect</th></tr></thead>
-                <tbody>
-                    <tr><td>Font Sizing</td><td>Cycle: 0, 1, 2, 3</td><td>Scales every <code class="nds-inline-code lang-html">--typo-*</code> token by 1.15×, 1.30×, or 1.50× via <code class="nds-inline-code lang-html">--user-font-scale</code>. Stamps <code class="nds-inline-code lang-html">font-step-N</code>.</td></tr>
-                    <tr><td>Dyslexia Friendly</td><td>Toggle</td><td>Swaps <code class="nds-inline-code lang-js">--nds-font-family</code> to the OpenDyslexic plus Maqroo stack and bumps body-copy weight.</td></tr>
-                    <tr><td>Highlight Titles</td><td>Toggle</td><td>Outlines every <code class="nds-inline-code lang-html">h1</code> through <code class="nds-inline-code lang-html">h6</code> with the warning palette so the document outline becomes scannable.</td></tr>
-                    <tr><td>Highlight Links</td><td>Toggle</td><td>Adds a dashed warning outline plus underline to every text link, leaving button-styled anchors untouched.</td></tr>
-                    <tr><td>Reading Mask</td><td>Toggle</td><td>Activates the draggable focus band described in the next section.</td></tr>
-                    <tr><td>Pause Motion</td><td>Toggle</td><td>Mutes animations and transitions site-wide and pauses every <code class="nds-inline-code lang-html">autoplay</code> media element on activation.</td></tr>
-                    <tr><td>Text Alignment</td><td>Cycle: default, end, start, justify</td><td>Forces alignment on body content via logical <code class="nds-inline-code lang-js">start</code> and <code class="nds-inline-code lang-js">end</code> so RTL and LTR both read naturally.</td></tr>
-                    <tr><td>Line Height</td><td>Cycle: normal, 1.6, 1.8, 2.0</td><td>Sets <code class="nds-inline-code lang-html">--user-line-height</code> on body copy. Headings keep their typographic ratios.</td></tr>
-                    <tr><td>Letter Spacing</td><td>Cycle: 0, 0.04em, 0.08em, 0.12em</td><td>Sets <code class="nds-inline-code lang-html">--user-letter-spacing</code>. Tile is hidden on Arabic pages because letter-spacing breaks cursive ligatures.</td></tr>
-                    <tr><td>Word Spacing</td><td>Cycle: 0, 0.16em, 0.32em, 0.48em</td><td>Sets <code class="nds-inline-code lang-html">--user-word-spacing</code> on body copy.</td></tr>
-                </tbody>
-            </table>
+            <div class="nds-block">
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Tile</th><th>Mechanism</th><th>Effect</th></tr></thead>
+                    <tbody>
+                        <tr><td>Font Sizing</td><td>Cycle: 0, 1, 2, 3</td><td>Scales every <code class="nds-inline-code lang-html">--typo-*</code> token by 1.15×, 1.30×, or 1.50× via <code class="nds-inline-code lang-html">--user-font-scale</code>. Stamps <code class="nds-inline-code lang-html">font-step-N</code>.</td></tr>
+                        <tr><td>Dyslexia Friendly</td><td>Toggle</td><td>Swaps <code class="nds-inline-code lang-js">--nds-font-family</code> to the OpenDyslexic plus Maqroo stack and bumps body-copy weight.</td></tr>
+                        <tr><td>Highlight Titles</td><td>Toggle</td><td>Outlines every <code class="nds-inline-code lang-html">h1</code> through <code class="nds-inline-code lang-html">h6</code> with the warning palette so the document outline becomes scannable.</td></tr>
+                        <tr><td>Highlight Links</td><td>Toggle</td><td>Adds a dashed warning outline plus underline to every text link, leaving button-styled anchors untouched.</td></tr>
+                        <tr><td>Reading Mask</td><td>Toggle</td><td>Activates the draggable focus band described in the next section.</td></tr>
+                        <tr><td>Pause Motion</td><td>Toggle</td><td>Mutes animations and transitions site-wide and pauses every <code class="nds-inline-code lang-html">autoplay</code> media element on activation.</td></tr>
+                        <tr><td>Text Alignment</td><td>Cycle: default, end, start, justify</td><td>Forces alignment on body content via logical <code class="nds-inline-code lang-js">start</code> and <code class="nds-inline-code lang-js">end</code> so RTL and LTR both read naturally.</td></tr>
+                        <tr><td>Line Height</td><td>Cycle: normal, 1.6, 1.8, 2.0</td><td>Sets <code class="nds-inline-code lang-html">--user-line-height</code> on body copy. Headings keep their typographic ratios.</td></tr>
+                        <tr><td>Letter Spacing</td><td>Cycle: 0, 0.04em, 0.08em, 0.12em</td><td>Sets <code class="nds-inline-code lang-html">--user-letter-spacing</code>. Tile is hidden on Arabic pages because letter-spacing breaks cursive ligatures.</td></tr>
+                        <tr><td>Word Spacing</td><td>Cycle: 0, 0.16em, 0.32em, 0.48em</td><td>Sets <code class="nds-inline-code lang-html">--user-word-spacing</code> on body copy.</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -614,17 +624,19 @@ last_edit: "02/08/2026 - 09:52 AM"
             <p class="nds-section-description">Tile grid in the third accordion section. Filters are mutex: turning one on automatically mutes the others, since composing CSS filters multiplicatively never produces what visitors expect. Every filter is wrapped in <code class="nds-inline-code lang-js">@media not (forced-colors: active)</code> so Windows High Contrast users are not double-treated.</p>
         </div>
         <div class="nds-section-body">
-            <table class="nds-table nds-responsive">
-                <thead><tr><th>Filter</th><th>CSS</th><th>Use case</th></tr></thead>
-                <tbody>
-                    <tr><td>Boost Contrast</td><td><code class="nds-inline-code lang-js">contrast(1.15)</code></td><td>Sharpens edges across the whole page without swapping the palette.</td></tr>
-                    <tr><td>Monochrome</td><td><code class="nds-inline-code lang-js">grayscale(1)</code></td><td>Removes color cues so the visitor can verify the page still works without them.</td></tr>
-                    <tr><td>High Contrast</td><td>Token-level palette swap</td><td>Replaces every semantic background, text, link, and border token with a black-on-white (or inverted) palette. Independent of the filter pipeline so chrome contrast can be tuned per theme.</td></tr>
-                    <tr><td>High Saturation</td><td><code class="nds-inline-code lang-js">saturate(2)</code></td><td>Doubles vividness for visitors who perceive low-chroma palettes as washed out.</td></tr>
-                    <tr><td>Low Saturation</td><td><code class="nds-inline-code lang-js">saturate(0.5)</code></td><td>Halves vividness for visitors with light sensitivity or migraine triggers.</td></tr>
-                    <tr><td>Deuteranopia</td><td>SVG <code class="nds-inline-code lang-js">feColorMatrix</code></td><td>Machado-Oliveira-Fernandes 2009 simulation matrix at severity 1.0. Matches Chrome DevTools' "Emulate vision deficiencies" panel so QA results align with the on-page filter.</td></tr>
-                </tbody>
-            </table>
+            <div class="nds-block">
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Filter</th><th>CSS</th><th>Use case</th></tr></thead>
+                    <tbody>
+                        <tr><td>Boost Contrast</td><td><code class="nds-inline-code lang-js">contrast(1.15)</code></td><td>Sharpens edges across the whole page without swapping the palette.</td></tr>
+                        <tr><td>Monochrome</td><td><code class="nds-inline-code lang-js">grayscale(1)</code></td><td>Removes color cues so the visitor can verify the page still works without them.</td></tr>
+                        <tr><td>High Contrast</td><td>Token-level palette swap</td><td>Replaces every semantic background, text, link, and border token with a black-on-white (or inverted) palette. Independent of the filter pipeline so chrome contrast can be tuned per theme.</td></tr>
+                        <tr><td>High Saturation</td><td><code class="nds-inline-code lang-js">saturate(2)</code></td><td>Doubles vividness for visitors who perceive low-chroma palettes as washed out.</td></tr>
+                        <tr><td>Low Saturation</td><td><code class="nds-inline-code lang-js">saturate(0.5)</code></td><td>Halves vividness for visitors with light sensitivity or migraine triggers.</td></tr>
+                        <tr><td>Deuteranopia</td><td>SVG <code class="nds-inline-code lang-js">feColorMatrix</code></td><td>Machado-Oliveira-Fernandes 2009 simulation matrix at severity 1.0. Matches Chrome DevTools' "Emulate vision deficiencies" panel so QA results align with the on-page filter.</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -637,7 +649,7 @@ last_edit: "02/08/2026 - 09:52 AM"
             <p class="nds-section-description">A telescope-style focus band that dims everything except a configurable horizontal stripe. The stripe stays where the visitor leaves it: it only moves on grab-handle drag or arrow-key nudge, never on scroll, so cognitively-loaded users never lose their place.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Toolbar</h3>
                 <p>Activated from the Readable Experience tile. A floating toolbar attaches to the band with four icon buttons: decrease band height, drag handle, increase band height, and close. The toolbar flips above the band automatically when there is no room below it.</p>
             </div>
@@ -674,62 +686,64 @@ last_edit: "02/08/2026 - 09:52 AM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates as soon as the panel markup is on the page. Drop the FAB plus aside snippet into your base template once and every page picks it up without further wiring.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-package"></i>
-                        <span class="nds-label">Seven Accessibility Bundles</span>
-                    </span>
-                    <p class="nds-item-desc">One-tap presets for epilepsy, visual impairment, cognitive load, motor impairment, colorblindness, dyslexia, and ADHD. Activating a bundle composes its primitives without clobbering settings the visitor already tuned by hand.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-font"></i>
-                        <span class="nds-label">Ten Readable Tiles</span>
-                    </span>
-                    <p class="nds-item-desc">Cycling and toggle tiles cover font sizing, dyslexia font, link and title highlights, reading mask, motion, alignment, line height, letter spacing, and word spacing.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-color-picker"></i>
-                        <span class="nds-label">Mutex Visual Filters</span>
-                    </span>
-                    <p class="nds-item-desc">Six color treatments behave as a single-pick group: boost contrast, monochrome, high contrast, high saturation, low saturation, and deuteranopia simulation.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-search-01"></i>
-                        <span class="nds-label">Telescope Reading Mask</span>
-                    </span>
-                    <p class="nds-item-desc">A draggable focus band with size controls, pointer-capture dragging, and arrow-key nudging. The position survives reload so visitors can resume reading where they left off.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-database"></i>
-                        <span class="nds-label">Cross-Page Persistence</span>
-                    </span>
-                    <p class="nds-item-desc">Every choice writes to <code class="nds-inline-code lang-html">localStorage['nds-a11y']</code> and a FOUC guard re-applies it before paint, so navigating between pages never reverts the visitor's setup.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-browser"></i>
-                        <span class="nds-label">OS Preference Sync</span>
-                    </span>
-                    <p class="nds-item-desc">Honors <code class="nds-inline-code lang-js">prefers-reduced-motion</code> and <code class="nds-inline-code lang-js">prefers-contrast</code> automatically, and re-applies whenever the visitor flips them in their OS mid-session.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-megaphone-01"></i>
-                        <span class="nds-label">Localized Live Announcements</span>
-                    </span>
-                    <p class="nds-item-desc">A polite live region announces every toggle, tile cycle, and reset in the visitor's language. Strings load lazily from <code class="nds-inline-code lang-html">assets/i18n/accessibility/{lang}.json</code>.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates as soon as the panel markup is on the page. Drop the FAB plus aside snippet into your base template once and every page picks it up without further wiring.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-package"></i>
+                            <span class="nds-label">Seven Accessibility Bundles</span>
+                        </span>
+                        <p class="nds-item-desc">One-tap presets for epilepsy, visual impairment, cognitive load, motor impairment, colorblindness, dyslexia, and ADHD. Activating a bundle composes its primitives without clobbering settings the visitor already tuned by hand.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-text-font"></i>
+                            <span class="nds-label">Ten Readable Tiles</span>
+                        </span>
+                        <p class="nds-item-desc">Cycling and toggle tiles cover font sizing, dyslexia font, link and title highlights, reading mask, motion, alignment, line height, letter spacing, and word spacing.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-color-picker"></i>
+                            <span class="nds-label">Mutex Visual Filters</span>
+                        </span>
+                        <p class="nds-item-desc">Six color treatments behave as a single-pick group: boost contrast, monochrome, high contrast, high saturation, low saturation, and deuteranopia simulation.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-search-01"></i>
+                            <span class="nds-label">Telescope Reading Mask</span>
+                        </span>
+                        <p class="nds-item-desc">A draggable focus band with size controls, pointer-capture dragging, and arrow-key nudging. The position survives reload so visitors can resume reading where they left off.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-database"></i>
+                            <span class="nds-label">Cross-Page Persistence</span>
+                        </span>
+                        <p class="nds-item-desc">Every choice writes to <code class="nds-inline-code lang-html">localStorage['nds-a11y']</code> and a FOUC guard re-applies it before paint, so navigating between pages never reverts the visitor's setup.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-browser"></i>
+                            <span class="nds-label">OS Preference Sync</span>
+                        </span>
+                        <p class="nds-item-desc">Honors <code class="nds-inline-code lang-js">prefers-reduced-motion</code> and <code class="nds-inline-code lang-js">prefers-contrast</code> automatically, and re-applies whenever the visitor flips them in their OS mid-session.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-megaphone-01"></i>
+                            <span class="nds-label">Localized Live Announcements</span>
+                        </span>
+                        <p class="nds-item-desc">A polite live region announces every toggle, tile cycle, and reset in the visitor's language. Strings load lazily from <code class="nds-inline-code lang-html">assets/i18n/accessibility/{lang}.json</code>.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -744,7 +758,7 @@ last_edit: "02/08/2026 - 09:52 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Treat the FAB as part of the site chrome. Keep it on every page so visitors who tuned the panel on one page do not lose their entry point on the next</li>
@@ -797,7 +811,7 @@ last_edit: "02/08/2026 - 09:52 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Tokens Stamped on <code class="nds-inline-code lang-html">&lt;html&gt;</code></h3>
                 <p>Author CSS can react to active modes by reading <code class="nds-inline-code lang-html">[data-a11y~="..."]</code> on the document root. Tokens compose, so multiple values appear space-separated.</p>
                 <table class="nds-table nds-responsive">
@@ -828,7 +842,7 @@ last_edit: "02/08/2026 - 09:52 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Accessibility</strong> API exposes the panel's lifecycle, the four state mutators, and a read-only state snapshot. Auto-init runs on first paint via the loader, so most pages never need to call <code class="nds-inline-code lang-js">NDS.Accessibility.init()</code> directly.</p>
                 <div class="nds-code nds-expandable">

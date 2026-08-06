@@ -19,54 +19,55 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-voice-input</code> to any action button inside a form container to activate speech-to-text. The button toggles listening on and off, and the transcript is written directly into the input.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Search with Voice Input</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="max-width: 480px; width: 100%;">
-                            <div class="nds-form-container nds-search">
-                                <div class="nds-form-control-wrapper">
-                                    <div class="nds-form-control">
-                                        <i class="nds-icon nds-hgi-search-01 nds-form-leading-icon" aria-hidden="true"></i>
-                                        <input type="text" id="speech-demo-input-1" class="nds-search-input" name="search"
-                                            placeholder="Search services...">
-                                        <div class="nds-form-action">
-                                            <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
-                                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Start voice input">
-                                                <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
-                                            </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Search with Voice Input</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="max-width: 480px; width: 100%;">
+                                <div class="nds-form-container nds-search">
+                                    <div class="nds-form-control-wrapper">
+                                        <div class="nds-form-control">
+                                            <i class="nds-icon nds-hgi-search-01 nds-form-leading-icon" aria-hidden="true"></i>
+                                            <input type="text" id="speech-demo-input-1" class="nds-search-input" name="search"
+                                                placeholder="Search services...">
+                                            <div class="nds-form-action">
+                                                <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
+                                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                                </button>
+                                                <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Start voice input">
+                                                    <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
                                         </div>
+                                        <div class="nds-form-footer" data-feedback-target hidden></div>
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-speech-overview-1" id="tab-speech-overview-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-speech-overview-1"
-                                    aria-labelledby="tab-speech-overview-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-speech-overview-1" id="tab-speech-overview-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-speech-overview-1"
+                                        aria-labelledby="tab-speech-overview-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-form-container nds-search"&gt;
   &lt;div class="nds-form-control-wrapper"&gt;
     &lt;div class="nds-form-control"&gt;
@@ -86,6 +87,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -103,48 +105,50 @@ last_edit: "28/06/2026 - 01:27 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Any button with <code class="nds-inline-code lang-html">nds-voice-input</code> is wired automatically when the <code class="nds-inline-code lang-js">NDS.VoiceInput</code> module loads: it installs a single document-level click handler, so buttons present now or added later all work with no per-button setup. No extra JS required.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-language-circle"></i>
-                        <span class="nds-label">Automatic Language Detection</span>
-                    </span>
-                    <p class="nds-item-desc">Reads the page language at recognition start and sets <code class="nds-inline-code lang-html">ar-SA</code> for Arabic pages or <code class="nds-inline-code lang-html">en-US</code> for English, with no manual configuration needed.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-voice"></i>
-                        <span class="nds-label">Live Interim Transcripts</span>
-                    </span>
-                    <p class="nds-item-desc">Partial results appear in the field as you speak, styled in italic to distinguish them from committed text. The final transcript replaces them when speech ends.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-volume-high"></i>
-                        <span class="nds-label">Audio Feedback Tones</span>
-                    </span>
-                    <p class="nds-item-desc">A short tone plays when the microphone opens (high pitch), closes (low pitch), or encounters an error (very low pitch), giving clear non-visual feedback during dictation.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-timer-02"></i>
-                        <span class="nds-label">30-Second Timeout</span>
-                    </span>
-                    <p class="nds-item-desc">Listening automatically stops after 30 seconds of inactivity and shows a localized timeout message in the input placeholder, preventing the microphone from staying open indefinitely.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
-                        <span class="nds-label">Support Detection</span>
-                    </span>
-                    <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.VoiceInput.isSupported()</code> to check whether the browser provides the Web Speech API, so you can hide or omit the microphone button on browsers that cannot use it.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Any button with <code class="nds-inline-code lang-html">nds-voice-input</code> is wired automatically when the <code class="nds-inline-code lang-js">NDS.VoiceInput</code> module loads: it installs a single document-level click handler, so buttons present now or added later all work with no per-button setup. No extra JS required.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-language-circle"></i>
+                            <span class="nds-label">Automatic Language Detection</span>
+                        </span>
+                        <p class="nds-item-desc">Reads the page language at recognition start and sets <code class="nds-inline-code lang-html">ar-SA</code> for Arabic pages or <code class="nds-inline-code lang-html">en-US</code> for English, with no manual configuration needed.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-voice"></i>
+                            <span class="nds-label">Live Interim Transcripts</span>
+                        </span>
+                        <p class="nds-item-desc">Partial results appear in the field as you speak, styled in italic to distinguish them from committed text. The final transcript replaces them when speech ends.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-volume-high"></i>
+                            <span class="nds-label">Audio Feedback Tones</span>
+                        </span>
+                        <p class="nds-item-desc">A short tone plays when the microphone opens (high pitch), closes (low pitch), or encounters an error (very low pitch), giving clear non-visual feedback during dictation.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-timer-02"></i>
+                            <span class="nds-label">30-Second Timeout</span>
+                        </span>
+                        <p class="nds-item-desc">Listening automatically stops after 30 seconds of inactivity and shows a localized timeout message in the input placeholder, preventing the microphone from staying open indefinitely.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
+                            <span class="nds-label">Support Detection</span>
+                        </span>
+                        <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.VoiceInput.isSupported()</code> to check whether the browser provides the Web Speech API, so you can hide or omit the microphone button on browsers that cannot use it.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -159,7 +163,7 @@ last_edit: "28/06/2026 - 01:27 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use voice input on search fields and long free-text inputs where typing is burdensome. Short, constrained fields like phone numbers, postcodes, or PIN codes are not good candidates.</li>
@@ -174,7 +178,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </ul>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Error Messages</h3>
                 <p>When recognition fails, the plugin sets a localized message as the input placeholder for 3 seconds. These messages are bilingual and chosen automatically by page language.</p>
                 <table class="nds-table nds-responsive">
@@ -192,7 +196,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Listening State</h3>
                 <p>When recording starts, the module adds <code class="nds-inline-code lang-html">listening</code> to the <code class="nds-inline-code lang-html">data-state</code> of the enclosing <code class="nds-inline-code lang-html">nds-form-container</code>. The CSS uses that token to animate the microphone icon with a colour-cycling pulse, giving a visible recording indicator.</p>
                 <table class="nds-table nds-responsive">
@@ -203,7 +207,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <p>The button finds its input automatically when it sits inside an <code class="nds-inline-code lang-html">nds-form-control</code>. Use a data attribute to link a button that lives elsewhere on the page.</p>
                 <table class="nds-table nds-responsive">
@@ -216,7 +220,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>Voice input wires itself up: when the <strong>NDS.VoiceInput</strong> module loads it installs a single document-level click handler, so every <code class="nds-inline-code lang-html">nds-voice-input</code> button (present now or added later) works with no per-button setup. The public surface is intentionally small.</p>
                 <div class="nds-code">

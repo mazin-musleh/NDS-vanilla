@@ -19,31 +19,32 @@ last_edit: "26/07/2026 - 09:20 PM"
             <p class="nds-section-description">A slim utility bar above the main navigation that holds the DGA digital stamp trigger, date and time widgets, and a dark mode toggle.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Top Bar</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-topbar-1" id="tab-topbar-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-topbar-1" aria-labelledby="tab-topbar-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Top Bar</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-topbar-1" id="tab-topbar-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-topbar-1" aria-labelledby="tab-topbar-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities"&gt;
   &lt;button class="nds-btn nds-menu-btn nds-topbar-info nds-digitalStamp-tab"
       role="button" aria-expanded="false" aria-controls="nds-digitalStamp"&gt;
@@ -65,6 +66,7 @@ last_edit: "26/07/2026 - 09:20 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -84,30 +86,31 @@ last_edit: "26/07/2026 - 09:20 PM"
             <p class="nds-section-description">Three optional widgets for the top bar: date, clock, and city/weather. Each initializes automatically when its element IDs are on the page. DGA compliance permits a maximum of two: choose the combination that best serves your audience. You also choose where each widget hides on smaller screens by stamping <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}"><code class="nds-inline-code lang-html">data-hidden</code></a> on it</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Top Bar Widgets</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-widgets-1" id="tab-widgets-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-widgets-1" aria-labelledby="tab-widgets-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Top Bar Widgets</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-widgets-1" id="tab-widgets-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-widgets-1" aria-labelledby="tab-widgets-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;!-- Hijri or Gregorian date (set via data-calendar);
      data-hidden picks where the widget hides (here: 960px and below) --&gt;
 &lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"&gt;&lt;/span&gt;
@@ -121,6 +124,7 @@ last_edit: "26/07/2026 - 09:20 PM"
 &lt;span id="nds-weatherInfo" class="nds-text-icon" data-hidden="sm"
     data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -163,31 +167,32 @@ last_edit: "26/07/2026 - 09:20 PM"
             <p class="nds-section-description">An expandable panel triggered from the top bar that verifies the site as an official Saudi government digital property. Displays domain verification and HTTPS security notices alongside the DGA registration number.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">DGA Digital Stamp Panel</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dga-stamp-1" id="tab-dga-stamp-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dga-stamp-1" aria-labelledby="tab-dga-stamp-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">DGA Digital Stamp Panel</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dga-stamp-1" id="tab-dga-stamp-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dga-stamp-1" aria-labelledby="tab-dga-stamp-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden&gt;
   &lt;div class="nds-content-wrapper"&gt;
     &lt;div class="nds-digitalStamp-notices"&gt;
@@ -233,6 +238,7 @@ last_edit: "26/07/2026 - 09:20 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -251,48 +257,50 @@ last_edit: "26/07/2026 - 09:20 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Widgets, the DGA stamp toggle, and the theme switch all activate as soon as their elements are on the page. No manual wiring required.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-02"></i>
-                        <span class="nds-label">DGA Stamp Toggle</span>
-                    </span>
-                    <p class="nds-item-desc">The top bar button expands and collapses the digital stamp panel with animated grid-row transitions, automatically closing any open nav menus first.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-clock-02"></i>
-                        <span class="nds-label">Live Date &amp; Clock</span>
-                    </span>
-                    <p class="nds-item-desc">Date refreshes every 24 hours, the real-time clock ticks every second, and both switch language with the page to keep the surface aligned with user locale.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-language-circle"></i>
-                        <span class="nds-label">Hijri &amp; Gregorian Calendars</span>
-                    </span>
-                    <p class="nds-item-desc">The date widget supports both calendars via <code class="nds-inline-code lang-html">data-calendar</code>. Hijri values come from the Aladhan API with a browser <code class="nds-inline-code lang-js">Intl</code> fallback when offline.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-pin-location-01"></i>
-                        <span class="nds-label">City &amp; Weather Widgets</span>
-                    </span>
-                    <p class="nds-item-desc">An author-set city name (<code class="nds-inline-code lang-html">data-city</code>) pairs with live weather readings from Open-Meteo, or falls back to a Nominatim reverse-geocode. City and coordinates are configurable per page via data attributes.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-database"></i>
-                        <span class="nds-label">Local Caching</span>
-                    </span>
-                    <p class="nds-item-desc">Hijri dates cache for 24 hours, weather for 15 minutes, and city names for 30 days, reducing API calls and keeping the top bar responsive across page loads.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Widgets, the DGA stamp toggle, and the theme switch all activate as soon as their elements are on the page. No manual wiring required.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-target-02"></i>
+                            <span class="nds-label">DGA Stamp Toggle</span>
+                        </span>
+                        <p class="nds-item-desc">The top bar button expands and collapses the digital stamp panel with animated grid-row transitions, automatically closing any open nav menus first.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-clock-02"></i>
+                            <span class="nds-label">Live Date &amp; Clock</span>
+                        </span>
+                        <p class="nds-item-desc">Date refreshes every 24 hours, the real-time clock ticks every second, and both switch language with the page to keep the surface aligned with user locale.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-language-circle"></i>
+                            <span class="nds-label">Hijri &amp; Gregorian Calendars</span>
+                        </span>
+                        <p class="nds-item-desc">The date widget supports both calendars via <code class="nds-inline-code lang-html">data-calendar</code>. Hijri values come from the Aladhan API with a browser <code class="nds-inline-code lang-js">Intl</code> fallback when offline.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-pin-location-01"></i>
+                            <span class="nds-label">City &amp; Weather Widgets</span>
+                        </span>
+                        <p class="nds-item-desc">An author-set city name (<code class="nds-inline-code lang-html">data-city</code>) pairs with live weather readings from Open-Meteo, or falls back to a Nominatim reverse-geocode. City and coordinates are configurable per page via data attributes.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-database"></i>
+                            <span class="nds-label">Local Caching</span>
+                        </span>
+                        <p class="nds-item-desc">Hijri dates cache for 24 hours, weather for 15 minutes, and city names for 30 days, reducing API calls and keeping the top bar responsive across page loads.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -307,7 +315,7 @@ last_edit: "26/07/2026 - 09:20 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Include the DGA digital stamp on all government websites. The top bar trigger and hidden panel are mandatory for DGA compliance. Populate the registration number and notice text from site configuration.</li>
@@ -350,7 +358,7 @@ last_edit: "26/07/2026 - 09:20 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The top bar widgets initialize automatically when their element IDs exist on the page. Use these APIs to re-initialize after dynamic content changes, refresh individual widgets manually, or pull Hijri dates programmatically for use elsewhere.</p>
                 <div class="nds-code nds-expandable">

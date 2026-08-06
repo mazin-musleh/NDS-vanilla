@@ -19,62 +19,63 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Drop a <code class="nds-inline-code lang-html">.nds-share</code> wrapper anywhere on the page with a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> trigger and four share items. With no data attributes, the utility shares <code class="nds-inline-code lang-js">window.location.href</code> and <code class="nds-inline-code lang-js">document.title</code>.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Share This Page</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-share nds-dropmenu">
-                            <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
-                                <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-                                <span class="nds-label">Share Page</span>
-                            </button>
-                            <div class="nds-dropmenu-menu" hidden>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
-                                    <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                                    <span class="nds-label">X</span>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Share This Page</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-share nds-dropmenu">
+                                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
+                                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Share Page</span>
                                 </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
-                                    <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                                    <span class="nds-label">LinkedIn</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
-                                    <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
-                                    <span class="nds-label">WhatsApp</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                                    data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close>
-                                    <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
-                                    <span class="nds-label">Copy Link</span>
-                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
+                                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                                        <span class="nds-label">X</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
+                                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                                        <span class="nds-label">LinkedIn</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
+                                        <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+                                        <span class="nds-label">WhatsApp</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
+                                        data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close>
+                                        <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+                                        <span class="nds-label">Copy Link</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-share-default-1" id="tab-share-default-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-share-default-1"
-                            aria-labelledby="tab-share-default-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-share-default-1" id="tab-share-default-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-share-default-1"
+                                aria-labelledby="tab-share-default-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;div class="nds-share nds-dropmenu"&gt;
     &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page"&gt;
         &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
@@ -101,9 +102,10 @@ last_edit: "28/06/2026 - 01:27 PM"
     &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -120,64 +122,65 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-share-url</code> and <code class="nds-inline-code lang-html">data-share-title</code> to the wrapper to share something other than the current page. Useful for article cards, search results, and downloadable resources.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Share a Specific Article</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-share nds-dropmenu"
-                            data-share-url="https://nds.sa/components/button"
-                            data-share-title="NDS Button Component">
-                            <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Article">
-                                <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-                                <span class="nds-label">Share Article</span>
-                            </button>
-                            <div class="nds-dropmenu-menu" hidden>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
-                                    <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                                    <span class="nds-label">X</span>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Share a Specific Article</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-share nds-dropmenu"
+                                data-share-url="https://nds.sa/components/button"
+                                data-share-title="NDS Button Component">
+                                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Article">
+                                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Share Article</span>
                                 </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
-                                    <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                                    <span class="nds-label">LinkedIn</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
-                                    <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
-                                    <span class="nds-label">WhatsApp</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                                    data-label="Link Copied!" data-message="Article link copied to clipboard" data-no-auto-close>
-                                    <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
-                                    <span class="nds-label">Copy Link</span>
-                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
+                                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                                        <span class="nds-label">X</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
+                                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                                        <span class="nds-label">LinkedIn</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
+                                        <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+                                        <span class="nds-label">WhatsApp</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
+                                        data-label="Link Copied!" data-message="Article link copied to clipboard" data-no-auto-close>
+                                        <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+                                        <span class="nds-label">Copy Link</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-share-custom-1" id="tab-share-custom-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-share-custom-1"
-                            aria-labelledby="tab-share-custom-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-share-custom-1" id="tab-share-custom-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-share-custom-1"
+                                aria-labelledby="tab-share-custom-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;div class="nds-share nds-dropmenu"
     data-share-url="https://nds.sa/components/button"
     data-share-title="NDS Button Component"&gt;
@@ -206,9 +209,10 @@ last_edit: "28/06/2026 - 01:27 PM"
     &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -225,61 +229,62 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Drop the same four share buttons directly inside <code class="nds-inline-code lang-html">.nds-share</code> (no <code class="nds-inline-code lang-html">.nds-dropmenu</code>, no trigger) to render them as an inline row. Use any button variant you like, and add <code class="nds-inline-code lang-html">.nds-icon-only</code> to hide the label when space is tight.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-icon-only", ".nds-share .nds-btn", "iconOnly"]'>
-                            <span class="nds-label">Icon Only</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-share">
-                            <button class="nds-btn nds-secondary-outline nds-share-x" type="button" aria-label="Share on X">
-                                <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                                <span class="nds-label">X</span>
-                            </button>
-                            <button class="nds-btn nds-secondary-outline nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
-                                <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                                <span class="nds-label">LinkedIn</span>
-                            </button>
-                            <button class="nds-btn nds-secondary-outline nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
-                                <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
-                                <span class="nds-label">WhatsApp</span>
-                            </button>
-                            <button class="nds-btn nds-secondary-outline nds-share-copy" type="button" aria-label="Copy Link"
-                                data-label="Link Copied!" data-message="Page link copied to clipboard">
-                                <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
-                                <span class="nds-label">Copy Link</span>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-icon-only", ".nds-share .nds-btn", "iconOnly"]'>
+                                <span class="nds-label">Icon Only</span>
                             </button>
                         </div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-share-inline-1" id="tab-share-inline-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-share-inline-1"
-                            aria-labelledby="tab-share-inline-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-share">
+                                <button class="nds-btn nds-secondary-outline nds-share-x" type="button" aria-label="Share on X">
+                                    <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                                    <span class="nds-label">X</span>
+                                </button>
+                                <button class="nds-btn nds-secondary-outline nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
+                                    <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                                    <span class="nds-label">LinkedIn</span>
+                                </button>
+                                <button class="nds-btn nds-secondary-outline nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
+                                    <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+                                    <span class="nds-label">WhatsApp</span>
+                                </button>
+                                <button class="nds-btn nds-secondary-outline nds-share-copy" type="button" aria-label="Copy Link"
+                                    data-label="Link Copied!" data-message="Page link copied to clipboard">
+                                    <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+                                    <span class="nds-label">Copy Link</span>
                                 </button>
                             </div>
-                            <code class="lang-html code">
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-share-inline-1" id="tab-share-inline-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-share-inline-1"
+                                aria-labelledby="tab-share-inline-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;!-- Add .nds-icon-only to any button to hide its label --&gt;
 &lt;div class="nds-share"&gt;
     &lt;button class="nds-btn nds-secondary-outline nds-share-x" type="button" aria-label="Share on X"&gt;
@@ -301,9 +306,10 @@ last_edit: "28/06/2026 - 01:27 PM"
     &lt;/button&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -319,41 +325,43 @@ last_edit: "28/06/2026 - 01:27 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-share</code> wrapper on the page is wired up automatically by the NDS loader. Drop the markup in, no JS to write.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-share-04"></i>
-                        <span class="nds-label">Four Social Targets</span>
-                    </span>
-                    <p class="nds-item-desc">X, LinkedIn, WhatsApp, and Copy Link are wired by class (<code class="nds-inline-code lang-html">nds-share-x</code>, <code class="nds-inline-code lang-html">nds-share-linkedin</code>, <code class="nds-inline-code lang-html">nds-share-whatsapp</code>, <code class="nds-inline-code lang-html">nds-share-copy</code>). Each opens a sized popup for the platform's native share dialog.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-link-04"></i>
-                        <span class="nds-label">Copy Link Composition</span>
-                    </span>
-                    <p class="nds-item-desc">The Copy Link action reuses the <a class="nds-color" href="{{ 'utilities/copy' | relative_url }}">Copy</a> utility for clipboard write, checkmark flash, label swap, and screen reader announcement. In the dropmenu variant it also closes the menu after the flash restores.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                        <span class="nds-label">Multiple Instances</span>
-                    </span>
-                    <p class="nds-item-desc">Any number of <code class="nds-inline-code lang-html">.nds-share</code> wrappers can co-exist on a single page. Each reads its own <code class="nds-inline-code lang-html">data-share-url</code> and <code class="nds-inline-code lang-html">data-share-title</code> independently.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-menu-01"></i>
-                        <span class="nds-label">Dropmenu or Inline</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-dropmenu</code> to get a collapsible menu with <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> handling open/close and outside-click. Omit it to render the buttons as an inline row &mdash; same JS, same data attributes.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-share</code> wrapper on the page is wired up automatically by the NDS loader. Drop the markup in, no JS to write.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-share-04"></i>
+                            <span class="nds-label">Four Social Targets</span>
+                        </span>
+                        <p class="nds-item-desc">X, LinkedIn, WhatsApp, and Copy Link are wired by class (<code class="nds-inline-code lang-html">nds-share-x</code>, <code class="nds-inline-code lang-html">nds-share-linkedin</code>, <code class="nds-inline-code lang-html">nds-share-whatsapp</code>, <code class="nds-inline-code lang-html">nds-share-copy</code>). Each opens a sized popup for the platform's native share dialog.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-link-04"></i>
+                            <span class="nds-label">Copy Link Composition</span>
+                        </span>
+                        <p class="nds-item-desc">The Copy Link action reuses the <a class="nds-color" href="{{ 'utilities/copy' | relative_url }}">Copy</a> utility for clipboard write, checkmark flash, label swap, and screen reader announcement. In the dropmenu variant it also closes the menu after the flash restores.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            <span class="nds-label">Multiple Instances</span>
+                        </span>
+                        <p class="nds-item-desc">Any number of <code class="nds-inline-code lang-html">.nds-share</code> wrappers can co-exist on a single page. Each reads its own <code class="nds-inline-code lang-html">data-share-url</code> and <code class="nds-inline-code lang-html">data-share-title</code> independently.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-menu-01"></i>
+                            <span class="nds-label">Dropmenu or Inline</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-dropmenu</code> to get a collapsible menu with <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> handling open/close and outside-click. Omit it to render the buttons as an inline row &mdash; same JS, same data attributes.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -368,7 +376,7 @@ last_edit: "28/06/2026 - 01:27 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the default form (no data attributes) for <strong>page-level sharing</strong>, typically in the hero action bar. It always reflects the current URL and title, so it works on every page without per-page configuration</li>
@@ -396,7 +404,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Share</strong> module exposes a single method, <code class="nds-inline-code lang-js">NDS.Share.init()</code>, which the NDS loader calls once on page load to attach the delegated click listener. Call it again after injecting new <code class="nds-inline-code lang-html">.nds-share</code> markup into the page; the listener is rebound via <code class="nds-inline-code lang-js">AbortController</code> so repeat calls do not stack handlers.</p>
                 <div class="nds-code">

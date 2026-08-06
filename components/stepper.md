@@ -19,189 +19,190 @@ last_edit: "25/07/2026 - 07:45 PM"
             <p class="nds-section-description">Three layouts render from one component: horizontal (default), vertical, and radial. Toggle the variant to preview each. The markup stays identical across variants; the progress ring and look-ahead text are part of the shared DOM and surface only in radial</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Horizontal</span>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Horizontal</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", "#demo-stepper-layouts", "stepperVariant"]'>
+                                                <span class="nds-label">Horizontal</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-vertical", "#demo-stepper-layouts", "stepperVariant"]'>
+                                                <span class="nds-label">Vertical</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-radial", "#demo-stepper-layouts", "stepperVariant"]'>
+                                                <span class="nds-label">Radial</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Default</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", "#demo-stepper-layouts", "stepperSize"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", "#demo-stepper-layouts", "stepperSize"]'
+                                                data-demo-requires-class="nds-radial">
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", "#demo-stepper-layouts", "stepperSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-xl", "#demo-stepper-layouts", "stepperSize"]'>
+                                                <span class="nds-label">XL</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-dot", "#demo-stepper-layouts", "stepperDot"]'
+                                    data-demo-forbids-class="nds-radial">
+                                    <span class="nds-label">Dot</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", "#demo-stepper-layouts", "stepperVariant"]'>
-                                            <span class="nds-label">Horizontal</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-vertical", "#demo-stepper-layouts", "stepperVariant"]'>
-                                            <span class="nds-label">Vertical</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-radial", "#demo-stepper-layouts", "stepperVariant"]'>
-                                            <span class="nds-label">Radial</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Default</span>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-center", "#demo-stepper-layouts", "stepperCenter"]'
+                                    data-demo-forbids-class="nds-vertical nds-radial">
+                                    <span class="nds-label">Center</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", "#demo-stepper-layouts", "stepperSize"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", "#demo-stepper-layouts", "stepperSize"]'
-                                            data-demo-requires-class="nds-radial">
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", "#demo-stepper-layouts", "stepperSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-xl", "#demo-stepper-layouts", "stepperSize"]'>
-                                            <span class="nds-label">XL</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dot", "#demo-stepper-layouts", "stepperDot"]'
-                                data-demo-forbids-class="nds-radial">
-                                <span class="nds-label">Dot</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", "#demo-stepper-layouts", "stepperCenter"]'
-                                data-demo-forbids-class="nds-vertical nds-radial">
-                                <span class="nds-label">Center</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-reverse", "#demo-stepper-layouts", "stepperReverse"]'
-                                data-demo-requires-class="nds-vertical">
-                                <span class="nds-label">Reverse</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-neutral", "#demo-stepper-layouts", "stepperNeutral"]'
-                                data-demo-requires-class="nds-radial">
-                                <span class="nds-label">Neutral</span>
-                            </button>
-                            <button class="nds-btn nds-subtle" data-stepper-control="previous"
-                                data-stepper-target="demo-stepper-layouts">
-                                <span class="nds-label">← Previous</span>
-                            </button>
-                            <button class="nds-btn nds-subtle" data-stepper-control="next"
-                                data-stepper-target="demo-stepper-layouts">
-                                <span class="nds-label">Next →</span>
-                            </button>
-                            <button class="nds-btn nds-subtle" data-stepper-control="goto"
-                                data-stepper-target="demo-stepper-layouts" data-stepper-value="1">
-                                <span class="nds-label">Go to 1</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='[["nds-oncolor", "#demo-stepper-layouts", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
-                                <span class="nds-label">On Color</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-stepper" id="demo-stepper-layouts" data-current="2" data-total="4">
-                                <div class="nds-progress-circle">
-                                    <svg width="64" height="64" viewBox="0 0 24 24">
-                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
-                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-                                    </svg>
-                                    <div class="nds-progress-info">
-                                        <span class="nds-progress-steps"></span>
-                                    </div>
-                                </div>
-                                <div class="nds-stepper-step">
-                                    <div class="nds-stepper-base">
-                                        <div class="nds-stepper-circle" data-step-text="1"></div>
-                                    </div>
-                                    <div class="nds-stepper-content">
-                                        <div class="nds-stepper-text">
-                                            <span class="nds-stepper-title">Personal Information</span>
-                                            <span class="nds-stepper-description">Identity details and contact information</span>
-                                            <span class="nds-stepper-next">Next: Document Upload</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-stepper-step">
-                                    <div class="nds-stepper-base">
-                                        <div class="nds-stepper-circle" data-step-text="2"></div>
-                                    </div>
-                                    <div class="nds-stepper-content">
-                                        <div class="nds-stepper-text">
-                                            <span class="nds-stepper-title">Document Upload</span>
-                                            <span class="nds-stepper-description">Upload required supporting documents</span>
-                                            <span class="nds-stepper-next">Next: Review &amp; Confirmation</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-stepper-step">
-                                    <div class="nds-stepper-base">
-                                        <div class="nds-stepper-circle" data-step-text="3"></div>
-                                    </div>
-                                    <div class="nds-stepper-content">
-                                        <div class="nds-stepper-text">
-                                            <span class="nds-stepper-title">Review &amp; Confirmation</span>
-                                            <span class="nds-stepper-description">Verify information before submission</span>
-                                            <span class="nds-stepper-next">Next: Application Submitted</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-stepper-step">
-                                    <div class="nds-stepper-base">
-                                        <div class="nds-stepper-circle" data-step-text="4"></div>
-                                    </div>
-                                    <div class="nds-stepper-content">
-                                        <div class="nds-stepper-text">
-                                            <span class="nds-stepper-title">Application Submitted</span>
-                                            <span class="nds-stepper-description">Confirmation and next steps</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-reverse", "#demo-stepper-layouts", "stepperReverse"]'
+                                    data-demo-requires-class="nds-vertical">
+                                    <span class="nds-label">Reverse</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-neutral", "#demo-stepper-layouts", "stepperNeutral"]'
+                                    data-demo-requires-class="nds-radial">
+                                    <span class="nds-label">Neutral</span>
+                                </button>
+                                <button class="nds-btn nds-subtle" data-stepper-control="previous"
+                                    data-stepper-target="demo-stepper-layouts">
+                                    <span class="nds-label">← Previous</span>
+                                </button>
+                                <button class="nds-btn nds-subtle" data-stepper-control="next"
+                                    data-stepper-target="demo-stepper-layouts">
+                                    <span class="nds-label">Next →</span>
+                                </button>
+                                <button class="nds-btn nds-subtle" data-stepper-control="goto"
+                                    data-stepper-target="demo-stepper-layouts" data-stepper-value="1">
+                                    <span class="nds-label">Go to 1</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='[["nds-oncolor", "#demo-stepper-layouts", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
+                                    <span class="nds-label">On Color</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-stepper-layouts-1" id="tab-stepper-layouts-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-stepper-layouts-js" id="tab-stepper-layouts-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-stepper-layouts-1" aria-labelledby="tab-stepper-layouts-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-stepper" id="demo-stepper-layouts" data-current="2" data-total="4">
+                                    <div class="nds-progress-circle">
+                                        <svg width="64" height="64" viewBox="0 0 24 24">
+                                            <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+                                            <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                                                stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+                                        </svg>
+                                        <div class="nds-progress-info">
+                                            <span class="nds-progress-steps"></span>
+                                        </div>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    <div class="nds-stepper-step">
+                                        <div class="nds-stepper-base">
+                                            <div class="nds-stepper-circle" data-step-text="1"></div>
+                                        </div>
+                                        <div class="nds-stepper-content">
+                                            <div class="nds-stepper-text">
+                                                <span class="nds-stepper-title">Personal Information</span>
+                                                <span class="nds-stepper-description">Identity details and contact information</span>
+                                                <span class="nds-stepper-next">Next: Document Upload</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-stepper-step">
+                                        <div class="nds-stepper-base">
+                                            <div class="nds-stepper-circle" data-step-text="2"></div>
+                                        </div>
+                                        <div class="nds-stepper-content">
+                                            <div class="nds-stepper-text">
+                                                <span class="nds-stepper-title">Document Upload</span>
+                                                <span class="nds-stepper-description">Upload required supporting documents</span>
+                                                <span class="nds-stepper-next">Next: Review &amp; Confirmation</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-stepper-step">
+                                        <div class="nds-stepper-base">
+                                            <div class="nds-stepper-circle" data-step-text="3"></div>
+                                        </div>
+                                        <div class="nds-stepper-content">
+                                            <div class="nds-stepper-text">
+                                                <span class="nds-stepper-title">Review &amp; Confirmation</span>
+                                                <span class="nds-stepper-description">Verify information before submission</span>
+                                                <span class="nds-stepper-next">Next: Application Submitted</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-stepper-step">
+                                        <div class="nds-stepper-base">
+                                            <div class="nds-stepper-circle" data-step-text="4"></div>
+                                        </div>
+                                        <div class="nds-stepper-content">
+                                            <div class="nds-stepper-text">
+                                                <span class="nds-stepper-title">Application Submitted</span>
+                                                <span class="nds-stepper-description">Confirmation and next steps</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-stepper-layouts-1" id="tab-stepper-layouts-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-stepper-layouts-js" id="tab-stepper-layouts-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-stepper-layouts-1" aria-labelledby="tab-stepper-layouts-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-stepper" id="demo-stepper-layouts" data-current="2" data-total="4"&gt;
   &lt;div class="nds-progress-circle"&gt;
     &lt;svg width="64" height="64" viewBox="0 0 24 24"&gt;
@@ -262,16 +263,16 @@ last_edit: "25/07/2026 - 07:45 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel"
-                                    id="panel-stepper-layouts-js" aria-labelledby="tab-stepper-layouts-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-javascript code">// Inject a stepper dynamically and initialize it
+                                    <div class="nds-tab-panel code-example" role="tabpanel"
+                                        id="panel-stepper-layouts-js" aria-labelledby="tab-stepper-layouts-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">// Inject a stepper dynamically and initialize it
 const el = document.getElementById('demo-stepper-layouts');
 const stepper = NDS.Stepper.create(el);
 
@@ -279,12 +280,13 @@ const stepper = NDS.Stepper.create(el);
 NDS.Stepper.next('demo-stepper-layouts');
 NDS.Stepper.previous('demo-stepper-layouts');
 NDS.Stepper.goTo('demo-stepper-layouts', 3);</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
@@ -298,247 +300,248 @@ NDS.Stepper.goTo('demo-stepper-layouts', 3);</code>
             <p class="nds-section-description">A single stepper that morphs between variants as the viewport crosses breakpoints. Suited to flows that span mobile and desktop, where a compact radial on small screens should give way to a full vertical panel on desktop. Resize the window to see the transition</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fallback: ">
-                                    <span class="nds-label">Fallback: Horizontal</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-state="selected"
-                                            data-stepper-fallback="horizontal" data-stepper-target="demo-stepper-responsive">
-                                            <span class="nds-label">Horizontal</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item"
-                                            data-stepper-fallback="vertical" data-stepper-target="demo-stepper-responsive">
-                                            <span class="nds-label">Vertical</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item"
-                                            data-stepper-fallback="radial" data-stepper-target="demo-stepper-responsive">
-                                            <span class="nds-label">Radial</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="LG: ">
-                                    <span class="nds-label">LG: Fallback</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["", "#demo-stepper-responsive", "stepperLayoutLg"]'>
-                                            <span class="nds-label">Fallback</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-horizontal-lg", "#demo-stepper-responsive", "stepperLayoutLg"]'>
-                                            <span class="nds-label">Horizontal</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-vertical-lg", "#demo-stepper-responsive", "stepperLayoutLg"]'>
-                                            <span class="nds-label">Vertical</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-radial-lg", "#demo-stepper-responsive", "stepperLayoutLg"]'>
-                                            <span class="nds-label">Radial</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="MD: ">
-                                    <span class="nds-label">MD: Fallback</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", "#demo-stepper-responsive", "stepperLayoutMd"]'>
-                                            <span class="nds-label">Fallback</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-horizontal-md", "#demo-stepper-responsive", "stepperLayoutMd"]'>
-                                            <span class="nds-label">Horizontal</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-vertical-md", "#demo-stepper-responsive", "stepperLayoutMd"]'>
-                                            <span class="nds-label">Vertical</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-radial-md", "#demo-stepper-responsive", "stepperLayoutMd"]'>
-                                            <span class="nds-label">Radial</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="SM: ">
-                                    <span class="nds-label">SM: Fallback</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", "#demo-stepper-responsive", "stepperLayoutSm"]'>
-                                            <span class="nds-label">Fallback</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-horizontal-sm", "#demo-stepper-responsive", "stepperLayoutSm"]'>
-                                            <span class="nds-label">Horizontal</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-vertical-sm", "#demo-stepper-responsive", "stepperLayoutSm"]'>
-                                            <span class="nds-label">Vertical</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-radial-sm", "#demo-stepper-responsive", "stepperLayoutSm"]'>
-                                            <span class="nds-label">Radial</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Default</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", "#demo-stepper-responsive", "stepperSize"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", "#demo-stepper-responsive", "stepperSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-xl", "#demo-stepper-responsive", "stepperSize"]'>
-                                            <span class="nds-label">XL</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-dot", "#demo-stepper-responsive", "stepperDot"]'
-                                data-demo-forbids-class="nds-radial">
-                                <span class="nds-label">Dot</span>
-                            </button>
-                            <button class="nds-btn nds-subtle" data-stepper-control="previous"
-                                data-stepper-target="demo-stepper-responsive">
-                                <span class="nds-label">← Previous</span>
-                            </button>
-                            <button class="nds-btn nds-subtle" data-stepper-control="next"
-                                data-stepper-target="demo-stepper-responsive">
-                                <span class="nds-label">Next →</span>
-                            </button>
-                            <button class="nds-btn nds-subtle" data-stepper-control="goto"
-                                data-stepper-target="demo-stepper-responsive" data-stepper-value="1">
-                                <span class="nds-label">Go to 1</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='[["nds-oncolor", "#demo-stepper-responsive", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
-                                <span class="nds-label">On Color</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-stepper"
-                                id="demo-stepper-responsive"
-                                data-current="2" data-total="4"
-                                data-stepper-auto-simplify>
-                                <div class="nds-progress-circle">
-                                    <svg width="64" height="64" viewBox="0 0 24 24">
-                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
-                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-                                    </svg>
-                                    <div class="nds-progress-info">
-                                        <span class="nds-progress-steps"></span>
-                                    </div>
-                                </div>
-                                <div class="nds-stepper-step">
-                                    <div class="nds-stepper-base">
-                                        <div class="nds-stepper-circle" data-step-text="1"></div>
-                                    </div>
-                                    <div class="nds-stepper-content">
-                                        <div class="nds-stepper-text">
-                                            <span class="nds-stepper-title">Personal Information</span>
-                                            <span class="nds-stepper-description">Identity details and contact information</span>
-                                            <span class="nds-stepper-next">Next: Document Upload</span>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fallback: ">
+                                        <span class="nds-label">Fallback: Horizontal</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-state="selected"
+                                                data-stepper-fallback="horizontal" data-stepper-target="demo-stepper-responsive">
+                                                <span class="nds-label">Horizontal</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item"
+                                                data-stepper-fallback="vertical" data-stepper-target="demo-stepper-responsive">
+                                                <span class="nds-label">Vertical</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item"
+                                                data-stepper-fallback="radial" data-stepper-target="demo-stepper-responsive">
+                                                <span class="nds-label">Radial</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step">
-                                    <div class="nds-stepper-base">
-                                        <div class="nds-stepper-circle" data-step-text="2"></div>
-                                    </div>
-                                    <div class="nds-stepper-content">
-                                        <div class="nds-stepper-text">
-                                            <span class="nds-stepper-title">Document Upload</span>
-                                            <span class="nds-stepper-description">Upload required supporting documents</span>
-                                            <span class="nds-stepper-next">Next: Review &amp; Confirmation</span>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="LG: ">
+                                        <span class="nds-label">LG: Fallback</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["", "#demo-stepper-responsive", "stepperLayoutLg"]'>
+                                                <span class="nds-label">Fallback</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-horizontal-lg", "#demo-stepper-responsive", "stepperLayoutLg"]'>
+                                                <span class="nds-label">Horizontal</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-vertical-lg", "#demo-stepper-responsive", "stepperLayoutLg"]'>
+                                                <span class="nds-label">Vertical</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-radial-lg", "#demo-stepper-responsive", "stepperLayoutLg"]'>
+                                                <span class="nds-label">Radial</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step">
-                                    <div class="nds-stepper-base">
-                                        <div class="nds-stepper-circle" data-step-text="3"></div>
-                                    </div>
-                                    <div class="nds-stepper-content">
-                                        <div class="nds-stepper-text">
-                                            <span class="nds-stepper-title">Review &amp; Confirmation</span>
-                                            <span class="nds-stepper-description">Verify information before submission</span>
-                                            <span class="nds-stepper-next">Next: Application Submitted</span>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="MD: ">
+                                        <span class="nds-label">MD: Fallback</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", "#demo-stepper-responsive", "stepperLayoutMd"]'>
+                                                <span class="nds-label">Fallback</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-horizontal-md", "#demo-stepper-responsive", "stepperLayoutMd"]'>
+                                                <span class="nds-label">Horizontal</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-vertical-md", "#demo-stepper-responsive", "stepperLayoutMd"]'>
+                                                <span class="nds-label">Vertical</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-radial-md", "#demo-stepper-responsive", "stepperLayoutMd"]'>
+                                                <span class="nds-label">Radial</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-stepper-step">
-                                    <div class="nds-stepper-base">
-                                        <div class="nds-stepper-circle" data-step-text="4"></div>
-                                    </div>
-                                    <div class="nds-stepper-content">
-                                        <div class="nds-stepper-text">
-                                            <span class="nds-stepper-title">Application Submitted</span>
-                                            <span class="nds-stepper-description">Confirmation and next steps</span>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="SM: ">
+                                        <span class="nds-label">SM: Fallback</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", "#demo-stepper-responsive", "stepperLayoutSm"]'>
+                                                <span class="nds-label">Fallback</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-horizontal-sm", "#demo-stepper-responsive", "stepperLayoutSm"]'>
+                                                <span class="nds-label">Horizontal</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-vertical-sm", "#demo-stepper-responsive", "stepperLayoutSm"]'>
+                                                <span class="nds-label">Vertical</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-radial-sm", "#demo-stepper-responsive", "stepperLayoutSm"]'>
+                                                <span class="nds-label">Radial</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Default</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", "#demo-stepper-responsive", "stepperSize"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", "#demo-stepper-responsive", "stepperSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-xl", "#demo-stepper-responsive", "stepperSize"]'>
+                                                <span class="nds-label">XL</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-dot", "#demo-stepper-responsive", "stepperDot"]'
+                                    data-demo-forbids-class="nds-radial">
+                                    <span class="nds-label">Dot</span>
+                                </button>
+                                <button class="nds-btn nds-subtle" data-stepper-control="previous"
+                                    data-stepper-target="demo-stepper-responsive">
+                                    <span class="nds-label">← Previous</span>
+                                </button>
+                                <button class="nds-btn nds-subtle" data-stepper-control="next"
+                                    data-stepper-target="demo-stepper-responsive">
+                                    <span class="nds-label">Next →</span>
+                                </button>
+                                <button class="nds-btn nds-subtle" data-stepper-control="goto"
+                                    data-stepper-target="demo-stepper-responsive" data-stepper-value="1">
+                                    <span class="nds-label">Go to 1</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='[["nds-oncolor", "#demo-stepper-responsive", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
+                                    <span class="nds-label">On Color</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-stepper-responsive-1" id="tab-stepper-responsive-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-stepper-responsive-js" id="tab-stepper-responsive-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-stepper-responsive-1" aria-labelledby="tab-stepper-responsive-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-stepper"
+                                    id="demo-stepper-responsive"
+                                    data-current="2" data-total="4"
+                                    data-stepper-auto-simplify>
+                                    <div class="nds-progress-circle">
+                                        <svg width="64" height="64" viewBox="0 0 24 24">
+                                            <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+                                            <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+                                                stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+                                        </svg>
+                                        <div class="nds-progress-info">
+                                            <span class="nds-progress-steps"></span>
+                                        </div>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    <div class="nds-stepper-step">
+                                        <div class="nds-stepper-base">
+                                            <div class="nds-stepper-circle" data-step-text="1"></div>
+                                        </div>
+                                        <div class="nds-stepper-content">
+                                            <div class="nds-stepper-text">
+                                                <span class="nds-stepper-title">Personal Information</span>
+                                                <span class="nds-stepper-description">Identity details and contact information</span>
+                                                <span class="nds-stepper-next">Next: Document Upload</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-stepper-step">
+                                        <div class="nds-stepper-base">
+                                            <div class="nds-stepper-circle" data-step-text="2"></div>
+                                        </div>
+                                        <div class="nds-stepper-content">
+                                            <div class="nds-stepper-text">
+                                                <span class="nds-stepper-title">Document Upload</span>
+                                                <span class="nds-stepper-description">Upload required supporting documents</span>
+                                                <span class="nds-stepper-next">Next: Review &amp; Confirmation</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-stepper-step">
+                                        <div class="nds-stepper-base">
+                                            <div class="nds-stepper-circle" data-step-text="3"></div>
+                                        </div>
+                                        <div class="nds-stepper-content">
+                                            <div class="nds-stepper-text">
+                                                <span class="nds-stepper-title">Review &amp; Confirmation</span>
+                                                <span class="nds-stepper-description">Verify information before submission</span>
+                                                <span class="nds-stepper-next">Next: Application Submitted</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-stepper-step">
+                                        <div class="nds-stepper-base">
+                                            <div class="nds-stepper-circle" data-step-text="4"></div>
+                                        </div>
+                                        <div class="nds-stepper-content">
+                                            <div class="nds-stepper-text">
+                                                <span class="nds-stepper-title">Application Submitted</span>
+                                                <span class="nds-stepper-description">Confirmation and next steps</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-stepper-responsive-1" id="tab-stepper-responsive-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-stepper-responsive-js" id="tab-stepper-responsive-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-stepper-responsive-1" aria-labelledby="tab-stepper-responsive-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-stepper"
   id="demo-stepper-responsive"
   data-current="2" data-total="4"&gt;
@@ -601,16 +604,16 @@ NDS.Stepper.goTo('demo-stepper-layouts', 3);</code>
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel"
-                                    id="panel-stepper-responsive-js" aria-labelledby="tab-stepper-responsive-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-javascript code">// Inject a stepper dynamically and initialize it
+                                    <div class="nds-tab-panel code-example" role="tabpanel"
+                                        id="panel-stepper-responsive-js" aria-labelledby="tab-stepper-responsive-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">// Inject a stepper dynamically and initialize it
 const el = document.getElementById('demo-stepper-responsive');
 const stepper = NDS.Stepper.create(el);
 
@@ -622,12 +625,13 @@ NDS.Stepper.setFallback('demo-stepper-responsive', 'vertical');
 NDS.Stepper.next('demo-stepper-responsive');
 NDS.Stepper.previous('demo-stepper-responsive');
 NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
@@ -640,62 +644,64 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-loading-03"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-stepper</code> is on the page. Step states, progress display, and control button handlers attach automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
-                        <span class="nds-label">Three Layout Modes</span>
-                    </span>
-                    <p class="nds-item-desc">Horizontal, vertical, and radial layouts cover wide forms, narrow sidebars, and compact dashboard widgets respectively.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-workflow-circle-06"></i>
-                        <span class="nds-label">Automatic State Management</span>
-                    </span>
-                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-current</code> and all steps update their completed, current, or upcoming states automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
-                        <span class="nds-label">Declarative Control Buttons</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-stepper-control</code> to any button to navigate steps without writing JavaScript.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-03"></i>
-                        <span class="nds-label">Step Change Events</span>
-                    </span>
-                    <p class="nds-item-desc">The <code class="nds-inline-code lang-js">nds:stepper:change</code> event fires on every navigation with current step, total, and percentage in the detail.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-device-access"></i>
-                        <span class="nds-label">Responsive Layout</span>
-                    </span>
-                    <p class="nds-item-desc">A single stepper adapts across breakpoints via modifier classes like <code class="nds-inline-code lang-html">nds-radial-sm</code> and <code class="nds-inline-code lang-html">nds-vertical-lg</code> (same pattern as <code class="nds-inline-code lang-html">nds-tableView-sm</code>). One DOM tree renders as horizontal, vertical, or radial depending on viewport.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-next"></i>
-                        <span class="nds-label">Look-Ahead Preview</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">.nds-stepper-next</code> inside any step to show the upcoming step name. Automatically hidden on horizontal and vertical layouts; surfaces only in radial.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-01"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Navigate with <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code>, <code class="nds-inline-code lang-js">NDS.Stepper.previous(id)</code>, and <code class="nds-inline-code lang-js">NDS.Stepper.goTo(id, step)</code>.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-loading-03"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-stepper</code> is on the page. Step states, progress display, and control button handlers attach automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-grid"></i>
+                            <span class="nds-label">Three Layout Modes</span>
+                        </span>
+                        <p class="nds-item-desc">Horizontal, vertical, and radial layouts cover wide forms, narrow sidebars, and compact dashboard widgets respectively.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-workflow-circle-06"></i>
+                            <span class="nds-label">Automatic State Management</span>
+                        </span>
+                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-current</code> and all steps update their completed, current, or upcoming states automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
+                            <span class="nds-label">Declarative Control Buttons</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-stepper-control</code> to any button to navigate steps without writing JavaScript.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-notification-03"></i>
+                            <span class="nds-label">Step Change Events</span>
+                        </span>
+                        <p class="nds-item-desc">The <code class="nds-inline-code lang-js">nds:stepper:change</code> event fires on every navigation with current step, total, and percentage in the detail.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-device-access"></i>
+                            <span class="nds-label">Responsive Layout</span>
+                        </span>
+                        <p class="nds-item-desc">A single stepper adapts across breakpoints via modifier classes like <code class="nds-inline-code lang-html">nds-radial-sm</code> and <code class="nds-inline-code lang-html">nds-vertical-lg</code> (same pattern as <code class="nds-inline-code lang-html">nds-tableView-sm</code>). One DOM tree renders as horizontal, vertical, or radial depending on viewport.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-next"></i>
+                            <span class="nds-label">Look-Ahead Preview</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">.nds-stepper-next</code> inside any step to show the upcoming step name. Automatically hidden on horizontal and vertical layouts; surfaces only in radial.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-target-01"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Navigate with <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code>, <code class="nds-inline-code lang-js">NDS.Stepper.previous(id)</code>, and <code class="nds-inline-code lang-js">NDS.Stepper.goTo(id, step)</code>.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -710,7 +716,7 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use steppers for <strong>multi-step forms</strong> like registration, applications, and onboarding flows where the user completes discrete stages in order</li>
@@ -793,7 +799,7 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>Steppers auto-initialize on page load. Access instances via <code class="nds-inline-code lang-js">NDS.Stepper.get(id)</code> or call convenience methods directly. The <code class="nds-inline-code lang-js">nds:stepper:change</code> event fires on every step change.</p>
                 <div class="nds-code nds-expandable">

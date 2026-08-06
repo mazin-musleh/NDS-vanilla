@@ -19,48 +19,50 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Choose a color palette that matches the link's visual context. Neutral is the default for most content; primary draws attention to key calls to action.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-primary", ".nds-link", "linkColor"]'>
-                                <span class="nds-label">Primary</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-underline", ".nds-link", "linkStyle"]'>
-                                <span class="nds-label">Underline</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="padding: var(--spacing-2xl);">
-                            <p>For complete policy details, review the <a href="#" class="nds-link">official guidelines</a> before submitting your application.</p>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-link-variants-1" id="tab-link-variants-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-primary", ".nds-link", "linkColor"]'>
+                                    <span class="nds-label">Primary</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-underline", ".nds-link", "linkStyle"]'>
+                                    <span class="nds-label">Underline</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-variants-1"
-                                    aria-labelledby="tab-link-variants-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="padding: var(--spacing-2xl);">
+                                <p>For complete policy details, review the <a href="#" class="nds-link">official guidelines</a> before submitting your application.</p>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-link-variants-1" id="tab-link-variants-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-variants-1"
+                                        aria-labelledby="tab-link-variants-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;p&gt;For complete policy details, review the &lt;a href="/guidelines" class="nds-link"&gt;official guidelines&lt;/a&gt; before submitting your application.&lt;/p&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -79,48 +81,50 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Use the on-color variant when placing links on primary or brand-colored backgrounds to ensure sufficient contrast.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-underline", ".nds-link", "oncolorStyle"]'>
-                                <span class="nds-label">Underline</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div style="background: var(--button-background-primary-default); padding: var(--spacing-xl); border-radius: var(--radius-md);">
-                                <p style="color: var(--text-oncolor-primary);">Explore <a href="#" class="nds-link nds-oncolor">available programs</a> and register your organization today.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-link-oncolor-1" id="tab-link-oncolor-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-underline", ".nds-link", "oncolorStyle"]'>
+                                    <span class="nds-label">Underline</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-oncolor-1"
-                                    aria-labelledby="tab-link-oncolor-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div style="background: var(--button-background-primary-default); padding: var(--spacing-xl); border-radius: var(--radius-md);">
+                                    <p style="color: var(--text-oncolor-primary);">Explore <a href="#" class="nds-link nds-oncolor">available programs</a> and register your organization today.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-link-oncolor-1" id="tab-link-oncolor-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-oncolor-1"
+                                        aria-labelledby="tab-link-oncolor-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div style="background: var(--button-background-primary-default); padding: var(--spacing-xl); border-radius: var(--radius-md);"&gt;
   &lt;p style="color: var(--text-oncolor-primary);"&gt;Explore &lt;a href="/programs" class="nds-link nds-oncolor"&gt;available programs&lt;/a&gt; and register your organization today.&lt;/p&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,122 +143,123 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Links to a different domain are detected and marked with the external icon automatically. Use <code class="nds-inline-code lang-html">nds-icon</code> to add an inline link icon to internal links. Apply <code class="nds-inline-code lang-html">data-no-external</code> to any link or ancestor to opt out of automatic external treatment.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-underline", ".nds-link", "externalStyle"]'>
-                                <span class="nds-label">Underline</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="padding: var(--spacing-2xl); display: flex; flex-direction: column; gap: var(--spacing-md);">
-                            <p>Consult the <a href="https://www.data.gov.sa/" class="nds-link">Saudi Open Data portal</a> for published datasets.</p>
-                            <p>Review the <a href="https://www.itu.int/en/Pages/default.aspx" class="nds-link nds-primary">ITU accessibility guidelines</a> before publishing your service.</p>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-link-external-1" id="tab-link-external-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-underline", ".nds-link", "externalStyle"]'>
+                                    <span class="nds-label">Underline</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-external-1"
-                                    aria-labelledby="tab-link-external-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="padding: var(--spacing-2xl); display: flex; flex-direction: column; gap: var(--spacing-md);">
+                                <p>Consult the <a href="https://www.data.gov.sa/" class="nds-link">Saudi Open Data portal</a> for published datasets.</p>
+                                <p>Review the <a href="https://www.itu.int/en/Pages/default.aspx" class="nds-link nds-primary">ITU accessibility guidelines</a> before publishing your service.</p>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-link-external-1" id="tab-link-external-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-external-1"
+                                        aria-labelledby="tab-link-external-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;!-- JS compares a.hostname against location.hostname (exact match). Any different hostname, including subdomains, gets nds-external + target="_blank" + rel="noopener noreferrer". --&gt;
 &lt;p&gt;Consult the &lt;a href="https://www.data.gov.sa/" class="nds-link"&gt;Saudi Open Data portal&lt;/a&gt; for published datasets.&lt;/p&gt;
 &lt;p&gt;Review the &lt;a href="https://www.itu.int/en/Pages/default.aspx" class="nds-link nds-primary"&gt;ITU accessibility guidelines&lt;/a&gt; before publishing your service.&lt;/p&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Icon Link</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="padding: var(--spacing-2xl);">
-                            <p>Download the <a href="#" class="nds-link nds-icon">Accessibility Compliance Report</a> for the current quarter.</p>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Icon Link</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-link-icon-1" id="tab-link-icon-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+                        <div class="demo-container">
+                            <div class="state-demo" style="padding: var(--spacing-2xl);">
+                                <p>Download the <a href="#" class="nds-link nds-icon">Accessibility Compliance Report</a> for the current quarter.</p>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-icon-1"
-                                    aria-labelledby="tab-link-icon-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-link-icon-1" id="tab-link-icon-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-icon-1"
+                                        aria-labelledby="tab-link-icon-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;p&gt;Download the &lt;a href="/reports/accessibility-q1" class="nds-link nds-icon"&gt;Accessibility Compliance Report&lt;/a&gt; for the current quarter.&lt;/p&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Opt-out</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="padding: var(--spacing-2xl); display: flex; flex-direction: column; gap: var(--spacing-md);">
-                            <p>This <a href="https://example.com" class="nds-link" data-no-external>partner portal</a> skips external treatment on a single link.</p>
-                            <div data-no-external>
-                                <p>All links in this container are also excluded: <a href="https://example.com" class="nds-link">trusted site</a> and <a href="https://other.com" class="nds-link">related service</a>.</p>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Opt-out</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="padding: var(--spacing-2xl); display: flex; flex-direction: column; gap: var(--spacing-md);">
+                                <p>This <a href="https://example.com" class="nds-link" data-no-external>partner portal</a> skips external treatment on a single link.</p>
+                                <div data-no-external>
+                                    <p>All links in this container are also excluded: <a href="https://example.com" class="nds-link">trusted site</a> and <a href="https://other.com" class="nds-link">related service</a>.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-link-optout-1" id="tab-link-optout-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-optout-1"
-                                    aria-labelledby="tab-link-optout-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-link-optout-1" id="tab-link-optout-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-optout-1"
+                                        aria-labelledby="tab-link-optout-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;!-- On a single link --&gt;
 &lt;a href="https://partner.example.com" class="nds-link" data-no-external&gt;partner portal&lt;/a&gt;
 
@@ -264,6 +269,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;a href="https://other.com" class="nds-link"&gt;related service&lt;/a&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -281,48 +287,50 @@ last_edit: "28/06/2026 - 01:27 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Runs on every page at load time. No selector required, no manual call needed.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors"></i>
-                        <span class="nds-label">Color Variants</span>
-                    </span>
-                    <p class="nds-item-desc">Neutral, primary, and on-color palettes with hover and active states driven by design tokens.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-globe-02"></i>
-                        <span class="nds-label">External Link Detection</span>
-                    </span>
-                    <p class="nds-item-desc">Compares each link's hostname against the current page origin and marks cross-domain links with the external icon automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-security-check"></i>
-                        <span class="nds-label">Safe Navigation</span>
-                    </span>
-                    <p class="nds-item-desc">External links open in a new tab automatically and receive <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>. The check compares <code class="nds-inline-code lang-html">a.hostname</code> against <code class="nds-inline-code lang-html">location.hostname</code> exactly, so subdomains are treated as external and also receive the rel attribute.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-toggle-off"></i>
-                        <span class="nds-label">Opt-out Control</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-no-external</code> to any link or ancestor element to prevent automatic external treatment on that link or the entire container.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-underline"></i>
-                        <span class="nds-label">Underline Modifier</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-underline</code> to reinforce link identity in dense text where color alone may not be sufficient.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Runs on every page at load time. No selector required, no manual call needed.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-colors"></i>
+                            <span class="nds-label">Color Variants</span>
+                        </span>
+                        <p class="nds-item-desc">Neutral, primary, and on-color palettes with hover and active states driven by design tokens.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-globe-02"></i>
+                            <span class="nds-label">External Link Detection</span>
+                        </span>
+                        <p class="nds-item-desc">Compares each link's hostname against the current page origin and marks cross-domain links with the external icon automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-security-check"></i>
+                            <span class="nds-label">Safe Navigation</span>
+                        </span>
+                        <p class="nds-item-desc">External links open in a new tab automatically and receive <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>. The check compares <code class="nds-inline-code lang-html">a.hostname</code> against <code class="nds-inline-code lang-html">location.hostname</code> exactly, so subdomains are treated as external and also receive the rel attribute.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-toggle-off"></i>
+                            <span class="nds-label">Opt-out Control</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-no-external</code> to any link or ancestor element to prevent automatic external treatment on that link or the entire container.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-text-underline"></i>
+                            <span class="nds-label">Underline Modifier</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-underline</code> to reinforce link identity in dense text where color alone may not be sufficient.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -337,7 +345,7 @@ last_edit: "28/06/2026 - 01:27 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <code class="nds-inline-code lang-html">nds-link</code> on <code class="nds-inline-code lang-html">&lt;a&gt;</code> elements for inline text links within paragraphs, alert messages, card footers, and other content areas</li>
@@ -395,7 +403,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p><strong>NDS.Link</strong> runs automatically at page load. Call <strong>NDS.Link.init()</strong> after injecting link elements dynamically to apply external-link detection to the new markup.</p>
                 <div class="nds-code">

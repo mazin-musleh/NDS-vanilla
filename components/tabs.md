@@ -19,249 +19,250 @@ last_edit: "29/07/2026 - 09:08 PM"
             <p class="nds-section-description">The default text-only tab strip. Reach for this when labels alone are enough to distinguish the panels and you want the broadest layout flexibility across vertical, divider, and card views.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-tabs", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-vertical", ".nds-tabs", "tabLayout"]'>
-                                <span class="nds-label">Vertical</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-divided", ".nds-tabs", "addDivider"]'>
-                                <span class="nds-label">Divider</span>
-                            </button>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                    <span class="nds-label">Size: Medium</span>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-tabs", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-tabs", "tabSize"]'>
-                                            <span class="nds-label">Small (32px)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-tabs", "tabSize"]'>
-                                            <span class="nds-label">Medium (40px)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", ".nds-tabs", "tabSize"]'>
-                                            <span class="nds-label">Large (48px)</span>
-                                        </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-vertical", ".nds-tabs", "tabLayout"]'>
+                                    <span class="nds-label">Vertical</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-divided", ".nds-tabs", "addDivider"]'>
+                                    <span class="nds-label">Divider</span>
+                                </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                        <span class="nds-label">Size: Medium</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-tabs", "tabSize"]'>
+                                                <span class="nds-label">Small (32px)</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-tabs", "tabSize"]'>
+                                                <span class="nds-label">Medium (40px)</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", ".nds-tabs", "tabSize"]'>
+                                                <span class="nds-label">Large (48px)</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
-                                    <span class="nds-label">Card View: None</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-tabs", "nds-cardView"]'>
-                                            <span class="nds-label">None</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tabs", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
-                                            <span class="nds-label">Full Container</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tab-content", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
-                                            <span class="nds-label">Content Only</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
+                                        <span class="nds-label">Card View: None</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-tabs", "nds-cardView"]'>
+                                                <span class="nds-label">None</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tabs", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
+                                                <span class="nds-label">Full Container</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tab-content", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
+                                                <span class="nds-label">Content Only</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="nds-tabs" id="tabs-standard-1">
+                        <div class="demo-container">
+                            <div class="nds-tabs" id="tabs-standard-1">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-tabs-standard-home" id="tab-tabs-standard-home" tabindex="0" data-label="Home">
+                                            <span class="nds-label">Home</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-services" id="tab-tabs-standard-services" tabindex="-1"
+                                            data-label="Services">
+                                            <span class="nds-label">Services</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-about" id="tab-tabs-standard-about" tabindex="-1">
+                                            <span class="nds-label">About</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-contact" id="tab-tabs-standard-contact" tabindex="-1">
+                                            <span class="nds-label">Contact</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-support" id="tab-tabs-standard-support" tabindex="-1">
+                                            <span class="nds-label">Support</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-resources" id="tab-tabs-standard-resources" tabindex="-1">
+                                            <span class="nds-label">Resources</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-documentation" id="tab-tabs-standard-documentation" tabindex="-1">
+                                            <span class="nds-label">Documentation</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-news" id="tab-tabs-standard-news" tabindex="-1">
+                                            <span class="nds-label">News</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-feedback" id="tab-tabs-standard-feedback" tabindex="-1">
+                                            <span class="nds-label">Feedback</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-standard-settings" id="tab-tabs-standard-settings" tabindex="-1">
+                                            <span class="nds-label">Settings</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-home" aria-labelledby="tab-tabs-standard-home"
+                                        tabindex="0">
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Welcome</h3>
+                                            <p>Welcome to our platform. Here you'll find the latest updates and important
+                                                information about our services and offerings.</p>
+                                            <p>This is the main dashboard where users can quickly access key features and get an
+                                                overview of their account status.</p>
+                                        </div>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Getting Started</h3>
+                                            <p>Explore the available services, review your recent activity, or configure your
+                                                account preferences from the tabs above.</p>
+                                            <ul>
+                                                <li>Browse available government services</li>
+                                                <li>Track your application status</li>
+                                                <li>Manage your profile and notifications</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-services"
+                                        aria-labelledby="tab-tabs-standard-services" aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Our Services</h3>
+                                            <p>We offer a comprehensive range of digital government services designed to make your
+                                                life easier.</p>
+                                            <ul>
+                                                <li>Document Processing</li>
+                                                <li>Online Applications</li>
+                                                <li>Digital Certificates</li>
+                                                <li>Support Services</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-about" aria-labelledby="tab-tabs-standard-about"
+                                        aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">About Us</h3>
+                                            <p>The National Design System is part of Saudi Arabia's digital transformation
+                                                initiative, providing consistent and accessible user experiences across all
+                                                government digital services.</p>
+                                            <p>Our mission is to create unified, user-friendly interfaces that serve citizens
+                                                efficiently and effectively.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-contact" aria-labelledby="tab-tabs-standard-contact"
+                                        aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Contact Information</h3>
+                                            <p>Get in touch with us through the following channels:</p>
+                                            <p><strong>Email:</strong> support@nds.gov.sa</p>
+                                            <p><strong>Phone:</strong> 920-000-000</p>
+                                            <p><strong>Address:</strong> National Design System, Riyadh, Saudi Arabia</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-support" aria-labelledby="tab-tabs-standard-support"
+                                        aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Support Center</h3>
+                                            <p>Find help and assistance with our comprehensive support resources.</p>
+                                            <ul>
+                                                <li>Technical Documentation</li>
+                                                <li>FAQ Section</li>
+                                                <li>Live Chat Support</li>
+                                                <li>Video Tutorials</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-resources"
+                                        aria-labelledby="tab-tabs-standard-resources" aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Resources</h3>
+                                            <p>Access downloadable resources and tools for developers and designers.</p>
+                                            <p>Browse our collection of design assets, code snippets, and implementation guides.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-documentation"
+                                        aria-labelledby="tab-tabs-standard-documentation" aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Documentation</h3>
+                                            <p>Comprehensive documentation for the National Design System components and guidelines.</p>
+                                            <p>Learn how to implement and customize components according to government standards.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-news" aria-labelledby="tab-tabs-standard-news"
+                                        aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Latest News</h3>
+                                            <p>Stay updated with the latest announcements and updates from the design system team.</p>
+                                            <p>New component releases, feature updates, and important notices are published here.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-feedback"
+                                        aria-labelledby="tab-tabs-standard-feedback" aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Feedback</h3>
+                                            <p>We value your feedback and suggestions for improving the design system.</p>
+                                            <p>Submit your ideas, report issues, or share your experience with our components.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-settings"
+                                        aria-labelledby="tab-tabs-standard-settings" aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Settings</h3>
+                                            <p>Configure your preferences and customize your experience with the design system.</p>
+                                            <p>Adjust theme settings, language preferences, and accessibility options.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-tabs-standard-home" id="tab-tabs-standard-home" tabindex="0" data-label="Home">
-                                        <span class="nds-label">Home</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-services" id="tab-tabs-standard-services" tabindex="-1"
-                                        data-label="Services">
-                                        <span class="nds-label">Services</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-about" id="tab-tabs-standard-about" tabindex="-1">
-                                        <span class="nds-label">About</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-contact" id="tab-tabs-standard-contact" tabindex="-1">
-                                        <span class="nds-label">Contact</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-support" id="tab-tabs-standard-support" tabindex="-1">
-                                        <span class="nds-label">Support</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-resources" id="tab-tabs-standard-resources" tabindex="-1">
-                                        <span class="nds-label">Resources</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-documentation" id="tab-tabs-standard-documentation" tabindex="-1">
-                                        <span class="nds-label">Documentation</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-news" id="tab-tabs-standard-news" tabindex="-1">
-                                        <span class="nds-label">News</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-feedback" id="tab-tabs-standard-feedback" tabindex="-1">
-                                        <span class="nds-label">Feedback</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-standard-settings" id="tab-tabs-standard-settings" tabindex="-1">
-                                        <span class="nds-label">Settings</span>
+                                        aria-controls="panel-tabs-standard-code-1" id="tab-tabs-standard-code-1">
+                                        <span class="nds-label">HTML</span>
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-home" aria-labelledby="tab-tabs-standard-home"
-                                    tabindex="0">
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Welcome</h3>
-                                        <p>Welcome to our platform. Here you'll find the latest updates and important
-                                            information about our services and offerings.</p>
-                                        <p>This is the main dashboard where users can quickly access key features and get an
-                                            overview of their account status.</p>
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tabs-standard-code-1"
+                                    aria-labelledby="tab-tabs-standard-code-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
                                     </div>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Getting Started</h3>
-                                        <p>Explore the available services, review your recent activity, or configure your
-                                            account preferences from the tabs above.</p>
-                                        <ul>
-                                            <li>Browse available government services</li>
-                                            <li>Track your application status</li>
-                                            <li>Manage your profile and notifications</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-services"
-                                    aria-labelledby="tab-tabs-standard-services" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Our Services</h3>
-                                        <p>We offer a comprehensive range of digital government services designed to make your
-                                            life easier.</p>
-                                        <ul>
-                                            <li>Document Processing</li>
-                                            <li>Online Applications</li>
-                                            <li>Digital Certificates</li>
-                                            <li>Support Services</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-about" aria-labelledby="tab-tabs-standard-about"
-                                    aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">About Us</h3>
-                                        <p>The National Design System is part of Saudi Arabia's digital transformation
-                                            initiative, providing consistent and accessible user experiences across all
-                                            government digital services.</p>
-                                        <p>Our mission is to create unified, user-friendly interfaces that serve citizens
-                                            efficiently and effectively.</p>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-contact" aria-labelledby="tab-tabs-standard-contact"
-                                    aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Contact Information</h3>
-                                        <p>Get in touch with us through the following channels:</p>
-                                        <p><strong>Email:</strong> support@nds.gov.sa</p>
-                                        <p><strong>Phone:</strong> 920-000-000</p>
-                                        <p><strong>Address:</strong> National Design System, Riyadh, Saudi Arabia</p>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-support" aria-labelledby="tab-tabs-standard-support"
-                                    aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Support Center</h3>
-                                        <p>Find help and assistance with our comprehensive support resources.</p>
-                                        <ul>
-                                            <li>Technical Documentation</li>
-                                            <li>FAQ Section</li>
-                                            <li>Live Chat Support</li>
-                                            <li>Video Tutorials</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-resources"
-                                    aria-labelledby="tab-tabs-standard-resources" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Resources</h3>
-                                        <p>Access downloadable resources and tools for developers and designers.</p>
-                                        <p>Browse our collection of design assets, code snippets, and implementation guides.</p>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-documentation"
-                                    aria-labelledby="tab-tabs-standard-documentation" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Documentation</h3>
-                                        <p>Comprehensive documentation for the National Design System components and guidelines.</p>
-                                        <p>Learn how to implement and customize components according to government standards.</p>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-news" aria-labelledby="tab-tabs-standard-news"
-                                    aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Latest News</h3>
-                                        <p>Stay updated with the latest announcements and updates from the design system team.</p>
-                                        <p>New component releases, feature updates, and important notices are published here.</p>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-feedback"
-                                    aria-labelledby="tab-tabs-standard-feedback" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Feedback</h3>
-                                        <p>We value your feedback and suggestions for improving the design system.</p>
-                                        <p>Submit your ideas, report issues, or share your experience with our components.</p>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-settings"
-                                    aria-labelledby="tab-tabs-standard-settings" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Settings</h3>
-                                        <p>Configure your preferences and customize your experience with the design system.</p>
-                                        <p>Adjust theme settings, language preferences, and accessibility options.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-tabs-standard-code-1" id="tab-tabs-standard-code-1">
-                                    <span class="nds-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tabs-standard-code-1"
-                                aria-labelledby="tab-tabs-standard-code-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-tabs"&gt;
     &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
         &lt;nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation"&gt;
@@ -422,10 +423,11 @@ last_edit: "29/07/2026 - 09:08 PM"
     &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -441,119 +443,120 @@ last_edit: "29/07/2026 - 09:08 PM"
             <p class="nds-section-description">Icons before each label help users scan and identify tabs quickly</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-tabs", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-vertical", ".nds-tabs", "tabLayout"]'>
-                                <span class="nds-label">Vertical</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-divided", ".nds-tabs", "addDivider"]'>
-                                <span class="nds-label">Divider</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-tab-list", "tabsAlign"]'>
-                                <span class="nds-label">Center</span>
-                            </button>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
-                                    <span class="nds-label">Card View: None</span>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-tabs", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-tabs", "nds-cardView"]'>
-                                            <span class="nds-label">None</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tabs", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
-                                            <span class="nds-label">Full Container</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tab-content", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
-                                            <span class="nds-label">Content Only</span>
-                                        </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-vertical", ".nds-tabs", "tabLayout"]'>
+                                    <span class="nds-label">Vertical</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-divided", ".nds-tabs", "addDivider"]'>
+                                    <span class="nds-label">Divider</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-center", ".nds-tab-list", "tabsAlign"]'>
+                                    <span class="nds-label">Center</span>
+                                </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
+                                        <span class="nds-label">Card View: None</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-tabs", "nds-cardView"]'>
+                                                <span class="nds-label">None</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tabs", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
+                                                <span class="nds-label">Full Container</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-tab-content", "nds-cardView"],["nds-noBg", ".demo-container", "nds-cardView"]]'>
+                                                <span class="nds-label">Content Only</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="nds-tabs" id="tabs-icons-1">
+                        <div class="demo-container">
+                            <div class="nds-tabs" id="tabs-icons-1">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-tabs-icons-dashboard" id="tab-tabs-icons-dashboard" tabindex="0">
+                                            <i class="hgi hgi-stroke hgi-home-05"></i>
+                                            <span class="nds-label">Dashboard</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-icons-analytics" id="tab-tabs-icons-analytics" tabindex="-1">
+                                            <i class="hgi hgi-stroke hgi-analytics-01"></i>
+                                            <span class="nds-label">Analytics</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-tabs-icons-settings" id="tab-tabs-icons-settings" tabindex="-1">
+                                            <i class="hgi hgi-stroke hgi-settings-01"></i>
+                                            <span class="nds-label">Settings</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-dashboard"
+                                        aria-labelledby="tab-tabs-icons-dashboard" tabindex="0">
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Dashboard</h3>
+                                            <p>Your main dashboard with key metrics and quick access to important features.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-analytics"
+                                        aria-labelledby="tab-tabs-icons-analytics" aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Analytics</h3>
+                                            <p>Configure your analytics preferences and data visualization options.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-settings"
+                                        aria-labelledby="tab-tabs-icons-settings" aria-hidden="true" tabindex="-1" hidden>
+                                        <div class="nds-block">
+                                            <h3 class="nds-block-title">Settings</h3>
+                                            <p>Configure your preferences and manage your account settings.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-tabs-icons-dashboard" id="tab-tabs-icons-dashboard" tabindex="0">
-                                        <i class="hgi hgi-stroke hgi-home-05"></i>
-                                        <span class="nds-label">Dashboard</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-icons-analytics" id="tab-tabs-icons-analytics" tabindex="-1">
-                                        <i class="hgi hgi-stroke hgi-analytics-01"></i>
-                                        <span class="nds-label">Analytics</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-tabs-icons-settings" id="tab-tabs-icons-settings" tabindex="-1">
-                                        <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                        <span class="nds-label">Settings</span>
+                                        aria-controls="panel-tabs-icons-code-1" id="tab-tabs-icons-code-1">
+                                        <span class="nds-label">HTML</span>
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-dashboard"
-                                    aria-labelledby="tab-tabs-icons-dashboard" tabindex="0">
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Dashboard</h3>
-                                        <p>Your main dashboard with key metrics and quick access to important features.</p>
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tabs-icons-code-1"
+                                    aria-labelledby="tab-tabs-icons-code-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
                                     </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-analytics"
-                                    aria-labelledby="tab-tabs-icons-analytics" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Analytics</h3>
-                                        <p>Configure your analytics preferences and data visualization options.</p>
-                                    </div>
-                                </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-settings"
-                                    aria-labelledby="tab-tabs-icons-settings" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-block">
-                                        <h3 class="nds-block-title">Settings</h3>
-                                        <p>Configure your preferences and manage your account settings.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-tabs-icons-code-1" id="tab-tabs-icons-code-1">
-                                    <span class="nds-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tabs-icons-code-1"
-                                aria-labelledby="tab-tabs-icons-code-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-tabs"&gt;
     &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
         &lt;nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation"&gt;
@@ -601,10 +604,11 @@ last_edit: "29/07/2026 - 09:08 PM"
     &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -619,62 +623,64 @@ last_edit: "29/07/2026 - 09:08 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-tabs</code> is on the page. Tab switching, keyboard handling, and scroll behavior attach automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard"></i>
-                        <span class="nds-label">Full Keyboard Navigation</span>
-                    </span>
-                    <p class="nds-item-desc">Arrow keys move between tabs, Home and End jump to first and last, and Enter or Space activates the focused tab.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-flip-horizontal"></i>
-                        <span class="nds-label">RTL-Aware Navigation</span>
-                    </span>
-                    <p class="nds-item-desc">Arrow key direction reverses automatically in RTL layouts so navigation always feels natural to the reading direction.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
-                        <span class="nds-label">Overflow Scrolling</span>
-                    </span>
-                    <p class="nds-item-desc">Long tab lists scroll horizontally with gradient fade indicators, drag-to-scroll, mouse wheel support, and a show-more button.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-left"></i>
-                        <span class="nds-label">Vertical Layout</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-vertical</code> for a side-stacked tab list with sticky positioning and vertical indicator bars.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-access"></i>
-                        <span class="nds-label">High Contrast and Reduced Motion</span>
-                    </span>
-                    <p class="nds-item-desc">Enhanced borders appear in high-contrast mode, and all transitions are disabled when the user prefers reduced motion.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-square"></i>
-                        <span class="nds-label">Tab Change Events</span>
-                    </span>
-                    <p class="nds-item-desc">Every tab switch dispatches an <code class="nds-inline-code lang-js">nds:tab:change</code> event with the new and previous tab and panel references.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Switch tabs, query the active panel, or destroy instances through the JS API on <code class="nds-inline-code lang-js">NDS.Tabs</code> or each element's <code class="nds-inline-code lang-js">.ndsTabs</code> property.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-tabs</code> is on the page. Tab switching, keyboard handling, and scroll behavior attach automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-keyboard"></i>
+                            <span class="nds-label">Full Keyboard Navigation</span>
+                        </span>
+                        <p class="nds-item-desc">Arrow keys move between tabs, Home and End jump to first and last, and Enter or Space activates the focused tab.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-flip-horizontal"></i>
+                            <span class="nds-label">RTL-Aware Navigation</span>
+                        </span>
+                        <p class="nds-item-desc">Arrow key direction reverses automatically in RTL layouts so navigation always feels natural to the reading direction.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
+                            <span class="nds-label">Overflow Scrolling</span>
+                        </span>
+                        <p class="nds-item-desc">Long tab lists scroll horizontally with gradient fade indicators, drag-to-scroll, mouse wheel support, and a show-more button.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-left"></i>
+                            <span class="nds-label">Vertical Layout</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-vertical</code> for a side-stacked tab list with sticky positioning and vertical indicator bars.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-access"></i>
+                            <span class="nds-label">High Contrast and Reduced Motion</span>
+                        </span>
+                        <p class="nds-item-desc">Enhanced borders appear in high-contrast mode, and all transitions are disabled when the user prefers reduced motion.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-notification-square"></i>
+                            <span class="nds-label">Tab Change Events</span>
+                        </span>
+                        <p class="nds-item-desc">Every tab switch dispatches an <code class="nds-inline-code lang-js">nds:tab:change</code> event with the new and previous tab and panel references.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Switch tabs, query the active panel, or destroy instances through the JS API on <code class="nds-inline-code lang-js">NDS.Tabs</code> or each element's <code class="nds-inline-code lang-js">.ndsTabs</code> property.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -689,7 +695,7 @@ last_edit: "29/07/2026 - 09:08 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use tabs to organize related content that users access one section at a time, such as settings categories, service details, or dashboard views</li>
@@ -812,7 +818,7 @@ last_edit: "29/07/2026 - 09:08 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Tabs</strong> API provides methods to create, switch, and query tab instances. Each initialized <code class="nds-inline-code lang-html">.nds-tabs</code> element stores its instance on the <code class="nds-inline-code lang-js">.ndsTabs</code> DOM property. The same controller drives the <a class="nds-color" href="{{ 'components/content-switcher' | relative_url }}">Content Switcher</a>, so everything below applies to a switcher instance too.</p>
                 <div class="nds-code nds-expandable">

@@ -19,78 +19,79 @@ last_edit: "27/07/2026 - 10:00 AM"
             <p class="nds-section-description">Set <code class="nds-inline-code lang-html">data-copy</code> on a <code class="nds-inline-code lang-html">.nds-copy</code> to copy the exact string. Use this for phone numbers, emails, tokens, codes, or any value already known at render time.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Contact Information</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <dl class="nds-definition-list" style="max-width: 360px;">
-                            <div class="nds-definition-item">
-                                <dt>
-                                    <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-                                    <span class="nds-label">Phone</span>
-                                </dt>
-                                <dd>
-                                    <span class="nds-label">9200343222</span>
-                                    <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                        data-copy="9200343222" aria-label="Copy phone number">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </dd>
-                            </div>
-                            <div class="nds-definition-item">
-                                <dt>
-                                    <i class="hgi hgi-stroke hgi-mail-01"></i>
-                                    <span class="nds-label">Email</span>
-                                </dt>
-                                <dd>
-                                    <span class="nds-label">help@company.sa</span>
-                                    <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                        data-copy="help@company.sa" aria-label="Copy email">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </dd>
-                            </div>
-                            <div class="nds-definition-item">
-                                <dt>
-                                    <i class="hgi hgi-stroke hgi-key-01"></i>
-                                    <span class="nds-label">API Token</span>
-                                </dt>
-                                <dd>
-                                    <span class="nds-label">sk-prod-9f3a8c2e</span>
-                                    <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
-                                        data-copy="sk-prod-9f3a8c2e" aria-label="Copy API token">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </dd>
-                            </div>
-                        </dl>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Contact Information</div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-copy-literal-1" id="tab-copy-literal-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <dl class="nds-definition-list" style="max-width: 360px;">
+                                <div class="nds-definition-item">
+                                    <dt>
+                                        <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
+                                        <span class="nds-label">Phone</span>
+                                    </dt>
+                                    <dd>
+                                        <span class="nds-label">9200343222</span>
+                                        <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                            data-copy="9200343222" aria-label="Copy phone number">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </dd>
+                                </div>
+                                <div class="nds-definition-item">
+                                    <dt>
+                                        <i class="hgi hgi-stroke hgi-mail-01"></i>
+                                        <span class="nds-label">Email</span>
+                                    </dt>
+                                    <dd>
+                                        <span class="nds-label">help@company.sa</span>
+                                        <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                            data-copy="help@company.sa" aria-label="Copy email">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </dd>
+                                </div>
+                                <div class="nds-definition-item">
+                                    <dt>
+                                        <i class="hgi hgi-stroke hgi-key-01"></i>
+                                        <span class="nds-label">API Token</span>
+                                    </dt>
+                                    <dd>
+                                        <span class="nds-label">sk-prod-9f3a8c2e</span>
+                                        <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
+                                            data-copy="sk-prod-9f3a8c2e" aria-label="Copy API token">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-copy-literal-1"
-                            aria-labelledby="tab-copy-literal-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-copy-literal-1" id="tab-copy-literal-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-copy-literal-1"
+                                aria-labelledby="tab-copy-literal-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;dl class="nds-definition-list" style="max-width: 360px;"&gt;
     &lt;div class="nds-definition-item"&gt;
         &lt;dt&gt;
@@ -133,9 +134,10 @@ last_edit: "27/07/2026 - 10:00 AM"
     &lt;/div&gt;
 &lt;/dl&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -152,52 +154,53 @@ last_edit: "27/07/2026 - 10:00 AM"
             <p class="nds-section-description">Set <code class="nds-inline-code lang-html">data-copy-target</code> to a CSS selector. The button copies the target element's text content at click time, which is useful when the value is rendered dynamically or sits inside a styled wrapper.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Reference ID Block</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-card nds-stroke" style="max-width: 480px;">
-                            <div class="nds-card-content">
-                                <div class="nds-card-text">
-                                    <p class="nds-card-description">Application reference</p>
-                                    <span class="nds-card-title" id="copy-target-ref">REF-2026-04-19-7A3F</span>
-                                    <div class="nds-card-actions">
-                                        <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
-                                            data-copy-target="#copy-target-ref" aria-label="Copy reference">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                            <span class="nds-label">Copy reference</span>
-                                        </button>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Reference ID Block</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-card nds-stroke" style="max-width: 480px;">
+                                <div class="nds-card-content">
+                                    <div class="nds-card-text">
+                                        <p class="nds-card-description">Application reference</p>
+                                        <span class="nds-card-title" id="copy-target-ref">REF-2026-04-19-7A3F</span>
+                                        <div class="nds-card-actions">
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
+                                                data-copy-target="#copy-target-ref" aria-label="Copy reference">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                                <span class="nds-label">Copy reference</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-copy-target-1" id="tab-copy-target-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-copy-target-1"
-                            aria-labelledby="tab-copy-target-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-copy-target-1" id="tab-copy-target-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-copy-target-1"
+                                aria-labelledby="tab-copy-target-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;div class="nds-card nds-stroke" style="max-width: 480px;"&gt;
     &lt;div class="nds-card-content"&gt;
         &lt;div class="nds-card-text"&gt;
@@ -214,9 +217,10 @@ last_edit: "27/07/2026 - 10:00 AM"
     &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -233,45 +237,46 @@ last_edit: "27/07/2026 - 10:00 AM"
             <p class="nds-section-description">Place a <code class="nds-inline-code lang-html">.nds-copy</code> inside an <a class="nds-color" href="{{ 'components/code' | relative_url }}">nds-code</a> wrapper and the button copies the nested code automatically. No <code class="nds-inline-code lang-html">data-copy</code> needed.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Implicit Code Resolution</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-code" style="width: 100%;">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Implicit Code Resolution</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-code" style="width: 100%;">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-bash code">npm install @nds/core --save</code>
                             </div>
-                            <code class="lang-bash code">npm install @nds/core --save</code>
                         </div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-copy-codeblock-1" id="tab-copy-codeblock-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-copy-codeblock-1"
-                            aria-labelledby="tab-copy-codeblock-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-copy-codeblock-1" id="tab-copy-codeblock-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-copy-codeblock-1"
+                                aria-labelledby="tab-copy-codeblock-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;div class="nds-code" style="width: 100%;"&gt;
     &lt;div class="nds-code-action"&gt;
         &lt;button class="nds-btn nds-subtle nds-copy" aria-label="Copy code"&gt;
@@ -281,9 +286,10 @@ last_edit: "27/07/2026 - 10:00 AM"
     &lt;code class="lang-bash code"&gt;npm install @nds/core --save&lt;/code&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -300,45 +306,46 @@ last_edit: "27/07/2026 - 10:00 AM"
             <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-label</code> to swap the visible button text during the success window, and <code class="nds-inline-code lang-html">data-message</code> to set the screen reader announcement. Both restore automatically after 2 seconds.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Visible Label Swap</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <button type="button" class="nds-btn nds-secondary-outline nds-copy"
-                            data-copy="https://nds.sa/components/copy"
-                            data-label="Link copied!"
-                            data-message="Page link copied to clipboard"
-                            aria-label="Copy page link">
-                            <i class="nds-icon nds-hgi-link-04"></i>
-                            <span class="nds-label">Copy link</span>
-                        </button>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Visible Label Swap</div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-copy-feedback-1" id="tab-copy-feedback-1">
-                                <span class="nds-tab-label">HTML</span>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button type="button" class="nds-btn nds-secondary-outline nds-copy"
+                                data-copy="https://nds.sa/components/copy"
+                                data-label="Link copied!"
+                                data-message="Page link copied to clipboard"
+                                aria-label="Copy page link">
+                                <i class="nds-icon nds-hgi-link-04"></i>
+                                <span class="nds-label">Copy link</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-copy-feedback-1"
-                            aria-labelledby="tab-copy-feedback-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-copy-feedback-1" id="tab-copy-feedback-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-copy-feedback-1"
+                                aria-labelledby="tab-copy-feedback-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;button type="button" class="nds-btn nds-secondary-outline nds-copy"
     data-copy="https://nds.sa/components/copy"
     data-label="Link copied!"
@@ -348,9 +355,10 @@ last_edit: "27/07/2026 - 10:00 AM"
     &lt;span class="nds-label"&gt;Copy link&lt;/span&gt;
 &lt;/button&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -366,48 +374,50 @@ last_edit: "27/07/2026 - 10:00 AM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-copy</code> on the page is wired up automatically. No setup, no per-button event listeners to manage.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-02"></i>
-                        <span class="nds-label">Three-Tier Text Resolution</span>
-                    </span>
-                    <p class="nds-item-desc">The button copies its <code class="nds-inline-code lang-html">data-copy</code> literal, the text of its <code class="nds-inline-code lang-html">data-copy-target</code> selector, or the nested <code class="nds-inline-code lang-html">&lt;code&gt;</code> when placed inside an <code class="nds-inline-code lang-html">.nds-code</code> block.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tick-01"></i>
-                        <span class="nds-label">Visible Success Feedback</span>
-                    </span>
-                    <p class="nds-item-desc">The icon flips to a checkmark and the optional <code class="nds-inline-code lang-html">data-label</code> text swaps in for two seconds, then everything restores. The button is inert during the flash (<code class="nds-inline-code lang-html">pointer-events: none</code> + <code class="nds-inline-code lang-html">aria-disabled="true"</code>) so a double-click can't re-trigger the copy mid-feedback.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-voice"></i>
-                        <span class="nds-label">Screen Reader Announcement</span>
-                    </span>
-                    <p class="nds-item-desc">A shared <code class="nds-inline-code lang-html">aria-live</code> region announces <code class="nds-inline-code lang-html">data-message</code> on every successful copy so assistive tech users get the same confirmation as sighted users.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-01"></i>
-                        <span class="nds-label">Insecure-Context Fallback</span>
-                    </span>
-                    <p class="nds-item-desc">When the modern Clipboard API is unavailable (HTTP, older browsers, sandboxed iframes), the utility falls back to a temporary textarea + <code class="nds-inline-code lang-js">execCommand</code> so copy still works in development.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.Copy.writeText</code>, <code class="nds-inline-code lang-js">NDS.Copy.flash</code>, or <code class="nds-inline-code lang-js">NDS.Copy.copyFrom</code> from your own JS to integrate copy into custom flows.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-copy</code> on the page is wired up automatically. No setup, no per-button event listeners to manage.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-target-02"></i>
+                            <span class="nds-label">Three-Tier Text Resolution</span>
+                        </span>
+                        <p class="nds-item-desc">The button copies its <code class="nds-inline-code lang-html">data-copy</code> literal, the text of its <code class="nds-inline-code lang-html">data-copy-target</code> selector, or the nested <code class="nds-inline-code lang-html">&lt;code&gt;</code> when placed inside an <code class="nds-inline-code lang-html">.nds-code</code> block.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-tick-01"></i>
+                            <span class="nds-label">Visible Success Feedback</span>
+                        </span>
+                        <p class="nds-item-desc">The icon flips to a checkmark and the optional <code class="nds-inline-code lang-html">data-label</code> text swaps in for two seconds, then everything restores. The button is inert during the flash (<code class="nds-inline-code lang-html">pointer-events: none</code> + <code class="nds-inline-code lang-html">aria-disabled="true"</code>) so a double-click can't re-trigger the copy mid-feedback.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-voice"></i>
+                            <span class="nds-label">Screen Reader Announcement</span>
+                        </span>
+                        <p class="nds-item-desc">A shared <code class="nds-inline-code lang-html">aria-live</code> region announces <code class="nds-inline-code lang-html">data-message</code> on every successful copy so assistive tech users get the same confirmation as sighted users.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-shield-01"></i>
+                            <span class="nds-label">Insecure-Context Fallback</span>
+                        </span>
+                        <p class="nds-item-desc">When the modern Clipboard API is unavailable (HTTP, older browsers, sandboxed iframes), the utility falls back to a temporary textarea + <code class="nds-inline-code lang-js">execCommand</code> so copy still works in development.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.Copy.writeText</code>, <code class="nds-inline-code lang-js">NDS.Copy.flash</code>, or <code class="nds-inline-code lang-js">NDS.Copy.copyFrom</code> from your own JS to integrate copy into custom flows.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -422,7 +432,7 @@ last_edit: "27/07/2026 - 10:00 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>literal copy</strong> (<code class="nds-inline-code lang-html">data-copy</code>) for values you already know at render time: phone numbers, emails, reference IDs, API tokens, emergency numbers</li>
@@ -450,7 +460,7 @@ last_edit: "27/07/2026 - 10:00 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Copy</strong> API powers every <code class="nds-inline-code lang-html">.nds-copy</code> on the page and is also callable directly from your own scripts when you need to compose copy into a larger flow (for example, copying a dynamically computed URL after a network request).</p>
                 <div class="nds-code nds-expandable">

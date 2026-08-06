@@ -19,23 +19,24 @@ last_edit: "02/08/2026 - 11:35 PM"
             <p class="nds-section-description">Standalone code blocks with copy button, used for API documentation and code snippets</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <!-- Basic Direct Code Block -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Basic Code Block</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-code nds-expandable">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                <!-- Basic Direct Code Block -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Basic Code Block</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-code nds-expandable">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;div class="nds-card nds-stroke"&gt;
   &lt;div class="nds-card-content"&gt;
     &lt;span class="nds-card-title"&gt;Card Title&lt;/span&gt;
@@ -43,31 +44,31 @@ last_edit: "02/08/2026 - 11:35 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-basic-1" id="tab-basic-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1"
-                            aria-labelledby="tab-basic-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-basic-1" id="tab-basic-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1"
+                                aria-labelledby="tab-basic-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;div class="nds-code nds-expandable"&gt;
   &lt;div class="nds-code-action"&gt;
     &lt;button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example"&gt;
@@ -81,27 +82,29 @@ last_edit: "02/08/2026 - 11:35 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Code Block with Line Numbers -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Code Block with Line Numbers</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-code nds-expandable">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-javascript">
+            <div class="nds-block">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Code Block with Line Numbers</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-code nds-expandable">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-javascript">
 const alert = NDS.Alert.create({
     variant: 'success',
     title: 'Success',
@@ -118,31 +121,31 @@ NDS.Alert.create({
     shadow: true
 });
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-linenums-1" id="tab-linenums-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-linenums-1"
-                            aria-labelledby="tab-linenums-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-linenums-1" id="tab-linenums-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-linenums-1"
+                                aria-labelledby="tab-linenums-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;div class="nds-code nds-expandable"&gt;
   &lt;div class="nds-code-action"&gt;
     &lt;button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example"&gt;
@@ -156,27 +159,29 @@ NDS.Alert.create({
   &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Expandable Code Block -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Expandable Code Block</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-code nds-expandable">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-javascript">
+            <div class="nds-block">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Expandable Code Block</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-code nds-expandable">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-javascript">
 async function handleFormSubmit(form) {
     const alertContainer = document.getElementById('form-alerts');
 
@@ -212,31 +217,31 @@ async function handleFormSubmit(form) {
     }
 }
                             </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-expandable-1" id="tab-expandable-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-expandable-1"
-                            aria-labelledby="tab-expandable-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-expandable-1" id="tab-expandable-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-expandable-1"
+                                aria-labelledby="tab-expandable-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;div class="nds-code nds-expandable"&gt;
   &lt;div class="nds-code-action"&gt;
     &lt;button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example"&gt;
@@ -251,9 +256,10 @@ async function handleFormSubmit(form) {
   &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -270,68 +276,69 @@ async function handleFormSubmit(form) {
             <p class="nds-section-description">Code blocks with tab navigation for showing multiple languages or file types</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <!-- Single Tab -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Single Tab</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="demo-panel-single-1" id="demo-tab-single-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-single-1"
-                                    aria-labelledby="demo-tab-single-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                <!-- Single Tab -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Single Tab</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="demo-panel-single-1" id="demo-tab-single-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-single-1"
+                                        aria-labelledby="demo-tab-single-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-primary nds-lg"&gt;
   &lt;i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"&gt;&lt;/i&gt;
   &lt;span class="nds-label"&gt;Button Text&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-singletab-1" id="tab-singletab-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-singletab-1"
-                            aria-labelledby="tab-singletab-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
                             </div>
-                            <code class="lang-html code">
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-singletab-1" id="tab-singletab-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-singletab-1"
+                                aria-labelledby="tab-singletab-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;div class="demo-code"&gt;
 &lt;div class="nds-tabs nds-code nds-divided"&gt;
   &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
@@ -360,48 +367,50 @@ async function handleFormSubmit(form) {
 &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Multiple Tabs -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Multiple Tabs</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="demo-panel-multi-html" id="demo-tab-multi-html">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="demo-panel-multi-js" id="demo-tab-multi-js">
-                                        <span class="nds-tab-label">JavaScript</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="demo-panel-multi-css" id="demo-tab-multi-css">
-                                        <span class="nds-tab-label">CSS</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-multi-html"
-                                    aria-labelledby="demo-tab-multi-html">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Multiple Tabs</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="demo-panel-multi-html" id="demo-tab-multi-html">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="demo-panel-multi-js" id="demo-tab-multi-js">
+                                            <span class="nds-tab-label">JavaScript</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="demo-panel-multi-css" id="demo-tab-multi-css">
+                                            <span class="nds-tab-label">CSS</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-multi-html"
+                                        aria-labelledby="demo-tab-multi-html">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-alert nds-card" data-status="success"&gt;
   &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
     &lt;span class="nds-feedback-icon"&gt;
@@ -416,15 +425,15 @@ async function handleFormSubmit(form) {
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-multi-js"
-                                    aria-labelledby="demo-tab-multi-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-multi-js"
+                                        aria-labelledby="demo-tab-multi-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">
 NDS.Alert.create({
     variant: 'success',
     title: 'Success',
@@ -432,15 +441,15 @@ NDS.Alert.create({
     target: '#container'
 });
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-multi-css"
-                                    aria-labelledby="demo-tab-multi-css" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-css code">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-multi-css"
+                                        aria-labelledby="demo-tab-multi-css" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-css code">
 .nds-alert {
   display: flex;
   align-items: flex-start;
@@ -448,34 +457,34 @@ NDS.Alert.create({
   padding: var(--spacing-lg);
 }
                                     </code>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-multitab-1" id="tab-multitab-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-multitab-1"
-                            aria-labelledby="tab-multitab-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
                             </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-multitab-1" id="tab-multitab-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-multitab-1"
+                                aria-labelledby="tab-multitab-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;div class="demo-code"&gt;
 &lt;div class="nds-tabs nds-code nds-divided"&gt;
   &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
@@ -519,47 +528,49 @@ NDS.Alert.create({
 &lt;/div&gt;
 &lt;/div&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Hidden Tabbed Code (inside demo cards) -->
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Hidden Code in Demo Cards</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <p style="padding: var(--spacing-lg); color: var(--text-subdued); text-align: center;">
-                            When used inside demo cards, tabbed code blocks start with the <strong>hidden</strong> attribute.
-                            The showcase JavaScript reveals them with a toggle button. Click the code icon below any demo card to see this in action.
-                        </p>
+            <div class="nds-block nds-prose">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Hidden Code in Demo Cards</div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-hidden-1" id="tab-hidden-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <p style="padding: var(--spacing-lg); color: var(--text-subdued); text-align: center;">
+                                When used inside demo cards, tabbed code blocks start with the <strong>hidden</strong> attribute.
+                                The showcase JavaScript reveals them with a toggle button. Click the code icon below any demo card to see this in action.
+                            </p>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hidden-1"
-                            aria-labelledby="tab-hidden-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-hidden-1" id="tab-hidden-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hidden-1"
+                                aria-labelledby="tab-hidden-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;!-- Inside a .nds-demo-card, add hidden attribute --&gt;
 &lt;div class="demo-code"&gt;
 &lt;div class="nds-tabs nds-code nds-divided"&gt;
@@ -567,9 +578,10 @@ NDS.Alert.create({
 &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -586,43 +598,45 @@ NDS.Alert.create({
             <p class="nds-section-description">Use <code class="nds-inline-code lang-html">nds-inline-code</code> on a <code class="nds-inline-code lang-html">&lt;code&gt;</code> element for short inline code references with syntax coloring</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Inline Code</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo" style="padding: var(--spacing-lg);">
-                        <p>Call <code class="nds-inline-code lang-html">NDS.Code.init</code> after inserting dynamic code blocks, or use the class <code class="nds-inline-code lang-html">nds-inline-code</code> directly on any <code class="nds-inline-code lang-html">&lt;code&gt;</code> element.</p>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Inline Code</div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-code-inline-1" id="tab-code-inline-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-code-inline-1"
-                            aria-labelledby="tab-code-inline-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <code class="lang-html code">
-&lt;p&gt;Call &lt;code class="nds-inline-code lang-html"&gt;NDS.Code.init&lt;/code&gt; after inserting dynamic code blocks, or use the class &lt;code class="nds-inline-code lang-html"&gt;nds-inline-code&lt;/code&gt; directly on any &lt;code class="nds-inline-code lang-html"&gt;&amp;lt;code&amp;gt;&lt;/code&gt; element.&lt;/p&gt;
-                            </code>
+                    <div class="demo-container">
+                        <div class="state-demo" style="padding: var(--spacing-lg);">
+                            <p>Call <code class="nds-inline-code lang-html">NDS.Code.init</code> after inserting dynamic code blocks, or use the class <code class="nds-inline-code lang-html">nds-inline-code</code> directly on any <code class="nds-inline-code lang-html">&lt;code&gt;</code> element.</p>
                         </div>
                     </div>
-                </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-code-inline-1" id="tab-code-inline-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-code-inline-1"
+                                aria-labelledby="tab-code-inline-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
+&lt;p&gt;Call &lt;code class="nds-inline-code lang-html"&gt;NDS.Code.init&lt;/code&gt; after inserting dynamic code blocks, or use the class &lt;code class="nds-inline-code lang-html"&gt;nds-inline-code&lt;/code&gt; directly on any &lt;code class="nds-inline-code lang-html"&gt;&amp;lt;code&amp;gt;&lt;/code&gt; element.&lt;/p&gt;
+                            </code>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </div>
 
@@ -639,50 +653,52 @@ NDS.Alert.create({
             <p class="nds-section-description">Supported language identifiers for the code element. When no class is present, the lexer sniffs the language from the content automatically.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Available Language Classes</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo" style="padding: var(--spacing-lg);">
-                        <table class="nds-table nds-responsive" style="--min-width:500px;">
-                            <thead>
-                                <tr>
-                                    <th>Class</th>
-                                    <th>Language</th>
-                                    <th>Usage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code class="nds-inline-code lang-html">lang-html</code></td>
-                                    <td>HTML / XML</td>
-                                    <td>Markup and template examples</td>
-                                </tr>
-                                <tr>
-                                    <td><code class="nds-inline-code lang-html">lang-css</code></td>
-                                    <td>CSS</td>
-                                    <td>Stylesheet examples. SCSS-only syntax (<code class="nds-inline-code lang-html">$vars</code>, <code class="nds-inline-code lang-html">@mixin</code>, <code class="nds-inline-code lang-html">//</code> comments) is not lexed</td>
-                                </tr>
-                                <tr>
-                                    <td><code class="nds-inline-code lang-html">lang-javascript</code> or <code class="nds-inline-code lang-html">lang-js</code></td>
-                                    <td>JavaScript</td>
-                                    <td>Script and API examples</td>
-                                </tr>
-                                <tr>
-                                    <td><code class="nds-inline-code lang-html">lang-markdown</code> or <code class="nds-inline-code lang-html">lang-md</code></td>
-                                    <td>Markdown</td>
-                                    <td>Docs and agent-instruction blocks. Headings, list and quote markers, links, bold, and inline code are coloured. A fenced block is lexed as its info-string language (<code class="nds-inline-code lang-html">```html</code>, <code class="nds-inline-code lang-html">```css</code>, <code class="nds-inline-code lang-html">```js</code>); any other info string renders the body as a flat code run. Prose-length lines soft-wrap instead of scrolling horizontally — the wrap is visual only, so copied text keeps the authored line breaks</td>
-                                </tr>
-                                <tr>
-                                    <td><code class="nds-inline-code lang-html">lang-prompt</code></td>
-                                    <td>AI prompt</td>
-                                    <td>Prompt text written to be pasted into a coding agent. Colours the parts the reader must check before sending: paths and filenames, <code class="nds-inline-code lang-html">SCREAMING_CASE</code> placeholders and markers, and quoted phrases. Wraps like Markdown</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Available Language Classes</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo" style="padding: var(--spacing-lg);">
+                            <table class="nds-table nds-responsive" style="--min-width:500px;">
+                                <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Language</th>
+                                        <th>Usage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code class="nds-inline-code lang-html">lang-html</code></td>
+                                        <td>HTML / XML</td>
+                                        <td>Markup and template examples</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="nds-inline-code lang-html">lang-css</code></td>
+                                        <td>CSS</td>
+                                        <td>Stylesheet examples. SCSS-only syntax (<code class="nds-inline-code lang-html">$vars</code>, <code class="nds-inline-code lang-html">@mixin</code>, <code class="nds-inline-code lang-html">//</code> comments) is not lexed</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="nds-inline-code lang-html">lang-javascript</code> or <code class="nds-inline-code lang-html">lang-js</code></td>
+                                        <td>JavaScript</td>
+                                        <td>Script and API examples</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="nds-inline-code lang-html">lang-markdown</code> or <code class="nds-inline-code lang-html">lang-md</code></td>
+                                        <td>Markdown</td>
+                                        <td>Docs and agent-instruction blocks. Headings, list and quote markers, links, bold, and inline code are coloured. A fenced block is lexed as its info-string language (<code class="nds-inline-code lang-html">```html</code>, <code class="nds-inline-code lang-html">```css</code>, <code class="nds-inline-code lang-html">```js</code>); any other info string renders the body as a flat code run. Prose-length lines soft-wrap instead of scrolling horizontally — the wrap is visual only, so copied text keeps the authored line breaks</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="nds-inline-code lang-html">lang-prompt</code></td>
+                                        <td>AI prompt</td>
+                                        <td>Prompt text written to be pasted into a coding agent. Colours the parts the reader must check before sending: paths and filenames, <code class="nds-inline-code lang-html">SCREAMING_CASE</code> placeholders and markers, and quoted phrases. Wraps like Markdown</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -699,55 +715,57 @@ NDS.Alert.create({
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-source-code"></i>
-                        <span class="nds-label">Syntax Highlighting</span>
-                    </span>
-                    <p class="nds-item-desc">HTML, CSS, JavaScript, Markdown, and agent prompts are highlighted automatically. Embedded <code class="nds-inline-code lang-html">&lt;style&gt;</code> and <code class="nds-inline-code lang-html">&lt;script&gt;</code> bodies inside HTML blocks are highlighted in their respective languages.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01"></i>
-                        <span class="nds-label">Line Numbers</span>
-                    </span>
-                    <p class="nds-item-desc">Every block gets a CSS counter gutter — no class needed. The gutter is reserved in CSS so it paints before the highlighter loads, and the line digits drop into it without shifting your code. Markdown blocks skip the gutter — their lines soft-wrap, so one digit would sit beside several visual rows.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01"></i>
-                        <span class="nds-label">Language Label</span>
-                    </span>
-                    <p class="nds-item-desc">Each block names its language with an <code class="nds-inline-code lang-html">nds-tag</code> in the top corner opposite the action bar, stamped from the authored <code class="nds-inline-code lang-html">lang-*</code> class — so it names languages the highlighter doesn't lex too (<code class="nds-inline-code lang-html">lang-bash</code>, <code class="nds-inline-code lang-html">lang-json</code>). Every block carries one: in a tabbed block the tag sits in each panel, and a block with no <code class="nds-inline-code lang-html">lang-*</code> class is named from the sniffed language. To place extra badges beside it, author a <code class="nds-inline-code lang-html">.nds-code-tags</code> strip (see Usage Guidelines).</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-copy-01"></i>
-                        <span class="nds-label">Copy Button</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-copy</code> to any button inside <code class="nds-inline-code lang-html">.nds-code-action</code> to copy the block's source text. The component sizes that button itself — <code class="nds-inline-code lang-html">nds-icon-only nds-md</code> is stamped at init, so no block needs the classes in its markup; a button carrying a visible label keeps its width. The button shows a brief "Copied" state on success.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01"></i>
-                        <span class="nds-label">Language Auto-detection</span>
-                    </span>
-                    <p class="nds-item-desc">When no <code class="nds-inline-code lang-html">lang-*</code> class is set, the lexer sniffs the language from the content: leading <code class="nds-inline-code lang-html">&lt;</code> implies HTML, JS keywords imply JavaScript, selector or declaration patterns imply CSS. A <code class="nds-inline-code lang-html">lang-*</code> class that names a language we don't lex renders as plain text — your label is never overridden by a guess.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code"></i>
-                        <span class="nds-label">Inline Code</span>
-                    </span>
-                    <p class="nds-item-desc">Apply <code class="nds-inline-code lang-html">nds-inline-code</code> to a <code class="nds-inline-code lang-html">&lt;code&gt;</code> element for short inline references. Coloring comes straight from the <code class="nds-inline-code lang-html">lang-*</code> class in CSS, so inline code is correct at first paint with no JavaScript.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors"></i>
-                        <span class="nds-label">Themeable Tokens</span>
-                    </span>
-                    <p class="nds-item-desc">Six role-named <code class="nds-inline-code lang-html">--syntax-*</code> custom properties let you override every syntax color at the page or component level. Each ships a light and a dark value that clears WCAG AA contrast.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-source-code"></i>
+                            <span class="nds-label">Syntax Highlighting</span>
+                        </span>
+                        <p class="nds-item-desc">HTML, CSS, JavaScript, Markdown, and agent prompts are highlighted automatically. Embedded <code class="nds-inline-code lang-html">&lt;style&gt;</code> and <code class="nds-inline-code lang-html">&lt;script&gt;</code> bodies inside HTML blocks are highlighted in their respective languages.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layers-01"></i>
+                            <span class="nds-label">Line Numbers</span>
+                        </span>
+                        <p class="nds-item-desc">Every block gets a CSS counter gutter — no class needed. The gutter is reserved in CSS so it paints before the highlighter loads, and the line digits drop into it without shifting your code. Markdown blocks skip the gutter — their lines soft-wrap, so one digit would sit beside several visual rows.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-tag-01"></i>
+                            <span class="nds-label">Language Label</span>
+                        </span>
+                        <p class="nds-item-desc">Each block names its language with an <code class="nds-inline-code lang-html">nds-tag</code> in the top corner opposite the action bar, stamped from the authored <code class="nds-inline-code lang-html">lang-*</code> class — so it names languages the highlighter doesn't lex too (<code class="nds-inline-code lang-html">lang-bash</code>, <code class="nds-inline-code lang-html">lang-json</code>). Every block carries one: in a tabbed block the tag sits in each panel, and a block with no <code class="nds-inline-code lang-html">lang-*</code> class is named from the sniffed language. To place extra badges beside it, author a <code class="nds-inline-code lang-html">.nds-code-tags</code> strip (see Usage Guidelines).</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            <span class="nds-label">Copy Button</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-copy</code> to any button inside <code class="nds-inline-code lang-html">.nds-code-action</code> to copy the block's source text. The component sizes that button itself — <code class="nds-inline-code lang-html">nds-icon-only nds-md</code> is stamped at init, so no block needs the classes in its markup; a button carrying a visible label keeps its width. The button shows a brief "Copied" state on success.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-tag-01"></i>
+                            <span class="nds-label">Language Auto-detection</span>
+                        </span>
+                        <p class="nds-item-desc">When no <code class="nds-inline-code lang-html">lang-*</code> class is set, the lexer sniffs the language from the content: leading <code class="nds-inline-code lang-html">&lt;</code> implies HTML, JS keywords imply JavaScript, selector or declaration patterns imply CSS. A <code class="nds-inline-code lang-html">lang-*</code> class that names a language we don't lex renders as plain text — your label is never overridden by a guess.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-code"></i>
+                            <span class="nds-label">Inline Code</span>
+                        </span>
+                        <p class="nds-item-desc">Apply <code class="nds-inline-code lang-html">nds-inline-code</code> to a <code class="nds-inline-code lang-html">&lt;code&gt;</code> element for short inline references. Coloring comes straight from the <code class="nds-inline-code lang-html">lang-*</code> class in CSS, so inline code is correct at first paint with no JavaScript.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-colors"></i>
+                            <span class="nds-label">Themeable Tokens</span>
+                        </span>
+                        <p class="nds-item-desc">Six role-named <code class="nds-inline-code lang-html">--syntax-*</code> custom properties let you override every syntax color at the page or component level. Each ships a light and a dark value that clears WCAG AA contrast.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -762,7 +780,7 @@ NDS.Alert.create({
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Authored Tag Strip</h3>
                 <p>To place extra badges beside the language tag (a version tag, a status chip), author a <code class="nds-inline-code lang-html">.nds-code-tags</code> strip as a direct child of the block. The strip replaces the auto-stamped label — the authored <code class="nds-inline-code lang-html">.nds-code-lang</code> chip inside it suppresses the stamp — and it carries the block's <code class="nds-inline-code lang-html">lang-*</code> class so it clears the line-number gutter the same way the stamped tag would. Extra chips are ordinary <code class="nds-inline-code lang-html">nds-tag</code> elements.</p>
                 <div class="nds-code">
@@ -794,7 +812,7 @@ NDS.Alert.create({
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <p>These properties apply to both <code class="nds-inline-code lang-html">.nds-code</code> and <code class="nds-inline-code lang-html">.nds-inline-code</code>. Set them on a parent element or <code class="nds-inline-code lang-html">:root</code> to re-theme all code on the page. Each is named for the role it colors, and setting one overrides both light and dark mode.</p>
                 <table class="nds-table nds-responsive">
@@ -811,7 +829,7 @@ NDS.Alert.create({
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Code</strong> API is called automatically on page load. Call <strong>NDS.Code.init()</strong> after inserting code blocks dynamically.</p>
                 <div class="nds-code nds-expandable">

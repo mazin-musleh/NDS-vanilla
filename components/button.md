@@ -19,113 +19,115 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Six variants across all interaction states</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Primary</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-primary", ".nds-demo", "stdVariant"]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-demo", "stdVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary", ".nds-demo", "stdVariant"]'>
-                                            <span class="nds-label">Secondary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary-outline", ".nds-demo", "stdVariant"]'>
-                                            <span class="nds-label">Secondary Outline</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-subtle", ".nds-demo", "stdVariant"]'>
-                                            <span class="nds-label">Subtle</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-transparent", ".nds-demo", "stdVariant"]'>
-                                            <span class="nds-label">Transparent</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-demo", "stdSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-demo", "stdSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-demo", "stdSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='[["nds-oncolor", ".nds-demo", "stdOncolor"],["dark-bg", ".demo-container", "stdOncolor"]]'>
-                                <span class="nds-label">On Color</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-indicator", ".nds-demo", "stdIndicator"]'>
-                                <span class="nds-label">Indicator</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="default"><span class="nds-label">Default</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="hover"><span class="nds-label">Hover</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="pressed"><span class="nds-label">Pressed</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="selected"><span class="nds-label">Selected</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" data-state="focused"><span class="nds-label">Focused</span></button>
-                            <button class="nds-btn nds-primary nds-lg nds-demo" disabled><span class="nds-label">Disabled</span></button>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-standard-1" id="tab-btn-standard-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Primary</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-primary", ".nds-demo", "stdVariant"]'>
+                                                <span class="nds-label">Primary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-demo", "stdVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary", ".nds-demo", "stdVariant"]'>
+                                                <span class="nds-label">Secondary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary-outline", ".nds-demo", "stdVariant"]'>
+                                                <span class="nds-label">Secondary Outline</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-subtle", ".nds-demo", "stdVariant"]'>
+                                                <span class="nds-label">Subtle</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-transparent", ".nds-demo", "stdVariant"]'>
+                                                <span class="nds-label">Transparent</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-demo", "stdSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-demo", "stdSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-demo", "stdSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='[["nds-oncolor", ".nds-demo", "stdOncolor"],["dark-bg", ".demo-container", "stdOncolor"]]'>
+                                    <span class="nds-label">On Color</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-indicator", ".nds-demo", "stdIndicator"]'>
+                                    <span class="nds-label">Indicator</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-standard-1"
-                                    aria-labelledby="tab-btn-standard-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-primary nds-lg nds-demo" data-state="default"><span class="nds-label">Default</span></button>
+                                <button class="nds-btn nds-primary nds-lg nds-demo" data-state="hover"><span class="nds-label">Hover</span></button>
+                                <button class="nds-btn nds-primary nds-lg nds-demo" data-state="pressed"><span class="nds-label">Pressed</span></button>
+                                <button class="nds-btn nds-primary nds-lg nds-demo" data-state="selected"><span class="nds-label">Selected</span></button>
+                                <button class="nds-btn nds-primary nds-lg nds-demo" data-state="focused"><span class="nds-label">Focused</span></button>
+                                <button class="nds-btn nds-primary nds-lg nds-demo" disabled><span class="nds-label">Disabled</span></button>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-standard-1" id="tab-btn-standard-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-standard-1"
+                                        aria-labelledby="tab-btn-standard-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-primary"&gt;
   &lt;span class="nds-label"&gt;Button&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -144,109 +146,111 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Red-toned variants for delete, remove, and irreversible actions</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Primary</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-primary", ".nds-demo", "destVariant"]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary", ".nds-demo", "destVariant"]'>
-                                            <span class="nds-label">Secondary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary-outline", ".nds-demo", "destVariant"]'>
-                                            <span class="nds-label">Secondary Outline</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-subtle", ".nds-demo", "destVariant"]'>
-                                            <span class="nds-label">Subtle</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-transparent", ".nds-demo", "destVariant"]'>
-                                            <span class="nds-label">Transparent</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-demo", "destSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-demo", "destSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-demo", "destSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='[["nds-oncolor", ".nds-demo", "destOncolor"],["dark-bg", ".demo-container", "destOncolor"]]'>
-                                <span class="nds-label">On Color</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-indicator", ".nds-demo", "destIndicator"]'>
-                                <span class="nds-label">Indicator</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="default"><span class="nds-label">Default</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="hover"><span class="nds-label">Hover</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="pressed"><span class="nds-label">Pressed</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="selected"><span class="nds-label">Selected</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="focused"><span class="nds-label">Focused</span></button>
-                            <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" disabled><span class="nds-label">Disabled</span></button>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-destructive-1" id="tab-btn-destructive-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Primary</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-primary", ".nds-demo", "destVariant"]'>
+                                                <span class="nds-label">Primary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary", ".nds-demo", "destVariant"]'>
+                                                <span class="nds-label">Secondary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary-outline", ".nds-demo", "destVariant"]'>
+                                                <span class="nds-label">Secondary Outline</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-subtle", ".nds-demo", "destVariant"]'>
+                                                <span class="nds-label">Subtle</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-transparent", ".nds-demo", "destVariant"]'>
+                                                <span class="nds-label">Transparent</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-demo", "destSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-demo", "destSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-demo", "destSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='[["nds-oncolor", ".nds-demo", "destOncolor"],["dark-bg", ".demo-container", "destOncolor"]]'>
+                                    <span class="nds-label">On Color</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-indicator", ".nds-demo", "destIndicator"]'>
+                                    <span class="nds-label">Indicator</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-destructive-1"
-                                    aria-labelledby="tab-btn-destructive-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="default"><span class="nds-label">Default</span></button>
+                                <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="hover"><span class="nds-label">Hover</span></button>
+                                <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="pressed"><span class="nds-label">Pressed</span></button>
+                                <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="selected"><span class="nds-label">Selected</span></button>
+                                <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" data-state="focused"><span class="nds-label">Focused</span></button>
+                                <button class="nds-btn nds-primary nds-destructive nds-lg nds-demo" disabled><span class="nds-label">Disabled</span></button>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-destructive-1" id="tab-btn-destructive-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-destructive-1"
+                                        aria-labelledby="tab-btn-destructive-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-primary nds-destructive"&gt;
   &lt;span class="nds-label"&gt;Delete&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -265,152 +269,154 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Content visibility, icon position, shape, and state modifiers</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Primary</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-primary", ".nds-demo", "layoutVariant"]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-demo", "layoutVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary", ".nds-demo", "layoutVariant"]'>
-                                            <span class="nds-label">Secondary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary-outline", ".nds-demo", "layoutVariant"]'>
-                                            <span class="nds-label">Secondary Outline</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-subtle", ".nds-demo", "layoutVariant"]'>
-                                            <span class="nds-label">Subtle</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-transparent", ".nds-demo", "layoutVariant"]'>
-                                            <span class="nds-label">Transparent</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Primary</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-primary", ".nds-demo", "layoutVariant"]'>
+                                                <span class="nds-label">Primary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-demo", "layoutVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary", ".nds-demo", "layoutVariant"]'>
+                                                <span class="nds-label">Secondary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary-outline", ".nds-demo", "layoutVariant"]'>
+                                                <span class="nds-label">Secondary Outline</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-subtle", ".nds-demo", "layoutVariant"]'>
+                                                <span class="nds-label">Subtle</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-transparent", ".nds-demo", "layoutVariant"]'>
+                                                <span class="nds-label">Transparent</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-demo", "layoutSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-demo", "layoutSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-demo", "layoutSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-demo", "layoutSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-demo", "layoutSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-demo", "layoutSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Content</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-demo", "layoutContent"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-icon-only", ".nds-demo", "layoutContent"]'>
-                                            <span class="nds-label">Icon Only</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-label-only", ".nds-demo", "layoutContent"]'>
-                                            <span class="nds-label">Label Only</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Content</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-demo", "layoutContent"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-icon-only", ".nds-demo", "layoutContent"]'>
+                                                <span class="nds-label">Icon Only</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-label-only", ".nds-demo", "layoutContent"]'>
+                                                <span class="nds-label">Label Only</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Shape</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-demo", "layoutShape"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-circle", ".nds-demo", "layoutShape"]'>
-                                            <span class="nds-label">Circle</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-full", ".nds-demo", "layoutShape"]'>
-                                            <span class="nds-label">Full Width</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Shape</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-demo", "layoutShape"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-circle", ".nds-demo", "layoutShape"]'>
+                                                <span class="nds-label">Circle</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-full", ".nds-demo", "layoutShape"]'>
+                                                <span class="nds-label">Full Width</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-trail-icon", ".nds-demo", "layoutTrail"]'>
+                                    <span class="nds-label">Trail Icon</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["data-state=loading", ".nds-demo", "layoutLoading", "attr"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-trail-icon", ".nds-demo", "layoutTrail"]'>
-                                <span class="nds-label">Trail Icon</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["data-state=loading", ".nds-demo", "layoutLoading", "attr"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
+                        </div>
+                        <div class="demo-container">
+                            <button class="nds-btn nds-primary nds-lg nds-demo">
+                                <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+                                <span class="nds-label">Add Item</span>
                             </button>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <button class="nds-btn nds-primary nds-lg nds-demo">
-                            <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
-                            <span class="nds-label">Add Item</span>
-                        </button>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-layout-1" id="tab-btn-layout-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-layout-1"
-                                    aria-labelledby="tab-btn-layout-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-layout-1" id="tab-btn-layout-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-layout-1"
+                                        aria-labelledby="tab-btn-layout-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-primary"&gt;
   &lt;i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"&gt;&lt;/i&gt;
   &lt;span class="nds-label"&gt;Add Item&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -429,117 +435,119 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Dropdown trigger with auto-rotating indicator</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Secondary Outline</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-primary", ".nds-demo", "menuVariant"]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-demo", "menuVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary", ".nds-demo", "menuVariant"]'>
-                                            <span class="nds-label">Secondary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-secondary-outline", ".nds-demo", "menuVariant"]'>
-                                            <span class="nds-label">Secondary Outline</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-subtle", ".nds-demo", "menuVariant"]'>
-                                            <span class="nds-label">Subtle</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-transparent", ".nds-demo", "menuVariant"]'>
-                                            <span class="nds-label">Transparent</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Secondary Outline</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-primary", ".nds-demo", "menuVariant"]'>
+                                                <span class="nds-label">Primary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-demo", "menuVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary", ".nds-demo", "menuVariant"]'>
+                                                <span class="nds-label">Secondary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-secondary-outline", ".nds-demo", "menuVariant"]'>
+                                                <span class="nds-label">Secondary Outline</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-subtle", ".nds-demo", "menuVariant"]'>
+                                                <span class="nds-label">Subtle</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-transparent", ".nds-demo", "menuVariant"]'>
+                                                <span class="nds-label">Transparent</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-demo", "menuSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-demo", "menuSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-demo", "menuSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-demo", "menuSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-demo", "menuSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-demo", "menuSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Content</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-demo", "menuContent"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-icon-only", ".nds-demo", "menuContent"]'>
-                                            <span class="nds-label">Icon Only</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-label-only", ".nds-demo", "menuContent"]'>
-                                            <span class="nds-label">Label Only</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Content</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-demo", "menuContent"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-icon-only", ".nds-demo", "menuContent"]'>
+                                                <span class="nds-label">Icon Only</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-label-only", ".nds-demo", "menuContent"]'>
+                                                <span class="nds-label">Label Only</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <button class="nds-btn nds-secondary-outline nds-menu-btn nds-lg nds-demo">
-                            <span class="nds-label">Options</span>
-                        </button>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-menu-1" id="tab-btn-menu-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-menu-1"
-                                    aria-labelledby="tab-btn-menu-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-container">
+                            <button class="nds-btn nds-secondary-outline nds-menu-btn nds-lg nds-demo">
+                                <span class="nds-label">Options</span>
+                            </button>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-menu-1" id="tab-btn-menu-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-menu-1"
+                                        aria-labelledby="tab-btn-menu-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-secondary-outline nds-menu-btn"&gt;
   &lt;span class="nds-label"&gt;Options&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -558,38 +566,39 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Pseudo-element icon buttons for navigation: next, previous, up, down, and ellipsis</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-secondary-outline nds-next"><span class="nds-label">Next</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-prev"><span class="nds-label">Prev</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-up"><span class="nds-label">Up</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-down"><span class="nds-label">Down</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-ellipsis nds-icon-only" aria-label="More"></button>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-directional-1" id="tab-btn-directional-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-secondary-outline nds-next"><span class="nds-label">Next</span></button>
+                                <button class="nds-btn nds-secondary-outline nds-prev"><span class="nds-label">Prev</span></button>
+                                <button class="nds-btn nds-secondary-outline nds-up"><span class="nds-label">Up</span></button>
+                                <button class="nds-btn nds-secondary-outline nds-down"><span class="nds-label">Down</span></button>
+                                <button class="nds-btn nds-secondary-outline nds-ellipsis nds-icon-only" aria-label="More"></button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-directional-1"
-                                    aria-labelledby="tab-btn-directional-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-directional-1" id="tab-btn-directional-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-directional-1"
+                                        aria-labelledby="tab-btn-directional-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;!-- Next: arrow points forward (RTL-aware) --&gt;
 &lt;button class="nds-btn nds-secondary-outline nds-next"&gt;
   &lt;span class="nds-label"&gt;Next&lt;/span&gt;
@@ -613,6 +622,7 @@ last_edit: "24/07/2026 - 04:05 PM"
 &lt;!-- Ellipsis (icon-only, no label needed) --&gt;
 &lt;button class="nds-btn nds-secondary-outline nds-ellipsis nds-icon-only" aria-label="More"&gt;&lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -631,108 +641,110 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Grouped buttons with merged borders and shared border radius</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Secondary Outline</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-primary", ".nds-demo", "groupVariant"]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-demo", "groupVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary", ".nds-demo", "groupVariant"]'>
-                                            <span class="nds-label">Secondary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-secondary-outline", ".nds-demo", "groupVariant"]'>
-                                            <span class="nds-label">Secondary Outline</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-subtle", ".nds-demo", "groupVariant"]'>
-                                            <span class="nds-label">Subtle</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-transparent", ".nds-demo", "groupVariant"]'>
-                                            <span class="nds-label">Transparent</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-<button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-demo", "groupSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-demo", "groupSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-demo", "groupSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-vertical", ".nds-btn-group", "groupAxis"]'>
-                                <span class="nds-label">Vertical</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="nds-btn-group">
-                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Left</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Center</span></button>
-                            <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Right</span></button>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-group-1" id="tab-btn-group-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Secondary Outline</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-primary", ".nds-demo", "groupVariant"]'>
+                                                <span class="nds-label">Primary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-demo", "groupVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary", ".nds-demo", "groupVariant"]'>
+                                                <span class="nds-label">Secondary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-secondary-outline", ".nds-demo", "groupVariant"]'>
+                                                <span class="nds-label">Secondary Outline</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-subtle", ".nds-demo", "groupVariant"]'>
+                                                <span class="nds-label">Subtle</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-transparent", ".nds-demo", "groupVariant"]'>
+                                                <span class="nds-label">Transparent</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-demo", "groupSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-demo", "groupSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-demo", "groupSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-vertical", ".nds-btn-group", "groupAxis"]'>
+                                    <span class="nds-label">Vertical</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-group-1"
-                                    aria-labelledby="tab-btn-group-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="nds-btn-group">
+                                <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Left</span></button>
+                                <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Center</span></button>
+                                <button class="nds-btn nds-secondary-outline nds-lg nds-demo"><span class="nds-label">Right</span></button>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-group-1" id="tab-btn-group-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-group-1"
+                                        aria-labelledby="tab-btn-group-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-btn-group"&gt;
   &lt;button class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Left&lt;/span&gt;&lt;/button&gt;
   &lt;button class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Center&lt;/span&gt;&lt;/button&gt;
   &lt;button class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Right&lt;/span&gt;&lt;/button&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -751,113 +763,114 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Circular countdown timer controlled by --progress-duration</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Primary</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-primary", ".nds-progress", "progressVariant"]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-progress", "progressVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary", ".nds-progress", "progressVariant"]'>
-                                            <span class="nds-label">Secondary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary-outline", ".nds-progress", "progressVariant"]'>
-                                            <span class="nds-label">Secondary Outline</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-subtle", ".nds-progress", "progressVariant"]'>
-                                            <span class="nds-label">Subtle</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-transparent", ".nds-progress", "progressVariant"]'>
-                                            <span class="nds-label">Transparent</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Primary</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-primary", ".nds-progress", "progressVariant"]'>
+                                                <span class="nds-label">Primary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-progress", "progressVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary", ".nds-progress", "progressVariant"]'>
+                                                <span class="nds-label">Secondary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary-outline", ".nds-progress", "progressVariant"]'>
+                                                <span class="nds-label">Secondary Outline</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-subtle", ".nds-progress", "progressVariant"]'>
+                                                <span class="nds-label">Subtle</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-transparent", ".nds-progress", "progressVariant"]'>
+                                                <span class="nds-label">Transparent</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-progress", "progressSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-progress", "progressSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-progress", "progressSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-progress", "progressSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-progress", "progressSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-progress", "progressSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-circle", ".nds-progress", "progressCircle"]'>
+                                    <span class="nds-label">Circle</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-action-btn"
+                                    data-action="reset-progress-duration">
+                                    <span class="nds-label">Reset</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-circle", ".nds-progress", "progressCircle"]'>
-                                <span class="nds-label">Circle</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-action-btn"
-                                data-action="reset-progress-duration">
-                                <span class="nds-label">Reset</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
+                        </div>
+                        <div class="demo-container">
+                            <button class="nds-btn nds-primary nds-icon-only nds-progress nds-lg"
+                                style="--progress-duration: 4000ms;" aria-label="Close">
+                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                <div class="nds-progress-circle">
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+                                    </svg>
+                                </div>
                             </button>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <button class="nds-btn nds-primary nds-icon-only nds-progress nds-lg"
-                            style="--progress-duration: 4000ms;" aria-label="Close">
-                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                            <div class="nds-progress-circle">
-                                <svg width="100%" height="100%" viewBox="0 0 24 24">
-                                    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-                                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-                                        stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
-                                </svg>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-progress-1" id="tab-btn-progress-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-btn-progress-1"
-                                    aria-labelledby="tab-btn-progress-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-progress-1" id="tab-btn-progress-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-btn-progress-1"
+                                        aria-labelledby="tab-btn-progress-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;button class="nds-btn nds-primary nds-icon-only nds-progress"
         style="--progress-duration: 4000ms;"
         aria-label="Close"&gt;
@@ -871,6 +884,7 @@ last_edit: "24/07/2026 - 04:05 PM"
   &lt;/div&gt;
 &lt;/button&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -890,113 +904,114 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Fixed percentage indicator controlled by --progress-value</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Primary</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-primary", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="nds-label">Secondary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-secondary-outline", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="nds-label">Secondary Outline</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-subtle", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="nds-label">Subtle</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-transparent", ".nds-progress-static", "progressStaticVariant"]'>
-                                            <span class="nds-label">Transparent</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Primary</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-primary", ".nds-progress-static", "progressStaticVariant"]'>
+                                                <span class="nds-label">Primary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-progress-static", "progressStaticVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary", ".nds-progress-static", "progressStaticVariant"]'>
+                                                <span class="nds-label">Secondary</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-secondary-outline", ".nds-progress-static", "progressStaticVariant"]'>
+                                                <span class="nds-label">Secondary Outline</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-subtle", ".nds-progress-static", "progressStaticVariant"]'>
+                                                <span class="nds-label">Subtle</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-transparent", ".nds-progress-static", "progressStaticVariant"]'>
+                                                <span class="nds-label">Transparent</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-progress-static", "progressStaticSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-progress-static", "progressStaticSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-progress-static", "progressStaticSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-progress-static", "progressStaticSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-progress-static", "progressStaticSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-progress-static", "progressStaticSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-circle", ".nds-progress-static", "progressStaticCircle"]'>
+                                    <span class="nds-label">Circle</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-action-btn"
+                                    data-action="random-progress-value">
+                                    <span class="nds-label">Random Value</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-circle", ".nds-progress-static", "progressStaticCircle"]'>
-                                <span class="nds-label">Circle</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-action-btn"
-                                data-action="random-progress-value">
-                                <span class="nds-label">Random Value</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
+                        </div>
+                        <div class="demo-container">
+                            <button class="nds-btn nds-primary nds-icon-only nds-progress nds-progress-static nds-lg"
+                                style="--progress-value: 25;" aria-label="Upload">
+                                <i class="hgi hgi-stroke hgi-upload-02"></i>
+                                <div class="nds-progress-circle">
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24">
+                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+                                    </svg>
+                                </div>
                             </button>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <button class="nds-btn nds-primary nds-icon-only nds-progress nds-progress-static nds-lg"
-                            style="--progress-value: 25;" aria-label="Upload">
-                            <i class="hgi hgi-stroke hgi-upload-02"></i>
-                            <div class="nds-progress-circle">
-                                <svg width="100%" height="100%" viewBox="0 0 24 24">
-                                    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-                                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-                                        stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
-                                </svg>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-progress-static-1" id="tab-btn-progress-static-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-btn-progress-static-1"
-                                    aria-labelledby="tab-btn-progress-static-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-progress-static-1" id="tab-btn-progress-static-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-btn-progress-static-1"
+                                        aria-labelledby="tab-btn-progress-static-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;button class="nds-btn nds-primary nds-icon-only nds-progress nds-progress-static"
         style="--progress-value: 25;"
         aria-label="Upload"&gt;
@@ -1010,6 +1025,7 @@ last_edit: "24/07/2026 - 04:05 PM"
   &lt;/div&gt;
 &lt;/button&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1029,84 +1045,85 @@ last_edit: "24/07/2026 - 04:05 PM"
             <p class="nds-section-description">Contextual color and icon change via data-status attribute</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Success</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["data-status=success", ".status-demo-btn", "statusToggle", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".status-demo-btn", "statusToggle", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=info", ".status-demo-btn", "statusToggle", "attr"]'>
-                                            <span class="nds-label">Info</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=warning", ".status-demo-btn", "statusToggle", "attr"]'>
-                                            <span class="nds-label">Warning</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Success</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["data-status=success", ".status-demo-btn", "statusToggle", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=error", ".status-demo-btn", "statusToggle", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=info", ".status-demo-btn", "statusToggle", "attr"]'>
+                                                <span class="nds-label">Info</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=warning", ".status-demo-btn", "statusToggle", "attr"]'>
+                                                <span class="nds-label">Warning</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-secondary status-demo-btn" onclick="this.dataset.status='success';setTimeout(()=>delete this.dataset.status,2000)">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                <span class="nds-label">Copy Link</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-status-1" id="tab-btn-status-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-btn-status-js" id="tab-btn-status-js">
-                                        <span class="nds-tab-label">JavaScript</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-secondary status-demo-btn" onclick="this.dataset.status='success';setTimeout(()=>delete this.dataset.status,2000)">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                    <span class="nds-label">Copy Link</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-status-1"
-                                    aria-labelledby="tab-btn-status-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-status-1" id="tab-btn-status-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-btn-status-js" id="tab-btn-status-js">
+                                            <span class="nds-tab-label">JavaScript</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-status-1"
+                                        aria-labelledby="tab-btn-status-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-secondary"&gt;
   &lt;i class="nds-icon nds-hgi-copy-01"&gt;&lt;/i&gt;
   &lt;span class="nds-label"&gt;Copy Link&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-status-js"
-                                    aria-labelledby="tab-btn-status-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-status-js"
+                                        aria-labelledby="tab-btn-status-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">
 // Set status with auto-reset after 2 seconds
 function copyAction(button) {
     button.dataset.status = 'success';
@@ -1116,6 +1133,7 @@ function copyAction(button) {
 const btn = document.querySelector('.nds-btn');
 btn.addEventListener('click', () =&gt; copyAction(btn));
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1134,56 +1152,58 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
             <p class="nds-section-description">Notification count overlay on icon buttons</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-icon-only nds-subtle">
-                                <i class="hgi hgi-stroke hgi-notification-03"><span class="nds-badge">3</span></i>
-                            </button>
-                            <button class="nds-btn nds-icon-only nds-subtle">
-                                <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"><span class="nds-badge">12</span></i>
-                            </button>
-                            <button class="nds-btn nds-icon-only nds-subtle">
-                                <i class="hgi hgi-stroke hgi-shopping-cart-01"><span class="nds-badge">5</span></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-badge-1" id="tab-btn-badge-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-badge-1"
-                                    aria-labelledby="tab-btn-badge-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-icon-only nds-subtle">
+                                    <i class="hgi hgi-stroke hgi-notification-03"><span class="nds-badge">3</span></i>
+                                </button>
+                                <button class="nds-btn nds-icon-only nds-subtle">
+                                    <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"><span class="nds-badge">12</span></i>
+                                </button>
+                                <button class="nds-btn nds-icon-only nds-subtle">
+                                    <i class="hgi hgi-stroke hgi-shopping-cart-01"><span class="nds-badge">5</span></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-badge-1" id="tab-btn-badge-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-badge-1"
+                                        aria-labelledby="tab-btn-badge-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-icon-only nds-subtle"&gt;
   &lt;i class="hgi hgi-stroke hgi-notification-03"&gt;
     &lt;span class="nds-badge"&gt;3&lt;/span&gt;
   &lt;/i&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1202,47 +1222,48 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
             <p class="nds-section-description">Click triggers a loading phase then a live countdown before the button is re-enabled</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-subtle nds-cooldown"
-                                data-cooldown="10"
-                                data-cooldown-loading="2"
-                                data-cooldown-label="Resend in {s}s"
-                                data-resend-label="Resend code"
-                                data-sent-title="Code sent"
-                                data-sent-message="Check your inbox for the verification code.">
-                                <i class="hgi hgi-stroke hgi-mail-send-01" aria-hidden="true"></i>
-                                <span class="nds-label">Send code</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-btn-cooldown-1" id="tab-btn-cooldown-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-btn-cooldown-js" id="tab-btn-cooldown-js">
-                                        <span class="nds-tab-label">JavaScript</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-subtle nds-cooldown"
+                                    data-cooldown="10"
+                                    data-cooldown-loading="2"
+                                    data-cooldown-label="Resend in {s}s"
+                                    data-resend-label="Resend code"
+                                    data-sent-title="Code sent"
+                                    data-sent-message="Check your inbox for the verification code.">
+                                    <i class="hgi hgi-stroke hgi-mail-send-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Send code</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-cooldown-1"
-                                    aria-labelledby="tab-btn-cooldown-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-cooldown-1" id="tab-btn-cooldown-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-btn-cooldown-js" id="tab-btn-cooldown-js">
+                                            <span class="nds-tab-label">JavaScript</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-cooldown-1"
+                                        aria-labelledby="tab-btn-cooldown-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-subtle nds-cooldown"
         data-cooldown="10"
         data-cooldown-loading="2"
@@ -1254,15 +1275,15 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
   &lt;span class="nds-label"&gt;Send code&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-cooldown-js"
-                                    aria-labelledby="tab-btn-cooldown-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-cooldown-js"
+                                        aria-labelledby="tab-btn-cooldown-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">
 // Trigger programmatically
 const btn = document.querySelector('.nds-cooldown');
 NDS.CooldownButton.start(btn);
@@ -1281,6 +1302,7 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
     console.log('Button restored');
 });
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1298,48 +1320,50 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01"></i>
-                        <span class="nds-label">Pure CSS</span>
-                    </span>
-                    <p class="nds-item-desc">No JavaScript required. All variants, sizes, and states render from HTML markup with design tokens.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors"></i>
-                        <span class="nds-label">Six Variants</span>
-                    </span>
-                    <p class="nds-item-desc">Primary, neutral, secondary, secondary-outline, subtle, and transparent with full state coverage.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01"></i>
-                        <span class="nds-label">Three Sizes</span>
-                    </span>
-                    <p class="nds-item-desc">24px to 40px. Font, icon, and indicator scale proportionally.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-01"></i>
-                        <span class="nds-label">Layout Options</span>
-                    </span>
-                    <p class="nds-item-desc">Lead icon, trail icon, icon-only, label-only, circular, full-width, and loading state.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
-                        <span class="nds-label">Accessibility</span>
-                    </span>
-                    <p class="nds-item-desc">High contrast borders, reduced motion fallback, print styles, and focus-visible ring.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle"></i>
-                        <span class="nds-label">Composable</span>
-                    </span>
-                    <p class="nds-item-desc">Combine with destructive, on-color, loading, progress, status, badge, indicator, and groups.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-tag-01"></i>
+                            <span class="nds-label">Pure CSS</span>
+                        </span>
+                        <p class="nds-item-desc">No JavaScript required. All variants, sizes, and states render from HTML markup with design tokens.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-colors"></i>
+                            <span class="nds-label">Six Variants</span>
+                        </span>
+                        <p class="nds-item-desc">Primary, neutral, secondary, secondary-outline, subtle, and transparent with full state coverage.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-resize-01"></i>
+                            <span class="nds-label">Three Sizes</span>
+                        </span>
+                        <p class="nds-item-desc">24px to 40px. Font, icon, and indicator scale proportionally.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cursor-01"></i>
+                            <span class="nds-label">Layout Options</span>
+                        </span>
+                        <p class="nds-item-desc">Lead icon, trail icon, icon-only, label-only, circular, full-width, and loading state.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
+                            <span class="nds-label">Accessibility</span>
+                        </span>
+                        <p class="nds-item-desc">High contrast borders, reduced motion fallback, print styles, and focus-visible ring.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-puzzle"></i>
+                            <span class="nds-label">Composable</span>
+                        </span>
+                        <p class="nds-item-desc">Combine with destructive, on-color, loading, progress, status, badge, indicator, and groups.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1354,7 +1378,7 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Use <strong>primary</strong> for the main action on the page. Limit to one per view</li>
@@ -1449,7 +1473,7 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Custom Events</h3>
                 <p>All events bubble and are dispatched on the <code class="nds-inline-code lang-html">.nds-cooldown</code> button element.</p>
                 <table class="nds-table nds-responsive">

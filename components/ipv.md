@@ -19,87 +19,88 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Click any thumbnail to open the full-screen viewer with zoom and navigation controls</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                data-toggler='["showZoom", ".nds-ipv-image-card", "ipvZoom"]'>
-                                <span class="nds-label">Zoom badge</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-ipv-gallery nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;">
-                                <div class="nds-ipv-image-item">
-                                    <div class="nds-ipv-image-card showZoom">
-                                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400"
-                                            data-ipv-full="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000"
-                                            alt="Mountain Landscape" class="nds-ipv-thumbnail">
-                                    </div>
-                                    <div class="nds-ipv-image-title">Mountain Landscape</div>
-                                </div>
-
-                                <div class="nds-ipv-image-item">
-                                    <div class="nds-ipv-image-card showZoom">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400"
-                                            data-ipv-full="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000"
-                                            alt="Forest Road" class="nds-ipv-thumbnail">
-                                    </div>
-                                    <div class="nds-ipv-image-title">Forest Road</div>
-                                </div>
-
-                                <div class="nds-ipv-image-item">
-                                    <div class="nds-ipv-image-card showZoom">
-                                        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400"
-                                            data-ipv-full="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=2000"
-                                            alt="Ocean View" class="nds-ipv-thumbnail">
-                                    </div>
-                                    <div class="nds-ipv-image-title">Ocean View</div>
-                                </div>
-
-                                <div class="nds-ipv-image-item">
-                                    <div class="nds-ipv-image-card showZoom">
-                                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400"
-                                            data-ipv-full="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=2000"
-                                            alt="Valley Sunrise" class="nds-ipv-thumbnail">
-                                    </div>
-                                    <div class="nds-ipv-image-title">Valley Sunrise</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-ipv-gallery-1" id="tab-ipv-gallery-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-ipv-gallery-js" id="tab-ipv-gallery-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                    data-toggler='["showZoom", ".nds-ipv-image-card", "ipvZoom"]'>
+                                    <span class="nds-label">Zoom badge</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-ipv-gallery-1"
-                                    aria-labelledby="tab-ipv-gallery-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-ipv-gallery nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;">
+                                    <div class="nds-ipv-image-item">
+                                        <div class="nds-ipv-image-card showZoom">
+                                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400"
+                                                data-ipv-full="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000"
+                                                alt="Mountain Landscape" class="nds-ipv-thumbnail">
+                                        </div>
+                                        <div class="nds-ipv-image-title">Mountain Landscape</div>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+
+                                    <div class="nds-ipv-image-item">
+                                        <div class="nds-ipv-image-card showZoom">
+                                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400"
+                                                data-ipv-full="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000"
+                                                alt="Forest Road" class="nds-ipv-thumbnail">
+                                        </div>
+                                        <div class="nds-ipv-image-title">Forest Road</div>
+                                    </div>
+
+                                    <div class="nds-ipv-image-item">
+                                        <div class="nds-ipv-image-card showZoom">
+                                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400"
+                                                data-ipv-full="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=2000"
+                                                alt="Ocean View" class="nds-ipv-thumbnail">
+                                        </div>
+                                        <div class="nds-ipv-image-title">Ocean View</div>
+                                    </div>
+
+                                    <div class="nds-ipv-image-item">
+                                        <div class="nds-ipv-image-card showZoom">
+                                            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400"
+                                                data-ipv-full="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=2000"
+                                                alt="Valley Sunrise" class="nds-ipv-thumbnail">
+                                        </div>
+                                        <div class="nds-ipv-image-title">Valley Sunrise</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-ipv-gallery-1" id="tab-ipv-gallery-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-ipv-gallery-js" id="tab-ipv-gallery-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-ipv-gallery-1"
+                                        aria-labelledby="tab-ipv-gallery-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-ipv-gallery nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;"&gt;
     &lt;div class="nds-ipv-image-item"&gt;
         &lt;div class="nds-ipv-image-card showZoom"&gt;
@@ -138,16 +139,16 @@ last_edit: "28/06/2026 - 01:27 PM"
     &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-ipv-gallery-js"
-                                    aria-labelledby="tab-ipv-gallery-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-javascript code">// Auto-initializes on page load; call again after dynamic thumbnail injection
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-ipv-gallery-js"
+                                        aria-labelledby="tab-ipv-gallery-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">// Auto-initializes on page load; call again after dynamic thumbnail injection
 NDS.Ipv.init();
 
 // Re-scan for new thumbnails added at runtime
@@ -160,6 +161,7 @@ var viewer = NDS.Ipv.create();
 viewer.open(document.querySelector('.nds-ipv-thumbnail'));
 viewer.close();
 viewer.destroy();</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -178,76 +180,78 @@ viewer.destroy();</code>
             <p class="nds-section-description">What you get out of the box with zero configuration</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Any image with the <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code> class becomes clickable and opens in the full-screen viewer. No extra markup or JS calls needed. For dynamically added images, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code>.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-zoom"></i>
-                        <span class="nds-label">Multi-input Zoom</span>
-                    </span>
-                    <p class="nds-item-desc">Zoom into images using mouse wheel (centered on cursor position), keyboard shortcuts (+/-), pinch-to-zoom on touch devices, or the on-screen zoom buttons. Supports 0.1x to 10x magnification.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-move"></i>
-                        <span class="nds-label">Drag to Pan</span>
-                    </span>
-                    <p class="nds-item-desc">Click and drag on desktop or swipe on touch devices to pan around zoomed images. Double-click or double-tap resets the view to the original position and zoom level.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
-                        <span class="nds-label">Gallery Navigation</span>
-                    </span>
-                    <p class="nds-item-desc">Every thumbnail on the page joins one navigable gallery. Arrow buttons and the left/right keys move between images, and a counter shows the current position. Controls hide automatically when a page has only one image.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard"></i>
-                        <span class="nds-label">Keyboard Controls</span>
-                    </span>
-                    <p class="nds-item-desc">Thumbnails are reachable with Tab and open with Enter or Space. Inside the viewer, Escape closes, +/- adjusts zoom, 0 resets the view, H toggles the controls, and arrow keys move between images.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-touch-interaction-01"></i>
-                        <span class="nds-label">Touch Gestures</span>
-                    </span>
-                    <p class="nds-item-desc">Pinch-to-zoom with two fingers centers on the gesture midpoint. Single-finger drag pans the image. All gestures work alongside on-screen controls on mobile.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-eye"></i>
-                        <span class="nds-label">Distraction-free Mode</span>
-                    </span>
-                    <p class="nds-item-desc">Press H or tap the toggle button to hide all controls, navigation, and overlays for a clean viewing experience. Toggle again to restore the full UI.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-image-02"></i>
-                        <span class="nds-label">Adaptive Image Loading</span>
-                    </span>
-                    <p class="nds-item-desc">Thumbnails load at a small size for fast page rendering, then the full-resolution image loads on demand when opened. A loading spinner displays while the full image is fetched.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-focus-point"></i>
-                        <span class="nds-label">Accessible Dialog</span>
-                    </span>
-                    <p class="nds-item-desc">The viewer opens as a focus-trapped dialog: keyboard focus stays within it while open, and returns to the thumbnail you opened it from when it closes.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-translate"></i>
-                        <span class="nds-label">Localized Controls</span>
-                    </span>
-                    <p class="nds-item-desc">Control labels and on-screen instructions follow the page language automatically, with Arabic and English provided out of the box.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Any image with the <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code> class becomes clickable and opens in the full-screen viewer. No extra markup or JS calls needed. For dynamically added images, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code>.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-zoom"></i>
+                            <span class="nds-label">Multi-input Zoom</span>
+                        </span>
+                        <p class="nds-item-desc">Zoom into images using mouse wheel (centered on cursor position), keyboard shortcuts (+/-), pinch-to-zoom on touch devices, or the on-screen zoom buttons. Supports 0.1x to 10x magnification.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-move"></i>
+                            <span class="nds-label">Drag to Pan</span>
+                        </span>
+                        <p class="nds-item-desc">Click and drag on desktop or swipe on touch devices to pan around zoomed images. Double-click or double-tap resets the view to the original position and zoom level.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
+                            <span class="nds-label">Gallery Navigation</span>
+                        </span>
+                        <p class="nds-item-desc">Every thumbnail on the page joins one navigable gallery. Arrow buttons and the left/right keys move between images, and a counter shows the current position. Controls hide automatically when a page has only one image.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-keyboard"></i>
+                            <span class="nds-label">Keyboard Controls</span>
+                        </span>
+                        <p class="nds-item-desc">Thumbnails are reachable with Tab and open with Enter or Space. Inside the viewer, Escape closes, +/- adjusts zoom, 0 resets the view, H toggles the controls, and arrow keys move between images.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-touch-interaction-01"></i>
+                            <span class="nds-label">Touch Gestures</span>
+                        </span>
+                        <p class="nds-item-desc">Pinch-to-zoom with two fingers centers on the gesture midpoint. Single-finger drag pans the image. All gestures work alongside on-screen controls on mobile.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-eye"></i>
+                            <span class="nds-label">Distraction-free Mode</span>
+                        </span>
+                        <p class="nds-item-desc">Press H or tap the toggle button to hide all controls, navigation, and overlays for a clean viewing experience. Toggle again to restore the full UI.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-image-02"></i>
+                            <span class="nds-label">Adaptive Image Loading</span>
+                        </span>
+                        <p class="nds-item-desc">Thumbnails load at a small size for fast page rendering, then the full-resolution image loads on demand when opened. A loading spinner displays while the full image is fetched.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-focus-point"></i>
+                            <span class="nds-label">Accessible Dialog</span>
+                        </span>
+                        <p class="nds-item-desc">The viewer opens as a focus-trapped dialog: keyboard focus stays within it while open, and returns to the thumbnail you opened it from when it closes.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-translate"></i>
+                            <span class="nds-label">Localized Controls</span>
+                        </span>
+                        <p class="nds-item-desc">Control labels and on-screen instructions follow the page language automatically, with Arabic and English provided out of the box.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -262,7 +266,7 @@ viewer.destroy();</code>
             <p class="nds-section-description">When and how to use the image popup viewer effectively</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the image popup viewer for any content where users need to inspect image details: product photos, maps, infographics, architectural plans, or document scans. The zoom and pan controls let users explore at their own pace.</li>
@@ -301,7 +305,7 @@ viewer.destroy();</code>
                     </tbody>
                 </table>
             </div>
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Ipv</strong> API controls initialization and programmatic access. The viewer auto-initializes on page load. For dynamically added thumbnails, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code> or <code class="nds-inline-code lang-js">NDS.Ipv.reinit()</code> to re-scan the page.</p>
                 <div class="nds-code nds-expandable">

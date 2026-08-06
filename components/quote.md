@@ -20,86 +20,87 @@ last_edit: "30/06/2026 - 11:50 PM"
             <p class="nds-section-description">Toggle optional parts to build the layout you need. Use the default background for standalone surface cards, or transparent to embed inside an existing section.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
 
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Background: ">
-                                    <span class="nds-label">Background: Default</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-state="selected" data-quote-bg="default">
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-quote-bg="transparent">
-                                            <span class="nds-label">Transparent</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Background: ">
+                                        <span class="nds-label">Background: Default</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-state="selected" data-quote-bg="default">
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-quote-bg="transparent">
+                                                <span class="nds-label">Transparent</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <button class="nds-btn nds-subtle" data-state="selected" data-quote-toggle="title">
-                                <span class="nds-label">Title</span>
-                            </button>
-
-                            <button class="nds-btn nds-subtle" data-state="selected" data-quote-toggle="avatar">
-                                <span class="nds-label">Avatar</span>
-                            </button>
-
-                            <button class="nds-btn nds-subtle" data-state="selected" data-quote-toggle="author">
-                                <span class="nds-label">Author</span>
-                            </button>
-
-                        </div>
-                    </div>
-
-                    <div class="demo-container nds-noBg">
-                        <div class="state-demo">
-                            <figure class="nds-quote">
-                                <blockquote class="nds-quote-body">
-                                    <span class="nds-quote-title">The Power of Design</span>
-                                    <p class="nds-quote-text">A well-crafted design system transforms how teams build products, creating consistency that users feel without necessarily seeing.</p>
-                                </blockquote>
-                                <figcaption class="nds-quote-author">
-                                    <div class="nds-persona nds-sm">
-                                        <div class="nds-avatar">
-                                            <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="nds-persona-info">
-                                            <cite class="nds-persona-name">Ahmed Al-Harbi</cite>
-                                            <span class="nds-persona-desc">Head of Design</span>
-                                        </div>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-quote-builder-1" id="tab-quote-builder-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle" data-state="selected" data-quote-toggle="title">
+                                    <span class="nds-label">Title</span>
                                 </button>
+
+                                <button class="nds-btn nds-subtle" data-state="selected" data-quote-toggle="avatar">
+                                    <span class="nds-label">Avatar</span>
+                                </button>
+
+                                <button class="nds-btn nds-subtle" data-state="selected" data-quote-toggle="author">
+                                    <span class="nds-label">Author</span>
+                                </button>
+
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-quote-builder-1" aria-labelledby="tab-quote-builder-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+
+                        <div class="demo-container nds-noBg">
+                            <div class="state-demo">
+                                <figure class="nds-quote">
+                                    <blockquote class="nds-quote-body">
+                                        <span class="nds-quote-title">The Power of Design</span>
+                                        <p class="nds-quote-text">A well-crafted design system transforms how teams build products, creating consistency that users feel without necessarily seeing.</p>
+                                    </blockquote>
+                                    <figcaption class="nds-quote-author">
+                                        <div class="nds-persona nds-sm">
+                                            <div class="nds-avatar">
+                                                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="nds-persona-info">
+                                                <cite class="nds-persona-name">Ahmed Al-Harbi</cite>
+                                                <span class="nds-persona-desc">Head of Design</span>
+                                            </div>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-quote-builder-1" id="tab-quote-builder-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-quote-builder-1" aria-labelledby="tab-quote-builder-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;figure class="nds-quote"&gt;
     &lt;blockquote class="nds-quote-body"&gt;
         &lt;span class="nds-quote-title"&gt;The Power of Design&lt;/span&gt;
@@ -118,12 +119,13 @@ last_edit: "30/06/2026 - 11:50 PM"
     &lt;/figcaption&gt;
 &lt;/figure&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,56 +140,58 @@ last_edit: "30/06/2026 - 11:50 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
 
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code"></i>
-                        <span class="nds-label">Spec-correct Semantic Markup</span>
-                    </span>
-                    <p class="nds-item-desc">Rendered with <code class="nds-inline-code lang-html">&lt;figure&gt;</code>, <code class="nds-inline-code lang-html">&lt;blockquote&gt;</code>, <code class="nds-inline-code lang-html">&lt;figcaption&gt;</code>, and <code class="nds-inline-code lang-html">&lt;cite&gt;</code> as recommended by the HTML Living Standard for a quoted excerpt with attribution.</p>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-code"></i>
+                            <span class="nds-label">Spec-correct Semantic Markup</span>
+                        </span>
+                        <p class="nds-item-desc">Rendered with <code class="nds-inline-code lang-html">&lt;figure&gt;</code>, <code class="nds-inline-code lang-html">&lt;blockquote&gt;</code>, <code class="nds-inline-code lang-html">&lt;figcaption&gt;</code>, and <code class="nds-inline-code lang-html">&lt;cite&gt;</code> as recommended by the HTML Living Standard for a quoted excerpt with attribution.</p>
+                    </div>
+
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-mask"></i>
+                            <span class="nds-label">Icon-based Quote Marks</span>
+                        </span>
+                        <p class="nds-item-desc">Opening and closing marks render as SVG mask images via CSS <code class="nds-inline-code lang-html">::before</code> and <code class="nds-inline-code lang-html">::after</code>, keeping them out of the accessibility tree and never blocking text selection.</p>
+                    </div>
+
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-globe"></i>
+                            <span class="nds-label">RTL and LTR Adaptive</span>
+                        </span>
+                        <p class="nds-item-desc">Quote marks automatically swap corners and mirror orientation between Arabic RTL and English LTR using CSS logical properties and transform-only overrides. No additional markup is required.</p>
+                    </div>
+
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-moon"></i>
+                            <span class="nds-label">Dark Mode Adaptive</span>
+                        </span>
+                        <p class="nds-item-desc">The mark color resolves through <code class="nds-inline-code lang-html">--text-primary-strong</code>, a semantic token that automatically shifts to a lighter green in dark themes without any component-level overrides.</p>
+                    </div>
+
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-profile"></i>
+                            <span class="nds-label">Persona Integration</span>
+                        </span>
+                        <p class="nds-item-desc">The author block embeds <a class="nds-color" href="{{ 'components/persona' | relative_url }}">Persona</a> at the <code class="nds-inline-code lang-html">nds-sm</code> size tier, inheriting all persona token overrides and dark-mode behavior automatically.</p>
+                    </div>
+
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-variable"></i>
+                            <span class="nds-label">CSS Token Overrides</span>
+                        </span>
+                        <p class="nds-item-desc">Twelve scoped custom properties expose every visual dimension: background, border, radius, padding, mark size, mark color, title and body typography, and text colors. Set any on the <code class="nds-inline-code lang-html">.nds-quote</code> element to restyle without touching SCSS.</p>
+                    </div>
+
                 </div>
-
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mask"></i>
-                        <span class="nds-label">Icon-based Quote Marks</span>
-                    </span>
-                    <p class="nds-item-desc">Opening and closing marks render as SVG mask images via CSS <code class="nds-inline-code lang-html">::before</code> and <code class="nds-inline-code lang-html">::after</code>, keeping them out of the accessibility tree and never blocking text selection.</p>
-                </div>
-
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-globe"></i>
-                        <span class="nds-label">RTL and LTR Adaptive</span>
-                    </span>
-                    <p class="nds-item-desc">Quote marks automatically swap corners and mirror orientation between Arabic RTL and English LTR using CSS logical properties and transform-only overrides. No additional markup is required.</p>
-                </div>
-
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-moon"></i>
-                        <span class="nds-label">Dark Mode Adaptive</span>
-                    </span>
-                    <p class="nds-item-desc">The mark color resolves through <code class="nds-inline-code lang-html">--text-primary-strong</code>, a semantic token that automatically shifts to a lighter green in dark themes without any component-level overrides.</p>
-                </div>
-
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-profile"></i>
-                        <span class="nds-label">Persona Integration</span>
-                    </span>
-                    <p class="nds-item-desc">The author block embeds <a class="nds-color" href="{{ 'components/persona' | relative_url }}">Persona</a> at the <code class="nds-inline-code lang-html">nds-sm</code> size tier, inheriting all persona token overrides and dark-mode behavior automatically.</p>
-                </div>
-
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-variable"></i>
-                        <span class="nds-label">CSS Token Overrides</span>
-                    </span>
-                    <p class="nds-item-desc">Twelve scoped custom properties expose every visual dimension: background, border, radius, padding, mark size, mark color, title and body typography, and text colors. Set any on the <code class="nds-inline-code lang-html">.nds-quote</code> element to restyle without touching SCSS.</p>
-                </div>
-
             </div>
         </div>
     </div>
@@ -202,7 +206,7 @@ last_edit: "30/06/2026 - 11:50 PM"
         </div>
         <div class="nds-section-body nds-stack">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use Quote to surface a single attributed statement that reinforces a point on the page: testimonials, editorial highlights, research findings, or policy citations.</li>

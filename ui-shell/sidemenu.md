@@ -19,20 +19,21 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">The side menu sits inside the content layout wrapper alongside the main content area. It uses the drawer component internally for scrollable, collapsible list navigation.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Component Tree</div>
-                    </div>
-                    <div class="demo-container nds-noBg">
-                        <div class="nds-code nds-expandable">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Component Tree</div>
+                        </div>
+                        <div class="demo-container nds-noBg">
+                            <div class="nds-code nds-expandable">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 aside.nds-sidemenu
 &#9500;&#9472;&#9472; button.nds-sidemenu-toggle.nds-btn.nds-peek
 &#9474;   &#9500;&#9472;&#9472; i.hgi.hgi-stroke.hgi-menu-02.nds-icon
@@ -63,6 +64,7 @@ aside.nds-sidemenu
         &#9492;&#9472;&#9472; button.nds-show-more.nds-btn.nds-subtle
             &#9492;&#9472;&#9472; i.hgi.hgi-stroke.hgi-arrow-down-01
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,31 +82,32 @@ aside.nds-sidemenu
             <p class="nds-section-description">The standard sidebar layout with flat links and collapsible accordion groups. On desktop it stays fixed beside the content. On tablet and mobile it slides in from the edge with a toggle button.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Side Menu with Accordion Groups</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-default-1" id="tab-sidenav-default-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sidenav-default-1" aria-labelledby="tab-sidenav-default-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Side Menu with Accordion Groups</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-default-1" id="tab-sidenav-default-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sidenav-default-1" aria-labelledby="tab-sidenav-default-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;aside class="nds-sidemenu" aria-label="Sidebar"&gt;
   &lt;button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden&gt;
     &lt;i class="nds-icon nds-hgi-menu-02" aria-hidden="true"&gt;&lt;/i&gt;
@@ -168,6 +171,7 @@ aside.nds-sidemenu
   &lt;/nav&gt;
 &lt;/aside&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -187,92 +191,93 @@ aside.nds-sidemenu
             <p class="nds-section-description">Add a third level by placing <code class="nds-inline-code lang-html">li.nds-drawer-group</code> items inside a section's submenu. Each group gets its own collapsible button. Use a count tag to show the number of items at a glance.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Section → Group → Item</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="padding: var(--spacing-xl); display: flex; justify-content: center;">
-                            <nav class="nds-drawer nds-divided" style="width: 280px;">
-                                <ul class="nds-drawer-list">
-                                    <li>
-                                        <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                            <span class="nds-label">Components</span>
-                                            <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">10</span></span>
-                                        </button>
-                                        <ul>
-                                            <li class="nds-drawer-group">
-                                                <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                                    <span class="nds-label">Forms</span>
-                                                    <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">4</span></span>
-                                                </button>
-                                                <ul>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Autocomplete</span></a></li>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Checkbox</span></a></li>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Switch</span></a></li>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Upload</span></a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="nds-drawer-group">
-                                                <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                                    <span class="nds-label">UI</span>
-                                                    <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
-                                                </button>
-                                                <ul>
-                                                    <li data-state="active"><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Alert</span></a></li>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Modal</span></a></li>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Tabs</span></a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="nds-drawer-group">
-                                                <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                                    <span class="nds-label">Data</span>
-                                                    <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
-                                                </button>
-                                                <ul>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Chart</span></a></li>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Sort</span></a></li>
-                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Tables</span></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                            <span class="nds-label">Layout</span>
-                                            <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
-                                        </button>
-                                        <ul>
-                                            <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Grid</span></a></li>
-                                            <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Section</span></a></li>
-                                            <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Block</span></a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </nav>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Section → Group → Item</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-grouped-1" id="tab-sidenav-grouped-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
+                        <div class="demo-container">
+                            <div class="state-demo" style="padding: var(--spacing-xl); display: flex; justify-content: center;">
+                                <nav class="nds-drawer nds-divided" style="width: 280px;">
+                                    <ul class="nds-drawer-list">
+                                        <li>
+                                            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                                <span class="nds-label">Components</span>
+                                                <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">10</span></span>
+                                            </button>
+                                            <ul>
+                                                <li class="nds-drawer-group">
+                                                    <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                                        <span class="nds-label">Forms</span>
+                                                        <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">4</span></span>
+                                                    </button>
+                                                    <ul>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Autocomplete</span></a></li>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Checkbox</span></a></li>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Switch</span></a></li>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Upload</span></a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nds-drawer-group">
+                                                    <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                                        <span class="nds-label">UI</span>
+                                                        <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+                                                    </button>
+                                                    <ul>
+                                                        <li data-state="active"><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Alert</span></a></li>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Modal</span></a></li>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Tabs</span></a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nds-drawer-group">
+                                                    <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                                        <span class="nds-label">Data</span>
+                                                        <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+                                                    </button>
+                                                    <ul>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Chart</span></a></li>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Sort</span></a></li>
+                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Tables</span></a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                                <span class="nds-label">Layout</span>
+                                                <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+                                            </button>
+                                            <ul>
+                                                <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Grid</span></a></li>
+                                                <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Section</span></a></li>
+                                                <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Block</span></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sidenav-grouped-1" aria-labelledby="tab-sidenav-grouped-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-grouped-1" id="tab-sidenav-grouped-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sidenav-grouped-1" aria-labelledby="tab-sidenav-grouped-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;ul class="nds-drawer-list"&gt;
   &lt;!-- Level 1: Section --&gt;
   &lt;li&gt;
@@ -319,6 +324,7 @@ aside.nds-sidemenu
   &lt;/li&gt;
 &lt;/ul&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -338,59 +344,62 @@ aside.nds-sidemenu
             <p class="nds-section-description">On screens below 960px the side menu switches from a persistent sidebar to one of two mobile-friendly patterns, controlled by the layout wrapper class.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Responsive Mode</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-primary nds-lg" id="toggleTopSideMenu">
-                                <span class="nds-label">Toggle Top Submenu Mode</span>
-                            </button>
-                            <div class="nds-alert nds-card nds-inline" data-status="info" role="alert" style="margin-top: var(--spacing-md);">
-                                <span class="nds-feedback nds-alert-icon">
-                                    <span class="nds-feedback-icon">
-                                        <i class="nds-icon" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Responsive Mode</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-primary nds-lg" id="toggleTopSideMenu">
+                                    <span class="nds-label">Toggle Top Submenu Mode</span>
+                                </button>
+                                <div class="nds-alert nds-card nds-inline" data-status="info" role="alert" style="margin-top: var(--spacing-md);">
+                                    <span class="nds-feedback nds-alert-icon">
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
                                     </span>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <div class="nds-alert-text">
-                                        <p class="nds-alert-description" id="topSideMenuStatus">Current mode: <strong>Slider</strong> (default). Resize the viewport below 960px to see the side menu behavior.</p>
+                                    <div class="nds-alert-content">
+                                        <div class="nds-alert-text">
+                                            <p class="nds-alert-description" id="topSideMenuStatus">Current mode: <strong>Slider</strong> (default). Resize the viewport below 960px to see the side menu behavior.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidemenu-modes-1" id="tab-sidemenu-modes-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sidemenu-modes-1" aria-labelledby="tab-sidemenu-modes-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidemenu-modes-1" id="tab-sidemenu-modes-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sidemenu-modes-1" aria-labelledby="tab-sidemenu-modes-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;!-- Add nds-top to the sidemenu to switch from slider to top dropdown mode --&gt;
 &lt;aside class="nds-sidemenu nds-top" aria-label="Sidebar"&gt;...&lt;/aside&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <script>
+            <div class="nds-block">
+                <script>
                 document.getElementById('toggleTopSideMenu').addEventListener('click', function() {
                     var menu = document.querySelector('.nds-sidemenu');
                     var status = document.getElementById('topSideMenuStatus');
@@ -401,6 +410,7 @@ aside.nds-sidemenu
                     NDS.Sidemenu.init();
                 });
             </script>
+            </div>
             <div class="nds-block" style="margin-top: var(--spacing-3xl);">
                 <h3 class="nds-block-title">Mode Comparison</h3>
                 <table class="nds-table nds-responsive">
@@ -433,30 +443,31 @@ aside.nds-sidemenu
             <p class="nds-section-description">Mark the current page by adding <code class="nds-inline-code lang-html">data-state="active"</code> to its <code class="nds-inline-code lang-html">&lt;li&gt;</code> element. The JS automatically expands all parent accordion groups so the active item is visible on load.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Active Item in a Nested Group</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-active-1" id="tab-sidenav-active-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sidenav-active-1" aria-labelledby="tab-sidenav-active-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Active Item in a Nested Group</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-active-1" id="tab-sidenav-active-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sidenav-active-1" aria-labelledby="tab-sidenav-active-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;ul class="nds-drawer-list"&gt;
   &lt;li&gt;
     &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
@@ -478,6 +489,7 @@ aside.nds-sidemenu
   &lt;/li&gt;
 &lt;/ul&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -495,48 +507,50 @@ aside.nds-sidemenu
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. Toggle button, close-on-click-outside, and Escape key handling all attach automatically. Accordion behavior is provided by the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> component.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-01"></i>
-                        <span class="nds-label">Active Page Tracking</span>
-                    </span>
-                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-state="active"</code> on a menu item and all parent accordion groups expand on load so the current page is always visible.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-04"></i>
-                        <span class="nds-label">Dual Responsive Modes</span>
-                    </span>
-                    <p class="nds-item-desc">Choose between a slide-in sidebar panel or a top dropdown bar for mobile. Switch modes by adding <code class="nds-inline-code lang-html">nds-top</code> to the sidemenu or setting <code class="nds-inline-code lang-html">sidemenu_mode: top</code> in front matter.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
-                        <span class="nds-label">Animated Accordion Groups</span>
-                    </span>
-                    <p class="nds-item-desc">Nested groups expand and collapse with smooth height transitions. Opening one group automatically closes its siblings.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-02"></i>
-                        <span class="nds-label">Peek Toggle Button</span>
-                    </span>
-                    <p class="nds-item-desc">The floating toggle button reveals itself briefly on page load and reappears as the cursor approaches, giving users a visual hint without obstructing content.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.Sidemenu.init()</code> to re-initialize after dynamic content changes or SPA route transitions.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. Toggle button, close-on-click-outside, and Escape key handling all attach automatically. Accordion behavior is provided by the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> component.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-target-01"></i>
+                            <span class="nds-label">Active Page Tracking</span>
+                        </span>
+                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-state="active"</code> on a menu item and all parent accordion groups expand on load so the current page is always visible.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-04"></i>
+                            <span class="nds-label">Dual Responsive Modes</span>
+                        </span>
+                        <p class="nds-item-desc">Choose between a slide-in sidebar panel or a top dropdown bar for mobile. Switch modes by adding <code class="nds-inline-code lang-html">nds-top</code> to the sidemenu or setting <code class="nds-inline-code lang-html">sidemenu_mode: top</code> in front matter.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
+                            <span class="nds-label">Animated Accordion Groups</span>
+                        </span>
+                        <p class="nds-item-desc">Nested groups expand and collapse with smooth height transitions. Opening one group automatically closes its siblings.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cursor-02"></i>
+                            <span class="nds-label">Peek Toggle Button</span>
+                        </span>
+                        <p class="nds-item-desc">The floating toggle button reveals itself briefly on page load and reappears as the cursor approaches, giving users a visual hint without obstructing content.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.Sidemenu.init()</code> to re-initialize after dynamic content changes or SPA route transitions.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -551,7 +565,7 @@ aside.nds-sidemenu
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the side menu for sites with <strong>hierarchical page structures</strong> where users need to jump between sections: documentation, admin consoles, multi-step workflows</li>
@@ -651,7 +665,7 @@ aside.nds-sidemenu
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Sidemenu</strong> namespace exposes a single initialization method. The component auto-initializes when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is present on the page, but you can call <code class="nds-inline-code lang-js">init()</code> manually after dynamic content changes.</p>
                 <div class="nds-code nds-expandable">

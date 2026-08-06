@@ -19,104 +19,105 @@ last_edit: "02/08/2026 - 01:03 AM"
             <p class="nds-section-description">Five status variants communicate different message types through color and icon</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Success</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["data-status=success", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=info", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="nds-label">Info</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=warning", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="nds-label">Warning</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=critical", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="nds-label">Critical</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=neutral", ".nds-alert", "alertVariant", "attr"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Success</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["data-status=success", ".nds-alert", "alertVariant", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=info", ".nds-alert", "alertVariant", "attr"]'>
+                                                <span class="nds-label">Info</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=warning", ".nds-alert", "alertVariant", "attr"]'>
+                                                <span class="nds-label">Warning</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=error", ".nds-alert", "alertVariant", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=critical", ".nds-alert", "alertVariant", "attr"]'>
+                                                <span class="nds-label">Critical</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=neutral", ".nds-alert", "alertVariant", "attr"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-shadow", ".nds-alert", "alertStyle"]'>
+                                    <span class="nds-label">Shadow</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-color", ".nds-alert", "alertColor"]'>
+                                    <span class="nds-label">Color</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-shadow", ".nds-alert", "alertStyle"]'>
-                                <span class="nds-label">Shadow</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-color", ".nds-alert", "alertColor"]'>
-                                <span class="nds-label">Color</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-alert nds-card" data-status="success" role="alert">
-                                <span class="nds-feedback nds-alert-icon nds-outline">
-                                    <span class="nds-feedback-icon">
-                                        <i class="nds-icon" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-alert nds-card" data-status="success" role="alert">
+                                    <span class="nds-feedback nds-alert-icon nds-outline">
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
                                     </span>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <div class="nds-alert-text">
-                                        <span class="nds-alert-title">Success</span>
-                                        <p class="nds-alert-description">Operation completed successfully!</p>
+                                    <div class="nds-alert-content">
+                                        <div class="nds-alert-text">
+                                            <span class="nds-alert-title">Success</span>
+                                            <p class="nds-alert-description">Operation completed successfully!</p>
+                                        </div>
                                     </div>
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
+                                        aria-label="Close alert">
+                                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                    </button>
                                 </div>
-                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
-                                    aria-label="Close alert">
-                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-alert-variants-1" id="tab-alert-variants-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-alert-variants-js" id="tab-alert-variants-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-variants-1"
-                                    aria-labelledby="tab-alert-variants-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-alert-variants-1" id="tab-alert-variants-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-alert-variants-js" id="tab-alert-variants-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-variants-1"
+                                        aria-labelledby="tab-alert-variants-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-alert nds-card" data-status="success" role="alert"&gt;
   &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
     &lt;span class="nds-feedback-icon"&gt;
@@ -134,15 +135,15 @@ last_edit: "02/08/2026 - 01:03 AM"
   &lt;/button&gt;
 &lt;/div&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-variants-js"
-                                    aria-labelledby="tab-alert-variants-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">NDS.Alert.create({
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-variants-js"
+                                        aria-labelledby="tab-alert-variants-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">NDS.Alert.create({
     variant: 'success',
     title: 'Success',
     description: 'Operation completed successfully!',
@@ -150,6 +151,7 @@ last_edit: "02/08/2026 - 01:03 AM"
     shadow: false,
     color: false
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -168,96 +170,97 @@ last_edit: "02/08/2026 - 01:03 AM"
             <p class="nds-section-description">Compact single-line layout with bottom stripe and solid icon</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <!-- Inline Alert -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <!-- Inline Alert -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Critical</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=success", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=neutral", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=info", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="nds-label">Info</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=warning", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="nds-label">Warning</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["data-status=critical", ".nds-alert", "inlineVariant", "attr"]'>
-                                            <span class="nds-label">Critical</span>
-                                        </button>
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Critical</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=success", ".nds-alert", "inlineVariant", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=neutral", ".nds-alert", "inlineVariant", "attr"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=info", ".nds-alert", "inlineVariant", "attr"]'>
+                                                <span class="nds-label">Info</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=warning", ".nds-alert", "inlineVariant", "attr"]'>
+                                                <span class="nds-label">Warning</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=error", ".nds-alert", "inlineVariant", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["data-status=critical", ".nds-alert", "inlineVariant", "attr"]'>
+                                                <span class="nds-label">Critical</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-alert nds-card nds-inline" data-status="critical" role="alert">
-                                <span class="nds-feedback nds-alert-icon">
-                                    <span class="nds-feedback-icon">
-                                        <i class="nds-icon" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-alert nds-card nds-inline" data-status="critical" role="alert">
+                                    <span class="nds-feedback nds-alert-icon">
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
                                     </span>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <div class="nds-alert-text">
-                                        <span class="nds-alert-title">Important:</span>
-                                        <p class="nds-alert-description">This is a very important banner message that requires attention</p>
+                                    <div class="nds-alert-content">
+                                        <div class="nds-alert-text">
+                                            <span class="nds-alert-title">Important:</span>
+                                            <p class="nds-alert-description">This is a very important banner message that requires attention</p>
+                                        </div>
+                                        <div class="nds-alert-actions">
+                                            <a href="#" class="nds-link">Learn More</a>
+                                        </div>
                                     </div>
-                                    <div class="nds-alert-actions">
-                                        <a href="#" class="nds-link">Learn More</a>
-                                    </div>
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
+                                        aria-label="Close alert">
+                                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                    </button>
                                 </div>
-                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
-                                    aria-label="Close alert">
-                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-alert-inline-1" id="tab-alert-inline-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-alert-inline-js" id="tab-alert-inline-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-inline-1"
-                                    aria-labelledby="tab-alert-inline-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-alert-inline-1" id="tab-alert-inline-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-alert-inline-js" id="tab-alert-inline-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-inline-1"
+                                        aria-labelledby="tab-alert-inline-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-alert nds-card nds-inline" data-status="critical" role="alert"&gt;
   &lt;span class="nds-feedback nds-alert-icon"&gt;
     &lt;span class="nds-feedback-icon"&gt;
@@ -278,15 +281,15 @@ last_edit: "02/08/2026 - 01:03 AM"
   &lt;/button&gt;
 &lt;/div&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-inline-js"
-                                    aria-labelledby="tab-alert-inline-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">NDS.Alert.create({
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-inline-js"
+                                        aria-labelledby="tab-alert-inline-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">NDS.Alert.create({
     variant: 'critical',
     title: 'Important:',
     description: 'This is a very important banner message that requires attention.',
@@ -296,6 +299,7 @@ last_edit: "02/08/2026 - 01:03 AM"
         { label: 'Learn More', href: '#', class: 'nds-link' }
     ]
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -314,79 +318,80 @@ last_edit: "02/08/2026 - 01:03 AM"
             <p class="nds-section-description">Action buttons let users respond directly from the notification</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-shadow", ".nds-alert","alertActionsStyle"]'>
-                                <span class="nds-label">Shadow</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-color", ".nds-alert","alertActionsColor"]'>
-                                <span class="nds-label">Color</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-shadow", ".nds-alert","alertActionsStyle"]'>
+                                    <span class="nds-label">Shadow</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-color", ".nds-alert","alertActionsColor"]'>
+                                    <span class="nds-label">Color</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-alert nds-card" data-status="info" role="alert">
-                                <span class="nds-feedback nds-alert-icon nds-outline">
-                                    <span class="nds-feedback-icon">
-                                        <i class="nds-icon" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-alert nds-card" data-status="info" role="alert">
+                                    <span class="nds-feedback nds-alert-icon nds-outline">
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
                                     </span>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <div class="nds-alert-text">
-                                        <span class="nds-alert-title">Update Available</span>
-                                        <p class="nds-alert-description">A new version is available. Would you like to update now?</p>
+                                    <div class="nds-alert-content">
+                                        <div class="nds-alert-text">
+                                            <span class="nds-alert-title">Update Available</span>
+                                            <p class="nds-alert-description">A new version is available. Would you like to update now?</p>
+                                        </div>
+                                        <div class="nds-alert-actions">
+                                            <button class="nds-btn nds-primary nds-sm">
+                                                <span class="nds-label">Update Now</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-sm">
+                                                <span class="nds-label">Later</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="nds-alert-actions">
-                                        <button class="nds-btn nds-primary nds-sm">
-                                            <span class="nds-label">Update Now</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-sm">
-                                            <span class="nds-label">Later</span>
-                                        </button>
-                                    </div>
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
+                                        aria-label="Close alert">
+                                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                    </button>
                                 </div>
-                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
-                                    aria-label="Close alert">
-                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-alert-actions-1" id="tab-alert-actions-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-alert-actions-js" id="tab-alert-actions-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-actions-1"
-                                    aria-labelledby="tab-alert-actions-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-alert-actions-1" id="tab-alert-actions-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-alert-actions-js" id="tab-alert-actions-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-actions-1"
+                                        aria-labelledby="tab-alert-actions-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-alert nds-card" data-status="info" role="alert"&gt;
   &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
     &lt;span class="nds-feedback-icon"&gt;
@@ -412,15 +417,15 @@ last_edit: "02/08/2026 - 01:03 AM"
   &lt;/button&gt;
 &lt;/div&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-actions-js"
-                                    aria-labelledby="tab-alert-actions-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">NDS.Alert.create({
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-actions-js"
+                                        aria-labelledby="tab-alert-actions-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">NDS.Alert.create({
     variant: 'info',
     title: 'Update Available',
     description: 'A new version is available. Would you like to update now?',
@@ -430,6 +435,7 @@ last_edit: "02/08/2026 - 01:03 AM"
         { label: 'Later', class: 'nds-btn nds-subtle nds-sm', dismiss: true }
     ]
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -448,64 +454,65 @@ last_edit: "02/08/2026 - 01:03 AM"
             <p class="nds-section-description">Action buttons that place text on the clipboard with a checkmark flash: pass a literal string with <code class="nds-inline-code lang-js">copy</code>, or point <code class="nds-inline-code lang-js">copyTarget</code> at an element on the page. In a toast, clicking a copy action also keeps the toast open</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <!-- Simple value copy -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Copy a one-time code</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-alert nds-card" data-status="info" role="alert">
-                                <span class="nds-feedback nds-alert-icon nds-outline">
-                                    <span class="nds-feedback-icon">
-                                        <i class="nds-icon" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <!-- Simple value copy -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Copy a one-time code</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-alert nds-card" data-status="info" role="alert">
+                                    <span class="nds-feedback nds-alert-icon nds-outline">
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
                                     </span>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <div class="nds-alert-text">
-                                        <span class="nds-alert-title">Verification code</span>
-                                        <p class="nds-alert-description">Your one-time code is 843291. It expires in 10 minutes.</p>
+                                    <div class="nds-alert-content">
+                                        <div class="nds-alert-text">
+                                            <span class="nds-alert-title">Verification code</span>
+                                            <p class="nds-alert-description">Your one-time code is 843291. It expires in 10 minutes.</p>
+                                        </div>
+                                        <div class="nds-alert-actions">
+                                            <button class="nds-btn nds-subtle nds-sm nds-copy" data-copy="843291">
+                                                <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
+                                                <span class="nds-label">Copy code</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="nds-alert-actions">
-                                        <button class="nds-btn nds-subtle nds-sm nds-copy" data-copy="843291">
-                                            <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
-                                            <span class="nds-label">Copy code</span>
-                                        </button>
-                                    </div>
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
+                                        aria-label="Close alert">
+                                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                    </button>
                                 </div>
-                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
-                                    aria-label="Close alert">
-                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-alert-copy-1" id="tab-alert-copy-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-alert-copy-js" id="tab-alert-copy-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copy-1"
-                                    aria-labelledby="tab-alert-copy-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-alert-copy-1" id="tab-alert-copy-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-alert-copy-js" id="tab-alert-copy-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copy-1"
+                                        aria-labelledby="tab-alert-copy-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-alert nds-card" data-status="info" role="alert"&gt;
   &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
     &lt;span class="nds-feedback-icon"&gt;
@@ -529,15 +536,15 @@ last_edit: "02/08/2026 - 01:03 AM"
   &lt;/button&gt;
 &lt;/div&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copy-js"
-                                    aria-labelledby="tab-alert-copy-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">NDS.Alert.create({
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copy-js"
+                                        aria-labelledby="tab-alert-copy-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">NDS.Alert.create({
     variant: 'info',
     title: 'Verification code',
     description: 'Your one-time code is 843291. It expires in 10 minutes.',
@@ -546,70 +553,70 @@ last_edit: "02/08/2026 - 01:03 AM"
         { label: 'Copy code', copy: '843291' }
     ]
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Error log copy -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Copy an error log</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-alert nds-card" data-status="error" role="alert">
-                                <span class="nds-feedback nds-alert-icon nds-outline">
-                                    <span class="nds-feedback-icon">
-                                        <i class="nds-icon" aria-hidden="true"></i>
+                    <!-- Error log copy -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Copy an error log</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-alert nds-card" data-status="error" role="alert">
+                                    <span class="nds-feedback nds-alert-icon nds-outline">
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
                                     </span>
-                                </span>
-                                <div class="nds-alert-content">
-                                    <div class="nds-alert-text">
-                                        <span class="nds-alert-title">Request failed</span>
-                                        <p class="nds-alert-description">The request could not be completed. Share the error log with support.</p>
+                                    <div class="nds-alert-content">
+                                        <div class="nds-alert-text">
+                                            <span class="nds-alert-title">Request failed</span>
+                                            <p class="nds-alert-description">The request could not be completed. Share the error log with support.</p>
+                                        </div>
+                                        <div class="nds-alert-actions">
+                                            <button class="nds-btn nds-neutral nds-sm nds-copy" data-copy="TRACE-4821 TypeError: response is undefined
+      at save (app.js:42)
+      at async submit (form.js:17)">
+                                                <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
+                                                <span class="nds-label">Copy error log</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="nds-alert-actions">
-                                        <button class="nds-btn nds-neutral nds-sm nds-copy" data-copy="TRACE-4821 TypeError: response is undefined
-  at save (app.js:42)
-  at async submit (form.js:17)">
-                                            <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
-                                            <span class="nds-label">Copy error log</span>
-                                        </button>
-                                    </div>
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
+                                        aria-label="Close alert">
+                                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                    </button>
                                 </div>
-                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
-                                    aria-label="Close alert">
-                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-alert-copylog-1" id="tab-alert-copylog-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-alert-copylog-js" id="tab-alert-copylog-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copylog-1"
-                                    aria-labelledby="tab-alert-copylog-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-alert-copylog-1" id="tab-alert-copylog-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-alert-copylog-js" id="tab-alert-copylog-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copylog-1"
+                                        aria-labelledby="tab-alert-copylog-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-alert nds-card" data-status="error" role="alert"&gt;
   &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
     &lt;span class="nds-feedback-icon"&gt;
@@ -635,15 +642,15 @@ last_edit: "02/08/2026 - 01:03 AM"
   &lt;/button&gt;
 &lt;/div&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copylog-js"
-                                    aria-labelledby="tab-alert-copylog-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">// In production, pass the real error you already hold:
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copylog-js"
+                                        aria-labelledby="tab-alert-copylog-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">// In production, pass the real error you already hold:
 // quotes, commas, and newlines inside the string are all safe
 NDS.Alert.create({
     variant: 'error',
@@ -654,6 +661,7 @@ NDS.Alert.create({
         { label: 'Copy error log', variant: 'neutral', copy: err.stack }
     ]
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -672,120 +680,121 @@ NDS.Alert.create({
             <p class="nds-section-description">Floating notifications anchored to any corner of the viewport. The auto-dismiss timer pauses while users hover or focus, and a click keeps the toast until closed</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Success</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=warning", ".nds-alert", "toastVariant", "attr"]'>
-                                            <span class="nds-label">Warning</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".nds-alert", "toastVariant", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=info", ".nds-alert", "toastVariant", "attr"]'>
-                                            <span class="nds-label">Info</span>
-                                        </button>
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Success</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=warning", ".nds-alert", "toastVariant", "attr"]'>
+                                                <span class="nds-label">Warning</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=error", ".nds-alert", "toastVariant", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=info", ".nds-alert", "toastVariant", "attr"]'>
+                                                <span class="nds-label">Info</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Top</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["data-position=top", ".nds-alert", "toastPosition", "attr"]'>
-                                            <span class="nds-label">Top</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-position=top-start", ".nds-alert", "toastPosition", "attr"]'>
-                                            <span class="nds-label">Top start</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-position=top-left", ".nds-alert", "toastPosition", "attr"]'>
-                                            <span class="nds-label">Top left</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-position=top-right", ".nds-alert", "toastPosition", "attr"]'>
-                                            <span class="nds-label">Top right</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
-                                            <span class="nds-label">Bottom</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-position=bottom-start", ".nds-alert", "toastPosition", "attr"]'>
-                                            <span class="nds-label">Bottom start</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-position=bottom-left", ".nds-alert", "toastPosition", "attr"]'>
-                                            <span class="nds-label">Bottom left</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-position=bottom-right", ".nds-alert", "toastPosition", "attr"]'>
-                                            <span class="nds-label">Bottom right</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Top</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["data-position=top", ".nds-alert", "toastPosition", "attr"]'>
+                                                <span class="nds-label">Top</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-position=top-start", ".nds-alert", "toastPosition", "attr"]'>
+                                                <span class="nds-label">Top start</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-position=top-left", ".nds-alert", "toastPosition", "attr"]'>
+                                                <span class="nds-label">Top left</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-position=top-right", ".nds-alert", "toastPosition", "attr"]'>
+                                                <span class="nds-label">Top right</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
+                                                <span class="nds-label">Bottom</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-position=bottom-start", ".nds-alert", "toastPosition", "attr"]'>
+                                                <span class="nds-label">Bottom start</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-position=bottom-left", ".nds-alert", "toastPosition", "attr"]'>
+                                                <span class="nds-label">Bottom left</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-position=bottom-right", ".nds-alert", "toastPosition", "attr"]'>
+                                                <span class="nds-label">Bottom right</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-color", ".nds-alert", "toastColor"]'>
-                                <span class="nds-label">Color</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo"
-                            style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
-                            <button class="nds-btn nds-primary nds-lg demo-action-btn" data-action="toast-show">
-                                <span class="nds-label">Show Toast</span>
-                            </button>
-                            <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
-                                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                                Select a variant and position above, then click the button to preview
-                            </span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-alert-toast-html" id="tab-alert-toast-html">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-alert-toast-js" id="tab-alert-toast-js">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-color", ".nds-alert", "toastColor"]'>
+                                    <span class="nds-label">Color</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-toast-html"
-                                    aria-labelledby="tab-alert-toast-html">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo"
+                                style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
+                                <button class="nds-btn nds-primary nds-lg demo-action-btn" data-action="toast-show">
+                                    <span class="nds-label">Show Toast</span>
+                                </button>
+                                <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
+                                    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                    Select a variant and position above, then click the button to preview
+                                </span>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-alert-toast-html" id="tab-alert-toast-html">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-alert-toast-js" id="tab-alert-toast-js">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-toast-html"
+                                        aria-labelledby="tab-alert-toast-html">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-alert-placeholder" data-position="top"&gt;
   &lt;div class="nds-alert nds-card nds-toast nds-shadow nds-stroke" data-status="success" role="alert" data-state="toast-show"&gt;
     &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
@@ -811,15 +820,15 @@ NDS.Alert.create({
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-toast-js"
-                                    aria-labelledby="tab-alert-toast-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">NDS.Alert.create({
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-toast-js"
+                                        aria-labelledby="tab-alert-toast-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">NDS.Alert.create({
     variant: 'success',
     title: 'Success',
     description: 'Changes saved successfully!',
@@ -827,6 +836,7 @@ NDS.Alert.create({
     position: 'top',
     duration: 4000
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -844,62 +854,64 @@ NDS.Alert.create({
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates when .nds-alert is on the page. Close button handlers attach automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors"></i>
-                        <span class="nds-label">Six Status Variants</span>
-                    </span>
-                    <p class="nds-item-desc">Success, info, warning, error, critical, and neutral with automatic icon and color theming.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-notification-square"></i>
-                        <span class="nds-label">Toast Notifications</span>
-                    </span>
-                    <p class="nds-item-desc">Floating notifications with an auto-dismiss timer and a countdown ring on the close button.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-pause"></i>
-                        <span class="nds-label">Pausable Auto-dismiss</span>
-                    </span>
-                    <p class="nds-item-desc">Toast timers pause on hover or keyboard focus and resume on leave. A click keeps the toast until closed.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-01"></i>
-                        <span class="nds-label">Flexible Placement</span>
-                    </span>
-                    <p class="nds-item-desc">Toasts anchor to the top or bottom edge combined with start, end, left, or right, and logical sides follow text direction.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-minus-sign"></i>
-                        <span class="nds-label">Inline Layout</span>
-                    </span>
-                    <p class="nds-item-desc">Single-line variant for contextual messages with actions pushed to the end.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Create, dismiss, and bulk-clear alerts through the JS API without writing HTML.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-                        <span class="nds-label">Responsive Layout</span>
-                    </span>
-                    <p class="nds-item-desc">Stacks vertically on mobile with stripe repositioned to the top.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates when .nds-alert is on the page. Close button handlers attach automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-colors"></i>
+                            <span class="nds-label">Six Status Variants</span>
+                        </span>
+                        <p class="nds-item-desc">Success, info, warning, error, critical, and neutral with automatic icon and color theming.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-notification-square"></i>
+                            <span class="nds-label">Toast Notifications</span>
+                        </span>
+                        <p class="nds-item-desc">Floating notifications with an auto-dismiss timer and a countdown ring on the close button.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-pause"></i>
+                            <span class="nds-label">Pausable Auto-dismiss</span>
+                        </span>
+                        <p class="nds-item-desc">Toast timers pause on hover or keyboard focus and resume on leave. A click keeps the toast until closed.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-01"></i>
+                            <span class="nds-label">Flexible Placement</span>
+                        </span>
+                        <p class="nds-item-desc">Toasts anchor to the top or bottom edge combined with start, end, left, or right, and logical sides follow text direction.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-minus-sign"></i>
+                            <span class="nds-label">Inline Layout</span>
+                        </span>
+                        <p class="nds-item-desc">Single-line variant for contextual messages with actions pushed to the end.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Create, dismiss, and bulk-clear alerts through the JS API without writing HTML.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
+                            <span class="nds-label">Responsive Layout</span>
+                        </span>
+                        <p class="nds-item-desc">Stacks vertically on mobile with stripe repositioned to the top.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -914,7 +926,7 @@ NDS.Alert.create({
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>standard alerts</strong> for important messages that need a title and description within a page section</li>
@@ -970,7 +982,7 @@ NDS.Alert.create({
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Alert</strong> API provides methods to create, display, and dismiss alerts programmatically. For dynamically added HTML alerts, call <strong>NDS.Alert.init()</strong> to re-attach close button handlers.</p>
                 <div class="nds-code nds-expandable">

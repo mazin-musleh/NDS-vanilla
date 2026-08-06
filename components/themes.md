@@ -15,16 +15,18 @@ last_edit: "03/07/2026 - 05:43 PM"
 <section class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
-                <span class="nds-feedback nds-alert-icon">
-                    <span class="nds-feedback-icon">
-                        <i class="nds-icon" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
+                    <span class="nds-feedback nds-alert-icon">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
                     </span>
-                </span>
-                <div class="nds-alert-content">
-                    <div class="nds-alert-text">
-                        <span class="nds-alert-title">Experimental</span>
-                        <p class="nds-alert-description">Dark mode is currently in an experimental phase and is not guaranteed to meet DGA compliance standards. Use in production at your own discretion.</p>
+                    <div class="nds-alert-content">
+                        <div class="nds-alert-text">
+                            <span class="nds-alert-title">Experimental</span>
+                            <p class="nds-alert-description">Dark mode is currently in an experimental phase and is not guaranteed to meet DGA compliance standards. Use in production at your own discretion.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,67 +42,68 @@ last_edit: "03/07/2026 - 05:43 PM"
             <p class="nds-section-description">Everything lives in one attribute on the root element: <code class="nds-inline-code lang-html">data-theme</code> is a space-separated token list holding the mode (<code class="nds-inline-code lang-html">dark</code>, with light as the default) and an optional theme name, so <code class="nds-inline-code lang-html">data-theme="dark crimson"</code> is dark mode on the Crimson palette. Give any control a <code class="nds-inline-code lang-html">data-theme-value</code> and it becomes a switcher: clicking it writes that theme token into <code class="nds-inline-code lang-html">data-theme</code> (keeping the dark token), saves the choice, and syncs <code class="nds-inline-code lang-html">aria-current</code>. Pick a theme and every component below updates.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu">
-                                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-                                    <span class="nds-label">Theme</span>
-                                </button>
-                                <div class="nds-dropmenu-menu nds-theme-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
-                                            <span class="nds-label">Default (DGA)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="crimson">
-                                            <span class="nds-label">Crimson</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="corporate">
-                                            <span class="nds-label">Corporate</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="sunset">
-                                            <span class="nds-label">Sunset</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu">
+                                    <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
+                                        <span class="nds-label">Theme</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu nds-theme-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
+                                                <span class="nds-label">Default (DGA)</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="crimson">
+                                                <span class="nds-label">Crimson</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="corporate">
+                                                <span class="nds-label">Corporate</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="sunset">
+                                                <span class="nds-label">Sunset</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
-                                <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-primary">
-                                <span class="nds-label">Primary action</span>
-                            </button>
-                            <a href="#themesSwitcher" class="nds-link nds-primary">Themed link</a>
-                            <button class="nds-chip nds-primary nds-rounded"><span class="nds-label">Theme chip</span></button>
-                            <span class="nds-tag nds-green nds-sm">Status</span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-themes-switcher-1" id="tab-themes-switcher-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+                                    <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-switcher-1"
-                                    aria-labelledby="tab-themes-switcher-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-primary">
+                                    <span class="nds-label">Primary action</span>
+                                </button>
+                                <a href="#themesSwitcher" class="nds-link nds-primary">Themed link</a>
+                                <button class="nds-chip nds-primary nds-rounded"><span class="nds-label">Theme chip</span></button>
+                                <span class="nds-tag nds-green nds-sm">Status</span>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-themes-switcher-1" id="tab-themes-switcher-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-switcher-1"
+                                        aria-labelledby="tab-themes-switcher-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-dropmenu"&gt;
   &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"&gt;
     &lt;span class="nds-label"&gt;Theme&lt;/span&gt;
@@ -123,6 +126,7 @@ last_edit: "03/07/2026 - 05:43 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -141,93 +145,94 @@ last_edit: "03/07/2026 - 05:43 PM"
             <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-theme-toggle</code> to any button or switch and it is wired automatically: the click flips the <code class="nds-inline-code lang-html">dark</code> token (keeping any active theme), persists the choice, swaps the moon and sun icon, and plays a circular reveal. Dark works on every palette.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Button toggle</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
-                                <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
-                            </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Button toggle</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-themes-darkbtn-1" id="tab-themes-darkbtn-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+                                    <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-darkbtn-1"
-                                    aria-labelledby="tab-themes-darkbtn-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-themes-darkbtn-1" id="tab-themes-darkbtn-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-darkbtn-1"
+                                        aria-labelledby="tab-themes-darkbtn-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-subtle nds-icon-only"
         data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode"&gt;
   &lt;i class="nds-icon nds-hgi-moon-02" aria-hidden="true"&gt;&lt;/i&gt;
 &lt;/button&gt;</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Switch toggle (settings pages)</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-form-container nds-switch-container" data-theme-toggle>
-                                <div class="nds-form-header" data-feedback-target>
-                                    <label for="themes-dark-switch-1">
-                                        <span class="nds-label">Dark Mode</span>
-                                        <span class="nds-info">Switch between light and dark themes</span>
-                                    </label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <div class="nds-switch nds-neutral">
-                                        <input type="checkbox" id="themes-dark-switch-1" class="nds-switch-input" role="switch" aria-label="Dark mode">
-                                        <div class="nds-switch-track">
-                                            <div class="nds-switch-thumb"></div>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Switch toggle (settings pages)</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-form-container nds-switch-container" data-theme-toggle>
+                                    <div class="nds-form-header" data-feedback-target>
+                                        <label for="themes-dark-switch-1">
+                                            <span class="nds-label">Dark Mode</span>
+                                            <span class="nds-info">Switch between light and dark themes</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch nds-neutral">
+                                            <input type="checkbox" id="themes-dark-switch-1" class="nds-switch-input" role="switch" aria-label="Dark mode">
+                                            <div class="nds-switch-track">
+                                                <div class="nds-switch-thumb"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-themes-darksw-1" id="tab-themes-darksw-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-darksw-1"
-                                    aria-labelledby="tab-themes-darksw-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-themes-darksw-1" id="tab-themes-darksw-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-darksw-1"
+                                        aria-labelledby="tab-themes-darksw-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-form-container nds-switch-container" data-theme-toggle&gt;
   &lt;div class="nds-form-header" data-feedback-target&gt;
     &lt;label for="dark-switch"&gt;
@@ -242,6 +247,7 @@ last_edit: "03/07/2026 - 05:43 PM"
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -260,81 +266,82 @@ last_edit: "03/07/2026 - 05:43 PM"
             <p class="nds-section-description">Define a complete theme from one to three seed colours. The OKLCH engine derives every ramp step from your seed with CSS relative colour, <code class="nds-inline-code lang-css">oklch(from var(--brand-primary) L C H)</code>: it keeps the seed's hue, sets a perceptually-even lightness, and scales the chroma, so the ramp stays balanced for any colour. Set the seeds plus the <code class="nds-inline-code lang-html">data-palette</code> flag on the root element and the full light palette, the brand-tint alphas, a temperature-matched neutral scale, and the dark variant are all generated. Without the flag the page stays on the frozen DGA default. The engine needs CSS relative colour (Chrome 119, Safari 16.4, Firefox 128; mid-2024); older browsers fall back to the DGA default, so ship a stylesheet theme if you must brand them.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu">
-                                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-                                    <span class="nds-label">Palette</span>
-                                </button>
-                                <div class="nds-dropmenu-menu nds-theme-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
-                                            <span class="nds-label">DGA (default)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="violet" data-seed-primary="#7c3aed" data-seed-secondary="#ec4899" data-seed-tint="0.4">
-                                            <span class="nds-label">Custom (Violet)</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu">
+                                    <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
+                                        <span class="nds-label">Palette</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu nds-theme-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
+                                                <span class="nds-label">DGA (default)</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="violet" data-seed-primary="#7c3aed" data-seed-secondary="#ec4899" data-seed-tint="0.4">
+                                                <span class="nds-label">Custom (Violet)</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
-                                <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-primary">
-                                <span class="nds-label">Primary action</span>
-                            </button>
-                            <a href="#themesPalette" class="nds-link nds-primary">Themed link</a>
-                            <button class="nds-chip nds-primary nds-rounded"><span class="nds-label">Theme chip</span></button>
-                            <span class="nds-tag nds-green nds-sm">Status</span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-themes-html" id="tab-themes-html">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-themes-css" id="tab-themes-css">
-                                        <span class="nds-tab-label">CSS</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-themes-js" id="tab-themes-js">
-                                        <span class="nds-tab-label">JS</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+                                    <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-html"
-                                    aria-labelledby="tab-themes-html">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-primary">
+                                    <span class="nds-label">Primary action</span>
+                                </button>
+                                <a href="#themesPalette" class="nds-link nds-primary">Themed link</a>
+                                <button class="nds-chip nds-primary nds-rounded"><span class="nds-label">Theme chip</span></button>
+                                <span class="nds-tag nds-green nds-sm">Status</span>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-themes-html" id="tab-themes-html">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-themes-css" id="tab-themes-css">
+                                            <span class="nds-tab-label">CSS</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-themes-js" id="tab-themes-js">
+                                            <span class="nds-tab-label">JS</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-html"
+                                        aria-labelledby="tab-themes-html">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;!-- Seeds inline on the root element --&gt;
 &lt;html data-palette style="--brand-primary: #7c3aed; --brand-secondary: #ec4899; --neutral-tint: 0.4;"&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-css"
-                                    aria-labelledby="tab-themes-css" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-css code">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-css"
+                                        aria-labelledby="tab-themes-css" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-css code">
 /* Add data-palette to &lt;html&gt;; only --brand-primary is required. */
 :root[data-palette] {
   --brand-primary:   #7c3aed;
@@ -342,15 +349,15 @@ last_edit: "03/07/2026 - 05:43 PM"
   --neutral-tint:    0.4;
 }
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-js"
-                                    aria-labelledby="tab-themes-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-js"
+                                        aria-labelledby="tab-themes-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">
 // Set the seeds, then flip the data-palette flag.
 const root = document.documentElement;
 root.style.setProperty('--brand-primary', '#7c3aed');
@@ -358,6 +365,7 @@ root.style.setProperty('--brand-secondary', '#ec4899');
 root.style.setProperty('--neutral-tint', '0.4');
 root.setAttribute('data-palette', '');
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -376,36 +384,37 @@ root.setAttribute('data-palette', '');
             <p class="nds-section-description">For exact, contrast-checked colours, the widest browser support, or styling beyond colour (custom hero layouts, patterns, injected content), ship a theme as its own stylesheet that overrides the colour tokens at <code class="nds-inline-code lang-css">:root</code>. In production you load it server-side as a render-blocking <code class="nds-inline-code lang-html">&lt;link&gt;</code> after the NDS critical CSS. Override the full set of themeable tokens below; the semantic and component tokens re-resolve from them.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Override the colour tokens in your own stylesheet</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-themes-ss-css" id="tab-themes-ss-css">
-                                        <span class="nds-tab-label">Theme CSS</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-themes-ss-html" id="tab-themes-ss-html">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-css"
-                                    aria-labelledby="tab-themes-ss-css">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Override the colour tokens in your own stylesheet</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-themes-ss-css" id="tab-themes-ss-css">
+                                            <span class="nds-tab-label">Theme CSS</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-css code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-themes-ss-html" id="tab-themes-ss-html">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-css"
+                                        aria-labelledby="tab-themes-ss-css">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-css code">
 /* DGA values shown; replace with your brand ramp. Status + base stay on DGA. */
 :root {
   /* Primary ramp (anchor your brand colour at the 600 step) */
@@ -490,17 +499,18 @@ root.setAttribute('data-palette', '');
   --background-footer: #0c111b;
 }
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-html"
-                                    aria-labelledby="tab-themes-ss-html" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-html code">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-html"
+                                        aria-labelledby="tab-themes-ss-html" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;link rel="stylesheet" href="assets/themes/my-brand.css"&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -518,62 +528,64 @@ root.setAttribute('data-palette', '');
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Toggles and switchers wire themselves: drop in <code class="nds-inline-code lang-html">data-theme-toggle</code> or <code class="nds-inline-code lang-html">data-theme-value</code> controls and they work, no setup code.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-database"></i>
-                        <span class="nds-label">Preference Persistence</span>
-                    </span>
-                    <p class="nds-item-desc">The chosen mode and theme are saved to <code class="nds-inline-code lang-js">localStorage</code> and restored on every page, so the choice follows the user across visits.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-bucket"></i>
-                        <span class="nds-label">Zero-Flash</span>
-                    </span>
-                    <p class="nds-item-desc">A saved mode or theme re-applies before the page is visible, so there is no colour flash on first load or return visit.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-sparkles"></i>
-                        <span class="nds-label">Circular Reveal Animation</span>
-                    </span>
-                    <p class="nds-item-desc">Switching mode or theme expands the new look outward from the clicked control in a circular ripple, with an instant swap where View Transitions are unsupported.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-moon-02"></i>
-                        <span class="nds-label">Light and Dark</span>
-                    </span>
-                    <p class="nds-item-desc">A built-in dark mode that works on every palette, with an automatic moon and sun icon swap on any toggle control.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-color-picker"></i>
-                        <span class="nds-label">Custom Palettes</span>
-                    </span>
-                    <p class="nds-item-desc">Set one to three seed colours and a neutral-tint dial; the OKLCH engine derives the full ramp and the dark variant. Dark follows the seeds with no extra work.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-file-script"></i>
-                        <span class="nds-label">Stylesheet Themes</span>
-                    </span>
-                    <p class="nds-item-desc">Ship a full theme as its own stylesheet that overrides the colour tokens at the root, for bespoke palettes and visuals beyond the generated ramp.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Read or flip the mode with <code class="nds-inline-code lang-js">NDS.Theme.get/set/toggle</code>, or apply a custom palette by setting <code class="nds-inline-code lang-css">--brand-*</code> and the <code class="nds-inline-code lang-html">data-palette</code> flag.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Toggles and switchers wire themselves: drop in <code class="nds-inline-code lang-html">data-theme-toggle</code> or <code class="nds-inline-code lang-html">data-theme-value</code> controls and they work, no setup code.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-database"></i>
+                            <span class="nds-label">Preference Persistence</span>
+                        </span>
+                        <p class="nds-item-desc">The chosen mode and theme are saved to <code class="nds-inline-code lang-js">localStorage</code> and restored on every page, so the choice follows the user across visits.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-paint-bucket"></i>
+                            <span class="nds-label">Zero-Flash</span>
+                        </span>
+                        <p class="nds-item-desc">A saved mode or theme re-applies before the page is visible, so there is no colour flash on first load or return visit.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-sparkles"></i>
+                            <span class="nds-label">Circular Reveal Animation</span>
+                        </span>
+                        <p class="nds-item-desc">Switching mode or theme expands the new look outward from the clicked control in a circular ripple, with an instant swap where View Transitions are unsupported.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-moon-02"></i>
+                            <span class="nds-label">Light and Dark</span>
+                        </span>
+                        <p class="nds-item-desc">A built-in dark mode that works on every palette, with an automatic moon and sun icon swap on any toggle control.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-color-picker"></i>
+                            <span class="nds-label">Custom Palettes</span>
+                        </span>
+                        <p class="nds-item-desc">Set one to three seed colours and a neutral-tint dial; the OKLCH engine derives the full ramp and the dark variant. Dark follows the seeds with no extra work.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-file-script"></i>
+                            <span class="nds-label">Stylesheet Themes</span>
+                        </span>
+                        <p class="nds-item-desc">Ship a full theme as its own stylesheet that overrides the colour tokens at the root, for bespoke palettes and visuals beyond the generated ramp.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Read or flip the mode with <code class="nds-inline-code lang-js">NDS.Theme.get/set/toggle</code>, or apply a custom palette by setting <code class="nds-inline-code lang-css">--brand-*</code> and the <code class="nds-inline-code lang-html">data-palette</code> flag.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -588,7 +600,7 @@ root.setAttribute('data-palette', '');
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Most government sites need no setup: the DGA default is active out of the box. Add theming only when you need dark mode or your own brand colours</li>
@@ -620,7 +632,7 @@ root.setAttribute('data-palette', '');
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <p>Set these on the root element (with <code class="nds-inline-code lang-html">data-palette</code>) for a custom palette, or at <code class="nds-inline-code lang-css">:root</code> in a stylesheet theme.</p>
                 <table class="nds-table nds-responsive">
@@ -643,7 +655,7 @@ root.setAttribute('data-palette', '');
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Theme</strong> module initializes automatically and owns both axes. Use it to read or flip the dark and light mode; predefined themes are applied by the switcher (or by writing the <code class="nds-inline-code lang-html">data-theme</code> token), and a custom palette by setting the seeds plus <code class="nds-inline-code lang-html">data-palette</code>.</p>
                 <div class="nds-code nds-expandable">

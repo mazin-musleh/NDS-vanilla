@@ -19,112 +19,114 @@ sidemenu_mode: false
             <p class="nds-section-description nds-full">This is an example of a section description in the Design System, where the same consistent style is maintained across all other sections. This is an example of a section description in the Design System, where the same consistent style is maintained across all other sections.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
+            <div class="nds-block">
+                <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
 
-                <div class="nds-card nds-shadow">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">e-Participation Policy</span>
-                        </div>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#e-participation-policy" class="nds-btn nds-secondary nds-icon-only" aria-label="Open e-Participation Policy">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
+                    <div class="nds-card nds-shadow">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">e-Participation Policy</span>
+                            </div>
+                            <div class="nds-card-actions nds-end">
+                                <a href="#e-participation-policy" class="nds-btn nds-secondary nds-icon-only" aria-label="Open e-Participation Policy">
+                                    <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-card nds-shadow">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Consultations</span>
-                        </div>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#consultations" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Consultations">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
+                    <div class="nds-card nds-shadow">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Consultations</span>
+                            </div>
+                            <div class="nds-card-actions nds-end">
+                                <a href="#consultations" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Consultations">
+                                    <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-card nds-shadow">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Co-Creation and Ideas</span>
-                        </div>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#co-creation" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Co-Creation and Ideas">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
+                    <div class="nds-card nds-shadow">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Co-Creation and Ideas</span>
+                            </div>
+                            <div class="nds-card-actions nds-end">
+                                <a href="#co-creation" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Co-Creation and Ideas">
+                                    <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-card nds-shadow">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Open Data</span>
-                        </div>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#open-data" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Open Data">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
+                    <div class="nds-card nds-shadow">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Open Data</span>
+                            </div>
+                            <div class="nds-card-actions nds-end">
+                                <a href="#open-data" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Open Data">
+                                    <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-card nds-shadow">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Complaints and Suggestions</span>
-                        </div>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#complaints" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Complaints and Suggestions">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
+                    <div class="nds-card nds-shadow">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Complaints and Suggestions</span>
+                            </div>
+                            <div class="nds-card-actions nds-end">
+                                <a href="#complaints" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Complaints and Suggestions">
+                                    <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-card nds-shadow">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Beneficiary Voice Reports</span>
-                        </div>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#beneficiary-voice" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Beneficiary Voice Reports">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
+                    <div class="nds-card nds-shadow">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Beneficiary Voice Reports</span>
+                            </div>
+                            <div class="nds-card-actions nds-end">
+                                <a href="#beneficiary-voice" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Beneficiary Voice Reports">
+                                    <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-card nds-shadow">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Website and Services Statistics</span>
-                        </div>
-                        <div class="nds-card-actions nds-end">
-                            <a href="{{ '/templates/kpis-template.html' | relative_url }}" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Website and Services Statistics">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
+                    <div class="nds-card nds-shadow">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Website and Services Statistics</span>
+                            </div>
+                            <div class="nds-card-actions nds-end">
+                                <a href="{{ '/templates/kpis-template.html' | relative_url }}" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Website and Services Statistics">
+                                    <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-card nds-shadow">
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Social Media</span>
-                        </div>
-                        <div class="nds-card-actions nds-end">
-                            <a href="{{ '/templates/social-media-template.html' | relative_url }}" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Social Media">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
+                    <div class="nds-card nds-shadow">
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Social Media</span>
+                            </div>
+                            <div class="nds-card-actions nds-end">
+                                <a href="{{ '/templates/social-media-template.html' | relative_url }}" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Social Media">
+                                    <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>

@@ -19,134 +19,136 @@ last_edit: "14/07/2026 - 12:13 AM"
             <p class="nds-section-description">Status-colored circular icons that automatically display the correct glyph for each status type</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Status: ">
-                                    <span class="nds-label">Status: Success</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["data-status=success", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=info", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                            <span class="nds-label">Info</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=warning", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                            <span class="nds-label">Warning</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=critical", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                            <span class="nds-label">Critical</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=neutral", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=help", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                            <span class="nds-label">Help</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Status: ">
+                                        <span class="nds-label">Status: Success</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["data-status=success", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=info", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                                <span class="nds-label">Info</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=warning", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                                <span class="nds-label">Warning</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=error", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=critical", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                                <span class="nds-label">Critical</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=neutral", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=help", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                                <span class="nds-label">Help</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                    <span class="nds-label">Size: Medium</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-feedback", "feedbackSize"]'>
-                                            <span class="nds-label">Small (16px)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-feedback", "feedbackSize"]'
-                                            data-trigger-label="Medium">
-                                            <span class="nds-label">Medium (24px)</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                        <span class="nds-label">Size: Medium</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-feedback", "feedbackSize"]'>
+                                                <span class="nds-label">Small (16px)</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-feedback", "feedbackSize"]'
+                                                data-trigger-label="Medium">
+                                                <span class="nds-label">Medium (24px)</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-ring", ".nds-feedback", "feedbackStyle"]'>
+                                    <span class="nds-label">Ring</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-outline", ".nds-feedback", "feedbackStyle"]'>
+                                    <span class="nds-label">Outline</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-ring", ".nds-feedback", "feedbackStyle"]'>
-                                <span class="nds-label">Ring</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-feedback", "feedbackStyle"]'>
-                                <span class="nds-label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <span class="nds-feedback" data-status="success">
-                                <span class="nds-feedback-icon">
-                                    <i class="nds-icon" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <span class="nds-feedback" data-status="success">
+                                    <span class="nds-feedback-icon">
+                                        <i class="nds-icon" aria-hidden="true"></i>
+                                    </span>
                                 </span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-feedback-icon-1" id="tab-feedback-icon-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-feedback-icon-js-1" id="tab-feedback-icon-js-1">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-1"
-                                    aria-labelledby="tab-feedback-icon-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-feedback-icon-1" id="tab-feedback-icon-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-feedback-icon-js-1" id="tab-feedback-icon-js-1">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-1"
+                                        aria-labelledby="tab-feedback-icon-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;span class="nds-feedback" data-status="success"&gt;
   &lt;span class="nds-feedback-icon"&gt;
     &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
   &lt;/span&gt;
 &lt;/span&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-js-1"
-                                    aria-labelledby="tab-feedback-icon-js-1" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">NDS.Feedback.create({
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-js-1"
+                                        aria-labelledby="tab-feedback-icon-js-1" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">NDS.Feedback.create({
     status: 'success',
     target: '#container',
     size: 'md',
     style: '',
     showIcon: true
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -165,109 +167,110 @@ last_edit: "14/07/2026 - 12:13 AM"
             <p class="nds-section-description">Combine the status icon with a text message for inline validation results and contextual hints</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Status: ">
-                                    <span class="nds-label">Status: Error</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["data-status=error", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=critical", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                            <span class="nds-label">Critical</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=success", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=warning", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                            <span class="nds-label">Warning</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=info", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                            <span class="nds-label">Info</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=neutral", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Status: ">
+                                        <span class="nds-label">Status: Error</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["data-status=error", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=critical", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
+                                                <span class="nds-label">Critical</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=success", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=warning", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
+                                                <span class="nds-label">Warning</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=info", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
+                                                <span class="nds-label">Info</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=neutral", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                    <span class="nds-label">Size: Small</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-sm", ".nds-feedback", "feedbackMsgSize"]'>
-                                            <span class="nds-label">Small (16px)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-feedback", "feedbackMsgSize"]'>
-                                            <span class="nds-label">Medium (24px)</span>
-                                        </button>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                        <span class="nds-label">Size: Small</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-sm", ".nds-feedback", "feedbackMsgSize"]'>
+                                                <span class="nds-label">Small (16px)</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-feedback", "feedbackMsgSize"]'>
+                                                <span class="nds-label">Medium (24px)</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-ring", ".nds-feedback", "feedbackMsgStyle"]'>
+                                    <span class="nds-label">Ring</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-outline", ".nds-feedback", "feedbackMsgStyle"]'>
+                                    <span class="nds-label">Outline</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-ring", ".nds-feedback", "feedbackMsgStyle"]'>
-                                <span class="nds-label">Ring</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-outline", ".nds-feedback", "feedbackMsgStyle"]'>
-                                <span class="nds-label">Outline</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <span class="nds-feedback nds-sm" data-status="error">
-                                <span class="nds-feedback-icon">
-                                    <i class="nds-icon" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <span class="nds-feedback nds-sm" data-status="error">
+                                    <span class="nds-feedback-icon">
+                                        <i class="nds-icon" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="nds-feedback-message">This field is required</span>
                                 </span>
-                                <span class="nds-feedback-message">This field is required</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-feedback-msg-1" id="tab-feedback-msg-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-feedback-msg-js-1" id="tab-feedback-msg-js-1">
-                                        <span class="nds-tab-label">JS API</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-1"
-                                    aria-labelledby="tab-feedback-msg-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-feedback-msg-1" id="tab-feedback-msg-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-feedback-msg-js-1" id="tab-feedback-msg-js-1">
+                                            <span class="nds-tab-label">JS API</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-1"
+                                        aria-labelledby="tab-feedback-msg-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;span class="nds-feedback nds-sm" data-status="error"&gt;
   &lt;span class="nds-feedback-icon"&gt;
     &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
@@ -275,21 +278,22 @@ last_edit: "14/07/2026 - 12:13 AM"
   &lt;span class="nds-feedback-message"&gt;This field is required&lt;/span&gt;
 &lt;/span&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-js-1"
-                                    aria-labelledby="tab-feedback-msg-js-1" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">NDS.Feedback.create({
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-js-1"
+                                        aria-labelledby="tab-feedback-msg-js-1" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">NDS.Feedback.create({
     message: 'This field is required',
     status: 'error',
     target: '#container',
     size: 'sm',
     style: ''
 });</code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -307,34 +311,36 @@ last_edit: "14/07/2026 - 12:13 AM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors"></i>
-                        <span class="nds-label">Auto Icon by Status</span>
-                    </span>
-                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-status</code> and the correct icon glyph appears automatically: checkmark for success, alert for warning, X for error, info circle for info.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01"></i>
-                        <span class="nds-label">Parent Status Inheritance</span>
-                    </span>
-                    <p class="nds-item-desc">Place a feedback icon inside any element with <code class="nds-inline-code lang-html">data-status</code> and it inherits the status color and icon without needing its own attribute.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-square-circle"></i>
-                        <span class="nds-label">Three Visual Styles</span>
-                    </span>
-                    <p class="nds-item-desc">Solid fill by default, outline for lighter weight, and ring for extra emphasis. Combine freely with any status and size.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code-circle"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Create, dismiss, and manage feedback lifecycle with <code class="nds-inline-code lang-js">NDS.Feedback.create()</code>. Permanent feedback survives status changes and restores automatically.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-colors"></i>
+                            <span class="nds-label">Auto Icon by Status</span>
+                        </span>
+                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-status</code> and the correct icon glyph appears automatically: checkmark for success, alert for warning, X for error, info circle for info.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layers-01"></i>
+                            <span class="nds-label">Parent Status Inheritance</span>
+                        </span>
+                        <p class="nds-item-desc">Place a feedback icon inside any element with <code class="nds-inline-code lang-html">data-status</code> and it inherits the status color and icon without needing its own attribute.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-square-circle"></i>
+                            <span class="nds-label">Three Visual Styles</span>
+                        </span>
+                        <p class="nds-item-desc">Solid fill by default, outline for lighter weight, and ring for extra emphasis. Combine freely with any status and size.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-code-circle"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Create, dismiss, and manage feedback lifecycle with <code class="nds-inline-code lang-js">NDS.Feedback.create()</code>. Permanent feedback survives status changes and restores automatically.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -349,7 +355,7 @@ last_edit: "14/07/2026 - 12:13 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <code class="nds-inline-code lang-js">NDS.Feedback.create()</code> for general-purpose feedback on any element: tooltips, notifications, hints on divs, sections, or cards</li>
@@ -416,7 +422,7 @@ last_edit: "14/07/2026 - 12:13 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p><strong>NDS.Feedback</strong> creates and manages feedback elements programmatically. For form validation, use <a class="nds-color" href="{{ 'components/forms' | relative_url }}">NDS.Forms.setStatus()</a> which calls Feedback internally and also sets form-specific attributes.</p>
 
@@ -560,7 +566,7 @@ last_edit: "14/07/2026 - 12:13 AM"
 
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <p>Set on <code class="nds-inline-code lang-html">.nds-feedback-icon</code> or any ancestor to override individual rendering knobs.</p>
                 <table class="nds-table nds-responsive">

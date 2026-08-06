@@ -19,45 +19,47 @@ last_edit: "26/07/2026 - 09:02 PM"
             <p class="nds-section-description">The native <code class="nds-inline-code lang-html">hidden</code> attribute is guaranteed to work on any NDS element, even ones styled with flex or grid display. The markup below ships four tags, and the one carrying <code class="nds-inline-code lang-html">hidden</code> never renders</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Four tags in the markup, three rendered</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); align-items: center;">
-                            <span class="nds-tag" data-status="success"><span class="nds-label">Active</span></span>
-                            <span class="nds-tag" data-status="info"><span class="nds-label">Beta</span></span>
-                            <span class="nds-tag" data-status="error" hidden><span class="nds-label">Deprecated</span></span>
-                            <span class="nds-tag nds-gray"><span class="nds-label">Archived</span></span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Four tags in the markup, three rendered</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hidden-attr-1" id="tab-hidden-attr-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); align-items: center;">
+                                <span class="nds-tag" data-status="success"><span class="nds-label">Active</span></span>
+                                <span class="nds-tag" data-status="info"><span class="nds-label">Beta</span></span>
+                                <span class="nds-tag" data-status="error" hidden><span class="nds-label">Deprecated</span></span>
+                                <span class="nds-tag nds-gray"><span class="nds-label">Archived</span></span>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hidden-attr-1"
-                                    aria-labelledby="tab-hidden-attr-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hidden-attr-1" id="tab-hidden-attr-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hidden-attr-1"
+                                        aria-labelledby="tab-hidden-attr-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;span class="nds-tag" data-status="success"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;
 &lt;span class="nds-tag" data-status="info"&gt;&lt;span class="nds-label"&gt;Beta&lt;/span&gt;&lt;/span&gt;
 &lt;span class="nds-tag" data-status="error" hidden&gt;&lt;span class="nds-label"&gt;Deprecated&lt;/span&gt;&lt;/span&gt;
 &lt;span class="nds-tag nds-gray"&gt;&lt;span class="nds-label"&gt;Archived&lt;/span&gt;&lt;/span&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,47 +78,49 @@ last_edit: "26/07/2026 - 09:02 PM"
             <p class="nds-section-description">Stamp <code class="nds-inline-code lang-html">data-hidden</code> on any element to hide it only inside a named viewport range: <code class="nds-inline-code lang-html">sm</code> (600px and below), <code class="nds-inline-code lang-html">md</code> (601 to 960px), <code class="nds-inline-code lang-html">lg</code> (961 to 1280px). Space-separate tokens to span ranges. Resize the window to watch each tag drop out of its own band</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Each tag names the range where it hides</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); align-items: center;">
-                            <span class="nds-tag" data-status="error" data-hidden="sm"><span class="nds-label">sm</span></span>
-                            <span class="nds-tag" data-status="warning" data-hidden="md"><span class="nds-label">md</span></span>
-                            <span class="nds-tag" data-status="info" data-hidden="lg"><span class="nds-label">lg</span></span>
-                            <span class="nds-tag" data-status="neutral" data-hidden="sm md"><span class="nds-label">sm md</span></span>
-                            <span class="nds-tag" data-status="success"><span class="nds-label">always visible</span></span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Each tag names the range where it hides</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hidden-bands-1" id="tab-hidden-bands-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); align-items: center;">
+                                <span class="nds-tag" data-status="error" data-hidden="sm"><span class="nds-label">sm</span></span>
+                                <span class="nds-tag" data-status="warning" data-hidden="md"><span class="nds-label">md</span></span>
+                                <span class="nds-tag" data-status="info" data-hidden="lg"><span class="nds-label">lg</span></span>
+                                <span class="nds-tag" data-status="neutral" data-hidden="sm md"><span class="nds-label">sm md</span></span>
+                                <span class="nds-tag" data-status="success"><span class="nds-label">always visible</span></span>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hidden-bands-1"
-                                    aria-labelledby="tab-hidden-bands-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hidden-bands-1" id="tab-hidden-bands-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hidden-bands-1"
+                                        aria-labelledby="tab-hidden-bands-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;span class="nds-tag" data-status="error" data-hidden="sm"&gt;&lt;span class="nds-label"&gt;sm&lt;/span&gt;&lt;/span&gt;
 &lt;span class="nds-tag" data-status="warning" data-hidden="md"&gt;&lt;span class="nds-label"&gt;md&lt;/span&gt;&lt;/span&gt;
 &lt;span class="nds-tag" data-status="info" data-hidden="lg"&gt;&lt;span class="nds-label"&gt;lg&lt;/span&gt;&lt;/span&gt;
 &lt;span class="nds-tag" data-status="neutral" data-hidden="sm md"&gt;&lt;span class="nds-label"&gt;sm md&lt;/span&gt;&lt;/span&gt;
 &lt;span class="nds-tag" data-status="success"&gt;&lt;span class="nds-label"&gt;always visible&lt;/span&gt;&lt;/span&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -135,45 +139,47 @@ last_edit: "26/07/2026 - 09:02 PM"
             <p class="nds-section-description">Add the <code class="nds-inline-code lang-html">sr</code> token to any <code class="nds-inline-code lang-html">data-hidden</code> value and the element is hidden visually but stays in the accessibility tree. Use it on button labels that collapse to icon-only, so the control never loses its accessible name. Resize below 600px: the label disappears, the button keeps its width padding, and screen readers still announce "Search"</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Label collapses on mobile, name survives</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-neutral" type="button">
-                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                <span class="nds-label" data-hidden="sm sr">Search</span>
-                            </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Label collapses on mobile, name survives</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-hidden-sr-1" id="tab-hidden-sr-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-neutral" type="button">
+                                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                    <span class="nds-label" data-hidden="sm sr">Search</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hidden-sr-1"
-                                    aria-labelledby="tab-hidden-sr-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-hidden-sr-1" id="tab-hidden-sr-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hidden-sr-1"
+                                        aria-labelledby="tab-hidden-sr-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;button class="nds-btn nds-neutral" type="button"&gt;
   &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
   &lt;span class="nds-label" data-hidden="sm sr"&gt;Search&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -191,34 +197,36 @@ last_edit: "26/07/2026 - 09:02 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-view-off-slash"></i>
-                        <span class="nds-label">Universal hidden Override</span>
-                    </span>
-                    <p class="nds-item-desc">Elements with the hidden attribute stay hidden even when a flex, grid, or utility display rule targets them.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-                        <span class="nds-label">Band-Exact Breakpoints</span>
-                    </span>
-                    <p class="nds-item-desc">Each data-hidden token hides an element only inside its own range, so a mid-width gap never leaks into small screens.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle"></i>
-                        <span class="nds-label">Composable Ranges</span>
-                    </span>
-                    <p class="nds-item-desc">Space-separate tokens to span ranges, like data-hidden="sm md" for everything below the large breakpoint.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-ear"></i>
-                        <span class="nds-label">Screen-Reader Preservation</span>
-                    </span>
-                    <p class="nds-item-desc">The sr token hides an element visually while assistive technology keeps announcing it, so icon-only collapses never lose their name.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                            <span class="nds-label">Universal hidden Override</span>
+                        </span>
+                        <p class="nds-item-desc">Elements with the hidden attribute stay hidden even when a flex, grid, or utility display rule targets them.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
+                            <span class="nds-label">Band-Exact Breakpoints</span>
+                        </span>
+                        <p class="nds-item-desc">Each data-hidden token hides an element only inside its own range, so a mid-width gap never leaks into small screens.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-puzzle"></i>
+                            <span class="nds-label">Composable Ranges</span>
+                        </span>
+                        <p class="nds-item-desc">Space-separate tokens to span ranges, like data-hidden="sm md" for everything below the large breakpoint.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-ear"></i>
+                            <span class="nds-label">Screen-Reader Preservation</span>
+                        </span>
+                        <p class="nds-item-desc">The sr token hides an element visually while assistive technology keeps announcing it, so icon-only collapses never lose their name.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -233,7 +241,7 @@ last_edit: "26/07/2026 - 09:02 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the <code class="nds-inline-code lang-html">hidden</code> attribute for state your JS toggles (panels, menus, wizard steps). It wins over any display value, so no extra CSS is needed</li>

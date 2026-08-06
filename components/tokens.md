@@ -20,16 +20,18 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
 <section class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-alert nds-card nds-inline" data-status="info" role="alert">
-                <span class="nds-feedback nds-alert-icon">
-                    <span class="nds-feedback-icon">
-                        <i class="nds-icon" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-alert nds-card nds-inline" data-status="info" role="alert">
+                    <span class="nds-feedback nds-alert-icon">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
                     </span>
-                </span>
-                <div class="nds-alert-content">
-                    <div class="nds-alert-text">
-                        <span class="nds-alert-title">Documentation preview</span>
-                        <p class="nds-alert-description">Every name and value below is parsed straight from the design-token SCSS on each build. This preview runs ahead of the current release (v{{ site.latest_release }}), so it can list tokens that the published bundle does not carry yet.</p>
+                    <div class="nds-alert-content">
+                        <div class="nds-alert-text">
+                            <span class="nds-alert-title">Documentation preview</span>
+                            <p class="nds-alert-description">Every name and value below is parsed straight from the design-token SCSS on each build. This preview runs ahead of the current release (v{{ site.latest_release }}), so it can list tokens that the published bundle does not carry yet.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,34 +48,36 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
             <p class="nds-section-description">NDS tokens are layered in four tiers. Always reference the highest tier that carries the meaning you need: a component token before a semantic one, a semantic token before a raw value. Higher tiers resolve down to lower ones, so a single re-theme or dark-mode switch cascades everywhere. To retheme the whole system from a few seed colors, see <a class="nds-color" href="{{ 'components/themes' | relative_url }}">Themes</a>.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board"></i>
-                        <span class="nds-label">Color Palette</span>
-                    </span>
-                    <p class="nds-item-desc">The raw <code class="nds-inline-code lang-css">--colors-*</code> values: brand slots, neutrals, status hues, and alpha ramps. Names carry no meaning, only shade. Never edited directly: re-theming regenerates the brand slots from seed colors.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cube"></i>
-                        <span class="nds-label">Primitive Scales</span>
-                    </span>
-                    <p class="nds-item-desc">The dimension vocabulary: named spacing, radius, and typography sizes such as <code class="nds-inline-code lang-css">--spacing-xl</code> and <code class="nds-inline-code lang-css">--radius-md</code>, each carrying its value directly. The size names are the entire scale.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tags"></i>
-                        <span class="nds-label">Semantic Tokens</span>
-                    </span>
-                    <p class="nds-item-desc">One name per meaning, system-wide: backgrounds, text, borders, icons, form-control surfaces, and shadows. Dark mode and re-themes re-bind this layer, so everything that references it adapts automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle"></i>
-                        <span class="nds-label">Component Tokens</span>
-                    </span>
-                    <p class="nds-item-desc">Per-component dials named <code class="nds-inline-code lang-css">--{component}-{property}-{variant}-{state}</code>. Override one to retune a single component everywhere without touching the shared meanings other components consume.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-paint-board"></i>
+                            <span class="nds-label">Color Palette</span>
+                        </span>
+                        <p class="nds-item-desc">The raw <code class="nds-inline-code lang-css">--colors-*</code> values: brand slots, neutrals, status hues, and alpha ramps. Names carry no meaning, only shade. Never edited directly: re-theming regenerates the brand slots from seed colors.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cube"></i>
+                            <span class="nds-label">Primitive Scales</span>
+                        </span>
+                        <p class="nds-item-desc">The dimension vocabulary: named spacing, radius, and typography sizes such as <code class="nds-inline-code lang-css">--spacing-xl</code> and <code class="nds-inline-code lang-css">--radius-md</code>, each carrying its value directly. The size names are the entire scale.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-tags"></i>
+                            <span class="nds-label">Semantic Tokens</span>
+                        </span>
+                        <p class="nds-item-desc">One name per meaning, system-wide: backgrounds, text, borders, icons, form-control surfaces, and shadows. Dark mode and re-themes re-bind this layer, so everything that references it adapts automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-puzzle"></i>
+                            <span class="nds-label">Component Tokens</span>
+                        </span>
+                        <p class="nds-item-desc">Per-component dials named <code class="nds-inline-code lang-css">--{component}-{property}-{variant}-{state}</code>. Override one to retune a single component everywhere without touching the shared meanings other components consume.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,37 +135,39 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
             </p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-tabs nds-code nds-divided">
-                <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="{{ tier.label }} categories">
-                        {%- for cat in tier.categories %}
-                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                            aria-controls="panel-tokens-{{ tier.id }}-{{ cat.id }}" id="tab-tokens-{{ tier.id }}-{{ cat.id }}">
-                            <span class="nds-tab-label">{{ cat.label }}</span>
-                        </button>
-                        {%- endfor %}
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <div class="nds-tab-content">
-                    {%- for cat in tier.categories %}
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tokens-{{ tier.id }}-{{ cat.id }}"
-                        aria-labelledby="tab-tokens-{{ tier.id }}-{{ cat.id }}"{% unless forloop.first %} hidden{% endunless %}>
-                        <div class="nds-code-action">
-                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy {{ cat.label }} tokens">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="{{ tier.label }} categories">
+                            {%- for cat in tier.categories %}
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                                aria-controls="panel-tokens-{{ tier.id }}-{{ cat.id }}" id="tab-tokens-{{ tier.id }}-{{ cat.id }}">
+                                <span class="nds-tab-label">{{ cat.label }}</span>
                             </button>
-                        </div>
-                        <div class="nds-expandable-content">
-                            <code class="lang-css code">:root {
+                            {%- endfor %}
+                        </nav>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="nds-tab-content">
+                        {%- for cat in tier.categories %}
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tokens-{{ tier.id }}-{{ cat.id }}"
+                            aria-labelledby="tab-tokens-{{ tier.id }}-{{ cat.id }}"{% unless forloop.first %} hidden{% endunless %}>
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy {{ cat.label }} tokens">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <div class="nds-expandable-content">
+                                <code class="lang-css code">:root {
 {%- for t in cat.tokens %}
   {{ t.name | escape }}: {{ t.value | escape }};
 {%- endfor %}
 }</code>
+                            </div>
                         </div>
+                        {%- endfor %}
                     </div>
-                    {%- endfor %}
                 </div>
             </div>
         </div>
@@ -189,7 +195,7 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
                     </tbody>
                 </table>
             </div>
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <div class="nds-code">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy knobs vs tokens example">
@@ -216,7 +222,7 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
             <p class="nds-section-description">Dark mode activates with <code class="nds-inline-code lang-html">&lt;html data-theme="dark"&gt;</code> (token-matched, so it composes with theme names like <code class="nds-inline-code lang-html">"dark crimson"</code>). It changes no component CSS: it only re-binds tokens.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <ul>
                     <li>The <strong>semantic layer</strong> flips first: page surfaces, text, borders, icons, and shadows take dark values, and everything consuming them follows</li>
                     <li><strong>Component dials</strong> re-bind where a component needs its own dark correction: checkbox and switch fills darken for white-glyph contrast while radio brightens for its dot-with-border shape</li>
@@ -224,7 +230,7 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
                     <li>The <strong>palette never changes</strong>: <code class="nds-inline-code lang-css">--colors-neutral-100</code> is the same hex in both modes, which is why components reference meanings, not shades</li>
                 </ul>
             </div>
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Overriding with dark in mind</h3>
                 <div class="nds-code">
                     <div class="nds-code-action">
@@ -252,7 +258,7 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Reference tokens with <code class="nds-inline-code lang-css">var(--token-name)</code>. Never hardcode a hex color, pixel value, or shadow that a token already names</li>
@@ -268,7 +274,7 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
                 </ul>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">How Tokens Resolve</h3>
                 <p>Every painted value walks a chain from a knob or component dial down to the palette. Two real chains from the source:</p>
                 <div class="nds-code">

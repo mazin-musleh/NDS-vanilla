@@ -19,153 +19,154 @@ last_edit: "04/08/2026 - 04:02 PM"
             <p class="nds-section-description">Accordion-style navigation with expandable submenus and active state indicators</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                    <span class="nds-label">Size: Medium</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-drawer", "drawerSize"]'
-                                            data-trigger-label="Medium">
-                                            <span class="nds-label">Medium (default)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", ".nds-drawer", "drawerSize"]'>
-                                            <span class="nds-label">Large</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-divided", ".nds-drawer", "drawerDivided"]'>
-                                <span class="nds-label">Divided</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lined", ".nds-drawer", "drawerLined"]'>
-                                <span class="nds-label">Lined</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <nav class="nds-drawer">
-                                <div class="nds-scroll-more nds-divided">
-                                    <ul class="nds-drawer-list nds-scroll-more-content">
-                                        <li data-state="active">
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-home-01"></i>
-                                                </span>
-                                                <span class="nds-label">Dashboard</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-layout-grid"></i>
-                                                </span>
-                                                <span class="nds-label">Components</span>
-                                            </button>
-                                            <ul>
-                                                <li>
-                                                    <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
-                                                        <span class="nds-label">Buttons</span>
-                                                    </button>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                                <span class="nds-label">Primary</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                                <span class="nds-label">Secondary</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                                <span class="nds-label">Danger</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label">Cards</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label">Forms</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-settings-01"></i>
-                                                </span>
-                                                <span class="nds-label">Settings</span>
-                                            </button>
-                                            <ul>
-                                                <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label">Profile</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label">Security</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-help-circle"></i>
-                                                </span>
-                                                <span class="nds-label">Help</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-drawer-nested-1" id="tab-drawer-nested-1">
-                                        <span class="nds-tab-label">HTML</span>
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                        <span class="nds-label">Size: Medium</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-drawer", "drawerSize"]'
+                                                data-trigger-label="Medium">
+                                                <span class="nds-label">Medium (default)</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", ".nds-drawer", "drawerSize"]'>
+                                                <span class="nds-label">Large</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-divided", ".nds-drawer", "drawerDivided"]'>
+                                    <span class="nds-label">Divided</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-lined", ".nds-drawer", "drawerLined"]'>
+                                    <span class="nds-label">Lined</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-drawer-nested-1" aria-labelledby="tab-drawer-nested-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <nav class="nds-drawer">
+                                    <div class="nds-scroll-more nds-divided">
+                                        <ul class="nds-drawer-list nds-scroll-more-content">
+                                            <li data-state="active">
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-home-01"></i>
+                                                    </span>
+                                                    <span class="nds-label">Dashboard</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
+                                                    </span>
+                                                    <span class="nds-label">Components</span>
+                                                </button>
+                                                <ul>
+                                                    <li>
+                                                        <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+                                                            <span class="nds-label">Buttons</span>
+                                                        </button>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                                    <span class="nds-label">Primary</span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                                    <span class="nds-label">Secondary</span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                                    <span class="nds-label">Danger</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label">Cards</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label">Forms</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-settings-01"></i>
+                                                    </span>
+                                                    <span class="nds-label">Settings</span>
+                                                </button>
+                                                <ul>
+                                                    <li>
+                                                        <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label">Profile</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label">Security</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-help-circle"></i>
+                                                    </span>
+                                                    <span class="nds-label">Help</span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-drawer-nested-1" id="tab-drawer-nested-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-drawer-nested-1" aria-labelledby="tab-drawer-nested-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;nav class="nds-drawer"&gt;
   &lt;div class="nds-scroll-more nds-divided"&gt;
     &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
@@ -251,6 +252,7 @@ last_edit: "04/08/2026 - 04:02 PM"
   &lt;/div&gt;
 &lt;/nav&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -270,83 +272,84 @@ last_edit: "04/08/2026 - 04:02 PM"
             <p class="nds-section-description">Permanently expanded on tablet and above, collapsible with toggle arrows on mobile</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <nav class="nds-drawer nds-divided" data-always-open-on="tablet">
-                                <div class="nds-scroll-more nds-divided">
-                                    <ul class="nds-drawer-list nds-scroll-more-content">
-                                        <li>
-                                            <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
-                                                <span class="nds-label">Components</span>
-                                            </button>
-                                            <ul>
-                                                <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label">Buttons</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label">Forms</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
-                                                <span class="nds-label">Guidelines</span>
-                                            </button>
-                                            <ul>
-                                                <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label">Typography</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label">Colors</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-drawer-responsive-1" id="tab-drawer-responsive-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-drawer-responsive-1" aria-labelledby="tab-drawer-responsive-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <nav class="nds-drawer nds-divided" data-always-open-on="tablet">
+                                    <div class="nds-scroll-more nds-divided">
+                                        <ul class="nds-drawer-list nds-scroll-more-content">
+                                            <li>
+                                                <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
+                                                    <span class="nds-label">Components</span>
+                                                </button>
+                                                <ul>
+                                                    <li>
+                                                        <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label">Buttons</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label">Forms</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
+                                                    <span class="nds-label">Guidelines</span>
+                                                </button>
+                                                <ul>
+                                                    <li>
+                                                        <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label">Typography</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label">Colors</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-drawer-responsive-1" id="tab-drawer-responsive-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-drawer-responsive-1" aria-labelledby="tab-drawer-responsive-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;nav class="nds-drawer nds-divided" data-always-open-on="tablet"&gt;
   &lt;div class="nds-scroll-more nds-divided"&gt;
     &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
@@ -388,6 +391,7 @@ last_edit: "04/08/2026 - 04:02 PM"
   &lt;/div&gt;
 &lt;/nav&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -407,101 +411,102 @@ last_edit: "04/08/2026 - 04:02 PM"
             <p class="nds-section-description">Height-limited drawer with scroll container and show-more button for overflow</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;">
-                                <div class="nds-scroll-more nds-divided">
-                                    <ul class="nds-drawer-list nds-scroll-more-content">
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
-                                                </span>
-                                                <span class="nds-label">Item 1</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
-                                                </span>
-                                                <span class="nds-label">Item 2</span>
-                                            </a>
-                                        </li>
-                                        <li data-state="active">
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
-                                                </span>
-                                                <span class="nds-label">Item 3</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
-                                                </span>
-                                                <span class="nds-label">Item 4</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
-                                                </span>
-                                                <span class="nds-label">Item 5</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-promotion"></i>
-                                                </span>
-                                                <span class="nds-label">Item 6</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-                                        <span class="nds-label">Show more</span>
-                                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-drawer-constrained-1" id="tab-drawer-constrained-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-drawer-constrained-1" aria-labelledby="tab-drawer-constrained-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;">
+                                    <div class="nds-scroll-more nds-divided">
+                                        <ul class="nds-drawer-list nds-scroll-more-content">
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-promotion"></i>
+                                                    </span>
+                                                    <span class="nds-label">Item 1</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-promotion"></i>
+                                                    </span>
+                                                    <span class="nds-label">Item 2</span>
+                                                </a>
+                                            </li>
+                                            <li data-state="active">
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-promotion"></i>
+                                                    </span>
+                                                    <span class="nds-label">Item 3</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-promotion"></i>
+                                                    </span>
+                                                    <span class="nds-label">Item 4</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-promotion"></i>
+                                                    </span>
+                                                    <span class="nds-label">Item 5</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-promotion"></i>
+                                                    </span>
+                                                    <span class="nds-label">Item 6</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
+                                            <span class="nds-label">Show more</span>
+                                            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                         </button>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-drawer-constrained-1" id="tab-drawer-constrained-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-drawer-constrained-1" aria-labelledby="tab-drawer-constrained-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;"&gt;
   &lt;div class="nds-scroll-more nds-divided"&gt;
     &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
@@ -561,6 +566,7 @@ last_edit: "04/08/2026 - 04:02 PM"
   &lt;/div&gt;
 &lt;/nav&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -580,157 +586,158 @@ last_edit: "04/08/2026 - 04:02 PM"
             <p class="nds-section-description">Stretches to fill parent height for equal-height columns in grid layouts</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
 
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-grid" style="--max-col: 2;--mid-col: 1;--min-col: 1;--row-gap: var(--spacing-6xl);">
-                                <div class="nds-flex nds-col" style="--align: start;--gap: 0;">
-                                    <h4>Latest Updates</h4>
-                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
-                                        style="--drawer-max-height:100%; --drawer-truncate:2;">
-                                        <div class="nds-scroll-more nds-divided">
-                                            <ul class="nds-drawer-list nds-scroll-more-content">
-                                                <li>
-                                                    <button class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label nds-truncate">New digital identity verification system now available</span>
-                                                        <span class="nds-tag nds-gray nds-xs">
-                                                            <span class="nds-label">23/12/2025</span>
-                                                        </span>
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label nds-truncate">Enhanced online portal for business licensing and permits</span>
-                                                        <span class="nds-tag nds-gray nds-xs">
-                                                            <span class="nds-label">18/12/2025</span>
-                                                        </span>
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label nds-truncate">Open data initiative: government datasets now publicly accessible</span>
-                                                        <span class="nds-tag nds-gray nds-xs">
-                                                            <span class="nds-label">18/12/2025</span>
-                                                        </span>
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button class="nds-btn nds-subtle nds-indicator">
-                                                        <span class="nds-label nds-truncate">National cybersecurity awareness campaign launches</span>
-                                                        <span class="nds-tag nds-gray nds-xs">
-                                                            <span class="nds-label">17/12/2025</span>
-                                                        </span>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                            <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-                                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                    </nav>
-                                </div>
-                                <div class="nds-flex nds-col" style="--align: start;--gap: 0;">
-                                    <h4>Quick Links</h4>
-                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
-                                        style="--drawer-max-height:100%; --drawer-truncate:2;">
-                                        <div class="nds-scroll-more nds-divided">
-                                            <ul class="nds-drawer-list nds-scroll-more-content">
-                                                <li>
-                                                    <a class="nds-btn nds-subtle nds-indicator" href="#">
-                                                        <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
-                                                        </span>
-                                                        <span class="nds-label nds-truncate">Services Portal</span>
-                                                        <i class="nds-icon nds-hgi-arrow-next-01"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="nds-btn nds-subtle nds-indicator" href="#">
-                                                        <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
-                                                        </span>
-                                                        <span class="nds-label nds-truncate">Laws and Regulations</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="nds-btn nds-subtle nds-indicator" href="#">
-                                                        <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
-                                                        </span>
-                                                        <span class="nds-label nds-truncate">Careers</span>
-                                                        <i class="nds-icon nds-hgi-arrow-next-01"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="nds-btn nds-subtle nds-indicator" href="#">
-                                                        <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
-                                                        </span>
-                                                        <span class="nds-label nds-truncate">Open Data</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="nds-btn nds-subtle nds-indicator" href="#">
-                                                        <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
-                                                        </span>
-                                                        <span class="nds-label nds-truncate">Media Center</span>
-                                                        <i class="nds-icon nds-hgi-arrow-next-01"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="nds-btn nds-subtle nds-indicator" href="#">
-                                                        <span class="nds-featured-icon nds-sm">
-                                                            <i class="hgi hgi-stroke hgi-link-02"></i>
-                                                        </span>
-                                                        <span class="nds-label nds-truncate">Contact Directory</span>
-                                                        <i class="hgi hgi-stroke hgi-link-square-02"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-                                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-drawer-fit-1" id="tab-drawer-fit-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-drawer-fit-1" aria-labelledby="tab-drawer-fit-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-grid" style="--max-col: 2;--mid-col: 1;--min-col: 1;--row-gap: var(--spacing-6xl);">
+                                    <div class="nds-flex nds-col" style="--align: start;--gap: 0;">
+                                        <h4>Latest Updates</h4>
+                                        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
+                                            style="--drawer-max-height:100%; --drawer-truncate:2;">
+                                            <div class="nds-scroll-more nds-divided">
+                                                <ul class="nds-drawer-list nds-scroll-more-content">
+                                                    <li>
+                                                        <button class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label nds-truncate">New digital identity verification system now available</span>
+                                                            <span class="nds-tag nds-gray nds-xs">
+                                                                <span class="nds-label">23/12/2025</span>
+                                                            </span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label nds-truncate">Enhanced online portal for business licensing and permits</span>
+                                                            <span class="nds-tag nds-gray nds-xs">
+                                                                <span class="nds-label">18/12/2025</span>
+                                                            </span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label nds-truncate">Open data initiative: government datasets now publicly accessible</span>
+                                                            <span class="nds-tag nds-gray nds-xs">
+                                                                <span class="nds-label">18/12/2025</span>
+                                                            </span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="nds-btn nds-subtle nds-indicator">
+                                                            <span class="nds-label nds-truncate">National cybersecurity awareness campaign launches</span>
+                                                            <span class="nds-tag nds-gray nds-xs">
+                                                                <span class="nds-label">17/12/2025</span>
+                                                            </span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                                <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
+                                                    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </nav>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    <div class="nds-flex nds-col" style="--align: start;--gap: 0;">
+                                        <h4>Quick Links</h4>
+                                        <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
+                                            style="--drawer-max-height:100%; --drawer-truncate:2;">
+                                            <div class="nds-scroll-more nds-divided">
+                                                <ul class="nds-drawer-list nds-scroll-more-content">
+                                                    <li>
+                                                        <a class="nds-btn nds-subtle nds-indicator" href="#">
+                                                            <span class="nds-featured-icon nds-sm">
+                                                                <i class="hgi hgi-stroke hgi-link-02"></i>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Services Portal</span>
+                                                            <i class="nds-icon nds-hgi-arrow-next-01"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nds-btn nds-subtle nds-indicator" href="#">
+                                                            <span class="nds-featured-icon nds-sm">
+                                                                <i class="hgi hgi-stroke hgi-link-02"></i>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Laws and Regulations</span>
+                                                            <i class="hgi hgi-stroke hgi-link-square-02"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nds-btn nds-subtle nds-indicator" href="#">
+                                                            <span class="nds-featured-icon nds-sm">
+                                                                <i class="hgi hgi-stroke hgi-link-02"></i>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Careers</span>
+                                                            <i class="nds-icon nds-hgi-arrow-next-01"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nds-btn nds-subtle nds-indicator" href="#">
+                                                            <span class="nds-featured-icon nds-sm">
+                                                                <i class="hgi hgi-stroke hgi-link-02"></i>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Open Data</span>
+                                                            <i class="hgi hgi-stroke hgi-link-square-02"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nds-btn nds-subtle nds-indicator" href="#">
+                                                            <span class="nds-featured-icon nds-sm">
+                                                                <i class="hgi hgi-stroke hgi-link-02"></i>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Media Center</span>
+                                                            <i class="nds-icon nds-hgi-arrow-next-01"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nds-btn nds-subtle nds-indicator" href="#">
+                                                            <span class="nds-featured-icon nds-sm">
+                                                                <i class="hgi hgi-stroke hgi-link-02"></i>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Contact Directory</span>
+                                                            <i class="hgi hgi-stroke hgi-link-square-02"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
+                                                    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-drawer-fit-1" id="tab-drawer-fit-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-drawer-fit-1" aria-labelledby="tab-drawer-fit-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-grid" style="--max-col: 2;--mid-col: 1;--min-col: 1;--row-gap: var(--spacing-6xl);"&gt;
   &lt;div class="nds-flex nds-col" style="--align: start;--gap: 0;"&gt;
     &lt;h4&gt;Latest Updates&lt;/h4&gt;
@@ -846,6 +853,7 @@ last_edit: "04/08/2026 - 04:02 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -865,130 +873,131 @@ last_edit: "04/08/2026 - 04:02 PM"
             <p class="nds-section-description">List items with icon, title, status tag, and a description on a second row. Status on the <code class="nds-inline-code lang-html">&lt;li data-status&gt;</code> cascades to the featured icon and tag automatically.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Notifications with status cascade</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-flex nds-col" style="--gap: 0; width: 420px; max-width: 100%;">
-                            <nav class="nds-drawer" style="--drawer-max-height: 360px;">
-                                <div class="nds-scroll-more nds-divided">
-                                    <ul class="nds-drawer-list nds-scroll-more-content">
-                                        <li data-status="success">
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
-                                                </span>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag nds-sm" data-status="success">
-                                                            <span class="nds-label">success</span>
-                                                        </span>
-                                                        <span class="nds-label nds-truncate">Document Approved</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Notifications with status cascade</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-flex nds-col" style="--gap: 0; width: 420px; max-width: 100%;">
+                                <nav class="nds-drawer" style="--drawer-max-height: 360px;">
+                                    <div class="nds-scroll-more nds-divided">
+                                        <ul class="nds-drawer-list nds-scroll-more-content">
+                                            <li data-status="success">
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
                                                     </span>
-                                                    <span class="nds-description">Your business license application has been reviewed and approved by the licensing authority.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li data-status="warning">
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-alert-02"></i>
-                                                </span>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag nds-sm" data-status="warning">
-                                                            <span class="nds-label">warning</span>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-tag nds-sm" data-status="success">
+                                                                <span class="nds-label">success</span>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Document Approved</span>
                                                         </span>
-                                                        <span class="nds-label nds-truncate">Payment Overdue</span>
+                                                        <span class="nds-description">Your business license application has been reviewed and approved by the licensing authority.</span>
                                                     </span>
-                                                    <span class="nds-description">Your annual business registration fee of 1,200 SAR is past due. Complete payment to avoid service suspension.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li data-status="info">
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-notification-02"></i>
-                                                </span>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag nds-sm" data-status="info">
-                                                            <span class="nds-label">info</span>
+                                                </a>
+                                            </li>
+                                            <li data-status="warning">
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-alert-02"></i>
+                                                    </span>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-tag nds-sm" data-status="warning">
+                                                                <span class="nds-label">warning</span>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Payment Overdue</span>
                                                         </span>
-                                                        <span class="nds-label nds-truncate">System Maintenance</span>
+                                                        <span class="nds-description">Your annual business registration fee of 1,200 SAR is past due. Complete payment to avoid service suspension.</span>
                                                     </span>
-                                                    <span class="nds-description">Scheduled maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be unavailable.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li data-status="error">
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-shield-01"></i>
-                                                </span>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag nds-sm" data-status="error">
-                                                            <span class="nds-label">error</span>
+                                                </a>
+                                            </li>
+                                            <li data-status="info">
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-notification-02"></i>
+                                                    </span>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-tag nds-sm" data-status="info">
+                                                                <span class="nds-label">info</span>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">System Maintenance</span>
                                                         </span>
-                                                        <span class="nds-label nds-truncate">Login Attempt Blocked</span>
+                                                        <span class="nds-description">Scheduled maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be unavailable.</span>
                                                     </span>
-                                                    <span class="nds-description">An unauthorized login attempt was detected from an unrecognized device. Your account has been temporarily locked.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li data-status="info">
-                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
-                                                <span class="nds-featured-icon nds-sm">
-                                                    <i class="hgi hgi-stroke hgi-mail-01"></i>
-                                                </span>
-                                                <span class="nds-drawer-item">
-                                                    <span class="nds-drawer-item-head">
-                                                        <span class="nds-tag nds-sm" data-status="info">
-                                                            <span class="nds-label">info</span>
+                                                </a>
+                                            </li>
+                                            <li data-status="error">
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-shield-01"></i>
+                                                    </span>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-tag nds-sm" data-status="error">
+                                                                <span class="nds-label">error</span>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">Login Attempt Blocked</span>
                                                         </span>
-                                                        <span class="nds-label nds-truncate">New Message Received</span>
+                                                        <span class="nds-description">An unauthorized login attempt was detected from an unrecognized device. Your account has been temporarily locked.</span>
                                                     </span>
-                                                    <span class="nds-description">You have a new message from the Ministry of Commerce regarding your trade license renewal.</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                                </a>
+                                            </li>
+                                            <li data-status="info">
+                                                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <span class="nds-featured-icon nds-sm">
+                                                        <i class="hgi hgi-stroke hgi-mail-01"></i>
+                                                    </span>
+                                                    <span class="nds-drawer-item">
+                                                        <span class="nds-drawer-item-head">
+                                                            <span class="nds-tag nds-sm" data-status="info">
+                                                                <span class="nds-label">info</span>
+                                                            </span>
+                                                            <span class="nds-label nds-truncate">New Message Received</span>
+                                                        </span>
+                                                        <span class="nds-description">You have a new message from the Ministry of Commerce regarding your trade license renewal.</span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                                <hr class="nds-divider">
+                                <a href="#" class="nds-btn nds-subtle nds-full">
+                                    <i class="hgi hgi-stroke hgi-notification-02"></i>
+                                    <span class="nds-label">View all notifications</span>
+                                </a>
                                 </div>
-                            </nav>
-                            <hr class="nds-divider">
-                            <a href="#" class="nds-btn nds-subtle nds-full">
-                                <i class="hgi hgi-stroke hgi-notification-02"></i>
-                                <span class="nds-label">View all notifications</span>
-                            </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-drawer-rich-1" id="tab-drawer-rich-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-drawer-rich-1" aria-labelledby="tab-drawer-rich-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-drawer-rich-1" id="tab-drawer-rich-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-drawer-rich-1" aria-labelledby="tab-drawer-rich-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-flex nds-col" style="--gap: 0;"&gt;
   &lt;nav class="nds-drawer" style="--drawer-max-height: 360px;"&gt;
     &lt;div class="nds-scroll-more nds-divided"&gt;
@@ -1083,6 +1092,7 @@ last_edit: "04/08/2026 - 04:02 PM"
   &lt;/a&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1101,55 +1111,57 @@ last_edit: "04/08/2026 - 04:02 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Works on page load with just HTML markup. For dynamically added drawers, call <code class="nds-inline-code lang-js">reinit()</code> to activate new instances.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01"></i>
-                        <span class="nds-label">Accordion Submenus</span>
-                    </span>
-                    <p class="nds-item-desc">Smooth animated expand and collapse with automatic sibling closing. Submenus nest to any depth and inherit the same animation, indicator, and state tracking at every level.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cursor-move-02"></i>
-                        <span class="nds-label">State Management</span>
-                    </span>
-                    <p class="nds-item-desc">Open, closing, and active states tracked via <code class="nds-inline-code lang-html">data-state</code> with custom events on every transition. Active nested items auto-reveal their parent menus on load.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-                        <span class="nds-label">Breakpoint-Driven Modes</span>
-                    </span>
-                    <p class="nds-item-desc">Static expanded list on desktop that collapses into an accordion on mobile, controlled per-drawer or per-item with a single data attribute.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-shrink"></i>
-                        <span class="nds-label">Scroll Overflow</span>
-                    </span>
-                    <p class="nds-item-desc">Height-constrained mode with gradient fade and a show-more button that auto-detects overflow and flips at scroll end.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-inbox"></i>
-                        <span class="nds-label">Empty State</span>
-                    </span>
-                    <p class="nds-item-desc">A drawer whose list can run out of items (notifications, search results, a filtered menu) takes <code class="nds-inline-code lang-html">nds-empty</code> on the <code class="nds-inline-code lang-html">&lt;ul class="nds-drawer-list"&gt;</code>: the <a href="{{ '/components/empty.html' | relative_url }}">Empty</a> component fills it with a placeholder while it holds no items and clears it as soon as one arrives. Set the wording and icon with <code class="nds-inline-code lang-html">data-empty-message</code> and <code class="nds-inline-code lang-html">data-empty-icon</code> on the same list.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">JavaScript API</span>
-                    </span>
-                    <p class="nds-item-desc">Programmatic toggle, overflow check, init, destroy, and custom events fired on every submenu open and close.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Works on page load with just HTML markup. For dynamically added drawers, call <code class="nds-inline-code lang-js">reinit()</code> to activate new instances.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layers-01"></i>
+                            <span class="nds-label">Accordion Submenus</span>
+                        </span>
+                        <p class="nds-item-desc">Smooth animated expand and collapse with automatic sibling closing. Submenus nest to any depth and inherit the same animation, indicator, and state tracking at every level.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cursor-move-02"></i>
+                            <span class="nds-label">State Management</span>
+                        </span>
+                        <p class="nds-item-desc">Open, closing, and active states tracked via <code class="nds-inline-code lang-html">data-state</code> with custom events on every transition. Active nested items auto-reveal their parent menus on load.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
+                            <span class="nds-label">Breakpoint-Driven Modes</span>
+                        </span>
+                        <p class="nds-item-desc">Static expanded list on desktop that collapses into an accordion on mobile, controlled per-drawer or per-item with a single data attribute.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-arrow-shrink"></i>
+                            <span class="nds-label">Scroll Overflow</span>
+                        </span>
+                        <p class="nds-item-desc">Height-constrained mode with gradient fade and a show-more button that auto-detects overflow and flips at scroll end.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-inbox"></i>
+                            <span class="nds-label">Empty State</span>
+                        </span>
+                        <p class="nds-item-desc">A drawer whose list can run out of items (notifications, search results, a filtered menu) takes <code class="nds-inline-code lang-html">nds-empty</code> on the <code class="nds-inline-code lang-html">&lt;ul class="nds-drawer-list"&gt;</code>: the <a href="{{ '/components/empty.html' | relative_url }}">Empty</a> component fills it with a placeholder while it holds no items and clears it as soon as one arrives. Set the wording and icon with <code class="nds-inline-code lang-html">data-empty-message</code> and <code class="nds-inline-code lang-html">data-empty-icon</code> on the same list.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">JavaScript API</span>
+                        </span>
+                        <p class="nds-item-desc">Programmatic toggle, overflow check, init, destroy, and custom events fired on every submenu open and close.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1164,7 +1176,7 @@ last_edit: "04/08/2026 - 04:02 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use drawers for <strong>sidebar navigation</strong> with nested menu structures. The accordion behavior keeps the interface tidy by closing siblings automatically when a new submenu opens.</li>
@@ -1338,7 +1350,7 @@ last_edit: "04/08/2026 - 04:02 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p><strong>NDS.Drawer</strong> initializes automatically on page load for all <code class="nds-inline-code lang-html">.nds-drawer</code> elements. For dynamically added drawers, call <code class="nds-inline-code lang-js">NDS.Drawer.create(element)</code> (legacy alias: <code class="nds-inline-code lang-js">NDS.Drawer.initDrawer</code>).</p>
                 <div class="nds-code nds-expandable">

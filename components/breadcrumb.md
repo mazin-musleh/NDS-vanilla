@@ -19,52 +19,53 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Three-level breadcrumb with linked parent pages and current page indicator</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">Components</a></li>
-                                    <li aria-current="page">Breadcrumb</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-breadcrumb-standard-1" id="tab-breadcrumb-standard-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-standard-1"
-                                    aria-labelledby="tab-breadcrumb-standard-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="#">Components</a></li>
+                                        <li aria-current="page">Breadcrumb</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-breadcrumb-standard-1" id="tab-breadcrumb-standard-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-standard-1"
+                                        aria-labelledby="tab-breadcrumb-standard-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
   &lt;ol class="nds-breadcrumb"&gt;
     &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -73,6 +74,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;/ol&gt;
 &lt;/nav&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -91,51 +93,52 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Minimal breadcrumb for pages one level deep</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li aria-current="page">Components</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-breadcrumb-twolevel-1" id="tab-breadcrumb-twolevel-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-twolevel-1"
-                                    aria-labelledby="tab-breadcrumb-twolevel-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li aria-current="page">Components</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-breadcrumb-twolevel-1" id="tab-breadcrumb-twolevel-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-twolevel-1"
+                                        aria-labelledby="tab-breadcrumb-twolevel-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
   &lt;ol class="nds-breadcrumb"&gt;
     &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -143,6 +146,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;/ol&gt;
 &lt;/nav&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -161,52 +165,53 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Truncate long page titles with nds-truncate to prevent wrapping</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">Components</a></li>
-                                    <li class="nds-truncate" aria-current="page">Very Long Page Title That May Wrap or Truncate</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-breadcrumb-long-1" id="tab-breadcrumb-long-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-long-1"
-                                    aria-labelledby="tab-breadcrumb-long-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="#">Components</a></li>
+                                        <li class="nds-truncate" aria-current="page">Very Long Page Title That May Wrap or Truncate</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-breadcrumb-long-1" id="tab-breadcrumb-long-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-long-1"
+                                        aria-labelledby="tab-breadcrumb-long-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
   &lt;ol class="nds-breadcrumb"&gt;
     &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -215,6 +220,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;/ol&gt;
 &lt;/nav&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -233,57 +239,58 @@ last_edit: "28/06/2026 - 01:27 PM"
             <p class="nds-section-description">Breadcrumbs with 5+ levels collapse into a dropmenu showing Home, ellipsis, and the last two items</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                <ol class="nds-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Category</a></li>
-                                    <li><a href="#">Subcategory</a></li>
-                                    <li><a href="#">Section</a></li>
-                                    <li><a href="#">Parent</a></li>
-                                    <li aria-current="page">Current Page</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-breadcrumb-collapsed-1" id="tab-breadcrumb-collapsed-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-breadcrumb-collapsed-1"
-                                    aria-labelledby="tab-breadcrumb-collapsed-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+                                    <ol class="nds-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="#">Services</a></li>
+                                        <li><a href="#">Category</a></li>
+                                        <li><a href="#">Subcategory</a></li>
+                                        <li><a href="#">Section</a></li>
+                                        <li><a href="#">Parent</a></li>
+                                        <li aria-current="page">Current Page</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-breadcrumb-collapsed-1" id="tab-breadcrumb-collapsed-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-breadcrumb-collapsed-1"
+                                        aria-labelledby="tab-breadcrumb-collapsed-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;!-- Write the full breadcrumb. JS collapses 5+ levels automatically --&gt;
 &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
   &lt;ol class="nds-breadcrumb"&gt;
@@ -297,6 +304,7 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;/ol&gt;
 &lt;/nav&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -315,34 +323,36 @@ last_edit: "28/06/2026 - 01:27 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates when .nds-breadcrumb-nav is on the page. No JavaScript setup required.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
-                        <span class="nds-label">Smart Collapsing</span>
-                    </span>
-                    <p class="nds-item-desc">Deep hierarchies collapse into a dropmenu. Shows Home, ellipsis, and last two items.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard"></i>
-                        <span class="nds-label">Keyboard Support</span>
-                    </span>
-                    <p class="nds-item-desc">Collapsed dropmenu is fully keyboard accessible via Enter, Space, and Escape.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-more-horizontal"></i>
-                        <span class="nds-label">Title Truncation</span>
-                    </span>
-                    <p class="nds-item-desc">Add nds-truncate to any item to prevent long titles from wrapping.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates when .nds-breadcrumb-nav is on the page. No JavaScript setup required.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
+                            <span class="nds-label">Smart Collapsing</span>
+                        </span>
+                        <p class="nds-item-desc">Deep hierarchies collapse into a dropmenu. Shows Home, ellipsis, and last two items.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-keyboard"></i>
+                            <span class="nds-label">Keyboard Support</span>
+                        </span>
+                        <p class="nds-item-desc">Collapsed dropmenu is fully keyboard accessible via Enter, Space, and Escape.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-more-horizontal"></i>
+                            <span class="nds-label">Title Truncation</span>
+                        </span>
+                        <p class="nds-item-desc">Add nds-truncate to any item to prevent long titles from wrapping.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -357,7 +367,7 @@ last_edit: "28/06/2026 - 01:27 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Use breadcrumbs on pages 2+ levels deep to show location within the site hierarchy</li>
@@ -390,7 +400,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Breadcrumb</strong> API handles auto-collapsing. For dynamically added breadcrumbs, call <strong>NDS.Breadcrumb.reinit()</strong> to process new elements.</p>
                 <div class="nds-code nds-expandable">

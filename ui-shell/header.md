@@ -19,20 +19,21 @@ last_edit: "26/07/2026 - 09:20 PM"
             <p class="nds-section-description">The header wraps three layers: the <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">top bar</a> for government branding and utilities, the main navigation bar, and the expandable <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}#dgaDigitalStamp">DGA digital stamp</a> panel.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Header Structure</div>
-                    </div>
-                    <div class="demo-container nds-noBg">
-                        <div class="nds-code nds-expandable">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Header Structure</div>
+                        </div>
+                        <div class="demo-container nds-noBg">
+                            <div class="nds-code nds-expandable">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 header
 &#9500;&#9472;&#9472; div.nds-topbar.nds-content-wrapper
 &#9474;   &#9500;&#9472;&#9472; button.nds-digitalStamp-tab
@@ -68,6 +69,7 @@ header
                     &#9492;&#9472;&#9472; li.nds-nav-item
                         &#9492;&#9472;&#9472; a/button.nds-nav-link
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,31 +87,32 @@ header
             <p class="nds-section-description">The sticky navigation bar holds branding, primary links, secondary actions, and the mobile hamburger toggle.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Navigation Bar</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-nav-bar-1" id="tab-nav-bar-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nav-bar-1" aria-labelledby="tab-nav-bar-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Navigation Bar</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-nav-bar-1" id="tab-nav-bar-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nav-bar-1" aria-labelledby="tab-nav-bar-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;nav class="nds-main-nav nds-content-wrapper" id="ndsMainNav" aria-label="Primary navigation"&gt;
   &lt;div class="nds-nav-container"&gt;
     &lt;a class="nds-brand" href="/"&gt;
@@ -157,6 +160,7 @@ header
   &lt;/div&gt;
 &lt;/nav&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -176,32 +180,33 @@ header
             <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-dropdown</code> to a nav item to attach a dropdown panel. The panel's <code class="nds-inline-code lang-html">nds-dropdown-columns</code> child supports three layouts for organizing content.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Column View — Categories with Titles</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-col-1" id="tab-dropdown-col-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dropdown-col-1" aria-labelledby="tab-dropdown-col-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Column View — Categories with Titles</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-col-1" id="tab-dropdown-col-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dropdown-col-1" aria-labelledby="tab-dropdown-col-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;li class="nds-nav-item nds-dropdown"&gt;
   &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
     &lt;span class="nds-label"&gt;Services&lt;/span&gt;
@@ -243,36 +248,36 @@ header
   &lt;/div&gt;
 &lt;/li&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Row View — Flat Horizontal List</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-row-1" id="tab-dropdown-row-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-dropdown-row-1" aria-labelledby="tab-dropdown-row-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Row View — Flat Horizontal List</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-row-1" id="tab-dropdown-row-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-dropdown-row-1" aria-labelledby="tab-dropdown-row-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;li class="nds-nav-item nds-dropdown"&gt;
   &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
     &lt;span class="nds-label"&gt;Tools&lt;/span&gt;
@@ -299,36 +304,36 @@ header
   &lt;/div&gt;
 &lt;/li&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Multi-Column List — 3-Column Grid Inside a Column</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-mcl-1" id="tab-dropdown-mcl-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dropdown-mcl-1" aria-labelledby="tab-dropdown-mcl-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Multi-Column List — 3-Column Grid Inside a Column</div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-mcl-1" id="tab-dropdown-mcl-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dropdown-mcl-1" aria-labelledby="tab-dropdown-mcl-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;li class="nds-nav-item nds-dropdown"&gt;
   &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
     &lt;span class="nds-label"&gt;All Services&lt;/span&gt;
@@ -364,16 +369,17 @@ header
   &lt;/div&gt;
 &lt;/li&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
 
-            <div class="nds-block" style="margin-top: var(--spacing-3xl);">
+            <div class="nds-block nds-prose" style="margin-top: var(--spacing-3xl);">
                 <h3 class="nds-block-title">Data-Driven Dropdowns</h3>
                 <p>Pages that use the Jekyll-driven nav (see <code class="nds-inline-code lang-html">_data/mainnav/mainnav.yml</code>) render dropdown content from two includes that map to the layouts above:</p>
                 <table class="nds-table nds-responsive">
@@ -396,76 +402,78 @@ header
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Dropdowns, collapse, overflow detection, and scroll behavior attach automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-                        <span class="nds-label">Responsive Collapse</span>
-                    </span>
-                    <p class="nds-item-desc">Switches from a horizontal nav bar to a hamburger menu at a configurable breakpoint, with animated expand and collapse transitions.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
-                        <span class="nds-label">Overflow Detection</span>
-                    </span>
-                    <p class="nds-item-desc">Primary nav items that exceed the available width become scrollable, with a show-more button that scrolls through hidden items.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
-                        <span class="nds-label">Dropdown Columns</span>
-                    </span>
-                    <p class="nds-item-desc">Dropdown content can be organized in column, row, or multi-column list layouts that adapt to narrower screens.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-navigation-03"></i>
-                        <span class="nds-label">Scroll-to-Anchor</span>
-                    </span>
-                    <p class="nds-item-desc">Same-page anchor links in the nav close open menus and scroll smoothly to the target section.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-drag-drop"></i>
-                        <span class="nds-label">Drag and Wheel Scrolling</span>
-                    </span>
-                    <p class="nds-item-desc">Primary nav supports horizontal drag scrolling and converts vertical mouse wheel input to horizontal scroll when items overflow.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-sidebar-right"></i>
-                        <span class="nds-label">RTL Support</span>
-                    </span>
-                    <p class="nds-item-desc">Scroll direction, drag behavior, and layout flip automatically in right-to-left contexts.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-01"></i>
-                        <span class="nds-label">Reduced Motion</span>
-                    </span>
-                    <p class="nds-item-desc">All header transitions respect the <code class="nds-inline-code lang-html">prefers-reduced-motion</code> setting, skipping animations for users who have requested it.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-pin-location-01"></i>
-                        <span class="nds-label">Persistent Action Buttons</span>
-                    </span>
-                    <p class="nds-item-desc">Nav items marked with <code class="nds-inline-code lang-html">nds-PAB</code> automatically relocate to the minimal nav bar on small screens and return to their original position on larger viewports.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01"></i>
-                        <span class="nds-label">Backdrop Overlay</span>
-                    </span>
-                    <p class="nds-item-desc">Opening a dropdown or the mobile collapse displays a backdrop that closes the menu on outside clicks, preventing interaction with page content beneath.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Dropdowns, collapse, overflow detection, and scroll behavior attach automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
+                            <span class="nds-label">Responsive Collapse</span>
+                        </span>
+                        <p class="nds-item-desc">Switches from a horizontal nav bar to a hamburger menu at a configurable breakpoint, with animated expand and collapse transitions.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
+                            <span class="nds-label">Overflow Detection</span>
+                        </span>
+                        <p class="nds-item-desc">Primary nav items that exceed the available width become scrollable, with a show-more button that scrolls through hidden items.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-grid"></i>
+                            <span class="nds-label">Dropdown Columns</span>
+                        </span>
+                        <p class="nds-item-desc">Dropdown content can be organized in column, row, or multi-column list layouts that adapt to narrower screens.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-navigation-03"></i>
+                            <span class="nds-label">Scroll-to-Anchor</span>
+                        </span>
+                        <p class="nds-item-desc">Same-page anchor links in the nav close open menus and scroll smoothly to the target section.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-drag-drop"></i>
+                            <span class="nds-label">Drag and Wheel Scrolling</span>
+                        </span>
+                        <p class="nds-item-desc">Primary nav supports horizontal drag scrolling and converts vertical mouse wheel input to horizontal scroll when items overflow.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-sidebar-right"></i>
+                            <span class="nds-label">RTL Support</span>
+                        </span>
+                        <p class="nds-item-desc">Scroll direction, drag behavior, and layout flip automatically in right-to-left contexts.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-shield-01"></i>
+                            <span class="nds-label">Reduced Motion</span>
+                        </span>
+                        <p class="nds-item-desc">All header transitions respect the <code class="nds-inline-code lang-html">prefers-reduced-motion</code> setting, skipping animations for users who have requested it.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-pin-location-01"></i>
+                            <span class="nds-label">Persistent Action Buttons</span>
+                        </span>
+                        <p class="nds-item-desc">Nav items marked with <code class="nds-inline-code lang-html">nds-PAB</code> automatically relocate to the minimal nav bar on small screens and return to their original position on larger viewports.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layers-01"></i>
+                            <span class="nds-label">Backdrop Overlay</span>
+                        </span>
+                        <p class="nds-item-desc">Opening a dropdown or the mobile collapse displays a backdrop that closes the menu on outside clicks, preventing interaction with page content beneath.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -480,7 +488,7 @@ header
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Place the header at the top of every page. The <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">top bar</a> sits above the navigation bar, and both are rendered inside a <code class="nds-inline-code lang-html">&lt;header&gt;</code> element.</li>
@@ -541,7 +549,7 @@ header
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The header initializes automatically when <code class="nds-inline-code lang-html">.nds-main-nav</code> exists on the page, and wires its own click handling through event delegation: the hamburger toggle and dropdown triggers respond without any inline <code class="nds-inline-code lang-html">onclick</code> attributes. The toggle functions below are exposed on the <code class="nds-inline-code lang-js">NDS.Mainnav</code> namespace for driving the nav from external scripts.</p>
                 <div class="nds-code nds-expandable">

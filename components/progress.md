@@ -19,113 +19,114 @@ last_edit: "04/07/2026 - 04:46 AM"
             <p class="nds-section-description">Circular indicator that scales from compact inline counters to large hero displays</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["", ".nds-progress-circle", "progressSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-progress-circle", "progressSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-progress-circle", "progressSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-xl", ".nds-progress-circle", "progressSize"]'>
-                                            <span class="nds-label">XL</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-2xl", ".nds-progress-circle", "progressSize"]'>
-                                            <span class="nds-label">2XL</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Default</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-progress-circle", "progressVariant"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-progress-circle", "progressVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=success", ".nds-progress-circle", "progressVariant", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".nds-progress-circle", "progressVariant", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-<button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-progress-circle nds-lg" data-value="75">
-                                <svg width="120" height="120" viewBox="0 0 24 24">
-                                    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-                                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-                                        stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-                                </svg>
-                                <div class="nds-progress-info">
-                                    <span class="nds-feedback">
-                                        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                                    </span>
-                                    <span class="nds-progress-percentage">
-                                        <span class="nds-progress-number"></span>
-                                        <span class="nds-progress-symbol">%</span>
-                                    </span>
-                                    <span class="nds-progress-text">Active users</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-progress-circle-1" id="tab-progress-circle-1">
-                                        <span class="nds-tab-label">HTML</span>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["", ".nds-progress-circle", "progressSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-progress-circle", "progressSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-progress-circle", "progressSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-xl", ".nds-progress-circle", "progressSize"]'>
+                                                <span class="nds-label">XL</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-2xl", ".nds-progress-circle", "progressSize"]'>
+                                                <span class="nds-label">2XL</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Default</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-progress-circle", "progressVariant"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-progress-circle", "progressVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=success", ".nds-progress-circle", "progressVariant", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=error", ".nds-progress-circle", "progressVariant", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+    <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-circle-1"
-                                    aria-labelledby="tab-progress-circle-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-progress-circle nds-lg" data-value="75">
+                                    <svg width="120" height="120" viewBox="0 0 24 24">
+                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
+                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+                                    </svg>
+                                    <div class="nds-progress-info">
+                                        <span class="nds-feedback">
+                                            <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                        </span>
+                                        <span class="nds-progress-percentage">
+                                            <span class="nds-progress-number"></span>
+                                            <span class="nds-progress-symbol">%</span>
+                                        </span>
+                                        <span class="nds-progress-text">Active users</span>
                                     </div>
-                                    <code class="lang-html code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-progress-circle-1" id="tab-progress-circle-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-circle-1"
+                                        aria-labelledby="tab-progress-circle-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-progress-circle nds-lg" data-value="75"&gt;
   &lt;svg width="120" height="120" viewBox="0 0 24 24"&gt;
     &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" /&gt;
@@ -144,12 +145,13 @@ last_edit: "04/07/2026 - 04:46 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
@@ -163,110 +165,111 @@ last_edit: "04/07/2026 - 04:46 AM"
             <p class="nds-section-description">Displays a value as a fraction (e.g. 3.75/5) instead of a percentage, ideal for GPA, ratings, and score displays</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["", ".nds-progress-circle", "progressOutOfSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-progress-circle", "progressOutOfSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-progress-circle", "progressOutOfSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-xl", ".nds-progress-circle", "progressOutOfSize"]'>
-                                            <span class="nds-label">XL</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-2xl", ".nds-progress-circle", "progressOutOfSize"]'>
-                                            <span class="nds-label">2XL</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Default</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-progress-circle", "progressOutOfVariant"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-progress-circle", "progressOutOfVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=success", ".nds-progress-circle", "progressOutOfVariant", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".nds-progress-circle", "progressOutOfVariant", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-progress-circle nds-lg" data-num="3.75" data-max="5">
-                                <svg width="120" height="120" viewBox="0 0 24 24">
-                                    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-                                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-                                        stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-                                </svg>
-                                <div class="nds-progress-info">
-                                    <span class="nds-progress-out-of">
-                                        <span class="nds-progress-number"></span>
-                                        <span class="nds-progress-of"></span>
-                                    </span>
-                                    <span class="nds-progress-text">SGPA</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-progress-outof-1" id="tab-progress-outof-1">
-                                        <span class="nds-tab-label">HTML</span>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["", ".nds-progress-circle", "progressOutOfSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-progress-circle", "progressOutOfSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-progress-circle", "progressOutOfSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-xl", ".nds-progress-circle", "progressOutOfSize"]'>
+                                                <span class="nds-label">XL</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-2xl", ".nds-progress-circle", "progressOutOfSize"]'>
+                                                <span class="nds-label">2XL</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Default</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-progress-circle", "progressOutOfVariant"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-progress-circle", "progressOutOfVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=success", ".nds-progress-circle", "progressOutOfVariant", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=error", ".nds-progress-circle", "progressOutOfVariant", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-outof-1"
-                                    aria-labelledby="tab-progress-outof-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-progress-circle nds-lg" data-num="3.75" data-max="5">
+                                    <svg width="120" height="120" viewBox="0 0 24 24">
+                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
+                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+                                    </svg>
+                                    <div class="nds-progress-info">
+                                        <span class="nds-progress-out-of">
+                                            <span class="nds-progress-number"></span>
+                                            <span class="nds-progress-of"></span>
+                                        </span>
+                                        <span class="nds-progress-text">SGPA</span>
                                     </div>
-                                    <code class="lang-html code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-progress-outof-1" id="tab-progress-outof-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-outof-1"
+                                        aria-labelledby="tab-progress-outof-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-progress-circle nds-lg" data-num="3.75" data-max="5"&gt;
   &lt;svg width="120" height="120" viewBox="0 0 24 24"&gt;
     &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" /&gt;
@@ -282,12 +285,13 @@ last_edit: "04/07/2026 - 04:46 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
@@ -301,98 +305,99 @@ last_edit: "04/07/2026 - 04:46 AM"
             <p class="nds-section-description">Linear indicator with label, fill percentage, and feedback message for file uploads, form completion, and multi-step workflows</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
+            <div class="nds-block">
+                <div class="nds-showcase">
 
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-progress-bar", "progressBarSize"]'>
-                                            <span class="nds-label">SM</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-progress-bar", "progressBarSize"]'>
-                                            <span class="nds-label">MD</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-lg", ".nds-progress-bar", "progressBarSize"]'>
-                                            <span class="nds-label">LG</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Default</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-progress-bar", "progressBarVariant"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-neutral", ".nds-progress-bar", "progressBarVariant"]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=success", ".nds-progress-bar", "progressBarVariant", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".nds-progress-bar", "progressBarVariant", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-progress-bar nds-lg" data-value="65">
-                                <span class="nds-progress-label">Uploading document.pdf</span>
-                                <div class="nds-progress-track">
-                                    <div class="nds-progress-fill"></div>
-                                </div>
-                                <span class="nds-feedback nds-sm">
-                                    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                                    <span class="nds-feedback-message">Processing your file...</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-progress-bar-1" id="tab-progress-bar-1">
-                                        <span class="nds-tab-label">HTML</span>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">LG</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-progress-bar", "progressBarSize"]'>
+                                                <span class="nds-label">SM</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-progress-bar", "progressBarSize"]'>
+                                                <span class="nds-label">MD</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-lg", ".nds-progress-bar", "progressBarSize"]'>
+                                                <span class="nds-label">LG</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Default</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-progress-bar", "progressBarVariant"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-neutral", ".nds-progress-bar", "progressBarVariant"]'>
+                                                <span class="nds-label">Neutral</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=success", ".nds-progress-bar", "progressBarVariant", "attr"]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=error", ".nds-progress-bar", "progressBarVariant", "attr"]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-bar-1"
-                                    aria-labelledby="tab-progress-bar-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-progress-bar nds-lg" data-value="65">
+                                    <span class="nds-progress-label">Uploading document.pdf</span>
+                                    <div class="nds-progress-track">
+                                        <div class="nds-progress-fill"></div>
                                     </div>
-                                    <code class="lang-html code">
+                                    <span class="nds-feedback nds-sm">
+                                        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                        <span class="nds-feedback-message">Processing your file...</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-progress-bar-1" id="tab-progress-bar-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-bar-1"
+                                        aria-labelledby="tab-progress-bar-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-progress-bar nds-lg" data-value="65"&gt;
   &lt;span class="nds-progress-label"&gt;Uploading document.pdf&lt;/span&gt;
   &lt;div class="nds-progress-track"&gt;
@@ -404,12 +409,13 @@ last_edit: "04/07/2026 - 04:46 AM"
   &lt;/span&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
@@ -422,69 +428,71 @@ last_edit: "04/07/2026 - 04:46 AM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Reads <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code>, and <code class="nds-inline-code lang-html">data-max</code> on page load and sets CSS custom properties automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-percent-circle"></i>
-                        <span class="nds-label">Data-Driven Values</span>
-                    </span>
-                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-value</code> on any circle or bar and the fill, percentage text, and CSS properties update reactively through a shared attribute observer.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-divide-sign-circle"></i>
-                        <span class="nds-label">Out-of Display</span>
-                    </span>
-                    <p class="nds-item-desc">Show values as fractions like 3.75/5 using <code class="nds-inline-code lang-html">data-num</code> and <code class="nds-inline-code lang-html">data-max</code>. The progress fill auto-calculates from the ratio.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-resize-01"></i>
-                        <span class="nds-label">Scalable Sizes</span>
-                    </span>
-                    <p class="nds-item-desc">Five circle sizes from compact inline counters to large hero displays, plus three bar heights, with text and icons that scale proportionally.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-colors"></i>
-                        <span class="nds-label">Status Feedback</span>
-                    </span>
-                    <p class="nds-item-desc">Success and error statuses swap the percentage for a feedback icon and apply the matching color automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-chart-bar-line"></i>
-                        <span class="nds-label">Inline Bar Percentage</span>
-                    </span>
-                    <p class="nds-item-desc">The large progress bar displays the current percentage inside the fill track, keeping the value visible without extra labels.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-motion-02"></i>
-                        <span class="nds-label">Smooth Transitions</span>
-                    </span>
-                    <p class="nds-item-desc">Both circle and bar fills animate smoothly when the progress value changes, giving users clear visual feedback during updates.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-scroll"></i>
-                        <span class="nds-label">Scroll-triggered Fill</span>
-                    </span>
-                    <p class="nds-item-desc">The fill sweeps in as each indicator enters the viewport (0.5 threshold via <code class="nds-inline-code lang-js">NDS.onIntersect</code>), so the animation plays where it is seen. Under <code class="nds-inline-code lang-html">prefers-reduced-motion</code>, the value is applied immediately at load.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Update values at runtime with <code class="nds-inline-code lang-js">NDS.Progress.setValue()</code> and <code class="nds-inline-code lang-js">NDS.Progress.setOutOf()</code>. Changes propagate through the attribute observer automatically.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Reads <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code>, and <code class="nds-inline-code lang-html">data-max</code> on page load and sets CSS custom properties automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-percent-circle"></i>
+                            <span class="nds-label">Data-Driven Values</span>
+                        </span>
+                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-value</code> on any circle or bar and the fill, percentage text, and CSS properties update reactively through a shared attribute observer.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-divide-sign-circle"></i>
+                            <span class="nds-label">Out-of Display</span>
+                        </span>
+                        <p class="nds-item-desc">Show values as fractions like 3.75/5 using <code class="nds-inline-code lang-html">data-num</code> and <code class="nds-inline-code lang-html">data-max</code>. The progress fill auto-calculates from the ratio.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-resize-01"></i>
+                            <span class="nds-label">Scalable Sizes</span>
+                        </span>
+                        <p class="nds-item-desc">Five circle sizes from compact inline counters to large hero displays, plus three bar heights, with text and icons that scale proportionally.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-colors"></i>
+                            <span class="nds-label">Status Feedback</span>
+                        </span>
+                        <p class="nds-item-desc">Success and error statuses swap the percentage for a feedback icon and apply the matching color automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-chart-bar-line"></i>
+                            <span class="nds-label">Inline Bar Percentage</span>
+                        </span>
+                        <p class="nds-item-desc">The large progress bar displays the current percentage inside the fill track, keeping the value visible without extra labels.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-motion-02"></i>
+                            <span class="nds-label">Smooth Transitions</span>
+                        </span>
+                        <p class="nds-item-desc">Both circle and bar fills animate smoothly when the progress value changes, giving users clear visual feedback during updates.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-scroll"></i>
+                            <span class="nds-label">Scroll-triggered Fill</span>
+                        </span>
+                        <p class="nds-item-desc">The fill sweeps in as each indicator enters the viewport (0.5 threshold via <code class="nds-inline-code lang-js">NDS.onIntersect</code>), so the animation plays where it is seen. Under <code class="nds-inline-code lang-html">prefers-reduced-motion</code>, the value is applied immediately at load.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Update values at runtime with <code class="nds-inline-code lang-js">NDS.Progress.setValue()</code> and <code class="nds-inline-code lang-js">NDS.Progress.setOutOf()</code>. Changes propagate through the attribute observer automatically.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -499,7 +507,7 @@ last_edit: "04/07/2026 - 04:46 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>progress circles</strong> for KPI displays, dashboard stats, and completion summaries where the value itself is the focus</li>
@@ -568,7 +576,7 @@ last_edit: "04/07/2026 - 04:46 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Progress</strong> API reads <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code>, and <code class="nds-inline-code lang-html">data-max</code> attributes on initialization and observes changes reactively. For dynamically added elements, call <code class="nds-inline-code lang-js">NDS.Progress.init()</code> to pick them up.</p>
                 <div class="nds-code nds-expandable">

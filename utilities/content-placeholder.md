@@ -19,67 +19,69 @@ last_edit: "25/07/2026 - 10:45 PM"
             <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-content-placeholder</code> to any empty region to mark it as a slot waiting for a real component. The text inside is yours, so the instruction can be written in any language.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                    <span class="nds-label">Size: Default</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Default">
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Small">
-                                            <span class="nds-label">Small</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Large">
-                                            <span class="nds-label">Large</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                        <span class="nds-label">Size: Default</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Default">
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Small">
+                                                <span class="nds-label">Small</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Large">
+                                                <span class="nds-label">Large</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-content-placeholder">
-                                <span>Swap with content component</span>
-                                <span>استبدل هذا العنصر بأي عنصر آخر</span>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-content-placeholder">
+                                    <span>Swap with content component</span>
+                                    <span>استبدل هذا العنصر بأي عنصر آخر</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-placeholder-default-1" id="tab-placeholder-default-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-placeholder-default-1"
-                                    aria-labelledby="tab-placeholder-default-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-placeholder-default-1" id="tab-placeholder-default-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-placeholder-default-1"
+                                        aria-labelledby="tab-placeholder-default-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-content-placeholder"&gt;
     &lt;span&gt;Swap with content component&lt;/span&gt;
     &lt;span&gt;استبدل هذا العنصر بأي عنصر آخر&lt;/span&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -97,34 +99,36 @@ last_edit: "25/07/2026 - 10:45 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code"></i>
-                        <span class="nds-label">CSS-Only</span>
-                    </span>
-                    <p class="nds-item-desc">One class, no JavaScript, no initialization. Delete the class and the region is back to normal.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-square-arrow-expand-01"></i>
-                        <span class="nds-label">Fills Its Region</span>
-                    </span>
-                    <p class="nds-item-desc">Stretches to a parent that has a height, such as a panel body, and falls back to a 120px floor when the parent is content-sized.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-board"></i>
-                        <span class="nds-label">Brand and Theme Aware</span>
-                    </span>
-                    <p class="nds-item-desc">Border, tint, and text read from the brand color tokens, so the marker retints with a custom theme and stays legible in dark mode.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-puzzle"></i>
-                        <span class="nds-label">Your Own Label</span>
-                    </span>
-                    <p class="nds-item-desc">The text lives in your markup, so you can name the component that belongs there and write the line in any language or direction.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-code"></i>
+                            <span class="nds-label">CSS-Only</span>
+                        </span>
+                        <p class="nds-item-desc">One class, no JavaScript, no initialization. Delete the class and the region is back to normal.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-square-arrow-expand-01"></i>
+                            <span class="nds-label">Fills Its Region</span>
+                        </span>
+                        <p class="nds-item-desc">Stretches to a parent that has a height, such as a panel body, and falls back to a 120px floor when the parent is content-sized.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-paint-board"></i>
+                            <span class="nds-label">Brand and Theme Aware</span>
+                        </span>
+                        <p class="nds-item-desc">Border, tint, and text read from the brand color tokens, so the marker retints with a custom theme and stays legible in dark mode.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-puzzle"></i>
+                            <span class="nds-label">Your Own Label</span>
+                        </span>
+                        <p class="nds-item-desc">The text lives in your markup, so you can name the component that belongs there and write the line in any language or direction.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,7 +143,7 @@ last_edit: "25/07/2026 - 10:45 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use it in a page template to mark a region the consumer replaces with a real component, so the layout can be reviewed before the content exists</li>

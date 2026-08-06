@@ -19,139 +19,140 @@ last_edit: "29/07/2026 - 01:32 AM"
             <p class="nds-section-description">A button group above the table triggers CSV, Excel, or PDF downloads. The library reads the table's headers, body rows, and checkbox state automatically</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Standard</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="gap: 0;">
-                            <div class="nds-toolbar">
-                                <div class="nds-bar-end">
-                                    <div class="nds-dropmenu" data-columns-target="exportOrdersTable">
-                                        <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                                            <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
-                                            <span class="nds-label">Columns</span>
-                                        </button>
-                                        <div class="nds-dropmenu-menu" hidden>
-                                            <div class="nds-dropmenu-scroll">
-                                                <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
-                                                    <legend class="nds-label">Visible columns</legend>
-                                                </fieldset>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Standard</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="gap: 0;">
+                                <div class="nds-toolbar">
+                                    <div class="nds-bar-end">
+                                        <div class="nds-dropmenu" data-columns-target="exportOrdersTable">
+                                            <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                                <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
+                                                <span class="nds-label">Columns</span>
+                                            </button>
+                                            <div class="nds-dropmenu-menu" hidden>
+                                                <div class="nds-dropmenu-scroll">
+                                                    <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+                                                        <legend class="nds-label">Visible columns</legend>
+                                                    </fieldset>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="nds-export nds-btn-group">
-                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                            data-export="csv" data-export-target="#exportOrdersTable">
-                                            <span class="nds-label">CSV</span>
-                                        </button>
-                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                            data-export="xls" data-export-target="#exportOrdersTable">
-                                            <span class="nds-label">Excel</span>
-                                        </button>
-                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                            data-export="pdf" data-export-target="#exportOrdersTable">
-                                            <span class="nds-label">PDF</span>
-                                        </button>
+                                        <div class="nds-export nds-btn-group">
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                data-export="csv" data-export-target="#exportOrdersTable">
+                                                <span class="nds-label">CSV</span>
+                                            </button>
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                data-export="xls" data-export-target="#exportOrdersTable">
+                                                <span class="nds-label">Excel</span>
+                                            </button>
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                data-export="pdf" data-export-target="#exportOrdersTable">
+                                                <span class="nds-label">PDF</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                                <table id="exportOrdersTable" class="nds-table nds-compact" data-export-name="orders">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="nds-form-container nds-check-container">
+                                                        <div class="nds-form-control">
+                                                            <input type="checkbox" class="nds-check" aria-label="Select all rows">
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>Reference</th>
+                                                <th>Customer</th>
+                                                <th data-export-label="Amount (SAR)">Amount</th>
+                                                <th data-export-skip>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="nds-form-container nds-check-container">
+                                                        <div class="nds-form-control">
+                                                            <input type="checkbox" class="nds-check" aria-label="Select 128">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>128</td>
+                                                <td>حسن المختار</td>
+                                                <td data-export-value="240"><span class="nds-number-format" data-currency="SAR">240</span></td>
+                                                <td><button class="nds-btn nds-sm nds-subtle">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="nds-form-container nds-check-container">
+                                                        <div class="nds-form-control">
+                                                            <input type="checkbox" class="nds-check" aria-label="Select 129">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>129</td>
+                                                <td>نادية الخطيب</td>
+                                                <td data-export-value="1250"><span class="nds-number-format" data-currency="SAR">1250</span></td>
+                                                <td><button class="nds-btn nds-sm nds-subtle">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="nds-form-container nds-check-container">
+                                                        <div class="nds-form-control">
+                                                            <input type="checkbox" class="nds-check" aria-label="Select 130">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>130</td>
+                                                <td>طارق السديري</td>
+                                                <td data-export-value="85"><span class="nds-number-format" data-currency="SAR">85</span></td>
+                                                <td><button class="nds-btn nds-sm nds-subtle">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="nds-form-container nds-check-container">
+                                                        <div class="nds-form-control">
+                                                            <input type="checkbox" class="nds-check" aria-label="Select 131">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>131</td>
+                                                <td>زهرة الحبيب</td>
+                                                <td data-export-value="3120"><span class="nds-number-format" data-currency="SAR">3120</span></td>
+                                                <td><button class="nds-btn nds-sm nds-subtle">View</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                             </div>
-                            <table id="exportOrdersTable" class="nds-table nds-compact" data-export-name="orders">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" class="nds-check" aria-label="Select all rows">
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th>Reference</th>
-                                            <th>Customer</th>
-                                            <th data-export-label="Amount (SAR)">Amount</th>
-                                            <th data-export-skip>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" class="nds-check" aria-label="Select 128">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>128</td>
-                                            <td>حسن المختار</td>
-                                            <td data-export-value="240"><span class="nds-number-format" data-currency="SAR">240</span></td>
-                                            <td><button class="nds-btn nds-sm nds-subtle">View</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" class="nds-check" aria-label="Select 129">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>129</td>
-                                            <td>نادية الخطيب</td>
-                                            <td data-export-value="1250"><span class="nds-number-format" data-currency="SAR">1250</span></td>
-                                            <td><button class="nds-btn nds-sm nds-subtle">View</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" class="nds-check" aria-label="Select 130">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>130</td>
-                                            <td>طارق السديري</td>
-                                            <td data-export-value="85"><span class="nds-number-format" data-currency="SAR">85</span></td>
-                                            <td><button class="nds-btn nds-sm nds-subtle">View</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="nds-form-container nds-check-container">
-                                                    <div class="nds-form-control">
-                                                        <input type="checkbox" class="nds-check" aria-label="Select 131">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>131</td>
-                                            <td>زهرة الحبيب</td>
-                                            <td data-export-value="3120"><span class="nds-number-format" data-currency="SAR">3120</span></td>
-                                            <td><button class="nds-btn nds-sm nds-subtle">View</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-export-table-1" id="tab-export-table-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-export-table-1"
-                                    aria-labelledby="tab-export-table-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-export-table-1" id="tab-export-table-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-export-table-1"
+                                        aria-labelledby="tab-export-table-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;div class="nds-bar-end"&gt;
     &lt;!-- Hiding a column stamps data-export-skip, so exports follow the view --&gt;
@@ -256,6 +257,7 @@ last_edit: "29/07/2026 - 01:32 AM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -275,145 +277,146 @@ last_edit: "29/07/2026 - 01:32 AM"
             <p class="nds-section-description">Card lists, definition lists, and any custom container become exportable by tagging their rows and fields with two data attributes</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-container">
-                        <div class="state-demo" style="gap: 0;">
-                            <div id="exportCardsDemo">
-                                <div class="nds-toolbar">
-                                    <div class="nds-bar-end">
-                                        <div class="nds-export nds-btn-group">
-                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                                data-export="csv" data-export-target="#exportCardsList">
-                                                <span class="nds-label">CSV</span>
-                                            </button>
-                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                                data-export="xls" data-export-target="#exportCardsList">
-                                                <span class="nds-label">Excel</span>
-                                            </button>
-                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                                data-export="pdf" data-export-target="#exportCardsList">
-                                                <span class="nds-label">PDF</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="exportCardsList" class="nds-grid"
-                                style="--max-col:3;--mid-col:2;--min-col:1;"
-                                data-export-rows=".nds-card" data-export-name="services">
-                                <label class="nds-card nds-stroke">
-                                    <div class="nds-card-header">
-                                        <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
-                                                <i class="hgi hgi-stroke hgi-passport"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-checkbox">
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" aria-label="Select Passport Renewal">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-container">
+                            <div class="state-demo" style="gap: 0;">
+                                <div id="exportCardsDemo">
+                                    <div class="nds-toolbar">
+                                        <div class="nds-bar-end">
+                                            <div class="nds-export nds-btn-group">
+                                                <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                    data-export="csv" data-export-target="#exportCardsList">
+                                                    <span class="nds-label">CSV</span>
+                                                </button>
+                                                <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                    data-export="xls" data-export-target="#exportCardsList">
+                                                    <span class="nds-label">Excel</span>
+                                                </button>
+                                                <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                    data-export="pdf" data-export-target="#exportCardsList">
+                                                    <span class="nds-label">PDF</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title" data-export-field="service" data-export-label="Service">Passport Renewal</span>
-                                            <p class="nds-card-description" data-export-field="entity" data-export-label="Entity">General Directorate of Passports</p>
-                                        </div>
-                                        <div class="nds-card-meta">
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-yellow nds-sm" data-export-field="status" data-export-label="Status">
-                                                    <span class="nds-label">In Progress</span>
+                                    <div id="exportCardsList" class="nds-grid"
+                                    style="--max-col:3;--mid-col:2;--min-col:1;"
+                                    data-export-rows=".nds-card" data-export-name="services">
+                                    <label class="nds-card nds-stroke">
+                                        <div class="nds-card-header">
+                                            <div class="nds-card-featured-icon">
+                                                <span class="nds-featured-icon nds-circle nds-lg">
+                                                    <i class="hgi hgi-stroke hgi-passport"></i>
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
-                                </label>
-                                <label class="nds-card nds-stroke">
-                                    <div class="nds-card-header">
-                                        <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
-                                                <i class="hgi hgi-stroke hgi-car-01"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-checkbox">
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" aria-label="Select Driving Licence">
+                                        <div class="nds-card-checkbox">
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" class="nds-check" aria-label="Select Passport Renewal">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title" data-export-field="service">Driving Licence</span>
-                                            <p class="nds-card-description" data-export-field="entity">Traffic Department</p>
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title" data-export-field="service" data-export-label="Service">Passport Renewal</span>
+                                                <p class="nds-card-description" data-export-field="entity" data-export-label="Entity">General Directorate of Passports</p>
+                                            </div>
+                                            <div class="nds-card-meta">
+                                                <div class="nds-card-tags">
+                                                    <span class="nds-tag nds-yellow nds-sm" data-export-field="status" data-export-label="Status">
+                                                        <span class="nds-label">In Progress</span>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="nds-card-meta">
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-green nds-sm" data-export-field="status">
-                                                    <span class="nds-label">Completed</span>
+                                    </label>
+                                    <label class="nds-card nds-stroke">
+                                        <div class="nds-card-header">
+                                            <div class="nds-card-featured-icon">
+                                                <span class="nds-featured-icon nds-circle nds-lg">
+                                                    <i class="hgi hgi-stroke hgi-car-01"></i>
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
-                                </label>
-                                <label class="nds-card nds-stroke">
-                                    <div class="nds-card-header">
-                                        <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
-                                                <i class="hgi hgi-stroke hgi-store-01"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-checkbox">
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" aria-label="Select Commercial Registration">
+                                        <div class="nds-card-checkbox">
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" class="nds-check" aria-label="Select Driving Licence">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title" data-export-field="service">Commercial Registration</span>
-                                            <p class="nds-card-description" data-export-field="entity">Ministry of Commerce</p>
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title" data-export-field="service">Driving Licence</span>
+                                                <p class="nds-card-description" data-export-field="entity">Traffic Department</p>
+                                            </div>
+                                            <div class="nds-card-meta">
+                                                <div class="nds-card-tags">
+                                                    <span class="nds-tag nds-green nds-sm" data-export-field="status">
+                                                        <span class="nds-label">Completed</span>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="nds-card-meta">
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-gray nds-sm" data-export-field="status">
-                                                    <span class="nds-label">Pending</span>
+                                    </label>
+                                    <label class="nds-card nds-stroke">
+                                        <div class="nds-card-header">
+                                            <div class="nds-card-featured-icon">
+                                                <span class="nds-featured-icon nds-circle nds-lg">
+                                                    <i class="hgi hgi-stroke hgi-store-01"></i>
                                                 </span>
                                             </div>
                                         </div>
+                                        <div class="nds-card-checkbox">
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" class="nds-check" aria-label="Select Commercial Registration">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title" data-export-field="service">Commercial Registration</span>
+                                                <p class="nds-card-description" data-export-field="entity">Ministry of Commerce</p>
+                                            </div>
+                                            <div class="nds-card-meta">
+                                                <div class="nds-card-tags">
+                                                    <span class="nds-tag nds-gray nds-sm" data-export-field="status">
+                                                        <span class="nds-label">Pending</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </label>
                                     </div>
-                                </label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-export-generic-1" id="tab-export-generic-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-export-generic-1"
-                                    aria-labelledby="tab-export-generic-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-export-generic-1" id="tab-export-generic-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-export-generic-1"
+                                        aria-labelledby="tab-export-generic-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div id="servicesExport"&gt;
   &lt;div class="nds-toolbar"&gt;
     &lt;div class="nds-bar-end"&gt;
@@ -526,6 +529,7 @@ last_edit: "29/07/2026 - 01:32 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -544,69 +548,71 @@ last_edit: "29/07/2026 - 01:32 AM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-file-export"></i>
-                        <span class="nds-label">Multi-Format Output</span>
-                    </span>
-                    <p class="nds-item-desc">Every source exports to CSV, Excel, or PDF from the same buttons. CSV ships with a UTF-8 BOM and RFC 4180 quoting, Excel as an HTML payload with the correct MIME, and PDF through the browser's native print dialog.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-database"></i>
-                        <span class="nds-label">Source Agnostic</span>
-                    </span>
-                    <p class="nds-item-desc">Works on any <code class="nds-inline-code lang-html">&lt;table&gt;</code> or <code class="nds-inline-code lang-html">.nds-table</code> with zero markup changes. Card lists, definition lists, and custom containers opt in by adding <code class="nds-inline-code lang-html">data-export-rows</code> and <code class="nds-inline-code lang-html">data-export-field</code>.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-checkmark-square-02"></i>
-                        <span class="nds-label">Smart Selection Scope</span>
-                    </span>
-                    <p class="nds-item-desc">If any row carries <code class="nds-inline-code lang-html">data-state="selected"</code> or contains a checked <code class="nds-inline-code lang-html">input.nds-check</code>, only that subset is exported. Otherwise the full set ships. No wiring required.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-file-management"></i>
-                        <span class="nds-label">Pagination Aware</span>
-                    </span>
-                    <p class="nds-item-desc">Paginated tables export every page, not just the visible one. The library walks through hidden rows inside <code class="nds-inline-code lang-html">.nds-paged-content</code> so the file always matches the full dataset. A table's own rows only: detail rows (<code class="nds-inline-code lang-html">nds-sub</code>) and any table nested inside one are skipped, so an expanded row never leaks its inner table into the file.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-shield-01"></i>
-                        <span class="nds-label">CSV Injection Guard</span>
-                    </span>
-                    <p class="nds-item-desc">Cells starting with <code class="nds-inline-code lang-html">=</code>, <code class="nds-inline-code lang-html">+</code>, <code class="nds-inline-code lang-html">-</code>, or <code class="nds-inline-code lang-html">@</code> are auto-prefixed with an apostrophe so spreadsheets treat them as text instead of evaluating them as formulas.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-printer"></i>
-                        <span class="nds-label">Print-Ready PDF</span>
-                    </span>
-                    <p class="nds-item-desc">The PDF path renders a clean table into a hidden iframe and triggers the browser's print dialog. Output uses light-mode tokens for legibility on paper, with header repeat across pages and proper page breaks.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-globe-02"></i>
-                        <span class="nds-label">RTL & UTF-8 Ready</span>
-                    </span>
-                    <p class="nds-item-desc">Arabic and other non-Latin scripts round-trip cleanly in CSV thanks to the UTF-8 BOM. Excel and PDF outputs honor the page's text direction so right-to-left columns stay right-to-left.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
-                        <span class="nds-label">Filter Aware</span>
-                    </span>
-                    <p class="nds-item-desc">Rows hidden by <code class="nds-inline-code lang-html">NDS.Filter</code> (<code class="nds-inline-code lang-html">data-filtered</code> attribute) are excluded from the export. This is distinct from pagination-hidden rows, which are always included. Export reflects the active filter without any extra wiring.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Declarative & Programmatic</span>
-                    </span>
-                    <p class="nds-item-desc">Drop a <code class="nds-inline-code lang-html">data-export</code> button anywhere on the page and it works through a single delegated listener. The full <code class="nds-inline-code lang-js">NDS.Export</code> namespace is also available for triggering exports from custom JS.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-file-export"></i>
+                            <span class="nds-label">Multi-Format Output</span>
+                        </span>
+                        <p class="nds-item-desc">Every source exports to CSV, Excel, or PDF from the same buttons. CSV ships with a UTF-8 BOM and RFC 4180 quoting, Excel as an HTML payload with the correct MIME, and PDF through the browser's native print dialog.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-database"></i>
+                            <span class="nds-label">Source Agnostic</span>
+                        </span>
+                        <p class="nds-item-desc">Works on any <code class="nds-inline-code lang-html">&lt;table&gt;</code> or <code class="nds-inline-code lang-html">.nds-table</code> with zero markup changes. Card lists, definition lists, and custom containers opt in by adding <code class="nds-inline-code lang-html">data-export-rows</code> and <code class="nds-inline-code lang-html">data-export-field</code>.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-checkmark-square-02"></i>
+                            <span class="nds-label">Smart Selection Scope</span>
+                        </span>
+                        <p class="nds-item-desc">If any row carries <code class="nds-inline-code lang-html">data-state="selected"</code> or contains a checked <code class="nds-inline-code lang-html">input.nds-check</code>, only that subset is exported. Otherwise the full set ships. No wiring required.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-file-management"></i>
+                            <span class="nds-label">Pagination Aware</span>
+                        </span>
+                        <p class="nds-item-desc">Paginated tables export every page, not just the visible one. The library walks through hidden rows inside <code class="nds-inline-code lang-html">.nds-paged-content</code> so the file always matches the full dataset. A table's own rows only: detail rows (<code class="nds-inline-code lang-html">nds-sub</code>) and any table nested inside one are skipped, so an expanded row never leaks its inner table into the file.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-shield-01"></i>
+                            <span class="nds-label">CSV Injection Guard</span>
+                        </span>
+                        <p class="nds-item-desc">Cells starting with <code class="nds-inline-code lang-html">=</code>, <code class="nds-inline-code lang-html">+</code>, <code class="nds-inline-code lang-html">-</code>, or <code class="nds-inline-code lang-html">@</code> are auto-prefixed with an apostrophe so spreadsheets treat them as text instead of evaluating them as formulas.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-printer"></i>
+                            <span class="nds-label">Print-Ready PDF</span>
+                        </span>
+                        <p class="nds-item-desc">The PDF path renders a clean table into a hidden iframe and triggers the browser's print dialog. Output uses light-mode tokens for legibility on paper, with header repeat across pages and proper page breaks.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-globe-02"></i>
+                            <span class="nds-label">RTL & UTF-8 Ready</span>
+                        </span>
+                        <p class="nds-item-desc">Arabic and other non-Latin scripts round-trip cleanly in CSV thanks to the UTF-8 BOM. Excel and PDF outputs honor the page's text direction so right-to-left columns stay right-to-left.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-filter"></i>
+                            <span class="nds-label">Filter Aware</span>
+                        </span>
+                        <p class="nds-item-desc">Rows hidden by <code class="nds-inline-code lang-html">NDS.Filter</code> (<code class="nds-inline-code lang-html">data-filtered</code> attribute) are excluded from the export. This is distinct from pagination-hidden rows, which are always included. Export reflects the active filter without any extra wiring.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Declarative & Programmatic</span>
+                        </span>
+                        <p class="nds-item-desc">Drop a <code class="nds-inline-code lang-html">data-export</code> button anywhere on the page and it works through a single delegated listener. The full <code class="nds-inline-code lang-js">NDS.Export</code> namespace is also available for triggering exports from custom JS.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -621,7 +627,7 @@ last_edit: "29/07/2026 - 01:32 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Reach for the declarative attribute pattern first: a <code class="nds-inline-code lang-html">[data-export]</code> button with <code class="nds-inline-code lang-html">data-export-target</code> needs no per-page JS and works for dynamically injected toolbars too.</li>
@@ -659,7 +665,7 @@ last_edit: "29/07/2026 - 01:32 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The library auto-binds to <code class="nds-inline-code lang-html">[data-export]</code> buttons via a single delegated listener. The <code class="nds-inline-code lang-js">NDS.Export</code> namespace is also available for triggering exports from custom scripts, building one-off formats, or accessing the normalized data.</p>
                 <div class="nds-tabs nds-code nds-divided">

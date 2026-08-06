@@ -43,45 +43,47 @@ hideFeedback: true
     </div>
     <div class="nds-section-body">
 
-        <div class="nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
-            <div class="nds-card nds-stroke">
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <span class="nds-card-title">Monthly Transactions</span>
+        <div class="nds-block">
+            <div class="nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Monthly Transactions</span>
+                        </div>
+                    </div>
+                    <div class="nds-chart"
+                        data-chart-config='{"type":"bar","series":[{"name":"Completed","data":[120,180,150,220,280,200]},{"name":"Pending","data":[50,70,60,40,30,80]},{"name":"Failed","data":[8,12,6,10,5,14]}],"labels":["Jan","Feb","Mar","Apr","May","Jun"],"height":300,"bar":{"stacked":true}}'>
                     </div>
                 </div>
-                <div class="nds-chart"
-                    data-chart-config='{"type":"bar","series":[{"name":"Completed","data":[120,180,150,220,280,200]},{"name":"Pending","data":[50,70,60,40,30,80]},{"name":"Failed","data":[8,12,6,10,5,14]}],"labels":["Jan","Feb","Mar","Apr","May","Jun"],"height":300,"bar":{"stacked":true}}'>
-                </div>
-            </div>
-            <div class="nds-card nds-stroke">
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <span class="nds-card-title">Requests Over Time</span>
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Requests Over Time</span>
+                        </div>
+                    </div>
+                    <div class="nds-chart"
+                        data-chart-config='{"type":"line","series":[{"name":"Requests","data":[340,420,380,510,470,620]},{"name":"Resolved","data":[310,390,360,480,450,590]}],"labels":["Jan","Feb","Mar","Apr","May","Jun"],"height":300}'>
                     </div>
                 </div>
-                <div class="nds-chart"
-                    data-chart-config='{"type":"line","series":[{"name":"Requests","data":[340,420,380,510,470,620]},{"name":"Resolved","data":[310,390,360,480,450,590]}],"labels":["Jan","Feb","Mar","Apr","May","Jun"],"height":300}'>
-                </div>
-            </div>
-            <div class="nds-card nds-stroke">
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <span class="nds-card-title">Service Categories</span>
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Service Categories</span>
+                        </div>
+                    </div>
+                    <div class="nds-chart"
+                        data-chart-config='{"type":"donut","series":[35,25,20,12,8],"labels":["Licensing","Registration","Permits","Payments","Inquiries"],"height":300}'>
                     </div>
                 </div>
-                <div class="nds-chart"
-                    data-chart-config='{"type":"donut","series":[35,25,20,12,8],"labels":["Licensing","Registration","Permits","Payments","Inquiries"],"height":300}'>
-                </div>
-            </div>
-            <div class="nds-card nds-stroke">
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <span class="nds-card-title">Department Workload</span>
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Department Workload</span>
+                        </div>
                     </div>
-                </div>
-                <div class="nds-chart"
-                    data-chart-config='{"type":"bar","series":[{"name":"Active","data":[45,38,52,28,18]},{"name":"Closed","data":[40,35,48,25,15]}],"labels":["Engineering","Operations","Finance","Design","Marketing"],"height":300}'>
+                    <div class="nds-chart"
+                        data-chart-config='{"type":"bar","series":[{"name":"Active","data":[45,38,52,28,18]},{"name":"Closed","data":[40,35,48,25,15]}],"labels":["Engineering","Operations","Finance","Design","Marketing"],"height":300}'>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,95 +99,97 @@ hideFeedback: true
         </div>
     </div>
     <div class="nds-section-body">
-        <div class="nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;">
-            <div class="nds-card nds-statistic nds-stroke">
-                <div class="nds-card-header">
-                    <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-xl">
-                            <i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <span class="nds-card-number nds-counter-value nds-number-format" data-target="1248">0</span>
-                        <p class="nds-card-description">Completed transactions</p>
-                    </div>
-                    <div class="nds-card-meta">
-                        <div class="nds-card-tags">
-                            <span class="nds-tag nds-green nds-sm">
-                                <i class="hgi hgi-stroke hgi-analytics-up"></i>
-                                <span class="nds-label">Up 18% this quarter</span>
+        <div class="nds-block">
+            <div class="nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;">
+                <div class="nds-card nds-statistic nds-stroke">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="nds-card nds-statistic nds-stroke nds-yellow">
-                <div class="nds-card-header">
-                    <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-xl">
-                            <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <span class="nds-card-number nds-counter-value nds-number-format" data-target="56">0</span>
-                        <p class="nds-card-description">Pending requests</p>
-                    </div>
-                    <div class="nds-card-meta">
-                        <div class="nds-card-tags">
-                            <span class="nds-tag nds-yellow nds-sm">
-                                <i class="hgi hgi-stroke hgi-alert-02"></i>
-                                <span class="nds-label">8 require attention</span>
-                            </span>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="1248">0</span>
+                            <p class="nds-card-description">Completed transactions</p>
+                        </div>
+                        <div class="nds-card-meta">
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-green nds-sm">
+                                    <i class="hgi hgi-stroke hgi-analytics-up"></i>
+                                    <span class="nds-label">Up 18% this quarter</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="nds-card nds-statistic nds-stroke nds-blue">
-                <div class="nds-card-header">
-                    <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-xl">
-                            <i class="hgi hgi-stroke hgi-user-multiple"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <span class="nds-card-number nds-counter-value nds-number-format" data-target="12">0</span>
-                        <p class="nds-card-description">Active team members</p>
-                    </div>
-                    <div class="nds-card-meta">
-                        <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm">
-                                <i class="hgi hgi-stroke hgi-building-06"></i>
-                                <span class="nds-label">Across 5 departments</span>
+                <div class="nds-card nds-statistic nds-stroke nds-yellow">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="nds-card nds-statistic nds-stroke nds-red">
-                <div class="nds-card-header">
-                    <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-xl">
-                            <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
-                        </span>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="56">0</span>
+                            <p class="nds-card-description">Pending requests</p>
+                        </div>
+                        <div class="nds-card-meta">
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-yellow nds-sm">
+                                    <i class="hgi hgi-stroke hgi-alert-02"></i>
+                                    <span class="nds-label">8 require attention</span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="nds-card-content">
-                    <div class="nds-card-text">
-                        <span class="nds-card-number nds-counter-value nds-number-format" data-target="10">0</span>
-                        <p class="nds-card-description">System notifications</p>
-                    </div>
-                    <div class="nds-card-meta">
-                        <div class="nds-card-tags">
-                            <span class="nds-tag nds-red nds-sm">
-                                <i class="hgi hgi-stroke hgi-shield-01"></i>
-                                <span class="nds-label">2 critical alerts</span>
+                <div class="nds-card nds-statistic nds-stroke nds-blue">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-user-multiple"></i>
                             </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="12">0</span>
+                            <p class="nds-card-description">Active team members</p>
+                        </div>
+                        <div class="nds-card-meta">
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-blue nds-sm">
+                                    <i class="hgi hgi-stroke hgi-building-06"></i>
+                                    <span class="nds-label">Across 5 departments</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-card nds-statistic nds-stroke nds-red">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="10">0</span>
+                            <p class="nds-card-description">System notifications</p>
+                        </div>
+                        <div class="nds-card-meta">
+                            <div class="nds-card-tags">
+                                <span class="nds-tag nds-red nds-sm">
+                                    <i class="hgi hgi-stroke hgi-shield-01"></i>
+                                    <span class="nds-label">2 critical alerts</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -202,275 +206,281 @@ hideFeedback: true
             <p class="nds-section-description">Latest financial records across all government service categories.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-toolbar">
-                <div class="nds-bar-row">
-                    <div class="nds-bar-start">
-                        <span class="nds-bar-text" data-paged-target="transactionsTableBody" data-selection-target="transactionsTableBody">
-                            <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> transaction(s)</span>
-                            <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> transaction(s)</span>
-                        </span>
+            <div class="nds-block">
+                <div class="nds-toolbar">
+                    <div class="nds-bar-row">
+                        <div class="nds-bar-start">
+                            <span class="nds-bar-text" data-paged-target="transactionsTableBody" data-selection-target="transactionsTableBody">
+                                <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> transaction(s)</span>
+                                <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> transaction(s)</span>
+                            </span>
+                        </div>
+                        <div class="nds-bar-end">
+                            <div class="nds-dropmenu"
+                                 data-select-name="perPage"
+                                 data-select-value="10"
+                                 data-per-page-target="transactionsTableBody">
+                                <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                    <span class="nds-label">10</span>
+                                </button>
+                                <div class="nds-dropmenu-menu nds-center" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="10"><span class="nds-label">10</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="25"><span class="nds-label">25</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="50"><span class="nds-label">50</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="100"><span class="nds-label">100</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="250"><span class="nds-label">250</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="500"><span class="nds-label">500</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu" data-columns-target="consoleTransactions">
+                                <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                    <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
+                                    <span class="nds-label">Columns</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+                                            <legend class="nds-label">Visible columns</legend>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu">
+                                <button type="button" class="nds-btn nds-secondary-outline nds-md nds-dropmenu-trigger">
+                                    <i class="hgi hgi-stroke hgi-download-04" aria-hidden="true"></i>
+                                    <span class="nds-label">Export</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
+                                                data-export="csv" data-export-target="#consoleTransactions">
+                                            <span class="nds-label">CSV</span>
+                                        </button>
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
+                                                data-export="xls" data-export-target="#consoleTransactions">
+                                            <span class="nds-label">Excel</span>
+                                        </button>
+                                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
+                                                data-export="pdf" data-export-target="#consoleTransactions">
+                                            <span class="nds-label">PDF</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-bar-end">
-                        <div class="nds-dropmenu"
-                             data-select-name="perPage"
-                             data-select-value="10"
-                             data-per-page-target="transactionsTableBody">
-                            <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                                <span class="nds-label">10</span>
+                    <div class="nds-bar-row">
+                        <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
+                            <div class="nds-search-content">
+                                <div class="nds-form-control">
+                                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                    <input type="text" class="nds-search-input" placeholder="Search transactions...">
+                                    <div class="nds-form-action">
+                                        <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-primary nds-search-btn" type="button">
+                                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                    <span class="nds-label" data-hidden="sm sr">Search</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody">
+                            <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                <i class="hgi hgi-stroke hgi-filter"></i>
+                                <span class="nds-label" data-hidden="sm sr">Filter</span>
                             </button>
-                            <div class="nds-dropmenu-menu nds-center" hidden>
+                            <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                                 <div class="nds-dropmenu-scroll">
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="10"><span class="nds-label">10</span></button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="25"><span class="nds-label">25</span></button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="50"><span class="nds-label">50</span></button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="100"><span class="nds-label">100</span></button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="250"><span class="nds-label">250</span></button>
-                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="500"><span class="nds-label">500</span></button>
+                                    <div data-filter="category" data-filter-type="checkbox"
+                                        data-filter-legend="Category"
+                                        data-no-auto-close>
+                                    </div>
+                                    <hr class="nds-divider">
+                                    <div data-filter="status" data-filter-type="radio"
+                                        data-filter-legend="Status"
+                                        data-filter-values='{"completed":"Completed","pending":"Pending","failed":"Failed"}'
+                                        data-no-auto-close>
+                                    </div>
+                                    <hr class="nds-divider">
+                                    <div data-filter="amount" data-filter-type="slider"
+                                        data-filter-legend="Amount"
+                                        data-filter-min="0" data-filter-max="45000" data-filter-step="500"
+                                        data-filter-currency="SAR" data-no-auto-close>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="nds-dropmenu" data-columns-target="consoleTransactions">
-                            <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                                <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
-                                <span class="nds-label">Columns</span>
-                            </button>
-                            <div class="nds-dropmenu-menu" hidden>
-                                <div class="nds-dropmenu-scroll">
-                                    <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
-                                        <legend class="nds-label">Visible columns</legend>
-                                    </fieldset>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nds-dropmenu">
-                            <button type="button" class="nds-btn nds-secondary-outline nds-md nds-dropmenu-trigger">
-                                <i class="hgi hgi-stroke hgi-download-04" aria-hidden="true"></i>
-                                <span class="nds-label">Export</span>
-                            </button>
-                            <div class="nds-dropmenu-menu" hidden>
-                                <div class="nds-dropmenu-scroll">
-                                    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
-                                            data-export="csv" data-export-target="#consoleTransactions">
-                                        <span class="nds-label">CSV</span>
-                                    </button>
-                                    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
-                                            data-export="xls" data-export-target="#consoleTransactions">
-                                        <span class="nds-label">Excel</span>
-                                    </button>
-                                    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
-                                            data-export="pdf" data-export-target="#consoleTransactions">
-                                        <span class="nds-label">PDF</span>
-                                    </button>
+                                <div class="nds-dropmenu-footer">
+                                    <hr class="nds-divider">
+                                    <div class="nds-dropmenu-action">
+                                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                            data-filter-action="clear" data-no-auto-close>
+                                            <span class="nds-label">Reset</span>
+                                        </button>
+                                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                            data-filter-action="apply">
+                                            <span class="nds-label">Filter</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="nds-bar-row">
-                    <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
-                        <div class="nds-search-content">
-                            <div class="nds-form-control">
-                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                <input type="text" class="nds-search-input" placeholder="Search transactions...">
-                                <div class="nds-form-action">
-                                    <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
-                                </div>
+                    <div class="nds-bar-row">
+                        <div class="nds-bar-start">
+                            <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
+                                <span class="nds-label">Applied Filters:</span>
+                                <div class="nds-chips"></div>
                             </div>
-                            <button class="nds-btn nds-primary nds-search-btn" type="button">
-                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                <span class="nds-label" data-hidden="sm sr">Search</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody">
-                        <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                            <i class="hgi hgi-stroke hgi-filter"></i>
-                            <span class="nds-label" data-hidden="sm sr">Filter</span>
-                        </button>
-                        <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
-                            <div class="nds-dropmenu-scroll">
-                                <div data-filter="category" data-filter-type="checkbox"
-                                    data-filter-legend="Category"
-                                    data-no-auto-close>
-                                </div>
-                                <hr class="nds-divider">
-                                <div data-filter="status" data-filter-type="radio"
-                                    data-filter-legend="Status"
-                                    data-filter-values='{"completed":"Completed","pending":"Pending","failed":"Failed"}'
-                                    data-no-auto-close>
-                                </div>
-                                <hr class="nds-divider">
-                                <div data-filter="amount" data-filter-type="slider"
-                                    data-filter-legend="Amount"
-                                    data-filter-min="0" data-filter-max="45000" data-filter-step="500"
-                                    data-filter-currency="SAR" data-no-auto-close>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu-footer">
-                                <hr class="nds-divider">
-                                <div class="nds-dropmenu-action">
-                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                        data-filter-action="clear" data-no-auto-close>
-                                        <span class="nds-label">Reset</span>
-                                    </button>
-                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                        data-filter-action="apply">
-                                        <span class="nds-label">Filter</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-bar-row">
-                    <div class="nds-bar-start">
-                        <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
-                            <span class="nds-label">Applied Filters:</span>
-                            <div class="nds-chips"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="console_transactions_content">
-                <table id="consoleTransactions" class="nds-table nds-compact nds-sortable" data-export-name="transactions">
-                    <thead>
-                        <tr>
-                            <th>
-                                <div class="nds-form-container nds-check-container">
-                                    <div class="nds-form-control">
-                                        <input type="checkbox" class="nds-check" aria-label="Select all transactions">
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="nds-col-header">
-                                    <span class="nds-label">Reference</span>
-                                    <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by reference"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="nds-col-header">
-                                    <span class="nds-label">Service</span>
-                                    <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by service"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="nds-col-header">
-                                    <span class="nds-label">Category</span>
-                                    <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by category"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>
-                            </th>
-                            <th data-export-label="Amount (SAR)">
-                                <div class="nds-col-header">
-                                    <span class="nds-label">Amount</span>
-                                    <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by amount"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="nds-col-header">
-                                    <span class="nds-label">Date</span>
-                                    <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by date"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="nds-col-header">
-                                    <span class="nds-label">Status</span>
-                                    <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by status"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="actions-column" data-export-skip>
-                                <div class="nds-col-header">
-                                    <span class="nds-label">Action</span>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="transactionsTableBody" class="nds-paged-content" data-filter-items="tr" style="--per-page:10;">
-                        {% for txn in site.data.content.transactions %}
-                        <tr class="nds-page-item">
-                            <td>
-                                <div class="nds-form-container nds-check-container">
-                                    <div class="nds-form-control">
-                                        <input type="checkbox" class="nds-check" aria-label="Select transaction {{ txn.id }}">
-                                    </div>
-                                </div>
-                            </td>
-                            <td>{{ txn.id }}</td>
-                            <td>{{ txn.name }}</td>
-                            <td>
-                                <span class="nds-tag nds-gray nds-sm">
-                                    <span class="nds-label" data-filter="category">{{ txn.category }}</span>
-                                </span>
-                            </td>
-                            <td data-sort-value="{{ txn.amount }}">
-                                {% if txn.amount == 0 %}
-                                <span class="nds-number-format" data-currency="{{ txn.currency }}" data-free data-filter="amount" data-filter-value="0">Free</span>
-                                {% else %}
-                                <span class="nds-number-format" data-currency="{{ txn.currency }}" data-filter="amount" data-filter-value="{{ txn.amount }}">{{ txn.amount }}</span>
-                                {% endif %}
-                            </td>
-                            <td>{{ txn.date }}</td>
-                            <td data-sort-value="{% if txn.status == 'completed' %}1{% elsif txn.status == 'pending' %}2{% elsif txn.status == 'failed' %}3{% else %}9{% endif %}">
-                                {% if txn.status == "completed" %}
-                                <span class="nds-tag nds-sm" data-status="success">
-                                    <span class="nds-label" data-filter="status" data-filter-value="completed">Completed</span>
-                                </span>
-                                {% elsif txn.status == "pending" %}
-                                <span class="nds-tag nds-sm" data-status="warning">
-                                    <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
-                                </span>
-                                {% elsif txn.status == "failed" %}
-                                <span class="nds-tag nds-sm" data-status="error">
-                                    <span class="nds-label" data-filter="status" data-filter-value="failed">Failed</span>
-                                </span>
-                                {% endif %}
-                            </td>
-                            <td class="actions-column">
-                                <div class="nds-dropmenu" data-portal>
-                                    <button class="nds-btn nds-subtle nds-sm nds-icon-only nds-dropmenu-trigger" aria-label="Row actions">
-                                        <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
-                                                <span class="nds-label">View details</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <i class="hgi hgi-stroke hgi-download-04"></i>
-                                                <span class="nds-label">Download receipt</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                                <span class="nds-label">Copy reference</span>
-                                            </button>
-                                            <hr class="nds-divider">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
-                                                <i class="hgi hgi-stroke hgi-delete-02"></i>
-                                                <span class="nds-label">Delete</span>
-                                            </button>
+            <div class="nds-block">
+                <div id="console_transactions_content">
+                    <table id="consoleTransactions" class="nds-table nds-compact nds-sortable" data-export-name="transactions">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="nds-form-container nds-check-container">
+                                        <div class="nds-form-control">
+                                            <input type="checkbox" class="nds-check" aria-label="Select all transactions">
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                                </th>
+                                <th>
+                                    <div class="nds-col-header">
+                                        <span class="nds-label">Reference</span>
+                                        <div class="nds-col-actions">
+                                            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by reference"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="nds-col-header">
+                                        <span class="nds-label">Service</span>
+                                        <div class="nds-col-actions">
+                                            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by service"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="nds-col-header">
+                                        <span class="nds-label">Category</span>
+                                        <div class="nds-col-actions">
+                                            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by category"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th data-export-label="Amount (SAR)">
+                                    <div class="nds-col-header">
+                                        <span class="nds-label">Amount</span>
+                                        <div class="nds-col-actions">
+                                            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by amount"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="nds-col-header">
+                                        <span class="nds-label">Date</span>
+                                        <div class="nds-col-actions">
+                                            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by date"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="nds-col-header">
+                                        <span class="nds-label">Status</span>
+                                        <div class="nds-col-actions">
+                                            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by status"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th class="actions-column" data-export-skip>
+                                    <div class="nds-col-header">
+                                        <span class="nds-label">Action</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody" class="nds-paged-content" data-filter-items="tr" style="--per-page:10;">
+                            {% for txn in site.data.content.transactions %}
+                            <tr class="nds-page-item">
+                                <td>
+                                    <div class="nds-form-container nds-check-container">
+                                        <div class="nds-form-control">
+                                            <input type="checkbox" class="nds-check" aria-label="Select transaction {{ txn.id }}">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ txn.id }}</td>
+                                <td>{{ txn.name }}</td>
+                                <td>
+                                    <span class="nds-tag nds-gray nds-sm">
+                                        <span class="nds-label" data-filter="category">{{ txn.category }}</span>
+                                    </span>
+                                </td>
+                                <td data-sort-value="{{ txn.amount }}">
+                                    {% if txn.amount == 0 %}
+                                    <span class="nds-number-format" data-currency="{{ txn.currency }}" data-free data-filter="amount" data-filter-value="0">Free</span>
+                                    {% else %}
+                                    <span class="nds-number-format" data-currency="{{ txn.currency }}" data-filter="amount" data-filter-value="{{ txn.amount }}">{{ txn.amount }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ txn.date }}</td>
+                                <td data-sort-value="{% if txn.status == 'completed' %}1{% elsif txn.status == 'pending' %}2{% elsif txn.status == 'failed' %}3{% else %}9{% endif %}">
+                                    {% if txn.status == "completed" %}
+                                    <span class="nds-tag nds-sm" data-status="success">
+                                        <span class="nds-label" data-filter="status" data-filter-value="completed">Completed</span>
+                                    </span>
+                                    {% elsif txn.status == "pending" %}
+                                    <span class="nds-tag nds-sm" data-status="warning">
+                                        <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
+                                    </span>
+                                    {% elsif txn.status == "failed" %}
+                                    <span class="nds-tag nds-sm" data-status="error">
+                                        <span class="nds-label" data-filter="status" data-filter-value="failed">Failed</span>
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td class="actions-column">
+                                    <div class="nds-dropmenu" data-portal>
+                                        <button class="nds-btn nds-subtle nds-sm nds-icon-only nds-dropmenu-trigger" aria-label="Row actions">
+                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                        </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                    <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
+                                                    <span class="nds-label">View details</span>
+                                                </button>
+                                                <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                    <i class="hgi hgi-stroke hgi-download-04"></i>
+                                                    <span class="nds-label">Download receipt</span>
+                                                </button>
+                                                <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                                    <span class="nds-label">Copy reference</span>
+                                                </button>
+                                                <hr class="nds-divider">
+                                                <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
+                                                    <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                    <span class="nds-label">Delete</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <nav class="nds-pagination" data-auto-pagination="transactionsTableBody" aria-label="Table pagination"></nav>
+            <div class="nds-block">
+                <nav class="nds-pagination" data-auto-pagination="transactionsTableBody" aria-label="Table pagination"></nav>
+            </div>
         </div>
     </div>
 </section>
@@ -489,110 +499,116 @@ hideFeedback: true
             <p class="nds-section-description">Active team members across all departments.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-toolbar">
-                <div class="nds-form-container nds-search-box" data-filter-target="teamDirectoryGrid">
-                    <div class="nds-search-content">
-                        <div class="nds-form-control">
-                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <input type="text" class="nds-search-input" placeholder="Search team members...">
-                            <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                        <button class="nds-btn nds-primary nds-search-btn" type="button">
-                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <span class="nds-label" data-hidden="sm sr">Search</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="nds-dropmenu nds-filter" data-filter-target="teamDirectoryGrid">
-                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
-                        <span class="nds-label" data-hidden="sm sr">Filter</span>
-                    </button>
-                    <div class="nds-dropmenu-menu" hidden>
-                        <div class="nds-dropmenu-scroll">
-                            <div data-filter="department" data-filter-type="checkbox"
-                                data-filter-legend="Department"
-                                data-no-auto-close>
-                            </div>
-                            <hr class="nds-divider">
-                            <div data-filter="status" data-filter-type="radio"
-                                data-filter-legend="Status"
-                                data-filter-values='{"active":"Active","away":"Away","offline":"Offline"}'
-                                data-no-auto-close>
-                            </div>
-                        </div>
-                        <div class="nds-dropmenu-footer">
-                            <hr class="nds-divider">
-                            <div class="nds-dropmenu-action">
-                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                    data-filter-action="clear" data-no-auto-close>
-                                    <span class="nds-label">Reset</span>
-                                </button>
-                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                    data-filter-action="apply">
-                                    <span class="nds-label">Filter</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-filter-applied" data-filter-target="teamDirectoryGrid" hidden>
-                    <span class="nds-label">Applied Filters:</span>
-                    <div class="nds-chips"></div>
-                </div>
-            </div>
-            <div id="team_directory_content" class="nds-paged-content nds-cq" style="--per-page:6;">
-                <div class="nds-grid" id="teamDirectoryGrid" data-filter-items="nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
-                    {% for user in site.data.content.users %}
-                    <div class="nds-card nds-stroke nds-rowView nds-page-item">
-                        <div class="nds-card-header">
-                            <div class="nds-avatar nds-2xl">
-                                {% if user.avatar %}
-                                <img src="{{ user.avatar | relative_url }}" alt="{{ user.name }}" loading="lazy">
-                                {% else %}
-                                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                {% endif %}
-                            </div>
-                            {% if user.status == "active" %}
-                            <span class="nds-tag nds-sm" data-status="success">
-                                <span class="nds-label" data-filter="status" data-filter-value="active">Active</span>
-                            </span>
-                            {% elsif user.status == "away" %}
-                            <span class="nds-tag nds-sm" data-status="warning">
-                                <span class="nds-label" data-filter="status" data-filter-value="away">Away</span>
-                            </span>
-                            {% elsif user.status == "offline" %}
-                            <span class="nds-tag nds-sm" data-status="neutral">
-                                <span class="nds-label" data-filter="status" data-filter-value="offline">Offline</span>
-                            </span>
-                            {% endif %}
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <span class="nds-card-title">{{ user.name }}</span>
-                                <p class="nds-card-description">{{ user.role }}</p>
-                            </div>
-                            <div class="nds-card-meta">
-                                <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
-                                        <span class="nds-label" data-filter="department">{{ user.department }}</span>
-                                    </span>
+            <div class="nds-block">
+                <div class="nds-toolbar">
+                    <div class="nds-form-container nds-search-box" data-filter-target="teamDirectoryGrid">
+                        <div class="nds-search-content">
+                            <div class="nds-form-control">
+                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                <input type="text" class="nds-search-input" placeholder="Search team members...">
+                                <div class="nds-form-action">
+                                    <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                                 </div>
                             </div>
-                            <div class="nds-card-actions">
-                                <a href="mailto:{{ user.email }}" class="nds-btn nds-secondary-outline nds-lg nds-lead-icon">
-                                    <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                                    <span class="nds-label">Contact</span>
-                                </a>
+                            <button class="nds-btn nds-primary nds-search-btn" type="button">
+                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                <span class="nds-label" data-hidden="sm sr">Search</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nds-dropmenu nds-filter" data-filter-target="teamDirectoryGrid">
+                        <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                            <i class="hgi hgi-stroke hgi-filter"></i>
+                            <span class="nds-label" data-hidden="sm sr">Filter</span>
+                        </button>
+                        <div class="nds-dropmenu-menu" hidden>
+                            <div class="nds-dropmenu-scroll">
+                                <div data-filter="department" data-filter-type="checkbox"
+                                    data-filter-legend="Department"
+                                    data-no-auto-close>
+                                </div>
+                                <hr class="nds-divider">
+                                <div data-filter="status" data-filter-type="radio"
+                                    data-filter-legend="Status"
+                                    data-filter-values='{"active":"Active","away":"Away","offline":"Offline"}'
+                                    data-no-auto-close>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu-footer">
+                                <hr class="nds-divider">
+                                <div class="nds-dropmenu-action">
+                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                        data-filter-action="clear" data-no-auto-close>
+                                        <span class="nds-label">Reset</span>
+                                    </button>
+                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                        data-filter-action="apply">
+                                        <span class="nds-label">Filter</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
+                    <div class="nds-filter-applied" data-filter-target="teamDirectoryGrid" hidden>
+                        <span class="nds-label">Applied Filters:</span>
+                        <div class="nds-chips"></div>
+                    </div>
                 </div>
             </div>
-            <nav class="nds-pagination" data-auto-pagination="team_directory_content" aria-label="Team directory pagination"></nav>
+            <div class="nds-block">
+                <div id="team_directory_content" class="nds-paged-content nds-cq" style="--per-page:6;">
+                    <div class="nds-grid" id="teamDirectoryGrid" data-filter-items="nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
+                        {% for user in site.data.content.users %}
+                        <div class="nds-card nds-stroke nds-rowView nds-page-item">
+                            <div class="nds-card-header">
+                                <div class="nds-avatar nds-2xl">
+                                    {% if user.avatar %}
+                                    <img src="{{ user.avatar | relative_url }}" alt="{{ user.name }}" loading="lazy">
+                                    {% else %}
+                                    <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
+                                    {% endif %}
+                                </div>
+                                {% if user.status == "active" %}
+                                <span class="nds-tag nds-sm" data-status="success">
+                                    <span class="nds-label" data-filter="status" data-filter-value="active">Active</span>
+                                </span>
+                                {% elsif user.status == "away" %}
+                                <span class="nds-tag nds-sm" data-status="warning">
+                                    <span class="nds-label" data-filter="status" data-filter-value="away">Away</span>
+                                </span>
+                                {% elsif user.status == "offline" %}
+                                <span class="nds-tag nds-sm" data-status="neutral">
+                                    <span class="nds-label" data-filter="status" data-filter-value="offline">Offline</span>
+                                </span>
+                                {% endif %}
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-title">{{ user.name }}</span>
+                                    <p class="nds-card-description">{{ user.role }}</p>
+                                </div>
+                                <div class="nds-card-meta">
+                                    <div class="nds-card-tags">
+                                        <span class="nds-tag nds-blue nds-sm">
+                                            <span class="nds-label" data-filter="department">{{ user.department }}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="nds-card-actions">
+                                    <a href="mailto:{{ user.email }}" class="nds-btn nds-secondary-outline nds-lg nds-lead-icon">
+                                        <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
+                                        <span class="nds-label">Contact</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="nds-block">
+                <nav class="nds-pagination" data-auto-pagination="team_directory_content" aria-label="Team directory pagination"></nav>
+            </div>
         </div>
     </div>
 </section>

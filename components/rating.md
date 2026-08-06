@@ -19,81 +19,82 @@ last_edit: "03/07/2026 - 02:01 AM"
             <p class="nds-section-description">Read-only stars that show an existing score. Use span elements for non-interactive display.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Medium</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-xs", ".nds-rating", "ratingDisplaySize"]'>
-                                            <span class="nds-label">Extra Small</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-rating", "ratingDisplaySize"]'>
-                                            <span class="nds-label">Small</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-md", ".nds-rating", "ratingDisplaySize"]'>
-                                            <span class="nds-label">Medium</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", ".nds-rating", "ratingDisplaySize"]'>
-                                            <span class="nds-label">Large</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Medium</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-xs", ".nds-rating", "ratingDisplaySize"]'>
+                                                <span class="nds-label">Extra Small</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-rating", "ratingDisplaySize"]'>
+                                                <span class="nds-label">Small</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-md", ".nds-rating", "ratingDisplaySize"]'>
+                                                <span class="nds-label">Medium</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", ".nds-rating", "ratingDisplaySize"]'>
+                                                <span class="nds-label">Large</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-brand", ".nds-rating", "ratingDisplayStyle"]'>
-                                <span class="nds-label">Brand</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-rating nds-md" data-rating="3.5">
-                                <span class="nds-rating-star"></span>
-                                <span class="nds-rating-star"></span>
-                                <span class="nds-rating-star"></span>
-                                <span class="nds-rating-star"></span>
-                                <span class="nds-rating-star"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-rating-display-1" id="tab-rating-display-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-brand", ".nds-rating", "ratingDisplayStyle"]'>
+                                    <span class="nds-label">Brand</span>
+                                </button>
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel"
-                                    id="panel-rating-display-1" aria-labelledby="tab-rating-display-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-rating nds-md" data-rating="3.5">
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-rating-display-1" id="tab-rating-display-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel"
+                                        id="panel-rating-display-1" aria-labelledby="tab-rating-display-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-rating nds-md" data-rating="3.5"&gt;
     &lt;span class="nds-rating-star"&gt;&lt;/span&gt;
     &lt;span class="nds-rating-star"&gt;&lt;/span&gt;
@@ -102,6 +103,7 @@ last_edit: "03/07/2026 - 02:01 AM"
     &lt;span class="nds-rating-star"&gt;&lt;/span&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -120,84 +122,85 @@ last_edit: "03/07/2026 - 02:01 AM"
             <p class="nds-section-description">Clickable stars that let users submit their own rating. Use button elements to enable interaction automatically.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Medium</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-xs", ".nds-rating", "ratingInteractiveSize"]'>
-                                            <span class="nds-label">Extra Small</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-rating", "ratingInteractiveSize"]'>
-                                            <span class="nds-label">Small</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-md", ".nds-rating", "ratingInteractiveSize"]'>
-                                            <span class="nds-label">Medium</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-lg", ".nds-rating", "ratingInteractiveSize"]'>
-                                            <span class="nds-label">Large</span>
-                                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Medium</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-xs", ".nds-rating", "ratingInteractiveSize"]'>
+                                                <span class="nds-label">Extra Small</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-sm", ".nds-rating", "ratingInteractiveSize"]'>
+                                                <span class="nds-label">Small</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-md", ".nds-rating", "ratingInteractiveSize"]'>
+                                                <span class="nds-label">Medium</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-lg", ".nds-rating", "ratingInteractiveSize"]'>
+                                                <span class="nds-label">Large</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-brand", ".nds-rating", "ratingInteractiveStyle"]'>
-                                <span class="nds-label">Brand</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle" data-rating-disable>
-                                <span class="nds-label">Disable</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-rating nds-md" data-rating="2.5">
-                                <button class="nds-rating-star" type="button" aria-label="1 star"></button>
-                                <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
-                                <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
-                                <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
-                                <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-rating-interactive-1" id="tab-rating-interactive-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-brand", ".nds-rating", "ratingInteractiveStyle"]'>
+                                    <span class="nds-label">Brand</span>
+                                </button>
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
+                                <button class="nds-btn nds-sm nds-subtle" data-rating-disable>
+                                    <span class="nds-label">Disable</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel"
-                                    id="panel-rating-interactive-1" aria-labelledby="tab-rating-interactive-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-rating nds-md" data-rating="2.5">
+                                    <button class="nds-rating-star" type="button" aria-label="1 star"></button>
+                                    <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
+                                    <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
+                                    <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
+                                    <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-rating-interactive-1" id="tab-rating-interactive-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel"
+                                        id="panel-rating-interactive-1" aria-labelledby="tab-rating-interactive-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-rating nds-md" data-rating="2.5"&gt;
     &lt;button class="nds-rating-star" type="button" aria-label="1 star"&gt;&lt;/button&gt;
     &lt;button class="nds-rating-star" type="button" aria-label="2 stars"&gt;&lt;/button&gt;
@@ -206,6 +209,7 @@ last_edit: "03/07/2026 - 02:01 AM"
     &lt;button class="nds-rating-star" type="button" aria-label="5 stars"&gt;&lt;/button&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -224,82 +228,83 @@ last_edit: "03/07/2026 - 02:01 AM"
             <p class="nds-section-description">A compact rating trigger that expands into an interactive voting panel. Used in hero sections and content headers to collect feedback without leaving the page.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-brand", ".nds-rating", "ratingDropmenuStyle"]'>
-                                <span class="nds-label">Brand</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-dropmenu">
-                                <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button">
-                                    <div class="nds-rating nds-xs" data-rating="4.5">
-                                        <span class="nds-rating-star" aria-hidden="true"></span>
-                                        <span class="nds-rating-star" aria-hidden="true"></span>
-                                        <span class="nds-rating-star" aria-hidden="true"></span>
-                                        <span class="nds-rating-star" aria-hidden="true"></span>
-                                        <span class="nds-rating-star" aria-hidden="true"></span>
-                                    </div>
-                                    <span class="nds-label"><span class="nds-total-rate">4.5</span> - (<span class="nds-total-votes">18</span>) Votes</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-brand", ".nds-rating", "ratingDropmenuStyle"]'>
+                                    <span class="nds-label">Brand</span>
                                 </button>
-                                <div class="nds-dropmenu-menu nds-rating-dropmenu" hidden>
-                                    <div class="nds-dropmenu-item" data-no-auto-close>
-                                        <span class="nds-label">Rate this service</span>
-                                        <div class="nds-rating" data-rating="0">
-                                            <button class="nds-rating-star" type="button" aria-label="1 star"></button>
-                                            <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
-                                            <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
-                                            <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
-                                            <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-dropmenu">
+                                    <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button">
+                                        <div class="nds-rating nds-xs" data-rating="4.5">
+                                            <span class="nds-rating-star" aria-hidden="true"></span>
+                                            <span class="nds-rating-star" aria-hidden="true"></span>
+                                            <span class="nds-rating-star" aria-hidden="true"></span>
+                                            <span class="nds-rating-star" aria-hidden="true"></span>
+                                            <span class="nds-rating-star" aria-hidden="true"></span>
                                         </div>
-                                    </div>
-                                    <div class="nds-dropmenu-footer">
-                                        <hr class="nds-divider nds-lg">
-                                        <div class="nds-dropmenu-action">
-                                            <button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close>
-                                                <span class="nds-label">Vote</span>
-                                            </button>
+                                        <span class="nds-label"><span class="nds-total-rate">4.5</span> - (<span class="nds-total-votes">18</span>) Votes</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu nds-rating-dropmenu" hidden>
+                                        <div class="nds-dropmenu-item" data-no-auto-close>
+                                            <span class="nds-label">Rate this service</span>
+                                            <div class="nds-rating" data-rating="0">
+                                                <button class="nds-rating-star" type="button" aria-label="1 star"></button>
+                                                <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
+                                                <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
+                                                <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
+                                                <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
+                                            </div>
+                                        </div>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider nds-lg">
+                                            <div class="nds-dropmenu-action">
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close>
+                                                    <span class="nds-label">Vote</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-rating-dropmenu-1" id="tab-rating-dropmenu-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-rating-dropmenu-1" aria-labelledby="tab-rating-dropmenu-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-rating-dropmenu-1" id="tab-rating-dropmenu-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-rating-dropmenu-1" aria-labelledby="tab-rating-dropmenu-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
 &lt;div class="nds-dropmenu"&gt;
     &lt;button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button"&gt;
         &lt;div class="nds-rating nds-xs" data-rating="4.5"&gt;
@@ -333,6 +338,7 @@ last_edit: "03/07/2026 - 02:01 AM"
     &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -351,48 +357,50 @@ last_edit: "03/07/2026 - 02:01 AM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-rating</code> is on the page. Components added dynamically are detected and initialized automatically.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tap-01"></i>
-                        <span class="nds-label">Automatic Mode Detection</span>
-                    </span>
-                    <p class="nds-item-desc">Stars built with <code class="nds-inline-code lang-html">&lt;button&gt;</code> elements become interactive with hover preview and click selection. Stars built with <code class="nds-inline-code lang-html">&lt;span&gt;</code> elements render as display-only.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-favourite"></i>
-                        <span class="nds-label">Half-Star Precision</span>
-                    </span>
-                    <p class="nds-item-desc">Decimal ratings display half stars automatically. Values with a decimal of 0.3 or higher show a half star; below 0.3 rounds down to the nearest whole.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard"></i>
-                        <span class="nds-label">Keyboard Navigation</span>
-                    </span>
-                    <p class="nds-item-desc">Full arrow key traversal (RTL-aware), Enter and Space to select, Home and End to jump, and Escape to blur focus.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
-                        <span class="nds-label">Responsive Sizing</span>
-                    </span>
-                    <p class="nds-item-desc">Large stars scale down from 48px to 40px on mobile viewports, keeping proportions balanced on smaller screens.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Get, set, disable, and enable ratings through the instance API. Listen for <code class="nds-inline-code lang-js">ratingChange</code> events to react to user selections.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-rating</code> is on the page. Components added dynamically are detected and initialized automatically.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-tap-01"></i>
+                            <span class="nds-label">Automatic Mode Detection</span>
+                        </span>
+                        <p class="nds-item-desc">Stars built with <code class="nds-inline-code lang-html">&lt;button&gt;</code> elements become interactive with hover preview and click selection. Stars built with <code class="nds-inline-code lang-html">&lt;span&gt;</code> elements render as display-only.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-favourite"></i>
+                            <span class="nds-label">Half-Star Precision</span>
+                        </span>
+                        <p class="nds-item-desc">Decimal ratings display half stars automatically. Values with a decimal of 0.3 or higher show a half star; below 0.3 rounds down to the nearest whole.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-keyboard"></i>
+                            <span class="nds-label">Keyboard Navigation</span>
+                        </span>
+                        <p class="nds-item-desc">Full arrow key traversal (RTL-aware), Enter and Space to select, Home and End to jump, and Escape to blur focus.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
+                            <span class="nds-label">Responsive Sizing</span>
+                        </span>
+                        <p class="nds-item-desc">Large stars scale down from 48px to 40px on mobile viewports, keeping proportions balanced on smaller screens.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Get, set, disable, and enable ratings through the instance API. Listen for <code class="nds-inline-code lang-js">ratingChange</code> events to react to user selections.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -407,7 +415,7 @@ last_edit: "03/07/2026 - 02:01 AM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>display ratings</strong> to show aggregate scores, average reviews, or any read-only quality indicator alongside products, services, or content</li>
@@ -539,7 +547,7 @@ last_edit: "03/07/2026 - 02:01 AM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Rating</strong> API initializes rating components and exposes instance methods on <code class="nds-inline-code lang-js">element.ndsRating</code>. For dynamically added ratings, call <code class="nds-inline-code lang-js">NDS.Rating.init()</code> or rely on automatic MutationObserver detection.</p>
                 <div class="nds-code nds-expandable">

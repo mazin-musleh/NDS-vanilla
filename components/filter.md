@@ -19,109 +19,110 @@ last_edit: "06/08/2026 - 03:36 AM"
             <p class="nds-section-description">Combine a search box with auto-generated checkbox and radio filters. The component scans card content and builds filter options automatically from data attributes.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Search + Auto Checkbox Filter</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-toolbar">
-                                <div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards">
-                                    <div class="nds-search-content">
-                                        <div class="nds-form-control">
-                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <input type="text" class="nds-search-input" placeholder="Search cards...">
-                                            <div class="nds-form-action">
-                                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
-                                            </div>
-                                        </div>
-                                        <button class="nds-btn nds-primary nds-search-btn" type="button">
-                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <span class="nds-label" data-hidden="sm sr">Search</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards">
-                                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter"></i>
-                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <div data-filter="department"
-                                                data-filter-type="checkbox" data-filter-legend="Department"
-                                                data-no-auto-close>
-                                            </div>
-                                            <hr class="nds-divider">
-                                            <div data-filter="role"
-                                                data-filter-type="radio" data-filter-legend="Role" data-no-auto-close>
-                                            </div>
-                                        </div>
-                                        <div class="nds-dropmenu-footer">
-                                            <hr class="nds-divider">
-                                            <div class="nds-dropmenu-action">
-                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                    data-filter-action="clear" data-no-auto-close>
-                                                    <span class="nds-label">Reset</span>
-                                                </button>
-                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                    data-filter-action="apply">
-                                                    <span class="nds-label">Filter</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-filter-applied" data-filter-target="basicFilterCards" hidden>
-                                    <span class="nds-label">Applied Filters:</span>
-                                    <div class="nds-chips"></div>
-                                </div>
-                            </div>
-                            <div id="basicFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
-                                style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
-                                {% for user in site.data.content.users %}
-                                <div class="nds-card nds-stroke nds-page-item">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">{{ user.name }}</span>
-                                            <span class="nds-card-description">{{ user.role }}</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
-                                                    data-filter="department">{{ user.department }}</span></span>
-                                            <span class="nds-tag nds-green nds-sm"><span class="nds-label"
-                                                    data-filter="role">{{ user.role }}</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <nav class="nds-pagination" data-auto-pagination="basicFilterCards" aria-label="Pagination"></nav>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Search + Auto Checkbox Filter</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-basic-1" id="tab-filter-basic-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-basic-1"
-                                    aria-labelledby="tab-filter-basic-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-toolbar">
+                                    <div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards">
+                                        <div class="nds-search-content">
+                                            <div class="nds-form-control">
+                                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                                <input type="text" class="nds-search-input" placeholder="Search cards...">
+                                                <div class="nds-form-action">
+                                                    <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                            <button class="nds-btn nds-primary nds-search-btn" type="button">
+                                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                                <span class="nds-label" data-hidden="sm sr">Search</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    <div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards">
+                                        <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                            <i class="hgi hgi-stroke hgi-filter"></i>
+                                            <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                        </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <div data-filter="department"
+                                                    data-filter-type="checkbox" data-filter-legend="Department"
+                                                    data-no-auto-close>
+                                                </div>
+                                                <hr class="nds-divider">
+                                                <div data-filter="role"
+                                                    data-filter-type="radio" data-filter-legend="Role" data-no-auto-close>
+                                                </div>
+                                            </div>
+                                            <div class="nds-dropmenu-footer">
+                                                <hr class="nds-divider">
+                                                <div class="nds-dropmenu-action">
+                                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                        data-filter-action="clear" data-no-auto-close>
+                                                        <span class="nds-label">Reset</span>
+                                                    </button>
+                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                        data-filter-action="apply">
+                                                        <span class="nds-label">Filter</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-filter-applied" data-filter-target="basicFilterCards" hidden>
+                                        <span class="nds-label">Applied Filters:</span>
+                                        <div class="nds-chips"></div>
+                                    </div>
+                                </div>
+                                <div id="basicFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
+                                    style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
+                                    {% for user in site.data.content.users %}
+                                    <div class="nds-card nds-stroke nds-page-item">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">{{ user.name }}</span>
+                                                <span class="nds-card-description">{{ user.role }}</span>
+                                            </div>
+                                            <div class="nds-card-tags">
+                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                        data-filter="department">{{ user.department }}</span></span>
+                                                <span class="nds-tag nds-green nds-sm"><span class="nds-label"
+                                                        data-filter="role">{{ user.role }}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <nav class="nds-pagination" data-auto-pagination="basicFilterCards" aria-label="Pagination"></nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-basic-1" id="tab-filter-basic-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-basic-1"
+                                        aria-labelledby="tab-filter-basic-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;!-- One flex bar above the grid; each surface is wired by its own data-filter-target --&gt;
 &lt;div class="nds-toolbar"&gt;
   &lt;!-- Search box (field + button) --&gt;
@@ -207,6 +208,7 @@ last_edit: "06/08/2026 - 03:36 AM"
 &lt;/div&gt;
 &lt;nav class="nds-pagination" data-auto-pagination="basicFilterCards" aria-label="Pagination"&gt;&lt;/nav&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -226,109 +228,110 @@ last_edit: "06/08/2026 - 03:36 AM"
             <p class="nds-section-description">Four auto-generated filter input types: checkbox (multi-select, OR logic), radio (single-select), switch (toggle, OR logic), and slider (numeric range). The first three build their options from card content; the slider reads its bounds from <code class="nds-inline-code lang-html">data-filter-min</code>/<code class="nds-inline-code lang-html">data-filter-max</code>.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <!-- Checkbox -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Checkbox Filter (Multi-Select)</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-toolbar">
-                            <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards" style="--dropmenu-min-width: 260px;">
-                                <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter"></i>
-                                    <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <div data-filter="status"
-                                            data-filter-type="checkbox" data-filter-legend="Status"
-                                            data-no-auto-close>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <!-- Checkbox -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Checkbox Filter (Multi-Select)</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-toolbar">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards" style="--dropmenu-min-width: 260px;">
+                                    <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
+                                        <i class="hgi hgi-stroke hgi-filter"></i>
+                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <div data-filter="status"
+                                                data-filter-type="checkbox" data-filter-legend="Status"
+                                                data-no-auto-close>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="nds-dropmenu-footer">
-                                        <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action">
-                                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                data-filter-action="clear" data-no-auto-close>
-                                                <span class="nds-label">Reset</span>
-                                            </button>
-                                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                data-filter-action="apply">
-                                                <span class="nds-label">Apply</span>
-                                            </button>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider">
+                                            <div class="nds-dropmenu-action">
+                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                    data-filter-action="clear" data-no-auto-close>
+                                                    <span class="nds-label">Reset</span>
+                                                </button>
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                    data-filter-action="apply">
+                                                    <span class="nds-label">Apply</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-filter-applied" data-filter-target="checkboxCards" hidden>
-                                <span class="nds-label">Applied Filters:</span>
-                                <div class="nds-chips"></div>
-                            </div>
-                            </div>
-                            <div id="checkboxCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Task A</span>
-                                        </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="nds-label" data-filter="status">Active</span></span></div>
-                                    </div>
+                                <div class="nds-filter-applied" data-filter-target="checkboxCards" hidden>
+                                    <span class="nds-label">Applied Filters:</span>
+                                    <div class="nds-chips"></div>
                                 </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Task B</span>
-                                        </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-gray nds-sm"><span
-                                                    class="nds-label" data-filter="status">Pending</span></span></div>
-                                    </div>
                                 </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Task C</span>
+                                <div id="checkboxCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Task A</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
+                                                        class="nds-label" data-filter="status">Active</span></span></div>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
-                                                    class="nds-label" data-filter="status">Complete</span></span></div>
                                     </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Task D</span>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Task B</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-gray nds-sm"><span
+                                                        class="nds-label" data-filter="status">Pending</span></span></div>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="nds-label" data-filter="status">Active</span></span></div>
+                                    </div>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Task C</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
+                                                        class="nds-label" data-filter="status">Complete</span></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Task D</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
+                                                        class="nds-label" data-filter="status">Active</span></span></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-checkbox-1" id="tab-filter-checkbox-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-checkbox-1"
-                                    aria-labelledby="tab-filter-checkbox-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-checkbox-1" id="tab-filter-checkbox-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-checkbox-1"
+                                        aria-labelledby="tab-filter-checkbox-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards"
@@ -420,115 +423,115 @@ last_edit: "06/08/2026 - 03:36 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Radio -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Radio Filter (Single-Select)</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-toolbar">
-                            <div class="nds-dropmenu nds-filter" data-filter-target="radioCards" style="--dropmenu-min-width: 260px;">
-                                <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter"></i>
-                                    <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <div data-filter="priority"
-                                            data-filter-type="radio" data-filter-legend="Priority"
-                                            data-no-auto-close>
+                    <!-- Radio -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Radio Filter (Single-Select)</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-toolbar">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="radioCards" style="--dropmenu-min-width: 260px;">
+                                    <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
+                                        <i class="hgi hgi-stroke hgi-filter"></i>
+                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <div data-filter="priority"
+                                                data-filter-type="radio" data-filter-legend="Priority"
+                                                data-no-auto-close>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="nds-dropmenu-footer">
-                                        <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action">
-                                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                data-filter-action="clear" data-no-auto-close>
-                                                <span class="nds-label">Reset</span>
-                                            </button>
-                                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                data-filter-action="apply">
-                                                <span class="nds-label">Apply</span>
-                                            </button>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider">
+                                            <div class="nds-dropmenu-action">
+                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                    data-filter-action="clear" data-no-auto-close>
+                                                    <span class="nds-label">Reset</span>
+                                                </button>
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                    data-filter-action="apply">
+                                                    <span class="nds-label">Apply</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-filter-applied" data-filter-target="radioCards" hidden>
-                                <span class="nds-label">Applied Filters:</span>
-                                <div class="nds-chips"></div>
-                            </div>
-                            </div>
-                            <div id="radioCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Feature Request</span>
-                                        </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-red nds-sm"><span
-                                                    class="nds-label" data-filter="priority">High</span></span></div>
-                                    </div>
+                                <div class="nds-filter-applied" data-filter-target="radioCards" hidden>
+                                    <span class="nds-label">Applied Filters:</span>
+                                    <div class="nds-chips"></div>
                                 </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Bug Fix</span>
-                                        </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
-                                                    class="nds-label" data-filter="priority">Medium</span></span></div>
-                                    </div>
                                 </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Documentation</span>
+                                <div id="radioCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Feature Request</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-red nds-sm"><span
+                                                        class="nds-label" data-filter="priority">High</span></span></div>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-gray nds-sm"><span
-                                                    class="nds-label" data-filter="priority">Low</span></span></div>
                                     </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Security Patch</span>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Bug Fix</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
+                                                        class="nds-label" data-filter="priority">Medium</span></span></div>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-red nds-sm"><span
-                                                    class="nds-label" data-filter="priority">High</span></span></div>
+                                    </div>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Documentation</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-gray nds-sm"><span
+                                                        class="nds-label" data-filter="priority">Low</span></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Security Patch</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-red nds-sm"><span
+                                                        class="nds-label" data-filter="priority">High</span></span></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-radio-1" id="tab-filter-radio-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-radio-1"
-                                    aria-labelledby="tab-filter-radio-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-radio-1" id="tab-filter-radio-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-radio-1"
+                                        aria-labelledby="tab-filter-radio-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="radioCards"
@@ -619,127 +622,127 @@ last_edit: "06/08/2026 - 03:36 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Switch -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Switch Filter (Toggle)</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-toolbar">
-                            <div class="nds-dropmenu nds-filter" data-filter-target="switchCards" style="--dropmenu-min-width: 260px;">
-                                <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter"></i>
-                                    <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <div data-filter="feature"
-                                            data-filter-type="switch" data-filter-legend="Features"
-                                            data-no-auto-close>
+                    <!-- Switch -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Switch Filter (Toggle)</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-toolbar">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="switchCards" style="--dropmenu-min-width: 260px;">
+                                    <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
+                                        <i class="hgi hgi-stroke hgi-filter"></i>
+                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <div data-filter="feature"
+                                                data-filter-type="switch" data-filter-legend="Features"
+                                                data-no-auto-close>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="nds-dropmenu-footer">
-                                        <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action">
-                                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                data-filter-action="clear" data-no-auto-close>
-                                                <span class="nds-label">Reset</span>
-                                            </button>
-                                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                data-filter-action="apply">
-                                                <span class="nds-label">Apply</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-filter-applied" data-filter-target="switchCards" hidden>
-                                <span class="nds-label">Applied Filters:</span>
-                                <div class="nds-chips"></div>
-                            </div>
-                            </div>
-                            <div id="switchCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">App Alpha</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
-                                                    data-filter="feature">SSO</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
-                                                    data-filter="feature">API</span></span>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider">
+                                            <div class="nds-dropmenu-action">
+                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                    data-filter-action="clear" data-no-auto-close>
+                                                    <span class="nds-label">Reset</span>
+                                                </button>
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                    data-filter-action="apply">
+                                                    <span class="nds-label">Apply</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">App Beta</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
-                                                    data-filter="feature">SSO</span></span>
+                                <div class="nds-filter-applied" data-filter-target="switchCards" hidden>
+                                    <span class="nds-label">Applied Filters:</span>
+                                    <div class="nds-chips"></div>
+                                </div>
+                                </div>
+                                <div id="switchCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">App Alpha</span>
+                                            </div>
+                                            <div class="nds-card-tags">
+                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                        data-filter="feature">SSO</span></span>
+                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                        data-filter="feature">API</span></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">App Gamma</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
-                                                    data-filter="feature">API</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
-                                                    data-filter="feature">Webhooks</span></span>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">App Beta</span>
+                                            </div>
+                                            <div class="nds-card-tags">
+                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                        data-filter="feature">SSO</span></span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">App Delta</span>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">App Gamma</span>
+                                            </div>
+                                            <div class="nds-card-tags">
+                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                        data-filter="feature">API</span></span>
+                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                        data-filter="feature">Webhooks</span></span>
+                                            </div>
                                         </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
-                                                    data-filter="feature">Webhooks</span></span>
+                                    </div>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">App Delta</span>
+                                            </div>
+                                            <div class="nds-card-tags">
+                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                        data-filter="feature">Webhooks</span></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-switch-1" id="tab-filter-switch-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-switch-1"
-                                    aria-labelledby="tab-filter-switch-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-switch-1" id="tab-filter-switch-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-switch-1"
+                                        aria-labelledby="tab-filter-switch-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="switchCards"
@@ -836,74 +839,74 @@ last_edit: "06/08/2026 - 03:36 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Slider -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Slider Filter (Range)</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-toolbar">
-                                <div class="nds-dropmenu nds-filter" data-filter-target="sliderCards" style="--dropmenu-min-width: 300px;">
-                                    <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter"></i>
-                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
-                                                data-filter-min="0" data-filter-max="5000" data-filter-step="100"
-                                                data-filter-currency="SAR" data-no-auto-close></div>
-                                        </div>
-                                        <div class="nds-dropmenu-footer">
-                                            <hr class="nds-divider">
-                                            <div class="nds-dropmenu-action">
-                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close><span class="nds-label">Reset</span></button>
-                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply"><span class="nds-label">Apply</span></button>
+                    <!-- Slider -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Slider Filter (Range)</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-toolbar">
+                                    <div class="nds-dropmenu nds-filter" data-filter-target="sliderCards" style="--dropmenu-min-width: 300px;">
+                                        <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
+                                            <i class="hgi hgi-stroke hgi-filter"></i>
+                                            <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                        </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
+                                                    data-filter-min="0" data-filter-max="5000" data-filter-step="100"
+                                                    data-filter-currency="SAR" data-no-auto-close></div>
+                                            </div>
+                                            <div class="nds-dropmenu-footer">
+                                                <hr class="nds-divider">
+                                                <div class="nds-dropmenu-action">
+                                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close><span class="nds-label">Reset</span></button>
+                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply"><span class="nds-label">Apply</span></button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="nds-filter-applied" data-filter-target="sliderCards" hidden>
+                                        <span class="nds-label">Applied Filters:</span>
+                                        <div class="nds-chips"></div>
+                                    </div>
                                 </div>
-                                <div class="nds-filter-applied" data-filter-target="sliderCards" hidden>
-                                    <span class="nds-label">Applied Filters:</span>
-                                    <div class="nds-chips"></div>
+                                <div id="sliderCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+                                    <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Hub</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="250">250</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Office Chair</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="900">900</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Monitor</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="1800">1800</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Laptop</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="3500">3500</span></span></div></div></div>
                                 </div>
-                            </div>
-                            <div id="sliderCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
-                                <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Hub</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="250">250</span></span></div></div></div>
-                                <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Office Chair</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="900">900</span></span></div></div></div>
-                                <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Monitor</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="1800">1800</span></span></div></div></div>
-                                <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Laptop</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="3500">3500</span></span></div></div></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-filter-slider-1" id="tab-filter-slider-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-slider-1" aria-labelledby="tab-filter-slider-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-filter-slider-1" id="tab-filter-slider-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-slider-1" aria-labelledby="tab-filter-slider-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;!-- Slider: numeric range. Both min+max = dual range; max alone = "up to" --&gt;
   &lt;div class="nds-dropmenu nds-filter" data-filter-target="sliderCards"
@@ -949,6 +952,7 @@ last_edit: "06/08/2026 - 03:36 AM"
   &lt;!-- ...more cards... --&gt;
 &lt;/div&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -968,104 +972,105 @@ last_edit: "06/08/2026 - 03:36 AM"
             <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-filter-accordion</code> to a filter group and it renders as a collapsible <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> item instead of an always-open fieldset. Opt in per group: reach for it when a group has many options and would otherwise push the rest of the menu out of view. Groups without the attribute stay inline, so short groups keep their options visible at a glance.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Department Inline, Role and Status Collapsible</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-toolbar">
-                                <div class="nds-dropmenu nds-filter" data-filter-target="accordionFilterCards">
-                                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter"></i>
-                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <div data-filter="department"
-                                                data-filter-type="checkbox" data-filter-legend="Department"
-                                                data-no-auto-close>
-                                            </div>
-                                            <hr class="nds-divider">
-                                            <div data-filter="role"
-                                                data-filter-type="checkbox" data-filter-legend="Role"
-                                                data-filter-accordion
-                                                data-no-auto-close>
-                                            </div>
-                                            <hr class="nds-divider">
-                                            <div data-filter="status"
-                                                data-filter-type="radio" data-filter-legend="Status"
-                                                data-filter-accordion
-                                                data-no-auto-close>
-                                            </div>
-                                        </div>
-                                        <div class="nds-dropmenu-footer">
-                                            <hr class="nds-divider">
-                                            <div class="nds-dropmenu-action">
-                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                    data-filter-action="clear" data-no-auto-close>
-                                                    <span class="nds-label">Reset</span>
-                                                </button>
-                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                    data-filter-action="apply">
-                                                    <span class="nds-label">Filter</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-filter-applied" data-filter-target="accordionFilterCards" hidden>
-                                    <span class="nds-label">Applied Filters:</span>
-                                    <div class="nds-chips"></div>
-                                </div>
-                            </div>
-                            <div id="accordionFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
-                                style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
-                                {% for user in site.data.content.users %}
-                                <div class="nds-card nds-stroke nds-page-item">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">{{ user.name }}</span>
-                                            <span class="nds-card-description">{{ user.role }}</span>
-                                        </div>
-                                        <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
-                                                    data-filter="department">{{ user.department }}</span></span>
-                                            <span class="nds-tag nds-green nds-sm"><span class="nds-label"
-                                                    data-filter="role">{{ user.role }}</span></span>
-                                            <span class="nds-tag nds-neutral nds-sm"><span class="nds-label"
-                                                    data-filter="status">{{ user.status }}</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <nav class="nds-pagination" data-auto-pagination="accordionFilterCards" aria-label="Pagination"></nav>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Department Inline, Role and Status Collapsible</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-accordion-1" id="tab-filter-accordion-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-accordion-1"
-                                    aria-labelledby="tab-filter-accordion-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-toolbar">
+                                    <div class="nds-dropmenu nds-filter" data-filter-target="accordionFilterCards">
+                                        <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                            <i class="hgi hgi-stroke hgi-filter"></i>
+                                            <span class="nds-label" data-hidden="sm sr">Filter</span>
                                         </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <div data-filter="department"
+                                                    data-filter-type="checkbox" data-filter-legend="Department"
+                                                    data-no-auto-close>
+                                                </div>
+                                                <hr class="nds-divider">
+                                                <div data-filter="role"
+                                                    data-filter-type="checkbox" data-filter-legend="Role"
+                                                    data-filter-accordion
+                                                    data-no-auto-close>
+                                                </div>
+                                                <hr class="nds-divider">
+                                                <div data-filter="status"
+                                                    data-filter-type="radio" data-filter-legend="Status"
+                                                    data-filter-accordion
+                                                    data-no-auto-close>
+                                                </div>
+                                            </div>
+                                            <div class="nds-dropmenu-footer">
+                                                <hr class="nds-divider">
+                                                <div class="nds-dropmenu-action">
+                                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                        data-filter-action="clear" data-no-auto-close>
+                                                        <span class="nds-label">Reset</span>
+                                                    </button>
+                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                        data-filter-action="apply">
+                                                        <span class="nds-label">Filter</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    <div class="nds-filter-applied" data-filter-target="accordionFilterCards" hidden>
+                                        <span class="nds-label">Applied Filters:</span>
+                                        <div class="nds-chips"></div>
+                                    </div>
+                                </div>
+                                <div id="accordionFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
+                                    style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
+                                    {% for user in site.data.content.users %}
+                                    <div class="nds-card nds-stroke nds-page-item">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">{{ user.name }}</span>
+                                                <span class="nds-card-description">{{ user.role }}</span>
+                                            </div>
+                                            <div class="nds-card-tags">
+                                                <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                        data-filter="department">{{ user.department }}</span></span>
+                                                <span class="nds-tag nds-green nds-sm"><span class="nds-label"
+                                                        data-filter="role">{{ user.role }}</span></span>
+                                                <span class="nds-tag nds-neutral nds-sm"><span class="nds-label"
+                                                        data-filter="status">{{ user.status }}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <nav class="nds-pagination" data-auto-pagination="accordionFilterCards" aria-label="Pagination"></nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-accordion-1" id="tab-filter-accordion-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-accordion-1"
+                                        aria-labelledby="tab-filter-accordion-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;div class="nds-dropmenu nds-filter" data-filter-target="accordionFilterCards"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -1143,6 +1148,7 @@ last_edit: "06/08/2026 - 03:36 AM"
 &lt;/div&gt;
 &lt;nav class="nds-pagination" data-auto-pagination="accordionFilterCards" aria-label="Pagination"&gt;&lt;/nav&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1162,99 +1168,100 @@ last_edit: "06/08/2026 - 03:36 AM"
             <p class="nds-section-description">The standard arrangement: a <a class="nds-color" href="{{ 'components/toolbar' | relative_url }}">Toolbar</a> directly above the grid, holding the search box, Filter, applied-filter chips, and auto-fill suggestions. Each surface carries its own <code class="nds-inline-code lang-html">data-filter-target</code>, so the bar itself stays pure layout. The Filter here pairs a category checkbox group with a <a class="nds-color" href="{{ 'components/slider' | relative_url }}">price slider</a> (<code class="nds-inline-code lang-html">data-filter-type="slider"</code>). Sort controls can live in the bar too: see the <a class="nds-color" href="{{ 'components/sort' | relative_url }}">Sort</a> page. Grid and pagination stay independent siblings below.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Search + Filter + Slider</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-toolbar">
-                                <div class="nds-form-container nds-search-box" data-filter-target="barFilterCards">
-                                    <div class="nds-search-content">
-                                        <div class="nds-form-control">
-                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <input id="barSearchInput" type="text" class="nds-search-input" name="search" placeholder="Search products...">
-                                            <div class="nds-form-action">
-                                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
-                                            </div>
-                                        </div>
-                                        <button class="nds-btn nds-primary nds-search-btn" type="button">
-                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <span class="nds-label" data-hidden="sm sr">Search</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards" style="--dropmenu-min-width: 300px;">
-                                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                        <i class="hgi hgi-stroke hgi-filter"></i>
-                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <div data-filter="category" data-filter-type="checkbox" data-filter-legend="Category" data-no-auto-close></div>
-                                            <hr class="nds-divider">
-                                            <div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
-                                                data-filter-min="0" data-filter-max="5000" data-filter-step="100"
-                                                data-filter-currency="SAR" data-no-auto-close></div>
-                                        </div>
-                                        <div class="nds-dropmenu-footer">
-                                            <hr class="nds-divider">
-                                            <div class="nds-dropmenu-action">
-                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close><span class="nds-label">Reset</span></button>
-                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply"><span class="nds-label">Apply</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-filter-applied" data-filter-target="barFilterCards" hidden>
-                                    <span class="nds-label">Applied Filters:</span>
-                                    <div class="nds-chips"></div>
-                                </div>
-                                <div class="nds-auto-fill" data-target="barSearchInput" data-filter-target="barFilterCards" data-autofill-apply>
-                                    <span class="nds-label">Suggestions:</span>
-                                    <div class="nds-chips">
-                                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Furniture</span></button>
-                                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Accessories</span></button>
-                                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Computers</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="barFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card" style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
-                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="USB-C Hub" data-sort-price="250"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">USB-C Hub</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="250">250</span></span></div></div></div>
-                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Wireless Mouse" data-sort-price="120"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Mouse</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="120">120</span></span></div></div></div>
-                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Wireless Keyboard" data-sort-price="480"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Keyboard</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="480">480</span></span></div></div></div>
-                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="27-inch Monitor" data-sort-price="950"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">27&quot; Monitor</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Displays</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="950">950</span></span></div></div></div>
-                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Ergonomic Chair" data-sort-price="1500"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Ergonomic Chair</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Furniture</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="1500">1500</span></span></div></div></div>
-                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Standing Desk" data-sort-price="2800"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Standing Desk</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Furniture</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="2800">2800</span></span></div></div></div>
-                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Laptop Pro" data-sort-price="4200"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Laptop Pro</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Computers</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="4200">4200</span></span></div></div></div>
-                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Noise-Cancel Headphones" data-sort-price="600"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Headphones</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="600">600</span></span></div></div></div>
-                            </div>
-                            <nav class="nds-pagination" data-auto-pagination="barFilterCards" aria-label="Pagination"></nav>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Search + Filter + Slider</div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-bar-1" id="tab-filter-bar-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-bar-1"
-                                    aria-labelledby="tab-filter-bar-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-toolbar">
+                                    <div class="nds-form-container nds-search-box" data-filter-target="barFilterCards">
+                                        <div class="nds-search-content">
+                                            <div class="nds-form-control">
+                                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                                <input id="barSearchInput" type="text" class="nds-search-input" name="search" placeholder="Search products...">
+                                                <div class="nds-form-action">
+                                                    <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                            <button class="nds-btn nds-primary nds-search-btn" type="button">
+                                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                                <span class="nds-label" data-hidden="sm sr">Search</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    <div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards" style="--dropmenu-min-width: 300px;">
+                                        <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                            <i class="hgi hgi-stroke hgi-filter"></i>
+                                            <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                        </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <div data-filter="category" data-filter-type="checkbox" data-filter-legend="Category" data-no-auto-close></div>
+                                                <hr class="nds-divider">
+                                                <div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
+                                                    data-filter-min="0" data-filter-max="5000" data-filter-step="100"
+                                                    data-filter-currency="SAR" data-no-auto-close></div>
+                                            </div>
+                                            <div class="nds-dropmenu-footer">
+                                                <hr class="nds-divider">
+                                                <div class="nds-dropmenu-action">
+                                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close><span class="nds-label">Reset</span></button>
+                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply"><span class="nds-label">Apply</span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-filter-applied" data-filter-target="barFilterCards" hidden>
+                                        <span class="nds-label">Applied Filters:</span>
+                                        <div class="nds-chips"></div>
+                                    </div>
+                                    <div class="nds-auto-fill" data-target="barSearchInput" data-filter-target="barFilterCards" data-autofill-apply>
+                                        <span class="nds-label">Suggestions:</span>
+                                        <div class="nds-chips">
+                                            <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Furniture</span></button>
+                                            <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Accessories</span></button>
+                                            <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Computers</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="barFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card" style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
+                                    <div class="nds-card nds-stroke nds-page-item" data-sort-name="USB-C Hub" data-sort-price="250"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">USB-C Hub</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="250">250</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke nds-page-item" data-sort-name="Wireless Mouse" data-sort-price="120"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Mouse</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="120">120</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke nds-page-item" data-sort-name="Wireless Keyboard" data-sort-price="480"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Keyboard</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="480">480</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke nds-page-item" data-sort-name="27-inch Monitor" data-sort-price="950"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">27&quot; Monitor</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Displays</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="950">950</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke nds-page-item" data-sort-name="Ergonomic Chair" data-sort-price="1500"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Ergonomic Chair</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Furniture</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="1500">1500</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke nds-page-item" data-sort-name="Standing Desk" data-sort-price="2800"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Standing Desk</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Furniture</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="2800">2800</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke nds-page-item" data-sort-name="Laptop Pro" data-sort-price="4200"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Laptop Pro</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Computers</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="4200">4200</span></span></div></div></div>
+                                    <div class="nds-card nds-stroke nds-page-item" data-sort-name="Noise-Cancel Headphones" data-sort-price="600"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Headphones</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="600">600</span></span></div></div></div>
+                                </div>
+                                <nav class="nds-pagination" data-auto-pagination="barFilterCards" aria-label="Pagination"></nav>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-bar-1" id="tab-filter-bar-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-bar-1"
+                                        aria-labelledby="tab-filter-bar-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;!-- One flex bar above the grid; each surface is wired by its own data-filter-target --&gt;
 &lt;div class="nds-toolbar"&gt;
   &lt;!-- Search box (field + button) --&gt;
@@ -1341,6 +1348,7 @@ last_edit: "06/08/2026 - 03:36 AM"
 &lt;/div&gt;
 &lt;nav class="nds-pagination" data-auto-pagination="barFilterCards" aria-label="Pagination"&gt;&lt;/nav&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1360,127 +1368,128 @@ last_edit: "06/08/2026 - 03:36 AM"
             <p class="nds-section-description">Define filter options upfront with <code class="nds-inline-code lang-html">data-filter-values</code> instead of scanning card content. Pass a JSON object <code class="nds-inline-code lang-html">{"value":"label"}</code> to map machine values to display labels, keeping internal identifiers separate from what users see.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Explicit Values (Radio)</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-toolbar">
-                            <div class="nds-dropmenu nds-filter" data-filter-target="staticCards">
-                                <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-filter"></i>
-                                    <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <div data-filter="category"
-                                            data-filter-type="radio" data-filter-legend="Category"
-                                            data-filter-values='{"tech":"Technology","design":"Design","biz":"Business"}'
-                                            data-no-auto-close>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Explicit Values (Radio)</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-toolbar">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="staticCards">
+                                    <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
+                                        <i class="hgi hgi-stroke hgi-filter"></i>
+                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <div data-filter="category"
+                                                data-filter-type="radio" data-filter-legend="Category"
+                                                data-filter-values='{"tech":"Technology","design":"Design","biz":"Business"}'
+                                                data-no-auto-close>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="nds-dropmenu-footer">
-                                        <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action">
-                                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                data-filter-action="clear" data-no-auto-close>
-                                                <span class="nds-label">Reset</span>
-                                            </button>
-                                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                data-filter-action="apply">
-                                                <span class="nds-label">Filter</span>
-                                            </button>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider">
+                                            <div class="nds-dropmenu-action">
+                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                    data-filter-action="clear" data-no-auto-close>
+                                                    <span class="nds-label">Reset</span>
+                                                </button>
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                    data-filter-action="apply">
+                                                    <span class="nds-label">Filter</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-filter-applied" data-filter-target="staticCards" hidden>
-                                <span class="nds-label">Applied Filters:</span>
-                                <div class="nds-chips"></div>
-                            </div>
-                            </div>
-                            <div id="staticCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">AI Research</span>
-                                        </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
-                                                    class="nds-label" data-filter="category" data-filter-value="tech">Technology</span></span></div>
-                                    </div>
+                                <div class="nds-filter-applied" data-filter-target="staticCards" hidden>
+                                    <span class="nds-label">Applied Filters:</span>
+                                    <div class="nds-chips"></div>
                                 </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Brand Identity</span>
-                                        </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="nds-label" data-filter="category" data-filter-value="design">Design</span></span></div>
-                                    </div>
                                 </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Market Analysis</span>
+                                <div id="staticCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">AI Research</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
+                                                        class="nds-label" data-filter="category" data-filter-value="tech">Technology</span></span></div>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
-                                                    class="nds-label" data-filter="category" data-filter-value="biz">Business</span></span></div>
                                     </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Cloud Migration</span>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Brand Identity</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
+                                                        class="nds-label" data-filter="category" data-filter-value="design">Design</span></span></div>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
-                                                    class="nds-label" data-filter="category" data-filter-value="tech">Technology</span></span></div>
                                     </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">UX Audit</span>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Market Analysis</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
+                                                        class="nds-label" data-filter="category" data-filter-value="biz">Business</span></span></div>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
-                                                    class="nds-label" data-filter="category" data-filter-value="design">Design</span></span></div>
                                     </div>
-                                </div>
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Revenue Report</span>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Cloud Migration</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
+                                                        class="nds-label" data-filter="category" data-filter-value="tech">Technology</span></span></div>
                                         </div>
-                                        <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
-                                                    class="nds-label" data-filter="category" data-filter-value="biz">Business</span></span></div>
+                                    </div>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">UX Audit</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
+                                                        class="nds-label" data-filter="category" data-filter-value="design">Design</span></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card nds-stroke">
+                                        <div class="nds-card-content">
+                                            <div class="nds-card-text">
+                                                <span class="nds-card-title">Revenue Report</span>
+                                            </div>
+                                            <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
+                                                        class="nds-label" data-filter="category" data-filter-value="biz">Business</span></span></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-static-1" id="tab-filter-static-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-static-1"
-                                    aria-labelledby="tab-filter-static-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-static-1" id="tab-filter-static-1">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-static-1"
+                                        aria-labelledby="tab-filter-static-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
 &lt;!-- Object form: keys = machine values, values = display labels --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="staticCards"&gt;
@@ -1532,6 +1541,7 @@ last_edit: "06/08/2026 - 03:36 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1551,43 +1561,44 @@ last_edit: "06/08/2026 - 03:36 AM"
             <p class="nds-section-description">Use <code class="nds-inline-code lang-js">populateFilter()</code> to generate filter inputs from values fetched at runtime. Supports cascading filters where one filter's selection determines another filter's options.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Populate from API</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-block">
-                                <p>Place an empty <code class="nds-inline-code lang-html">data-filter</code> placeholder in the dropmenu, then call <code class="nds-inline-code lang-js">populateFilter()</code> after fetching values. The method generates the same auto-generated inputs as <code class="nds-inline-code lang-html">data-filter-type</code> and binds all listeners automatically.</p>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Populate from API</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-block">
+                                    <p>Place an empty <code class="nds-inline-code lang-html">data-filter</code> placeholder in the dropmenu, then call <code class="nds-inline-code lang-js">populateFilter()</code> after fetching values. The method generates the same auto-generated inputs as <code class="nds-inline-code lang-html">data-filter-type</code> and binds all listeners automatically.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-populate-html" id="tab-filter-populate-html">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-filter-populate-js" id="tab-filter-populate-js">
-                                        <span class="nds-tab-label">JavaScript</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-filter-populate-html"
-                                    aria-labelledby="tab-filter-populate-html">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-populate-html" id="tab-filter-populate-html">
+                                            <span class="nds-tab-label">HTML</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-filter-populate-js" id="tab-filter-populate-js">
+                                            <span class="nds-tab-label">JavaScript</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-filter-populate-html"
+                                        aria-labelledby="tab-filter-populate-html">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;!-- Empty placeholder — JS will generate the inputs --&gt;
 &lt;div class="nds-dropmenu nds-filter" id="apiFilter"
   data-filter-target="results"&gt;
@@ -1620,15 +1631,15 @@ last_edit: "06/08/2026 - 03:36 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
-                                </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-filter-populate-js"
-                                    aria-labelledby="tab-filter-populate-js" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
                                     </div>
-                                    <code class="lang-javascript code">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-filter-populate-js"
+                                        aria-labelledby="tab-filter-populate-js" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">
 // Fetch values from API, then populate the filter
 NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
     NDS.request('/api/systems', { json: true })
@@ -1637,45 +1648,45 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
         });
 });
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Cascading -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Cascading Filters</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-block">
-                                <p>Call <code class="nds-inline-code lang-js">populateFilter()</code> again whenever a parent filter changes. The method clears the previous inputs and generates new ones from the updated values.</p>
+                    <!-- Cascading -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Cascading Filters</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-block">
+                                    <p>Call <code class="nds-inline-code lang-js">populateFilter()</code> again whenever a parent filter changes. The method clears the previous inputs and generates new ones from the updated values.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-cascade-1" id="tab-filter-cascade-1">
-                                        <span class="nds-tab-label">JavaScript</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-filter-cascade-1"
-                                    aria-labelledby="tab-filter-cascade-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-cascade-1" id="tab-filter-cascade-1">
+                                            <span class="nds-tab-label">JavaScript</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-javascript code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-filter-cascade-1"
+                                        aria-labelledby="tab-filter-cascade-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">
 // Cascading: when beneficiary changes, re-populate system filter
 NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
     const beneficiaryInputs = document.querySelectorAll(
@@ -1695,6 +1706,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
     });
 });
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1713,45 +1725,46 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
             <p class="nds-section-description">Send filter criteria to a server endpoint via AJAX. HTML responses are auto-injected into the target container &mdash; the response must contain an element with the target's <code class="nds-inline-code lang-html">id</code>, or the submission is treated as a failure and the existing results are left in place. JSON responses dispatch raw data via event for developer rendering.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">AJAX Filter Form</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-block">
-                                <p>Add a separate <code class="nds-inline-code lang-html">&lt;form&gt;</code> element with <code class="nds-inline-code lang-html">data-filter-target</code> linking it to the filter anchor, plus <code class="nds-inline-code lang-html">data-filter-submit</code> and <code class="nds-inline-code lang-html">data-ajax</code> attributes. Set the <code class="nds-inline-code lang-html">action</code> attribute to the API endpoint URL.</p>
-                                <p><code class="nds-inline-code lang-html">.nds-filter</code> stays a pure anchor — the form drives submission. HTML responses are automatically injected into the target container. For JSON responses, listen for the <code class="nds-inline-code lang-js">nds:filterFormComplete</code> event and render the data yourself.</p>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">AJAX Filter Form</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-block">
+                                    <p>Add a separate <code class="nds-inline-code lang-html">&lt;form&gt;</code> element with <code class="nds-inline-code lang-html">data-filter-target</code> linking it to the filter anchor, plus <code class="nds-inline-code lang-html">data-filter-submit</code> and <code class="nds-inline-code lang-html">data-ajax</code> attributes. Set the <code class="nds-inline-code lang-html">action</code> attribute to the API endpoint URL.</p>
+                                    <p><code class="nds-inline-code lang-html">.nds-filter</code> stays a pure anchor — the form drives submission. HTML responses are automatically injected into the target container. For JSON responses, listen for the <code class="nds-inline-code lang-js">nds:filterFormComplete</code> event and render the data yourself.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-ajax-html" id="tab-filter-ajax-html">
-                                        <span class="nds-tab-label">HTML Response</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-filter-ajax-json" id="tab-filter-ajax-json">
-                                        <span class="nds-tab-label">JSON Response</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-ajax-html"
-                                    aria-labelledby="tab-filter-ajax-html">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-ajax-html" id="tab-filter-ajax-html">
+                                            <span class="nds-tab-label">HTML Response</span>
                                         </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-filter-ajax-json" id="tab-filter-ajax-json">
+                                            <span class="nds-tab-label">JSON Response</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-ajax-html"
+                                        aria-labelledby="tab-filter-ajax-html">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;!-- Submission form: separate element linked via data-filter-target --&gt;
 &lt;form id="resultsForm" data-filter-target="results"
   data-filter-submit data-ajax
@@ -1814,17 +1827,17 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
   &lt;!-- HTML response will be injected here --&gt;
 &lt;/div&gt;
                                     </code>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-ajax-json"
-                                    aria-labelledby="tab-filter-ajax-json" hidden>
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-ajax-json"
+                                        aria-labelledby="tab-filter-ajax-json" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                        <code class="lang-html code">
 &lt;!-- AJAX form: JSON response handled via event on the .nds-filter anchor --&gt;
 &lt;form id="resultsForm" data-filter-target="results"
   data-filter-submit data-ajax
@@ -1861,47 +1874,47 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
         });
 &lt;/script&gt;
                                     </code>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Custom AJAX Rendering -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Custom AJAX Rendering (preventDefault)</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-block">
-                                <p>Use <code class="nds-inline-code lang-js">preventDefault()</code> on the <code class="nds-inline-code lang-js">nds:filterFormAjax</code> event to fully control the AJAX request and rendering. The filter component still handles UI updates (chips, count, URL params) before dispatching the event — so if your request fails, call <code class="nds-inline-code lang-js">e.detail.rollback()</code> to put them back rather than leaving them describing results that were never rendered.</p>
-                                <p>All filter actions (apply, chip removal, reset, clear) fire through <code class="nds-inline-code lang-js">nds:filterFormAjax</code>, so you only need one event listener.</p>
+                    <!-- Custom AJAX Rendering -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Custom AJAX Rendering (preventDefault)</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-block">
+                                    <p>Use <code class="nds-inline-code lang-js">preventDefault()</code> on the <code class="nds-inline-code lang-js">nds:filterFormAjax</code> event to fully control the AJAX request and rendering. The filter component still handles UI updates (chips, count, URL params) before dispatching the event — so if your request fails, call <code class="nds-inline-code lang-js">e.detail.rollback()</code> to put them back rather than leaving them describing results that were never rendered.</p>
+                                    <p>All filter actions (apply, chip removal, reset, clear) fire through <code class="nds-inline-code lang-js">nds:filterFormAjax</code>, so you only need one event listener.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-filter-ajax-custom" id="tab-filter-ajax-custom">
-                                        <span class="nds-tab-label">JavaScript</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-filter-ajax-custom"
-                                    aria-labelledby="tab-filter-ajax-custom">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-filter-ajax-custom" id="tab-filter-ajax-custom">
+                                            <span class="nds-tab-label">JavaScript</span>
                                         </button>
-                                    </div>
-                                    <code class="lang-javascript code">
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-filter-ajax-custom"
+                                        aria-labelledby="tab-filter-ajax-custom">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-javascript code">
 // Intercept AJAX and handle fetching yourself
 // Covers: apply, chip removal, reset, and clear
 filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
@@ -1924,6 +1937,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
         .catch(() =&gt; e.detail.rollback());
 });
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1941,104 +1955,106 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Every element that carries the same <code class="nds-inline-code lang-html">data-filter-target</code> joins one filter: search box, dropmenu, chips row, count slots. A <code class="nds-inline-code lang-html">.nds-filter</code> element is optional, so a search box on its own is already a working filter.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
-                        <span class="nds-label">Auto-Generated Filters</span>
-                    </span>
-                    <p class="nds-item-desc">Builds checkbox, radio, or switch inputs automatically. Values come from card content, a JSON attribute (<code class="nds-inline-code lang-html">data-filter-values</code>), or the <code class="nds-inline-code lang-js">populateFilter()</code> API — no manual HTML required.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-search-list-01"></i>
-                        <span class="nds-label">Searchable Options</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-search</code> to the filter dropmenu and a search box appears above the options. Every generated checkbox, radio, and switch row is filtered as the user types.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-equal-sign-circle"></i>
-                        <span class="nds-label">Slider Filtering</span>
-                    </span>
-                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-filter-type="slider"</code> to inject a range (dual-thumb) or "up to" (single-thumb) slider that filters cards by a numeric <code class="nds-inline-code lang-html">data-filter-value</code>. The active selection shows as one removable chip and syncs to the URL.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layers-01"></i>
-                        <span class="nds-label">Collapsible Groups</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-filter-accordion</code> to a long filter group and it becomes a collapsible section, closed by default, with a tag on its header counting the values selected inside. Short groups stay inline.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-link-circle-02"></i>
-                        <span class="nds-label">Shareable URL State</span>
-                    </span>
-                    <p class="nds-item-desc">Selections and the search term sync to URL query parameters, so a filtered view is bookmarkable and restores exactly. Checkbox and switch groups join values with commas (<code class="nds-inline-code lang-html">?department=Design,Finance</code>), so their option values must not contain one. Radio values may.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-tag-01"></i>
-                        <span class="nds-label">Applied Filter Chips</span>
-                    </span>
-                    <p class="nds-item-desc">Active filters display as removable chips below the filter bar. Clicking a chip removes that filter and re-applies the remaining criteria.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-search-01"></i>
-                        <span class="nds-label">No Results Alert</span>
-                    </span>
-                    <p class="nds-item-desc">Shows a warning alert with a "Clear Filter" action when no cards match the current criteria. The alert dismisses automatically when results reappear.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-refresh"></i>
-                        <span class="nds-label">Dynamic and Cascading Filters</span>
-                    </span>
-                    <p class="nds-item-desc">Use <code class="nds-inline-code lang-js">populateFilter()</code> to generate or replace filter inputs at runtime. Supports cascading filters where one selection drives another filter's options via API.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-globe-02"></i>
-                        <span class="nds-label">AJAX Form Submission</span>
-                    </span>
-                    <p class="nds-item-desc">Supports server-side filtering via AJAX with automatic HTML response injection and JSON response events for custom rendering.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-grid"></i>
-                        <span class="nds-label">Custom Item Selectors</span>
-                    </span>
-                    <p class="nds-item-desc">Filter any element type by setting <code class="nds-inline-code lang-html">data-filter-items</code> on the target container. Works with list items, table rows, drawers, or any custom structure beyond the default <code class="nds-inline-code lang-html">.nds-card</code>.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-translate"></i>
-                        <span class="nds-label">Value and Label Mapping</span>
-                    </span>
-                    <p class="nds-item-desc">Separate machine values from display labels using <code class="nds-inline-code lang-html">data-filter-value</code> on items or the object form of <code class="nds-inline-code lang-html">data-filter-values</code> on filter groups. Labels are derived automatically from visible text content.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-flash"></i>
-                        <span class="nds-label">Deferred Option Build</span>
-                    </span>
-                    <p class="nds-item-desc">Options for a group that sits inside a closed dropmenu are built on the first open, not at page load, so a long option list costs nothing until the user asks for it. Groups whose values arrive in the URL still build on load.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-code"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Set filters, search terms, and reset state through the <code class="nds-inline-code lang-js">NDS.Filter</code> API. Access instances by selector, target ID, or the <code class="nds-inline-code lang-js">whenReady</code> helper.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Every element that carries the same <code class="nds-inline-code lang-html">data-filter-target</code> joins one filter: search box, dropmenu, chips row, count slots. A <code class="nds-inline-code lang-html">.nds-filter</code> element is optional, so a search box on its own is already a working filter.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-filter"></i>
+                            <span class="nds-label">Auto-Generated Filters</span>
+                        </span>
+                        <p class="nds-item-desc">Builds checkbox, radio, or switch inputs automatically. Values come from card content, a JSON attribute (<code class="nds-inline-code lang-html">data-filter-values</code>), or the <code class="nds-inline-code lang-js">populateFilter()</code> API — no manual HTML required.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-search-list-01"></i>
+                            <span class="nds-label">Searchable Options</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-search</code> to the filter dropmenu and a search box appears above the options. Every generated checkbox, radio, and switch row is filtered as the user types.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-equal-sign-circle"></i>
+                            <span class="nds-label">Slider Filtering</span>
+                        </span>
+                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-filter-type="slider"</code> to inject a range (dual-thumb) or "up to" (single-thumb) slider that filters cards by a numeric <code class="nds-inline-code lang-html">data-filter-value</code>. The active selection shows as one removable chip and syncs to the URL.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layers-01"></i>
+                            <span class="nds-label">Collapsible Groups</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-filter-accordion</code> to a long filter group and it becomes a collapsible section, closed by default, with a tag on its header counting the values selected inside. Short groups stay inline.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-link-circle-02"></i>
+                            <span class="nds-label">Shareable URL State</span>
+                        </span>
+                        <p class="nds-item-desc">Selections and the search term sync to URL query parameters, so a filtered view is bookmarkable and restores exactly. Checkbox and switch groups join values with commas (<code class="nds-inline-code lang-html">?department=Design,Finance</code>), so their option values must not contain one. Radio values may.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-tag-01"></i>
+                            <span class="nds-label">Applied Filter Chips</span>
+                        </span>
+                        <p class="nds-item-desc">Active filters display as removable chips below the filter bar. Clicking a chip removes that filter and re-applies the remaining criteria.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-search-01"></i>
+                            <span class="nds-label">No Results Alert</span>
+                        </span>
+                        <p class="nds-item-desc">Shows a warning alert with a "Clear Filter" action when no cards match the current criteria. The alert dismisses automatically when results reappear.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-refresh"></i>
+                            <span class="nds-label">Dynamic and Cascading Filters</span>
+                        </span>
+                        <p class="nds-item-desc">Use <code class="nds-inline-code lang-js">populateFilter()</code> to generate or replace filter inputs at runtime. Supports cascading filters where one selection drives another filter's options via API.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-globe-02"></i>
+                            <span class="nds-label">AJAX Form Submission</span>
+                        </span>
+                        <p class="nds-item-desc">Supports server-side filtering via AJAX with automatic HTML response injection and JSON response events for custom rendering.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-grid"></i>
+                            <span class="nds-label">Custom Item Selectors</span>
+                        </span>
+                        <p class="nds-item-desc">Filter any element type by setting <code class="nds-inline-code lang-html">data-filter-items</code> on the target container. Works with list items, table rows, drawers, or any custom structure beyond the default <code class="nds-inline-code lang-html">.nds-card</code>.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-translate"></i>
+                            <span class="nds-label">Value and Label Mapping</span>
+                        </span>
+                        <p class="nds-item-desc">Separate machine values from display labels using <code class="nds-inline-code lang-html">data-filter-value</code> on items or the object form of <code class="nds-inline-code lang-html">data-filter-values</code> on filter groups. Labels are derived automatically from visible text content.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-flash"></i>
+                            <span class="nds-label">Deferred Option Build</span>
+                        </span>
+                        <p class="nds-item-desc">Options for a group that sits inside a closed dropmenu are built on the first open, not at page load, so a long option list costs nothing until the user asks for it. Groups whose values arrive in the URL still build on load.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-code"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Set filters, search terms, and reset state through the <code class="nds-inline-code lang-js">NDS.Filter</code> API. Access instances by selector, target ID, or the <code class="nds-inline-code lang-js">whenReady</code> helper.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2053,7 +2069,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use client-side filtering when all items are already on the page and the dataset is small enough to load at once (under a few hundred cards)</li>
@@ -2086,7 +2102,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Data Attributes</h3>
 
                 <h4>Filter Anchor (<code class="nds-inline-code lang-html">.nds-filter</code>)</h4>
@@ -2193,7 +2209,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
@@ -2216,7 +2232,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 <p>A failure also rolls the applied state back to what the displayed results represent: chips, the filter-button badge, the dropmenu controls and the URL params all return to their pre-submission values. Without it a failed Clear would show no chips over results that are still filtered. The trade-off is that an unsaved selection made in the dropmenu is discarded along with the failed submission.</p>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Keyboard and Accessibility</h3>
                 <ul>
                     <li><code class="nds-inline-code">Enter</code> in the page search box runs the search straight away</li>
@@ -2227,7 +2243,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </ul>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <code class="nds-inline-code lang-js">NDS.Filter</code> API provides methods to create, query, and control filter instances programmatically. For dynamically added filter forms, call <code class="nds-inline-code lang-js">NDS.Filter.init()</code> to initialize new instances.</p>
                 <div class="nds-code nds-expandable">

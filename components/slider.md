@@ -19,109 +19,110 @@ last_edit: "30/06/2026 - 11:50 PM"
             <p class="nds-section-description">One thumb for selecting a single value along the track. Drag, arrow keys, Home, End, and Page Up/Down all adjust the value</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Small</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-sm", ".nds-slider-container", "sliderSize", "remove:nds-md"]'>
-                                            <span class="nds-label">Small</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-slider-container", "sliderSize", "remove:nds-sm"]'>
-                                            <span class="nds-label">Medium</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">State</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-form-container", "sliderState"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-required", ".nds-form-container", "sliderState", "attr"]'>
-                                            <span class="nds-label">Required</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["disabled", ".nds-form-container", "sliderState", "data-state"]'>
-                                            <span class="nds-label">Disabled</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["readonly", ".nds-form-container", "sliderState", "data-state"]'>
-                                            <span class="nds-label">Readonly</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["data-loading=true", ".nds-slider-container", "sliderLoading", "attr"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-stacked", ".nds-slider-container", "sliderStacked"]'>
-                                <span class="nds-label">Stacked</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-slider-container nds-form-container">
-                                <div class="nds-form-header">
-                                    <label for="slider-default-1">
-                                        <span class="nds-label">Volume</span>
-                                        <span class="nds-info">Drag the thumb or use the arrow keys</span>
-                                    </label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <div class="nds-slider-track">
-                                        <input type="range" id="slider-default-1" class="nds-slider" min="0" max="100" value="50">
-                                    </div>
-                                    <output for="slider-default-1" class="nds-slider-value">50</output>
-                                </div>
-                                <div class="nds-form-footer" data-feedback-target>
-                                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                                        <span class="nds-feedback-icon">
-                                            <i class="nds-icon" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="nds-feedback-message">Changes apply instantly</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-slider-default-1" id="tab-slider-default-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Small</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-sm", ".nds-slider-container", "sliderSize", "remove:nds-md"]'>
+                                                <span class="nds-label">Small</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-slider-container", "sliderSize", "remove:nds-sm"]'>
+                                                <span class="nds-label">Medium</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">State</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-form-container", "sliderState"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-required", ".nds-form-container", "sliderState", "attr"]'>
+                                                <span class="nds-label">Required</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["disabled", ".nds-form-container", "sliderState", "data-state"]'>
+                                                <span class="nds-label">Disabled</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["readonly", ".nds-form-container", "sliderState", "data-state"]'>
+                                                <span class="nds-label">Readonly</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["data-loading=true", ".nds-slider-container", "sliderLoading", "attr"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-stacked", ".nds-slider-container", "sliderStacked"]'>
+                                    <span class="nds-label">Stacked</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-default-1"
-                                    aria-labelledby="tab-slider-default-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-slider-container nds-form-container">
+                                    <div class="nds-form-header">
+                                        <label for="slider-default-1">
+                                            <span class="nds-label">Volume</span>
+                                            <span class="nds-info">Drag the thumb or use the arrow keys</span>
+                                        </label>
                                     </div>
-                                    <code class="lang-html code">
+                                    <div class="nds-form-control">
+                                        <div class="nds-slider-track">
+                                            <input type="range" id="slider-default-1" class="nds-slider" min="0" max="100" value="50">
+                                        </div>
+                                        <output for="slider-default-1" class="nds-slider-value">50</output>
+                                    </div>
+                                    <div class="nds-form-footer" data-feedback-target>
+                                        <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                                            <span class="nds-feedback-icon">
+                                                <i class="nds-icon" aria-hidden="true"></i>
+                                            </span>
+                                            <span class="nds-feedback-message">Changes apply instantly</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-slider-default-1" id="tab-slider-default-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-default-1"
+                                        aria-labelledby="tab-slider-default-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-slider-container nds-form-container"&gt;
   &lt;div class="nds-form-header"&gt;
     &lt;label for="slider-default-1"&gt;
@@ -145,6 +146,7 @@ last_edit: "30/06/2026 - 11:50 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -163,111 +165,112 @@ last_edit: "30/06/2026 - 11:50 PM"
             <p class="nds-section-description">Two thumbs for selecting a min and max value. Use when the user picks a continuous span, like a price or date range</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Small</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-sm", ".nds-slider-range", "rangeSize", "remove:nds-md"]'>
-                                            <span class="nds-label">Small</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-slider-range", "rangeSize", "remove:nds-sm"]'>
-                                            <span class="nds-label">Medium</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">State</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-form-container", "rangeState"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-required", ".nds-form-container", "rangeState", "attr"]'>
-                                            <span class="nds-label">Required</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["disabled", ".nds-form-container", "rangeState", "data-state"]'>
-                                            <span class="nds-label">Disabled</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["readonly", ".nds-form-container", "rangeState", "data-state"]'>
-                                            <span class="nds-label">Readonly</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["data-loading=true", ".nds-slider-container", "rangeLoading", "attr"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-stacked", ".nds-slider-container", "rangeStacked"]'>
-                                <span class="nds-label">Stacked</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-slider-container nds-form-container nds-slider-range">
-                                <div class="nds-form-header">
-                                    <label>
-                                        <span class="nds-label">Age range</span>
-                                        <span class="nds-info">Tab to either thumb and adjust independently</span>
-                                    </label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <output class="nds-slider-value nds-slider-value-min">25</output>
-                                    <div class="nds-slider-track">
-                                        <input type="range" class="nds-slider nds-slider-min" min="18" max="80" value="25" aria-label="Minimum age">
-                                        <input type="range" class="nds-slider nds-slider-max" min="18" max="80" value="55" aria-label="Maximum age">
-                                    </div>
-                                    <output class="nds-slider-value nds-slider-value-max">55</output>
-                                </div>
-                                <div class="nds-form-footer" data-feedback-target>
-                                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                                        <span class="nds-feedback-icon">
-                                            <i class="nds-icon" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="nds-feedback-message">Whole years only</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-slider-range-1" id="tab-slider-range-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Small</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-sm", ".nds-slider-range", "rangeSize", "remove:nds-md"]'>
+                                                <span class="nds-label">Small</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-slider-range", "rangeSize", "remove:nds-sm"]'>
+                                                <span class="nds-label">Medium</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">State</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-form-container", "rangeState"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-required", ".nds-form-container", "rangeState", "attr"]'>
+                                                <span class="nds-label">Required</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["disabled", ".nds-form-container", "rangeState", "data-state"]'>
+                                                <span class="nds-label">Disabled</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["readonly", ".nds-form-container", "rangeState", "data-state"]'>
+                                                <span class="nds-label">Readonly</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["data-loading=true", ".nds-slider-container", "rangeLoading", "attr"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-stacked", ".nds-slider-container", "rangeStacked"]'>
+                                    <span class="nds-label">Stacked</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-range-1"
-                                    aria-labelledby="tab-slider-range-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-slider-container nds-form-container nds-slider-range">
+                                    <div class="nds-form-header">
+                                        <label>
+                                            <span class="nds-label">Age range</span>
+                                            <span class="nds-info">Tab to either thumb and adjust independently</span>
+                                        </label>
                                     </div>
-                                    <code class="lang-html code">
+                                    <div class="nds-form-control">
+                                        <output class="nds-slider-value nds-slider-value-min">25</output>
+                                        <div class="nds-slider-track">
+                                            <input type="range" class="nds-slider nds-slider-min" min="18" max="80" value="25" aria-label="Minimum age">
+                                            <input type="range" class="nds-slider nds-slider-max" min="18" max="80" value="55" aria-label="Maximum age">
+                                        </div>
+                                        <output class="nds-slider-value nds-slider-value-max">55</output>
+                                    </div>
+                                    <div class="nds-form-footer" data-feedback-target>
+                                        <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                                            <span class="nds-feedback-icon">
+                                                <i class="nds-icon" aria-hidden="true"></i>
+                                            </span>
+                                            <span class="nds-feedback-message">Whole years only</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-slider-range-1" id="tab-slider-range-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-range-1"
+                                        aria-labelledby="tab-slider-range-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-slider-container nds-form-container nds-slider-range"&gt;
   &lt;div class="nds-form-header"&gt;
     &lt;label&gt;
@@ -293,6 +296,7 @@ last_edit: "30/06/2026 - 11:50 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -311,111 +315,112 @@ last_edit: "30/06/2026 - 11:50 PM"
             <p class="nds-section-description">Combine a range slider with the <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> utility to show thousand-separated values and the official Saudi Riyal symbol next to each thumb. Add <code class="nds-inline-code lang-html">nds-number-format</code> and <code class="nds-inline-code lang-html">data-currency="SAR"</code> to each output — the slider applies <code class="nds-inline-code lang-js">toLocaleString()</code> automatically on every update and the currency icon is rendered as a CSS pseudo-element.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Small</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-sm", ".nds-slider-container", "priceSize", "remove:nds-md"]'>
-                                            <span class="nds-label">Small</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-md", ".nds-slider-container", "priceSize", "remove:nds-sm"]'>
-                                            <span class="nds-label">Medium</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">State</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-form-container", "priceState"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-required", ".nds-form-container", "priceState", "attr"]'>
-                                            <span class="nds-label">Required</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["disabled", ".nds-form-container", "priceState", "data-state"]'>
-                                            <span class="nds-label">Disabled</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["readonly", ".nds-form-container", "priceState", "data-state"]'>
-                                            <span class="nds-label">Readonly</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["data-loading=true", ".nds-slider-container", "priceLoading", "attr"]'>
-                                <span class="nds-label">Loading</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                data-toggler='["nds-stacked", ".nds-slider-container", "priceStacked"]'>
-                                <span class="nds-label">Stacked</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-slider-container nds-form-container nds-slider-range nds-stacked" id="price-range-1">
-                                <div class="nds-form-header">
-                                    <label>
-                                        <span class="nds-label">Budget</span>
-                                        <span class="nds-info">Drag either thumb to set the minimum and maximum spend</span>
-                                    </label>
-                                </div>
-                                <div class="nds-form-control">
-                                    <output class="nds-slider-value nds-slider-value-min nds-number-format" data-currency="SAR">5000</output>
-                                    <div class="nds-slider-track">
-                                        <input type="range" class="nds-slider nds-slider-min" min="0" max="100000" step="500" value="5000" aria-label="Minimum price">
-                                        <input type="range" class="nds-slider nds-slider-max" min="0" max="100000" step="500" value="65000" aria-label="Maximum price">
-                                    </div>
-                                    <output class="nds-slider-value nds-slider-value-max nds-number-format" data-currency="SAR">65000</output>
-                                </div>
-                                <div class="nds-form-footer" data-feedback-target>
-                                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                                        <span class="nds-feedback-icon">
-                                            <i class="nds-icon" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="nds-feedback-message">Prices include VAT</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-slider-price-1" id="tab-slider-price-1">
-                                        <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">Small</span>
                                     </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-sm", ".nds-slider-container", "priceSize", "remove:nds-md"]'>
+                                                <span class="nds-label">Small</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-md", ".nds-slider-container", "priceSize", "remove:nds-sm"]'>
+                                                <span class="nds-label">Medium</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                        <span class="nds-label">State</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-form-container", "priceState"]'>
+                                                <span class="nds-label">Default</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-required", ".nds-form-container", "priceState", "attr"]'>
+                                                <span class="nds-label">Required</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["disabled", ".nds-form-container", "priceState", "data-state"]'>
+                                                <span class="nds-label">Disabled</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["readonly", ".nds-form-container", "priceState", "data-state"]'>
+                                                <span class="nds-label">Readonly</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["data-loading=true", ".nds-slider-container", "priceLoading", "attr"]'>
+                                    <span class="nds-label">Loading</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                    data-toggler='["nds-stacked", ".nds-slider-container", "priceStacked"]'>
+                                    <span class="nds-label">Stacked</span>
                                 </button>
                             </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-price-1"
-                                    aria-labelledby="tab-slider-price-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-slider-container nds-form-container nds-slider-range nds-stacked" id="price-range-1">
+                                    <div class="nds-form-header">
+                                        <label>
+                                            <span class="nds-label">Budget</span>
+                                            <span class="nds-info">Drag either thumb to set the minimum and maximum spend</span>
+                                        </label>
                                     </div>
-                                    <code class="lang-html code">
+                                    <div class="nds-form-control">
+                                        <output class="nds-slider-value nds-slider-value-min nds-number-format" data-currency="SAR">5000</output>
+                                        <div class="nds-slider-track">
+                                            <input type="range" class="nds-slider nds-slider-min" min="0" max="100000" step="500" value="5000" aria-label="Minimum price">
+                                            <input type="range" class="nds-slider nds-slider-max" min="0" max="100000" step="500" value="65000" aria-label="Maximum price">
+                                        </div>
+                                        <output class="nds-slider-value nds-slider-value-max nds-number-format" data-currency="SAR">65000</output>
+                                    </div>
+                                    <div class="nds-form-footer" data-feedback-target>
+                                        <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                                            <span class="nds-feedback-icon">
+                                                <i class="nds-icon" aria-hidden="true"></i>
+                                            </span>
+                                            <span class="nds-feedback-message">Prices include VAT</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-slider-price-1" id="tab-slider-price-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-price-1"
+                                        aria-labelledby="tab-slider-price-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
 &lt;div class="nds-slider-container nds-form-container nds-slider-range nds-stacked" id="price-range-1"&gt;
   &lt;div class="nds-form-header"&gt;
     &lt;label&gt;
@@ -441,6 +446,7 @@ last_edit: "30/06/2026 - 11:50 PM"
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -458,48 +464,50 @@ last_edit: "30/06/2026 - 11:50 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-slider-container</code> appears on the page. A single delegated listener handles every slider, including those added later through DOM updates.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-circle-arrow-horizontal"></i>
-                        <span class="nds-label">Single and Range Modes</span>
-                    </span>
-                    <p class="nds-item-desc">One markup pattern for picking a value, a second for picking a min–max span. Add <code class="nds-inline-code lang-html">nds-slider-range</code> to switch from single to dual thumbs.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard"></i>
-                        <span class="nds-label">Keyboard Control</span>
-                    </span>
-                    <p class="nds-item-desc">Arrow keys step the value, Home and End jump to min and max, Page Up and Page Down move by larger increments. The focused thumb gets a visible bullseye ring on keyboard focus only.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-text-align-right"></i>
-                        <span class="nds-label">RTL-aware Fill</span>
-                    </span>
-                    <p class="nds-item-desc">The fill direction flips with the page direction: in Arabic the bar fills from the right toward the thumb, in English from the left. Thumb position, fill window, and value display all align without extra markup.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-loading-03"></i>
-                        <span class="nds-label">Skeleton State</span>
-                    </span>
-                    <p class="nds-item-desc">The track paints as a shimmer placeholder until init lands and during any <code class="nds-inline-code lang-html">data-loading</code> period, so a value pulled from an async source does not flash an incorrect fill.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Reinit, destroy, and create methods on <code class="nds-inline-code lang-js">NDS.Slider</code> let you wire sliders inside dynamically added containers without a full page rescan.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-slider-container</code> appears on the page. A single delegated listener handles every slider, including those added later through DOM updates.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-circle-arrow-horizontal"></i>
+                            <span class="nds-label">Single and Range Modes</span>
+                        </span>
+                        <p class="nds-item-desc">One markup pattern for picking a value, a second for picking a min–max span. Add <code class="nds-inline-code lang-html">nds-slider-range</code> to switch from single to dual thumbs.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-keyboard"></i>
+                            <span class="nds-label">Keyboard Control</span>
+                        </span>
+                        <p class="nds-item-desc">Arrow keys step the value, Home and End jump to min and max, Page Up and Page Down move by larger increments. The focused thumb gets a visible bullseye ring on keyboard focus only.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-text-align-right"></i>
+                            <span class="nds-label">RTL-aware Fill</span>
+                        </span>
+                        <p class="nds-item-desc">The fill direction flips with the page direction: in Arabic the bar fills from the right toward the thumb, in English from the left. Thumb position, fill window, and value display all align without extra markup.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-loading-03"></i>
+                            <span class="nds-label">Skeleton State</span>
+                        </span>
+                        <p class="nds-item-desc">The track paints as a shimmer placeholder until init lands and during any <code class="nds-inline-code lang-html">data-loading</code> period, so a value pulled from an async source does not flash an incorrect fill.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Reinit, destroy, and create methods on <code class="nds-inline-code lang-js">NDS.Slider</code> let you wire sliders inside dynamically added containers without a full page rescan.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -514,7 +522,7 @@ last_edit: "30/06/2026 - 11:50 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use a <strong>single slider</strong> when the user picks one value from a continuous numeric range where the exact number is less important than the approximate position (volume, brightness, zoom, opacity)</li>
@@ -566,7 +574,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Slider</strong> API initializes sliders, repaints the fill after value changes, and tears down state. Auto-initialization activates on page load; call <strong>NDS.Slider.reinit()</strong> after dynamically inserting a slider or after writing to <code class="nds-inline-code lang-js">input.value</code> from script.</p>
                 <div class="nds-code nds-expandable">

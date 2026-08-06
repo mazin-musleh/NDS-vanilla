@@ -19,71 +19,72 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">The default table layout with striped rows and rounded borders. Toggle Interactive to preview the optional hover state</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
-                            <span class="nds-label">Interactive</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for user in site.data.content.users limit:4 %}
-                                <tr>
-                                    <td>{{ user.name }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>{{ user.role }}</td>
-                                    <td><span class="nds-tag nds-sm" data-status="{% if user.status == 'active' %}success{% elsif user.status == 'away' %}warning{% else %}error{% endif %}"><span
-                                                class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}Away{% else %}Offline{% endif %}</span></span></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-basic-1" id="tab-table-basic-1">
-                                <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                                <span class="nds-label">Interactive</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-basic-1"
-                            aria-labelledby="tab-table-basic-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in site.data.content.users limit:4 %}
+                                    <tr>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.role }}</td>
+                                        <td><span class="nds-tag nds-sm" data-status="{% if user.status == 'active' %}success{% elsif user.status == 'away' %}warning{% else %}error{% endif %}"><span
+                                                    class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}Away{% else %}Offline{% endif %}</span></span></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-basic-1" id="tab-table-basic-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-basic-1"
+                                aria-labelledby="tab-table-basic-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;table class="nds-table"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -121,10 +122,11 @@ last_edit: "29/07/2026 - 04:31 PM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -140,111 +142,112 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">Click any column header to cycle through ascending, descending, and original order</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
-                            <span class="nds-label">Interactive</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table nds-sortable">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div class="nds-col-header">
-                                            <span class="nds-label">Department</span>
-                                            <div class="nds-col-actions">
-                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by department"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th data-state="sorted-asc">
-                                        <div class="nds-col-header">
-                                            <span class="nds-label">Employees</span>
-                                            <div class="nds-col-actions">
-                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by employees"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="nds-col-header">
-                                            <span class="nds-label">Budget</span>
-                                            <div class="nds-col-actions">
-                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by budget"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Information Technology</td>
-                                    <td>25</td>
-                                    <td>5,625,000 SAR</td>
-                                    <td><span class="nds-tag nds-sm" data-status="success"><span
-                                                class="nds-label">Active</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Human Resources</td>
-                                    <td>12</td>
-                                    <td>3,000,000 SAR</td>
-                                    <td><span class="nds-tag nds-sm" data-status="success"><span
-                                                class="nds-label">Active</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Sales</td>
-                                    <td>18</td>
-                                    <td>4,500,000 SAR</td>
-                                    <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Under
-                                                Review</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Marketing</td>
-                                    <td>8</td>
-                                    <td>2,250,000 SAR</td>
-                                    <td><span class="nds-tag nds-sm" data-status="info"><span
-                                                class="nds-label">Planning</span></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-sortable-1" id="tab-table-sortable-1">
-                                <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                                <span class="nds-label">Interactive</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-sortable-1"
-                            aria-labelledby="tab-table-sortable-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table nds-sortable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="nds-col-header">
+                                                <span class="nds-label">Department</span>
+                                                <div class="nds-col-actions">
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by department"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th data-state="sorted-asc">
+                                            <div class="nds-col-header">
+                                                <span class="nds-label">Employees</span>
+                                                <div class="nds-col-actions">
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by employees"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="nds-col-header">
+                                                <span class="nds-label">Budget</span>
+                                                <div class="nds-col-actions">
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by budget"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Information Technology</td>
+                                        <td>25</td>
+                                        <td>5,625,000 SAR</td>
+                                        <td><span class="nds-tag nds-sm" data-status="success"><span
+                                                    class="nds-label">Active</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Human Resources</td>
+                                        <td>12</td>
+                                        <td>3,000,000 SAR</td>
+                                        <td><span class="nds-tag nds-sm" data-status="success"><span
+                                                    class="nds-label">Active</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sales</td>
+                                        <td>18</td>
+                                        <td>4,500,000 SAR</td>
+                                        <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Under
+                                                    Review</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Marketing</td>
+                                        <td>8</td>
+                                        <td>2,250,000 SAR</td>
+                                        <td><span class="nds-tag nds-sm" data-status="info"><span
+                                                    class="nds-label">Planning</span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-sortable-1" id="tab-table-sortable-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-sortable-1"
+                                aria-labelledby="tab-table-sortable-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;table class="nds-table nds-sortable"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -303,10 +306,11 @@ last_edit: "29/07/2026 - 04:31 PM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -322,147 +326,148 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">Status columns using feedback icons for quick visual scanning of row states</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
-                            <span class="nds-label">Interactive</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table">
-                            <thead>
-                                <tr>
-                                    <th>Ticket ID</th>
-                                    <th>Customer</th>
-                                    <th>Issue Type</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="ticket-id">
-                                            <span class="ticket-number">#TK-001</span>
-                                        </div>
-                                    </td>
-                                    <td>Omar Al-Ahmad</td>
-                                    <td>Login Issue</td>
-                                    <td>
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">Low</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="nds-feedback" data-status="success">
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ticket-id">
-                                            <span class="ticket-number">#TK-002</span>
-                                        </div>
-                                    </td>
-                                    <td>Layla Al-Mansouri</td>
-                                    <td>Performance</td>
-                                    <td>
-                                        <span class="nds-tag nds-yellow nds-sm">
-                                            <span class="nds-label">Medium</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="nds-feedback" data-status="warning">
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ticket-id">
-                                            <span class="ticket-number">#TK-003</span>
-                                        </div>
-                                    </td>
-                                    <td>Yusuf Al-Kindi</td>
-                                    <td>Data Loss</td>
-                                    <td>
-                                        <span class="nds-tag nds-red nds-sm">
-                                            <span class="nds-label">High</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="nds-feedback" data-status="error">
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="ticket-id">
-                                            <span class="ticket-number">#TK-004</span>
-                                        </div>
-                                    </td>
-                                    <td>Aisha Al-Farisi</td>
-                                    <td>Feature Request</td>
-                                    <td>
-                                        <span class="nds-tag nds-gray nds-sm">
-                                            <span class="nds-label">Low</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="nds-feedback" data-status="info">
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-feedback-1" id="tab-table-feedback-1">
-                                <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                                <span class="nds-label">Interactive</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-feedback-1"
-                            aria-labelledby="tab-table-feedback-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket ID</th>
+                                        <th>Customer</th>
+                                        <th>Issue Type</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="ticket-id">
+                                                <span class="ticket-number">#TK-001</span>
+                                            </div>
+                                        </td>
+                                        <td>Omar Al-Ahmad</td>
+                                        <td>Login Issue</td>
+                                        <td>
+                                            <span class="nds-tag nds-gray nds-sm">
+                                                <span class="nds-label">Low</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="nds-feedback" data-status="success">
+                                                <span class="nds-feedback-icon">
+                                                    <i class="nds-icon" aria-hidden="true"></i>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="ticket-id">
+                                                <span class="ticket-number">#TK-002</span>
+                                            </div>
+                                        </td>
+                                        <td>Layla Al-Mansouri</td>
+                                        <td>Performance</td>
+                                        <td>
+                                            <span class="nds-tag nds-yellow nds-sm">
+                                                <span class="nds-label">Medium</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="nds-feedback" data-status="warning">
+                                                <span class="nds-feedback-icon">
+                                                    <i class="nds-icon" aria-hidden="true"></i>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="ticket-id">
+                                                <span class="ticket-number">#TK-003</span>
+                                            </div>
+                                        </td>
+                                        <td>Yusuf Al-Kindi</td>
+                                        <td>Data Loss</td>
+                                        <td>
+                                            <span class="nds-tag nds-red nds-sm">
+                                                <span class="nds-label">High</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="nds-feedback" data-status="error">
+                                                <span class="nds-feedback-icon">
+                                                    <i class="nds-icon" aria-hidden="true"></i>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="ticket-id">
+                                                <span class="ticket-number">#TK-004</span>
+                                            </div>
+                                        </td>
+                                        <td>Aisha Al-Farisi</td>
+                                        <td>Feature Request</td>
+                                        <td>
+                                            <span class="nds-tag nds-gray nds-sm">
+                                                <span class="nds-label">Low</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="nds-feedback" data-status="info">
+                                                <span class="nds-feedback-icon">
+                                                    <i class="nds-icon" aria-hidden="true"></i>
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-feedback-1" id="tab-table-feedback-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-feedback-1"
+                                aria-labelledby="tab-table-feedback-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;table class="nds-table"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -561,10 +566,11 @@ last_edit: "29/07/2026 - 04:31 PM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -580,156 +586,157 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">Row checkboxes with a select-all header for bulk operations. The header checkbox shows an indeterminate state when some rows are selected, and with an active <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a> both it and select-all operate on the filtered rows only (selections made before filtering persist on hidden rows). Pair with the <a class="nds-color" href="{{ 'components/export' | relative_url }}">Export</a> component to ship files of the selected rows, and the <a class="nds-color" href="{{ 'components/selection' | relative_url }}">Selection</a> counter to show how many are selected.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
-                            <span class="nds-label">Interactive</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                                <span class="nds-label">Interactive</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo" style="gap: 0;">
-                        <div class="nds-toolbar">
-                            <div class="nds-bar-end">
-                                <div class="nds-dropmenu" data-columns-target="selectionTable">
-                                    <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                                        <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
-                                        <span class="nds-label">Columns</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
-                                                <legend class="nds-label">Visible columns</legend>
-                                            </fieldset>
+                    <div class="demo-container">
+                        <div class="state-demo" style="gap: 0;">
+                            <div class="nds-toolbar">
+                                <div class="nds-bar-end">
+                                    <div class="nds-dropmenu" data-columns-target="selectionTable">
+                                        <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                            <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
+                                            <span class="nds-label">Columns</span>
+                                        </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+                                                    <legend class="nds-label">Visible columns</legend>
+                                                </fieldset>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="nds-export nds-btn-group">
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="csv" data-export-target="#selectionTable">
-                                        <span class="nds-label">CSV</span>
-                                    </button>
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="xls" data-export-target="#selectionTable">
-                                        <span class="nds-label">Excel</span>
-                                    </button>
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="pdf" data-export-target="#selectionTable">
-                                        <span class="nds-label">PDF</span>
-                                    </button>
+                                    <div class="nds-export nds-btn-group">
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="csv" data-export-target="#selectionTable">
+                                            <span class="nds-label">CSV</span>
+                                        </button>
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="xls" data-export-target="#selectionTable">
+                                            <span class="nds-label">Excel</span>
+                                        </button>
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="pdf" data-export-target="#selectionTable">
+                                            <span class="nds-label">PDF</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            <table id="selectionTable" class="nds-table" data-export-name="selection">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" class="nds-check" aria-label="Select all rows">
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" class="nds-check" aria-label="Select Hassan Al-Mukhtar">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Hassan Al-Mukhtar</td>
+                                        <td>hassan.almukhtar@moi.gov.sa</td>
+                                        <td>Engineering</td>
+                                        <td><span class="nds-tag nds-green nds-sm"><span
+                                                    class="nds-label">Active</span></span></td>
+                                    </tr>
+                                    <tr data-state="selected">
+                                        <td>
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" class="nds-check" checked aria-label="Select Nadia Al-Khatib">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Nadia Al-Khatib</td>
+                                        <td>nadia.alkhatib@moi.gov.sa</td>
+                                        <td>Design</td>
+                                        <td><span class="nds-tag nds-green nds-sm"><span
+                                                    class="nds-label">Active</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" class="nds-check" aria-label="Select Tariq Al-Sudairi">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Tariq Al-Sudairi</td>
+                                        <td>tariq.alsudairi@moi.gov.sa</td>
+                                        <td>Marketing</td>
+                                        <td><span class="nds-tag nds-yellow nds-sm"><span
+                                                    class="nds-label">Pending</span></span></td>
+                                    </tr>
+                                    <tr data-state="selected">
+                                        <td>
+                                            <div class="nds-form-container nds-check-container">
+                                                <div class="nds-form-control">
+                                                    <input type="checkbox" class="nds-check" checked aria-label="Select Zara Al-Habib">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Zara Al-Habib</td>
+                                        <td>zara.alhabib@moi.gov.sa</td>
+                                        <td>Sales</td>
+                                        <td><span class="nds-tag nds-gray nds-sm"><span class="nds-label">On
+                                                    Leave</span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <table id="selectionTable" class="nds-table" data-export-name="selection">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" aria-label="Select all rows">
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Department</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" aria-label="Select Hassan Al-Mukhtar">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Hassan Al-Mukhtar</td>
-                                    <td>hassan.almukhtar@moi.gov.sa</td>
-                                    <td>Engineering</td>
-                                    <td><span class="nds-tag nds-green nds-sm"><span
-                                                class="nds-label">Active</span></span></td>
-                                </tr>
-                                <tr data-state="selected">
-                                    <td>
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" checked aria-label="Select Nadia Al-Khatib">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Nadia Al-Khatib</td>
-                                    <td>nadia.alkhatib@moi.gov.sa</td>
-                                    <td>Design</td>
-                                    <td><span class="nds-tag nds-green nds-sm"><span
-                                                class="nds-label">Active</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" aria-label="Select Tariq Al-Sudairi">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Tariq Al-Sudairi</td>
-                                    <td>tariq.alsudairi@moi.gov.sa</td>
-                                    <td>Marketing</td>
-                                    <td><span class="nds-tag nds-yellow nds-sm"><span
-                                                class="nds-label">Pending</span></span></td>
-                                </tr>
-                                <tr data-state="selected">
-                                    <td>
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" class="nds-check" checked aria-label="Select Zara Al-Habib">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Zara Al-Habib</td>
-                                    <td>zara.alhabib@moi.gov.sa</td>
-                                    <td>Sales</td>
-                                    <td><span class="nds-tag nds-gray nds-sm"><span class="nds-label">On
-                                                Leave</span></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-checkbox-1" id="tab-table-checkbox-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-checkbox-1"
-                            aria-labelledby="tab-table-checkbox-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-checkbox-1" id="tab-table-checkbox-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-checkbox-1"
+                                aria-labelledby="tab-table-checkbox-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;div class="nds-bar-end"&gt;
     &lt;!-- Checklist is built from the table's own &lt;thead&gt; --&gt;
@@ -834,10 +841,11 @@ last_edit: "29/07/2026 - 04:31 PM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -853,86 +861,87 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">Center-align all cell content when the data benefits from symmetrical presentation. To align a single column instead, put <code class="nds-inline-code lang-html">data-align="center|start|end"</code> on its <code class="nds-inline-code lang-html">&lt;th&gt;</code>.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
-                            <span class="nds-label">Interactive</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table nds-center">
-                            <thead>
-                                <tr>
-                                    <th>Quarter</th>
-                                    <th>Revenue</th>
-                                    <th>Growth</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Q1 2024</td>
-                                    <td>2,450,000 SAR</td>
-                                    <td>+12%</td>
-                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Q2 2024</td>
-                                    <td>2,780,000 SAR</td>
-                                    <td>+13.5%</td>
-                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Q3 2024</td>
-                                    <td>2,610,000 SAR</td>
-                                    <td>-6.1%</td>
-                                    <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">At Risk</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Q4 2024</td>
-                                    <td>3,100,000 SAR</td>
-                                    <td>+18.8%</td>
-                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-center-1" id="tab-table-center-1">
-                                <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                                <span class="nds-label">Interactive</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-center-1"
-                            aria-labelledby="tab-table-center-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table nds-center">
+                                <thead>
+                                    <tr>
+                                        <th>Quarter</th>
+                                        <th>Revenue</th>
+                                        <th>Growth</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Q1 2024</td>
+                                        <td>2,450,000 SAR</td>
+                                        <td>+12%</td>
+                                        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Q2 2024</td>
+                                        <td>2,780,000 SAR</td>
+                                        <td>+13.5%</td>
+                                        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Q3 2024</td>
+                                        <td>2,610,000 SAR</td>
+                                        <td>-6.1%</td>
+                                        <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">At Risk</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Q4 2024</td>
+                                        <td>3,100,000 SAR</td>
+                                        <td>+18.8%</td>
+                                        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-center-1" id="tab-table-center-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-center-1"
+                                aria-labelledby="tab-table-center-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;table class="nds-table nds-center"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -970,73 +979,75 @@ last_edit: "29/07/2026 - 04:31 PM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Per-Column Alignment</div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table">
-                            <thead>
-                                <tr>
-                                    <th>Quarter</th>
-                                    <th data-align="end">Revenue</th>
-                                    <th data-align="center">Growth</th>
-                                    <th data-align="center">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Q1 2024</td>
-                                    <td>2,450,000 SAR</td>
-                                    <td>+12%</td>
-                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Q2 2024</td>
-                                    <td>2,780,000 SAR</td>
-                                    <td>+13.5%</td>
-                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Q3 2024</td>
-                                    <td>2,610,000 SAR</td>
-                                    <td>-6.1%</td>
-                                    <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">At Risk</span></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <div class="nds-block">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Per-Column Alignment</div>
                     </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-align-1" id="tab-table-align-1">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table">
+                                <thead>
+                                    <tr>
+                                        <th>Quarter</th>
+                                        <th data-align="end">Revenue</th>
+                                        <th data-align="center">Growth</th>
+                                        <th data-align="center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Q1 2024</td>
+                                        <td>2,450,000 SAR</td>
+                                        <td>+12%</td>
+                                        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Q2 2024</td>
+                                        <td>2,780,000 SAR</td>
+                                        <td>+13.5%</td>
+                                        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Q3 2024</td>
+                                        <td>2,610,000 SAR</td>
+                                        <td>-6.1%</td>
+                                        <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">At Risk</span></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-align-1"
-                            aria-labelledby="tab-table-align-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-align-1" id="tab-table-align-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-align-1"
+                                aria-labelledby="tab-table-align-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;table class="nds-table"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -1068,10 +1079,11 @@ last_edit: "29/07/2026 - 04:31 PM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -1087,79 +1099,80 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">A shimmer animation on table cells indicates data is being fetched</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
-                            <span class="nds-label">Interactive</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table" data-state="loading">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Department</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                </tr>
-                                <tr>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                </tr>
-                                <tr>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                    <td>Loading...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-loading-1" id="tab-table-loading-1">
-                                <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                                <span class="nds-label">Interactive</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-table-loading-1"
-                            aria-labelledby="tab-table-loading-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table" data-state="loading">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                        <td>Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-loading-1" id="tab-table-loading-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-table-loading-1"
+                                aria-labelledby="tab-table-loading-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <code class="lang-html code">
 &lt;table class="nds-table" data-state="loading"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -1191,9 +1204,10 @@ last_edit: "29/07/2026 - 04:31 PM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -1209,76 +1223,77 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">All tables are responsive by default. JS auto-wraps every <strong>nds-table</strong> in an nds-table-wrapper with horizontal scroll on overflow. Add <strong>nds-mask</strong> to opt into gradient fade masks on the overflow edges. Use <strong>--max-width</strong> to constrain wrapper width and <strong>--min-width</strong> to lock the table's minimum width. If <strong>--min-width</strong> is not set, the JS auto-calculates it from the table's natural content width so cells never shrink.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-mask", ".nds-table", "tableMask"]'>
-                            <span class="nds-label">Mask</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table" style="--max-width: 600px;">
-                            <thead>
-                                <tr>
-                                    <th>Employee ID</th>
-                                    <th>Full Name</th>
-                                    <th>Email Address</th>
-                                    <th>Department</th>
-                                    <th>Position</th>
-                                    <th>Start Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for user in site.data.content.users limit:4 %}
-                                <tr>
-                                    <td>EMP-{{ forloop.index | prepend: '00' | slice: -3, 3 }}</td>
-                                    <td>{{ user.name }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>{{ user.department }}</td>
-                                    <td>{{ user.role }}</td>
-                                    <td>2023-0{{ forloop.index }}-15</td>
-                                    <td><span class="nds-tag {% if user.status == 'active' %}nds-green{% elsif user.status == 'away' %}nds-yellow{% else %}nds-red{% endif %} nds-sm"><span class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}On Leave{% else %}Inactive{% endif %}</span></span></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-responsive-1" id="tab-table-responsive-1">
-                                <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-mask", ".nds-table", "tableMask"]'>
+                                <span class="nds-label">Mask</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-responsive-1"
-                            aria-labelledby="tab-table-responsive-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table" style="--max-width: 600px;">
+                                <thead>
+                                    <tr>
+                                        <th>Employee ID</th>
+                                        <th>Full Name</th>
+                                        <th>Email Address</th>
+                                        <th>Department</th>
+                                        <th>Position</th>
+                                        <th>Start Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in site.data.content.users limit:4 %}
+                                    <tr>
+                                        <td>EMP-{{ forloop.index | prepend: '00' | slice: -3, 3 }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.department }}</td>
+                                        <td>{{ user.role }}</td>
+                                        <td>2023-0{{ forloop.index }}-15</td>
+                                        <td><span class="nds-tag {% if user.status == 'active' %}nds-green{% elsif user.status == 'away' %}nds-yellow{% else %}nds-red{% endif %} nds-sm"><span class="nds-label">{% if user.status == 'active' %}Active{% elsif user.status == 'away' %}On Leave{% else %}Inactive{% endif %}</span></span></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-responsive-1" id="tab-table-responsive-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-responsive-1"
+                                aria-labelledby="tab-table-responsive-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;table class="nds-table" style="--max-width: 600px;"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -1344,10 +1359,11 @@ last_edit: "29/07/2026 - 04:31 PM"
 &lt;!-- style="--min-width: 900px;" - Explicit minimum width --&gt;
 &lt;!-- No --min-width              - Auto-calculated from content (default) --&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -1363,147 +1379,148 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">Large datasets can be paginated using the <strong>data-auto-pagination</strong> attribute. Add <strong>nds-page-item</strong> class to each <code>&lt;tr&gt;</code>, then put <strong>nds-paged-content</strong> and <strong>--per-page</strong> on the <code>&lt;tbody&gt;</code> itself, so the rows show their skeleton until pagination initializes.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Remove bg</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <div id="tables_pagination_demo">
-                            <div class="nds-toolbar">
-                                <div class="nds-bar-row">
-                                    <div class="nds-bar-start">
-                                        <span class="nds-bar-text" data-paged-target="paginatedTableBody">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> service(s)</span>
-                                    </div>
-                                    <div class="nds-bar-end">
-                                    <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal>
-                                        <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                            <i class="hgi hgi-stroke hgi-filter"></i>
-                                            <span class="nds-label" data-hidden="sm sr">Filter</span>
-                                        </button>
-                                        <div class="nds-dropmenu-menu" hidden>
-                                            <div class="nds-dropmenu-scroll">
-                                                <div data-filter="system" data-filter-type="checkbox"
-                                                    data-filter-legend="System"
-                                                    data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
-                                                    data-no-auto-close>
-                                                </div>
-                                                <hr class="nds-divider">
-                                                <div data-filter="popularity" data-filter-type="radio"
-                                                    data-filter-legend="Popularity"
-                                                    data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
-                                                    data-no-auto-close>
-                                                </div>
-                                            </div>
-                                            <div class="nds-dropmenu-footer">
-                                                <hr class="nds-divider">
-                                                <div class="nds-dropmenu-action">
-                                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                        data-filter-action="clear" data-no-auto-close>
-                                                        <span class="nds-label">Reset</span>
-                                                    </button>
-                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                        data-filter-action="apply">
-                                                        <span class="nds-label">Filter</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="nds-bar-row">
-                                    <div class="nds-bar-start">
-                                        <div class="nds-filter-applied" data-filter-target="paginatedTableBody" hidden>
-                                            <span class="nds-label">Applied Filters:</span>
-                                            <div class="nds-chips"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="nds-table nds-compact nds-sortable">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="nds-col-header">
-                                                <span class="nds-label">#</span>
-                                                <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by row number"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="nds-col-header">
-                                                <span class="nds-label">Service</span>
-                                                <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by service"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="nds-col-header">
-                                                <span class="nds-label">System</span>
-                                                <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by system"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>Popularity</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="paginatedTableBody" class="nds-paged-content" style="--per-page: 5;" data-filter-items="tr">
-                                    {% for service in site.data.content.services %}
-                                    <tr class="nds-page-item">
-                                        <td>{{ forloop.index }}</td>
-                                        <td>{{ service.title }}</td>
-                                        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">{{ service.system }}</span></span></td>
-                                        <td>
-                                            {% if service.most_used %}
-                                            <span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span>
-                                            {% else %}
-                                            <span class="nds-tag nds-sm" data-status="neutral"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                        <nav class="nds-pagination" data-auto-pagination="paginatedTableBody" aria-label="Table pagination"></nav>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-paginated-1" id="tab-table-paginated-1">
-                                <span class="nds-tab-label">HTML</span>
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-paginated-1"
-                            aria-labelledby="tab-table-paginated-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div id="tables_pagination_demo">
+                                <div class="nds-toolbar">
+                                    <div class="nds-bar-row">
+                                        <div class="nds-bar-start">
+                                            <span class="nds-bar-text" data-paged-target="paginatedTableBody">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> service(s)</span>
+                                        </div>
+                                        <div class="nds-bar-end">
+                                        <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal>
+                                            <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                                <i class="hgi hgi-stroke hgi-filter"></i>
+                                                <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                            </button>
+                                            <div class="nds-dropmenu-menu" hidden>
+                                                <div class="nds-dropmenu-scroll">
+                                                    <div data-filter="system" data-filter-type="checkbox"
+                                                        data-filter-legend="System"
+                                                        data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
+                                                        data-no-auto-close>
+                                                    </div>
+                                                    <hr class="nds-divider">
+                                                    <div data-filter="popularity" data-filter-type="radio"
+                                                        data-filter-legend="Popularity"
+                                                        data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
+                                                        data-no-auto-close>
+                                                    </div>
+                                                </div>
+                                                <div class="nds-dropmenu-footer">
+                                                    <hr class="nds-divider">
+                                                    <div class="nds-dropmenu-action">
+                                                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                            data-filter-action="clear" data-no-auto-close>
+                                                            <span class="nds-label">Reset</span>
+                                                        </button>
+                                                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                            data-filter-action="apply">
+                                                            <span class="nds-label">Filter</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="nds-bar-row">
+                                        <div class="nds-bar-start">
+                                            <div class="nds-filter-applied" data-filter-target="paginatedTableBody" hidden>
+                                                <span class="nds-label">Applied Filters:</span>
+                                                <div class="nds-chips"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="nds-table nds-compact nds-sortable">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="nds-col-header">
+                                                    <span class="nds-label">#</span>
+                                                    <div class="nds-col-actions">
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by row number"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="nds-col-header">
+                                                    <span class="nds-label">Service</span>
+                                                    <div class="nds-col-actions">
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by service"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="nds-col-header">
+                                                    <span class="nds-label">System</span>
+                                                    <div class="nds-col-actions">
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by system"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>Popularity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="paginatedTableBody" class="nds-paged-content" style="--per-page: 5;" data-filter-items="tr">
+                                        {% for service in site.data.content.services %}
+                                        <tr class="nds-page-item">
+                                            <td>{{ forloop.index }}</td>
+                                            <td>{{ service.title }}</td>
+                                            <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">{{ service.system }}</span></span></td>
+                                            <td>
+                                                {% if service.most_used %}
+                                                <span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span>
+                                                {% else %}
+                                                <span class="nds-tag nds-sm" data-status="neutral"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                            <nav class="nds-pagination" data-auto-pagination="paginatedTableBody" aria-label="Table pagination"></nav>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-paginated-1" id="tab-table-paginated-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-paginated-1"
+                                aria-labelledby="tab-table-paginated-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                    <code class="lang-html code">
 &lt;div id="tables_pagination_demo"&gt;
   &lt;div class="nds-toolbar"&gt;
     &lt;div class="nds-bar-row"&gt;
@@ -1624,10 +1641,11 @@ last_edit: "29/07/2026 - 04:31 PM"
 &lt;!-- Auto-pagination nav bound to the content wrapper by id --&gt;
 &lt;nav class="nds-pagination" data-auto-pagination="paginatedTableBody" aria-label="Table pagination"&gt;&lt;/nav&gt;
                                 </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -1643,121 +1661,122 @@ last_edit: "29/07/2026 - 04:31 PM"
             <p class="nds-section-description">A detail row that opens beneath its parent, holding anything from a paragraph to a nested table. Reach for this when a record has supporting data that does not deserve its own page</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-showcase">
-            <div class="nds-demo-card">
-                <div class="demo-header">
-                    <div class="demo-label">Static sub-rows</div>
-                    <div class="demo-action">
-                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
-                            <span class="nds-label">Compact</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table" id="subRowDemo">
-                            <thead>
-                                <tr>
-                                    <th>Reference</th>
-                                    <th>Service</th>
-                                    <th>Amount</th>
-                                    <th class="actions-column">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>TXN-2026-001</td>
-                                    <td>Commercial registration</td>
-                                    <td>1,200</td>
-                                    <td class="actions-column">
-                                        <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-1" aria-expanded="false">
-                                            <span class="nds-label">Details</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr id="sub-row-1" class="nds-sub" hidden>
-                                    <td>
-                                        <table class="nds-table nds-compact">
-                                            <thead>
-                                                <tr>
-                                                    <th>Line item</th>
-                                                    <th>Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Processing fee</td>
-                                                    <td>25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Service charge</td>
-                                                    <td>1,020</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>VAT (15%)</td>
-                                                    <td>155</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>TXN-2026-002</td>
-                                    <td>Work permit renewal</td>
-                                    <td>650</td>
-                                    <td class="actions-column">
-                                        <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-2" aria-expanded="true" data-state="open">
-                                            <span class="nds-label">Details</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr id="sub-row-2" class="nds-sub">
-                                    <td colspan="4">
-                                        <p>Opens on first paint. Leave <strong>hidden</strong> off the sub row and ship <strong>aria-expanded="true"</strong> plus <strong>data-state="open"</strong> on the toggle. Add <strong>colspan</strong> too: it is corrected at init either way, but a row that is already visible would reflow when that happens.</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>TXN-2026-003</td>
-                                    <td>Municipal licence</td>
-                                    <td>2,400</td>
-                                    <td class="actions-column">
-                                        <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-3" aria-expanded="false">
-                                            <span class="nds-label">Details</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr id="sub-row-3" class="nds-sub" hidden>
-                                    <td>
-                                        <p>Opening one sub closes the others. Add <strong>data-state="always-open"</strong> to the table to let several stay open at once.</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-table-subrow-1" id="tab-table-subrow-1">
-                                <span class="nds-tab-label">HTML</span>
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Static sub-rows</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                                <span class="nds-label">Compact</span>
                             </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
+                        </div>
                     </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-subrow-1"
-                            aria-labelledby="tab-table-subrow-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table" id="subRowDemo">
+                                <thead>
+                                    <tr>
+                                        <th>Reference</th>
+                                        <th>Service</th>
+                                        <th>Amount</th>
+                                        <th class="actions-column">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>TXN-2026-001</td>
+                                        <td>Commercial registration</td>
+                                        <td>1,200</td>
+                                        <td class="actions-column">
+                                            <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-1" aria-expanded="false">
+                                                <span class="nds-label">Details</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr id="sub-row-1" class="nds-sub" hidden>
+                                        <td>
+                                            <table class="nds-table nds-compact">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Line item</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Processing fee</td>
+                                                        <td>25</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Service charge</td>
+                                                        <td>1,020</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>VAT (15%)</td>
+                                                        <td>155</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN-2026-002</td>
+                                        <td>Work permit renewal</td>
+                                        <td>650</td>
+                                        <td class="actions-column">
+                                            <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-2" aria-expanded="true" data-state="open">
+                                                <span class="nds-label">Details</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr id="sub-row-2" class="nds-sub">
+                                        <td colspan="4">
+                                            <p>Opens on first paint. Leave <strong>hidden</strong> off the sub row and ship <strong>aria-expanded="true"</strong> plus <strong>data-state="open"</strong> on the toggle. Add <strong>colspan</strong> too: it is corrected at init either way, but a row that is already visible would reflow when that happens.</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TXN-2026-003</td>
+                                        <td>Municipal licence</td>
+                                        <td>2,400</td>
+                                        <td class="actions-column">
+                                            <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-3" aria-expanded="false">
+                                                <span class="nds-label">Details</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr id="sub-row-3" class="nds-sub" hidden>
+                                        <td>
+                                            <p>Opening one sub closes the others. Add <strong>data-state="always-open"</strong> to the table to let several stay open at once.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-table-subrow-1" id="tab-table-subrow-1">
+                                    <span class="nds-tab-label">HTML</span>
                                 </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                            <code class="lang-html code">
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-subrow-1"
+                                aria-labelledby="tab-table-subrow-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                <code class="lang-html code">
 &lt;table class="nds-table" id="subRowDemo"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -1822,10 +1841,11 @@ last_edit: "29/07/2026 - 04:31 PM"
   &lt;/tbody&gt;
 &lt;/table&gt;
                             </code>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -1840,90 +1860,92 @@ last_edit: "29/07/2026 - 04:31 PM"
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">Auto-initialization</span>
-                    </span>
-                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-table</code> on the page is automatically wrapped in a responsive scroll container. Opt into gradient fade masks with <code class="nds-inline-code lang-html">nds-mask</code>.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-sorting-01"></i>
-                        <span class="nds-label">Column Sorting</span>
-                    </span>
-                    <p class="nds-item-desc">Columns cycle through ascending, descending, and original order. Numbers, dates, and text are detected and sorted appropriately.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-checkmark-square-02"></i>
-                        <span class="nds-label">Row Selection</span>
-                    </span>
-                    <p class="nds-item-desc">Header checkbox toggles all rows with indeterminate state support. Selected rows receive a distinct background highlight that persists across striped rows.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
-                        <span class="nds-label">Column Visibility</span>
-                    </span>
-                    <p class="nds-item-desc">Point a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> at a table with <code class="nds-inline-code lang-html">data-columns-target</code> and it becomes a checklist of that table's columns, built from the <code class="nds-inline-code lang-html">&lt;thead&gt;</code> on first open. Hidden columns are skipped by exports, the trigger label gains a count, and the choice is remembered for tables that have an <code class="nds-inline-code lang-html">id</code>.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
-                        <span class="nds-label">Scroll Awareness</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-mask</code> to fade the overflow edges with a gradient that updates as the user scrolls to indicate more content in either direction. The mask clips descendants to the wrapper, so avoid it on tables with dropmenus, tooltips, or other overflowing popovers.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-keyboard"></i>
-                        <span class="nds-label">Keyboard Accessible</span>
-                    </span>
-                    <p class="nds-item-desc">Sort headers are focusable buttons that respond to Enter and Space. Interactive elements within cells receive visible focus rings.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-table-01"></i>
-                        <span class="nds-label">Row Highlighting</span>
-                    </span>
-                    <p class="nds-item-desc">Alternating row backgrounds make large datasets easier to scan. Add <code class="nds-inline-code lang-html">nds-interactive</code> to opt into hover highlighting on tables whose rows respond to clicks or selection.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-loading-01"></i>
-                        <span class="nds-label">Loading State</span>
-                    </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-state="loading"</code> to show a shimmer animation across all cells while data is being fetched.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
-                    </span>
-                    <p class="nds-item-desc">Access sort state, reset sorting, and reinitialize tables after dynamic content changes through the <code class="nds-inline-code lang-js">NDS.Tables</code> namespace.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-row-insert"></i>
-                        <span class="nds-label">Expandable Sub-Rows</span>
-                    </span>
-                    <p class="nds-item-desc">Put <code class="nds-inline-code lang-html">data-sub-toggle</code> anywhere in a row and a detail row opens beneath it, holding a nested table, a form, or plain content. Sorting carries each sub with its parent, filtering and pagination hide it alongside, and collapsing keeps the DOM so anything typed inside survives.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-cloud-download"></i>
-                        <span class="nds-label">Lazy Detail Loading</span>
-                    </span>
-                    <p class="nds-item-desc">A toggle with no detail row yet fires <code class="nds-inline-code lang-js">nds:table:sub-request</code> and spins while you fetch. Answer with <code class="nds-inline-code lang-js">setContent(html).open()</code> and the result is cached, so reopening never asks twice.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-download-01"></i>
-                        <span class="nds-label">Row Export</span>
-                    </span>
-                    <p class="nds-item-desc">Export selected rows (or all rows, across paginated pages) to CSV, Excel, or PDF via the <code class="nds-inline-code lang-js">NDS.Export</code> namespace. Arabic UTF-8 and RTL print are handled natively; zero runtime dependencies.</p>
+            <div class="nds-block">
+                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                            <span class="nds-label">Auto-initialization</span>
+                        </span>
+                        <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-table</code> on the page is automatically wrapped in a responsive scroll container. Opt into gradient fade masks with <code class="nds-inline-code lang-html">nds-mask</code>.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-sorting-01"></i>
+                            <span class="nds-label">Column Sorting</span>
+                        </span>
+                        <p class="nds-item-desc">Columns cycle through ascending, descending, and original order. Numbers, dates, and text are detected and sorted appropriately.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-checkmark-square-02"></i>
+                            <span class="nds-label">Row Selection</span>
+                        </span>
+                        <p class="nds-item-desc">Header checkbox toggles all rows with indeterminate state support. Selected rows receive a distinct background highlight that persists across striped rows.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
+                            <span class="nds-label">Column Visibility</span>
+                        </span>
+                        <p class="nds-item-desc">Point a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> at a table with <code class="nds-inline-code lang-html">data-columns-target</code> and it becomes a checklist of that table's columns, built from the <code class="nds-inline-code lang-html">&lt;thead&gt;</code> on first open. Hidden columns are skipped by exports, the trigger label gains a count, and the choice is remembered for tables that have an <code class="nds-inline-code lang-html">id</code>.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
+                            <span class="nds-label">Scroll Awareness</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-mask</code> to fade the overflow edges with a gradient that updates as the user scrolls to indicate more content in either direction. The mask clips descendants to the wrapper, so avoid it on tables with dropmenus, tooltips, or other overflowing popovers.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-keyboard"></i>
+                            <span class="nds-label">Keyboard Accessible</span>
+                        </span>
+                        <p class="nds-item-desc">Sort headers are focusable buttons that respond to Enter and Space. Interactive elements within cells receive visible focus rings.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-layout-table-01"></i>
+                            <span class="nds-label">Row Highlighting</span>
+                        </span>
+                        <p class="nds-item-desc">Alternating row backgrounds make large datasets easier to scan. Add <code class="nds-inline-code lang-html">nds-interactive</code> to opt into hover highlighting on tables whose rows respond to clicks or selection.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-loading-01"></i>
+                            <span class="nds-label">Loading State</span>
+                        </span>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-state="loading"</code> to show a shimmer animation across all cells while data is being fetched.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-api"></i>
+                            <span class="nds-label">Programmatic Control</span>
+                        </span>
+                        <p class="nds-item-desc">Access sort state, reset sorting, and reinitialize tables after dynamic content changes through the <code class="nds-inline-code lang-js">NDS.Tables</code> namespace.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-row-insert"></i>
+                            <span class="nds-label">Expandable Sub-Rows</span>
+                        </span>
+                        <p class="nds-item-desc">Put <code class="nds-inline-code lang-html">data-sub-toggle</code> anywhere in a row and a detail row opens beneath it, holding a nested table, a form, or plain content. Sorting carries each sub with its parent, filtering and pagination hide it alongside, and collapsing keeps the DOM so anything typed inside survives.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-cloud-download"></i>
+                            <span class="nds-label">Lazy Detail Loading</span>
+                        </span>
+                        <p class="nds-item-desc">A toggle with no detail row yet fires <code class="nds-inline-code lang-js">nds:table:sub-request</code> and spins while you fetch. Answer with <code class="nds-inline-code lang-js">setContent(html).open()</code> and the result is cached, so reopening never asks twice.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-download-01"></i>
+                            <span class="nds-label">Row Export</span>
+                        </span>
+                        <p class="nds-item-desc">Export selected rows (or all rows, across paginated pages) to CSV, Excel, or PDF via the <code class="nds-inline-code lang-js">NDS.Export</code> namespace. Arabic UTF-8 and RTL print are handled natively; zero runtime dependencies.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1938,7 +1960,7 @@ last_edit: "29/07/2026 - 04:31 PM"
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use tables for <strong>structured, comparable data</strong> where users need to scan across rows and columns. For simple key-value pairs, use a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">Definition List</a> instead</li>
@@ -2023,7 +2045,7 @@ last_edit: "29/07/2026 - 04:31 PM"
                 </table>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Tables</strong> API provides methods to initialize, sort, and manage table instances. All tables auto-initialize on page load. Call <code class="nds-inline-code lang-js">NDS.Tables.reinit()</code> after dynamically adding new tables to the DOM.</p>
                 <div class="nds-code nds-expandable">
