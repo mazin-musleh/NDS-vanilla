@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "06/08/2026 - 02:38 AM"
+last_edit: "06/08/2026 - 03:36 AM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -235,12 +235,12 @@ last_edit: "06/08/2026 - 02:38 AM"
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-toolbar">
-                            <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards">
+                            <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards" style="--dropmenu-min-width: 260px;">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label" data-hidden="sm sr">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="status"
                                             data-filter-type="checkbox" data-filter-legend="Status"
@@ -331,12 +331,13 @@ last_edit: "06/08/2026 - 02:38 AM"
                                     <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
-&lt;div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards"&gt;
+&lt;div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards"
+  style="--dropmenu-min-width: 260px;"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Checkbox: multi-select, OR logic --&gt;
       &lt;div data-filter="status"
@@ -434,12 +435,12 @@ last_edit: "06/08/2026 - 02:38 AM"
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-toolbar">
-                            <div class="nds-dropmenu nds-filter" data-filter-target="radioCards">
+                            <div class="nds-dropmenu nds-filter" data-filter-target="radioCards" style="--dropmenu-min-width: 260px;">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label" data-hidden="sm sr">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="priority"
                                             data-filter-type="radio" data-filter-legend="Priority"
@@ -530,12 +531,13 @@ last_edit: "06/08/2026 - 02:38 AM"
                                     <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
-&lt;div class="nds-dropmenu nds-filter" data-filter-target="radioCards"&gt;
+&lt;div class="nds-dropmenu nds-filter" data-filter-target="radioCards"
+  style="--dropmenu-min-width: 260px;"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Radio: single-select --&gt;
       &lt;div data-filter="priority"
@@ -632,12 +634,12 @@ last_edit: "06/08/2026 - 02:38 AM"
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-toolbar">
-                            <div class="nds-dropmenu nds-filter" data-filter-target="switchCards">
+                            <div class="nds-dropmenu nds-filter" data-filter-target="switchCards" style="--dropmenu-min-width: 260px;">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label" data-hidden="sm sr">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="feature"
                                             data-filter-type="switch" data-filter-legend="Features"
@@ -740,12 +742,13 @@ last_edit: "06/08/2026 - 02:38 AM"
                                     <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
-&lt;div class="nds-dropmenu nds-filter" data-filter-target="switchCards"&gt;
+&lt;div class="nds-dropmenu nds-filter" data-filter-target="switchCards"
+  style="--dropmenu-min-width: 260px;"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Switch: toggle, OR logic --&gt;
       &lt;div data-filter="feature"
@@ -848,12 +851,12 @@ last_edit: "06/08/2026 - 02:38 AM"
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-toolbar">
-                                <div class="nds-dropmenu nds-filter" data-filter-target="sliderCards">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="sliderCards" style="--dropmenu-min-width: 300px;">
                                     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
                                         <span class="nds-label" data-hidden="sm sr">Filter</span>
                                     </button>
-                                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                                    <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
                                             <div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
                                                 data-filter-min="0" data-filter-max="5000" data-filter-step="100"
@@ -903,12 +906,13 @@ last_edit: "06/08/2026 - 02:38 AM"
                                     <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;!-- Slider: numeric range. Both min+max = dual range; max alone = "up to" --&gt;
-  &lt;div class="nds-dropmenu nds-filter" data-filter-target="sliderCards"&gt;
+  &lt;div class="nds-dropmenu nds-filter" data-filter-target="sliderCards"
+    style="--dropmenu-min-width: 300px;"&gt;
     &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
       &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" style="min-width: 300px;" hidden&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
         &lt;div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
           data-filter-min="0" data-filter-max="5000" data-filter-step="100"
@@ -1181,12 +1185,12 @@ last_edit: "06/08/2026 - 02:38 AM"
                                         </button>
                                     </div>
                                 </div>
-                                <div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards" style="--dropmenu-min-width: 300px;">
                                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
                                         <span class="nds-label" data-hidden="sm sr">Filter</span>
                                     </button>
-                                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                                    <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
                                             <div data-filter="category" data-filter-type="checkbox" data-filter-legend="Category" data-no-auto-close></div>
                                             <hr class="nds-divider">
@@ -1274,12 +1278,13 @@ last_edit: "06/08/2026 - 02:38 AM"
   &lt;/div&gt;
 
   &lt;!-- Filter: category checkbox + price slider --&gt;
-  &lt;div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards"&gt;
+  &lt;div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards"
+    style="--dropmenu-min-width: 300px;"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
       &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" style="min-width: 300px;" hidden&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
         &lt;div data-filter="category" data-filter-type="checkbox"
           data-filter-legend="Category" data-no-auto-close&gt;&lt;/div&gt;
@@ -1942,7 +1947,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-filter</code> is on the page. Search, filter inputs, chips, and URL sync are set up automatically.</p>
+                    <p class="nds-item-desc">Every element that carries the same <code class="nds-inline-code lang-html">data-filter-target</code> joins one filter: search box, dropmenu, chips row, count slots. A <code class="nds-inline-code lang-html">.nds-filter</code> element is optional, so a search box on its own is already a working filter.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1950,6 +1955,13 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         <span class="nds-label">Auto-Generated Filters</span>
                     </span>
                     <p class="nds-item-desc">Builds checkbox, radio, or switch inputs automatically. Values come from card content, a JSON attribute (<code class="nds-inline-code lang-html">data-filter-values</code>), or the <code class="nds-inline-code lang-js">populateFilter()</code> API — no manual HTML required.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-search-list-01"></i>
+                        <span class="nds-label">Searchable Options</span>
+                    </span>
+                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-search</code> to the filter dropmenu and a search box appears above the options. Every generated checkbox, radio, and switch row is filtered as the user types.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1970,7 +1982,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         <i class="hgi hgi-stroke hgi-link-circle-02"></i>
                         <span class="nds-label">Shareable URL State</span>
                     </span>
-                    <p class="nds-item-desc">Filter selections and search terms sync to URL query parameters automatically, producing bookmarkable and shareable links that restore the exact filter state. A multi-select group joins its values with commas (<code class="nds-inline-code lang-html">?department=Design,Finance</code>), so a checkbox or switch option whose own value contains a comma cannot round-trip. Radio groups hold one value at a time and never join, so their option values may contain commas freely — <code class="nds-inline-code lang-html">value="1,2,3"</code> for a single option standing in for a group of ids restores from the URL as written.</p>
+                    <p class="nds-item-desc">Selections and the search term sync to URL query parameters, so a filtered view is bookmarkable and restores exactly. Checkbox and switch groups join values with commas (<code class="nds-inline-code lang-html">?department=Design,Finance</code>), so their option values must not contain one. Radio values may.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -2016,6 +2028,13 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-flash"></i>
+                        <span class="nds-label">Deferred Option Build</span>
+                    </span>
+                    <p class="nds-item-desc">Options for a group that sits inside a closed dropmenu are built on the first open, not at page load, so a long option list costs nothing until the user asks for it. Groups whose values arrive in the URL still build on load.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-code"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
@@ -2053,6 +2072,21 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
             </div>
 
             <div class="nds-block">
+                <h3 class="nds-block-title">Structural Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-filter</code></td><td>The filter anchor. Add it next to <code class="nds-inline-code lang-html">nds-dropmenu</code> for the standard Filter button and menu.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-filter-btn</code></td><td>Marks the always-visible trigger button. It carries the applied-filter count badge and the loading spinner during a submission.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-filter-applied</code></td><td>The applied-chips row. Give it an inner <code class="nds-inline-code lang-html">.nds-chips</code> element and the filter fills it.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-auto-fill</code></td><td>A suggestion row shown only while no filter is applied. Same label plus chips layout as the applied row.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-filter-menu</code></td><td>Added by the filter to its own <code class="nds-inline-code lang-html">.nds-dropmenu-menu</code>. Style the menu through this class: it stays on the menu after <code class="nds-inline-code lang-html">data-portal</code> moves it.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-filter-range</code></td><td>The fieldset a slider filter generates. Read-only hook for styling.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
 
                 <h4>Filter Anchor (<code class="nds-inline-code lang-html">.nds-filter</code>)</h4>
@@ -2060,6 +2094,8 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-target</code></td><td>ID of the container holding filterable items. Also used to link the anchor to its submission form, search box, applied-chips row, query/count slots, and filter controls.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-search</code></td><td>When the anchor is also a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a>, adds a search box above the options and filters the generated rows as the user types. Pass a number (<code class="nds-inline-code lang-html">data-search="50"</code>) to show it only once the menu holds that many options.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-portal</code></td><td>Moves the open menu to <code class="nds-inline-code lang-html">&lt;body&gt;</code>. Use it when the filter sits inside a modal, drawer, or any scrolling box that would clip the menu. Width knobs travel with the menu.</td></tr>
                     </tbody>
                 </table>
 
@@ -2116,7 +2152,6 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         <tr><td><code class="nds-inline-code lang-html">data-filter-accordion</code></td><td>Boolean attribute. Renders this group as a collapsible <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> item, closed by default, with the <code class="nds-inline-code lang-html">data-filter-legend</code> text as the header and a tag counting that group's selected values (hidden at zero). Opt in per group: groups without it stay inline. Wrap several opted-in groups in your own <code class="nds-inline-code lang-html">&lt;div class="nds-accordion"&gt;</code> to make them one accordion; otherwise each group becomes its own, so they open independently.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-variant</code></td><td>CSS class to add to auto-generated input elements (e.g. <code class="nds-inline-code lang-html">nds-primary</code>)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-value</code></td><td>Set on a <code class="nds-inline-code lang-html">[data-filter]</code> element to provide a machine-readable filter value separate from the visible text. The display label is derived from the element's text content automatically. Example: <code class="nds-inline-code lang-html">&lt;span data-filter="type" data-filter-value="Announcement"&gt;Translated Label&lt;/span&gt;</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-name</code></td><td>Custom display name used in applied filter chips instead of the raw value</td></tr>
                     </tbody>
                 </table>
 
@@ -2146,13 +2181,14 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     </tbody>
                 </table>
 
-                <h4>Search Box (AJAX mode)</h4>
+                <h4>Search Suggestions</h4>
+                <p>Typed suggestions in the search box are owned by <a class="nds-color" href="{{ 'components/autocomplete' | relative_url }}">Autocomplete</a>, not by Filter. Put these on the same <code class="nds-inline-code lang-html">.nds-form-container</code> that holds the search input and both components work together. See the Autocomplete page for the full list.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-url</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-search-box</code>. API endpoint for search autocomplete suggestions</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-name</code></td><td>JSON field name to display from autocomplete results</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-query-param</code></td><td>URL query parameter name for the search term</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-url</code></td><td>API endpoint that returns the suggestions.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-name</code></td><td>JSON field to display from each result. Default: <code class="nds-inline-code lang-html">Title</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-query-param</code></td><td>Query parameter name for the typed term. Default: <code class="nds-inline-code lang-html">q</code>.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2162,7 +2198,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--dropmenu-min-width</code></td><td>250px</td><td>Minimum width of the filter dropmenu</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dropmenu-min-width</code></td><td>250px</td><td>Minimum width of the filter menu. Set it on the <code class="nds-inline-code lang-html">.nds-filter</code> element, not on the menu: the menu keeps the value even after <code class="nds-inline-code lang-html">data-portal</code> moves it to <code class="nds-inline-code lang-html">&lt;body&gt;</code>.</td></tr>
                     </tbody>
                 </table>
 
@@ -2171,13 +2207,24 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Selector</th><th>Effect</th><th>When set</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-state~="submitting"]</code></td><td><code class="nds-inline-code">opacity: 0.7; pointer-events: none</code></td><td>Set on the anchor when a standard or AJAX form submission is in flight. Cleared when the response arrives.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-state~="submitting"]</code></td><td><code class="nds-inline-code">pointer-events: none</code></td><td>Set on the anchor when a standard or AJAX form submission is in flight. Cleared when the response arrives.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-status="success"]</code></td><td>Search inputs get <code class="nds-inline-code">border-color: var(--border-success)</code></td><td>Set on successful AJAX response. Auto-cleared after 3 seconds.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-status="error"]</code></td><td>Search inputs get <code class="nds-inline-code">border-color: var(--border-error)</code></td><td>Set on AJAX request failure. Auto-cleared after 5 seconds.</td></tr>
                     </tbody>
                 </table>
                 <p>Because a failed submission deliberately leaves the results untouched, the border tint is the only thing on screen that moves — so filter also raises an error toast via <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> (soft dependency: skipped if <code class="nds-inline-code lang-js">nds-alert.js</code> isn't bundled). Call <code class="nds-inline-code lang-js">preventDefault()</code> on <code class="nds-inline-code lang-js">nds:filterFormError</code> to suppress it.</p>
                 <p>A failure also rolls the applied state back to what the displayed results represent: chips, the filter-button badge, the dropmenu controls and the URL params all return to their pre-submission values. Without it a failed Clear would show no chips over results that are still filtered. The trade-off is that an unsaved selection made in the dropmenu is discarded along with the failed submission.</p>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Keyboard and Accessibility</h3>
+                <ul>
+                    <li><code class="nds-inline-code">Enter</code> in the page search box runs the search straight away</li>
+                    <li><code class="nds-inline-code">Enter</code> anywhere inside the open filter menu triggers the Apply button, so a keyboard user never has to tab to it</li>
+                    <li>Generated options are real <code class="nds-inline-code lang-html">&lt;input&gt;</code> elements inside a <code class="nds-inline-code lang-html">&lt;fieldset&gt;</code> with a legend, so screen readers announce the group name with each option</li>
+                    <li>Radio groups get an "All" option first. Without it a keyboard user could pick a value but never clear it</li>
+                    <li>Slider thumbs carry their own labels and respond to the arrow keys</li>
+                </ul>
             </div>
 
             <div class="nds-block">
@@ -2206,6 +2253,8 @@ NDS.Filter.whenReady('.nds-filter', (instance) =&gt; {
 filter.setFilterValues('department', ['Engineering', 'Design']);  // Check/uncheck existing inputs
 filter.setSearchValue('Ahmed');
 filter.removeFilterValue('department', 'Design');
+filter.removeSearchFilter();                 // Clear the search keyword, keep the other filters
+filter.resetRangeFilter('price');            // Put a slider filter back to its full span
 
 // ── Generate filter inputs from values (no card scanning) ──
 filter.populateFilter('system', ['Identity', 'Transport', 'Healthcare']);          // checkbox (default)
