@@ -2,7 +2,7 @@
 
 The project's chosen conventions for `_js/nds-*.js` component files, documented as concrete canonical forms backed by principle reasoning. Consulted by `nds-js-audit` so JSD-15 ("cross-file pattern consistency") works in single-file mode and so the audit measures code against deliberate choices instead of against the loudest accidental majority.
 
-**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-showcase.js` (demo-page wiring).
+**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-showcase.js` (demo-page wiring). Exception: entry 7 (public-surface banner) uses its own wider scope — the `SCOPE` array in `scripts/check-banners.mjs`, which includes `nds-core.js` and `nds-loader.js`.
 
 ---
 
@@ -265,6 +265,51 @@ Flag any of these signal-less shapes in a file WITHOUT the documented two-phase-
 Files with the documented two-phase shape pass.
 
 **Two-controller split, not a two-phase carve-out.** When a subset of listeners has a genuinely shorter lifetime than the instance, prefer a second domain-named controller over per-handler bookkeeping — both lifetimes stay atomic. Cite: `_js/nds-upload.js` `dragAbortController`, re-armed by `_initDragAndDrop` / aborted by `_removeDragAndDrop` on every `dropbox` state toggle, alongside the instance-lifetime `abortController`. The entry-2 `cleanup()`+`destroy()` carve-out remains for the case a split can't serve — `_js/nds-date-picker.js`, where the two phases share individual handlers rather than partitioning cleanly.
+
+---
+
+### 7. Public-surface banner
+
+**Canonical**
+
+Every in-scope file opens with a banner comment — the first lines of the file, before any code and before any other prose — enumerating the file's public surface in five fixed sections, always in this order, every label always present (`(none)` entries when a section is empty):
+
+```js
+/* NDS.Stepper — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Stepper.init() / .reinit()   scan + initialize steppers
+ * Events:
+ *   nds:stepper:change   detail {step, stepper}
+ * Hooks:
+ *   (none)
+ * Gotchas:
+ *   (none)
+ */
+```
+
+- **Rides** — edges point UP only: a rider names its base(s) plus the surface it inherits, in parentheses — `Rides: nds-dropmenu (portal, positioning, search, auto-close knobs) · nds-forms (validation)`; soft edges append `(soft — works without it)`; bases declare `Rides: (none — base component)`. A base never enumerates its riders.
+- **Methods** — the `NDS.<Name>.*` surface, one per line with a short tail description; instance methods are labeled as such.
+- **Events** — full event name plus its `detail {…}` shape.
+- **Hooks** — consumer-facing `data-*` attributes and action roles, hand-enumerated. Excludes init sentinels (`data-nds-*-initialized`) and base-owned attributes — a rider restating a base's hooks (e.g. `data-portal` in a dropmenu-rider's Hooks) is a violation.
+- **Gotchas** — one-liners, only what THIS file owns.
+
+No version stamps inside banners. Scaled-down banners (~6–10 lines) are the norm for tiny surfaces. Tooling: `node scripts/check-banners.mjs --generate <file>` prints a skeleton (Methods/Events pre-filled, Hooks grep candidates); `--verify <file>` / `--all` checks presence, section order, and Methods/Events drift. The `SCOPE` array in that script (57 files: 53 components + core, loader, accessibility, theme) is the single source of truth for which files carry a banner.
+
+**Why (and rejected alternatives)**
+
+The banner is the knowledge surface a consumer agent (and human reader) greps before wiring the component — it ships verbatim in the template zip's `_source/_js/`, travels with the code, and costs zero production bytes (Terser strips all comments). Methods and Events are mechanically verified, so the contract cannot silently drift from the code. Rejected: doc-page front matter as the banner's home — it does not travel with the source, has no home for core/loader (no doc page) or many-to-many mappings (forms/tables), and hides from human readers; version stamps inside banners — churn every release with no reader value (the zip is versioned as a whole); riders restating base surface — two copies of one contract drift apart, and the Rides parenthetical already names what is inherited.
+
+**Carve-outs (NOT divergence)**
+
+- Files outside the `SCOPE` array (`nds-showcase.js`, `nds-theme-foundation-day.js`, `nds-theme-hajj.js`, `nds-fontLoading.js`) carry no banner.
+- `(none)` entries are information, not omission — `Hooks: (none)` tells the reader there is nothing to wire; a tiny banner is conformant, not lazy.
+- WHY-prose surviving BELOW the banner (bundle/crit headers, usage notes) is not part of the banner and is not judged by this entry — JSA-16 governs it as usual.
+- The banner itself is never comment noise: JSA-16 explicitly exempts it (see its carve-out list in `RULES-JSA.md`); JSD-20 owns its conformance.
+
+**Audit behavior**
+
+Run (or mirror) `node scripts/check-banners.mjs --verify <file>`: missing banner, or a missing/misordered section label → LOW. Methods/Events drift against the file's actual `NDS.<Name>` surface and dispatch literals → MEDIUM. A rider restating base-owned surface, or a base enumerating riders (downward edge) → LOW. Full rule: JSD-20 in `RULES-JSD.md`.
 
 ---
 
