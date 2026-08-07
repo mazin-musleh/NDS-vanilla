@@ -2,8 +2,8 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-updated: "1.6.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "05/08/2026 - 09:48 PM"
+updated: "1.7.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
+last_edit: "07/08/2026 - 09:40 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -20,7 +20,7 @@ sidemenu_mode: false
 <section id="getStartedGuide" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
-            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 14"
+            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 16"
                 data-toc-source="#getStartedGuide article" data-toc-levels="h2, h3">
                 <div class="nds-toc-head">
                     <span class="nds-label">On this page</span>
@@ -107,8 +107,9 @@ sidemenu_mode: false
                         </div>
                         <code class="lang-markdown">
 README.md       - Overview and entry-point documentation
+NDS-IQ.md       - The NDS IQ instructions, offline copy (see section 2)
 _site/          - Compiled documentation site and runtime assets
-_source/        - Uncompiled JS/SCSS source and machine-readable catalogs
+_source/        - Uncompiled JS/SCSS source, doc and page sources, catalogs
 CHANGELOG.md    - Release history and migration notes
 LICENSE         - License terms
                         </code>
@@ -121,11 +122,11 @@ LICENSE         - License terms
                 </div>
 
                 <h2 id="rules">2. Setup</h2>
-                <p>One prompt runs the whole setup: the agent installs the NDS IQ instructions, asks for paths, then hands back the first plan for your review.</p>
+                <p>One prompt runs the whole setup: the agent installs NDS IQ, asks for paths, then hands back the first plan for your review.</p>
 
                 <div class="nds-block">
                     <h3 id="instructions-block">Setup Prompt</h3>
-                    <p>Hand the agent the prompt below as its first turn. It downloads the raw NDS IQ instructions file and installs it verbatim into the agent's instruction file at the project root, creating the file if it doesn't exist, or appending to an existing one. NDS IQ's own setup flow takes over from there.</p>
+                    <p>Hand the agent the prompt below as its first turn. It downloads the NDS IQ rules file to your project root, then follows the install steps inside that file: adding a short anchor to your agent instruction file and asking you for the two paths. NDS IQ's own setup flow takes over from there.</p>
                     <div class="nds-code">
                         <div class="nds-code-action">
                             <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
@@ -133,7 +134,7 @@ LICENSE         - License terms
                             </button>
                         </div>
                         <code class="lang-prompt">
-Download these instructions as a raw file (curl or equivalent, never a web-fetch tool, which re-renders what it fetches) and append them verbatim to this project's agent instructions file. Verify the installed copy's first line starts with `## Design system: NDS Vanilla` (both # intact) and its last line is `&lt;!-- end NDS instructions --&gt;`, then follow the installed instructions; their setup flow starts from whatever state this project is in (existing UI, fresh build, or prior NDS work): https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/nds-ai-instructions.md
+Download this file raw (curl or equivalent, never a web-fetch tool, which re-renders what it fetches) and save it as `NDS-IQ.md` at this project's root. Verify the saved copy's first line starts with `# NDS IQ` and names an `instructions v` revision, then read it top to bottom and follow its "Install and upgrade this file" section; its setup flow starts from whatever state this project is in (existing UI, fresh build, or prior NDS work): https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md
                         </code>
                     </div>
                     <div class="nds-block">
@@ -166,15 +167,18 @@ Download these instructions as a raw file (curl or equivalent, never a web-fetch
                             </div>
                         </div>
                     </div>
-                    <ul>
-                        <li><strong>Claude Code</strong>: <code class="nds-inline-code lang-html">CLAUDE.md</code></li>
-                        <li><strong>Cursor / Codex</strong>: <code class="nds-inline-code lang-html">AGENTS.md</code></li>
-                    </ul>
+                    <p><strong>Two pieces land in your project:</strong></p>
+                    <ol>
+                        <li><code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, committed. The full rulebook. It holds no project-specific values, so every project's copy is identical and a refresh is a whole-file replace.</li>
+                        <li>A short <strong>anchor</strong> added to your agent instruction file. It carries your two paths and one instruction: read <code class="nds-inline-code lang-html">NDS-IQ.md</code> before NDS work starts. It has no version, so it never needs updating.</li>
+                    </ol>
+                    <p>The agent instruction file is <code class="nds-inline-code lang-html">CLAUDE.md</code> for Claude Code, <code class="nds-inline-code lang-html">AGENTS.md</code> for Cursor and Codex.</p>
+                    <p>Only the anchor loads on every turn. The rulebook is read on demand, once per session, when NDS work starts, so non-UI days cost nothing.</p>
                     <p>The URL always tracks the latest published revision; on later sessions, NDS IQ's own upgrade workflow handles any drift against your installed template.</p>
                 </div>
                 <div class="nds-block">
                     <h3 id="paths">Paths</h3>
-                    <p>The NDS IQ instructions ship with two paths declared at the top as placeholders. On first install the agent asks you for real values; provide what's below and it writes them into the declaration lines. Installing manually? Edit only those top two lines; any <code class="nds-inline-code lang-html">/path/to/…</code> further down is instructional and stays as-is.</p>
+                    <p>The anchor declares two paths, and ships them as placeholders. On first install the agent asks you for real values; provide what's below and it writes them into the anchor's two declaration lines. Until they are set, NDS IQ blocks NDS work rather than guessing at a folder. Installing manually? Those two lines are the only thing you edit — <code class="nds-inline-code lang-html">NDS-IQ.md</code> itself is never edited, and any <code class="nds-inline-code lang-html">/path/to/…</code> inside it is instructional.</p>
                     <table class="nds-table nds-responsive">
                         <thead><tr><th>Variable</th><th>Description</th></tr></thead>
                         <tbody>
@@ -182,7 +186,7 @@ Download these instructions as a raw file (curl or equivalent, never a web-fetch
                             <tr><td><code class="nds-inline-code lang-html">NDS_ASSETS</code></td><td>The directory where your application serves static assets (e.g. <code class="nds-inline-code lang-html">public/assets/</code>, <code class="nds-inline-code lang-html">wwwroot/</code>). If it does not exist, the agent creates it during the first asset copy.</td></tr>
                         </tbody>
                     </table>
-                    <p>One-time only: future sessions load the agent's instruction file automatically at start.</p>
+                    <p>One-time only: future sessions load the agent's instruction file automatically at start, and its anchor points them at the rulebook.</p>
                 </div>
                 <div class="nds-block">
                     <h3 id="plan-review">Plan Review</h3>
@@ -191,26 +195,27 @@ Download these instructions as a raw file (curl or equivalent, never a web-fetch
                 </div>
                 <div class="nds-block">
                     <h3 id="manual-install">Manual Install (optional)</h3>
-                    <p>For a manual install, or to read what the agent installs, the full NDS IQ instructions are below. <strong>Copy them exactly as written, all of them.</strong> A paraphrase reads correct but silently drops rules the build depends on later.</p>
-<!-- ═══════════════════════ COPY START ═══════════════════════ -->
-            <div class="nds-code nds-expandable">
-                <span class="nds-code-tags lang-markdown">
-                    <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>
-                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v6</span></span>
-                </span>
-                <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy NDS IQ instructions">
-                        <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                </div>
-                <div class="nds-expandable-content">
-                    <code class="lang-markdown">
+                    <p>To install by hand, or to read what the agent installs, the full rulebook is below. Save it as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at your project root, then add the anchor — its exact text is in the file's own <em>Install and upgrade this file</em> section — to your agent instruction file with your two paths filled in. <strong>Copy the file exactly as written, all of it.</strong> A paraphrase reads correct but silently drops rules the build depends on later.</p>
+                    <p>The template zip carries the same file at <code class="nds-inline-code lang-html">NDS_ROOT/NDS-IQ.md</code>, matched to that release. Use it when you want the offline copy instead of the latest.</p>
 {%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
+{%- assign _iq_parts = _instr | split: 'instructions v' %}
+{%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
+                    <div class="nds-code nds-expandable">
+                        <span class="nds-code-tags lang-markdown">
+                            <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>
+                            <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v{{ _iq_v }}</span></span>
+                        </span>
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy NDS IQ instructions">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
+                            <code class="lang-markdown">
 {{ _instr | strip | escape }}
-                    </code>
-                </div>
-            </div>
-<!-- ═══════════════════════ COPY END ═══════════════════════ -->
+                            </code>
+                        </div>
+                    </div>
                 </div>
 
                 <h2 id="sessions">3. Build</h2>
@@ -288,7 +293,8 @@ Continue: read NDS-PLAN.md and propose the next step.
                 </div>
 
                 <h2 id="upgrade">4. Upgrade</h2>
-                <p>When a new version of NDS is published, paste the prompt below. The agent handles the whole upgrade: downloads the release into <code class="nds-inline-code lang-html">NDS_ROOT</code>, then runs the upgrade workflow from the NDS IQ instructions (version compare, runtime replace, changelog sweep, its own refresh) and reports every change.</p>
+                <p>When a new version of NDS is published, paste the prompt below. The agent handles the whole upgrade: downloads the release into <code class="nds-inline-code lang-html">NDS_ROOT</code>, then runs the upgrade workflow from NDS IQ (version compare, runtime replace, changelog sweep) and reports every change.</p>
+                <p>The last step refreshes the rules themselves. If a newer revision of <code class="nds-inline-code lang-html">NDS-IQ.md</code> is published, the agent replaces your copy whole: no merging, no partial patches. Your anchor is never touched, so the two paths survive every refresh.</p>
 
                 <div class="nds-code">
                     <div class="nds-code-action">

@@ -2,8 +2,8 @@
 layout: page
 title: NDS IQ
 since: "1.6.x"
-updated: "1.6.x"
-last_edit: "05/08/2026 - 09:48 PM"
+updated: "1.7.0"
+last_edit: "07/08/2026 - 09:40 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -17,6 +17,9 @@ layout_class: nds-wSideInfo
 sidemenu_mode: false
 ---
 
+{%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
+{%- assign _iq_parts = _instr | split: 'instructions v' %}
+{%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
 <section id="ndsIqGuide" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
@@ -37,7 +40,9 @@ sidemenu_mode: false
                 <h2 id="overview">Overview</h2>
                 <p>What NDS IQ is and where it lives in a project.</p>
 
-                <p><strong>NDS IQ (Integration Quality)</strong> is the instruction system that governs AI agents building with NDS. It is a single block of rules <strong>installed once</strong> into a project's agent instruction file (<code class="nds-inline-code lang-html">CLAUDE.md</code> or <code class="nds-inline-code lang-html">AGENTS.md</code>), where it <strong>loads on every session</strong> and drives the whole lifecycle: installing the runtime, porting or building pages, verifying them in the browser, and upgrading. Two paths declared at its top configure everything it does.</p>
+                <p><strong>NDS IQ (Integration Quality)</strong> is the instruction system that governs AI agents building with NDS. It drives the whole lifecycle: installing the runtime, porting or building pages, verifying them in the browser, and upgrading.</p>
+                <p>It installs as two pieces. The rules live in <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, and a short <strong>anchor</strong> goes into the project's agent instruction file (<code class="nds-inline-code lang-html">CLAUDE.md</code> or <code class="nds-inline-code lang-html">AGENTS.md</code>). The anchor declares the two paths that configure everything, and tells every session to read the rules before NDS work starts. Only the anchor loads on every turn; the rules are read <strong>on demand, once per session</strong>, so a project pays for them on the days it builds UI.</p>
+                <p>That split is what makes the rules file universal: every project's copy is byte-identical, because the only per-project values live in the anchor. Refreshing the rules is a whole-file replace, never an edit.</p>
                 <p>Installation, the workflow, and the full rule text live in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>. This page explains the system itself: how it is built, tested, versioned, and kept current.</p>
 
                 <h2 id="how-built">How It Is Built</h2>
@@ -53,7 +58,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-block">
                     <h3 id="tested">Tested per Revision</h3>
-                    <p>The block must not depend on a strong model to be read correctly. Before a revision publishes, a scenario suite replays real failure cases against fresh agents on the weakest model tier the block serves. A new rule goes through a <strong>fail, fix, pass loop</strong>: the failure is reproduced against the old text, the rule lands, and the same scenario must pass against the new text. Passing scenarios stay in the suite as regression tripwires for every later edit.</p>
+                    <p>The rules must not depend on a strong model to be read correctly. Before a revision publishes, a scenario suite replays real failure cases against fresh agents on the weakest model tier the rules serve. A new rule goes through a <strong>fail, fix, pass loop</strong>: the failure is reproduced against the old text, the rule lands, and the same scenario must pass against the new text. Passing scenarios stay in the suite as regression tripwires for every later edit.</p>
                 </div>
 
                 <h2 id="governs">What It Governs</h2>
@@ -72,9 +77,9 @@ sidemenu_mode: false
                 <p>Around the rules sits a <strong>workflow</strong> (inventory, plan, build, verify) and a <strong>plan file</strong> (<code class="nds-inline-code lang-html">NDS-PLAN.md</code>) that carries state between sessions, so any session can pick up where the last one stopped.</p>
 
                 <h2 id="revisions">Revision History</h2>
-                <p>The block versions independently of the template: a plain integer, bumped once per published revision.</p>
+                <p>The rules version independently of the template: a plain integer, bumped once per published revision.</p>
 
-                <p>The current revision is stamped in the block's own heading (<code class="nds-inline-code lang-html">instructions v6</code>) and on the green chip beside the copyable block in the guide. An installed copy compares its stamp against the template's during upgrades to know when a refresh is due.</p>
+                <p>The current revision is stamped in the file's own heading (<code class="nds-inline-code lang-html">instructions v{{ _iq_v }}</code>) and on the green chip beside the rendered copy below. An installed copy compares its stamp against the published one during upgrades to know when a refresh is due. The anchor carries no version: it never needs updating.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Revision</th><th>Template</th><th>Highlights</th></tr></thead>
                     <tbody>
@@ -84,6 +89,7 @@ sidemenu_mode: false
                         <tr><td>v4</td><td>1.6.0</td><td>The NDS IQ name. Greenfield projects, the spike rule, JS wiring facts, the menu portal fact.</td></tr>
                         <tr><td>v5</td><td>1.6.0</td><td>From two field cycles: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template floor, hunting existing automation before falling back to a verification checklist, raw-file fetch discipline, the project's own globals as legacy UI, clean resets over inherited attempts, and image geometry on swapped assets.</td></tr>
                         <tr><td>v6</td><td>1.6.0</td><td>Stale NDS instructions in the agent file join the prior attempt's footprint: a superseded block copy, hand-written conventions, leftover notes, all proposed for removal with the plan.</td></tr>
+                        <tr><td>v7</td><td>1.7.0</td><td>New install model: the rules move out of the agent file into <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, read on demand, with a version-free anchor left behind. Rewritten for that job. JS wiring reads the per-component banner the template now ships in every source file; page and component markup route to the raw doc, template, and example sources in <code class="nds-inline-code lang-html">_source/</code>.</td></tr>
                     </tbody>
                 </table>
 
@@ -92,22 +98,20 @@ sidemenu_mode: false
 
                 <p>Two paths deliver updates:</p>
                 <ul>
-                    <li><strong>Template upgrade</strong>: the matching block revision rides along; the upgrade workflow replaces the installed block from the new template's guide.</li>
+                    <li><strong>Template upgrade</strong>: the matching revision rides along, as the last step of the upgrade workflow.</li>
                     <li><strong>Standalone refresh</strong>: on ask, the agent fetches the latest revision straight from the repository, even between template releases.</li>
                 </ul>
-                <p>Both paths swap the block from its heading through its end marker and re-apply the project's two declared paths, so a refresh <strong>never loses local configuration</strong>. The agent handles all of it; the upgrade prompt in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> is the whole interface.</p>
+                <p>Both paths do the same thing: compare the installed file's heading against the published one, and replace the file whole when it is behind. No merging, no partial patches, no surgery on an installed copy. The anchor is never touched, so a refresh <strong>never loses local configuration</strong> — the two paths live there, not in the file being replaced. The agent handles all of it; the upgrade prompt in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> is the whole interface.</p>
+                <p>Projects still running a pasted v6 block migrate on their next refresh: the old raw URL now serves a pointer that carries them to the file-and-anchor model, then the pasted block is deleted.</p>
 
                 <h2 id="compatibility">Compatibility</h2>
                 <p>Agent-agnostic by design, exercised end to end with Claude Code.</p>
 
-                <p>The rules assume a capable local coding agent with file access and a shell: nothing in them is specific to one vendor. Claude Code is the reference agent the system is built and tested with; other agents follow the same text. The Revision History table names the template release each revision is validated against. Template 1.6.0 is the floor: earlier releases ship no readable source in the zip, so on an older runtime the block mandates the upgrade before driving any NDS work.</p>
+                <p>The rules assume a capable local coding agent with file access and a shell: nothing in them is specific to one vendor. Claude Code is the reference agent the system is built and tested with; other agents follow the same text. The Revision History table names the template release each revision is validated against, and that release is also its floor. A revision reads artifacts its own template introduced — v7 reads the per-file JS banners and the raw page sources that template 1.7.0 added — so on an older template the rules mandate the upgrade before driving any NDS work.</p>
 
                 <h2 id="the-instructions">The Instructions</h2>
-                <p>The complete block, rendered from the same source the template ships. Installation flow lives in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
+                <p>The complete rulebook, rendered from the same source the template ships. Installation flow lives in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
 
-{%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
-{%- assign _iq_parts = _instr | split: 'instructions v' %}
-{%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
                 <div class="nds-code nds-expandable">
                     <span class="nds-code-tags lang-markdown">
                         <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>

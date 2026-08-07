@@ -1,5 +1,5 @@
 name: IQ report
-description: Consumer findings from installing the NDS IQ instructions block. Attach your NDS-REPORT.md and add anything else worth flagging.
+description: Consumer findings from installing NDS IQ. Attach your NDS-REPORT.md and add anything else worth flagging.
 title: "[IQ]: "
 labels: ["iq", "triage"]
 body:
@@ -24,8 +24,10 @@ body:
     id: iq-version
     attributes:
       label: IQ version
-      description: From the `NDS IQ instructions vN` heading in your pasted block.
+      description: From the `instructions vN` stamp in your project's `NDS-IQ.md` heading (or, on older installs, the pasted block's heading).
       options:
+        - "v6"
+        - "v5"
         - "v4"
         - "v3"
         - "v2"
