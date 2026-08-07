@@ -45,6 +45,16 @@
       min-height: 0;
     }
 
+    // Canonical modal markup nests the actions INSIDE .nds-card-content, which
+    // is the part that scrolls. Pin them so a long form can't push them out of
+    // reach; the card's own background keeps scrolled content from showing through.
+    .nds-card-content > .nds-card-actions {
+      position: sticky;
+      bottom: 0;
+      background-color: var(--_card-bg);
+      padding-block-start: var(--spacing-md);
+    }
+
     // Desktop: centered with margin auto
     transform: translateY(0);
 

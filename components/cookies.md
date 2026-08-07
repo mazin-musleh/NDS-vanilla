@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.1.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.6.x"
+last_edit: "07/08/2026 - 07:09 PM"
 ---
 
 <!-- Overview -->
@@ -55,14 +55,14 @@ last_edit: "28/06/2026 - 01:27 PM"
                                             <span>|</span>
                                             <a href="/privacy-policy">Privacy Policy</a>
                                         </div>
-                                        <div class="nds-card-actions">
-                                            <button class="nds-btn nds-primary nds-full" data-accept-title="Accepted" data-accept-message="Cookies have been accepted">
-                                                <span class="nds-label">Accept</span>
-                                            </button>
-                                            <button class="nds-btn nds-secondary nds-full" data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected">
-                                                <span class="nds-label">Reject Non-Essential</span>
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions">
+                                        <button class="nds-btn nds-primary nds-full" data-accept-title="Accepted" data-accept-message="Cookies have been accepted">
+                                            <span class="nds-label">Accept</span>
+                                        </button>
+                                        <button class="nds-btn nds-secondary nds-full" data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected">
+                                            <span class="nds-label">Reject Non-Essential</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -108,16 +108,16 @@ last_edit: "28/06/2026 - 01:27 PM"
       &lt;span&gt;|&lt;/span&gt;
       &lt;a href="/privacy-policy" id="ndsCookiesPrivacyLink"&gt;Privacy Policy&lt;/a&gt;
     &lt;/div&gt;
-    &lt;div class="nds-card-actions"&gt;
-      &lt;button class="nds-btn nds-primary nds-full" id="ndsCookiesAcceptBtn"
-        data-accept-title="Accepted" data-accept-message="Cookies have been accepted"&gt;
-        &lt;span class="nds-label"&gt;Accept&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn"
-        data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected"&gt;
-        &lt;span class="nds-label"&gt;Reject Non-Essential&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-card-actions"&gt;
+    &lt;button class="nds-btn nds-primary nds-full" id="ndsCookiesAcceptBtn"
+      data-accept-title="Accepted" data-accept-message="Cookies have been accepted"&gt;
+      &lt;span class="nds-label"&gt;Accept&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn"
+      data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected"&gt;
+      &lt;span class="nds-label"&gt;Reject Non-Essential&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>

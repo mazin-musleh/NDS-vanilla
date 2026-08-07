@@ -110,11 +110,11 @@ exclude_showcase: false
                             </span>
                             {% endfor %}
                         </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ item.url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">Action</span>
-                            </a>
-                        </div>
+                    </div>
+                    <div class="nds-card-actions">
+                        <a href="{{ item.url }}" class="nds-btn nds-primary">
+                            <span class="nds-label">Action</span>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}

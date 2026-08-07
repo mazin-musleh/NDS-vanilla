@@ -46,11 +46,11 @@ sidemenu_mode: false
                                 <dd>Within 5 days.</dd>
                             </div>
                         </dl>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#contact-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open contact form">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
-                        </div>
+                    </div>
+                    <div class="nds-card-actions nds-end">
+                        <a href="#contact-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open contact form">
+                            <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -84,11 +84,11 @@ sidemenu_mode: false
                                 <dd>Instant answers.</dd>
                             </div>
                         </dl>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#faqs" class="nds-btn nds-secondary nds-icon-only" aria-label="Browse frequently asked questions">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
-                        </div>
+                    </div>
+                    <div class="nds-card-actions nds-end">
+                        <a href="#faqs" class="nds-btn nds-secondary nds-icon-only" aria-label="Browse frequently asked questions">
+                            <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -122,11 +122,11 @@ sidemenu_mode: false
                                 <dd>Within minutes.</dd>
                             </div>
                         </dl>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#live-chat" class="nds-btn nds-secondary nds-icon-only" aria-label="Start live chat">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
-                        </div>
+                    </div>
+                    <div class="nds-card-actions nds-end">
+                        <a href="#live-chat" class="nds-btn nds-secondary nds-icon-only" aria-label="Start live chat">
+                            <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -160,11 +160,11 @@ sidemenu_mode: false
                                 <dd>Immediate.</dd>
                             </div>
                         </dl>
-                        <div class="nds-card-actions nds-end">
-                            <a href="tel:19996" class="nds-btn nds-secondary nds-icon-only" aria-label="Call support line">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
-                        </div>
+                    </div>
+                    <div class="nds-card-actions nds-end">
+                        <a href="tel:19996" class="nds-btn nds-secondary nds-icon-only" aria-label="Call support line">
+                            <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -198,11 +198,11 @@ sidemenu_mode: false
                                 <dd>Same-day service.</dd>
                             </div>
                         </dl>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#office-locations" class="nds-btn nds-secondary nds-icon-only" aria-label="Find a branch office">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
-                        </div>
+                    </div>
+                    <div class="nds-card-actions nds-end">
+                        <a href="#office-locations" class="nds-btn nds-secondary nds-icon-only" aria-label="Find a branch office">
+                            <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -236,11 +236,11 @@ sidemenu_mode: false
                                 <dd>Within 3 days.</dd>
                             </div>
                         </dl>
-                        <div class="nds-card-actions nds-end">
-                            <a href="#report-issue" class="nds-btn nds-secondary nds-icon-only" aria-label="Report a service issue">
-                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
-                            </a>
-                        </div>
+                    </div>
+                    <div class="nds-card-actions nds-end">
+                        <a href="#report-issue" class="nds-btn nds-secondary nds-icon-only" aria-label="Report a service issue">
+                            <i class="nds-icon nds-hgi-arrow-next-02"></i>
+                        </a>
                     </div>
                 </div>
 

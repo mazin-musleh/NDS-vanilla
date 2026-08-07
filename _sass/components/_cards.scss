@@ -342,12 +342,12 @@
 // CARD FORM SECTION
 // ==============================================
 
-// Form wrapper inside a card — matches card's own flex-column layout so
-// wrapping .nds-card-content / .nds-card-actions in a <form class="nds-form">
-// doesn't break the card's vertical rhythm.
-.nds-card .nds-card-meta,
-.nds-card>.nds-form,
-.nds-card-form {
+// The meta block owns a flex column. A <form> inside a card deliberately does
+// NOT — it stays display:contents (see _forms.scss) so the card's own flex
+// column reaches .nds-card-content directly. Making the form a flex item breaks
+// the shrink chain, and a long form in a modal then grows past max-height
+// instead of scrolling. Same gap either way, so nothing moves visually.
+.nds-card .nds-card-meta {
   display: flex;
   flex-direction: column;
   gap: var(--_card-gap);

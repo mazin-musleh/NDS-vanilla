@@ -114,16 +114,16 @@ last_edit: "14/07/2026 - 04:13 PM"
                         </span>
                         {% endif %}
                     </div>
-                    <div class="nds-card-actions">
-                        <a href="{{ '/templates/service-template' | relative_url }}" class="nds-btn nds-secondary-outline nds-lg"
-                            aria-label="Service Details">
-                            <span class="nds-label">Details</span>
-                        </a>
-                        <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon"
-                            aria-label="Get Started">
-                            <span class="nds-label">Get Started</span>
-                        </a>
-                    </div>
+                </div>
+                <div class="nds-card-actions">
+                    <a href="{{ '/templates/service-template' | relative_url }}" class="nds-btn nds-secondary-outline nds-lg"
+                        aria-label="Service Details">
+                        <span class="nds-label">Details</span>
+                    </a>
+                    <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon"
+                        aria-label="Get Started">
+                        <span class="nds-label">Get Started</span>
+                    </a>
                 </div>
             </div>
             {% endfor %}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "06/08/2026 - 11:13 PM"
+last_edit: "07/08/2026 - 07:09 PM"
 ---
 
 <!-- Modal Dialog -->
@@ -95,14 +95,14 @@ last_edit: "06/08/2026 - 11:13 PM"
                                             </div>
                                         </div>
 
-                                        <div class="nds-card-actions">
-                                            <button class="nds-btn nds-primary nds-lg" data-modal-close>
-                                                <span class="nds-label">Confirm</span>
-                                            </button>
-                                            <button class="nds-btn nds-secondary-outline nds-lg" data-modal-close>
-                                                <span class="nds-label">Cancel</span>
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions">
+                                        <button class="nds-btn nds-primary nds-lg" data-modal-close>
+                                            <span class="nds-label">Confirm</span>
+                                        </button>
+                                        <button class="nds-btn nds-secondary-outline nds-lg" data-modal-close>
+                                            <span class="nds-label">Cancel</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -170,14 +170,14 @@ last_edit: "06/08/2026 - 11:13 PM"
         &lt;/span&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-card-actions"&gt;
-      &lt;button class="nds-btn nds-primary nds-lg" data-modal-close&gt;
-        &lt;span class="nds-label"&gt;Confirm&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-secondary-outline nds-lg" data-modal-close&gt;
-        &lt;span class="nds-label"&gt;Cancel&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-card-actions"&gt;
+    &lt;button class="nds-btn nds-primary nds-lg" data-modal-close&gt;
+      &lt;span class="nds-label"&gt;Confirm&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="nds-btn nds-secondary-outline nds-lg" data-modal-close&gt;
+      &lt;span class="nds-label"&gt;Cancel&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>

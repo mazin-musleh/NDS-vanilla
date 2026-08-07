@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "31/07/2026 - 05:11 AM"
+updated: "1.6.x"
+last_edit: "07/08/2026 - 07:09 PM"
 ---
 
 <!-- Section Structure Overview -->
@@ -938,14 +938,14 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                     <span class="nds-card-title nds-truncate">{{ service.title }}</span>
                                     <span class="nds-card-description nds-truncate">{{ service.description }}</span>
                                 </div>
-                                <div class="nds-card-actions">
-                                    <a href="#" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
-                                        <span class="nds-label">Details</span>
-                                    </a>
-                                    <a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
-                                        <span class="nds-label">Get Started</span>
-                                    </a>
-                                </div>
+                            </div>
+                            <div class="nds-card-actions">
+                                <a href="#" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
+                                    <span class="nds-label">Details</span>
+                                </a>
+                                <a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
+                                    <span class="nds-label">Get Started</span>
+                                </a>
                             </div>
                         </div>
                     </div>
