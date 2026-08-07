@@ -1,6 +1,6 @@
 # NDS IQ — building UI with the National Design System (instructions v7)
 
-Written for template 1.7.0.
+Validated against template 1.7.0. Works with 1.7.0 or later.
 
 ## How to use this file
 
@@ -20,7 +20,7 @@ This file is the rulebook for NDS work in this project. The anchor in the projec
 If either anchor path still looks like a placeholder (`/path/to/…`), **stop and ask the dev to set it**. A declared `NDS_ROOT` missing on disk (a fresh clone; `.nds/` is gitignored) is restorable instead:
 
 - Read the `Version:` banner in `NDS_ASSETS/js/nds-main.min.js`. Download that exact release — `releases/download/v<version>/nds-vanilla-template-v<version>.zip` on the repo — extract it to the declared path, and tell the dev. That banner-first rule covers every population of `NDS_ROOT`, first install included, not just restores: whenever `NDS_ASSETS` already holds a runtime, its banner picks the release, never the latest link.
-- One floor overrides it: releases before 1.6.0 predate these rules and ship no `_source/` in the zip, so a banner below 1.6.0 has no supported reference to install — half of what this file tells you to read would not exist. Report it and propose the upgrade per "Upgrading NDS"; below the floor the upgrade is the prerequisite for any NDS work, not an option, and until the dev approves it you are blocked exactly as on a placeholder path.
+- One floor overrides it: these rules read artifacts that template 1.7.0 introduced — the per-file JS banners and the `_source/` doc, template and example sources — so a banner below 1.7.0 has no supported reference to install, and half of what this file tells you to read would not exist. Report it and propose the upgrade per "Upgrading NDS"; below the floor the upgrade is the prerequisite for any NDS work, not an option, and until the dev approves it you are blocked exactly as on a placeholder path.
 - Above the floor, a newer template against the older runtime is an upgrade with its own migration steps, the dev's call ("Upgrading NDS"): report both versions and propose it; never silently install a newer reference than the runtime. A `-dev` banner matches no release: report it and let the dev choose.
 - An empty `NDS_ASSETS` alone does not prove a fresh start: an install predating these rules may serve NDS from another path. Sweep the project for a stray `nds-main.min.js` and the layouts loading it before concluding anything. A found runtime's banner governs the same rules; whether `NDS_ASSETS` should point at that folder, or the runtime moves wholesale to the declared path, is the dev's call (its pages take Workflow step 1's prior-NDS split).
 - No runtime anywhere in the project means first setup: ask the dev; only then is the latest release the default. A missing `NDS_ASSETS` folder is not a blocker: create it at the first asset copy.
@@ -30,7 +30,7 @@ More rules that hold while paths are unsettled:
 - **While blocked:** project-side work that needs no NDS path (the Workflow section's step 1 inventory, below) may proceed; nothing NDS-side may. Never write guessed NDS targets into `NDS-PLAN.md`; a blocked path leaves the plan's NDS Target column reading `blocked on NDS_ROOT` until you can read the real catalogs.
 - **Never adopt a likely folder yourself.** A plausible candidate (an old extract, a different version, a sibling project; for `NDS_ASSETS`, an existing assets folder already serving NDS) silently wires the whole project to the wrong template, or copies assets into the wrong place. Enumerating candidates for the dev to choose from is fine: read each one's `Version:` banner per rule #2. The choice stays the dev's.
 - **When the dev supplies or changes a path, update the anchor's two declaration lines in the same session. Not optional.** Chat answers don't survive the session; those two lines are what every future session reads.
-- **Older template, newer rules.** Raw main of this file stays valid for the latest published template. Against an older `NDS_ROOT` (1.6.0), two references degrade, each with a fallback: the `_source` doc and page sources (`components/`, `templates/`, `examples/`) do not exist yet — read their `_site/*.html` twins instead; `_source/_js/` files carry no banner — use the grep fallback in "JS wiring".
+- **Newer template, older rules.** Raw main of this file stays valid for the latest published template, so a `NDS_ROOT` newer than the stamp on line 3 is fine. Older than the floor is not: take the paragraph above.
 
 ## Seven hard rules
 
@@ -38,7 +38,7 @@ More rules that hold while paths are unsettled:
 
 2. **Never read `*.min.js` or `*.min.css`.** They are opaque. Read the matching file in `NDS_ROOT/_source/` instead. One exception: the `Version:` banner in a bundle's first lines. Read just those lines for the upgrade check.
 
-3. **Copy canonical markup verbatim. Never invent it.** Every component has a doc page whose `lang-html` code block holds the exact HTML to copy. Read it at `NDS_ROOT/_source/components/<name>.md` — the doc source: same code blocks and attribute tables, no site chrome, a quarter of the bytes. The built twin at `NDS_ROOT/_site/components/<name>.html` is the human surface, and the markup fallback on templates before 1.7.0. Class names, nesting, `data-*` attributes, and ARIA roles all matter; markup from memory breaks the component.
+3. **Copy canonical markup verbatim. Never invent it.** Every component has a doc page whose `lang-html` code block holds the exact HTML to copy. Read it at `NDS_ROOT/_source/components/<name>.md` — the doc source: same code blocks and attribute tables, no site chrome, a quarter of the bytes. The built twin at `NDS_ROOT/_site/components/<name>.html` is the human surface. Class names, nesting, `data-*` attributes, and ARIA roles all matter; markup from memory breaks the component.
     - "Verbatim" covers structure, classes, `data-*`, and ARIA.
     - Two kinds of value edits are sanctioned, and only these: (1) asset-URL rewrites: `href`/`src` pointing into the template's assets get rewritten to `NDS_ASSETS` (see "Asset references in copied markup" below); (2) content swaps: replacing placeholder text and content-bearing attribute values with the project's own.
     - Content swap includes attribute values: link `href`s, `alt` text, and `aria-label`s are content too. So are a swapped image's `width`/`height` attributes: they carry the sample file's geometry, and keeping them forces it onto yours (the brand slot's square sample squashing a wide project logo is the classic case); set them to the new file's real pixel size. Audit all of them against the target page's language and routes, or dead docs-site links and wrong-language labels ride along silently.
@@ -195,8 +195,6 @@ Many NDS components ship rich programmatic APIs and DOM events. **Wire your code
 
 The banner is the contract: wire through its Methods and Events, configure through its Hooks. The doc page explains usage with full markup; the banner enumerates the surface. Cross-cutting utilities — the fetch wrapper (`NDS.request`), `data-state`/`data-status` writes (`NDS.State`/`NDS.Status`), language and breakpoint facts (`NDS.lang`, `NDS.isRTL`, `NDS.breakpoints`), i18n string tables (`NDS.i18n.load`) — live in `nds-core.js`: read ITS banner the same way, and prefer those helpers over hand-rolled equivalents.
 
-**Older template (pre-1.7.0), no banners?** Grep the same file for `NDS.<Name> = {` (the public methods) and `new CustomEvent('nds:` (the events).
-
 **Nothing there for what you need?** Going direct is fine: leave a one-line comment naming what you looked for, and an `NDS-REPORT.md` entry (see the plan section).
 
 Facts that hold across all of NDS:
@@ -232,7 +230,7 @@ When the dev asks for an upgrade, fetching the latest zip and replacing `NDS_ROO
 ## Reference index: where to look inside `NDS_ROOT`
 
 - `_source/components/*.md`: doc-page sources. Canonical `lang-html` markup + `data-*` tables + ARIA notes, no site chrome. **First stop for how to write a component.** (Two pages keep a demo or chip behind an include the source does not inline — `user-feedback.md`, `multiselect.md`; their built twins show the full demo.)
-- `_site/components/*.html`: the built doc pages. The human surface, and the markup fallback on templates before 1.7.0.
+- `_site/components/*.html`: the built doc pages. The human surface.
 - `_site/ui-shell/*.html`: chrome docs. `head.html`, `header.html`, `topbar.html`, `footer.html`, `hero.html`, `sidemenu.html`, `sideinfo.html`.
 - `_source/layout/*.md` (built: `_site/layout/*.html`): layout primitive docs. `section`, `grid`, `flex`, `block`.
 - `_source/templates/*.md` + `_source/examples/*.md`: full-page templates + composed real-world pages, raw markup (built twins in `_site/templates/` + `_site/examples/`).

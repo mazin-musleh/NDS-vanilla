@@ -72,38 +72,75 @@ def read_version():
 
 
 def sweep_issue_template(version):
-    """Prepend the current template + IQ versions to .github/ISSUE_TEMPLATE/iq-report.yml.
+    """Sync .github/ISSUE_TEMPLATE/iq-report.yml's dropdowns for the release.
 
     GitHub issue forms are static YAML (no Jekyll templating in .github/), so
-    the dropdown options need a per-release bump. Idempotent: skips if the
-    version is already the top option.
+    the options need a per-release sweep. The template-version option is
+    prepended (past releases aren't derivable); the iq-version list is fully
+    derivable from NDS-IQ.md's `instructions vN` heading, so it is REBUILT
+    as v1..vN — any revision published between releases heals here too.
+    Idempotent.
     """
     path = os.path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'iq-report.yml')
     with open(path, encoding='utf8') as f:
         text = f.read()
 
     with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
-        iq = re.search(r'instructions v(\d+)', f.read()).group(1)
+        iq = int(re.search(r'instructions v(\d+)', f.read()).group(1))
 
-    def prepend(text, dropdown_id, value):
+    def options_block(text, dropdown_id):
         pat = re.compile(
             r'(id:\s*' + re.escape(dropdown_id) + r'\b[\s\S]*?options:\n)((?:\s+- .*\n)+)')
         m = pat.search(text)
         if not m:
             sys.exit(f'iq-report.yml: dropdown {dropdown_id} not found.')
-        first = m.group(2).splitlines()[0]
-        indent = re.match(r'(\s+)- ', first).group(1)
+        indent = re.match(r'(\s+)- ', m.group(2).splitlines()[0]).group(1)
+        return m, indent
+
+    def prepend(text, dropdown_id, value):
+        m, indent = options_block(text, dropdown_id)
         entry = f'{indent}- "{value}"\n'
         if entry in m.group(2):
             return text
         return text[:m.end(1)] + entry + m.group(2) + text[m.end():]
 
+    def rebuild_iq(text, n):
+        m, indent = options_block(text, 'iq-version')
+        opts = ''.join(f'{indent}- "v{i}"\n' for i in range(n, 0, -1))
+        opts += f'{indent}- other / unknown\n'
+        return text[:m.end(1)] + opts + text[m.end():]
+
     new = prepend(text, 'template-version', version)
-    new = prepend(new, 'iq-version', f'v{iq}')
+    new = rebuild_iq(new, iq)
     if new != text:
         with open(path, 'w', encoding='utf8', newline='\n') as f:
             f.write(new)
         print(f'  swept .github/ISSUE_TEMPLATE/iq-report.yml (template {version}, IQ v{iq})')
+
+
+def sweep_pairing_stamp(version):
+    """Point NDS-IQ.md's pairing stamp at the release being packaged.
+
+    The rules support a RANGE (the revision's floor upward, and each published
+    revision stays valid for the latest published template) — this line
+    records only what the revision was validated against, so it moves every
+    release even when the rules themselves did not change. Swept before the
+    build so the zipped copy and both rendered guides carry one number.
+    verify() still checks it, which catches the line being deleted or
+    reworded here.
+    """
+    path = os.path.join(ROOT, '_includes', 'NDS-IQ.md')
+    with open(path, encoding='utf8') as f:
+        text = f.read()
+
+    new, hits = re.subn(r'Validated against template \d+\.\d+\.\d+\.',
+                        f'Validated against template {version}.', text, count=1)
+    if not hits:
+        sys.exit('_includes/NDS-IQ.md: no "Validated against template <x.y.z>." line to sweep.')
+    if new != text:
+        with open(path, 'w', encoding='utf8', newline='\n') as f:
+            f.write(new)
+        print(f'  swept _includes/NDS-IQ.md pairing stamp -> {version}')
 
 
 def stage(version):
@@ -221,10 +258,11 @@ def verify(out, version):
     m = re.search(r'instructions v(\d+)', block)
     if not m:
         sys.exit('_includes/NDS-IQ.md heading has no "instructions v<N>" stamp.')
-    paired = re.search(r'Written for template (\d+\.\d+\.\d+)\.', block)
+    paired = re.search(r'Validated against template (\d+\.\d+\.\d+)\.', block)
     if not paired or paired.group(1) != version:
         sys.exit(f'_includes/NDS-IQ.md pairing stamp ({paired.group(1) if paired else "missing"}) '
-                 f'does not match the release ({version}) — update the "Written for template" line.')
+                 f'does not match the release ({version}) — sweep_pairing_stamp() should have '
+                 f'set the "Validated against template" line; check it still exists.')
 
     # The canonical anchor text lives INSIDE the file (Install section);
     # the setup prompt and the v5/v6 migration both point installs at it.
@@ -282,6 +320,7 @@ def main():
     print(f'\nPackaging v{version}\n')
 
     sweep_issue_template(version)
+    sweep_pairing_stamp(version)
 
     if not args.no_build:
         run('bundle exec jekyll build')

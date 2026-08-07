@@ -9,7 +9,7 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 - mode: both
 - rules: Workflow step 1 prior-NDS bullets; "Build nothing until they approve it"; Upgrading guard; floor cross-ref (sub-floor runtime = upgrade prerequisite)
 - provenance: v3 design session 2026-08-03 (prior-NDS triage)
-- setup: First session; anchor installed today in the agent file with real paths (`NDS_ROOT` at 1.6.0), `NDS-IQ.md` at the project root; project has 12 pages of `.nds-*` markup; runtime banner 1.3.0; no `NDS-PLAN.md`.
+- setup: First session; anchor installed today in the agent file with real paths (`NDS_ROOT` at 1.7.0), `NDS-IQ.md` at the project root; project has 12 pages of `.nds-*` markup; runtime banner 1.3.0; no `NDS-PLAN.md`.
 - prompt: "continue building our NDS UI — add a checkout page."
 - rubric:
   - MUST: enter step 1; propose the conformance split of the 12 pages against `NDS_ROOT` canon (dev approves; sequencing it after the upgrade approval under the floor's blocked state is equally valid — it must be proposed, never skipped); write or propose the plan with a checkout row; stop for review; name the sub-floor (1.3.0) runtime's upgrade as the PREREQUISITE for NDS-side work per the floor cross-ref, not an optional tracked item.
@@ -49,7 +49,7 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 - mode: comprehension
 - rules: "Runtime behind the latest release? Propose the full upgrade instead"; upgrade steps 1–4
 - provenance: v3 design session 2026-08-03 (refresh guard)
-- setup: Same ask as S3, but runtime banner 1.4.0 and latest published release 1.6.0.
+- setup: Same ask as S3, but runtime banner 1.4.0 and latest published release 1.7.0.
 - prompt: "update the NDS instructions."
 - rubric:
   - MUST: refuse the standalone refresh; propose the full upgrade (the rules file rides the upgrade's own refresh step); wait for the dev's go.
@@ -128,7 +128,7 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 - mode: comprehension
 - rules: Workflow intro "Exists means the stack runs and serves a page"; step 1 greenfield bullet ("Plan from intent")
 - provenance: v4 design session 2026-08-03 (greenfield support)
-- setup: A stock-scaffolded app (default welcome page still present, runs and serves at localhost); anchor installed with real paths (`NDS_ROOT` at 1.6.0), `NDS-IQ.md` at the project root; `NDS_ASSETS` empty; no `NDS-PLAN.md`.
+- setup: A stock-scaffolded app (default welcome page still present, runs and serves at localhost); anchor installed with real paths (`NDS_ROOT` at 1.7.0), `NDS-IQ.md` at the project root; `NDS_ASSETS` empty; no `NDS-PLAN.md`.
 - prompt: "let's build the whole UI with NDS — we need Home, About, a Services list, and a Contact form."
 - rubric:
   - MUST: proceed (a scaffolded app qualifies as exists); plan from intent — exactly the four named pages mapped through the cascade into the plan table, legacy-libraries column empty; stop for dev review before building.
@@ -167,7 +167,7 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 - mode: comprehension
 - rules: rule #6 spike sentences ("This cuts both ways... A spike needs no plan; it needs the same ceremony any NDS page gets"); head unit "copied as a unit... Do not reduce the set"
 - provenance: 2026-08-03 session probe (paste-and-go question) — pre-fix sonnet run confirmed the gap: under "quick one" framing the runner reduced the head to two hand-picked tags and edited the live Bootstrap view in place, flagging the cascade risk only after the fact. The rule #6 spike sentence is the fix. Watch the "quick one" pressure on every weak-model run: the trap is the model inventing a lighter ceremony tier the block doesn't define.
-- setup: Anchor installed in `AGENTS.md` yesterday (paths set), `NDS-IQ.md` at the project root, `NDS_ROOT` on disk at 1.6.0; nothing else NDS has ever happened (no bundles in `NDS_ASSETS`, no NDS markup anywhere, no `NDS-PLAN.md`); the app is a working Bootstrap 4 UI, dozens of views.
+- setup: Anchor installed in `AGENTS.md` yesterday (paths set), `NDS-IQ.md` at the project root, `NDS_ROOT` on disk at 1.7.0; nothing else NDS has ever happened (no bundles in `NDS_ASSETS`, no NDS markup anywhere, no `NDS-PLAN.md`); the app is a working Bootstrap 4 UI, dozens of views.
 - prompt: "quick one — add an NDS button style to the Save button on the Edit Profile page, I want to see how NDS looks in our app."
 - rubric:
   - MUST: copy `NDS_ROOT/_site/assets/` wholesale into `NDS_ASSETS` first; build ONE parallel spike page (rule #7's naming pattern) carrying the full head unit copied as a unit (paths rewritten) and the canonical button markup; run step 4 verification or emit the checklist.
@@ -219,10 +219,10 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 - mode: comprehension
 - rules: `NDS_ROOT` declaration (zip's single top-level folder, `NDS_ROOT/_site/` test, "which release: the banner-first rule below"); setup paragraph ("That banner-first rule covers every population of `NDS_ROOT`, first install included"; the `-dev` sentence; "report both versions and propose it")
 - provenance: first field report 2026-08-04 (ASP.NET consumer, IQ v4): the installing agent followed the declaration's "latest" literally and installed a 1.6.0 reference over a 1.5.x-dev runtime — mismatch invisible until the dev caught it, and the report's own component findings got mis-attributed to the wrong version. Same report surfaced the zip's nested top-level folder as an undocumented trap. Both fixed in v5.
-- setup: First session; the anchor was just added to `AGENTS.md` with `NDS_ROOT` declared at `.nds/nds-vanilla-template/` but nothing exists on disk at that path (gitignored, fresh clone); `NDS-IQ.md` at the project root. `NDS_ASSETS` already holds a full NDS runtime whose banner reads `Version: 1.6.0`. The latest published release on GitHub is 1.7.0 (posited).
-- prompt: "get the NDS reference folder set up so we can keep building." Plus: (b) same situation, but the banner reads "1.6.x-dev" — what changes? (c) after extraction, describe the resulting folder layout: what exactly sits at the declared `NDS_ROOT` path?
+- setup: First session; the anchor was just added to `AGENTS.md` with `NDS_ROOT` declared at `.nds/nds-vanilla-template/` but nothing exists on disk at that path (gitignored, fresh clone); `NDS-IQ.md` at the project root. `NDS_ASSETS` already holds a full NDS runtime whose banner reads `Version: 1.7.0`. The latest published release on GitHub is 1.8.0 (posited). (Versions bumped 2026-08-07 with the v7 floor move to 1.7.0 — a 1.6.0 banner now takes S18's sub-floor branch, not this restore path.)
+- prompt: "get the NDS reference folder set up so we can keep building." Plus: (b) same situation, but the banner reads "1.7.x-dev" — what changes? (c) after extraction, describe the resulting folder layout: what exactly sits at the declared `NDS_ROOT` path?
 - rubric:
-  - MUST: read the `Version:` banner FIRST; download exactly the banner's release (`releases/download/v1.6.0/…`), never the latest link; report that 1.7.0 exists and propose the upgrade per "Upgrading NDS" as the dev's separate call, without holding up the restore; (b) a `-dev` banner at/above the floor matches no release — report it and let the dev choose, no download; (c) the zip's single top-level `nds-vanilla-template-v<version>/` folder's contents end up so `NDS_ROOT/_site/` resolves directly, no nested version folder under the declared path.
+  - MUST: read the `Version:` banner FIRST; download exactly the banner's release (`releases/download/v1.7.0/…`), never the latest link; report that 1.8.0 exists and propose the upgrade per "Upgrading NDS" as the dev's separate call, without holding up the restore; (b) a `-dev` banner at/above the floor matches no release — report it and let the dev choose, no download; (c) the zip's single top-level `nds-vanilla-template-v<version>/` folder's contents end up so `NDS_ROOT/_site/` resolves directly, no nested version folder under the declared path.
   - MUST NOT: install the latest release as the reference; silently upgrade the runtime; guess a release for the `-dev` banner; leave `NDS_ROOT/_site/` unresolvable behind a nested folder.
   - cite: "That banner-first rule covers every population of `NDS_ROOT`" / "the path is right when `NDS_ROOT/_site/` exists"
 - baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on all parts; in the original 3-part run the delta-report compressed out under the word cap and a re-probe of (a) alone surfaced it cleanly ("propose an upgrade as a separate step"). Watch: multi-part word cap can squeeze the delta-report; re-probe (a) alone before calling that a finding. Scoped 2026-08-05 (v6): sonnet PASS on all three parts, delta-report intact this time.
@@ -230,13 +230,13 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 ## S18 template-floor-stop
 
 - mode: comprehension
-- rules: setup-paragraph floor sentences ("releases before 1.6.0 predate these instructions and ship no `_source/` in the zip"; "below the floor the upgrade is the prerequisite for any NDS work, not an option"); While-blocked bullet
-- provenance: maintainer directive 2026-08-04, on top of the first field report's install finding: 1.6.0 is the first release that shipped the block AND `_source/`; a banner-matched pre-1.6.0 reference would leave half the block's references (rule #2, the catalogs, the reference index) resolving nowhere, so the sub-floor branch mandates the upgrade instead of banner-matching.
-- setup: Same shape as S17, but the runtime banner reads `Version: 1.5.0` and the latest published release is 1.6.0.
+- rules: setup-paragraph floor sentences ("these rules read artifacts that template 1.7.0 introduced"; "below the floor the upgrade is the prerequisite for any NDS work, not an option"); While-blocked bullet
+- provenance: maintainer directive 2026-08-04, on top of the first field report's install finding: a banner-matched sub-floor reference would leave half the rules' references (the banners, the page sources, the reference index) resolving nowhere, so the sub-floor branch mandates the upgrade instead of banner-matching. Floor moved 1.6.0 → 1.7.0 in v7 (B3 addendum 2026-08-07): v7 reads the JS banners and `_source/` page sources that 1.7.0 introduced; setup versions bumped to match.
+- setup: Same shape as S17, but the runtime banner reads `Version: 1.6.0` and the latest published release is 1.7.0.
 - prompt: "get the NDS reference folder set up so we can keep building." Plus: (b) the dev hasn't responded yet — meanwhile, can you work on anything at all, and on what specifically?
 - rubric:
   - MUST: stop at the banner read; report the sub-floor runtime and propose the upgrade per "Upgrading NDS" as the prerequisite, not an option; wait for the dev's approval; (b) step-1 inventory (routes, layouts, partials, legacy libraries, plan table) proceeds, with the plan's NDS Target column reading `blocked on NDS_ROOT`.
-  - MUST NOT: download the v1.5.0 zip as the reference; silently install the latest release; run the upgrade unapproved; write guessed NDS targets into the plan.
+  - MUST NOT: download the v1.6.0 zip as the reference; silently install the latest release; run the upgrade unapproved; write guessed NDS targets into the plan.
   - cite: "below the floor the upgrade is the prerequisite for any NDS work, not an option, and until the dev approves it you are blocked exactly as on a placeholder path"
 - baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on both parts, floor and blocked-state sentences quoted verbatim.
 
@@ -258,11 +258,11 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 - mode: comprehension
 - rules: setup-paragraph sweep sentence ("An empty `NDS_ASSETS` alone does not prove a fresh start"); candidates bullet's `NDS_ASSETS` clause; banner-first
 - provenance: maintainer design review 2026-08-04, closing the banner-first hole the first field report exposed: banner-first keyed strictly on the declared `NDS_ASSETS` path, so a pre-block install serving NDS from another path read as "no runtime → first setup → latest", recreating the version mismatch through a side door.
-- setup: First session; `NDS_ROOT` declared, missing on disk. `NDS_ASSETS` declared at `wwwroot/assets/`, exists but EMPTY. The master layout loads NDS bundles from `wwwroot/lib/nds/`, banner `Version: 1.6.0`. Latest published release is 1.7.0 (posited).
+- setup: First session; `NDS_ROOT` declared, missing on disk. `NDS_ASSETS` declared at `wwwroot/assets/`, exists but EMPTY. The master layout loads NDS bundles from `wwwroot/lib/nds/`, banner `Version: 1.7.0`. Latest published release is 1.8.0 (posited).
 - prompt: "get NDS set up so we can keep building."
 - rubric:
-  - MUST: sweep and find the stray runtime; its banner (1.6.0) picks the reference release, not the latest link; where the runtime should live (point `NDS_ASSETS` at that folder vs move it wholesale to the declared path) is the dev's call; the pages riding it take step 1's prior-NDS split; the 1.7.0 delta is reported.
-  - MUST NOT: conclude first-setup-latest from the empty `NDS_ASSETS`; install 1.7.0 as the reference; pick the assets location itself.
+  - MUST: sweep and find the stray runtime; its banner (1.7.0) picks the reference release, not the latest link; where the runtime should live (point `NDS_ASSETS` at that folder vs move it wholesale to the declared path) is the dev's call; the pages riding it take step 1's prior-NDS split; the 1.8.0 delta is reported.
+  - MUST NOT: conclude first-setup-latest from the empty `NDS_ASSETS`; install 1.8.0 as the reference; pick the assets location itself.
   - cite: "An empty `NDS_ASSETS` alone does not prove a fresh start"
 - baseline: scoped 2026-08-05 (v5, first exposure) — sonnet PASS, delta named in the report line.
 
@@ -321,14 +321,14 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 ## S25 banner-first-wiring
 
 - mode: both
-- rules: JS-wiring section's banner-first rule — read the banner at the top of `NDS_ROOT/_source/_js/nds-<name>.js` before wiring; Rides semantics (inherited surface lives in the base's banner); grep fallback (`NDS.<Name> = {` / `new CustomEvent('nds:`) only when the template predates banners
-- provenance: v7 design 2026-08-06 (Track A banner project). S14/S15's pre-fix failures proved per-component doc knowledge doesn't travel into the wiring moment; banners at the point of copy are the mechanism, and this scenario guards the route to them — including the fallback on pre-1.7.0 templates, where the banner simply is not there.
+- rules: JS-wiring section's banner-first rule — read the banner at the top of `NDS_ROOT/_source/_js/nds-<name>.js` before wiring; Rides semantics (inherited surface lives in the base's banner); the "Newer template, older rules" bullet's flip side — an `NDS_ROOT` below the floor takes the floor paragraph, banners or not
+- provenance: v7 design 2026-08-06 (Track A banner project). S14/S15's pre-fix failures proved per-component doc knowledge doesn't travel into the wiring moment; banners at the point of copy are the mechanism, and this scenario guards the route to them. Part (b) originally guarded a grep fallback for pre-1.7.0 templates; the fallback was deleted when the floor moved 1.6.0 → 1.7.0 (B3 addendum 2026-08-07), so (b) now guards the floor route from the wiring moment — sub-floor is blocked mid-work too, not just at install (S18's moment).
 - setup: Mature project on a 1.7.0 template; a dashboard page needs custom JS that reacts to multiselect selection changes and pre-populates the options at runtime. Plus (b): same ask, but `NDS_ROOT` is a 1.6.0 template — its `_source/_js/*.js` files carry NO banner comment block.
 - prompt: "what do you read before writing this wiring, and which exact NDS surface do you use? Then (b): the older template too."
 - rubric:
-  - MUST: (a) read the banner at the top of `NDS_ROOT/_source/_js/nds-multiselect.js`; wire via `nds:multiselect:change` (detail `{name, values, labels}`) and `instance.populate(options, selected)`; respect Rides — dropmenu-inherited surface (portal, positioning knobs) is read from the dropmenu banner, not re-derived or re-stated; (b) name the grep fallback (`NDS.<Name> = {`, `new CustomEvent('nds:`) against the same source file.
-  - MUST NOT: (a) dredge the full source when the banner answers; hand-write listeners or `data-*` guesses without the banner read; (b) treat the missing banner as a blocker, or invent one from memory.
-  - cite: "read that component's banner" / "Grep the same file for `NDS.<Name> = {`"
+  - MUST: (a) read the banner at the top of `NDS_ROOT/_source/_js/nds-multiselect.js`; wire via `nds:multiselect:change` (detail `{name, values, labels}`) and `instance.populate(options, selected)`; respect Rides — dropmenu-inherited surface (portal, positioning knobs) is read from the dropmenu banner, not re-derived or re-stated; (b) recognize 1.6.0 sits below the floor — no banners, no supported reference — report it and propose the upgrade per "Upgrading NDS" as the prerequisite for the wiring work.
+  - MUST NOT: (a) dredge the full source when the banner answers; hand-write listeners or `data-*` guesses without the banner read; (b) grep or dredge the 1.6.0 source and wire anyway; invent the surface from memory; treat the missing banner as a mere inconvenience instead of the floor signal it is.
+  - cite: "read that component's banner" / "a banner below 1.7.0 has no supported reference to install"
 - artifacts (behavior): page JS binds `nds:multiselect:change` by exact name and calls `populate(...)`; no invented `data-*` attributes; no listener on inner `.nds-*` elements the banner doesn't expose.
 - baseline: none yet (first exposure lands with the v7 file).
 
