@@ -10,11 +10,18 @@
   url: "/examples/services-list.html"
 
 - title: "Registration"
-  description: "Multi-step form with validation, OTP, file upload, and Hijri date selection."
+  description: "Sign-up form with field validation, a matching password check, and an OTP step."
   icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
   category: "Form"
-  tags: ["Stepper", "OTP", "Upload", "Date Picker"]
+  tags: ["Forms", "OTP", "Validation"]
   url: "/examples/registration.html"
+
+- title: "Sign In"
+  description: "National single sign-on with a credentials fallback, one-time code, and account settings."
+  icon: '<i class="hgi hgi-stroke hgi-login-circle-01"></i>'
+  category: "Form"
+  tags: ["Forms", "OTP", "Cooldown Button", "Alert"]
+  url: "/examples/sign-in.html"
 
 - title: "Faculty Profile"
   description: "Faculty member page with profile, tabbed content, and structured academic information."

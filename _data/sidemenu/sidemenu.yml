@@ -55,6 +55,9 @@
 - label: "Examples"
   has_sub: true
   children:
+    - label: "Sign In"
+      url: "/examples/sign-in"
+      href: "/examples/sign-in.html"
     - label: "Registration"
       url: "/examples/registration"
       href: "/examples/registration.html"
