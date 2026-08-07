@@ -19,6 +19,7 @@
   --_tag-fs: var(--tag-fs, var(--typo-text-md-FS));
   --_tag-padding-inline: var(--tag-padding-inline, var(--spacing-xl));
   --_tag-dot-size: var(--tag-dot-size, 10px);
+  --_tag-label-max: var(--tag-label-max, 160px);
 
   display: inline-flex;
   align-items: center;
@@ -40,16 +41,17 @@
   color: var(--_text);
   border: 1px solid var(--_border);
 
-  // Same truncation as the chip label, --truncate knob included.
+  // Chip-style truncation, fixed at one line: a tag is nowrap at a fixed
+  // height, so it has no second line for a clamp to use — chips take the
+  // --truncate knob, a tag would only ignore it.
   .nds-label {
-    --_truncate: var(--truncate, 1);
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--_truncate);
-    line-clamp: var(--_truncate);
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     text-overflow: ellipsis;
-    max-width: 160px;
+    max-width: var(--_tag-label-max);
   }
 
   // ==============================================

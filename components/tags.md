@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "27/07/2026 - 10:00 AM"
+updated: "1.6.x"
+last_edit: "07/08/2026 - 09:44 PM"
 ---
 
 <!-- Variants -->
@@ -632,6 +632,7 @@ last_edit: "27/07/2026 - 10:00 AM"
                         <tr><td><code class="nds-inline-code lang-html">--tag-fs</code></td><td><code class="nds-inline-code lang-html">--typo-text-md-FS</code></td><td>Font size</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-padding-inline</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Horizontal padding</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-dot-size</code></td><td><code class="nds-inline-code lang-html">10px</code></td><td>Diameter of the status dot indicator</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-label-max</code></td><td><code class="nds-inline-code lang-html">160px</code></td><td>Widest the label gets before it truncates with an ellipsis. A tag also caps at the width of the box that holds it, so a long label truncates instead of escaping a card or a table cell. Truncation is always one line: a tag has a fixed height</td></tr>
                     </tbody>
                 </table>
             </div>
