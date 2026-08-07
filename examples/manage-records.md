@@ -793,7 +793,7 @@ hideFeedback: true
 <!-- Create / edit dialog -->
 <div id="record-modal" class="nds-modal nds-card nds-stroke nds-lg" role="dialog" aria-labelledby="record-modal-title" aria-hidden="true" hidden>
     <div class="nds-card-header">
-        <span class="nds-featured-icon nds-circle" data-status="neutral">
+        <span class="nds-featured-icon nds-circle">
             <i class="hgi hgi-stroke hgi-file-edit"></i>
         </span>
         <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close dialog">
@@ -807,114 +807,122 @@ hideFeedback: true
                 <p class="nds-card-description">Fill in the request details. Fields marked required must be filled.</p>
             </div>
 
-            <div class="nds-form-container" data-required
-                data-url="{{ '/docs-assets/data/users-autocomplete.json' | relative_url }}"
-                data-name="Name" data-fetch="once" data-min-chars="2"
-                data-empty-message="No matching people">
-                <div class="nds-form-header">
-                    <label for="record-requester">
-                        <span class="nds-label">Requester</span>
-                    </label>
-                </div>
-                <div class="nds-form-control" data-portal>
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <input type="text" id="record-requester" class="nds-input" autocomplete="on" placeholder="Type a name..." required>
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
-                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
+            <div class="nds-scroll-more">
+                <div class="nds-scroll-more-content nds-flex nds-col" style="--gap: var(--spacing-3xl);">
+                <div class="nds-form-container" data-required
+                    data-url="{{ '/docs-assets/data/users-autocomplete.json' | relative_url }}"
+                    data-name="Name" data-fetch="once" data-min-chars="2"
+                    data-empty-message="No matching people">
+                    <div class="nds-form-header">
+                        <label for="record-requester">
+                            <span class="nds-label">Requester</span>
+                        </label>
                     </div>
-                </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
-            </div>
-
-            <div class="nds-form-container nds-select" id="record-service-field" data-required>
-                <div class="nds-form-header">
-                    <label for="record-service">
-                        <span class="nds-label">Service</span>
-                    </label>
-                </div>
-                <!-- data-portal: inside a modal the menu must escape the dialog's
-                     stacking context, or it clips at the card edge -->
-                <div class="nds-form-control" data-portal>
-                    <input type="text" id="record-service" class="nds-input nds-select-input" placeholder="Choose a service..." readonly>
-                    <input type="hidden" name="service" id="record-service-value" class="nds-select-value">
-                    <div class="nds-select-dropdown" hidden>
-                        <div class="nds-select-options">
-                            <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Commercial registration">
-                                <span class="nds-option-text">Commercial registration</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Work permit renewal">
-                                <span class="nds-option-text">Work permit renewal</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Municipal licence">
-                                <span class="nds-option-text">Municipal licence</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Building permit">
-                                <span class="nds-option-text">Building permit</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Vehicle transfer">
-                                <span class="nds-option-text">Vehicle transfer</span>
+                    <div class="nds-form-control" data-portal>
+                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                        <input type="text" id="record-requester" class="nds-input" autocomplete="on" placeholder="Type a name..." required>
+                        <div class="nds-form-action">
+                            <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
+                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
-            </div>
 
-            <div class="nds-form-container nds-date-picker" data-required>
-                <div class="nds-form-header">
-                    <label for="record-date">
-                        <span class="nds-label">Submitted</span>
-                    </label>
-                </div>
-                <div class="nds-form-control" data-portal>
-                    <div class="nds-form-action">
-                        <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
-                            <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                        </button>
+                <div class="nds-form-container nds-select" id="record-service-field" data-required>
+                    <div class="nds-form-header">
+                        <label for="record-service">
+                            <span class="nds-label">Service</span>
+                        </label>
                     </div>
-                    <input type="text" id="record-date" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-year-before="5" data-year-after="1" required>
-                </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
-            </div>
-
-            <div class="nds-form-container" data-required>
-                <div class="nds-form-header">
-                    <label for="record-amount">
-                        <span class="nds-label">Fee (SAR)</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <input type="number" id="record-amount" class="nds-input" placeholder="0" min="0" step="10" required>
-                </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
-            </div>
-
-            <div class="nds-form-container nds-select">
-                <div class="nds-form-header">
-                    <label for="record-status">
-                        <span class="nds-label">Status</span>
-                    </label>
-                </div>
-                <div class="nds-form-control" data-portal>
-                    <input type="text" id="record-status" class="nds-input nds-select-input" placeholder="Pending" readonly>
-                    <input type="hidden" name="status" id="record-status-value" class="nds-select-value">
-                    <div class="nds-select-dropdown" hidden>
-                        <div class="nds-select-options">
-                            <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="pending">
-                                <span class="nds-option-text">Pending</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="approved">
-                                <span class="nds-option-text">Approved</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="rejected">
-                                <span class="nds-option-text">Rejected</span>
-                            </button>
+                    <!-- data-portal: inside a modal the menu must escape the dialog's
+                         stacking context, or it clips at the card edge -->
+                    <div class="nds-form-control" data-portal>
+                        <input type="text" id="record-service" class="nds-input nds-select-input" placeholder="Choose a service..." readonly>
+                        <input type="hidden" name="service" id="record-service-value" class="nds-select-value">
+                        <div class="nds-select-dropdown" hidden>
+                            <div class="nds-select-options">
+                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Commercial registration">
+                                    <span class="nds-option-text">Commercial registration</span>
+                                </button>
+                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Work permit renewal">
+                                    <span class="nds-option-text">Work permit renewal</span>
+                                </button>
+                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Municipal licence">
+                                    <span class="nds-option-text">Municipal licence</span>
+                                </button>
+                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Building permit">
+                                    <span class="nds-option-text">Building permit</span>
+                                </button>
+                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="Vehicle transfer">
+                                    <span class="nds-option-text">Vehicle transfer</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
+
+                <div class="nds-form-container nds-date-picker" data-required>
+                    <div class="nds-form-header">
+                        <label for="record-date">
+                            <span class="nds-label">Submitted</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control" data-portal>
+                        <div class="nds-form-action">
+                            <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Calendar Toggler">
+                                <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="record-date" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-year-before="5" data-year-after="1" required>
+                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
+                </div>
+
+                <div class="nds-form-container" data-required>
+                    <div class="nds-form-header">
+                        <label for="record-amount">
+                            <span class="nds-label">Fee (SAR)</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <input type="number" id="record-amount" class="nds-input" placeholder="0" min="0" step="10" required>
+                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
+                </div>
+
+                <div class="nds-form-container nds-select">
+                    <div class="nds-form-header">
+                        <label for="record-status">
+                            <span class="nds-label">Status</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control" data-portal>
+                        <input type="text" id="record-status" class="nds-input nds-select-input" placeholder="Pending" readonly>
+                        <input type="hidden" name="status" id="record-status-value" class="nds-select-value">
+                        <div class="nds-select-dropdown" hidden>
+                            <div class="nds-select-options">
+                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="pending">
+                                    <span class="nds-option-text">Pending</span>
+                                </button>
+                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="approved">
+                                    <span class="nds-option-text">Approved</span>
+                                </button>
+                                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="rejected">
+                                    <span class="nds-option-text">Rejected</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
+                </div>
+                </div>
+                <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
+                    <span class="nds-label">Show more</span>
+                    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
             </div>
 
         </div>

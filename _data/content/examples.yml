@@ -39,7 +39,7 @@
 
 - title: "Manage Records"
   description: "Records screen with create, edit and delete, expandable detail rows, and export."
-  icon: '<i class="hgi hgi-stroke hgi-table-01"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'
   category: "Dashboard"
   tags: ["Tables", "Sub-Rows", "Modal", "Filter"]
   url: "/examples/manage-records.html"
