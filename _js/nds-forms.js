@@ -1177,6 +1177,15 @@
                     Utils.triggerEvents(input);
                     FieldSync.update(input, formControl);
                 });
+
+                // The clear button hides itself once the field is empty, which
+                // would drop focus to <body>. Hand it back to the field so the
+                // user can keep typing.
+                for (var i = 0; i < inputElements.length; i++) {
+                    if (inputElements[i].type === 'hidden' || inputElements[i].disabled) continue;
+                    inputElements[i].focus();
+                    break;
+                }
             });
         }
     };

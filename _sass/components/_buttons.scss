@@ -151,6 +151,27 @@
     --btn-LH: var(--typo-text-xs-LH);
   }
 
+  // Stacked button (.nds-col from the flex utilities): the icon sits above the
+  // label, so the fixed height gives way to the content and padding-block: 0
+  // leaves the rows touching the edges. Match the inline padding on both axes.
+  &.nds-col {
+    padding-block: var(--_btn-padding);
+    // Two rows of content, so the label wraps instead of running off, and the
+    // button fills its slot rather than sitting at the one-line --btn-height.
+    white-space: normal;
+    height: stretch;
+    // Column direction makes justify-content the vertical axis: the base centre
+    // would float the icon mid-button once a taller sibling stretches the row,
+    // so icons stay pinned to the top and line up across a row of choices.
+    justify-content: flex-start;
+
+    // Centred here only — the global start keeps wrapped menu labels (mainnav,
+    // drawer) hugging the start edge.
+    .nds-label {
+      text-align: center;
+    }
+  }
+
   // ==============================================
   // BUTTON VARIANTS
   // ==============================================

@@ -2,8 +2,29 @@
 
 // Cooldown state toggled on the button by _js/nds-cooldown-button.js.
 // Visuals for [data-state~="loading"] and :disabled already live in
-// components/_buttons.scss; this rule just keeps the label on one line
-// so "Resend" → "Resend in 30s" doesn't wrap or reflow neighbors.
-.nds-btn[data-state~="cooldown"] .nds-label {
+// components/_buttons.scss.
+.nds-cooldown .nds-label {
+  // The text swaps up to three times per cycle (first label → countdown → resend),
+  // and a width that follows the text resizes the button under the user's finger.
+  // The hidden row below holds the box open at the widest of the three from first
+  // paint: the JS stamps all three texts into one attribute when it wires the
+  // button, so nothing is ever measured and nothing ever reflows. Grid, so the
+  // visible row and the hidden one share a cell width.
+  display: inline-grid;
+  justify-items: center;
   white-space: nowrap;
+  // Same advance width for every digit, so 18s → 11s doesn't twitch.
+  font-variant-numeric: tabular-nums;
+
+  // One row holding every text the label can show, newline-separated, as a `pre`
+  // block: its width is the widest line. The live text is one of them and gets
+  // overwritten, so it has to be in here too — reserving only the countdown lets
+  // the button shrink when the countdown is the shorter string.
+  &::after {
+    content: attr(data-cooldown-sizes);
+    white-space: pre;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
 }

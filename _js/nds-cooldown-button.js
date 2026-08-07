@@ -21,6 +21,10 @@
  *     and cached. Editing them later has no effect. The label and toast attributes are
  *     re-read every cycle.
  *   - The button needs a <span class="nds-label"> for the countdown text to land in.
+ *   - That label holds itself open at the widest of its three texts (first label,
+ *     countdown, resend) from first paint, so the button never resizes mid-cycle.
+ *     It looks wider than its text at rest — shorten the wording, not the CSS. The
+ *     data-cooldown-sizes stamp is the component's own; do not set or style it.
  *   - It is language-agnostic: write the attribute text in the page's own language.
  *   - For a toast with a different variant or position, leave the two toast attributes off
  *     and call NDS.Alert.create() from nds:cooldown:triggered.
@@ -99,9 +103,13 @@
     function configFor(btn) {
         let cfg = config.get(btn);
         if (!cfg) {
+            const labelEl = btn.querySelector('.nds-label');
             cfg = {
                 cooldown: seconds(btn.getAttribute('data-cooldown'), 0),
-                loading: seconds(btn.getAttribute('data-cooldown-loading'), 0)
+                loading: seconds(btn.getAttribute('data-cooldown-loading'), 0),
+                // Authored label, frozen before any swap can overwrite it — the width
+                // reservation needs it for every later cycle.
+                label: labelEl ? labelEl.textContent.trim() : ''
             };
             config.set(btn, cfg);
         }
@@ -141,6 +149,18 @@
         });
     }
 
+    // Hand the CSS every text this label can show — the one it was authored with, the
+    // countdown at its starting number (its longest), and data-resend-label — so the
+    // label reserves the widest of them from first paint and the button never resizes
+    // mid-cycle. Writing one attribute; nothing is measured, nothing reflows.
+    function stampSizers(btn) {
+        const labelEl = btn.querySelector('.nds-label');
+        if (!labelEl) return;
+        const cfg = configFor(btn);
+        const texts = [cfg.label, labelTemplate(btn).replace('{s}', cfg.cooldown), resendLabel(btn)];
+        labelEl.setAttribute('data-cooldown-sizes', texts.filter((t) => t).join('\n'));
+    }
+
     function render(ctx, template, remaining) {
         if (ctx.labelEl) ctx.labelEl.textContent = template.replace('{s}', remaining);
     }
@@ -161,6 +181,10 @@
             tickTimer: null,
             triggered: false
         };
+
+        // The label + toast attributes are re-read every cycle, so re-stamp the
+        // width sizers in case the page changed the countdown or resend text.
+        stampSizers(btn);
         active.set(btn, ctx);
 
         const beginCooldown = () => {
@@ -222,6 +246,7 @@
         if (!btn || btn.hasAttribute(WIRED_ATTR)) return;
         btn.setAttribute(WIRED_ATTR, '');
         configFor(btn); // freeze cooldown durations at wire time
+        stampSizers(btn); // reserve the label width before the first click
         btn._cooldownAC = new AbortController();
         btn.addEventListener('click', () => {
             if (btn.disabled || active.has(btn)) return;

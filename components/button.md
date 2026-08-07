@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "24/07/2026 - 04:05 PM"
+updated: "1.6.x"
+last_edit: "07/08/2026 - 05:37 AM"
 ---
 
 <!-- Standard -->
@@ -375,6 +375,10 @@ last_edit: "24/07/2026 - 04:05 PM"
                                     <span class="nds-label">Trail Icon</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-col", ".nds-demo", "layoutAxis"]'>
+                                    <span class="nds-label">Stacked</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
                                     data-toggler='["data-state=loading", ".nds-demo", "layoutLoading", "attr"]'>
                                     <span class="nds-label">Loading</span>
                                 </button>
@@ -415,6 +419,68 @@ last_edit: "24/07/2026 - 04:05 PM"
   &lt;i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"&gt;&lt;/i&gt;
   &lt;span class="nds-label"&gt;Add Item&lt;/span&gt;
 &lt;/button&gt;
+                                    </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Stacked -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Stacked</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="nds-grid" style="--max-col: 3; --gap: var(--spacing-md);">
+                                <button class="nds-btn nds-secondary-outline nds-col">
+                                    <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Mobile app</span>
+                                </button>
+                                <button class="nds-btn nds-secondary-outline nds-col">
+                                    <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Email</span>
+                                </button>
+                                <button class="nds-btn nds-secondary-outline nds-col">
+                                    <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
+                                    <span class="nds-label">Text message</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-btn-stacked-1" id="tab-btn-stacked-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-stacked-1"
+                                        aria-labelledby="tab-btn-stacked-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
+&lt;div class="nds-grid" style="--max-col: 3; --gap: var(--spacing-md);"&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-col"&gt;
+    &lt;i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="nds-label"&gt;Mobile app&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-col"&gt;
+    &lt;i class="nds-icon nds-hgi-mail-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="nds-label"&gt;Email&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-col"&gt;
+    &lt;i class="nds-icon nds-hgi-notification-02" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="nds-label"&gt;Text message&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                     </div>
                                 </div>
@@ -1415,6 +1481,7 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
                         <tr><td><code class="nds-inline-code lang-html">nds-lead-icon</code></td><td>Forces icon before label (row direction)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-trail-icon</code></td><td>Forces icon after label (row-reverse)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-full</code></td><td>Full-width, centered label</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-col</code></td><td>Stacks the icon above the label. Adds matching block padding, lets the label wrap on two lines, centers it, and fills the height of its slot</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-circle</code></td><td>999px border-radius for circular icon buttons</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-indicator</code></td><td>Adds a bottom-edge active indicator bar</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-menu-btn</code></td><td>Dropdown trigger with rotating chevron indicator</td></tr>
