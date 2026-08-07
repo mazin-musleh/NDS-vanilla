@@ -12,13 +12,18 @@ lang: en
 direction: ltr
 sidemenu_mode: false
 ---
-<section id="formTemplate" class="nds-content-section nds-sideinfo-section">
+<!-- --ft-scroll-offset: the gap NDS.scrollBelowNav leaves past the nav when it
+     scrolls a new step into view. 0 lands the section flush, where the mobile
+     stepper strip pins. Without it the helper falls back to 120px. -->
+<section id="formTemplate" class="nds-content-section nds-sideinfo-section" style="--ft-scroll-offset: 0px;">
     <div class="nds-section-body">
 
         <div class="nds-info-content">
             <p class="nds-required-notice"><span class="nds-label">*Required information</span></p>
 
-            <form id="form-template" class="nds-form" novalidate>
+            <!-- data-ajax: Forms owns the submit listener and stops the POST itself
+                 after validation. Send the request from nds:formValid. -->
+            <form id="form-template" class="nds-form" data-ajax>
 
                 <!-- ============================================================
                      STEP 1 — Identity Verification
@@ -434,13 +439,10 @@ sidemenu_mode: false
 
 <script>
     (function () {
-        const stepper = document.getElementById('formStepper');
         const panels = document.querySelectorAll('[data-form-step]');
 
         const requiredNotice = document.querySelector('#formTemplate .nds-required-notice');
         const formSection = document.getElementById('formTemplate');
-        const mainNav = document.querySelector('.nds-main-nav');
-        const reducedMotionMQL = window.matchMedia('(prefers-reduced-motion: reduce)');
 
         function showPanel(step) {
             panels.forEach(p => {
@@ -451,16 +453,10 @@ sidemenu_mode: false
             const panel = document.querySelector('#formTemplate [data-form-step]:not([hidden])');
             // Scroll to the form section top, not the panel. The section sits above
             // all the dynamic content (notice, panels, mobile stepper strip), so its
-            // position never drifts and the scroll lands the same on every step. Land
-            // it flush under the nav — the mobile strip pins at exactly navHeight.
-            const navHeight = mainNav ? mainNav.offsetHeight : 72;
-            const sectionTop = formSection.getBoundingClientRect().top;
-            if (sectionTop < navHeight) {
-                window.scrollTo({
-                    top: sectionTop + window.pageYOffset - navHeight,
-                    behavior: reducedMotionMQL.matches ? 'auto' : 'smooth'
-                });
-            }
+            // position never drifts and the scroll lands the same on every step.
+            // The helper reads the nav height, skips the scroll when the section
+            // already clears it, and honours prefers-reduced-motion.
+            NDS.scrollBelowNav(formSection, { offsetVar: '--ft-scroll-offset' });
             if (panel) focusNext(panel);
         }
 
@@ -477,11 +473,12 @@ sidemenu_mode: false
             if (target) target.focus({ preventScroll: true });
         }
 
+        // Read the field as the user sees it. The date field is an NDS date picker,
+        // which writes its own formatted string (and stamps the other calendar in
+        // data-converted-date) — reparsing that would break the Hijri format.
         function valueOf(id) {
             const el = document.getElementById(id);
-            if (!el) return '';
-            if (el.type === 'date' && el.value) return new Date(el.value).toLocaleDateString();
-            return (el.value || '').trim();
+            return el ? (el.value || '').trim() : '';
         }
 
         function populateReview() {
@@ -504,11 +501,8 @@ sidemenu_mode: false
         }
 
         // Switch panels and run step-specific hooks (review summary, reference
-        // number). Special case: when the success panel (step 4) is reached on
-        // a non-radial layout, push currentStep past totalSteps so
-        // syncStepStates() marks every step as completed. On radial the push
-        // is skipped (clamping would leave no step marked current and the CSS
-        // hides non-current steps, collapsing the whole aside).
+        // number). One more next() on the last step marks every step completed —
+        // the component owns that rule, including the radial exception.
         document.addEventListener('nds:stepper:change', (e) => {
             if (e.target.id !== 'formStepper') return;
             const step = e.detail.currentStep;
@@ -519,20 +513,16 @@ sidemenu_mode: false
             if (panelStep === 4) {
                 const ref = document.getElementById('ft-reference');
                 if (ref) ref.textContent = generateReference();
-                if (step === 4 && !stepper.classList.contains('nds-radial')) {
-                    // Defer so we don't reenter syncStepStates mid-event.
-                    // The follow-up change fires with step=5; panelStep clamps
-                    // back to 4, so no recursion and the panel stays visible.
-                    queueMicrotask(() => { stepper.dataset.current = '5'; });
-                }
+                // Deferred so the second change event does not fire mid-handler.
+                // It is a no-op once the last step is already completed, so this
+                // settles after one extra pass.
+                if (step === 4) queueMicrotask(() => { NDS.Stepper.next('formStepper'); });
             }
         });
 
-        // Intercept the Submit Application button so the form does not actually
-        // POST — this is a static demo; the stepper-control handler still advances
-        // the stepper to step 4 (success).
-        const form = document.getElementById('form-template');
-        if (form) form.addEventListener('submit', (e) => e.preventDefault());
+        // The form carries data-ajax, so Forms validates on submit, stops the POST
+        // and fires nds:formValid. The stepper-control handler on the Submit
+        // Application button advances the stepper to step 4 (success).
 
         // OTP Resend: loading, cooldown, countdown, and success toast are all
         // owned by NDS.CooldownButton via data-* attrs on the button.
