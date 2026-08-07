@@ -28,8 +28,10 @@
         --_sub-item-pad: var(--spacing-xxs);
     }
 
-    :where(p, ul, ol, blockquote, figure, table, pre) {
-        margin-block: var(--spacing-lg);
+    // Two-thirds of the 24px body line box: the break reads as a break without
+    // splitting the flow into separate blocks.
+    :where(p, ul, ol, blockquote, figure, table, pre, .nds-code, .nds-alert) {
+        margin-block: var(--spacing-xl);
     }
 
     :where(ul, ol) > li {
@@ -52,6 +54,18 @@
     :where(ol ol) { list-style-type: lower-alpha; }
     :where(ol ol ol) { list-style-type: lower-roman; }
 
+    // The reset's heading gaps are tuned against page chrome, not against a
+    // paragraph rhythm — inside prose they land too close to the sibling gap
+    // above, so the eye stops reading a heading as a break. Restate them as
+    // multiples of that gap: 4x for h2, 2.5x for h3, a step the ladder shows.
+    // Every heading in the flow follows, classed or not; components keep their
+    // own look through the cascade, the way the plain-table rules below do.
+    // Ramped, not stepped: a flat gap costs a phone a tenth of its screen on
+    // one break. Floor and ceiling are the rungs either side, the slope tops
+    // out at the 1200px viewport the typo clamps top out at.
+    :where(h2) { margin-top: clamp(var(--spacing-6xl), 5.33vw, var(--spacing-7xl)); }
+    :where(h3) { margin-top: clamp(var(--spacing-4xl), 3.33vw, var(--spacing-5xl)); }
+
     > :where(*:first-child) {
         margin-block-start: 0;
     }
@@ -63,6 +77,22 @@
 
 .nds-prose {
     @include prose-flow;
+
+    // Same readable measure section descriptions and wrapped code already use.
+    // Running text only — tables, code and demos keep the full column. A list
+    // caps its box, not its text, so its indent eats into the measure and both
+    // edges line up with the paragraphs around it. Direct children only: text
+    // inside a component is measured by that component's box, and capping it
+    // again just leaves it ragged in a wide one.
+    > :where(p, ul, ol) {
+        max-width: var(--paragraph-max-width);
+    }
+
+    // The alert keeps its full-width box; only the text inside it drops to the
+    // reading measure, so it wraps in step with the paragraphs around it.
+    :where(.nds-alert-content) {
+        max-width: var(--paragraph-max-width);
+    }
 
     // Flowing-citation tier; the featured pull-quote card is .nds-quote
     // (components/_quote.scss) — same border token family by design

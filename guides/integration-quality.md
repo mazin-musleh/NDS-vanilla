@@ -3,7 +3,7 @@ layout: page
 title: NDS IQ
 since: "1.6.x"
 updated: "1.7.0"
-last_edit: "07/08/2026 - 09:40 PM"
+last_edit: "08/08/2026 - 12:39 AM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -42,24 +42,18 @@ sidemenu_mode: false
 
                 <p><strong>NDS IQ (Integration Quality)</strong> is the instruction system that governs AI agents building with NDS. It drives the whole lifecycle: installing the runtime, porting or building pages, verifying them in the browser, and upgrading.</p>
                 <p>It installs as two pieces. The rules live in <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, and a short <strong>anchor</strong> goes into the project's agent instruction file (<code class="nds-inline-code lang-html">CLAUDE.md</code> or <code class="nds-inline-code lang-html">AGENTS.md</code>). The anchor declares the two paths that configure everything, and tells every session to read the rules before NDS work starts. Only the anchor loads on every turn; the rules are read <strong>on demand, once per session</strong>, so a project pays for them on the days it builds UI.</p>
-                <p>That split is what makes the rules file universal: every project's copy is byte-identical, because the only per-project values live in the anchor. Refreshing the rules is a whole-file replace, never an edit.</p>
+                <p>That split is what makes the rules file universal: every project's copy is byte-identical, because the only per-project values live in the anchor. A rules update is a whole-file replace, never an edit.</p>
                 <p>Installation, the workflow, and the full rule text live in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>. This page explains the system itself: how it is built, tested, versioned, and kept current.</p>
 
                 <h2 id="how-built">How It Is Built</h2>
                 <p>Three sources feed every rule: component internals, real migrations, and regression tests.</p>
 
-                <div class="nds-block">
-                    <h3 id="from-source">From the Source Outward</h3>
-                    <p>The rules start where the components are defined: init lifecycles, event surfaces, state cascades, and the dependency graph between components. What an agent must never guess (markup structure, API shapes, attribute contracts) is written down as law; what it can safely derive is left to the agent.</p>
-                </div>
-                <div class="nds-block">
-                    <h3 id="hardened">Hardened by Real Migrations</h3>
-                    <p>Revisions are driven by <strong>evidence, not speculation</strong>. NDS runs real adoption and migration projects with AI agents, and each failure an agent hits becomes a candidate rule. A finding earns its sentence only after verification against the source: reported gaps that turn out to be agent noise are dropped, not codified.</p>
-                </div>
-                <div class="nds-block">
-                    <h3 id="tested">Tested per Revision</h3>
-                    <p>The rules must not depend on a strong model to be read correctly. Before a revision publishes, a scenario suite replays real failure cases against fresh agents on the weakest model tier the rules serve. A new rule goes through a <strong>fail, fix, pass loop</strong>: the failure is reproduced against the old text, the rule lands, and the same scenario must pass against the new text. Passing scenarios stay in the suite as regression tripwires for every later edit.</p>
-                </div>
+                <h3 id="from-source">From the Source Outward</h3>
+                <p>The rules start where the components are defined: init lifecycles, event surfaces, state cascades, and the dependency graph between components. What an agent must never guess (markup structure, API shapes, attribute contracts) is written down as law; what it can safely derive is left to the agent.</p>
+                <h3 id="hardened">Hardened by Real Migrations</h3>
+                <p>Revisions are driven by <strong>evidence, not speculation</strong>. NDS runs real adoption and migration projects with AI agents, and each failure an agent hits becomes a candidate rule. A finding earns its sentence only after verification against the source: reported gaps that turn out to be agent noise are dropped, not codified.</p>
+                <h3 id="tested">Tested per Revision</h3>
+                <p>The rules must not depend on a strong model to be read correctly. Before a revision publishes, a scenario suite replays real failure cases against fresh agents on the weakest model tier the rules serve. A new rule goes through a <strong>fail, fix, pass loop</strong>: the failure is reproduced against the old text, the rule lands, and the same scenario must pass against the new text. Passing scenarios stay in the suite as regression tripwires for every later edit.</p>
 
                 <h2 id="governs">What It Governs</h2>
                 <p>A map of the system. The letter of every rule lives in the Get Started guide.</p>
@@ -79,7 +73,7 @@ sidemenu_mode: false
                 <h2 id="revisions">Revision History</h2>
                 <p>The rules version independently of the template: a plain integer, bumped once per published revision.</p>
 
-                <p>The current revision is stamped in the file's own heading (<code class="nds-inline-code lang-html">instructions v{{ _iq_v }}</code>) and on the green chip beside the rendered copy below. An installed copy compares its stamp against the published one during upgrades to know when a refresh is due. The anchor carries no version: it never needs updating.</p>
+                <p>The current revision is stamped in the file's own heading (<code class="nds-inline-code lang-html">instructions v{{ _iq_v }}</code>) and on the green chip beside the rendered copy below. An installed copy compares its stamp against the published one during upgrades to know when an update is due. The anchor carries no version: it never needs updating.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Revision</th><th>Template</th><th>Highlights</th></tr></thead>
                     <tbody>
@@ -99,9 +93,9 @@ sidemenu_mode: false
                 <p>Two paths deliver updates:</p>
                 <ul>
                     <li><strong>Template upgrade</strong>: the matching revision rides along, as the last step of the upgrade workflow.</li>
-                    <li><strong>Standalone refresh</strong>: on ask, the agent fetches the latest revision straight from the repository, even between template releases.</li>
+                    <li><strong>Standalone update</strong>: on ask, the agent fetches the latest revision straight from the repository, even between template releases.</li>
                 </ul>
-                <p>Both paths do the same thing: compare the installed file's heading against the published one, and replace the file whole when it is behind. No merging, no partial patches, no surgery on an installed copy. The anchor is never touched, so a refresh <strong>never loses local configuration</strong> — the two paths live there, not in the file being replaced. The agent handles all of it; the upgrade prompt in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> is the whole interface.</p>
+                <p>Both paths do the same thing: compare the installed file's heading against the published one, and replace the file whole when it is behind. No merging, no partial patches, no surgery on an installed copy. The anchor is never touched, so an update <strong>never loses local configuration</strong> — the two paths live there, not in the file being replaced. The agent handles all of it; the upgrade prompt in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> is the whole interface.</p>
                 <p>Projects still running a pasted v6 block migrate on their next refresh: the old raw URL now serves a pointer that carries them to the file-and-anchor model, then the pasted block is deleted.</p>
 
                 <h2 id="compatibility">Compatibility</h2>
