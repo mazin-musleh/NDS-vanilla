@@ -1,0 +1,12 @@
+# Build output
+node_modules/
+build/
+dist/
+
+# Composer (if introduced later)
+vendor/
+
+# Local WP installs
+*.sql
+*.sql.gz
+.DS_Store

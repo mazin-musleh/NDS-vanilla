@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nds/tab",
+	"version": "0.1.0",
+	"title": "NDS Tab",
+	"category": "design",
+	"parent": [ "nds/tabs" ],
+	"icon": "table-row-after",
+	"description": "A single tab panel. Its title is set in the sidebar; its content is the inner blocks.",
+	"textdomain": "nds-theme",
+	"attributes": {
+		"title": { "type": "string", "default": "Tab" }
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./edit.js"
+}

@@ -1,0 +1,20 @@
+/*
+Theme Name: NDS
+Theme URI: https://github.com/akatsuki2020a/NDS-vanilla
+Author: NDS
+Author URI: https://github.com/akatsuki2020a/NDS-vanilla
+Description: WordPress block theme port of the National Design System (NDS) — Saudi Arabia's DGA design system, rebuilt from the vanilla HTML/CSS/JS reference implementation. RTL (Arabic) first, token-driven theming, block-based architecture.
+Requires at least: 6.6
+Tested up to: 6.8
+Requires PHP: 7.4
+Version: 0.1.0
+License: MIT
+License URI: https://opensource.org/licenses/MIT
+Text Domain: nds-theme
+Tags: block-patterns, block-styles, full-site-editing, rtl-language-support, translation-ready
+*/
+
+/*
+ * This file intentionally contains no CSS rules.
+ * All styles are provided through theme.json and assets/css/nds-critical.css.
+ */

@@ -1,0 +1,974 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "defaultPalette": false,
+      "defaultGradients": false,
+      "palette": [
+        {
+          "name": "Primary 25",
+          "slug": "primary-25",
+          "color": "#f7fdf9"
+        },
+        {
+          "name": "Primary 50",
+          "slug": "primary-50",
+          "color": "#f3fcf6"
+        },
+        {
+          "name": "Primary 100",
+          "slug": "primary-100",
+          "color": "#dff6e7"
+        },
+        {
+          "name": "Primary 200",
+          "slug": "primary-200",
+          "color": "#b8eacb"
+        },
+        {
+          "name": "Primary 300",
+          "slug": "primary-300",
+          "color": "#88d8ad"
+        },
+        {
+          "name": "Primary 400",
+          "slug": "primary-400",
+          "color": "#54c08a"
+        },
+        {
+          "name": "Primary 500",
+          "slug": "primary-500",
+          "color": "#25935f"
+        },
+        {
+          "name": "Primary 600",
+          "slug": "primary-600",
+          "color": "#1b8354"
+        },
+        {
+          "name": "Primary 700",
+          "slug": "primary-700",
+          "color": "#166a45"
+        },
+        {
+          "name": "Primary 800",
+          "slug": "primary-800",
+          "color": "#14573a"
+        },
+        {
+          "name": "Primary 900",
+          "slug": "primary-900",
+          "color": "#104631"
+        },
+        {
+          "name": "Primary 950",
+          "slug": "primary-950",
+          "color": "#092a1e"
+        },
+        {
+          "name": "Secondary 25",
+          "slug": "secondary-25",
+          "color": "#fffef7"
+        },
+        {
+          "name": "Secondary 50",
+          "slug": "secondary-50",
+          "color": "#fffef2"
+        },
+        {
+          "name": "Secondary 100",
+          "slug": "secondary-100",
+          "color": "#fffce6"
+        },
+        {
+          "name": "Secondary 200",
+          "slug": "secondary-200",
+          "color": "#fcf3bd"
+        },
+        {
+          "name": "Secondary 300",
+          "slug": "secondary-300",
+          "color": "#fae996"
+        },
+        {
+          "name": "Secondary 400",
+          "slug": "secondary-400",
+          "color": "#f7d54d"
+        },
+        {
+          "name": "Secondary 500",
+          "slug": "secondary-500",
+          "color": "#f5bd02"
+        },
+        {
+          "name": "Secondary 600",
+          "slug": "secondary-600",
+          "color": "#dba102"
+        },
+        {
+          "name": "Secondary 700",
+          "slug": "secondary-700",
+          "color": "#b87b02"
+        },
+        {
+          "name": "Secondary 800",
+          "slug": "secondary-800",
+          "color": "#945c01"
+        },
+        {
+          "name": "Secondary 900",
+          "slug": "secondary-900",
+          "color": "#6e3c00"
+        },
+        {
+          "name": "Secondary 950",
+          "slug": "secondary-950",
+          "color": "#472400"
+        },
+        {
+          "name": "Tertiary 25",
+          "slug": "tertiary-25",
+          "color": "#fefcff"
+        },
+        {
+          "name": "Tertiary 50",
+          "slug": "tertiary-50",
+          "color": "#f9f5fa"
+        },
+        {
+          "name": "Tertiary 100",
+          "slug": "tertiary-100",
+          "color": "#f2e9f5"
+        },
+        {
+          "name": "Tertiary 200",
+          "slug": "tertiary-200",
+          "color": "#e1cce8"
+        },
+        {
+          "name": "Tertiary 300",
+          "slug": "tertiary-300",
+          "color": "#ccadd9"
+        },
+        {
+          "name": "Tertiary 400",
+          "slug": "tertiary-400",
+          "color": "#a57bba"
+        },
+        {
+          "name": "Tertiary 500",
+          "slug": "tertiary-500",
+          "color": "#80519f"
+        },
+        {
+          "name": "Tertiary 600",
+          "slug": "tertiary-600",
+          "color": "#6d428f"
+        },
+        {
+          "name": "Tertiary 700",
+          "slug": "tertiary-700",
+          "color": "#532d75"
+        },
+        {
+          "name": "Tertiary 800",
+          "slug": "tertiary-800",
+          "color": "#3d1d5e"
+        },
+        {
+          "name": "Tertiary 900",
+          "slug": "tertiary-900",
+          "color": "#281047"
+        },
+        {
+          "name": "Tertiary 950",
+          "slug": "tertiary-950",
+          "color": "#16072e"
+        },
+        {
+          "name": "Neutral 25",
+          "slug": "neutral-25",
+          "color": "#fcfcfd"
+        },
+        {
+          "name": "Neutral 50",
+          "slug": "neutral-50",
+          "color": "#f9fafb"
+        },
+        {
+          "name": "Neutral 100",
+          "slug": "neutral-100",
+          "color": "#f3f4f6"
+        },
+        {
+          "name": "Neutral 200",
+          "slug": "neutral-200",
+          "color": "#e5e7eb"
+        },
+        {
+          "name": "Neutral 300",
+          "slug": "neutral-300",
+          "color": "#d2d6db"
+        },
+        {
+          "name": "Neutral 400",
+          "slug": "neutral-400",
+          "color": "#9da4ae"
+        },
+        {
+          "name": "Neutral 500",
+          "slug": "neutral-500",
+          "color": "#6c727e"
+        },
+        {
+          "name": "Neutral 600",
+          "slug": "neutral-600",
+          "color": "#4d5761"
+        },
+        {
+          "name": "Neutral 700",
+          "slug": "neutral-700",
+          "color": "#384250"
+        },
+        {
+          "name": "Neutral 750",
+          "slug": "neutral-750",
+          "color": "#2b3643"
+        },
+        {
+          "name": "Neutral 800",
+          "slug": "neutral-800",
+          "color": "#1f2a37"
+        },
+        {
+          "name": "Neutral 850",
+          "slug": "neutral-850",
+          "color": "#18212f"
+        },
+        {
+          "name": "Neutral 900",
+          "slug": "neutral-900",
+          "color": "#111927"
+        },
+        {
+          "name": "Neutral 950",
+          "slug": "neutral-950",
+          "color": "#0c111b"
+        },
+        {
+          "name": "Blue 25",
+          "slug": "blue-25",
+          "color": "#f5faff"
+        },
+        {
+          "name": "Blue 50",
+          "slug": "blue-50",
+          "color": "#eff8ff"
+        },
+        {
+          "name": "Blue 100",
+          "slug": "blue-100",
+          "color": "#d1e9ff"
+        },
+        {
+          "name": "Blue 200",
+          "slug": "blue-200",
+          "color": "#b2ddff"
+        },
+        {
+          "name": "Blue 300",
+          "slug": "blue-300",
+          "color": "#84caff"
+        },
+        {
+          "name": "Blue 400",
+          "slug": "blue-400",
+          "color": "#53b0fd"
+        },
+        {
+          "name": "Blue 500",
+          "slug": "blue-500",
+          "color": "#2e90fa"
+        },
+        {
+          "name": "Blue 600",
+          "slug": "blue-600",
+          "color": "#156fee"
+        },
+        {
+          "name": "Blue 700",
+          "slug": "blue-700",
+          "color": "#175cd3"
+        },
+        {
+          "name": "Blue 800",
+          "slug": "blue-800",
+          "color": "#1849a9"
+        },
+        {
+          "name": "Blue 900",
+          "slug": "blue-900",
+          "color": "#194084"
+        },
+        {
+          "name": "Blue 950",
+          "slug": "blue-950",
+          "color": "#102a56"
+        },
+        {
+          "name": "Green 25",
+          "slug": "green-25",
+          "color": "#f6fef9"
+        },
+        {
+          "name": "Green 50",
+          "slug": "green-50",
+          "color": "#ecfdf3"
+        },
+        {
+          "name": "Green 100",
+          "slug": "green-100",
+          "color": "#dcfae6"
+        },
+        {
+          "name": "Green 200",
+          "slug": "green-200",
+          "color": "#abefc6"
+        },
+        {
+          "name": "Green 300",
+          "slug": "green-300",
+          "color": "#75dfa6"
+        },
+        {
+          "name": "Green 400",
+          "slug": "green-400",
+          "color": "#47cd89"
+        },
+        {
+          "name": "Green 500",
+          "slug": "green-500",
+          "color": "#17b169"
+        },
+        {
+          "name": "Green 600",
+          "slug": "green-600",
+          "color": "#069454"
+        },
+        {
+          "name": "Green 700",
+          "slug": "green-700",
+          "color": "#067647"
+        },
+        {
+          "name": "Green 800",
+          "slug": "green-800",
+          "color": "#085d3a"
+        },
+        {
+          "name": "Green 900",
+          "slug": "green-900",
+          "color": "#074c30"
+        },
+        {
+          "name": "Green 950",
+          "slug": "green-950",
+          "color": "#053321"
+        },
+        {
+          "name": "Yellow 25",
+          "slug": "yellow-25",
+          "color": "#fffcf5"
+        },
+        {
+          "name": "Yellow 50",
+          "slug": "yellow-50",
+          "color": "#fffaeb"
+        },
+        {
+          "name": "Yellow 100",
+          "slug": "yellow-100",
+          "color": "#fef0c7"
+        },
+        {
+          "name": "Yellow 200",
+          "slug": "yellow-200",
+          "color": "#fedf89"
+        },
+        {
+          "name": "Yellow 300",
+          "slug": "yellow-300",
+          "color": "#fec84b"
+        },
+        {
+          "name": "Yellow 400",
+          "slug": "yellow-400",
+          "color": "#fdb022"
+        },
+        {
+          "name": "Yellow 500",
+          "slug": "yellow-500",
+          "color": "#f79009"
+        },
+        {
+          "name": "Yellow 600",
+          "slug": "yellow-600",
+          "color": "#dc6803"
+        },
+        {
+          "name": "Yellow 700",
+          "slug": "yellow-700",
+          "color": "#b54707"
+        },
+        {
+          "name": "Yellow 800",
+          "slug": "yellow-800",
+          "color": "#93370c"
+        },
+        {
+          "name": "Yellow 900",
+          "slug": "yellow-900",
+          "color": "#7a2e0e"
+        },
+        {
+          "name": "Yellow 950",
+          "slug": "yellow-950",
+          "color": "#4e1d09"
+        },
+        {
+          "name": "Red 25",
+          "slug": "red-25",
+          "color": "#fffbfa"
+        },
+        {
+          "name": "Red 50",
+          "slug": "red-50",
+          "color": "#fef3f2"
+        },
+        {
+          "name": "Red 100",
+          "slug": "red-100",
+          "color": "#fee4e2"
+        },
+        {
+          "name": "Red 200",
+          "slug": "red-200",
+          "color": "#fecdca"
+        },
+        {
+          "name": "Red 300",
+          "slug": "red-300",
+          "color": "#fca19b"
+        },
+        {
+          "name": "Red 400",
+          "slug": "red-400",
+          "color": "#f97066"
+        },
+        {
+          "name": "Red 500",
+          "slug": "red-500",
+          "color": "#f04437"
+        },
+        {
+          "name": "Red 600",
+          "slug": "red-600",
+          "color": "#d92c20"
+        },
+        {
+          "name": "Red 700",
+          "slug": "red-700",
+          "color": "#b42318"
+        },
+        {
+          "name": "Red 800",
+          "slug": "red-800",
+          "color": "#912018"
+        },
+        {
+          "name": "Red 900",
+          "slug": "red-900",
+          "color": "#7a2619"
+        },
+        {
+          "name": "Red 950",
+          "slug": "red-950",
+          "color": "#54150c"
+        },
+        {
+          "name": "Base White",
+          "slug": "base-white",
+          "color": "#ffffff"
+        },
+        {
+          "name": "Base Black",
+          "slug": "base-black",
+          "color": "#161616"
+        }
+      ],
+      "gradients": [
+        {
+          "name": "Primary Gradient",
+          "slug": "primary-gradient",
+          "gradient": "linear-gradient(135deg, #104631 0%, #1b8354 100%)"
+        }
+      ]
+    },
+    "typography": {
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "fontFamily": "\"IBM Plex Sans Arabic\", sans-serif",
+          "slug": "ibm-plex-sans-arabic",
+          "name": "IBM Plex Sans Arabic",
+          "fontFace": [
+            {
+              "fontFamily": "IBM Plex Sans Arabic",
+              "fontWeight": "300 400",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/IBMPlexSansArabic-Regular.woff2"
+              ],
+              "unicodeRange": "U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1"
+            },
+            {
+              "fontFamily": "IBM Plex Sans Arabic",
+              "fontWeight": "500",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/IBMPlexSansArabic-Medium.woff2"
+              ],
+              "unicodeRange": "U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1"
+            },
+            {
+              "fontFamily": "IBM Plex Sans Arabic",
+              "fontWeight": "600",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/IBMPlexSansArabic-SemiBold.woff2"
+              ],
+              "unicodeRange": "U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1"
+            },
+            {
+              "fontFamily": "IBM Plex Sans Arabic",
+              "fontWeight": "700",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/IBMPlexSansArabic-Bold.woff2"
+              ],
+              "unicodeRange": "U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1"
+            },
+            {
+              "fontFamily": "IBM Plex Sans Arabic",
+              "fontWeight": "300 400",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/IBMPlexSans-Regular-Latin1.woff2"
+              ],
+              "unicodeRange": "U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02"
+            },
+            {
+              "fontFamily": "IBM Plex Sans Arabic",
+              "fontWeight": "500",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/IBMPlexSans-Medium-Latin1.woff2"
+              ],
+              "unicodeRange": "U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02"
+            },
+            {
+              "fontFamily": "IBM Plex Sans Arabic",
+              "fontWeight": "600",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/IBMPlexSans-SemiBold-Latin1.woff2"
+              ],
+              "unicodeRange": "U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02"
+            },
+            {
+              "fontFamily": "IBM Plex Sans Arabic",
+              "fontWeight": "700",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/IBMPlexSans-Bold-Latin1.woff2"
+              ],
+              "unicodeRange": "U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02"
+            }
+          ]
+        }
+      ],
+      "fontSizes": [
+        {
+          "name": "Display 2XL",
+          "slug": "display-2xl",
+          "size": "clamp(48px, 2.0vw, 72px)",
+          "fluid": {
+            "min": "48px",
+            "max": "72px"
+          }
+        },
+        {
+          "name": "Display XL",
+          "slug": "display-xl",
+          "size": "clamp(40px, 1.67vw, 60px)",
+          "fluid": {
+            "min": "40px",
+            "max": "60px"
+          }
+        },
+        {
+          "name": "Display LG",
+          "slug": "display-lg",
+          "size": "clamp(32px, 1.33vw, 48px)",
+          "fluid": {
+            "min": "32px",
+            "max": "48px"
+          }
+        },
+        {
+          "name": "Display MD",
+          "slug": "display-md",
+          "size": "clamp(24px, 1.0vw, 36px)",
+          "fluid": {
+            "min": "24px",
+            "max": "36px"
+          }
+        },
+        {
+          "name": "Display SM",
+          "slug": "display-sm",
+          "size": "clamp(20px, 0.83vw, 30px)",
+          "fluid": {
+            "min": "20px",
+            "max": "30px"
+          }
+        },
+        {
+          "name": "Display XS",
+          "slug": "display-xs",
+          "size": "clamp(18px, 0.5vw, 24px)",
+          "fluid": {
+            "min": "18px",
+            "max": "24px"
+          }
+        },
+        {
+          "name": "Text XL",
+          "slug": "text-xl",
+          "size": "clamp(16px, 0.33vw, 20px)",
+          "fluid": {
+            "min": "16px",
+            "max": "20px"
+          }
+        },
+        {
+          "name": "Text LG",
+          "slug": "text-lg",
+          "size": "clamp(14px, 0.33vw, 18px)",
+          "fluid": {
+            "min": "14px",
+            "max": "18px"
+          }
+        },
+        {
+          "name": "Text MD",
+          "slug": "text-md",
+          "size": "clamp(12px, 0.33vw, 16px)",
+          "fluid": {
+            "min": "12px",
+            "max": "16px"
+          }
+        },
+        {
+          "name": "Text SM",
+          "slug": "text-sm",
+          "size": "clamp(10px, 0.33vw, 14px)",
+          "fluid": {
+            "min": "10px",
+            "max": "14px"
+          }
+        },
+        {
+          "name": "Text XS",
+          "slug": "text-xs",
+          "size": "clamp(8px, 0.33vw, 12px)",
+          "fluid": {
+            "min": "8px",
+            "max": "12px"
+          }
+        },
+        {
+          "name": "Text 2XS",
+          "slug": "text-2xs",
+          "size": "clamp(8px, 0.17vw, 10px)",
+          "fluid": {
+            "min": "8px",
+            "max": "10px"
+          }
+        }
+      ]
+    },
+    "spacing": {
+      "spacingSizes": [
+        {
+          "name": "Spacing xs",
+          "slug": "xs",
+          "size": "4px"
+        },
+        {
+          "name": "Spacing sm",
+          "slug": "sm",
+          "size": "6px"
+        },
+        {
+          "name": "Spacing md",
+          "slug": "md",
+          "size": "8px"
+        },
+        {
+          "name": "Spacing lg",
+          "slug": "lg",
+          "size": "12px"
+        },
+        {
+          "name": "Spacing xl",
+          "slug": "xl",
+          "size": "16px"
+        },
+        {
+          "name": "Spacing 2xl",
+          "slug": "2xl",
+          "size": "20px"
+        },
+        {
+          "name": "Spacing 3xl",
+          "slug": "3xl",
+          "size": "24px"
+        },
+        {
+          "name": "Spacing 4xl",
+          "slug": "4xl",
+          "size": "32px"
+        },
+        {
+          "name": "Spacing 5xl",
+          "slug": "5xl",
+          "size": "40px"
+        },
+        {
+          "name": "Spacing 6xl",
+          "slug": "6xl",
+          "size": "48px"
+        },
+        {
+          "name": "Spacing 7xl",
+          "slug": "7xl",
+          "size": "64px"
+        },
+        {
+          "name": "Spacing 8xl",
+          "slug": "8xl",
+          "size": "80px"
+        },
+        {
+          "name": "Spacing 9xl",
+          "slug": "9xl",
+          "size": "96px"
+        },
+        {
+          "name": "Spacing 10xl",
+          "slug": "10xl",
+          "size": "128px"
+        },
+        {
+          "name": "Spacing 11xl",
+          "slug": "11xl",
+          "size": "160px"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "1280px",
+      "wideSize": "1600px"
+    },
+    "custom": {
+      "nds": {
+        "navHeight": "72px",
+        "sidemenuWidth": "260px",
+        "sideinfoWidth": "400px",
+        "viewportPadding": "32px",
+        "contentMaxWidth": "1280px",
+        "radiusSm": "4px",
+        "radiusMd": "8px",
+        "radiusLg": "16px",
+        "transitionSpeed": "0.2s"
+      }
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--neutral-50)",
+      "text": "var(--wp--preset--color--neutral-900)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--ibm-plex-sans-arabic)",
+      "fontSize": "var(--wp--preset--font-size--text-md)",
+      "lineHeight": "1.6"
+    },
+    "elements": {
+      "heading": {
+        "color": "var(--wp--preset--color--neutral-800)",
+        "typography": {
+          "fontWeight": "700",
+          "lineHeight": "1.25"
+        }
+      },
+      "link": {
+        "color": "var(--wp--preset--color--primary-600)",
+        "textDecoration": "none",
+        ":hover": {
+          "color": "var(--wp--preset--color--primary-700)",
+          "textDecoration": "underline"
+        }
+      },
+      "button": {
+        "color": "var(--wp--preset--color--base-white)",
+        "backgroundColor": "var(--wp--preset--color--primary-600)",
+        "borderRadius": "var(--wp--custom--nds--radius-md)"
+      }
+    },
+    "blocks": {
+      "core/button": {
+        "borderRadius": "var(--wp--custom--nds--radius-md)"
+      },
+      "core/separator": {
+        "color": "var(--wp--preset--color--neutral-200)"
+      }
+    },
+    "css": ":root { color-scheme: light; }"
+  },
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "Header",
+      "area": "header"
+    },
+    {
+      "name": "topbar",
+      "title": "Top Bar",
+      "area": "header"
+    },
+    {
+      "name": "mainnav",
+      "title": "Main Navigation",
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "Footer",
+      "area": "footer"
+    },
+    {
+      "name": "post-meta",
+      "title": "Post Meta",
+      "area": "uncategorized"
+    },
+    {
+      "name": "cookie-popup",
+      "title": "Cookie Popup",
+      "area": "uncategorized"
+    },
+    {
+      "name": "accessibility",
+      "title": "Accessibility Panel",
+      "area": "uncategorized"
+    },
+    {
+      "name": "user-feedback",
+      "title": "User Feedback",
+      "area": "uncategorized"
+    }
+  ],
+  "customTemplates": [
+    {
+      "name": "template-service",
+      "title": "Service",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-faq",
+      "title": "FAQ",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-contact",
+      "title": "Contact",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-form",
+      "title": "Multi-step Form",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-kpis",
+      "title": "KPIs Dashboard",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-help",
+      "title": "Help & Support",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-about",
+      "title": "About Entity",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-e-participation",
+      "title": "e-Participation",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-social",
+      "title": "Social Media",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "template-search",
+      "title": "Search Landing",
+      "postTypes": [
+        "page"
+      ]
+    }
+  ]
+}

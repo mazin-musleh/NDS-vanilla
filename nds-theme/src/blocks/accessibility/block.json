@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nds/accessibility",
+	"version": "0.1.0",
+	"title": "NDS Accessibility Panel",
+	"category": "widgets",
+	"icon": "universal-access-alt",
+	"description": "Floating accessibility panel: font scaling, dyslexia font, contrast, and text spacing. Presets persisted across pages.",
+	"textdomain": "nds-theme",
+	"supports": {
+		"html": false,
+		"align": false,
+		"multiple": false
+	},
+	"render": "file:./render.php",
+	"blockHooks": {
+		"core/footer": "after"
+	}
+}

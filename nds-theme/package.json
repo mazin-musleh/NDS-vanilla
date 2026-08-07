@@ -1,0 +1,18 @@
+{
+	"name": "nds-theme",
+	"version": "0.1.0",
+	"description": "WordPress block theme port of the National Design System (NDS).",
+	"author": "NDS",
+	"license": "MIT",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:js": "wp-scripts lint-js",
+		"lint:css": "wp-scripts lint-style",
+		"format": "wp-scripts format",
+		"bundle:theme-json": "python3 scripts/generate-theme-json.py"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^27.0.0"
+	}
+}

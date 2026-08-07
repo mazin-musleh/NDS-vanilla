@@ -1,0 +1,1885 @@
+{
+  "nds_component": [
+    {
+      "title": "Themes",
+      "excerpt": "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet theme",
+      "category": "Foundations",
+      "tags": [
+        "CSS",
+        "JS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-paint-bucket",
+        "_nds_source_url": "/components/themes.html"
+      }
+    },
+    {
+      "title": "Tokens",
+      "excerpt": "Every CSS custom property in the system: palette, primitive scales, semantic meanings, and component dials to reference and override",
+      "category": "Foundations",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-cube",
+        "_nds_source_url": "/components/tokens.html"
+      }
+    },
+    {
+      "title": "Icons",
+      "excerpt": "The HugeIcons Stroke Rounded font for content plus a curated inline SVG set for components and chrome, with sizing, color, and license guidance",
+      "category": "Foundations",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-svg-01",
+        "_nds_source_url": "/components/icons.html"
+      }
+    },
+    {
+      "title": "Accordion",
+      "excerpt": "Expandable content panels with nested group support",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-arrow-shrink-02",
+        "_nds_source_url": "/components/accordion.html"
+      }
+    },
+    {
+      "title": "Alert",
+      "excerpt": "Contextual messages for status, warnings, and notifications",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-alert-02",
+        "_nds_source_url": "/components/alert.html"
+      }
+    },
+    {
+      "title": "Avatar",
+      "excerpt": "Profile images, initials, and group stacks",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_source_url": "/components/avatar.html"
+      }
+    },
+    {
+      "title": "Breadcrumb",
+      "excerpt": "Hierarchical path showing the current page location",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-arrow-right-double",
+        "_nds_source_url": "/components/breadcrumb.html"
+      }
+    },
+    {
+      "title": "Buttons",
+      "excerpt": "Interactive actions with multiple variants, sizes, and states",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-cursor-pointer-01",
+        "_nds_source_url": "/components/button.html"
+      }
+    },
+    {
+      "title": "Cards",
+      "excerpt": "Versatile content containers for articles, profiles, and actions",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-dashboard-square-01",
+        "_nds_source_url": "/components/cards.html"
+      }
+    },
+    {
+      "title": "Chips",
+      "excerpt": "Compact labels for tags, filters, and selections",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-tag-01",
+        "_nds_source_url": "/components/chips.html"
+      }
+    },
+    {
+      "title": "Code",
+      "excerpt": "Formatted code blocks with syntax highlighting and copy",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-source-code",
+        "_nds_source_url": "/components/code.html"
+      }
+    },
+    {
+      "title": "Content Switcher",
+      "excerpt": "Toggle between content sections within the same space on the screen",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-exchange-01",
+        "_nds_source_url": "/components/content-switcher.html"
+      }
+    },
+    {
+      "title": "Cooldown Button",
+      "excerpt": "Click-disabled countdown button for resend, retry, and rate-limited actions",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-timer-02",
+        "_nds_source_url": "/components/cooldown-button.html"
+      }
+    },
+    {
+      "title": "Definition List",
+      "excerpt": "Structured key-value pairs in grid or list layouts",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-list-view",
+        "_nds_source_url": "/components/definition-list.html"
+      }
+    },
+    {
+      "title": "Drawer",
+      "excerpt": "Collapsible navigation lists with accordion groups",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-sidebar-right",
+        "_nds_source_url": "/components/drawer.html"
+      }
+    },
+    {
+      "title": "Dropmenu",
+      "excerpt": "Toggle-activated overlay for actions and navigation",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-more-vertical",
+        "_nds_source_url": "/components/dropmenu.html"
+      }
+    },
+    {
+      "title": "Empty",
+      "excerpt": "Parent-adaptive placeholder for containers with no content",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-desert",
+        "_nds_source_url": "/components/empty.html"
+      }
+    },
+    {
+      "title": "Featured Icons",
+      "excerpt": "Decorative icon containers with shape and color options",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-star",
+        "_nds_source_url": "/components/featured-icons.html"
+      }
+    },
+    {
+      "title": "Feedback Icons",
+      "excerpt": "Semantic status icons for success, error, and info",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-checkmark-circle-02",
+        "_nds_source_url": "/components/feedback-icons.html"
+      }
+    },
+    {
+      "title": "Floating Action Button",
+      "excerpt": "FAB that pins to a viewport corner and stacks with others",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-add-circle",
+        "_nds_source_url": "/components/fab.html"
+      }
+    },
+    {
+      "title": "Image Popup Viewer",
+      "excerpt": "IPV fullscreen image preview with zoom and navigation",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-image-02",
+        "_nds_source_url": "/components/ipv.html"
+      }
+    },
+    {
+      "title": "Link",
+      "excerpt": "Inline navigation with color variants and automatic external-link detection",
+      "category": "UI",
+      "tags": [
+        "CSS",
+        "JS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-link-01",
+        "_nds_source_url": "/components/link.html"
+      }
+    },
+    {
+      "title": "Loading",
+      "excerpt": "Spinners and skeleton placeholders for loading states",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-loading-03",
+        "_nds_source_url": "/components/loading.html"
+      }
+    },
+    {
+      "title": "Modal",
+      "excerpt": "Focused dialog overlays for confirmations and forms",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-browser",
+        "_nds_source_url": "/components/modal.html"
+      }
+    },
+    {
+      "title": "Pagination",
+      "excerpt": "Page-by-page navigation for large data sets",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-paragraph-bullets-point-01",
+        "_nds_source_url": "/components/pagination.html"
+      }
+    },
+    {
+      "title": "Panels",
+      "excerpt": "Content-agnostic surface that slides in from any edge of the viewport",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-layout-right",
+        "_nds_source_url": "/components/panels.html"
+      }
+    },
+    {
+      "title": "Persona",
+      "excerpt": "Identity block with avatar, name, role, and optional action row",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-profile",
+        "_nds_source_url": "/components/persona.html"
+      }
+    },
+    {
+      "title": "Progress",
+      "excerpt": "Visual indicators for task completion and loading",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-loading-01",
+        "_nds_source_url": "/components/progress.html"
+      }
+    },
+    {
+      "title": "Quote",
+      "excerpt": "Semantic quotation block with optional title and author attribution",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-quote-up-square",
+        "_nds_source_url": "/components/quote.html"
+      }
+    },
+    {
+      "title": "Rating",
+      "excerpt": "Star-based display and input for user ratings",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-star",
+        "_nds_source_url": "/components/rating.html"
+      }
+    },
+    {
+      "title": "Scroll More",
+      "excerpt": "Overflow wrapper with edge mask-fade and sticky show-more button",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-mouse-scroll-01",
+        "_nds_source_url": "/components/scroll-more.html"
+      }
+    },
+    {
+      "title": "Stepper",
+      "excerpt": "Sequential step indicators for multi-stage workflows",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-right-to-left-list-number",
+        "_nds_source_url": "/components/stepper.html"
+      }
+    },
+    {
+      "title": "Swiper",
+      "excerpt": "Touch-enabled carousel for images and content slides",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-sliders-horizontal",
+        "_nds_source_url": "/components/swiper.html"
+      }
+    },
+    {
+      "title": "Tabs",
+      "excerpt": "Switchable content panels with horizontal tab navigation",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-browser",
+        "_nds_source_url": "/components/tabs.html"
+      }
+    },
+    {
+      "title": "Tags",
+      "excerpt": "Small labels for categorization and metadata",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-tags",
+        "_nds_source_url": "/components/tags.html"
+      }
+    },
+    {
+      "title": "TOC",
+      "excerpt": "Auto-populated in-page table of contents with active-section tracking",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-menu-square",
+        "_nds_source_url": "/components/toc.html"
+      }
+    },
+    {
+      "title": "Toolbar",
+      "excerpt": "Controls bar above a table, list, or grid: result counts and applied filters lead, export and actions trail",
+      "category": "UI",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-distribute-horizontal-center",
+        "_nds_source_url": "/components/toolbar.html"
+      }
+    },
+    {
+      "title": "Tooltip",
+      "excerpt": "Click-activated balloon for contextual help next to a term or field",
+      "category": "UI",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-help-circle",
+        "_nds_source_url": "/components/tooltip.html"
+      }
+    },
+    {
+      "title": "Text Inputs",
+      "excerpt": "Single-line fields with labels, icons, and validation",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-text-font",
+        "_nds_source_url": "/components/forms.html"
+      }
+    },
+    {
+      "title": "Selects",
+      "excerpt": "Native dropdown menus for choosing from a list",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-arrow-down-01",
+        "_nds_source_url": "/components/forms.html"
+      }
+    },
+    {
+      "title": "Textareas",
+      "excerpt": "Resizable multi-line text fields",
+      "category": "Forms",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-paragraph",
+        "_nds_source_url": "/components/forms.html#textareaInput"
+      }
+    },
+    {
+      "title": "Number Input",
+      "excerpt": "Numeric field with increment and decrement controls, min/max, and step",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-calculator",
+        "_nds_source_url": "/components/forms.html#numberInput"
+      }
+    },
+    {
+      "title": "Checkbox",
+      "excerpt": "Multi-select toggles for options and preferences",
+      "category": "Forms",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-checkmark-square-01",
+        "_nds_source_url": "/components/checkbox.html"
+      }
+    },
+    {
+      "title": "Radio",
+      "excerpt": "Single-choice selection within a group",
+      "category": "Forms",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-radio",
+        "_nds_source_url": "/components/radio.html"
+      }
+    },
+    {
+      "title": "Switch",
+      "excerpt": "Binary on/off toggles for settings and preferences",
+      "category": "Forms",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-toggle-on",
+        "_nds_source_url": "/components/switch.html"
+      }
+    },
+    {
+      "title": "Slider",
+      "excerpt": "Numeric range input with single-thumb and dual-thumb modes for picking a value or a min–max span",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-arrow-left-right",
+        "_nds_source_url": "/components/slider.html"
+      }
+    },
+    {
+      "title": "OTP Input",
+      "excerpt": "Segmented one-time password fields with auto-advance",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-key-01",
+        "_nds_source_url": "/components/otp.html"
+      }
+    },
+    {
+      "title": "File Upload",
+      "excerpt": "Drag-and-drop file input with preview and validation",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-upload-04",
+        "_nds_source_url": "/components/upload.html"
+      }
+    },
+    {
+      "title": "Autocomplete",
+      "excerpt": "Type-ahead search with filtered suggestions",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-search-01",
+        "_nds_source_url": "/components/autocomplete.html"
+      }
+    },
+    {
+      "title": "Editor",
+      "excerpt": "Rich text field that submits clean NDS markup, converting Word, Google Docs, and web pastes and inserting NDS components as blocks",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS",
+        "API",
+        "Beta"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-quill-write-02",
+        "_nds_source_url": "/components/editor.html"
+      }
+    },
+    {
+      "title": "Multiselect",
+      "excerpt": "Multi-option select over a native checkbox group: removable chips, JSON-populated options, staged or instant commit",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-tag-01",
+        "_nds_source_url": "/components/multiselect.html"
+      }
+    },
+    {
+      "title": "Tag Input",
+      "excerpt": "Free-text tags committed as removable chips while typing, posted natively as an array",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-tags",
+        "_nds_source_url": "/components/taginput.html"
+      }
+    },
+    {
+      "title": "User Feedback",
+      "excerpt": "Satisfaction surveys and inline rating forms",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-message-edit-01",
+        "_nds_source_url": "/components/user-feedback.html"
+      }
+    },
+    {
+      "title": "Date Picker",
+      "excerpt": "Hijri/Gregorian calendar with dual date conversion",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-calendar-03",
+        "_nds_source_url": "/components/date-picker.html"
+      }
+    },
+    {
+      "title": "Voice Input",
+      "excerpt": "Voice-to-text button that dictates into a text field, with Arabic/English auto-detection",
+      "category": "Forms",
+      "tags": [
+        "JS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-mic-01",
+        "_nds_source_url": "/components/voice-input.html"
+      }
+    },
+    {
+      "title": "Metric",
+      "excerpt": "Dashboard tile pairing a key statistic with an inline sparkline",
+      "category": "Data",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-chart-line-data-01",
+        "_nds_source_url": "/components/metric.html"
+      }
+    },
+    {
+      "title": "Filter",
+      "excerpt": "Applied filters with search, URL sync, and remote data",
+      "category": "Data",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-filter",
+        "_nds_source_url": "/components/filter.html"
+      }
+    },
+    {
+      "title": "Tables",
+      "excerpt": "Data grids with sorting, pagination, and expandable rows",
+      "category": "Data",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-table-02",
+        "_nds_source_url": "/components/tables.html"
+      }
+    },
+    {
+      "title": "Selection",
+      "excerpt": "Selected-items counter for tables, card grids, and checkbox lists, with a records-line swap while a selection is active",
+      "category": "Data",
+      "tags": [
+        "JS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-check-list",
+        "_nds_source_url": "/components/selection.html"
+      }
+    },
+    {
+      "title": "Sort",
+      "excerpt": "DOM-reorder engine for lists, grids, and tables with type auto-detect and URL sync",
+      "category": "Data",
+      "tags": [
+        "JS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-sorting-05",
+        "_nds_source_url": "/components/sort.html"
+      }
+    },
+    {
+      "title": "Chart",
+      "excerpt": "Lightweight SVG charts: bar, line, pie, and donut",
+      "category": "Data",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-chart",
+        "_nds_source_url": "/components/chart.html"
+      }
+    },
+    {
+      "title": "Export",
+      "excerpt": "Declarative CSV, Excel, and PDF downloads from any table, card list, or marked-up container",
+      "category": "Data",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-file-export",
+        "_nds_source_url": "/components/export.html"
+      }
+    },
+    {
+      "title": "Section",
+      "excerpt": "Page content sections with head, body, and action areas",
+      "category": "Layout",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-layout-03",
+        "_nds_source_url": "/layout/section.html"
+      }
+    },
+    {
+      "title": "Grid",
+      "excerpt": "Responsive column system with flexible breakpoints",
+      "category": "Layout",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-grid",
+        "_nds_source_url": "/layout/grid.html"
+      }
+    },
+    {
+      "title": "Block",
+      "excerpt": "Titled content grouping primitive for sub-sections inside a section body",
+      "category": "Layout",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-paragraph",
+        "_nds_source_url": "/layout/block.html"
+      }
+    },
+    {
+      "title": "Flex",
+      "excerpt": "Quick alignment, direction, and wrapping with custom-property overrides",
+      "category": "Layout",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-distribute-horizontal-center",
+        "_nds_source_url": "/layout/flex.html"
+      }
+    },
+    {
+      "title": "Cookies",
+      "excerpt": "Privacy-compliant cookie management banner",
+      "category": "Utilities",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-cookie",
+        "_nds_source_url": "/components/cookies.html"
+      }
+    },
+    {
+      "title": "Content Placeholder",
+      "excerpt": "Dashed stand-in marking a region a real component will replace",
+      "category": "Utilities",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-puzzle",
+        "_nds_source_url": "/utilities/content-placeholder.html"
+      }
+    },
+    {
+      "title": "Copy",
+      "excerpt": "One-click clipboard copy with checkmark feedback and screen reader announcement",
+      "category": "Utilities",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-copy-01",
+        "_nds_source_url": "/utilities/copy.html"
+      }
+    },
+    {
+      "title": "Truncate Text",
+      "excerpt": "Line-clamped overflow with expand/collapse toggle",
+      "category": "Utilities",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-text-wrap",
+        "_nds_source_url": "/utilities/truncate-text.html"
+      }
+    },
+    {
+      "title": "Divider",
+      "excerpt": "Horizontal or vertical rule with optional centered label",
+      "category": "Utilities",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-minus-sign",
+        "_nds_source_url": "/utilities/divider.html"
+      }
+    },
+    {
+      "title": "Expandable Content",
+      "excerpt": "Show more/less toggle for long content blocks",
+      "category": "Utilities",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-arrow-expand-02",
+        "_nds_source_url": "/utilities/expandable-content.html"
+      }
+    },
+    {
+      "title": "Hidden",
+      "excerpt": "Visibility utilities: the hidden attribute honored everywhere and band-exact responsive hiding with data-hidden",
+      "category": "Utilities",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-view-off-slash",
+        "_nds_source_url": "/utilities/hidden.html"
+      }
+    },
+    {
+      "title": "Saudi Cities",
+      "excerpt": "Bundled JSON dataset of 132 Saudi Arabian cities with bilingual names, drop-in for autocomplete and address flows",
+      "category": "Utilities",
+      "tags": [
+        "Data"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-globe-02",
+        "_nds_source_url": "/utilities/saudi-cities.html"
+      }
+    },
+    {
+      "title": "Numbers",
+      "excerpt": "Locale-aware thousand separators for any number on the page",
+      "category": "Utilities",
+      "tags": [
+        "JS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-math",
+        "_nds_source_url": "/utilities/numbers.html"
+      }
+    },
+    {
+      "title": "Request",
+      "excerpt": "Fetch wrapper with a timeout, a response size cap, and errors you can branch on",
+      "category": "Utilities",
+      "tags": [
+        "JS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-connect",
+        "_nds_source_url": "/utilities/request.html"
+      }
+    },
+    {
+      "title": "Counter Animation",
+      "excerpt": "Scroll-triggered animated counters that count up to a target value",
+      "category": "Utilities",
+      "tags": [
+        "JS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-chart-increase",
+        "_nds_source_url": "/utilities/numbers.html#counterAnimation"
+      }
+    },
+    {
+      "title": "Currency",
+      "excerpt": "SAR and international currency symbols appended automatically via data attribute",
+      "category": "Utilities",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-coins-dollar",
+        "_nds_source_url": "/utilities/numbers.html#currencyFormat"
+      }
+    },
+    {
+      "title": "Share",
+      "excerpt": "Social share dropmenu for X, LinkedIn, WhatsApp, and copy link",
+      "category": "Utilities",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-share-08",
+        "_nds_source_url": "/utilities/share.html"
+      }
+    },
+    {
+      "title": "Top Bar",
+      "excerpt": "Government branding bar with date, weather, and dark mode toggle",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-layout-top",
+        "_nds_source_url": "/ui-shell/topbar.html"
+      }
+    },
+    {
+      "title": "Weather Widget",
+      "excerpt": "Live weather display from GPS coordinates",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-sun-cloud-01",
+        "_nds_source_url": "/ui-shell/topbar.html#topbarWidgets"
+      }
+    },
+    {
+      "title": "Clock",
+      "excerpt": "Real-time clock with Hijri/Gregorian date",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-clock-01",
+        "_nds_source_url": "/ui-shell/topbar.html#topbarWidgets"
+      }
+    },
+    {
+      "title": "Header",
+      "excerpt": "Top bar and primary navigation shell with mega menus and mobile drawer",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-navigation-01",
+        "_nds_source_url": "/ui-shell/header.html"
+      }
+    },
+    {
+      "title": "Document Head",
+      "excerpt": "Critical CSS, deferred bundles, and the inline gate every page loads in its head",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-html-5",
+        "_nds_source_url": "/ui-shell/head.html"
+      }
+    },
+    {
+      "title": "Hero",
+      "excerpt": "Full-width page banners with slider and call-to-action",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-image-02",
+        "_nds_source_url": "/ui-shell/hero.html"
+      }
+    },
+    {
+      "title": "DGA Digital Stamp",
+      "excerpt": "Government authority verification panel",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-shield-01",
+        "_nds_source_url": "/ui-shell/topbar.html#dgaDigitalStamp"
+      }
+    },
+    {
+      "title": "Side Menu",
+      "excerpt": "Collapsible nested sidebar navigation",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-menu-02",
+        "_nds_source_url": "/ui-shell/sidemenu.html"
+      }
+    },
+    {
+      "title": "Side Info",
+      "excerpt": "Companion column for service details, progress, and in-page navigation",
+      "category": "UI Shell",
+      "tags": [
+        "JS",
+        "CSS",
+        "API"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-layout-right",
+        "_nds_source_url": "/ui-shell/sideinfo.html"
+      }
+    },
+    {
+      "title": "Footer",
+      "excerpt": "Multi-column footer with light and green variants",
+      "category": "UI Shell",
+      "tags": [
+        "CSS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-layout-bottom",
+        "_nds_source_url": "/ui-shell/footer.html"
+      }
+    },
+    {
+      "title": "Accessibility",
+      "excerpt": "Site-wide panel for accessibility presets, typography tuning, and visual filters",
+      "category": "Add-ons",
+      "tags": [
+        "JS",
+        "CSS",
+        "Add-on"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-accessibility",
+        "_nds_source_url": "/components/accessibility.html"
+      }
+    }
+  ],
+  "nds_template": [
+    {
+      "title": "Form Template",
+      "excerpt": "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero.",
+      "category": "Form",
+      "tags": [
+        "DGA",
+        "Forms",
+        "Stepper",
+        "Side Info",
+        "Grid"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-file-edit",
+        "_nds_source_url": "/templates/form-template.html"
+      }
+    },
+    {
+      "title": "Service Page Template",
+      "excerpt": "Government digital service with side info, breadcrumbs, and structured content layout.",
+      "category": "Service",
+      "tags": [
+        "DGA",
+        "Tabs",
+        "Side Info",
+        "Rating"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-menu-square",
+        "_nds_source_url": "/templates/service-template.html"
+      }
+    },
+    {
+      "title": "Contact Us Template",
+      "excerpt": "Contact page with two-column form, country-code prefix, select, textarea, file upload, and a side info card with emergency contacts.",
+      "category": "Service",
+      "tags": [
+        "DGA",
+        "Forms",
+        "Upload",
+        "Side Info",
+        "Grid"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-mail-01",
+        "_nds_source_url": "/templates/contact-us-template.html"
+      }
+    },
+    {
+      "title": "Content Template",
+      "excerpt": "Long-form editorial layout with article-style sections, numbered sub-sections, and a sticky on-this-page table of contents for in-page navigation.",
+      "category": "Content",
+      "tags": [
+        "DGA",
+        "Side Info",
+        "Article",
+        "TOC"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-book-open-01",
+        "_nds_source_url": "/templates/content-template.html"
+      }
+    },
+    {
+      "title": "Help & Support Template",
+      "excerpt": "Help hub with a flat sub-hero and a responsive grid of support-channel cards, each with a featured icon, description, availability, and response time.",
+      "category": "Content",
+      "tags": [
+        "DGA",
+        "Grid",
+        "Cards",
+        "Featured Icons"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-help-circle",
+        "_nds_source_url": "/templates/help-support-template.html"
+      }
+    },
+    {
+      "title": "About The Entity Template",
+      "excerpt": "Entity landing hub with a flat sub-hero and a responsive grid of topic cards, each with a featured icon, title, and navigation arrow.",
+      "category": "Content",
+      "tags": [
+        "DGA",
+        "Grid",
+        "Cards",
+        "Featured Icons"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-information-diamond",
+        "_nds_source_url": "/templates/about-entity-template.html"
+      }
+    },
+    {
+      "title": "FAQ Template",
+      "excerpt": "Frequently asked questions layout with a flat sub-hero, large accordion list, and a feedback call-to-action card for routing unresolved inquiries to support.",
+      "category": "Content",
+      "tags": [
+        "DGA",
+        "Accordion",
+        "Cards"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-help-circle",
+        "_nds_source_url": "/templates/faq-template.html"
+      }
+    },
+    {
+      "title": "e-Participation Template",
+      "excerpt": "Engagement topics hub with a sub-hero and a responsive 4-column grid of text-only navigation cards for citizen participation entry points.",
+      "category": "Content",
+      "tags": [
+        "DGA",
+        "Grid",
+        "Cards"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-user-group",
+        "_nds_source_url": "/templates/e-participation-template.html"
+      }
+    },
+    {
+      "title": "Social Media Template",
+      "excerpt": "Social channels hub with a flat sub-hero and a responsive grid of platform cards, each with a featured icon, name, and navigation arrow.",
+      "category": "Content",
+      "tags": [
+        "DGA",
+        "Grid",
+        "Cards",
+        "Featured Icons"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-share-08",
+        "_nds_source_url": "/templates/social-media-template.html"
+      }
+    },
+    {
+      "title": "KPIs Template",
+      "excerpt": "Performance dashboard combining KPI counter tiles, pie, donut, line, and bar charts, and responsive data tables for portal and service statistics.",
+      "category": "Dashboard",
+      "tags": [
+        "DGA",
+        "Charts",
+        "Tables",
+        "Statistics",
+        "Grid"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-analytics-up",
+        "_nds_source_url": "/templates/kpis-template.html"
+      }
+    },
+    {
+      "title": "Search Template",
+      "excerpt": "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list.",
+      "category": "Service",
+      "tags": [
+        "DGA",
+        "Search",
+        "Filter",
+        "Pagination"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-search-01",
+        "_nds_source_url": "/templates/search-template.html"
+      }
+    },
+    {
+      "title": "404 Template",
+      "excerpt": "Custom error page with illustration and back-to-home action.",
+      "category": "Service",
+      "tags": [
+        "DGA",
+        "Empty State"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-alert-02",
+        "_nds_source_url": "/templates/404-template.html"
+      }
+    }
+  ],
+  "nds_example": [
+    {
+      "title": "Services List",
+      "excerpt": "Filterable government services catalog with search and category filters.",
+      "category": "Service",
+      "tags": [
+        "Filter",
+        "Search",
+        "Pagination"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-grid-view",
+        "_nds_source_url": "/examples/services-list.html"
+      }
+    },
+    {
+      "title": "Registration",
+      "excerpt": "Multi-step form with validation, OTP, file upload, and Hijri date selection.",
+      "category": "Form",
+      "tags": [
+        "Stepper",
+        "OTP",
+        "Upload",
+        "Date Picker"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-file-validation",
+        "_nds_source_url": "/examples/registration.html"
+      }
+    },
+    {
+      "title": "Faculty Profile",
+      "excerpt": "Faculty member page with profile, tabbed content, and structured academic information.",
+      "category": "Content",
+      "tags": [
+        "Tabs",
+        "Avatar",
+        "Definition List"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-school",
+        "_nds_source_url": "/examples/faculty.html"
+      }
+    },
+    {
+      "title": "Academic Program",
+      "excerpt": "Degree program page with expandable content, curriculum, and admission information.",
+      "category": "Content",
+      "tags": [
+        "Expandable",
+        "Accordion"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-mortarboard-02",
+        "_nds_source_url": "/examples/program.html"
+      }
+    },
+    {
+      "title": "Console",
+      "excerpt": "Admin console with charts, transactions, team directory, and notifications.",
+      "category": "Dashboard",
+      "tags": [
+        "Charts",
+        "Tables",
+        "Stats"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-dashboard-browsing",
+        "_nds_source_url": "/examples/console-demo.html"
+      }
+    }
+  ],
+  "nds_service": [
+    {
+      "title": "Identity Verification",
+      "excerpt": "Verify your national identity and obtain digital certificates for government transactions",
+      "category": "Identity & Records",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-user-id-verification",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Passport Renewal",
+      "excerpt": "Renew your passport online with expedited processing and home delivery options",
+      "category": "Identity & Records",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-passport",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Birth Certificate Request",
+      "excerpt": "Request official birth certificates and family documentation online",
+      "category": "Identity & Records",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-file-02",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Marriage Contract Registration",
+      "excerpt": "Register marriage contracts and obtain official marriage certificates",
+      "category": "Identity & Records",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-agreement-02",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Driver's License Services",
+      "excerpt": "Apply for, renew, or update your driving license information",
+      "category": "Transport & Vehicles",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-license",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Vehicle Registration",
+      "excerpt": "Register new vehicles, transfer ownership, or renew your vehicle registration",
+      "category": "Transport & Vehicles",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-car-01",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Visa Application",
+      "excerpt": "Apply for entry visas for visitors, workers, or family members",
+      "category": "Transport & Vehicles",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-passport-01",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Health Insurance Enrollment",
+      "excerpt": "Enroll in government health insurance plans and manage your coverage",
+      "category": "Healthcare & Social",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-health",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Medical Appointment Booking",
+      "excerpt": "Schedule appointments at government hospitals and healthcare facilities",
+      "category": "Healthcare & Social",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-calendar-03",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Employment Certificate",
+      "excerpt": "Request official employment certificates and salary statements",
+      "category": "Healthcare & Social",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-user-multiple",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Work Permit Processing",
+      "excerpt": "Apply for work permits and employment authorization for foreign workers",
+      "category": "Healthcare & Social",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-briefcase-01",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Retirement Benefits Application",
+      "excerpt": "Apply for retirement pensions and manage your social security benefits",
+      "category": "Healthcare & Social",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-security-check",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Tax Declaration Filing",
+      "excerpt": "Submit your annual tax returns and manage tax obligations online",
+      "category": "Business & Finance",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-calculator",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "VAT Registration",
+      "excerpt": "Register for VAT and manage value-added tax compliance for your business",
+      "category": "Business & Finance",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-invoice-02",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Business License Application",
+      "excerpt": "Apply for commercial licenses and business permits for new ventures",
+      "category": "Business & Finance",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-store-01",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Property Registration",
+      "excerpt": "Register property ownership, transfers, and real estate transactions",
+      "category": "Business & Finance",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-building-02",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Building Permit Request",
+      "excerpt": "Apply for construction permits and building approvals for new projects",
+      "category": "Business & Finance",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-structure-02",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "School Enrollment",
+      "excerpt": "Enroll children in public schools and manage educational records",
+      "category": "Education & Justice",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-mortarboard-02",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Certificate Authentication",
+      "excerpt": "Authenticate academic certificates and professional credentials",
+      "category": "Education & Justice",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-certificate-02",
+        "_nds_source_url": "service.html"
+      }
+    },
+    {
+      "title": "Court Case Filing",
+      "excerpt": "File legal cases and track court proceedings through the judicial system",
+      "category": "Education & Justice",
+      "tags": [],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-legal-01",
+        "_nds_source_url": "service.html"
+      }
+    }
+  ],
+  "nds_faq": [
+    {
+      "title": "What is this FAQ section for?",
+      "excerpt": "",
+      "category": "general",
+      "tags": [],
+      "content": "This section answers the most common questions about our services, eligibility, required documents, and how to complete your application online.",
+      "meta": {
+        "_nds_faq_id": "purpose"
+      }
+    },
+    {
+      "title": "Where can I find more information?",
+      "excerpt": "",
+      "category": "general",
+      "tags": [],
+      "content": "Every service page includes a detailed description, required documents, fees, and processing times. You can also visit the Help &amp; Support hub for guided articles.",
+      "meta": {
+        "_nds_faq_id": "more-info"
+      }
+    },
+    {
+      "title": "What does the National Design System include?",
+      "excerpt": "",
+      "category": "general",
+      "tags": [],
+      "content": "The system ships design tokens, responsive components, page templates, Arabic/English typography, and accessibility guidelines that match official government services.",
+      "meta": {
+        "_nds_faq_id": "what-nds-includes"
+      }
+    },
+    {
+      "title": "How do I contact support?",
+      "excerpt": "",
+      "category": "services",
+      "tags": [],
+      "content": "Reach us through the contact form, unified call center, or live chat. Response times and availability are listed on the Help &amp; Support page.",
+      "meta": {
+        "_nds_faq_id": "contact-support"
+      }
+    },
+    {
+      "title": "How do I track my application status?",
+      "excerpt": "",
+      "category": "services",
+      "tags": [],
+      "content": "Open &quot;My requests&quot; from the account menu. Each request shows its current stage, expected completion date, and any actions pending from your side.",
+      "meta": {
+        "_nds_faq_id": "track-application"
+      }
+    },
+    {
+      "title": "Which services are available online?",
+      "excerpt": "",
+      "category": "services",
+      "tags": [],
+      "content": "Over 6,000 government services are available digitally through the unified portal, covering civil affairs, licensing, health, education, and business registration.",
+      "meta": {
+        "_nds_faq_id": "online-services"
+      }
+    },
+    {
+      "title": "How do I get started?",
+      "excerpt": "",
+      "category": "account",
+      "tags": [],
+      "content": "Create an account using your national ID, verify your contact details, and choose the service you need from the homepage to begin a new request.",
+      "meta": {
+        "_nds_faq_id": "get-started"
+      }
+    },
+    {
+      "title": "How do I reset my password?",
+      "excerpt": "",
+      "category": "account",
+      "tags": [],
+      "content": "On the sign-in screen choose &quot;Forgot password&quot;, verify your national ID and the mobile number linked to your account, then set a new password within the sent link.",
+      "meta": {
+        "_nds_faq_id": "reset-password"
+      }
+    },
+    {
+      "title": "How do I update my profile details?",
+      "excerpt": "",
+      "category": "account",
+      "tags": [],
+      "content": "Open the account menu, choose &quot;Profile&quot;, and edit your contact details. Changes to legal data such as your name require uploading a supporting document for review.",
+      "meta": {
+        "_nds_faq_id": "update-profile"
+      }
+    },
+    {
+      "title": "Can I customize this platform?",
+      "excerpt": "",
+      "category": "technical",
+      "tags": [],
+      "content": "Yes. Entities can reuse the National Design System components and tokens to match their own branding while preserving accessibility, RTL support, and consistency with official government services.",
+      "meta": {
+        "_nds_faq_id": "customize-platform"
+      }
+    },
+    {
+      "title": "Which browsers are supported?",
+      "excerpt": "",
+      "category": "technical",
+      "tags": [],
+      "content": "The platform supports the last two major versions of Chrome, Edge, Firefox, and Safari on desktop and mobile. Older browsers may render correctly but are not tested.",
+      "meta": {
+        "_nds_faq_id": "supported-browsers"
+      }
+    },
+    {
+      "title": "Why am I seeing a loading error?",
+      "excerpt": "",
+      "category": "technical",
+      "tags": [],
+      "content": "Clear your browser cache, disable conflicting extensions, and confirm that your network allows traffic to our government-issued certificate. If the issue persists, contact support with the error code shown.",
+      "meta": {
+        "_nds_faq_id": "loading-error"
+      }
+    }
+  ],
+  "nds_event": [
+    {
+      "title": "Foundation Day",
+      "excerpt": "Re-skin the whole site for Saudi Founding Day with one script tag: the heritage brown palette and a configurable bilingual hero slide, in both light and dark mode.",
+      "category": "Theme",
+      "tags": [
+        "CSS",
+        "JS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-flag-02",
+        "_nds_source_url": "/events/foundation-day.html"
+      }
+    },
+    {
+      "title": "Hajj",
+      "excerpt": "Re-skin the whole site for the Hajj season with one script tag: a Saudi-font hero, a direction-aware backdrop, and seasonal section accents, in both light and dark mode.",
+      "category": "Theme",
+      "tags": [
+        "CSS",
+        "JS"
+      ],
+      "content": "",
+      "meta": {
+        "_nds_icon_class": "hgi-kaaba-01",
+        "_nds_source_url": "/events/hajj.html"
+      }
+    }
+  ]
+}

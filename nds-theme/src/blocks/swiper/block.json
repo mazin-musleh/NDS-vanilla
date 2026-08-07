@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nds/swiper",
+	"version": "0.1.0",
+	"title": "NDS Swiper",
+	"category": "design",
+	"icon": "images-alt2",
+	"description": "Scroll-snap carousel for card collections. Each inner block is one slide. Slides-per-view configurable per breakpoint.",
+	"textdomain": "nds-theme",
+	"attributes": {
+		"slidesMax": { "type": "number", "default": 3 },
+		"slidesMid": { "type": "number", "default": 2 },
+		"slidesMin": { "type": "number", "default": 1 },
+		"peek": { "type": "number", "default": 40 },
+		"showArrows": { "type": "boolean", "default": true },
+		"showPagination": { "type": "boolean", "default": true }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ]
+	},
+	"editorScript": "file:./edit.js",
+	"viewScript": "file:./view.js"
+}
