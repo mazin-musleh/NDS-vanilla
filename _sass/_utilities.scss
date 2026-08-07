@@ -94,23 +94,12 @@
 // ALIGNMENT UTILITIES
 // ==============================================
 
-// Center alignment utility
-// Note: Uses mobile-first approach. For start/end alignment, use text-align CSS property directly
-
-// Base center alignment class (applies to all screens unless overridden)
+// Centers the text inside the element and the element itself within its parent.
+// For start/end alignment, set text-align directly; for centering at one screen
+// width only, write the media query in your own stylesheet.
 .nds-center {
   text-align: center !important;
   margin-inline: auto;
-}
-
-// Responsive center alignment (mobile-first, cascades upward)
-@each $breakpoint, $query in $breakpoints-range {
-  @media #{$query} {
-    .nds-center-#{$breakpoint},
-    .nds-center-#{$breakpoint}>* {
-      text-align: center !important;
-    }
-  }
 }
 
 .nds-flush {
@@ -164,6 +153,10 @@
 // and any LTR-only content that must render predictably inside an RTL page.
 .nds-ltr {
   direction: ltr !important;
+  // Required, not optional: a browser ignores direction on an inline element
+  // while unicode-bidi is normal. isolate also stops the LTR run from reordering
+  // the Arabic text around it.
+  unicode-bidi: isolate;
 }
 
 // ==============================================
@@ -175,6 +168,37 @@
 // .nds-color selector does not apply.
 .nds-color-primary {
   color: var(--text-primary);
+}
+
+// ==============================================
+// NOTE UTILITY
+// ==============================================
+
+// Small note line: a required-field explainer above a form, a fee disclaimer,
+// a footnote under a table, or a hint beside a label. Status tints the text.
+// For a note that needs an icon or a box, use Feedback or Alert instead.
+// Plain class specificity, not :where() — a note carries meaning, so it should
+// not lose to any class that happens to land on the same element. Legacy
+// .nds-required-notice rides along as the error case.
+:is(.nds-note, .nds-required-notice) {
+  color: var(--text-secondary-paragraph);
+  font-size: var(--typo-text-sm-FS);
+  line-height: var(--typo-text-sm-LH);
+}
+
+.nds-note {
+  &[data-status="error"] { color: var(--text-error); }
+  &[data-status="warning"] { color: var(--text-warning); }
+  &[data-status="success"] { color: var(--text-success); }
+  &[data-status="info"] { color: var(--text-info); }
+}
+
+// The alias is the error note plus the block spacing it shipped with. .nds-note
+// carries none, so it stays safe beside a label, where a flex parent would
+// blockify a span.
+.nds-required-notice {
+  color: var(--text-error);
+  margin-block-end: var(--spacing-md);
 }
 
 // ==============================================
@@ -239,12 +263,4 @@
 .nds-content-placeholder.nds-lg {
   --placeholder-FS: var(--typo-text-sm-FS);
   --placeholder-LH: var(--typo-text-sm-LH);
-}
-
-// Small red notice shown above a form ("*Required information" etc.).
-.nds-required-notice {
-  color: var(--text-error);
-  font-size: var(--typo-text-sm-FS);
-  line-height: var(--typo-text-sm-LH);
-  margin-block-end: var(--spacing-md);
 }
