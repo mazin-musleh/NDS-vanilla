@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "27/07/2026 - 10:00 AM"
+last_edit: "07/08/2026 - 09:44 PM"
 ---
 
 <!-- Literal Copy -->
@@ -168,14 +168,14 @@ last_edit: "27/07/2026 - 10:00 AM"
                                     <div class="nds-card-text">
                                         <p class="nds-card-description">Application reference</p>
                                         <span class="nds-card-title" id="copy-target-ref">REF-2026-04-19-7A3F</span>
-                                        <div class="nds-card-actions">
-                                            <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
-                                                data-copy-target="#copy-target-ref" aria-label="Copy reference">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                                <span class="nds-label">Copy reference</span>
-                                            </button>
-                                        </div>
                                     </div>
+                                </div>
+                                <div class="nds-card-actions">
+                                    <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
+                                        data-copy-target="#copy-target-ref" aria-label="Copy reference">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                        <span class="nds-label">Copy reference</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -207,13 +207,13 @@ last_edit: "27/07/2026 - 10:00 AM"
             &lt;p class="nds-card-description"&gt;Application reference&lt;/p&gt;
             &lt;span class="nds-card-title" id="copy-target-ref"&gt;REF-2026-04-19-7A3F&lt;/span&gt;
         &lt;/div&gt;
-        &lt;div class="nds-card-actions"&gt;
-            &lt;button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
-                data-copy-target="#copy-target-ref" aria-label="Copy reference"&gt;
-                &lt;i class="nds-icon nds-hgi-copy-01"&gt;&lt;/i&gt;
-                &lt;span class="nds-label"&gt;Copy reference&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card-actions"&gt;
+        &lt;button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
+            data-copy-target="#copy-target-ref" aria-label="Copy reference"&gt;
+            &lt;i class="nds-icon nds-hgi-copy-01"&gt;&lt;/i&gt;
+            &lt;span class="nds-label"&gt;Copy reference&lt;/span&gt;
+        &lt;/button&gt;
     &lt;/div&gt;
 &lt;/div&gt;
                             </code>

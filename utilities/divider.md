@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.3.0"
-last_edit: "02/07/2026 - 09:17 PM"
+last_edit: "07/08/2026 - 09:44 PM"
 ---
 
 <!-- Plain Divider -->
@@ -324,18 +324,18 @@ last_edit: "02/07/2026 - 09:17 PM"
                                         <div class="nds-card-text nds-center">
                                             <span class="nds-card-title">Sign in with National Single Sign-On</span>
                                             <p class="nds-card-description">Use the credentials from your Nafath account to access the services provided by the university.</p>
-                                            <div class="nds-card-actions nds-row">
-                                                <a href="#" class="nds-btn nds-primary nds-lg nds-full">
-                                                    <span class="nds-label">Continue with Nafath</span>
-                                                </a>
-                                            </div>
                                         </div>
-                                        <div class="nds-divider">or</div>
-                                        <div class="nds-card-actions nds-row">
-                                            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full">
-                                                <span class="nds-label">Sign in with University ID</span>
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions nds-row">
+                                        <a href="#" class="nds-btn nds-primary nds-lg nds-full">
+                                            <span class="nds-label">Continue with Nafath</span>
+                                        </a>
+                                    </div>
+                                    <div class="nds-divider">or</div>
+                                    <div class="nds-card-actions nds-row">
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full">
+                                            <span class="nds-label">Sign in with University ID</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -367,17 +367,17 @@ last_edit: "02/07/2026 - 09:17 PM"
       &lt;span class="nds-card-title"&gt;Sign in with National Single Sign-On&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;Use the credentials from your Nafath account to access the services provided by the university.&lt;/p&gt;
     &lt;/div&gt;
-    &lt;div class="nds-card-actions nds-row"&gt;
-      &lt;a href="#" class="nds-btn nds-primary nds-lg nds-full"&gt;
-        &lt;span class="nds-label"&gt;Continue with Nafath&lt;/span&gt;
-      &lt;/a&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-divider"&gt;or&lt;/div&gt;
-    &lt;div class="nds-card-actions nds-row"&gt;
-      &lt;button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full"&gt;
-        &lt;span class="nds-label"&gt;Sign in with University ID&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-card-actions nds-row"&gt;
+    &lt;a href="#" class="nds-btn nds-primary nds-lg nds-full"&gt;
+      &lt;span class="nds-label"&gt;Continue with Nafath&lt;/span&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-divider"&gt;or&lt;/div&gt;
+  &lt;div class="nds-card-actions nds-row"&gt;
+    &lt;button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full"&gt;
+      &lt;span class="nds-label"&gt;Sign in with University ID&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>

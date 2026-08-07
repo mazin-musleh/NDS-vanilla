@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "16/07/2026 - 12:29 AM"
+updated: "1.6.x"
+last_edit: "07/08/2026 - 09:44 PM"
 ---
 
 <!-- Standard Card -->
@@ -215,13 +215,13 @@ last_edit: "16/07/2026 - 12:29 AM"
                                                 </div>
                                                 <span class="nds-card-rating-text">(12 reviews)</span>
                                             </div>
-                                            <div class="nds-card-actions" hidden>
-                                                <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
-                                                    <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
-                                                    <span class="nds-label">Learn More</span>
-                                                </a>
-                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="nds-card-actions" hidden>
+                                        <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
+                                            <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+                                            <span class="nds-label">Learn More</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -873,6 +873,7 @@ last_edit: "16/07/2026 - 12:29 AM"
                     <li>Make the entire card clickable by using <code class="nds-inline-code lang-html">&lt;a&gt;</code> or <code class="nds-inline-code lang-html">&lt;button&gt;</code> as the root element, not by wrapping a card in a separate link</li>
                     <li>Don't use a card for a transient status message: use an <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> instead. Don't use a card to block the user for a decision: use a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">Modal</a></li>
                     <li>Don't nest cards inside cards. If you need internal structure, use <code class="nds-inline-code lang-html">nds-card-meta</code>, <code class="nds-inline-code lang-html">nds-card-tags</code>, or a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">definition list</a> inside the content area</li>
+                    <li>Place <code class="nds-inline-code lang-html">nds-card-actions</code> after <code class="nds-inline-code lang-html">nds-card-content</code>, not inside it. Only the content area scrolls inside a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">modal</a>, so buttons placed inside it scroll out of reach on a long form. Actions inside the content still work: a modal pins them to the bottom, and an <code class="nds-inline-code lang-html">nds-rowView</code> card keeps them in the content column</li>
                     <li>Add a featured icon or avatar in the header for quick visual recognition. Size up (<code class="nds-inline-code lang-html">nds-lg</code>, <code class="nds-inline-code lang-html">nds-xl</code>) on statistic cards and grid contexts where the icon carries the meaning</li>
                     <li>Show prices with <code class="nds-inline-code lang-html">nds-card-price</code>, not tags: the amount is an <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> span (<code class="nds-inline-code lang-html">data-currency</code> renders the riyal icon), a <code class="nds-inline-code lang-html">&lt;s&gt;</code> child is the crossed-out original, and a unit suffix like <code class="nds-inline-code lang-html">/ kg</code> is plain text</li>
                     <li>Keep card descriptions to one or two lines. For longer copy, add <code class="nds-inline-code lang-html">nds-truncate</code> on the title and description, or link out to a detail page from the actions area</li>
