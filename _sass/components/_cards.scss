@@ -93,12 +93,29 @@
 
   &.nds-rowView {
     flex-direction: row;
+    // Actions are a SIBLING of the content, so a row card would line them up
+    // beside it — squeezing the text and pushing the buttons past the card
+    // edge. Wrapping puts them back on their own line under the row.
+    flex-wrap: wrap;
 
     .nds-card-header {
       flex: 0 1;
       flex-wrap: wrap;
       align-content: flex-start;
       justify-content: center;
+    }
+
+    // Half the row as the base size, so the break to a stacked layout happens
+    // at the same width for every card. Sized from content instead, a long tag
+    // stacks one card while the one beside it stays in a row. min-width lets it
+    // shrink past that content, which is what keeps the tag inside the card.
+    > .nds-card-content {
+      flex: 1 1 50%;
+      min-width: 0;
+    }
+
+    > .nds-card-actions {
+      flex-basis: 100%;
     }
   }
 
