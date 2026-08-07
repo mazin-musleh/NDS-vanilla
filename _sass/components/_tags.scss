@@ -28,7 +28,10 @@
   font-size: var(--_tag-fs);
   line-height: var(--_tag-height);
   height: var(--_tag-height);
-  min-width: fit-content;
+  // Shrink to the container before the label does, so a long tag ellipsizes
+  // instead of escaping the card or cell it sits in.
+  min-width: 0;
+  max-width: 100%;
   white-space: nowrap;
   border-radius: var(--radius-sm);
   position: relative;
@@ -37,9 +40,16 @@
   color: var(--_text);
   border: 1px solid var(--_border);
 
-  .nds-label{
-    display: flex;
-    align-items: center;
+  // Same truncation as the chip label, --truncate knob included.
+  .nds-label {
+    --_truncate: var(--truncate, 1);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--_truncate);
+    line-clamp: var(--_truncate);
+    text-overflow: ellipsis;
+    max-width: 160px;
   }
 
   // ==============================================
