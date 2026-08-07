@@ -4,7 +4,8 @@
  *   NDS.Forms.init()                       scan + initialize every .nds-form-container
  *   NDS.Forms.initializeContainer(el)      initialize one container
  *   NDS.Forms.initForm(form)               wire one .nds-form (submit validation)
- *   NDS.Forms.setStatus(el, status, msg)   set field status (error/success/warning/info)
+ *   NDS.Forms.setStatus({element, status, message, permanent})   set field status
+ *                                          (error/success/warning/info/neutral)
  *   NDS.Forms.clearStatus(el)              clear it
  *   NDS.Forms.getStatus(el)                read {status, message}
  *   NDS.Forms.setState(el, name, add)      add/remove a field state ('required' also
