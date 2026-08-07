@@ -130,19 +130,19 @@ breadcrumb: [["Examples", "/examples"]]
                   <input type="checkbox" id="accept-terms" name="accept-terms" value="accepted" class="nds-check" required>
                 </div>
               </div>
+            </div>
 
-              <div class="nds-card-actions nds-row">
-                <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
-                  <span class="nds-label">Create account</span>
-                </button>
-              </div>
-
-              <div class="nds-card-footer nds-center">
-                <span>Already have an account?</span>
-                <a href="{{ '/examples/sign-in/' | relative_url }}">Sign in</a>
-              </div>
+            <!-- Actions sit outside .nds-card-content: that is the part that scrolls -->
+            <div class="nds-card-actions nds-row">
+              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+                <span class="nds-label">Create account</span>
+              </button>
             </div>
           </form>
+
+          <p class="nds-note nds-center">
+            Already have an account? <a href="{{ '/examples/sign-in/' | relative_url }}">Sign in</a>
+          </p>
         </div>
 
         <!-- Step 2: Verify Email -->
@@ -196,18 +196,18 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
               </fieldset>
 
-              <p class="nds-card-description nds-center">
+              <p class="nds-note nds-center">
                 Didn't receive the code? <a href="#" class="resend-link">Resend</a>
               </p>
+            </div>
 
-              <div class="nds-card-actions nds-row">
-                <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
-                  <span class="nds-label">Verify</span>
-                </button>
-                <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
-                  <span class="nds-label">Back</span>
-                </button>
-              </div>
+            <div class="nds-card-actions nds-row">
+              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+                <span class="nds-label">Verify</span>
+              </button>
+              <button type="button" class="nds-btn nds-secondary-outline nds-lg step-prev-btn">
+                <span class="nds-label">Back</span>
+              </button>
             </div>
           </form>
         </div>
@@ -226,12 +226,12 @@ breadcrumb: [["Examples", "/examples"]]
               <h1 class="nds-card-title">Account created</h1>
               <p class="nds-card-description">Your email has been verified. You're all set.</p>
             </div>
+          </div>
 
-            <div class="nds-card-actions nds-row">
-              <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-lg nds-full">
-                <span class="nds-label">Go to dashboard</span>
-              </a>
-            </div>
+          <div class="nds-card-actions nds-row">
+            <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-lg nds-full">
+              <span class="nds-label">Go to dashboard</span>
+            </a>
           </div>
         </div>
       </div>
@@ -259,10 +259,11 @@ breadcrumb: [["Examples", "/examples"]]
     var password = document.getElementById('password');
     var confirmPassword = document.getElementById('confirm-password');
     var otpGroup = form2.querySelector('.nds-otp-group');
-    var otpHidden = form2.querySelector('.nds-otp-value');
     var expectedCode = '';
     var demoCode = document.getElementById('registration-demo-code');
 
+    // Plain [hidden] toggling: no NDS component swaps sibling cards (Panel is a
+    // slide-in surface, Stepper only stamps the indicator), so this stays native.
     function show(which) {
       Object.keys(cards).forEach(function (key) {
         cards[key].toggleAttribute('hidden', key !== which);
@@ -281,9 +282,9 @@ breadcrumb: [["Examples", "/examples"]]
 
     function withLoading(btn, delay, done) {
       if (!btn) { done(); return; }
-      btn.dataset.state = 'loading';
+      NDS.State.add(btn, 'loading');
       setTimeout(function () {
-        btn.removeAttribute('data-state');
+        NDS.State.remove(btn, 'loading');
         done();
       }, delay);
     }
@@ -315,8 +316,7 @@ breadcrumb: [["Examples", "/examples"]]
 
     // Step 2 — Verify
     form2.addEventListener('nds:formValid', function () {
-      var entered = (otpHidden && otpHidden.value) || '';
-      if (entered !== expectedCode) {
+      if (NDS.OTP.getValue(otpGroup) !== expectedCode) {
         NDS.Forms.setStatus({
           element: otpGroup,
           status: 'error',
@@ -327,16 +327,14 @@ breadcrumb: [["Examples", "/examples"]]
       var btn = form2.querySelector('button[type="submit"]');
       withLoading(btn, 1500, function () {
         show('step3');
-        if (NDS.Alert) {
-          NDS.Alert.create({
-            variant: 'success',
-            title: 'Email verified',
-            description: 'Your account is ready.',
-            display: 'toast',
-            position: 'top',
-            duration: 3000
-          });
-        }
+        NDS.Alert.create({
+          variant: 'success',
+          title: 'Email verified',
+          description: 'Your account is ready.',
+          display: 'toast',
+          position: 'top',
+          duration: 3000
+        });
       });
     });
 

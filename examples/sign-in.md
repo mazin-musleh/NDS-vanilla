@@ -37,21 +37,36 @@ breadcrumb: [["Examples", "/examples"]]
                 portal.</p>
             </div>
 
-            <div class="nds-card-actions nds-row">
-              <button type="button" class="nds-btn nds-primary nds-lg nds-full" id="nafath-btn">
-                <span class="nds-label">Continue with Nafath</span>
-              </button>
-            </div>
+          </div>
 
-            <div class="nds-divider">or</div>
+          <!-- Actions sit outside .nds-card-content: that is the part that scrolls -->
+          <div class="nds-card-actions nds-row">
+            <button type="button" class="nds-btn nds-primary nds-lg nds-full" id="nafath-btn">
+              <span class="nds-label">Continue with Nafath</span>
+            </button>
+          </div>
 
-            <div class="nds-card-actions nds-row" id="credentials-toggle">
-              <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full">
-                <span class="nds-label">Sign in with National ID</span>
-              </button>
-            </div>
+          <div class="nds-divider">or</div>
 
-            <form id="credentials-form" class="nds-card-form nds-form" data-ajax hidden>
+          <div class="nds-card-actions nds-row">
+            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full" id="credentials-btn">
+              <span class="nds-label">Sign in with National ID</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- National ID and password: its own card, so it can move to its own page -->
+        <div class="nds-card nds-shadow nds-stroke" id="signin-credentials" hidden>
+          <div class="nds-card-header">
+            <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+          </div>
+          <form id="credentials-form" class="nds-form" data-ajax>
+            <div class="nds-card-content">
+              <div class="nds-card-text nds-center">
+                <h1 class="nds-card-title">Sign in with National ID</h1>
+                <p class="nds-card-description">Enter your National ID and password.</p>
+              </div>
 
               <!-- Form-level error: no close button, so the same alert can be shown again -->
               <div class="nds-alert nds-card nds-color" data-status="error" role="alert" id="credentials-error" hidden>
@@ -154,14 +169,17 @@ breadcrumb: [["Examples", "/examples"]]
                   <span class="nds-label">New</span>
                 </button>
               </div>
+            </div>
 
-              <div class="nds-card-actions nds-row">
-                <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
-                  <span class="nds-label">Sign in</span>
-                </button>
-              </div>
-            </form>
-          </div>
+            <div class="nds-card-actions nds-col">
+              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+                <span class="nds-label">Sign in</span>
+              </button>
+              <button type="button" class="nds-btn nds-subtle nds-full back-to-start">
+                <span class="nds-label">Cancel</span>
+              </button>
+            </div>
+          </form>
         </div>
 
         <!-- Delivery method: where the one-time code is sent -->
@@ -191,12 +209,12 @@ breadcrumb: [["Examples", "/examples"]]
                 <span class="nds-label">Text message</span>
               </button>
             </div>
+          </div>
 
-            <div class="nds-card-actions nds-row">
-              <button type="button" class="nds-btn nds-subtle nds-full back-to-start">
-                <span class="nds-label">Cancel</span>
-              </button>
-            </div>
+          <div class="nds-card-actions nds-row">
+            <button type="button" class="nds-btn nds-subtle nds-full back-to-start">
+              <span class="nds-label">Cancel</span>
+            </button>
           </div>
         </div>
 
@@ -264,15 +282,16 @@ breadcrumb: [["Examples", "/examples"]]
                   <span class="nds-label">Resend code</span>
                 </button>
               </div>
+            </div>
 
-              <div class="nds-card-actions nds-col">
-                <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
-                  <span class="nds-label">Verify</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle nds-full back-to-start">
-                  <span class="nds-label">Cancel</span>
-                </button>
-              </div>
+            <div class="nds-card-actions nds-col">
+              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+                <span class="nds-label">Verify</span>
+              </button>
+              <!-- Cancel returns to whichever card sent the code, so no fixed target -->
+              <button type="button" class="nds-btn nds-subtle nds-full" id="otp-cancel">
+                <span class="nds-label">Cancel</span>
+              </button>
             </div>
           </form>
         </div>
@@ -291,24 +310,24 @@ breadcrumb: [["Examples", "/examples"]]
               <h1 class="nds-card-title">You are signed in</h1>
               <p class="nds-card-description">Welcome back, <strong>Noura Al-Harbi</strong> (1098234571).</p>
             </div>
+          </div>
 
-            <div class="nds-card-actions nds-col">
-              <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-full">
-                <span class="nds-label">Go to dashboard</span>
-              </a>
-              <button type="button" class="nds-btn nds-secondary-outline nds-full" data-goto="password">
-                <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
-                <span class="nds-label">Change password</span>
-              </button>
-              <button type="button" class="nds-btn nds-secondary-outline nds-full" data-goto="mobile">
-                <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
-                <span class="nds-label">Update mobile number</span>
-              </button>
-              <button type="button" class="nds-btn nds-subtle nds-full" data-goto="out">
-                <i class="nds-icon nds-hgi-door-01" aria-hidden="true"></i>
-                <span class="nds-label">Sign out</span>
-              </button>
-            </div>
+          <div class="nds-card-actions nds-col">
+            <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-full">
+              <span class="nds-label">Go to dashboard</span>
+            </a>
+            <button type="button" class="nds-btn nds-secondary-outline nds-full" data-goto="password">
+              <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
+              <span class="nds-label">Change password</span>
+            </button>
+            <button type="button" class="nds-btn nds-secondary-outline nds-full" data-goto="mobile">
+              <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
+              <span class="nds-label">Update mobile number</span>
+            </button>
+            <button type="button" class="nds-btn nds-subtle nds-full" data-goto="out">
+              <i class="nds-icon nds-hgi-door-01" aria-hidden="true"></i>
+              <span class="nds-label">Sign out</span>
+            </button>
           </div>
         </div>
 
@@ -425,15 +444,15 @@ breadcrumb: [["Examples", "/examples"]]
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="nds-card-actions nds-col">
-                <button type="submit" class="nds-btn nds-primary nds-full">
-                  <span class="nds-label">Update password</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle nds-full" data-goto="account">
-                  <span class="nds-label">Cancel</span>
-                </button>
-              </div>
+            <div class="nds-card-actions nds-col">
+              <button type="submit" class="nds-btn nds-primary nds-full">
+                <span class="nds-label">Update password</span>
+              </button>
+              <button type="button" class="nds-btn nds-subtle nds-full" data-goto="account">
+                <span class="nds-label">Cancel</span>
+              </button>
             </div>
           </form>
         </div>
@@ -448,7 +467,8 @@ breadcrumb: [["Examples", "/examples"]]
             <div class="nds-card-content">
               <div class="nds-card-text nds-center">
                 <h1 class="nds-card-title">Update your mobile number</h1>
-                <p class="nds-card-description">Alerts and one-time codes go to this number.</p>
+                <p class="nds-card-description">Alerts and one-time codes go to this number. We send a code to the new
+                number to confirm it.</p>
               </div>
 
               <div class="nds-form-container" data-required>
@@ -477,15 +497,15 @@ breadcrumb: [["Examples", "/examples"]]
                   </span>
                 </div>
               </div>
+            </div>
 
-              <div class="nds-card-actions nds-col">
-                <button type="submit" class="nds-btn nds-primary nds-full">
-                  <span class="nds-label">Save number</span>
-                </button>
-                <button type="button" class="nds-btn nds-subtle nds-full" data-goto="account">
-                  <span class="nds-label">Cancel</span>
-                </button>
-              </div>
+            <div class="nds-card-actions nds-col">
+              <button type="submit" class="nds-btn nds-primary nds-full">
+                <span class="nds-label">Send code</span>
+              </button>
+              <button type="button" class="nds-btn nds-subtle nds-full" data-goto="account">
+                <span class="nds-label">Cancel</span>
+              </button>
             </div>
           </form>
         </div>
@@ -515,12 +535,12 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="nds-card-actions nds-row">
-              <button type="button" class="nds-btn nds-secondary-outline nds-full back-to-start">
-                <span class="nds-label">Sign in again</span>
-              </button>
-            </div>
+          <div class="nds-card-actions nds-row">
+            <button type="button" class="nds-btn nds-secondary-outline nds-full back-to-start">
+              <span class="nds-label">Sign in again</span>
+            </button>
           </div>
         </div>
       </div>
@@ -540,6 +560,7 @@ breadcrumb: [["Examples", "/examples"]]
   document.addEventListener('DOMContentLoaded', function () {
     var cards = {
       start: document.getElementById('signin-start'),
+      credentials: document.getElementById('signin-credentials'),
       delivery: document.getElementById('signin-delivery'),
       otp: document.getElementById('signin-otp'),
       account: document.getElementById('signin-account'),
@@ -549,12 +570,10 @@ breadcrumb: [["Examples", "/examples"]]
     };
     var credForm = document.getElementById('credentials-form');
     var credError = document.getElementById('credentials-error');
-    var credToggle = document.getElementById('credentials-toggle');
     var captchaInput = document.getElementById('captcha-value');
     var captchaText = document.getElementById('captcha-image');
     var otpForm = document.getElementById('otp-form');
     var otpGroup = otpForm.querySelector('.nds-otp-group');
-    var otpHidden = otpForm.querySelector('.nds-otp-value');
     var passwordForm = document.getElementById('password-form');
     var newPassword = document.getElementById('new-password');
     var retypePassword = document.getElementById('retype-password');
@@ -562,7 +581,13 @@ breadcrumb: [["Examples", "/examples"]]
     var captchaCode = '';
     var expectedCode = '';
     var signoutTimer = null;
+    // The OTP card is a hub: sign-in and the mobile-number change both send a
+    // code through it. This says which flow is running, so verify and cancel
+    // know where to go next.
+    var otpFlow = 'signin';
 
+    // Plain [hidden] toggling: no NDS component swaps sibling cards (Panel is a
+    // slide-in surface, Stepper only stamps the indicator), so this stays native.
     function show(which) {
       Object.keys(cards).forEach(function (key) {
         cards[key].toggleAttribute('hidden', key !== which);
@@ -575,15 +600,14 @@ breadcrumb: [["Examples", "/examples"]]
 
     function withLoading(btn, delay, done) {
       if (!btn) { done(); return; }
-      btn.dataset.state = 'loading';
+      NDS.State.add(btn, 'loading');
       setTimeout(function () {
-        btn.removeAttribute('data-state');
+        NDS.State.remove(btn, 'loading');
         done();
       }, delay);
     }
 
     function toast(variant, title, description) {
-      if (!NDS.Alert) return null;
       return NDS.Alert.create({
         variant: variant,
         title: title,
@@ -608,9 +632,8 @@ breadcrumb: [["Examples", "/examples"]]
     document.getElementById('captcha-refresh')
       .addEventListener('nds:cooldown:triggered', newCaptcha);
 
-    credToggle.querySelector('button').addEventListener('click', function () {
-      credToggle.hidden = true;
-      credForm.hidden = false;
+    document.getElementById('credentials-btn').addEventListener('click', function () {
+      show('credentials');
       document.getElementById('national-id').focus();
     });
 
@@ -628,7 +651,7 @@ breadcrumb: [["Examples", "/examples"]]
         credError.hidden = false;
         captchaInput.value = '';
         newCaptcha();
-        if (NDS.CooldownButton) NDS.CooldownButton.start(document.getElementById('captcha-refresh'));
+        NDS.CooldownButton.start(document.getElementById('captcha-refresh'));
         captchaInput.focus();
         return;
       }
@@ -653,6 +676,7 @@ breadcrumb: [["Examples", "/examples"]]
     document.querySelectorAll('.delivery-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
         withLoading(btn, 1000, function () {
+          otpFlow = 'signin';
           show('otp');
           sendCode(btn.dataset.delivery);
         });
@@ -663,7 +687,7 @@ breadcrumb: [["Examples", "/examples"]]
       .addEventListener('nds:cooldown:triggered', function () { sendCode(); });
 
     otpForm.addEventListener('nds:formValid', function () {
-      if (((otpHidden && otpHidden.value) || '') !== expectedCode) {
+      if (NDS.OTP.getValue(otpGroup) !== expectedCode) {
         NDS.Forms.setStatus({
           element: otpGroup,
           status: 'error',
@@ -673,7 +697,14 @@ breadcrumb: [["Examples", "/examples"]]
       }
       withLoading(otpForm.querySelector('button[type="submit"]'), 1500, function () {
         show('account');
+        if (otpFlow !== 'mobile') return;
+        toast('success', 'Mobile number saved',
+          'Codes now go to ' + document.getElementById('mobile-number').value + '.');
       });
+    });
+
+    document.getElementById('otp-cancel').addEventListener('click', function () {
+      show(otpFlow === 'mobile' ? 'mobile' : 'start');
     });
 
     // --- Account actions ----------------------------------------------------
@@ -730,7 +761,12 @@ breadcrumb: [["Examples", "/examples"]]
 
     passwordForm.addEventListener('nds:formValid', function () {
       withLoading(passwordForm.querySelector('button[type="submit"]'), 1500, function () {
-        passwordForm.reset();
+        // Forms listens for no native reset event, so form.reset() would leave the
+        // clear buttons and validation paint stale. Clear each field and re-sync it.
+        passwordForm.querySelectorAll('input').forEach(function (input) {
+          input.value = '';
+          NDS.Forms.syncState(input);
+        });
         checkRules();
         show('account');
         toast('success', 'Password updated', 'Use the new password the next time you sign in.');
@@ -739,11 +775,14 @@ breadcrumb: [["Examples", "/examples"]]
 
     // --- Update mobile ------------------------------------------------------
 
+    // A new number is only saved once a code sent to it comes back verified,
+    // so this hands over to the OTP card instead of saving straight away.
     mobileForm.addEventListener('nds:formValid', function () {
       var value = document.getElementById('mobile-number').value;
       withLoading(mobileForm.querySelector('button[type="submit"]'), 1500, function () {
-        show('account');
-        toast('success', 'Mobile number saved', 'Codes now go to ' + value + '.');
+        otpFlow = 'mobile';
+        show('otp');
+        sendCode(value);
       });
     });
 
