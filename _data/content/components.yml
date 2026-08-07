@@ -358,6 +358,14 @@
   url: "/ui-shell/hero.html"
   scss: _sass/components/_hero.scss
 
+- title: "Helper Classes"
+  description: "Single-purpose classes for your own markup: centering, spacing reset, direction isolation, brand text color, and notes"
+  icon: '<i class="hgi hgi-stroke hgi-magic-wand-01"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/helpers.html"
+  scss: _sass/_utilities.scss
+
 - title: "Hidden"
   description: "Visibility utilities: the hidden attribute honored everywhere and band-exact responsive hiding with data-hidden"
   icon: '<i class="hgi hgi-stroke hgi-view-off-slash"></i>'
