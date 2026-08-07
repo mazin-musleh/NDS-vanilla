@@ -37,6 +37,13 @@
   tags: ["Expandable", "Accordion"]
   url: "/examples/program.html"
 
+- title: "Manage Records"
+  description: "Records screen with create, edit and delete, expandable detail rows, and export."
+  icon: '<i class="hgi hgi-stroke hgi-table-01"></i>'
+  category: "Dashboard"
+  tags: ["Tables", "Sub-Rows", "Modal", "Filter"]
+  url: "/examples/manage-records.html"
+
 - title: "Console"
   description: "Admin console with charts, transactions, team directory, and notifications."
   icon: '<i class="hgi hgi-stroke hgi-dashboard-browsing"></i>'
