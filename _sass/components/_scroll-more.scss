@@ -16,6 +16,7 @@
     --scroll-max-width: initial;
     --scroll-gap: initial;
     --scroll-divider: initial;
+    --scroll-padding: initial;
 
     // Internal tokens with external fallbacks
     --_scroll-fade:       var(--scroll-fade, 48px);
@@ -23,6 +24,7 @@
     --_scroll-max-width:  var(--scroll-max-width, none);
     --_scroll-gap:        var(--scroll-gap, 0);
     --_scroll-divider:    var(--scroll-divider, var(--divider-color));
+    --_scroll-padding:    var(--scroll-padding, var(--spacing-xs));
 
     // Mask tokens (consumed by .nds-scroll-more-content's mask-image).
     --_fade-start: var(--_scroll-fade);
@@ -59,9 +61,10 @@
     min-width: 0;
     min-height: 0;
 
-    // No default padding declaration: authors set --scroll-padding on the wrapper
-    // (or apply padding inline on this element) when they need breathing room.
-    // Leaving it off preserves the project's own resets for <ul>, <ol>, etc.
+    // Padding follows the SCROLL axis (rules below, keyed on data-axis): the
+    // first and last item sit flush against the scrollport, so their border and
+    // focus ring get clipped there. The cross axis is left alone — children are
+    // full-bleed by design. --scroll-padding retunes it; 0 opts out.
 
     &::-webkit-scrollbar { display: none; }
     scrollbar-width: none;
@@ -72,6 +75,17 @@
     // the container, scrollWidth never exceeds clientWidth, and the JS
     // axis-detection sees no overflow. No effect in block/grid contexts.
     > * { flex-shrink: 0; }
+}
+
+// Breathing room at the SCROLL END, where the last item's border and focus ring
+// meet the scrollport edge. End only: padding at the start would read as a gap
+// at rest, since that edge is already flush by design.
+.nds-scroll-more[data-axis="vertical"] > .nds-scroll-more-content {
+    padding-block-end: var(--_scroll-padding);
+}
+
+.nds-scroll-more[data-axis="horizontal"] > .nds-scroll-more-content {
+    padding-inline-end: var(--_scroll-padding);
 }
 
 // Opt-in: snap each child's leading edge to the scroll container.

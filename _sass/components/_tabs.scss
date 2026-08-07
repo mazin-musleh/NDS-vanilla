@@ -140,6 +140,9 @@
 
 .nds-tab-list-container {
   isolation: isolate;
+  // A tab strip is exactly --btn-size tall by design; scroll-more's cross-axis
+  // padding default would grow every strip on the page, so opt out.
+  --scroll-padding: 0;
 }
 
 // ==============================================
