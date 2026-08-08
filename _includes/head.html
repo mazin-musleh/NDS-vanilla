@@ -25,11 +25,7 @@
     {%- comment -%} Critical CSS. Default: render-blocking <link> (fastest LCP/FCP on slow networks, cacheable across pages). Opt in to the inline skeleton gate + async crit with `critical_inline: true` (site or page) — non-blocking first paint; the gate is auto-generated from _sass/_fold.scss so it can't drift from the crit file. {%- endcomment -%}
     {%- if site.critical_inline or page.critical_inline %}
     {% include critical-inline.html %}
-    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="high"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
+    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="high" data-nds-defer>
     {%- else %}
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
@@ -41,46 +37,23 @@
     <link id="nds-theme-stylesheet" rel="stylesheet" href="{{ _brand.css | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
     {%- endif %}
-    <!-- Main CSS — deferred; onload triggers loadDeferredAssets (icons + HGI) so they never compete with the LCP window. -->
-    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
-        onload="this.onload=null;this.rel='stylesheet';window.loadDeferredAssets?loadDeferredAssets():window.__ndsDeferredPending=true">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
-    {%- if site.use_hgi_font or page.use_hgi_font %}
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
-    {%- endif %}
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
+    <!-- Main CSS — deferred; the head script applies it, the loader adds the icon sheets. -->
+    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low" data-nds-defer="main">
     {%- unless site.accessibility == false %}
     <!-- Accessibility add-on (optional) - a11y panel + mode overrides -->
-    <link rel="preload" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
+    <link rel="preload" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low" data-nds-defer>
     {%- endunless %}
     <!-- Custom page-specific CSS files with deferred loading -->
     {%- if page.custom_css %}
     {%- for css_file in page.custom_css %}
-    <link rel="preload" href="{{ css_file | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ css_file | relative_url }}">
-    </noscript>
+    <link rel="preload" href="{{ css_file | relative_url }}" as="style" data-nds-defer>
     {%- endfor %}
     {%- endif %}
     <!-- Favicon - low-priority fetch so it doesn't compete with critical assets.
          Ships as a placeholder so a copied head renders; consumers swap the file. -->
     <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}" fetchpriority="low">
     {%- unless page.exclude_showcase == true %}
-    <link rel="preload" href="{{ 'docs-assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'docs-assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
+    <link rel="preload" href="{{ 'docs-assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low" data-nds-defer>
     {%- endunless %}
     {%- if site.perf_monitor %}
     {% include perf-monitor.html %}

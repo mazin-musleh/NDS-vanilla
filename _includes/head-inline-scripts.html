@@ -1,3 +1,4 @@
+<!-- One script element on purpose: a strict CSP grants it once (one nonce, one hash) instead of twice. -->
 <script>
     // Pre-paint FOUC guard: stamp saved data-theme before first paint, union-merged with markup/pack tokens so a stored value never clobbers them.
     (function() {
@@ -9,22 +10,18 @@
             d.setAttribute('data-theme', t.join(' '));
         }
     })();
-</script>
-<script>
-    // Loads icons + HGI after main CSS — keeps them out of the LCP window.
-    function loadDeferredAssets() {
-        var icons = document.createElement('link');
-        icons.rel = 'stylesheet';
-        icons.href = '{{ "assets/css/nds-icons.min.css" | relative_url }}?ver={{ site.asset_ver }}';
-        icons.onload = function () { document.documentElement.setAttribute('data-nds-icons-loaded', ''); };
-        document.head.appendChild(icons);
-        {%- if site.use_hgi_font or page.use_hgi_font %}
-        var hgi = document.createElement('link');
-        hgi.rel = 'stylesheet';
-        hgi.href = '{{ "assets/css/hgi-rounded-stroke-min.css" | relative_url }}?ver={{ site.asset_ver }}';
-        document.head.appendChild(hgi);
-        {%- endif %}
-    }
-    // Cached main.css can fire onload before this script parses — flush the pending flag.
-    if (window.__ndsDeferredPending) loadDeferredAssets();
+    // Deferred styles: preload → injected stylesheet link (markers move with it). Rationale: ui-shell/head.md, CSP section.
+    (function () {
+        document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (p) {
+            var l = document.createElement('link');
+            // Clone every attribute except rel/as — keeps href, fetchpriority, integrity, crossorigin, and the data-* markers.
+            for (var i = 0; i < p.attributes.length; i++) {
+                var a = p.attributes[i];
+                if (a.name !== 'rel' && a.name !== 'as') l.setAttribute(a.name, a.value);
+            }
+            l.rel = 'stylesheet';
+            p.removeAttribute('data-nds-defer');
+            document.head.appendChild(l);
+        });
+    })();
 </script>

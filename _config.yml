@@ -33,11 +33,6 @@ nds_iq:
 baseurl: "/NDS-vanilla"
 url: "https://mazin-musleh.github.io"  # production origin (no trailing slash); used by sitemap.xml / robots.txt
 
-# HGI icon font from CDN: loads the font site-wide when true so any
-# `<i class="hgi hgi-stroke hgi-NAME">` markup in content/demo/doc pages renders.
-# UI icons always render via mask-image regardless.
-use_hgi_font: true
-
 # Set to true to show the dark/light theme toggle button in the topbar.
 theme_switcher: true
 

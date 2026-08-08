@@ -700,17 +700,56 @@
         // for its load. window.load is the backstop so the reveal can't hang.
         function stampWhenStyled() {
             const root = document.documentElement;
-            const stamp = () => root.setAttribute('data-nds-loaded', '');
-            const main = document.querySelector('link[href*="nds-main.min.css"]');
-            // Already applied? `.sheet` is set once the CSSOM attaches; `rel` flips to
-            // 'stylesheet' the instant the <link>'s onload swap runs. Check both — a
-            // load event that already fired before this listener attaches must not
-            // strand the reveal on the window.load backstop (which waits on every
-            // subresource: images, fonts, iframes).
-            if (!main || main.sheet || main.rel === 'stylesheet') { stamp(); return; }
-            main.addEventListener('load', stamp, { once: true });
-            main.addEventListener('error', stamp, { once: true });
-            window.addEventListener('load', stamp, { once: true });
+            // Marker first, filename second. The marker sits on the stylesheet link
+            // the head script injected (the script moves it off the preload, which
+            // never gets a `.sheet`). The filename fallback keeps a pre-1.7 head —
+            // and anyone fingerprinting their asset names — working. Two queries,
+            // not a comma list: a comma list resolves by document order, and the
+            // main CSS preload (same filename, earlier in head) would win.
+            const main = document.querySelector('link[data-nds-defer="main"]')
+                || document.querySelector('link[href*="nds-main.min.css"]');
+            // Idempotent: three listeners race to get here and only one may inject.
+            const done = () => {
+                if (root.hasAttribute('data-nds-loaded')) return;
+                root.setAttribute('data-nds-loaded', '');
+                loadIconSheets(main);
+            };
+            // Already applied? `.sheet` is set once the CSSOM attaches. Catching this
+            // here matters: a load event that already fired before these listeners
+            // attach must not strand the reveal on the window.load backstop, which
+            // waits on every subresource — images, fonts, iframes.
+            if (!main || main.sheet) { done(); return; }
+            main.addEventListener('load', done, { once: true });
+            main.addEventListener('error', done, { once: true });
+            window.addEventListener('load', done, { once: true });
+        }
+
+        // Icon sheets ride behind main CSS so they never compete inside the LCP
+        // window. They load from here rather than an inline head script so a strict
+        // CSP needs no extra grant: this bundle is already an allowed origin, while
+        // an inline script needs the consumer's nonce or hash. The href comes off the
+        // main CSS link — same folder as the icon sheets in every build — not off the
+        // JS directory, which a consumer's bundler may place somewhere else entirely.
+        function loadIconSheets(main) {
+            if (!main) return;
+            const href = (name) => main.href.replace('nds-main.min.css', name);
+            // Per-sheet dedupe: skip a sheet the head already carries (self-hosting
+            // consumer, or a pre-1.7 inline head that adds its own). Check link
+            // elements, not document.styleSheets — a sheet still downloading has no
+            // entry there yet, and missing it would inject a duplicate.
+            const add = (url) => {
+                if ([...document.querySelectorAll('link[rel="stylesheet"]')].some((l) => l.href === url)) return null;
+                const l = document.createElement('link');
+                l.rel = 'stylesheet';
+                l.href = url;
+                document.head.appendChild(l);
+                return l;
+            };
+            const icons = add(href('nds-icons.min.css'));
+            // The stamp gates icon opacity (_sass/_icons.scss) — without it they stay invisible.
+            if (icons) icons.onload = () =>
+                document.documentElement.setAttribute('data-nds-icons-loaded', '');
+            add(href('hgi-rounded-stroke-min.css'));
         }
 
         // Critical pass (the reveal checklist): time-sliced. Small inits share a

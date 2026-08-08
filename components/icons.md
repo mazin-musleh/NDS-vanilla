@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.4.1"
-last_edit: "20/07/2026 - 12:48 AM"
+updated: "1.6.x"
+last_edit: "08/08/2026 - 06:48 AM"
 ---
 
 <!-- Content icons -->
@@ -309,7 +309,6 @@ last_edit: "20/07/2026 - 12:48 AM"
                     <li>Size with <code class="nds-inline-code lang-css">font-size</code>, not width and height, and let color come from the surrounding text</li>
                     <li>Add <code class="nds-inline-code lang-html">aria-hidden="true"</code> to an icon next to a label. On an icon-only control, put the <code class="nds-inline-code lang-html">aria-label</code> on the control</li>
                     <li>Stay in one style. Only Stroke Rounded ships, and the other styles are not free</li>
-                    <li>Using no content icons? Set <code class="nds-inline-code lang-js">use_hgi_font: false</code> in <code class="nds-inline-code lang-js">_config.yml</code> to drop the font from every page</li>
                 </ul>
             </div>
 
