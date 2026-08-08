@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "09/08/2026 - 02:04 AM"
+last_edit: "09/08/2026 - 02:13 AM"
 ---
 
 <!-- Plain Divider -->
@@ -397,23 +397,44 @@ last_edit: "09/08/2026 - 02:04 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Label Position</h2>
-            <p class="nds-section-description">The two lines share the space evenly, which centres the label. Cap either one with <code class="nds-inline-code lang-html">--divider-line-start</code> or <code class="nds-inline-code lang-html">--divider-line-end</code> and the other takes the rest. Any length or percentage works, and the values follow writing direction, so start is the right-hand line in RTL.</p>
+            <p class="nds-section-description">The two lines share the space evenly, which centres the label. Add <code class="nds-inline-code lang-html">nds-start</code> or <code class="nds-inline-code lang-html">nds-end</code> to remove one line, so the label sits flush against that edge. For finer control, cap either line with <code class="nds-inline-code lang-html">--divider-line-start</code> or <code class="nds-inline-code lang-html">--divider-line-end</code> and the other takes the rest. Any length or percentage works. A cap of <code class="nds-inline-code lang-html">0</code> keeps the gap between the line and the label, which is the difference from the classes. The values follow writing direction, so start is the right-hand line in RTL.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
                 <div class="nds-showcase">
                     <div class="nds-demo-card">
                         <div class="demo-header">
-                            <div class="demo-label">Each label names its own setting</div>
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Position: ">
+                                        <span class="nds-label">Position: Centered</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["", ".nds-divider", "dividerLabelPosition"]'
+                                                data-trigger-label="Centered">
+                                                <span class="nds-label">Centered</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-start", ".nds-divider", "dividerLabelPosition"]'
+                                                data-trigger-label="Start">
+                                                <span class="nds-label">Start</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-end", ".nds-divider", "dividerLabelPosition"]'
+                                                data-trigger-label="End">
+                                                <span class="nds-label">End</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="demo-container">
                             <div class="state-demo">
                                 <div class="nds-content-wrapper">
-                                    <div class="nds-divider">Centered by default</div>
-                                    <div class="nds-divider" style="--divider-line-start: 0;">Label at the start</div>
-                                    <div class="nds-divider" style="--divider-line-end: 0;">Label at the end</div>
-                                    <div class="nds-divider" style="--divider-line-start: 24px;">Short start line</div>
-                                    <div class="nds-divider" style="--divider-line-end: 25%;">End line capped at 25%</div>
+                                    <div class="nds-divider">Label</div>
                                 </div>
                             </div>
                         </div>
@@ -438,9 +459,50 @@ last_edit: "09/08/2026 - 02:04 AM"
                                             </button>
                                         </div>
                                         <code class="lang-html code">
-&lt;div class="nds-divider"&gt;Centered by default&lt;/div&gt;
-&lt;div class="nds-divider" style="--divider-line-start: 0;"&gt;Label at the start&lt;/div&gt;
-&lt;div class="nds-divider" style="--divider-line-end: 0;"&gt;Label at the end&lt;/div&gt;
+&lt;div class="nds-divider"&gt;Label&lt;/div&gt;
+</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Each label names its own cap</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-content-wrapper">
+                                    <div class="nds-divider" style="--divider-line-start: 0;">Start line at zero width</div>
+                                    <div class="nds-divider" style="--divider-line-end: 0;">End line at zero width</div>
+                                    <div class="nds-divider" style="--divider-line-start: 24px;">Short start line</div>
+                                    <div class="nds-divider" style="--divider-line-end: 25%;">End line capped at 25%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-divider-position-2" id="tab-divider-position-2">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-position-2"
+                                        aria-labelledby="tab-divider-position-2">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
+&lt;div class="nds-divider" style="--divider-line-start: 0;"&gt;Start line at zero width&lt;/div&gt;
+&lt;div class="nds-divider" style="--divider-line-end: 0;"&gt;End line at zero width&lt;/div&gt;
 &lt;div class="nds-divider" style="--divider-line-start: 24px;"&gt;Short start line&lt;/div&gt;
 &lt;div class="nds-divider" style="--divider-line-end: 25%;"&gt;End line capped at 25%&lt;/div&gt;
 </code>
@@ -526,6 +588,8 @@ last_edit: "09/08/2026 - 02:04 AM"
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-vertical</code></td><td>Flips the rule to a vertical line. Stretches to the flex parent's cross axis. Spacing modifiers apply inline instead of block</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-start</code></td><td>Removes the line before the label, so the label sits flush at the start and one full line follows it. Text variant only</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-end</code></td><td>Removes the line after the label, so the label sits flush at the end and one full line precedes it. Text variant only</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium spacing around the rule</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Large spacing around the rule</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Extra-large spacing around the rule</td></tr>

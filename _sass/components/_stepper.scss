@@ -462,6 +462,14 @@
 
         .nds-stepper-content {
             flex: 1;
+
+            // The step circle already sits beside the label here, so the stub that
+            // echoes it horizontally just crowds the connecting line. Drop the line
+            // before the label instead of capping it — a zero-width cap would still
+            // hold its share of the flex gap and leave the label inset.
+            > .nds-divider::before {
+                display: none;
+            }
         }
     }
 }

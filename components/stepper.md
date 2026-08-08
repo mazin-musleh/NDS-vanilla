@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "08/08/2026 - 09:20 PM"
+last_edit: "09/08/2026 - 02:18 AM"
 ---
 
 <!-- Horizontal Layout -->

@@ -83,6 +83,12 @@ mark {
         &::after { max-width: var(--divider-line-end, none); }
     }
 
+    // Label alignment: drop one line entirely so the label sits flush against
+    // that edge. Removed, not zero-width — a zero-width line still takes its
+    // share of the flex gap, which is exactly the inset we are killing here.
+    &.nds-start::before,
+    &.nds-end::after { display: none; }
+
     &.nds-md { --divider: var(--spacing-md); }
     &.nds-lg { --divider: var(--spacing-lg); }
     &.nds-xl { --divider: var(--spacing-xl); }
