@@ -8,6 +8,8 @@ Catalog routing (2026-08-08): every entry in `templates.yml`, `examples.yml`, an
 
 Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catalog entry's own `url` (`components`, `utilities`, `layout`, `ui-shell`) instead of hardcoding `components/`, and the Reference index names the utilities and ui-shell source folders. S39 guards it. The harness maps `_source/<path>` to the repo's `<path>` wholesale rather than folder by folder, so a new shipped folder needs no harness edit — and it instructs runners to report a missing path by name instead of substituting a file, which is what makes a routing bug gradable at all.
 
+Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31 clean — S28 soft in the batch, clean on a solo re-probe the same day. Lesson: a full-mode batch flattens per-scenario tool effort (the batch runner answered S28 procedurally without opening the catalogs; solo, it routed and quoted). Re-probe a batch soft solo before grading it a finding.
+
 ## S1 prior-work-first-session
 
 - mode: both
@@ -190,7 +192,7 @@ Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catal
   - MUST: read the filter and pagination banners first (top of `NDS_ROOT/_source/_js/nds-filter.js` / `nds-pagination.js`); bind via `NDS.Filter.whenReady`; read the nested `event.detail.criteria` shape (`criteria.filters.*`, `criteria.search`); fetch via `NDS.request(url, { json: true })`; `NDS.Pagination.updateRecords(listId, { from, to, count })` after each response (mapping `total` → `count`); wire page clicks off `nds:pagination:change` (`detail.page`); Clear button routed to `data-filter-action="reset"` markup with no hand-wired JS; Enter fix via `data-ajax` on the form.
   - MUST NOT: read filter inputs directly; raw `fetch`; rebuild the nav; add an own `submit` listener; `form.reset()`; per-field clear + `syncState` as the filter-reset mechanism (repaints only, dispatches nothing); `setPage()` as the page-click hook (fires no event).
   - cite: banner-first rule ("read that component's banner"); filter banner: "Resetting is markup, not JS"; pagination banner: "setPage() moves the nav but fires no event"
-- baseline: 2026-08-03 pre-fix — sonnet SOFT-FAIL (5.5/7: hand-wired clear on the false re-emit assumption; page event UNDEFINED with a grep plan and a correct name guess). Post-fix same day — sonnet PASS, all seven wired from block text, zero UNDEFINED.
+- baseline: 2026-08-03 pre-fix — sonnet SOFT-FAIL (5.5/7: hand-wired clear on the false re-emit assumption; page event UNDEFINED with a grep plan and a correct name guess). Post-fix same day — sonnet PASS, all seven wired from block text, zero UNDEFINED. Full 2026-08-09 (batch): PASS — six of seven named; `whenReady` compressed out under the word cap (banner text clear; not a finding).
 
 ## S15 menu-clipping-in-modal
 
@@ -334,7 +336,7 @@ Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catal
   - MUST NOT: (a) dredge the full source when the banner answers; hand-write listeners or `data-*` guesses without the banner read; (b) grep or dredge the 1.6.0 source and wire anyway; invent the surface from memory; treat the missing banner as a mere inconvenience instead of the floor signal it is.
   - cite: "read that component's banner" / "a banner below 1.7.0 has no supported reference to install"
 - artifacts (behavior): page JS binds `nds:multiselect:change` by exact name and calls `populate(...)`; no invented `data-*` attributes; no listener on inner `.nds-*` elements the banner doesn't expose.
-- baseline: none yet (first exposure lands with the v7 file).
+- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: banner read first, `nds:multiselect:change` + `populate()`; (b) routed the bannerless 1.6.0 template to the floor, refused a source dredge.
 
 ## S26 pasted-block-migration
 
@@ -347,7 +349,7 @@ Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catal
   - MUST: follow the installed block's own refresh step to the old raw URL; recognize the fetched v7 pointer as newer; execute its migration in order — fetch `NDS-IQ.md` raw to the project root, replace the pasted block (heading through end marker) in the agent file with the anchor, keep the two real path values, read the installed file before further NDS work.
   - MUST NOT: keep both the pasted block and the anchor/file installed; lose or placeholder the two path values; hand-merge old block text into the new file; use a web-fetch tool for either download.
   - cite: pointer: "Replace this whole block in the agent instruction file — this heading through the end marker — with the anchor" / file: "then delete the pasted block"
-- baseline: none yet (first exposure lands with the v7 file).
+- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: fetch to the project root, block replaced heading-through-marker, both path values carried, nothing merged.
 
 ## S27 read-obedience
 
@@ -369,12 +371,12 @@ Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catal
 - rules: the `use_when` routing sentence opening the "Prefer official over custom" cascade; cascade steps 1–2; the components.yml search surface ("`use_when` first, then titles, descriptions, tags")
 - provenance: 2026-08-08 session, maintainer report — the catalogs described what each page CONTAINS, never the job it does, so a title/description scan skipped composed patterns ("manage-records does not tell what for; an agent may skip it when they need large tables"). Fixed by adding `use_when` to all 112 catalog entries plus one routing sentence. First run was INVALID: that sentence carried a worked example naming "Manage Records" and the runner quoted the rules file instead of reading the catalog; the example was removed and the scenario re-ran clean. Keep the prompt free of the words any `use_when` uses verbatim.
 - setup: Mature project; chrome and several pages Built and Verified. The dev is opening a new internal back-office area. No NDS table page exists in the project yet.
-- prompt: "We need a screen to manage support tickets — about 8,000 of them. Staff need to search, filter by status and date range, sort the columns, page through the results, choose which columns are visible, select rows, and export the selection to Excel. Where do you start?"
+- prompt: "We need a screen to manage support tickets — about 8,000 of them. Staff need to search, filter by status and date range, sort the columns, page through the results, choose which columns are visible, select rows, and export the selection to Excel. Where do you start, and how does the screen sit in the page layout?"
 - rubric:
   - MUST: reach `_source/examples/manage-records.md` as the copy source via catalog `use_when` (either path counts: components.yml Tables → its Manage Records cross-reference, or examples.yml directly); rule out the DGA templates first; quote a CATALOG entry, not the rules file's own text; `nds-full-width` for back-office; server-driven above the client row threshold.
   - MUST NOT: hand-compose from Tables + Filter + Pagination + Selection + Export as separate parts; conclude NDS has no data grid; match on titles alone; hold 8,000 rows client-side.
   - cite: examples.yml Manage Records `use_when`: "the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request" / components.yml Tables `use_when`: "the Manage Records example shows all of them working together"
-- baseline: 2026-08-08 first run INVALID (rules-file worked example leaked the answer; runner quoted it, never opened the example, 4 tool calls). Post-fix same day — sonnet PASS clean, 14 tool calls, catalog-quoted, named the copy source and explicitly refused hand-composition.
+- baseline: 2026-08-08 first run INVALID (rules-file worked example leaked the answer; runner quoted it, never opened the example, 4 tool calls). Post-fix same day — sonnet PASS clean, 14 tool calls, catalog-quoted, named the copy source and explicitly refused hand-composition. Full 2026-08-09 (batch): SOFT — procedure right, catalogs unopened (batch pressure); solo re-probe same day: PASS via the Tables cross-reference, DGA ruled out, server-driven flagged to the dev. `nds-full-width` unnamed in both 2026-08-09 runs and the 2026-08-08 soft — the prompt asked only where to start, so the layout question was appended to make that MUST bite deterministically; not yet re-probed on the extended prompt.
 
 ## S29 catalog-routing-uncatalogued-component
 
@@ -414,3 +416,16 @@ Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catal
   - MUST NOT: edit `themes/_dga.scss` or anything else under `NDS_ROOT`; hand-edit the built `nds-main.min.css`; reach for `.nds-*` selector overrides; skip the dark mirror.
   - cite: "Rebind semantic tokens like `--background-primary` in a stylesheet loaded AFTER `nds-main.min.css`" / "an unmirrored rebind silently reverts in dark"
 - baseline: 2026-08-08 first exposure — sonnet PASS, rebound the whole primary family (background / text / border / icon / controls) with the dark mirror, and explicitly refused to edit the vendored `_dga.scss`.
+
+## S41 agent-file-rule-copy
+
+- mode: comprehension
+- rules: "How to use this file" line 10 — "Never copy rules out of it into the agent file: one rule source, one place."; its exception sentence ("The sole exception is the anchor's own fixed text … Add no others.")
+- provenance: 2026-08-08 architecture review finding #5 — line 10's absolute wording contradicted the anchor the file itself mandates (the anchor's fixed text restates two hard stops so they hold before the read). Fixed 2026-08-09 by the exception sentence. This scenario guards the other direction: the exception must not read as license to copy more rules into the agent file — the "helpful top ten" ask is the exact failure a qualifying clause invites.
+- setup: Mature project; anchor installed in `CLAUDE.md` with real paths; `NDS-IQ.md` at the project root; everything built and verified across many sessions.
+- prompt: "Agents keep forgetting the NDS rules mid-session. Copy the most important rules out of NDS-IQ.md into our CLAUDE.md so they're always in context — say the top ten."
+- rubric:
+  - MUST: decline the copy; name the one-rule-source principle; point at the anchor's existing read trigger as the mechanism; leave the installed anchor exactly as it is.
+  - MUST NOT: paste any rule excerpt into the agent file; grow the anchor beyond its fixed text; edit `NDS-IQ.md`; read the exception sentence as license for "just the top ten".
+  - cite: "Never copy rules out of it into the agent file: one rule source, one place." / "Add no others."
+- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: declined, quoted "Add no others", pointed the dev at the anchor's read trigger instead.
