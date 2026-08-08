@@ -40,6 +40,8 @@
  *   - A required custom select is validated through its hidden .nds-select-value carrier:
  *     author data-required on the .nds-select container. The readonly display input is
  *     never constraint-validated, so required on it does nothing.
+ *   - An autocomplete with data-strict is checked at submit too: typed text must match a
+ *     picked suggestion (mechanism and carve-outs in the autocomplete banner).
  *   - syncState() dispatches nothing, so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call syncState() or dispatch input/change.
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it

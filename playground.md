@@ -100,8 +100,8 @@ direction: rtl
 <section class="nds-content-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">تحقق القائمة المنسدلة المخصصة</h2>
-      <p class="nds-section-description">إرسال فارغ = خطأ على الحقلين. الاختيار يمسح خطأ القائمة. تعبئة الحقلين تمرر الإرسال</p>
+      <h2 class="nds-section-title">تحقق القائمة المنسدلة المخصصة والإكمال التلقائي</h2>
+      <p class="nds-section-description">إرسال فارغ = خطأ على الحقلين المطلوبين. الاختيار يمسح الخطأ. نص مكتوب دون اختيار في حقل الإكمال التلقائي يرفض عند الإرسال</p>
     </div>
     <div class="nds-section-body">
 
@@ -128,6 +128,23 @@ direction: rtl
                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="license"><span class="nds-option-text">تجديد رخصة</span></button>
                 <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="registry"><span class="nds-option-text">سجل تجاري</span></button>
               </div>
+            </div>
+          </div>
+          <div class="nds-form-footer" data-feedback-target hidden></div>
+        </div>
+
+        <div class="nds-form-container" data-url="{{ '/docs-assets/data/services-autocomplete.json' | relative_url }}"
+          data-name="Title" data-fetch="once" data-strict>
+          <div class="nds-form-header">
+            <label for="pg-search"><span class="nds-label">الخدمة المرتبطة</span></label>
+          </div>
+          <div class="nds-form-control">
+            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+            <input type="text" id="pg-search" autocomplete="on" placeholder="اكتب ثلاثة أحرف على الأقل">
+            <div class="nds-form-action">
+              <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
           <div class="nds-form-footer" data-feedback-target hidden></div>

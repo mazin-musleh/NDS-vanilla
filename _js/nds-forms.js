@@ -40,6 +40,8 @@
  *   - A required custom select is validated through its hidden .nds-select-value carrier:
  *     author data-required on the .nds-select container. The readonly display input is
  *     never constraint-validated, so required on it does nothing.
+ *   - An autocomplete with data-strict is checked at submit too: typed text must match a
+ *     picked suggestion (mechanism and carve-outs in the autocomplete banner).
  *   - syncState() dispatches nothing, so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call syncState() or dispatch input/change.
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
@@ -495,6 +497,23 @@
             return this._finishGroupValidation(container, options, isValid, message, { value: carrier ? carrier.value : '' });
         },
 
+        // Autocomplete strict: data-strict says typed text must match a picked
+        // suggestion. The hidden .nds-autocomplete-value carrier (JS-created at
+        // build under data-strict) holds the last picked text; typing or clear
+        // empties it. No carrier = the field never built (e.g. server-prefilled
+        // and untouched) — sanctioned as-is. Empty text is the required rule's
+        // business, not strict's. Internal — reached via validateForm.
+        validateAutocomplete: function(acElement, options) {
+            options = options || { showMessage: true };
+            var container = acElement.closest('.nds-form-container') || acElement;
+            var carrier = container.querySelector('.nds-autocomplete-value');
+            var input = ownField(container);
+            var text = input ? input.value.trim() : '';
+            var isValid = !carrier || text === '' || carrier.value === text;
+            var message = isValid ? '' : (NDS.isArabic ? 'اختر من الاقتراحات' : 'Choose from the suggestions');
+            return this._finishGroupValidation(container, options, isValid, message, { picked: !!(carrier && carrier.value) });
+        },
+
         validateOtpGroup: function(groupElement, options) {
             options = options || { showMessage: true };
 
@@ -631,6 +650,22 @@
                     var anchor = cs.querySelector('.nds-select-input');
                     acc.invalidFields.push(cs);
                     acc.errors.push({ field: cs, input: anchor, message: result.message });
+                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
+                }
+            });
+
+            // Autocomplete strict fields: typed-vs-picked check on the hidden
+            // carrier. Skip taginput containers — assist mode makes one
+            // container serve both components, and taginput owns its own
+            // commit rejection at add-time.
+            form.querySelectorAll('.nds-form-container[data-strict]').forEach(function(ac) {
+                if (!isFieldVisible(ac, form)) return;
+                if (ac.classList.contains('nds-taginput')) return;
+                var result = Validator.validateAutocomplete(ac, { showMessage: options.showMessages });
+                if (!result.valid) {
+                    var anchor = ownField(ac);
+                    acc.invalidFields.push(ac);
+                    acc.errors.push({ field: ac, input: anchor, message: result.message });
                     if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
                 }
             });

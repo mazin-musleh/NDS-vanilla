@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "04/08/2026 - 04:02 PM"
+last_edit: "09/08/2026 - 01:19 AM"
 ---
 
 <!-- Autocomplete Input -->
@@ -266,6 +266,7 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
           <li><code class="nds-inline-code lang-html">data-fetch</code>: fetch mode, either <code class="nds-inline-code lang-js">"each"</code> (default) or <code class="nds-inline-code lang-js">"once"</code>. With <code class="nds-inline-code lang-js">"each"</code> the API is called on every keystroke and the server filters results. With <code class="nds-inline-code lang-js">"once"</code> the full list is fetched once on first input, cached, and filtered client-side on each keystroke. Use <code class="nds-inline-code lang-js">"once"</code> for small static datasets such as countries, currencies, or departments.</li>
           <li><code class="nds-inline-code lang-html">data-empty-message</code>: custom text for the "no results" placeholder shown when a query matches nothing (default: localized "No results")</li>
           <li><code class="nds-inline-code lang-html">data-empty-icon</code>: icon classes for the "no results" placeholder (default: <code class="nds-inline-code lang-html">nds-icon nds-hgi-search-01</code>)</li>
+          <li><code class="nds-inline-code lang-html">data-strict</code>: the typed text must match a picked suggestion. Form validation rejects other text at submit with "Choose from the suggestions". A pick fills a hidden carrier input; typing or the clear button empties it. The carrier has no <code class="nds-inline-code lang-html">name</code>, so the submitted form data does not change. Typing the exact text without picking it still rejects — the pick is what commits the value.</li>
         </ul>
       </div>
       <div class="nds-block nds-prose">
