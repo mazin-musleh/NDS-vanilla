@@ -63,6 +63,16 @@
     }
 }
 
+/* Stacked wrappers: each one is a titled block in its own right, and nothing
+   sits between them — no card edge, no stripe, no section padding. They need
+   more air than the rule above, which also covers a wrapper followed by a
+   breakout body. Scoped to wrapper-meets-wrapper so only stacking is affected.
+   The section is a block, so this collapses with the margin above rather than
+   adding to it: the larger of the two wins. */
+.nds-section-wrapper + .nds-section-wrapper {
+    margin-block-start: var(--section-wrapper-gap, var(--spacing-6xl));
+}
+
 /* ── Section title ── */
 
 .nds-section-title {
