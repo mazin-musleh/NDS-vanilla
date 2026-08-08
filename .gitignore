@@ -47,3 +47,6 @@ Desktop.ini
 .claude/settings.local.json
 .claude/workspace/
 .claude/audit-reports/
+
+# Python bytecode (scripts/mkrelease.py and its guard check)
+__pycache__/

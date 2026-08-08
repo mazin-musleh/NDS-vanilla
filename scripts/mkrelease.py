@@ -4,6 +4,13 @@
     python scripts/mkrelease.py              # full: build, clean, format, zip
     python scripts/mkrelease.py --no-build   # reuse the existing _site
 
+--no-build only works when _site already post-dates sweep_pairing_stamp(): the
+sweep edits the rules file the guides render, so a _site older than it ships
+guides stamped for the PREVIOUS release. verify() catches that and says so.
+
+scripts/check-release-guards.py proves verify()'s NDS-IQ guards still fire —
+run it after touching verify(), the sweeps, or the stamp sentences they key on.
+
 Output: dist/nds-vanilla-template-v<version>.zip, laid out as
 
     nds-vanilla-template-v<version>/
@@ -134,9 +141,10 @@ def sweep_pairing_stamp(version):
         text = f.read()
 
     new, hits = re.subn(r'Validated against template \d+\.\d+\.\d+\.',
-                        f'Validated against template {version}.', text, count=1)
-    if not hits:
-        sys.exit('_includes/NDS-IQ.md: no "Validated against template <x.y.z>." line to sweep.')
+                        f'Validated against template {version}.', text)
+    if hits != 1:
+        sys.exit(f'_includes/NDS-IQ.md: expected exactly one "Validated against template <x.y.z>." '
+                 f'line to sweep, found {hits}. A second copy would go stale unnoticed.')
     if new != text:
         with open(path, 'w', encoding='utf8', newline='\n') as f:
             f.write(new)
@@ -229,7 +237,10 @@ def verify(out, version):
                    '_source/components/multiselect.md',
                    '_source/templates/form-template.md',
                    '_source/examples/console-demo.md',
-                   'NDS-IQ.md', 'README.md', '_site/guides/get-started.html'):
+                   '_source/utilities/copy.md', '_source/layout/section.md',
+                   '_source/ui-shell/head.md',
+                   'NDS-IQ.md', 'README.md', '_site/guides/get-started.html',
+                   '_site/guides/integration-quality.html'):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
 
@@ -249,8 +260,10 @@ def verify(out, version):
     # silently.
     with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
         block = f.read()
-    with open(os.path.join(ROOT, 'guides', 'get-started.md'), encoding='utf8') as f:
-        integration = html.unescape(f.read())
+    guides = {}
+    for name in ('get-started', 'integration-quality'):
+        with open(os.path.join(ROOT, 'guides', f'{name}.md'), encoding='utf8') as f:
+            guides[name] = html.unescape(f.read())
 
     if '{%' in block or '{{' in block:
         sys.exit('_includes/NDS-IQ.md contains literal Liquid delimiters — it is a Jekyll '
@@ -264,11 +277,45 @@ def verify(out, version):
                  f'does not match the release ({version}) — sweep_pairing_stamp() should have '
                  f'set the "Validated against template" line; check it still exists.')
 
+    # The FLOOR is the load-bearing number: below it the rules block all NDS
+    # work. Unlike the pairing stamp it is hand-maintained, restated in the
+    # sub-floor paragraph, and no sweep touches it — so check it two ways.
+    # (1) Every version literal outside the pairing slot must BE the floor: a
+    # floor bump that lands in one sentence and not the others leaves the file
+    # contradicting itself. (2) The release must not sit below its own floor,
+    # or the zip ships rules that block the template shipping them.
+    floor = re.search(r'Works with (\d+\.\d+\.\d+) or later\.', block)
+    if not floor:
+        sys.exit('_includes/NDS-IQ.md line 3 lost its "Works with <x.y.z> or later." floor sentence.')
+    stray = {v for v in re.findall(r'\d+\.\d+\.\d+', block.replace(paired.group(0), ''))
+             if v != floor.group(1)}
+    if stray:
+        sys.exit(f'_includes/NDS-IQ.md declares floor {floor.group(1)} but also names {sorted(stray)} — '
+                 f'a floor bump missed a sentence. Every version literal outside the pairing stamp '
+                 f'must be the floor.')
+    as_tuple = lambda v: tuple(int(n) for n in v.split('.'))
+    if as_tuple(version) < as_tuple(floor.group(1)):
+        sys.exit(f'Release {version} is below the floor the rules declare ({floor.group(1)}). '
+                 f'The zip would ship rules that block NDS work on the very template it ships '
+                 f'with. Lower the floor or cut a higher version.')
+
+    # The plan-file stamp carries the revision counter a THIRD time (the
+    # heading and the pointer are the other two). No sweep touches it, and a
+    # consumer's plan file is stamped from it — a desync misreports which
+    # revision produced the plan.
+    plan_stamp = re.search(r'Managed by NDS IQ v(\d+)', block)
+    if not plan_stamp or plan_stamp.group(1) != m.group(1):
+        sys.exit(f'_includes/NDS-IQ.md plan stamp (v{plan_stamp.group(1) if plan_stamp else "?"}) '
+                 f'does not match the heading (v{m.group(1)}) — bump both together.')
+
     # The canonical anchor text lives INSIDE the file (Install section);
     # the setup prompt and the v5/v6 migration both point installs at it.
+    # These literals appear ONLY inside the anchor code block — a string the
+    # surrounding prose also uses would keep passing after the anchor lost it.
     for canon in ('- `NDS_ROOT` = `/path/to/nds-vanilla-template/`',
                   '- `NDS_ASSETS` = `/path/to/your-project/public/assets/`',
-                  'top to bottom, once per session'):
+                  'Do no NDS work before that read.',
+                  'Never write `.nds-*` markup from memory'):
         if canon not in block:
             sys.exit(f'_includes/NDS-IQ.md anchor canon lost its line: {canon!r}')
 
@@ -285,21 +332,40 @@ def verify(out, version):
                  f'(v{m.group(1)}) — bump both together.')
     if 'end NDS instructions' not in pointer:
         sys.exit('Pointer file is missing the "end NDS instructions" marker — v6\'s post-swap check fails.')
+    # The migrating dev's two path values land in THESE lines. Lose them and
+    # the bridge still reads correctly while silently dropping the only
+    # per-project configuration the old install carried.
+    for decl in ('- `NDS_ROOT` = `/path/to/nds-vanilla-template/`',
+                 '- `NDS_ASSETS` = `/path/to/your-project/public/assets/`'):
+        if decl not in pointer:
+            sys.exit(f'Pointer file lost a declaration line: {decl!r} — a migrating install has '
+                     f'nowhere to carry its paths across.')
 
-    if 'include NDS-IQ.md' not in integration:
-        sys.exit('guides/get-started.md no longer includes NDS-IQ.md — the rules file is not rendered.')
-    guide_html = z.read(root + '_site/guides/get-started.html').decode('utf8', 'ignore')
-    if f'instructions v{m.group(1)}' not in guide_html:
-        sys.exit(f'Built guide lacks "instructions v{m.group(1)}" — the rendered version stamp '
-                 'is missing or stale.')
+    # BOTH guides render the include, and both are in the zip's link graph.
+    # Checking only one lets the other lose the entire rulebook silently.
+    for name, text in guides.items():
+        if 'include NDS-IQ.md' not in text:
+            sys.exit(f'guides/{name}.md no longer includes NDS-IQ.md — the rules file is not rendered.')
+        guide_html = z.read(f'{root}_site/guides/{name}.html').decode('utf8', 'ignore')
+        if f'instructions v{m.group(1)}' not in guide_html:
+            sys.exit(f'Built guides/{name}.html lacks "instructions v{m.group(1)}" — the rendered '
+                     'version stamp is missing or stale.')
+        # Catches a stale _site under --no-build: the sweeps run before the
+        # build, so a reused _site renders the PREVIOUS release's stamp.
+        if f'Validated against template {version}' not in guide_html:
+            sys.exit(f'Built guides/{name}.html does not carry "Validated against template {version}" '
+                     f'— _site predates sweep_pairing_stamp(). Rebuild without --no-build.')
 
     # Every literal path the guide and README reference must exist in the
     # zip — a doc rename otherwise ships a prompt pointing the consumer's
     # LLM at a dead path, and it invents instead (the exact failure the
     # guide prevents). Placeholder/glob refs (<name>, *) are skipped.
     readme = z.read(root + 'README.md').decode('utf8', 'ignore')
-    refs = re.findall(r'NDS_ROOT/([^\s`)\]]+)', block + integration)
-    refs += re.findall(r'`((?:_site|_source)/[^`]*)`', readme)
+    refs = re.findall(r'NDS_ROOT/([^\s`)\]]+)', block + ''.join(guides.values()))
+    # The rules' Reference index writes bare `_source/...` / `_site/...` paths
+    # with no NDS_ROOT prefix, so the prefixed pattern alone never saw the one
+    # section whose entire job is naming paths.
+    refs += re.findall(r'`((?:_site|_source)/[^`]*)`', block + readme)
     dead = sorted({p for p in refs if '<' not in p and '*' not in p
                    and root + p not in names
                    and root + p.rstrip('/') + '/' not in names})
@@ -331,7 +397,11 @@ def main():
     out = zip_up(dist, pkg, version)
     shutil.rmtree(pkg)
     verify(out, version)
-    print('\n  Upload:  gh release upload v%s "%s" --clobber\n' % (version, out))
+    # Both sweeps write TRACKED files. They are meant to land in the release
+    # commit, but nothing else says so — and an aborted run leaves them swept.
+    print('\n  Swept (tracked, commit with the release): _includes/NDS-IQ.md, '
+          '.github/ISSUE_TEMPLATE/iq-report.yml')
+    print('  Upload:  gh release upload v%s "%s" --clobber\n' % (version, out))
 
 
 if __name__ == '__main__':
