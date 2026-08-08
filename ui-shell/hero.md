@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "25/07/2026 - 08:40 PM"
+updated: "1.6.x"
+last_edit: "08/08/2026 - 11:05 PM"
 ---
 
 <!-- Sub Hero -->
@@ -730,6 +730,10 @@ last_edit: "25/07/2026 - 08:40 PM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">hero_image_pos</code></td>
                             <td>CSS <code class="nds-inline-code lang-html">background-position</code> value for the hero image. Default: <code class="nds-inline-code lang-html">50% 50%</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">hero_avatar</code></td>
+                            <td>Path to a portrait shown beside the title, in the section image slot. Use it for pages about one person or entity. Distinct from <code class="nds-inline-code lang-html">hero_image</code>, which is the background.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">hero_tags</code></td>
