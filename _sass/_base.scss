@@ -71,6 +71,16 @@ mark {
             flex: 1;
             border-block-start: var(--_divider-size) solid var(--divider-color);
         }
+
+        // Both lines grow evenly, so the label centres on its own. Giving one a length
+        // caps it there and the other simply takes the rest. A cap, not a fixed width:
+        // a narrow container shrinks the line instead of overflowing, and a plain
+        // length behaves as written (`flex: 96px` would still grow, because the flex
+        // shorthand defaults flex-grow to 1 for a bare length).
+        // Named start/end, not before/after, because a flex row reverses in RTL and
+        // start follows the text.
+        &::before { max-width: var(--divider-line-start, none); }
+        &::after { max-width: var(--divider-line-end, none); }
     }
 
     &.nds-md { --divider: var(--spacing-md); }

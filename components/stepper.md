@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "08/08/2026 - 04:30 PM"
+last_edit: "08/08/2026 - 09:20 PM"
 ---
 
 <!-- Horizontal Layout -->
@@ -638,6 +638,178 @@ NDS.Stepper.goTo('demo-stepper-horizontal', 3);</code>
     </div>
 </section>
 
+<!-- Timeline with Divider Labels -->
+<section id="stepperTimeline" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Timeline with Divider Labels</h2>
+            <p class="nds-section-description">A past-to-present record: each step opens with a <a class="nds-color" href="{{ 'utilities/divider' | relative_url }}">divider</a> carrying its date, and the rule doubles as the separator between entries. Add <code class="nds-inline-code lang-html">nds-reverse</code> so the newest entry sits on top, and write the steps oldest first.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-cardView", "#demo-stepper-timeline", "timelineCardView"]'>
+                                    <span class="nds-label">Card view</span>
+                                </button>
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                    <span class="nds-label">Remove bg</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <!-- nds-reverse renders the last step at the top, so steps run oldest first -->
+                                <div class="nds-stepper nds-vertical nds-dot nds-reverse" id="demo-stepper-timeline"
+                                    data-current="4" data-total="4">
+                                <div class="nds-stepper-step">
+                                    <div class="nds-stepper-base">
+                                        <div class="nds-stepper-circle" data-step-text="1"></div>
+                                    </div>
+                                    <div class="nds-stepper-content">
+                                        <div class="nds-divider">2013 — 2018</div>
+                                        <div class="nds-stepper-text">
+                                            <span class="nds-stepper-title">Assistant Professor</span>
+                                            <span class="nds-stepper-description">Department of Industrial Engineering</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-stepper-step">
+                                    <div class="nds-stepper-base">
+                                        <div class="nds-stepper-circle" data-step-text="2"></div>
+                                    </div>
+                                    <div class="nds-stepper-content">
+                                        <div class="nds-divider">2018 — 2020</div>
+                                        <div class="nds-stepper-text">
+                                            <span class="nds-stepper-title">Associate Professor</span>
+                                            <span class="nds-stepper-description">Department of Industrial Engineering</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-stepper-step">
+                                    <div class="nds-stepper-base">
+                                        <div class="nds-stepper-circle" data-step-text="3"></div>
+                                    </div>
+                                    <div class="nds-stepper-content">
+                                        <div class="nds-divider">2020 — 2022</div>
+                                        <div class="nds-stepper-text">
+                                            <span class="nds-stepper-title">Supervisor, Entrepreneurship Center</span>
+                                            <span class="nds-stepper-description">Office of the Vice Rector for Research</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-stepper-step">
+                                    <div class="nds-stepper-base">
+                                        <div class="nds-stepper-circle" data-step-text="4"></div>
+                                    </div>
+                                    <div class="nds-stepper-content">
+                                        <div class="nds-divider">2023 — Present</div>
+                                        <div class="nds-stepper-text">
+                                            <span class="nds-stepper-title">Head, Department of Industrial Engineering</span>
+                                            <span class="nds-stepper-description">College of Engineering</span>
+                                        </div>
+                                        <ul>
+                                            <li>Led the 2024 program accreditation review.</li>
+                                            <li>Opened two research labs with industry funding.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-stepper-timeline-1" id="tab-stepper-timeline-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                        id="panel-stepper-timeline-1" aria-labelledby="tab-stepper-timeline-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
+&lt;div class="nds-stepper nds-vertical nds-dot nds-reverse" data-current="4" data-total="4"&gt;
+  &lt;div class="nds-stepper-step"&gt;
+    &lt;div class="nds-stepper-base"&gt;
+      &lt;div class="nds-stepper-circle" data-step-text="1"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-stepper-content"&gt;
+      &lt;div class="nds-divider"&gt;2013 — 2018&lt;/div&gt;
+      &lt;div class="nds-stepper-text"&gt;
+        &lt;span class="nds-stepper-title"&gt;Assistant Professor&lt;/span&gt;
+        &lt;span class="nds-stepper-description"&gt;Department of Industrial Engineering&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-stepper-step"&gt;
+    &lt;div class="nds-stepper-base"&gt;
+      &lt;div class="nds-stepper-circle" data-step-text="2"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-stepper-content"&gt;
+      &lt;div class="nds-divider"&gt;2018 — 2020&lt;/div&gt;
+      &lt;div class="nds-stepper-text"&gt;
+        &lt;span class="nds-stepper-title"&gt;Associate Professor&lt;/span&gt;
+        &lt;span class="nds-stepper-description"&gt;Department of Industrial Engineering&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-stepper-step"&gt;
+    &lt;div class="nds-stepper-base"&gt;
+      &lt;div class="nds-stepper-circle" data-step-text="3"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-stepper-content"&gt;
+      &lt;div class="nds-divider"&gt;2020 — 2022&lt;/div&gt;
+      &lt;div class="nds-stepper-text"&gt;
+        &lt;span class="nds-stepper-title"&gt;Supervisor, Entrepreneurship Center&lt;/span&gt;
+        &lt;span class="nds-stepper-description"&gt;Office of the Vice Rector for Research&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-stepper-step"&gt;
+    &lt;div class="nds-stepper-base"&gt;
+      &lt;div class="nds-stepper-circle" data-step-text="4"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-stepper-content"&gt;
+      &lt;div class="nds-divider"&gt;2023 — Present&lt;/div&gt;
+      &lt;div class="nds-stepper-text"&gt;
+        &lt;span class="nds-stepper-title"&gt;Head, Department of Industrial Engineering&lt;/span&gt;
+        &lt;span class="nds-stepper-description"&gt;College of Engineering&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Led the 2024 program accreditation review.&lt;/li&gt;
+      &lt;li&gt;Opened two research labs with industry funding.&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Responsive Stepper -->
 <section id="stepperResponsive" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -1139,6 +1311,8 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-size</code></td><td>32px</td><td>Circle diameter for linear steppers. Overridden by size classes</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-gap</code></td><td>Derived from the layout and size</td><td>Spacing between steps. Left unset it follows the layout: <code class="nds-inline-code lang-html">calc(var(--stepper-size) * 1.5)</code> vertical, <code class="nds-inline-code lang-html">calc(var(--stepper-size) / 2)</code> for a vertical <code class="nds-inline-code lang-html">nds-cardView</code> without <code class="nds-inline-code lang-html">nds-dot</code>, and the indicator gap scaled by the size classes when horizontal. Set it to override any of them</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-indicator-gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td><td>Base spacing between steps that <code class="nds-inline-code lang-html">--stepper-gap</code> derives from; the size classes scale it by 1.2 and 1.5</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--divider-lift</code></td><td><code class="nds-inline-code lang-html">calc(var(--stepper-size) / 4)</code></td><td>Drops a label <a class="nds-color" href="{{ 'utilities/divider' | relative_url }}">divider</a> inside a step so its rule meets the centre of the step circle. Scales with the circle, so the size classes carry it. Set <code class="nds-inline-code lang-html">0</code> to leave the divider where it falls</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--stepper-content-width</code></td><td><code class="nds-inline-code lang-html">var(--paragraph-max-width)</code></td><td>Maximum width of a step's content, so a step stays readable in a wide column and its text and any label divider end on the same edge. Set <code class="nds-inline-code lang-html">none</code> on a step that holds something wide, such as a table or a full-bleed image</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-text-padding</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between the step indicator and its text block</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-card-lift</code></td><td><code class="nds-inline-code lang-html">calc(var(--stepper-size) / 4)</code>, or <code class="nds-inline-code lang-html">var(--stepper-size)</code> with <code class="nds-inline-code lang-html">nds-dot</code></td><td>How far <code class="nds-inline-code lang-html">nds-cardView</code> raises each card so its first row meets the circle (vertical only). Scales with the circle, so the size classes carry it. Set it when your content starts with something taller or shorter than a title</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td>var(--spacing-xl)</td><td>Vertical gap between the step's text block and any <code class="nds-inline-code lang-html">.nds-stepper-action</code> buttons. Set on the <code class="nds-inline-code lang-html">.nds-stepper</code> container</td></tr>

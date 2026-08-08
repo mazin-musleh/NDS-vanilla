@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "07/08/2026 - 09:44 PM"
+updated: "1.6.x"
+last_edit: "08/08/2026 - 09:40 PM"
 ---
 
 <!-- Plain Divider -->
@@ -392,6 +392,69 @@ last_edit: "07/08/2026 - 09:44 PM"
     </div>
 </section>
 
+<!-- Label Position -->
+<section id="dividerLabelPosition" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Label Position</h2>
+            <p class="nds-section-description">The two lines share the space evenly, which centres the label. Cap either one with <code class="nds-inline-code lang-html">--divider-line-start</code> or <code class="nds-inline-code lang-html">--divider-line-end</code> and the other takes the rest. Any length or percentage works, and the values follow writing direction, so start is the right-hand line in RTL.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Each label names its own setting</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <div class="nds-content-wrapper">
+                                    <div class="nds-divider">Centered by default</div>
+                                    <div class="nds-divider" style="--divider-line-start: 0;">Label at the start</div>
+                                    <div class="nds-divider" style="--divider-line-end: 0;">Label at the end</div>
+                                    <div class="nds-divider" style="--divider-line-start: 24px;">Short start line</div>
+                                    <div class="nds-divider" style="--divider-line-end: 25%;">End line capped at 25%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-divider-position-1" id="tab-divider-position-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-position-1"
+                                        aria-labelledby="tab-divider-position-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
+&lt;div class="nds-divider"&gt;Centered by default&lt;/div&gt;
+&lt;div class="nds-divider" style="--divider-line-start: 0;"&gt;Label at the start&lt;/div&gt;
+&lt;div class="nds-divider" style="--divider-line-end: 0;"&gt;Label at the end&lt;/div&gt;
+&lt;div class="nds-divider" style="--divider-line-start: 24px;"&gt;Short start line&lt;/div&gt;
+&lt;div class="nds-divider" style="--divider-line-end: 25%;"&gt;End line capped at 25%&lt;/div&gt;
+</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="dividerFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -406,7 +469,7 @@ last_edit: "07/08/2026 - 09:44 PM"
                             <i class="hgi hgi-stroke hgi-text-align-center"></i>
                             <span class="nds-label">Text Annotation</span>
                         </span>
-                        <p class="nds-item-desc">Any child content automatically turns the divider into a centered label flanked by two balanced lines, no extra markup needed.</p>
+                        <p class="nds-item-desc">Any child content automatically turns the divider into a label flanked by two lines, no extra markup needed. The label centres by default, and capping either line moves it anywhere along the rule.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -480,6 +543,8 @@ last_edit: "07/08/2026 - 09:44 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--divider</code></td><td><code class="nds-inline-code lang-html">--spacing-xs</code></td><td>Block margin applied above and below the divider. Size modifiers override this value</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--divider-size</code></td><td><code class="nds-inline-code lang-html">2px</code></td><td>Thickness of the rule. Applies to the element border and the pseudo-element lines in the text variant</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--divider-line-start</code></td><td><code class="nds-inline-code lang-html">none</code></td><td>Caps the length of the line before the label, so the label moves and the other line takes the rest. Text variant only. Any length or percentage works, and <code class="nds-inline-code lang-html">0</code> pins the label to the start. It is a cap, not a fixed width: a container too narrow for it shrinks the line rather than overflowing. Follows writing direction, so it is the right-hand line in RTL</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--divider-line-end</code></td><td><code class="nds-inline-code lang-html">none</code></td><td>Same, for the line after the label</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--divider-color</code></td><td><code class="nds-inline-code lang-html">--colors-alpha-black-10</code></td><td>Color of the rule. Swaps automatically to <code class="nds-inline-code lang-html">--colors-alpha-white-10</code> in dark mode. Override per-instance to match surrounding surfaces</td></tr>
                     </tbody>
                 </table>

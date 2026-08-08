@@ -205,6 +205,36 @@
     display: flex;
     flex-direction: column;
     gap: var(--_content-gap);
+
+    // Hold the step to a readable measure in a wide column. Capping the content
+    // rather than each child keeps text and any label divider ending on the same
+    // edge; capping only the divider lets a long description overshoot its own rule.
+    // Set --stepper-content-width: none for a step holding something wide, such as
+    // a table or a full-bleed image.
+    max-width: var(--stepper-content-width, var(--paragraph-max-width));
+
+    // A divider used as a step label (a date, a phase name): a short stub before the
+    // label echoes the step circle, and the rest of the rule carries across as the
+    // row separator. Set here rather than per divider so every step inherits it.
+    --divider-line-start: var(--spacing-3xl);
+
+    // Nudge the label divider down so its rule meets the centre of the step circle,
+    // scaled off the circle so the size classes carry it. Its spacing otherwise comes
+    // from the content gap, so every other margin goes.
+    --_divider-lift: var(--divider-lift, calc(var(--stepper-size) / 4));
+
+    > .nds-divider {
+        margin: 0;
+        margin-block-start: var(--_divider-lift);
+    }
+}
+
+// No lift by default in two cases: a dot is small enough that the rule already meets
+// it, and a carded step gets its alignment from the card's own lift and padding, so
+// nudging the divider as well would double it. Both re-read the public knob rather
+// than hardcoding, so a consumer's value still wins.
+.nds-stepper:is(.nds-dot, .nds-cardView) .nds-stepper-content {
+    --_divider-lift: var(--divider-lift, 0);
 }
 
 .nds-stepper-text {
@@ -791,9 +821,20 @@
 :is(.nds-stepper:not([data-nds-stepper-initialized]),
     .nds-stepper:is(.nds-loading, [data-state='loading'])) {
 
-    .nds-stepper-step :is(.nds-stepper-title, .nds-stepper-description, .nds-stepper-next) {
-        width: fit-content;
+    // One rule for the whole step: every direct child of the content becomes a bar —
+    // the text block, a label divider, a list, an action row. Barring the containers
+    // rather than naming individual text parts means content the author adds is
+    // covered too, so a step never shows half real content mid-load.
+    .nds-stepper-content > * {
+        --nds-skeleton-width: 100%;
         @include skeleton-bar;
+
+        // A divider draws its rules as pseudo-element borders, which would otherwise
+        // sit on top of the fill.
+        &::before,
+        &::after {
+            visibility: hidden;
+        }
     }
 
     // Explicit !important throughout the circle: the per-state rules
