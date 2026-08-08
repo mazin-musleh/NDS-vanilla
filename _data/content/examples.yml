@@ -1,9 +1,16 @@
 # Example pages catalog for examples index listing
 # Categories: Service (citizen-facing service pages), Form (standalone flows), Content (editorial), Dashboard (data views)
 # Tags: features/components demonstrated. Official DGA templates live in _data/content/templates.yml.
+#
+# use_when: match the request against THIS field first, not against the title.
+#   Titles name the demo's subject matter; use_when names the JOB the page does
+#   and the words developers actually use for it. Never conclude NDS lacks a
+#   pattern until every use_when here has been read.
+#   description/icon/category/tags drive the index cards; use_when renders nowhere.
 
 - title: "Services List"
   description: "Filterable government services catalog with search and category filters."
+  use_when: "A browsable catalog of items shown as cards, with keyword search, category filters, and pagination. Use for any service directory, product listing, document library, resource index, or list-all-X page."
   icon: '<i class="hgi hgi-stroke hgi-grid-view"></i>'
   category: "Service"
   tags: ["Filter", "Search", "Pagination"]
@@ -11,6 +18,7 @@
 
 - title: "Registration"
   description: "Sign-up form with field validation, a matching password check, and an OTP step."
+  use_when: "A standalone create-account or sign-up flow, with field validation, a confirm-password match check, and an OTP verification step. The page carries no topbar, header, or footer, so use it for any full-screen auth flow."
   icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
   category: "Form"
   tags: ["Forms", "OTP", "Validation"]
@@ -18,6 +26,7 @@
 
 - title: "Sign In"
   description: "National single sign-on with a credentials fallback, one-time code, and account settings."
+  use_when: "A standalone login page: national single sign-on as the primary path, a username and password fallback, an OTP step, and a resend button with a cooldown timer. No topbar, header, or footer."
   icon: '<i class="hgi hgi-stroke hgi-login-circle-01"></i>'
   category: "Form"
   tags: ["Forms", "OTP", "Cooldown Button", "Alert"]
@@ -25,6 +34,7 @@
 
 - title: "Faculty Profile"
   description: "Faculty member page with profile, tabbed content, and structured academic information."
+  use_when: "A profile page for one person: avatar header, tabbed sections, a definition list of structured fields, and tables of related records. Use for staff bios, employee profiles, member directory detail pages, or any view-this-person screen."
   icon: '<i class="hgi hgi-stroke hgi-school"></i>'
   category: "Content"
   tags: ["Tabs", "Avatar", "Definition List"]
@@ -32,6 +42,7 @@
 
 - title: "Academic Program"
   description: "Degree program page with expandable content, curriculum, and admission information."
+  use_when: "A detail page for one program or offering: overview text, stat tiles, tabbed sections, expandable blocks, and detail tables. Use for courses, training programs, grant schemes, initiatives, or any about-this-thing page too long for a card."
   icon: '<i class="hgi hgi-stroke hgi-mortarboard-02"></i>'
   category: "Content"
   tags: ["Expandable", "Accordion"]
@@ -39,6 +50,7 @@
 
 - title: "Manage Records"
   description: "Records screen with create, edit and delete, expandable detail rows, and export."
+  use_when: "The data-heavy admin screen, and the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request, including replacements for third-party table plugins. Carries a large table with keyword search, multi-field filters (checkbox, range, date), column sorting, pagination with a per-page picker, a show/hide column picker, row selection with a live count, per-row edit and delete actions, expandable sub-rows for detail, add and edit modals, an empty-state message, and CSV export. Runs fully in the browser, so no server is needed."
   icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'
   category: "Dashboard"
   tags: ["Tables", "Sub-Rows", "Modal", "Filter"]
@@ -46,6 +58,7 @@
 
 - title: "Console"
   description: "Admin console with charts, transactions, team directory, and notifications."
+  use_when: "The landing page of an admin area: KPI stat tiles, charts, a recent-activity table, a people directory, and alert notifications. Runs edge-to-edge beside a side menu through nds-full-width on body. Use for admin home, back-office overview, control panel, or internal tool landing screens."
   icon: '<i class="hgi hgi-stroke hgi-dashboard-browsing"></i>'
   category: "Dashboard"
   tags: ["Charts", "Tables", "Stats"]

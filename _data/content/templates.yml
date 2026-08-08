@@ -1,9 +1,16 @@
 # Template pages catalog for templates index listing
 # Categories: Service (citizen-facing service pages), Form (standalone flows), Content (editorial), Dashboard (data views)
 # Tags: DGA (official DGA design system pages), plus features/components demonstrated
+#
+# use_when: match the request against THIS field first, not against the title.
+#   Titles name the template's original subject; use_when names the JOB it does
+#   and the words developers actually use for it. These are DGA-official pages,
+#   so a match here outranks any hand-composed page or an examples.yml entry.
+#   description/icon/category/tags drive the index cards; use_when renders nowhere.
 
 - title: "Form Template"
   description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
+  use_when: "Any multi-step form or wizard: service application, request submission, registration workflow, onboarding, or checkout. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile."
   icon: '<i class="hgi hgi-stroke hgi-file-edit"></i>'
   category: "Form"
   tags: ["DGA", "Forms", "Stepper", "Side Info", "Grid"]
@@ -11,6 +18,7 @@
 
 - title: "Service Page Template"
   description: "Government digital service with side info, breadcrumbs, and structured content layout."
+  use_when: "The landing page for a single government service: what it is, who is eligible, the steps, the fees, and the start-service action. The side-info column, breadcrumbs, hero tags, and the rating widget are all switched on from front matter (layout_class: nds-wSideInfo, breadcrumb, rating)."
   icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'
   category: "Service"
   tags: ["DGA", "Tabs", "Side Info", "Rating"]
@@ -18,6 +26,7 @@
 
 - title: "Contact Us Template"
   description: "Contact page with two-column form, country-code prefix, select, textarea, file upload, and a side info card with emergency contacts."
+  use_when: "A contact or enquiry page: a two-column message form with a country-code phone prefix, select, textarea, and file upload, beside a card listing phone, email, and emergency contacts. Use for contact us, feedback, support request, or get-in-touch pages."
   icon: '<i class="hgi hgi-stroke hgi-mail-01"></i>'
   category: "Service"
   tags: ["DGA", "Forms", "Upload", "Side Info", "Grid"]
@@ -25,6 +34,7 @@
 
 - title: "Content Template"
   description: "Long-form editorial layout with article-style sections, numbered sub-sections, and a sticky on-this-page table of contents for in-page navigation."
+  use_when: "Any long-form editorial page: policy, terms of use, privacy notice, regulation, news article, press release, or a written guide. Carries article sections, numbered sub-sections, and a sticky on-this-page table of contents."
   icon: '<i class="hgi hgi-stroke hgi-book-open-01"></i>'
   category: "Content"
   tags: ["DGA", "Side Info", "Article", "TOC"]
@@ -32,6 +42,7 @@
 
 - title: "Help & Support Template"
   description: "Help hub with a flat sub-hero and a responsive grid of support-channel cards, each with a featured icon, description, availability, and response time."
+  use_when: "A support hub that routes people to help channels such as phone, email, live chat, or a ticket form. Each card carries an icon, description, availability hours, and response time."
   icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
@@ -39,6 +50,7 @@
 
 - title: "About The Entity Template"
   description: "Entity landing hub with a flat sub-hero and a responsive grid of topic cards, each with a featured icon, title, and navigation arrow."
+  use_when: "A topic-hub landing page whose only job is to route onward through a grid of icon cards. Use for About Us, Departments, Sectors, Initiatives, Our Work, or any parent page that links to its sub-pages."
   icon: '<i class="hgi hgi-stroke hgi-information-diamond"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
@@ -46,6 +58,7 @@
 
 - title: "FAQ Template"
   description: "Frequently asked questions layout with a flat sub-hero, large accordion list, and a feedback call-to-action card for routing unresolved inquiries to support."
+  use_when: "A frequently asked questions or knowledge-base page: a searchable and filterable accordion list, plus a still-need-help card that routes to support."
   icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
   category: "Content"
   tags: ["DGA", "Accordion", "Cards"]
@@ -53,6 +66,7 @@
 
 - title: "e-Participation Template"
   description: "Engagement topics hub with a sub-hero and a responsive 4-column grid of text-only navigation cards for citizen participation entry points."
+  use_when: "A hub of text-only navigation cards, four across, with no icons. Use for citizen participation, public consultations, surveys, polls, suggestion boxes, or any compact list of entry points where icons would add nothing."
   icon: '<i class="hgi hgi-stroke hgi-user-group"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards"]
@@ -60,6 +74,7 @@
 
 - title: "Social Media Template"
   description: "Social channels hub with a flat sub-hero and a responsive grid of platform cards, each with a featured icon, name, and navigation arrow."
+  use_when: "A page that lists external destinations as icon cards. Use for official social accounts, partner sites, related portals, mobile app store links, or any outbound link directory."
   icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
@@ -67,6 +82,7 @@
 
 - title: "KPIs Template"
   description: "Performance dashboard combining KPI counter tiles, pie, donut, line, and bar charts, and responsive data tables for portal and service statistics."
+  use_when: "A read-only reporting page: KPI counter tiles, pie, donut, line, and bar charts, and data tables. Use for performance reports, portal statistics, open-data pages, annual figures, or any analytics view. Pick the Manage Records example instead when people must edit the data."
   icon: '<i class="hgi hgi-stroke hgi-analytics-up"></i>'
   category: "Dashboard"
   tags: ["DGA", "Charts", "Tables", "Statistics", "Grid"]
@@ -74,6 +90,7 @@
 
 - title: "Search Template"
   description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
+  use_when: "A search results page: the matched keyword highlighted inside each result, filter and sort dropmenus, and a paginated list of result cards."
   icon: '<i class="hgi hgi-stroke hgi-search-01"></i>'
   category: "Service"
   tags: ["DGA", "Search", "Filter", "Pagination"]
@@ -81,6 +98,7 @@
 
 - title: "404 Template"
   description: "Custom error page with illustration and back-to-home action."
+  use_when: "Any error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is built as a hero section, not from the empty-state component."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "Service"
   tags: ["DGA", "Empty State"]

@@ -52,11 +52,18 @@ First: Read C:\Projects\NDS-vanilla\_includes\NDS-IQ.md in full. That file is
 your ONLY rulebook. Ignore every other file in this repo (CLAUDE.md,
 AGENTS.md, source code) — they are maintainer-side documents the consumer
 agent never sees. ONE exception: where the rules file routes you to a read
-under NDS_ROOT, simulate it against this repo — NDS_ROOT/_source/_js/<f>.js
-is C:\Projects\NDS-vanilla\_js\<f>.js (read only its top banner comment) and
-NDS_ROOT/_source/components/<n>.md is
-C:\Projects\NDS-vanilla\components\<n>.md. Read only what the rules file's
-own workflow would have you read; nothing else. Answer strictly from the
+under NDS_ROOT, simulate it against this repo:
+- NDS_ROOT/_source/_js/<f>.js  is  C:\Projects\NDS-vanilla\_js\<f>.js  (read
+  only its top banner comment)
+- NDS_ROOT/_source/components/<n>.md  is
+  C:\Projects\NDS-vanilla\components\<n>.md
+- NDS_ROOT/_source/_data/content/<n>.yml  is
+  C:\Projects\NDS-vanilla\_data\content\<n>.yml
+- NDS_ROOT/_source/examples/<n>.md  is  C:\Projects\NDS-vanilla\examples\<n>.md
+- NDS_ROOT/_source/templates/<n>.md  is
+  C:\Projects\NDS-vanilla\templates\<n>.md
+
+Read only what the rules file's own workflow would have you read; nothing else. Answer strictly from the
 file's text, those routed reads, and ordinary engineering judgment.
 
 Then answer the scenarios below. For each, give exactly three parts:

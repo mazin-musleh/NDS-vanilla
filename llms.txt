@@ -29,16 +29,17 @@ Important notes:
 - [Get started]({{ "/guides/get-started.html" | absolute_url }}): Adopting NDS into an existing project with a coding agent — download the template release, install NDS IQ (a rules file at the project root, plus a short anchor in the project's `CLAUDE.md`/`AGENTS.md`), set the two paths the anchor declares, then work session by session.
 - [NDS IQ]({{ "/guides/integration-quality.html" | absolute_url }}): The instruction system itself — how it is built, tested, versioned, and kept current, with the full revision history.
 - [NDS IQ rules (raw)]({{ rawbase }}/_includes/NDS-IQ.md): The installable rules file, latest published revision — download the raw file itself (curl or equivalent, never a summarizing web-fetch: a re-rendered copy is corrupt), save it as `NDS-IQ.md` at the project root, then follow its own "Install and upgrade this file" section, which adds the anchor to the agent instruction file. Read it top to bottom, once per session, before any NDS work.
-{%- assign cats = "UI,Forms,Data,Plugins,Layout,UI Shell,Utilities" | split: "," -%}
-{%- assign labels = "UI components,Form components,Data components,Plugin components,Layout,UI shell,Utilities" | split: "," -%}
-{%- for ci in (0..6) -%}
+{%- assign cats = "Foundations,UI,Forms,Data,Layout,UI Shell,Utilities,Add-ons" | split: "," -%}
+{%- assign labels = "Foundations,UI components,Form components,Data components,Layout,UI shell,Utilities,Add-ons" | split: "," -%}
+{%- assign catlast = cats.size | minus: 1 -%}
+{%- for ci in (0..catlast) -%}
 {%- assign cat = cats[ci] -%}
 {%- assign items = site.data.content.components | where: "category", cat | sort: "title" -%}
 {%- if items.size > 0 %}
 
 ## {{ labels[ci] }}
 {%- for c in items %}
-- [{{ c.title }}]({{ c.url | absolute_url }}){% if c.description and c.description != "" %}: {{ c.description }}{% endif %}{% if c.tags and c.tags.size > 0 %} ({{ c.tags | join: ", " }}){% endif %}{% if c.js or c.scss %} — source:{% if c.js %} [JS]({{ rawbase }}/{{ c.js }}){% endif %}{% if c.js and c.scss %} ·{% endif %}{% if c.scss %} [SCSS]({{ rawbase }}/{{ c.scss }}){% endif %}{% endif %}
+- [{{ c.title }}]({{ c.url | absolute_url }}){% if c.description and c.description != "" %}: {{ c.description }}{% endif %}{% if c.tags and c.tags.size > 0 %} ({{ c.tags | join: ", " }}){% endif %}{% if c.use_when and c.use_when != "" %} **Use when:** {{ c.use_when }}{% endif %}{% if c.js or c.scss %} — source:{% if c.js %} [JS]({{ rawbase }}/{{ c.js }}){% endif %}{% if c.js and c.scss %} ·{% endif %}{% if c.scss %} [SCSS]({{ rawbase }}/{{ c.scss }}){% endif %}{% endif %}
 {%- endfor %}
 {%- endif -%}
 {%- endfor %}
@@ -47,14 +48,14 @@ Important notes:
 
 DGA-compliant full-page templates — copy, populate with your content, and publish.
 {%- for t in site.data.content.templates %}
-- [{{ t.title }}]({{ t.url | absolute_url }}){% if t.description and t.description != "" %}: {{ t.description }}{% endif %}
+- [{{ t.title }}]({{ t.url | absolute_url }}){% if t.description and t.description != "" %}: {{ t.description }}{% endif %}{% if t.use_when and t.use_when != "" %} **Use when:** {{ t.use_when }}{% endif %}
 {%- endfor %}
 
 ## Examples
 
 Composed pages showing NDS components working together in real government-service contexts.
 {%- for e in site.data.content.examples %}
-- [{{ e.title }}]({{ e.url | absolute_url }}){% if e.description and e.description != "" %}: {{ e.description }}{% endif %}
+- [{{ e.title }}]({{ e.url | absolute_url }}){% if e.description and e.description != "" %}: {{ e.description }}{% endif %}{% if e.use_when and e.use_when != "" %} **Use when:** {{ e.use_when }}{% endif %}
 {%- endfor %}
 
 ## Optional

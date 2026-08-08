@@ -4,6 +4,8 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
 
 v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in the consumer agent file + `NDS-IQ.md` at the consumer project root, read on demand. Setups, rules, and MUSTs are re-homed onto that model; cites were re-quoted against the v7 file text on 2026-08-07 (B2.3), and banner-routed scenarios cite banner text by file. Baselines dated before 2026-08-06 measured the pasted-block model; they stay as history, not as comparable numbers.
 
+Catalog routing (2026-08-08): every entry in `templates.yml`, `examples.yml`, and `components.yml` gained a `use_when` field naming the job it does, and the composition cascade opens with the sentence that routes on it. S28/S29 guard that rule. Runner prompts need the `_source/_data/content/`, `_source/examples/`, and `_source/templates/` repo mappings (now in the harness above) or the catalogs are unreadable and any catalog-routing scenario fails for the wrong reason. Keep catalog-routing prompts phrased in the dev's words, never in words a `use_when` uses verbatim — and keep worked examples that name a specific entry OUT of the rules file, or the runner quotes the answer instead of finding it.
+
 ## S1 prior-work-first-session
 
 - mode: both
@@ -358,3 +360,29 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
   - cite: anchor: "read `NDS-IQ.md` at this project's root, top to bottom, once per session" / "If the file is missing, stop and ask the dev."
 - artifacts (behavior): the read of `NDS-IQ.md` precedes the first file write; any `NDS-PLAN.md` opens with the `Managed by NDS IQ v7` stamp (only producible from the file); (c) the change is a knob/token, not a `.nds-*` override; (d) zero files written or modified.
 - baseline: none yet (first exposure lands with the v7 file).
+
+## S28 catalog-routing-composed-pattern
+
+- mode: comprehension
+- rules: the `use_when` routing sentence opening the "Prefer official over custom" cascade; cascade steps 1–2; the components.yml search surface ("`use_when` first, then titles, descriptions, tags")
+- provenance: 2026-08-08 session, maintainer report — the catalogs described what each page CONTAINS, never the job it does, so a title/description scan skipped composed patterns ("manage-records does not tell what for; an agent may skip it when they need large tables"). Fixed by adding `use_when` to all 112 catalog entries plus one routing sentence. First run was INVALID: that sentence carried a worked example naming "Manage Records" and the runner quoted the rules file instead of reading the catalog; the example was removed and the scenario re-ran clean. Keep the prompt free of the words any `use_when` uses verbatim.
+- setup: Mature project; chrome and several pages Built and Verified. The dev is opening a new internal back-office area. No NDS table page exists in the project yet.
+- prompt: "We need a screen to manage support tickets — about 8,000 of them. Staff need to search, filter by status and date range, sort the columns, page through the results, choose which columns are visible, select rows, and export the selection to Excel. Where do you start?"
+- rubric:
+  - MUST: reach `_source/examples/manage-records.md` as the copy source via catalog `use_when` (either path counts: components.yml Tables → its Manage Records cross-reference, or examples.yml directly); rule out the DGA templates first; quote a CATALOG entry, not the rules file's own text; `nds-full-width` for back-office; server-driven above the client row threshold.
+  - MUST NOT: hand-compose from Tables + Filter + Pagination + Selection + Export as separate parts; conclude NDS has no data grid; match on titles alone; hold 8,000 rows client-side.
+  - cite: examples.yml Manage Records `use_when`: "the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request" / components.yml Tables `use_when`: "the Manage Records example shows all of them working together"
+- baseline: 2026-08-08 first run INVALID (rules-file worked example leaked the answer; runner quoted it, never opened the example, 4 tool calls). Post-fix same day — sonnet PASS clean, 14 tool calls, catalog-quoted, named the copy source and explicitly refused hand-composition.
+
+## S29 catalog-routing-uncatalogued-component
+
+- mode: comprehension
+- rules: the `use_when` routing sentence; rule #3 (copy canonical markup verbatim); the components.yml search surface
+- provenance: 2026-08-08 catalog audit — `NDS.CustomSelect` shipped a full JS API, its own source file, styling in `_forms.scss` and a doc anchor, but had NO catalog entry; the nearest entry read "Selects: Native dropdown menus for choosing from a list", so an agent asking for a styled dropdown was routed to a native element it cannot style. Fixed by adding the missing "Custom Select" entry pointing at `forms.html#selectDropdown`. Guards both the entry's existence and its disambiguation lines. Note the rules file never names this component — a pass here is evidence the catalog alone carries the routing.
+- setup: Mature project; you are building a form on a new NDS page, copying canonical markup.
+- prompt: "The 'assigned team' dropdown needs each option to show a small coloured dot plus a short description line under the option label — a plain browser dropdown can't render that. It's a single choice, and the list is short enough that nobody needs to type to search it. What does NDS give us, and what exactly do you use?"
+- rubric:
+  - MUST: land on the Custom Select catalog entry; copy canonical markup from `_source/components/forms.md` at `#selectDropdown`; keep the option label inside `.nds-option-text`; name `NDS.CustomSelect`.
+  - MUST NOT: fall back to a native `select`; pick Autocomplete (no type-ahead needed) or Multiselect (single choice); invent dropdown markup; conclude NDS has no styled select.
+  - cite: components.yml Custom Select `use_when`: "custom option markup, icons or descriptions in options, and a JS API" / "For type-ahead search use Autocomplete; for several choices use Multiselect"
+- baseline: 2026-08-08 — sonnet PASS clean on both runs (before and after the routing sentence was reworded). Correctly UNDEFINED'd the dot/description sub-element classes, which the doc block does not demonstrate, and treated them as free content inside the option — verified correct against `nds-customselect.js:57-58,150-151`, where only `.nds-option-text` feeds the display field.
