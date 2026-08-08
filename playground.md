@@ -96,3 +96,48 @@ direction: rtl
     </div>
   </div>
 </section>
+
+<section class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">تحقق القائمة المنسدلة المخصصة</h2>
+      <p class="nds-section-description">إرسال فارغ = خطأ على الحقلين. الاختيار يمسح خطأ القائمة. تعبئة الحقلين تمرر الإرسال</p>
+    </div>
+    <div class="nds-section-body">
+
+      <form class="nds-form" data-ajax>
+        <div class="nds-form-container">
+          <div class="nds-form-header">
+            <label for="pg-name"><span class="nds-label">الاسم</span></label>
+          </div>
+          <div class="nds-form-control">
+            <input type="text" id="pg-name" class="nds-input" placeholder="اكتب الاسم" required>
+          </div>
+          <div class="nds-form-footer" data-feedback-target hidden></div>
+        </div>
+
+        <div class="nds-form-container nds-select" data-required>
+          <div class="nds-form-header">
+            <label for="pg-service"><span class="nds-label">الخدمة</span></label>
+          </div>
+          <div class="nds-form-control">
+            <input type="text" id="pg-service" class="nds-input nds-select-input" placeholder="اختر الخدمة" readonly>
+            <input type="hidden" name="pg-service-value" class="nds-select-value">
+            <div class="nds-select-dropdown" hidden>
+              <div class="nds-select-options">
+                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="license"><span class="nds-option-text">تجديد رخصة</span></button>
+                <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="registry"><span class="nds-option-text">سجل تجاري</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="nds-form-footer" data-feedback-target hidden></div>
+        </div>
+
+        <div class="nds-form-action">
+          <button type="submit" class="nds-btn nds-primary"><span class="nds-label">إرسال</span></button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>

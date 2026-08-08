@@ -37,6 +37,9 @@
  *   data-target · data-autofill-apply (auto-fill containers)
  * Gotchas:
  *   - Singleton shape: init() and initializeContainer() only — no reinit(), no create().
+ *   - A required custom select is validated through its hidden .nds-select-value carrier:
+ *     author data-required on the .nds-select container. The readonly display input is
+ *     never constraint-validated, so required on it does nothing.
  *   - syncState() dispatches nothing, so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call syncState() or dispatch input/change.
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
@@ -478,6 +481,20 @@
             return this._finishGroupValidation(ti, options, isValid, message, { count: count });
         },
 
+        // Custom select: the visible .nds-select-input is readonly — barred
+        // from constraint validation, so checkValidity() always passes it.
+        // The hidden .nds-select-value is the carrier that submits; required
+        // reads it. Internal — reached via validateForm, not exported.
+        validateCustomSelect: function(csElement, options) {
+            options = options || { showMessage: true };
+            var container = csElement.closest('.nds-select') || csElement;
+            var carrier = container.querySelector('.nds-select-value');
+            var hasRequired = container.hasAttribute('data-required') || container.classList.contains('nds-required');
+            var isValid = !hasRequired || !!(carrier && carrier.value.trim());
+            var message = isValid ? '' : (NDS.isArabic ? 'يرجى اختيار خيار' : 'Please select an option');
+            return this._finishGroupValidation(container, options, isValid, message, { value: carrier ? carrier.value : '' });
+        },
+
         validateOtpGroup: function(groupElement, options) {
             options = options || { showMessage: true };
 
@@ -509,6 +526,11 @@
                 // Composite wrappers own their own validators — taginput's
                 // typing field isn't the carrier, checkValidity would false-fail.
                 if (container.classList.contains('nds-taginput')) return;
+                // Custom selects too: the readonly display input false-PASSES
+                // checkValidity, so the carrier block in _validateGroups reads
+                // the hidden .nds-select-value instead. Keyed on the carrier —
+                // a native <select> in the same .nds-select shell stays here.
+                if (container.querySelector('.nds-select-value')) return;
 
                 var input = ownField(container);
                 if (!input || input.disabled) return;
@@ -595,6 +617,23 @@
                     if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
                 }
             });
+
+            // Custom selects: same pattern — the readonly display input is
+            // barred from constraint validation, so required reads the hidden
+            // .nds-select-value carrier. Keyed on the carrier: a native
+            // <select> shares the .nds-select shell and stays with
+            // _validateContainers. Anchor is the display input (focusable).
+            form.querySelectorAll('.nds-select[data-required], .nds-select.nds-required').forEach(function(cs) {
+                if (!isFieldVisible(cs, form)) return;
+                if (!cs.querySelector('.nds-select-value')) return;
+                var result = Validator.validateCustomSelect(cs, { showMessage: options.showMessages });
+                if (!result.valid) {
+                    var anchor = cs.querySelector('.nds-select-input');
+                    acc.invalidFields.push(cs);
+                    acc.errors.push({ field: cs, input: anchor, message: result.message });
+                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
+                }
+            });
         },
 
         // Thin orchestrator over both validation passes (shared accumulator),
@@ -654,7 +693,10 @@
                 // Skip required propagation for radios/checkboxes — managed at group level.
                 // Skip for taginput too: the wrapper's data-required is authoritative,
                 // the typing input's required attr isn't (and mustn't be — see initializeInput).
-                if (input.type !== 'radio' && input.type !== 'checkbox' && !formContainer.classList.contains('nds-taginput')) {
+                // Same for custom selects: the readonly display input never carries
+                // required — syncing from it would strip the container's authored attr.
+                if (input.type !== 'radio' && input.type !== 'checkbox' && !formContainer.classList.contains('nds-taginput')
+                    && !input.classList.contains('nds-select-input')) {
                     formContainer.toggleAttribute('data-required', input.required);
                 }
             }

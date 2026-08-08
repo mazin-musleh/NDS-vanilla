@@ -1118,18 +1118,10 @@ hideFeedback: true
       openEditor(null);
     });
 
-    // A custom select's visible field is readonly, so the browser never validates
-    // it. Check it here and report through the Forms status API.
-    fields.service.closest('.nds-form-control').addEventListener('nds:customselect:change', function () {
-      NDS.Forms.clearStatus(serviceField);
-    });
-
     // data-ajax makes Forms validate, block the real submit, and fire this.
+    // The required Service select is validated by Forms itself (the container's
+    // data-required reads the hidden .nds-select-value carrier).
     form.addEventListener('nds:formValid', function () {
-      if (!fields.serviceValue.value) {
-        NDS.Forms.setStatus({ element: serviceField, status: 'error', message: 'Choose a service' });
-        return;
-      }
       var record = {
         ref: editing ? readRow(editing).ref : 'REQ-2026-' + nextRef++,
         requester: fields.requester.value.trim(),
