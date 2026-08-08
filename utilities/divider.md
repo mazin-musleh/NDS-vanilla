@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "08/08/2026 - 09:40 PM"
+last_edit: "09/08/2026 - 02:04 AM"
 ---
 
 <!-- Plain Divider -->
@@ -19,7 +19,7 @@ last_edit: "08/08/2026 - 09:40 PM"
             <p class="nds-section-description">A single line between blocks of content. The spacing above and below scales through size modifiers so the separator breathes with the content around it.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block nds-prose">
+            <div class="nds-block">
                 <div class="nds-showcase">
                     <div class="nds-demo-card">
                         <div class="demo-header">
