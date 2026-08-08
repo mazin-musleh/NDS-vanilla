@@ -159,10 +159,12 @@
 
         // Pick the last entry whose section top has crossed the nav band.
         // 1px tolerance absorbs sub-pixel rounding from smooth scroll so a
-        // just-landed heading still counts as "reached".
+        // just-landed heading still counts as "reached". Null until the first
+        // heading is actually reached — on mobile the TOC sits ABOVE the content,
+        // so defaulting to entry[0] highlighted a section still off-screen.
         findActive() {
             const threshold = window.scrollY + this.navOffset() + 1;
-            let active = this.entries[0];
+            let active = null;
             for (const e of this.entries) {
                 if (e.target.getBoundingClientRect().top + window.scrollY <= threshold) {
                     active = e;
