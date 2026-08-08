@@ -181,7 +181,7 @@ $a11y-filters: (
 // drop its masked decorative image (it'd fade into a now-white band). The
 // main `.nds-hero-section:not(.nds-sub)` — full-bleed photo + on-colour
 // text — is deliberately NOT altered by high-contrast mode.
-:root[data-a11y~="high-contrast"] .nds-hero-section.nds-sub::after {
+:root[data-a11y~="high-contrast"] .nds-hero-section.nds-sub::before {
     display: none;
 }
 

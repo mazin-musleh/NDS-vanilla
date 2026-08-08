@@ -94,6 +94,15 @@
         </ol>
     </nav>
     <div class="nds-section-wrapper">
+        {%- comment %} Optional portrait beside the title, for pages about one person or entity. {%- endcomment %}
+        {%- if page.hero_avatar %}
+        <div class="nds-section-image">
+            <div class="nds-avatar nds-image-border">
+                <img src="{{ page.hero_avatar | relative_url }}" width="120" height="120"
+                    alt="{{ page.hero_title | default: page.title }}" fetchpriority="high">
+            </div>
+        </div>
+        {%- endif %}
         <div class="nds-section-head">
             {%- if _has_float %}
             <div class="nds-section-action{%- if hero_float_actions_class %} {{ hero_float_actions_class }}{%- endif %}">

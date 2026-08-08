@@ -89,10 +89,16 @@
         flex-direction: column;
         justify-content: center;
         gap: var(--spacing-3xl);
-        isolation: isolate; // contain the z-index:-1 image ::after in its own stacking context
-
-        // Image layer — mask fades it to transparent so background-color shows through
-        &::after {
+        // Image layer — mask fades it to transparent so background-color shows through.
+        //
+        // Deliberately ::before, not ::after: among positioned siblings paint order
+        // follows DOM order, and ::before comes first, so the image lands behind the
+        // content on its own. The ::after form needed z-index:-1, which in turn needed
+        // isolation:isolate to stay contained — and that stacking context silently
+        // trapped anything overflowing the hero, so an open share dropmenu painted
+        // behind the section below. No negative z-index here, so no isolate, so the
+        // menu escapes and the image still sits behind the text.
+        &::before {
             content: '';
             position: absolute;
             inset: 0;
@@ -100,7 +106,12 @@
             -webkit-mask-image: linear-gradient(var(--_mask-angle), black var(--_mask-from), transparent var(--_mask-to));
             mask-image: linear-gradient(var(--_mask-angle), black var(--_mask-from), transparent var(--_mask-to));
             pointer-events: none;
-            z-index: -1;
+        }
+
+        // Positioned, so they share the image's paint layer and DOM order puts them
+        // above it. Without this they are in-flow content and the image covers them.
+        > :is(.nds-breadcrumb-nav, .nds-section-wrapper) {
+            position: relative;
         }
 
         @include ltr {
@@ -116,7 +127,7 @@
             background: var(--background-default) !important;
             box-shadow: unset !important;
 
-            &::after {
+            &::before {
                 display: none;
             }
 
