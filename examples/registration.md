@@ -196,9 +196,14 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
               </fieldset>
 
-              <p class="nds-note nds-center">
-                Didn't receive the code? <a href="#" class="resend-link">Resend</a>
-              </p>
+              <p class="nds-note nds-center">Didn't receive the code?</p>
+              <div class="nds-center">
+                <button type="button" class="nds-btn nds-subtle nds-cooldown" id="registration-resend" data-cooldown="30"
+                  data-cooldown-loading="1" data-cooldown-label="Resend in {s}s" data-resend-label="Resend"
+                  data-sent-title="Code sent" data-sent-message="A new code is on its way.">
+                  <span class="nds-label">Resend code</span>
+                </button>
+              </div>
             </div>
 
             <div class="nds-card-actions nds-row">
@@ -280,11 +285,15 @@ breadcrumb: [["Examples", "/examples"]]
       demoCode.textContent = expectedCode;
     }
 
+    // The loading state is visual only — pair it with disabled, or the button stays
+    // clickable for the whole wait and a second click queues a second submit.
     function withLoading(btn, delay, done) {
       if (!btn) { done(); return; }
       NDS.State.add(btn, 'loading');
+      btn.disabled = true;
       setTimeout(function () {
         NDS.State.remove(btn, 'loading');
+        btn.disabled = false;
         done();
       }, delay);
     }
@@ -343,12 +352,10 @@ breadcrumb: [["Examples", "/examples"]]
       btn.addEventListener('click', function () { show('step1'); });
     });
 
-    // Resend
-    form2.querySelectorAll('.resend-link').forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        sendCode();
-      });
-    });
+    // Resend — the cooldown button owns the throttle, the countdown label and the
+    // sent toast. Issue the code from its event, never from a bare click handler:
+    // a plain link would let the user hammer a real send-code endpoint.
+    document.getElementById('registration-resend')
+      .addEventListener('nds:cooldown:triggered', function () { sendCode(); });
   });
 </script>

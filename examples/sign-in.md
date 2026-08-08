@@ -598,11 +598,15 @@ breadcrumb: [["Examples", "/examples"]]
       }
     }
 
+    // The loading state is visual only — pair it with disabled, or the button stays
+    // clickable for the whole wait and a second click queues a second submit.
     function withLoading(btn, delay, done) {
       if (!btn) { done(); return; }
       NDS.State.add(btn, 'loading');
+      btn.disabled = true;
       setTimeout(function () {
         NDS.State.remove(btn, 'loading');
+        btn.disabled = false;
         done();
       }, delay);
     }
@@ -650,8 +654,13 @@ breadcrumb: [["Examples", "/examples"]]
       if (captchaInput.value !== captchaCode) {
         credError.hidden = false;
         captchaInput.value = '';
-        newCaptcha();
-        NDS.CooldownButton.start(document.getElementById('captcha-refresh'));
+        // The refresh button owns the regeneration, so drive it rather than calling
+        // newCaptcha() here as well — that changed the code twice, once now and once
+        // when the countdown started, under a user already retyping it. reset() first
+        // because start() is a no-op while a countdown is still running.
+        var refresh = document.getElementById('captcha-refresh');
+        NDS.CooldownButton.reset(refresh);
+        NDS.CooldownButton.start(refresh);
         captchaInput.focus();
         return;
       }
