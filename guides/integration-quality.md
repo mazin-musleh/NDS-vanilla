@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.6.x"
-updated: "1.7.0"
+updated: "1.7.x"
 last_edit: "08/08/2026 - 11:36 PM"
 lang: en
 direction: ltr
