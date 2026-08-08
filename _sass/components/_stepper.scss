@@ -13,12 +13,18 @@
 .nds-stepper {
     --stepper-size: 32px;
     --_indicator-gap: var(--stepper-indicator-gap, var(--spacing-md));
-    --stepper-gap: var(--_indicator-gap);
+    --_stepper-gap: var(--stepper-gap, var(--_indicator-gap));
+    // Line colours resolve through private names so a modifier (nds-oncolor)
+    // can retune them in ONE place. Re-binding the --stepper-line-* tokens
+    // here would break the rule that a component never re-binds a global token.
+    --_stepper-line-current: var(--stepper-line-current);
+    --_stepper-line-completed: var(--stepper-line-completed);
+    --_stepper-line-upcoming: var(--stepper-line-upcoming);
     --_content-gap: var(--gap, var(--spacing-xl));
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--stepper-gap);
+    gap: var(--_stepper-gap);
     font-family: var(--nds-font-family);
     width: 100%;
     align-items: flex-start;
@@ -26,12 +32,12 @@
 
     &.nds-lg {
         --stepper-size: 40px;
-        --stepper-gap: calc(var(--_indicator-gap) * 1.2);
+        --_stepper-gap: var(--stepper-gap, calc(var(--_indicator-gap) * 1.2));
     }
 
     &.nds-xl {
         --stepper-size: 48px;
-        --stepper-gap: calc(var(--_indicator-gap) * 1.5);
+        --_stepper-gap: var(--stepper-gap, calc(var(--_indicator-gap) * 1.5));
     }
 
     // RTL support is default - LTR overrides when needed
@@ -90,17 +96,17 @@
         position: absolute;
         top: calc(var(--stepper-size) /2);
         inset-inline-start: var(--stepper-size);
-        inset-inline-end: calc(var(--stepper-gap) * -1);
+        inset-inline-end: calc(var(--_stepper-gap) * -1);
         height: 2px;
-        background-color: var(--stepper-line-current);
+        background-color: var(--_stepper-line-current);
     }
 
     &[data-state~="completed"] .nds-stepper-base::after {
-        background-color: var(--stepper-line-completed);
+        background-color: var(--_stepper-line-completed);
     }
 
     &[data-state~="upcoming"] .nds-stepper-base::after {
-        background-color: var(--stepper-line-upcoming);
+        background-color: var(--_stepper-line-upcoming);
     }
 }
 
@@ -380,18 +386,31 @@
 // styles — the bars/fills ride the true layout).
 @mixin stepper-variant-vertical {
     flex-direction: column;
-    --stepper-gap: calc(var(--stepper-size)*1.5);
+    --_stepper-gap: var(--stepper-gap, calc(var(--stepper-size) * 1.5));
+
+    // Carded steps carry their own height and padding, so they need far less
+    // air between them. A dot is small enough that the roomy default still
+    // reads right, so it keeps it.
+    &.nds-cardView:not(.nds-dot) {
+        --_stepper-gap: var(--stepper-gap, calc(var(--stepper-size) / 2));
+    }
 
     .nds-stepper-step {
         position: relative;
         flex-direction: row;
+        // The stepper sets align-items: flex-start, which in a column overrides
+        // flexbox's default cross-axis stretch and leaves each step shrunk to its
+        // own content. Put the default back on the item. Preferred over width:100%,
+        // which ignores the step's own margins, and over width:stretch, which still
+        // needs vendor fallbacks.
+        align-self: stretch;
 
         // Override horizontal line to vertical
         .nds-stepper-base::after {
             top: var(--stepper-size);
             inset-inline-start: calc((var(--stepper-size) / 2) - 1px);
             inset-inline-end: unset;
-            bottom: calc(var(--stepper-gap) * -1);
+            bottom: calc(var(--_stepper-gap) * -1);
             width: 2px;
             height: unset;
             z-index: 0;
@@ -429,7 +448,7 @@
     .nds-stepper-step {
         // In reverse, line color should come from the next DOM sibling's state
         &[data-state~="completed"]+ :not([data-state~="upcoming"]) .nds-stepper-base::after {
-            background-color: var(--stepper-line-completed);
+            background-color: var(--_stepper-line-completed);
         }
 
         // Reverse flips visuals: DOM-first step sits at the visual bottom, with
@@ -446,6 +465,60 @@
     }
 }
 
+// Steps that read as cards. The canonical content box takes the card surface
+// itself, so nothing is nested inside it and the step keeps using
+// .nds-stepper-text for its typography.
+@mixin stepper-card-surface {
+    padding: var(--spacing-xl);
+    border: 1px solid var(--border-neutral-primary);
+    border-radius: var(--radius-lg);
+    background-color: var(--background-card);
+}
+
+// Vertical shows every step down a line, so each step's content is its own card.
+// The lift puts the box's first row level with the dot: content sits BESIDE the
+// circle here, so the box's own padding would otherwise drop that row below it.
+//
+// Transform, not margin — the connector line is measured on .nds-stepper-base,
+// so moving the box in layout would leave the line short of the next dot.
+.nds-stepper.nds-vertical.nds-cardView {
+    // Scales with the circle, so the size classes carry it for free. A dot is half
+    // the diameter of a numbered circle yet needs the larger lift: the circle's own
+    // height already covers most of the box padding, a dot's does not.
+    --_stepper-card-lift: var(--stepper-card-lift, calc(var(--stepper-size) / 4));
+
+    // A transform borrows space without occupying it, so the topmost card would
+    // hang over whatever sits above the stepper. Reserve the lift back here.
+    margin-block-start: var(--_stepper-card-lift);
+
+    &.nds-dot {
+        --_stepper-card-lift: var(--stepper-card-lift, var(--stepper-size));
+    }
+
+    .nds-stepper-content {
+        @include stepper-card-surface;
+        transform: translateY(calc(var(--_stepper-card-lift) * -1));
+    }
+}
+
+// Radial shows one step at a time beside the progress ring and hides the base, so
+// the whole widget is the card. Carding the lone content box instead would box the
+// text and leave the ring outside it. No lift: there is no circle to line up with.
+// Horizontal is deliberately left out: its content sits under the circle in a row
+// of equal columns, and boxing each one fights the connecting line.
+.nds-stepper.nds-radial.nds-cardView {
+    @include stepper-card-surface;
+}
+
+// On a colored background the surface takes the same translucent white as
+// .nds-card.nds-oncolor, so a carded step and a real card read alike. Text and
+// circles already adapt in the .nds-oncolor block above.
+.nds-stepper.nds-oncolor.nds-vertical.nds-cardView .nds-stepper-content,
+.nds-stepper.nds-oncolor.nds-radial.nds-cardView {
+    background-color: var(--colors-alpha-white-10);
+    border-color: var(--colors-alpha-white-20);
+}
+
 // ==============================================
 // RADIAL STEPPER LAYOUT MODIFIER
 // ==============================================
@@ -454,7 +527,7 @@
 @mixin stepper-variant-radial {
     --stepper-size: 64px;
     --progress-size: var(--stepper-size);
-    --stepper-gap: calc(var(--progress-size)/8);
+    --_stepper-gap: var(--stepper-gap, calc(var(--progress-size) / 8));
     align-items: center;
 
     .nds-stepper-step {
@@ -589,15 +662,17 @@
 // ==============================================
 
 .nds-stepper.nds-oncolor {
+    // One retune reaches every line rule, including the reverse variant's sibling
+    // selector, which outranks anything scoped inside this block.
+    --_stepper-line-current: var(--colors-alpha-white-30);
+    --_stepper-line-upcoming: var(--colors-alpha-white-30);
+    --_stepper-line-completed: var(--background-surface-oncolor);
+
     .nds-stepper-title { color: var(--colors-alpha-white-40); }
     .nds-stepper-description { color: var(--colors-alpha-white-30); }
     .nds-stepper-next { color: var(--colors-alpha-white-30); }
 
     .nds-stepper-step {
-        .nds-stepper-base:after {
-            background-color: var(--colors-alpha-white-30);
-        }
-
         .nds-stepper-circle {
             border-color: var(--colors-alpha-white-30);
             background-color: var(--colors-alpha-white-10);
@@ -627,10 +702,6 @@
         &[data-state~="completed"] {
             .nds-stepper-title { color: var(--text-oncolor-primary); }
             .nds-stepper-description { color: var(--text-oncolor-secondary); }
-
-            .nds-stepper-base:after {
-                background-color: var(--background-surface-oncolor);
-            }
 
             .nds-stepper-circle {
                 border-color: var(--background-surface-oncolor);
