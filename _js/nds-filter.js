@@ -338,7 +338,8 @@
             if (!result.valid) {
                 e.preventDefault();
                 this.filterContainer.dispatchEvent(new CustomEvent('nds:formInvalid', {
-                    detail: { invalidFields: result.invalidFields, errors: result.errors }
+                    detail: { invalidFields: result.invalidFields, errors: result.errors },
+                    bubbles: true
                 }));
                 return;
             }
@@ -349,7 +350,8 @@
                     criteria: this.criteria,
                     form: this.submissionForm
                 },
-                cancelable: true
+                cancelable: true,
+                bubbles: true
             });
 
             const shouldContinue = this.filterContainer.dispatchEvent(submitEvent);
@@ -363,7 +365,8 @@
             this._showTriggerLoading();
 
             this.filterContainer.dispatchEvent(new CustomEvent('nds:formValid', {
-                detail: {}
+                detail: {},
+                bubbles: true
             }));
         }
 
@@ -398,7 +401,8 @@
                     // the built-in path runs — theirs to call from a .catch.
                     rollback: () => this._rollbackApplied(appliedUrl)
                 },
-                cancelable: true
+                cancelable: true,
+                bubbles: true
             });
             if (!this.filterContainer.dispatchEvent(ajaxEvent)) return;
 
@@ -543,7 +547,8 @@
             this._commitAppliedUi();
 
             this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
-                detail: eventDetail
+                detail: eventDetail,
+                bubbles: true
             }));
 
             // JSON developers render inside the complete-event handler and may set
@@ -582,7 +587,8 @@
                     error: error.message,
                     form: this.filterContainer
                 },
-                cancelable: true
+                cancelable: true,
+                bubbles: true
             }));
             if (shouldToast) this._showAjaxErrorToast();
 
