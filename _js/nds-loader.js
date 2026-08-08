@@ -611,7 +611,10 @@
                 delete _bundlePromises[name];
                 resolve();
             };
-            document.head.appendChild(s);
+            // Body, not head: injection happens post-reveal, so the DOM is parsed
+            // and a body-tail script is where a deferred bundle belongs. Falls back
+            // to head for the sync-in-<head> case, where body doesn't exist yet.
+            (document.body || document.head).appendChild(s);
         });
         return _bundlePromises[name];
     }
