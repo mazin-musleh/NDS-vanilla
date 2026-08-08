@@ -38,7 +38,7 @@ More rules that hold while paths are unsettled:
 
 2. **Never read `*.min.js` or `*.min.css`.** They are opaque. Read the matching file in `NDS_ROOT/_source/` instead. One exception: the `Version:` banner in a bundle's first lines. Read just those lines for the upgrade check.
 
-3. **Copy canonical markup verbatim. Never invent it.** Every component has a doc page whose `lang-html` code block holds the exact HTML to copy. Read it at `NDS_ROOT/_source/components/<name>.md` — the doc source: same code blocks and attribute tables, no site chrome, a quarter of the bytes. The built twin at `NDS_ROOT/_site/components/<name>.html` is the human surface. Class names, nesting, `data-*` attributes, and ARIA roles all matter; markup from memory breaks the component.
+3. **Copy canonical markup verbatim. Never invent it.** Every component has a doc page whose `lang-html` code block holds the exact HTML to copy. Read it at `NDS_ROOT/_source/<folder>/<name>.md` — the doc source: same code blocks and attribute tables, no site chrome, a quarter of the bytes. `<folder>` is the one the catalog entry's `url` names: `components`, `utilities`, `layout`, or `ui-shell`. Not every entry sits under `components`. The built twin at `NDS_ROOT/_site/<folder>/<name>.html` is the human surface. Class names, nesting, `data-*` attributes, and ARIA roles all matter; markup from memory breaks the component.
     - "Verbatim" covers structure, classes, `data-*`, and ARIA.
     - Two kinds of value edits are sanctioned, and only these: (1) asset-URL rewrites: `href`/`src` pointing into the template's assets get rewritten to `NDS_ASSETS` (see "Asset references in copied markup" below); (2) content swaps: replacing placeholder text and content-bearing attribute values with the project's own.
     - Content swap includes attribute values: link `href`s, `alt` text, and `aria-label`s are content too. So are a swapped image's `width`/`height` attributes: they carry the sample file's geometry, and keeping them forces it onto yours (the brand slot's square sample squashing a wide project logo is the classic case); set them to the new file's real pixel size. Audit all of them against the target page's language and routes, or dead docs-site links and wrong-language labels ride along silently.
@@ -142,7 +142,7 @@ Build the outer page skeleton before any inner content:
 
 The chrome you copy is the docs site's own. Before duplicating it to page #2, apply the porting principle (composition cascade, below) to its controls and values; one miss there multiplies by page count.
 
-Why: `<html dir>` and body class shape how every component paints (RTL/LTR + dark). Dropmenus, modals, and drawers portal to `<body>` and expect chrome class chains present. Pasting a component into a page with a broken shell means every rendering bug is ambiguously "component or chrome?", impossible to attribute cleanly.
+Why: `<html dir>` and body class shape how every component paints (RTL/LTR + dark). Dropmenus, modals, and drawers expect the chrome's class chains and stacking context. Pasting a component into a page with a broken shell means every rendering bug is ambiguously "component or chrome?", impossible to attribute cleanly.
 
 ## Composition cascade: for any page
 
@@ -208,15 +208,15 @@ The banner is the contract: wire through its Methods and Events, configure throu
 
 Facts that hold across all of NDS:
 
-- **Reinitialization** (after any dynamic DOM change that adds NDS markup): `NDS.<Component>.reinit()` rescans the page and skips anything already initialized, so it is safe to call repeatedly; this is the one to reach for. `NDS.<Component>.create(el)` constructs unconditionally: run it on an already-initialized element and you bind a second set of listeners (a double-constructed accordion closes again on the first click). Use it only for an element you know is fresh — and check the banner first: not every component ships the same shape (forms, for example, has `initializeContainer` and no reinit at all).
+- **Reinitialization** (after any dynamic DOM change that adds NDS markup): `NDS.<Component>.reinit()` rescans the page and skips anything already initialized, so it is safe to call repeatedly; this is the one to reach for. `NDS.<Component>.create(el)` varies by component: some return the element's live instance, others build a second one on top of it and bind a duplicate set of listeners. The banner's Methods line says which. Use it only for an element you know is fresh — and check the banner first: not every component ships the same shape (forms, for example, has `initializeContainer` and no reinit at all).
 - **A lazily loaded namespace answers for any key.** `NDS.X.method` can be a loader stub that returns a function for anything, so a `typeof` check proves nothing about the real surface. The banner (or the grep) is how you learn what actually exists.
 - **Client- or server-driven data? Judge by scale, then by growth.** Under ~500 rows, client-side wins: fetch the set once and let table, filter, sort, and export work the full data, more capability with zero backend work. Above that, or when the dataset is small today but expected to grow, go server-driven (the pagination banner's record-slot method plus re-fetching sort/filter). When the better choice needs a backend change (a clean list endpoint, a sort parameter, a count field), propose it to the dev and make it with their approval; don't contort the page to avoid touching the server.
 
 ## Design tokens (in `NDS_ROOT/_source/_sass/`)
 
-Four tiers. Tiers 2–4 live in `tokens/`, one file each, with the light block at the top and the `:root[data-theme~="dark"]` block at the bottom of the same file.
+Four tiers. Tiers 2–4 live in `tokens/`, one file each. Tiers 3 and 4 put the light block at the top and the `:root[data-theme~="dark"]` block at the bottom of the same file. Tier 2 carries no color, so it has no dark block.
 
-1. **Palette** (`themes/_dga.scss`, vendored, do not modify): raw color ramps, no meaning. Its dark ramps are generated at runtime by `themes/_register.scss`, not held in the file itself.
+1. **Palette** (`themes/_dga.scss`, vendored, do not modify): raw color ramps, no meaning. Its values are frozen hex and never flip; dark comes from the semantic tier's dark block.
 2. **Primitives** (`tokens/_primitives.scss`): dimension vocabulary (`--spacing-md`, `--radius-sm`, typography rungs).
 3. **Semantic** (`tokens/_semantic.scss`): one name per meaning (`--background-primary`, `--text-oncolor-primary`). Rule #5 rebinds these at `:root` for whole-system theming.
 4. **Component** (`tokens/_components.scss`): per-component dials, `--{component}-{property}-{variant}-{state}`.
@@ -239,6 +239,8 @@ When the dev asks for an upgrade, fetching the latest zip and replacing `NDS_ROO
 ## Reference index: where to look inside `NDS_ROOT`
 
 - `_source/components/*.md`: doc-page sources. Canonical `lang-html` markup + `data-*` tables + ARIA notes, no site chrome. **First stop for how to write a component.** (Two pages keep a demo or chip behind an include the source does not inline — `user-feedback.md`, `multiselect.md`; their built twins show the full demo.)
+- `_source/utilities/*.md` (built: `_site/utilities/*.html`): same doc format for the utility entries in `components.yml` — copy, divider, numbers, helpers, and the rest.
+- `_source/ui-shell/*.md`: the chrome doc sources, in that same format.
 - `_site/components/*.html`: the built doc pages. The human surface.
 - `_site/ui-shell/*.html`: chrome docs. `head.html`, `header.html`, `topbar.html`, `footer.html`, `hero.html`, `sidemenu.html`, `sideinfo.html`.
 - `_source/layout/*.md` (built: `_site/layout/*.html`): layout primitive docs. `section`, `grid`, `flex`, `block`.
@@ -246,7 +248,7 @@ When the dev asks for an upgrade, fetching the latest zip and replacing `NDS_ROO
 - `_source/_data/content/*.yml`: machine-readable catalogs. `components.yml`, `templates.yml`, `examples.yml`, `icons.yml`.
 - `_source/_js/nds-<name>.js`: readable component behavior source, opening with the public-surface banner ("JS wiring" section).
 - `_source/_sass/components/_<name>.scss`: readable component styling source.
-- `_source/_sass/tokens/`: three of the four design-token tiers, one file each (primitives, semantic, components); the fourth tier, the palette, lives in `_source/_sass/themes/_dga.scss`. Dark rebinds sit at the bottom of each tier file, under `:root[data-theme~="dark"]`.
+- `_source/_sass/tokens/`: three of the four design-token tiers, one file each (primitives, semantic, components); the fourth tier, the palette, lives in `_source/_sass/themes/_dga.scss`. Dark rebinds sit at the bottom of the semantic and component tier files, under `:root[data-theme~="dark"]`.
 - `_source/_sass/_mixins.scss`: shared mixins.
 
 ## Install and upgrade this file

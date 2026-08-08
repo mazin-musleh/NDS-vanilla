@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.7.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "08/08/2026 - 12:39 AM"
+last_edit: "08/08/2026 - 11:36 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS

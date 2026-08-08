@@ -53,15 +53,18 @@ your ONLY rulebook. Ignore every other file in this repo (CLAUDE.md,
 AGENTS.md, source code) — they are maintainer-side documents the consumer
 agent never sees. ONE exception: where the rules file routes you to a read
 under NDS_ROOT, simulate it against this repo:
-- NDS_ROOT/_source/_js/<f>.js  is  C:\Projects\NDS-vanilla\_js\<f>.js  (read
-  only its top banner comment)
-- NDS_ROOT/_source/components/<n>.md  is
-  C:\Projects\NDS-vanilla\components\<n>.md
-- NDS_ROOT/_source/_data/content/<n>.yml  is
-  C:\Projects\NDS-vanilla\_data\content\<n>.yml
-- NDS_ROOT/_source/examples/<n>.md  is  C:\Projects\NDS-vanilla\examples\<n>.md
-- NDS_ROOT/_source/templates/<n>.md  is
-  C:\Projects\NDS-vanilla\templates\<n>.md
+- NDS_ROOT/_source/<path>  is  C:\Projects\NDS-vanilla\<path>. The zip's
+  _source/ is a straight copy of the repo's own folders, so strip the prefix:
+  _js, _sass, components, utilities, layout, ui-shell, templates, examples,
+  _data/content. For a _source/_js/<f>.js read, read only its top banner comment.
+- NDS_ROOT/_site/<path>  is  C:\Projects\NDS-vanilla\_site\<path>, when a build
+  exists. If it does not, report the read as unavailable and continue — never
+  substitute the _source twin for a _site read, or the reverse.
+
+If a routed read lands on a path that does not exist, say so explicitly and
+name the path you tried. Do not silently substitute a different file: a routing
+bug in the rules file surfaces here as a missing path, and a silent substitution
+hides the very defect the run exists to find.
 
 Read only what the rules file's own workflow would have you read; nothing else. Answer strictly from the
 file's text, those routed reads, and ordinary engineering judgment.

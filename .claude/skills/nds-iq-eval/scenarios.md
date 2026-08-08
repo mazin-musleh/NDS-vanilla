@@ -6,6 +6,8 @@ v7 re-home (2026-08-06, install-model redesign): paste-in block → ANCHOR in th
 
 Catalog routing (2026-08-08): every entry in `templates.yml`, `examples.yml`, and `components.yml` gained a `use_when` field naming the job it does, and the composition cascade opens with the sentence that routes on it. S28/S29 guard that rule. Runner prompts need the `_source/_data/content/`, `_source/examples/`, and `_source/templates/` repo mappings (now in the harness above) or the catalogs are unreadable and any catalog-routing scenario fails for the wrong reason. Keep catalog-routing prompts phrased in the dev's words, never in words a `use_when` uses verbatim — and keep worked examples that name a specific entry OUT of the rules file, or the runner quotes the answer instead of finding it.
 
+Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catalog entry's own `url` (`components`, `utilities`, `layout`, `ui-shell`) instead of hardcoding `components/`, and the Reference index names the utilities and ui-shell source folders. S39 guards it. The harness maps `_source/<path>` to the repo's `<path>` wholesale rather than folder by folder, so a new shipped folder needs no harness edit — and it instructs runners to report a missing path by name instead of substituting a file, which is what makes a routing bug gradable at all.
+
 ## S1 prior-work-first-session
 
 - mode: both
@@ -386,3 +388,29 @@ Catalog routing (2026-08-08): every entry in `templates.yml`, `examples.yml`, an
   - MUST NOT: fall back to a native `select`; pick Autocomplete (no type-ahead needed) or Multiselect (single choice); invent dropdown markup; conclude NDS has no styled select.
   - cite: components.yml Custom Select `use_when`: "custom option markup, icons or descriptions in options, and a JS API" / "For type-ahead search use Autocomplete; for several choices use Multiselect"
 - baseline: 2026-08-08 — sonnet PASS clean on both runs (before and after the routing sentence was reworded). Correctly UNDEFINED'd the dot/description sub-element classes, which the doc block does not demonstrate, and treated them as free content inside the option — verified correct against `nds-customselect.js:57-58,150-151`, where only `.nds-option-text` feeds the display field.
+
+## S39 doc-folder-routing-utilities
+
+- mode: comprehension
+- rules: rule #3's `<folder>` path sentence ("`<folder>` is the one the catalog entry's `url` names"); the Reference index's `_source/utilities/*.md` and `_source/ui-shell/*.md` lines
+- provenance: 2026-08-08 architecture review — rule #3 hardcoded `_source/components/<name>.md`, but only 65 of the 93 `components.yml` entries carry a `/components/` url: 13 are `/utilities/` (copy, divider, numbers, helpers, hidden, …), 10 `/ui-shell/`, 5 `/layout/`. `_source/utilities/` appeared nowhere in the rules file even though `mkrelease.py` ships it, so an agent that found the right catalog entry was then routed to a path that does not exist — a silent dead end for 14% of the catalog. Fixed by taking the folder from the entry's own `url` and naming the utilities and ui-shell source folders in the Reference index. Guards the routing for every non-`components` folder; S7 covers the `ui-shell` side from the layout-coupled angle.
+- setup: Mature project; chrome and several pages Built and Verified. You are building the ticket detail page. Each ticket shows a long reference number that staff constantly re-type into other systems.
+- prompt: "Put a one-click copy button next to the reference number. What does NDS give us, and where exactly do you copy the markup from? Give me the file path you read."
+- rubric:
+  - MUST: land on the Copy entry in `components.yml`; name the read path as `NDS_ROOT/_source/utilities/copy.md`; copy a canonical `lang-html` block verbatim; pick the target-based variant, since the reference number is already rendered in the page markup, and set its `data-copy-target` to a CSS selector for that element.
+  - MUST NOT: report the doc source as missing or unreachable; route to `_source/components/copy.md`; substitute the built `_site` twin without saying why; hand-write clipboard JS; conclude NDS has no copy utility.
+  - cite: rule #3: "`<folder>` is the one the catalog entry's `url` names: `components`, `utilities`, `layout`, or `ui-shell`" / components.yml Copy `use_when`: "reference numbers, links, codes, and IDs"
+- baseline: 2026-08-08 first exposure — sonnet PASS, routed to `utilities/copy.md` and printed the path unprompted, chose the target-based demo on the right reasoning ("value already rendered in markup"), refused hand-written clipboard JS.
+
+## S40 theme-rebind-dark-mirror
+
+- mode: comprehension
+- rules: rule #5's token tier ("Rebind semantic tokens like `--background-primary` in a stylesheet loaded AFTER `nds-main.min.css`"; the dark-mirror sentence and its "a project without the switcher never enters dark" carve-out); the Design tokens section's four-tier list
+- provenance: 2026-08-08 architecture review — rule #5 and the whole Design tokens section had NO scenario in the suite, one of two hard rules with zero coverage. The same review corrected three factual claims in that section: the palette's dark values were credited to `themes/_register.scss` (which derives brand-theme ramps from seeds, not the DGA palette's dark), and every tier file was said to carry a dark block though `_primitives.scss` carries none. This scenario covers the rule and guards the corrected text — "frozen hex and never flip" must not read as license to edit the vendored palette.
+- setup: Mature project; the chrome was copied whole, so the topbar's theme switcher is present and users can toggle dark mode.
+- prompt: "Our corporate green is #0F7B4A. Make it the primary color across the entire site — every button, link, and header. Where exactly do you put it, and what file does that go in?"
+- rubric:
+  - MUST: rebind semantic tokens at `:root` in a project stylesheet loaded AFTER `nds-main.min.css`; mirror every rebind under `:root[data-theme~="dark"]`, naming the present switcher as the reason; treat the primary family as a unit rather than rebinding one token.
+  - MUST NOT: edit `themes/_dga.scss` or anything else under `NDS_ROOT`; hand-edit the built `nds-main.min.css`; reach for `.nds-*` selector overrides; skip the dark mirror.
+  - cite: "Rebind semantic tokens like `--background-primary` in a stylesheet loaded AFTER `nds-main.min.css`" / "an unmirrored rebind silently reverts in dark"
+- baseline: 2026-08-08 first exposure — sonnet PASS, rebound the whole primary family (background / text / border / icon / controls) with the dark mirror, and explicitly refused to edit the vendored `_dga.scss`.
