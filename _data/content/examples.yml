@@ -41,11 +41,11 @@
   url: "/examples/faculty.html"
 
 - title: "Faculty CV"
-  description: "Long-form academic profile with a career timeline, qualifications, and paginated publications."
-  use_when: "A profile page read top to bottom instead of through tabs: avatar header with a contact menu, a card grid of key fields, a prose block, a dated career timeline built from a reversed vertical stepper so the newest entry sits on top, qualification cards, and a long list of records split into pages. Use for a CV, resume, portfolio, staff bio, work history, or any person page whose sections are too long to hide behind tabs."
+  description: "Long-form academic profile with a table of contents, a career timeline, qualifications, and paginated publications."
+  use_when: "A profile page read top to bottom instead of through tabs, with a sticky table of contents tracking the sections as you scroll: a portrait and name in the hero, a contact menu, a card grid of key fields, a prose block, a dated career timeline built from a reversed vertical stepper so the newest entry sits on top, qualification cards, and a long list of records split into pages. Use for a CV, resume, portfolio, staff bio, work history, or any person page whose sections are too long to hide behind tabs."
   icon: '<i class="hgi hgi-stroke hgi-mortarboard-02"></i>'
   category: "Content"
-  tags: ["Stepper", "Cards", "Pagination", "Dropmenu"]
+  tags: ["Stepper", "TOC", "Divider", "Pagination", "Cards"]
   url: "/examples/faculty-cv.html"
 
 - title: "Academic Program"
