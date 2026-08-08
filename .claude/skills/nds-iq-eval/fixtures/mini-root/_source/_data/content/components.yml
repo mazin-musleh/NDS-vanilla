@@ -1,13 +1,16 @@
 # fixture catalog stub
 - title: Button
   description: Primary action element with states and icon slot.
+  use_when: "Any clickable action: primary, secondary, and icon-only variants, with sizes and states. The base for most interactive markup."
   url: /components/button.html
   tags: [action, form]
 - title: Table
   description: Data table with sort, filter, pagination, export.
+  use_when: "Any tabular data: data grid, sortable table, records list. The starting point for replacing DataTables, jTable, or a similar plugin. Pair with Filter and Pagination."
   url: /components/table.html
   tags: [data, list, sort, filter, pagination, export]
 - title: Autocomplete
   description: Async searchable select input.
+  use_when: "A type-ahead field: search suggestions, live search, combobox, async option loading. To pick several values use Multiselect."
   url: /components/autocomplete.html
   tags: [form, search, select]

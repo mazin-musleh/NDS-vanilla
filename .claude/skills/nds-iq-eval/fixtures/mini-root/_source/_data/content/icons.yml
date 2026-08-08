@@ -1,0 +1,6 @@
+# fixture catalog stub — UI icons registered in the inline set (.nds-icon.nds-hgi-*)
+hgi:
+  - nds-hgi-arrow-left-01
+  - nds-hgi-arrow-right-01
+  - nds-hgi-search-01
+  - nds-hgi-copy-01

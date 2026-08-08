@@ -4,7 +4,8 @@
  *   NDS.Forms.init()                       scan + initialize every .nds-form-container
  *   NDS.Forms.initializeContainer(el)      initialize one container
  *   NDS.Forms.initForm(form)               wire one .nds-form (submit validation)
- *   NDS.Forms.setStatus(el, status, msg)   set field status (error/success/warning/info)
+ *   NDS.Forms.setStatus({element, status, message, permanent})   set field status
+ *                                          (error/success/warning/info/neutral)
  *   NDS.Forms.clearStatus(el)              clear it
  *   NDS.Forms.getStatus(el)                read {status, message}
  *   NDS.Forms.setState(el, name, add)      add/remove a field state ('required' also
@@ -12,7 +13,9 @@
  *   NDS.Forms.syncState(input)             re-sync a control's chrome after setting
  *                                          value/checked from JS
  *   NDS.Forms.setIndeterminate(cb, value)  set a checkbox's indeterminate state
- *   NDS.Forms.validateForm(form, opts)     validate everything → {valid, invalidFields, errors}
+ *   NDS.Forms.validateForm(el, opts)       validate everything → {valid, invalidFields, errors};
+ *                                          el is the .nds-form or anything inside it — works on
+ *                                          a non-<form> container too (see the Gotcha below)
  *   NDS.Forms.validateCheckboxGroup(group, opts)
  *   NDS.Forms.validateRadioGroup(group, opts)
  *   NDS.Forms.validateMultiselect(el, opts)
@@ -36,8 +39,14 @@
  *   - Singleton shape: init() and initializeContainer() only — no reinit(), no create().
  *   - syncState() dispatches nothing, so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call syncState() or dispatch input/change.
- *   - Forms owns the submit listener on every .nds-form. data-ajax makes it preventDefault()
- *     after validation — the request is yours to send from nds:formValid.
+ *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
+ *     preventDefault() after validation — the request is yours to send from nds:formValid.
+ *   - That automatic wiring is <form>-tags only: on any other element .nds-form is a layout
+ *     marker (wizard step divs use it that way) and initForm() skips it — no submit validation,
+ *     no nds:formValid, silently. Can't use a <form> tag (one outer server form, a fragment)?
+ *     Keep .nds-form on the container, call NDS.Forms.validateForm(container) from your own
+ *     trigger (the button's click), and branch on its {valid} result — validation works the
+ *     same; only the automatic submit lifecycle is absent.
  *   - validateForm() is called synchronously at submit; keep it in the main bundle.
  *   - Never call form.reset(): nothing in NDS listens for the native reset event. Clear
  *     per field and syncState() each.

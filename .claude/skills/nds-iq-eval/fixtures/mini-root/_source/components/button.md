@@ -2,7 +2,7 @@
 layout: page
 title: Button
 since: "1.0.0"
-updated: "1.6.0"
+updated: "1.7.0"
 ---
 
 Fixture doc source (`.md`). Chrome-free twin of `_site/components/button.html` — the v7 rules file routes markup reads here first. The code block below is the canonical markup runners must copy verbatim.

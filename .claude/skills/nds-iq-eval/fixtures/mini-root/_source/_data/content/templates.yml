@@ -1,5 +1,6 @@
 # fixture catalog stub
 - title: Content Page
   description: DGA-official content page with side menu and sections.
+  use_when: "Any long-form content or editorial page: policy, terms of use, news article, written guide. Carries the side-menu wrapper chain and article sections."
   url: /templates/content.html
   category: DGA

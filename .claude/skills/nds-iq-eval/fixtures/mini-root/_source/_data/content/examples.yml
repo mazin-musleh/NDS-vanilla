@@ -1,4 +1,5 @@
 # fixture catalog stub
 - title: Service Listing
   description: Filterable, paginated service catalog page.
+  use_when: "A browsable catalog of items with keyword search, filters, and pagination. Use for any service directory, product listing, or list-all-X page."
   url: /examples/service-listing.html
