@@ -3,6 +3,7 @@
  * Methods:
  *   NDS.Dropmenu.init() / .reinit()      scan + initialize dropmenu wrappers
  *   NDS.Dropmenu.create(el)              instance one .nds-dropmenu wrapper
+ *   NDS.Dropmenu.destroy(el)             tear one down before you discard its wrapper
  *   NDS.Dropmenu.from(el)                resolve owning wrapper from any inner el — portal-aware
  *   NDS.Dropmenu.menuOf(dropmenu)        resolve menu el — works nested or portaled to <body>
  * Events (bubble from the .nds-dropmenu wrapper):
@@ -17,6 +18,9 @@
  *   data-select-name · data-select-value · data-required · data-trigger-label · data-value
  * Gotchas:
  *   - Portaled menus leave the DOM ancestry: use from()/menuOf(), not closest().
+ *   - An instance holds a document-level click listener, so dropping its wrapper from
+ *     the DOM (replacing a table row, closing a view) leaks it and the detached subtree.
+ *     Call destroy(el) first. reinit() covers the other side: wrappers you ADD.
  *   - nds:dropmenu:prepare is the lazy-content hook; opened fires after placement.
  *   - data-position-vertical is written by the component (a CSS hook), never set it yourself.
  *   - Menus render in place by default: an ancestor with overflow or its own stacking
@@ -1175,6 +1179,7 @@
         init: initializeDropmenus,
         reinit: initializeDropmenus,
         create: (element) => new NDSDropmenu(element),
+        destroy: (element) => element?.ndsDropmenu?.destroy(),
         // Walks up from `el` to find the .nds-dropmenu wrapper. Falls
         // back to the menu's `_ownerDropmenu` backref when the menu has
         // been portaled to <body> (so closest can't reach the wrapper

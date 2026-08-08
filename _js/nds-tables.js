@@ -82,7 +82,6 @@
             this.sortButtons = Array.from(this.thead?.querySelectorAll('.nds-sort-btn') || []);
 
             this.selectAllCheckbox = this.thead?.querySelector('th input[type="checkbox"].nds-check');
-            this.rowCheckboxes = Array.from(this.tbody?.querySelectorAll(':scope > tr:not(.nds-sub) td input[type="checkbox"].nds-check') || []);
 
             if (!this.thead || !this.tbody) {
                 console.warn('NDS Tables: Invalid table structure found');
@@ -90,7 +89,9 @@
             }
 
             this.isSortable = this.sortButtons.length > 0;
-            this.isSelectable = this.selectAllCheckbox && this.rowCheckboxes.length > 0;
+            // Keyed on the header's select-all, not on today's row count: a table
+            // that starts empty and gains rows later must still wire selection up.
+            this.isSelectable = !!this.selectAllCheckbox;
 
             // AbortController for the change-listeners attached in
             // setupEventListeners — aborted in destroy() so the per-row
@@ -226,6 +227,15 @@
             this.table.dispatchEvent(event);
         }
 
+        // Read live, never cached. Rows are created and deleted at runtime, and the
+        // change listener is delegated on tbody so a new row already fires — but a
+        // construction-time snapshot left it out of every count and out of
+        // selectedRows, so the page saw an empty selection for a row it had just
+        // ticked. reinit() cannot repair that: it skips an initialized table.
+        get rowCheckboxes() {
+            return Array.from(this.tbody?.querySelectorAll(':scope > tr:not(.nds-sub) td input[type="checkbox"].nds-check') || []);
+        }
+
         // Select-all and the header state operate on the FILTERED view only:
         // rows an active filter removed carry data-filtered and are excluded.
         // Pagination-hidden rows (other pages) stay included, matching export.
@@ -275,18 +285,18 @@
         }
 
         dispatchSelectionEvent() {
-            // Resolve each row from its own checkbox. Sorting re-appends the <tr>
-            // nodes (nds-sort.js), so rowCheckboxes' construction-time order stops
-            // matching the live tbody order — indexing tbody rows by position
-            // reported the wrong rows after the first sort.
-            const selected = this.rowCheckboxes
+            // Resolve each row from its own checkbox rather than by tbody position:
+            // sorting re-appends the <tr> nodes (nds-sort.js), and indexing tbody
+            // rows by position reported the wrong rows after the first sort.
+            const checkboxes = this.rowCheckboxes;
+            const selected = checkboxes
                 .map((checkbox, index) => ({ checkbox, index }))
                 .filter(item => item.checkbox.checked);
 
             const event = new CustomEvent('nds:table:selection', {
                 detail: {
                     selectedCount: selected.length,
-                    totalCount: this.rowCheckboxes.length,
+                    totalCount: checkboxes.length,
                     selectedRows: selected.map(item => item.checkbox.closest('tr')),
                     selectedIndexes: selected.map(item => item.index),
                     table: this.table

@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "29/07/2026 - 04:31 PM"
+updated: "1.6.x"
+last_edit: "09/08/2026 - 01:46 AM"
 ---
 
 <!-- Basic Table Section -->
@@ -2111,9 +2111,12 @@ table.addEventListener('nds:table:selection', (e) =&gt; {
     e.detail.selectedCount;    // Number of selected rows
     e.detail.totalCount;       // Total number of selectable rows
     e.detail.selectedRows;     // Array of selected &lt;tr&gt; elements
-    e.detail.selectedIndexes;  // Array of selected row indexes
+    e.detail.selectedIndexes;  // Their positions in the current row order
     e.detail.table;            // The &lt;table&gt; element
 });
+
+// Rows are read live, so rows you add or remove at runtime are counted
+// straight away — no reinit call is needed to keep selection in step.
 
 // Fires when a column is shown or hidden
 table.addEventListener('nds:table:columns', (e) =&gt; {

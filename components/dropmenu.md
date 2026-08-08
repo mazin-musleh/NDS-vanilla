@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "30/07/2026 - 01:45 AM"
+updated: "1.6.x"
+last_edit: "09/08/2026 - 01:46 AM"
 ---
 
 <!-- Standard Dropmenu -->
@@ -1319,6 +1319,12 @@ NDS.Dropmenu.reinit();
 // ── Manual creation ────────────────────────────────────────
 const element = document.querySelector('.nds-dropmenu');
 const instance = NDS.Dropmenu.create(element);
+
+// ── Teardown ───────────────────────────────────────────────
+// Call before the wrapper leaves the DOM — replacing a table row, closing
+// a view. An instance holds a document-level click listener, so dropping
+// its wrapper without this leaks the listener and the detached subtree.
+NDS.Dropmenu.destroy(element);
 
 // ── Static helpers ─────────────────────────────────────────
 // Walk up from any descendant (including portaled menus) to the wrapper
