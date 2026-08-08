@@ -18,7 +18,7 @@ Evaluates the consumer rules file (`_includes/NDS-IQ.md` — installed at a cons
 
 | Mode | What runs | Model(s) | When |
 |---|---|---|---|
-| `scoped` (default) | Scenarios whose `rules:` touch file lines changed since the last-evaluated state — plain diff of the working-tree `_includes/NDS-IQ.md` against the `last-evaluated.md` snapshot (commits are irrelevant: uncommitted edits scope correctly) | sonnet | After any file edit |
+| `scoped` (default) | Scenarios whose `rules:` cover the changed lines. The diff is mechanical — working-tree `_includes/NDS-IQ.md` against the `last-evaluated.md` snapshot (commits are irrelevant: uncommitted edits scope correctly) — but the scenario match is judgment: `rules:` is prose, many scenarios quote no literal, so read each `rules:` line against the changed sentences and include every plausible match (when unsure, include) | sonnet | After any file edit |
 | `full` | Every comprehension scenario | sonnet | Before a version bump |
 | `sweep` | Every comprehension scenario | fable + opus + sonnet in parallel | Pre-release, explicit ask only |
 | `behavior <id>` | One scenario against the micro-fixtures | sonnet (or named) | Explicit ask only |
