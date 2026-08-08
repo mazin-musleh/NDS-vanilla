@@ -105,6 +105,15 @@
   .nds-tab:is([aria-selected="true"], [aria-selected="true"] + .nds-tab) {
     --btn-border: transparent;
   }
+
+  // The strip is fit-content, not a full-width rail, so the panel has no edge to
+  // align to — inline padding would just indent the content off its container.
+  // Same shape as the .nds-tab-content.nds-card branch: zero by default, but the
+  // consumer's public knobs still win. Skipped when the panel is itself a card —
+  // it draws its own surface, so it owns its own gutter.
+  .nds-tab-panel:not(.nds-card) {
+    --_tab-panel-padding-inline: var(--tab-panel-padding-inline, var(--tab-panel-padding, 0));
+  }
 }
 
 // Default text colour for an oncolor strip: the whole thing sits on a dark or
