@@ -7,7 +7,7 @@ Validated against template 1.7.0. Works with 1.7.0 or later.
 This file is the rulebook for NDS work in this project. The anchor in the project's agent instruction file (`CLAUDE.md` / `AGENTS.md`) points here: it declares the two paths and tells every session to read this file before NDS work starts.
 
 - Read this file top to bottom, once per session, before any NDS work. NDS work is any UI, page, component, styling, or asset task — and any task where you are unsure whether NDS applies.
-- This file is universal. It holds no project-specific values. Never edit it. Never copy rules out of it into the agent file: one rule source, one place.
+- This file is universal. It holds no project-specific values. Never edit it. Never copy rules out of it into the agent file: one rule source, one place. The sole exception is the anchor's own fixed text ("Install and upgrade this file"): it restates the few hard stops that must hold before any session has read this file. Add no others.
 - The two paths, `NDS_ROOT` and `NDS_ASSETS`, are declared in the anchor. Read their values there; this file only explains what they mean.
 - Upgrades replace this file whole. See "Install and upgrade this file" at the end.
 
