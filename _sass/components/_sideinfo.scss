@@ -3,7 +3,10 @@
 /* ── Side info ── */
 
 .nds-sideinfo-section {
-    .nds-section-body {
+    // Direct child only: this lays out the aside beside .nds-info-content. As a
+    // descendant it also caught the body of every section wrapper nested inside,
+    // turning their content into flex rows.
+    > .nds-section-body {
         display: flex;
         gap: var(--spacing-4xl);
 

@@ -55,20 +55,24 @@
     }
 }
 
-.nds-section-wrapper:not(:last-child) {
-    margin-bottom: var(--spacing-4xl);
+/* Spacing after a wrapper is carried by whatever follows it, so exactly one
+   margin exists per gap and nothing can double. The two rules cover the only
+   two things that ever follow a wrapper: a breakout body, or another wrapper.
+
+   Written as sibling rules rather than `:not(:last-child)` + margin-bottom
+   because that form relied on the two margins collapsing, which does not
+   happen once the section body is a flex container (any side-info page). */
+.nds-section-wrapper + .nds-section-body {
+    margin-block-start: var(--spacing-4xl);
 
     .nds-content-layout.nds-cardView & {
-        margin-bottom: var(--spacing-2xl);
+        margin-block-start: var(--spacing-2xl);
     }
 }
 
-/* Stacked wrappers: each one is a titled block in its own right, and nothing
-   sits between them — no card edge, no stripe, no section padding. They need
-   more air than the rule above, which also covers a wrapper followed by a
-   breakout body. Scoped to wrapper-meets-wrapper so only stacking is affected.
-   The section is a block, so this collapses with the margin above rather than
-   adding to it: the larger of the two wins. */
+/* Stacked wrappers: each is a titled block in its own right, and nothing sits
+   between them — no card edge, no stripe, no section padding. They need more
+   air than a wrapper followed by its own breakout body. */
 .nds-section-wrapper + .nds-section-wrapper {
     margin-block-start: var(--section-wrapper-gap, var(--spacing-6xl));
 }
