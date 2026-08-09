@@ -276,8 +276,17 @@ hideFeedback: true
                         </tr>
                         <tr id="detail-REQ-2026-118" class="nds-sub" hidden>
                             <td>
-                                <p>Fee breakdown for the commercial registration request.</p>
-                                <table class="nds-table nds-compact">
+                                <div class="nds-toolbar">
+                                    <div class="nds-bar-start">
+                                        <span class="nds-bar-text">Fee breakdown for the commercial registration request.</span>
+                                    </div>
+                                    <div class="nds-bar-end">
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md" data-export="csv" data-export-target="#detail-REQ-2026-118-items">
+                                            <span class="nds-label">Export CSV</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <table id="detail-REQ-2026-118-items" class="nds-table nds-compact" data-export-name="REQ-2026-118-fee-breakdown">
                                     <thead>
                                         <tr>
                                             <th>Line item</th>
@@ -353,8 +362,17 @@ hideFeedback: true
                         </tr>
                         <tr id="detail-REQ-2026-117" class="nds-sub" hidden>
                             <td>
-                                <p>Renewal approved by the labour office. The permit card is ready for collection at the service centre.</p>
-                                <table class="nds-table nds-compact">
+                                <div class="nds-toolbar">
+                                    <div class="nds-bar-start">
+                                        <span class="nds-bar-text">Renewal approved by the labour office. The permit card is ready for collection at the service centre.</span>
+                                    </div>
+                                    <div class="nds-bar-end">
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md" data-export="csv" data-export-target="#detail-REQ-2026-117-timeline">
+                                            <span class="nds-label">Export CSV</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <table id="detail-REQ-2026-117-timeline" class="nds-table nds-compact" data-export-name="REQ-2026-117-timeline">
                                     <thead>
                                         <tr>
                                             <th>Step</th>
