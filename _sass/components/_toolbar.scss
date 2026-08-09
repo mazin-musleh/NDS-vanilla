@@ -87,6 +87,12 @@
     width: 100%;
 }
 
+// Inside a sub-row (a compact detail cell): a smaller bottom gap before the
+// nested content. Still overridable per-bar via the public --toolbar-margin-block.
+.nds-sub :is(.nds-toolbar, .nds-filter-bar) {
+    --_toolbar-margin-block: var(--toolbar-margin-block, 0 var(--spacing-xl));
+}
+
 // A row spans the bar, so whatever follows it starts a new line.
 .nds-bar-row {
     flex: 1 1 100%;
@@ -101,7 +107,7 @@
 :is(.nds-bar-text, .nds-results-count) {
     display: block;   // span-rooted; block so standalone counters sit on their own line
     align-self: end;  // sits on the bar's bottom edge next to taller controls; inert outside flex/grid
-    color: var(--text-secondary-paragraph);
+    color: var(--text-primary-paragraph);
 
     b {
         font-weight: var(--font-weight-medium);
