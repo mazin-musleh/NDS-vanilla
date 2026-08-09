@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "09/08/2026 - 01:46 AM"
+last_edit: "09/08/2026 - 09:52 PM"
 ---
 
 <!-- Basic Table Section -->
@@ -2047,7 +2047,7 @@ last_edit: "09/08/2026 - 01:46 AM"
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Tables</strong> API provides methods to initialize, sort, and manage table instances. All tables auto-initialize on page load. Call <code class="nds-inline-code lang-js">NDS.Tables.reinit()</code> after dynamically adding new tables to the DOM.</p>
+                <p>The <strong>NDS.Tables</strong> API provides methods to initialize, sort, and manage table instances. All tables auto-initialize on page load. Call <code class="nds-inline-code lang-js">NDS.Tables.reinit()</code> after dynamically adding new tables to the DOM. When the <em>rows</em> change rather than the table, call <code class="nds-inline-code lang-js">NDS.Init.refresh(tbody)</code> instead: it updates every component affected by the change, including the filter, the counters, and anything inside the new rows. See <a class="nds-color" href="{{ 'core/refresh' | relative_url }}">Refresh</a>.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">

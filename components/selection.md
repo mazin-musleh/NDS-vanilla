@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.6.0"
-last_edit: "29/07/2026 - 04:31 PM"
+updated: "1.6.x"
+last_edit: "09/08/2026 - 09:52 PM"
 ---
 
 <!-- Selection count on cards -->
@@ -511,6 +511,10 @@ NDS.Selection.init();
 // Recount every widget — call after adding/removing items or
 // setting .checked programmatically (no change event fires then)
 NDS.Selection.reinit();
+NDS.Selection.refresh();   // Same recount, the name NDS.Init.refresh() uses
+
+// Changed the list itself? Prefer NDS.Init.refresh(container): it recounts this
+// widget plus every other component affected by the change. See Refresh under Core.
 
 // Recount one list's widgets by id
 NDS.Selection.recount('ordersList');

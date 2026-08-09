@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 - **Content Switcher** — new component: DGA segmented control built on tabs. See the [Content Switcher doc page](https://mazin-musleh.github.io/NDS-vanilla/components/content-switcher.html).
 - **Get Started guide** — hosted adoption workflow with an agent instruction block, replacing the in-zip integration docs. See the [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html).
-- **NDS.request** — a fetch wrapper with a 15s default timeout, a response-size cap, and errors carrying `.status`, `.url`, and a capped `.body`. See the [Request doc page](https://mazin-musleh.github.io/NDS-vanilla/utilities/request.html).
+- **NDS.request** — a fetch wrapper with a 15s default timeout, a response-size cap, and errors carrying `.status`, `.url`, and a capped `.body`. See the [Request doc page](https://mazin-musleh.github.io/NDS-vanilla/core/request.html).
 - Tables — expandable sub-rows.
 - Pagination — windowed lazy ellipsis picker, URL sync, and a jump-to-page field.
 - Pagination — `data-pagination-no-scroll` opts a nav out of the page-change scroll; `NDS.Pagination.scrollToContent()` runs it manually.

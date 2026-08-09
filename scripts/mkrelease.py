@@ -173,7 +173,7 @@ def stage(version):
     # routes page-shape reads to.
     src = os.path.join(pkg, '_source')
     os.makedirs(src)
-    for d in ('_js', '_sass', 'components', 'utilities', 'layout', 'ui-shell',
+    for d in ('_js', '_sass', 'components', 'utilities', 'layout', 'ui-shell', 'core',
               'templates', 'examples'):
         shutil.copytree(os.path.join(ROOT, d), os.path.join(src, d),
                         ignore=shutil.ignore_patterns('*.bak'))
@@ -237,7 +237,7 @@ def verify(out, version):
                    '_source/components/multiselect.md',
                    '_source/templates/form-template.md',
                    '_source/examples/console-demo.md',
-                   '_source/utilities/copy.md', '_source/layout/section.md',
+                   '_source/utilities/copy.md', '_source/core/request.md', '_source/layout/section.md',
                    '_source/ui-shell/head.md',
                    'NDS-IQ.md', 'README.md', '_site/guides/get-started.html',
                    '_site/guides/integration-quality.html'):

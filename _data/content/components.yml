@@ -1,4 +1,12 @@
 # Component catalog for homepage listing
+# Categories:    Foundations (icons, themes, tokens) · UI · Forms · Data · Add-ons
+#                (optional bundles) · UI Shell (page chrome) · Layout · Core (the
+#                runtime's own API: things you CALL, with no markup of their own) ·
+#                Utilities (small helpers you APPLY to markup)
+#   The category groups the index cards and the side menu. It does not have to match
+#   the page's directory: Cookies is Utilities at /components/, Clock is UI Shell at
+#   /ui-shell/. Recategorising alone changes no URL; moving the file does, so weigh
+#   that against who already links to the old path.
 # Tags (tech):   JS, CSS, API, Data
 # Tags (status): Experimental, New, Beta, Deprecated
 #   Color a status tag via the object form: { name: "Beta", style: "nds-yellow" }
@@ -9,7 +17,7 @@
   use_when: "The dev asks for an accessibility widget, a11y toolbar, font-size controls, high contrast mode, colour-blind filters, or a WCAG preferences panel. Site-wide floating panel, shipped as an optional add-on bundle gated by a site flag."
   icon: '<i class="hgi hgi-stroke hgi-accessibility"></i>'
   category: "Add-ons"
-  tags: ["JS", "CSS", "Add-on"]
+  tags: ["JS", "CSS", "Add-on", "API"]
   url: "/components/accessibility.html"
   js: _js/nds-accessibility.js
   scss: _sass/components/_accessibility.scss
@@ -19,7 +27,7 @@
   use_when: "Expand and collapse panels in place: FAQ lists, collapsible sections, show-hide groups, disclosure widgets. Supports nested groups. To switch between panels in one space instead of expanding, use Tabs or Content Switcher."
   icon: '<i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/accordion.html"
   js: _js/nds-accordion.js
   scss: _sass/components/_accordion.scss
@@ -29,7 +37,7 @@
   use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. For a blocking message over the page use Modal."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "UI"
-  tags: ["CSS"]
+  tags: ["CSS", "API"]
   url: "/components/alert.html"
   js: _js/nds-alert.js
   scss: _sass/components/_alert.scss
@@ -39,7 +47,7 @@
   use_when: "A type-ahead field: search suggestions, live search, combobox, async option loading, city or name lookup. Carries the search-box markup too. To pick several values use Multiselect; for free typed values use Tag Input."
   icon: '<i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>'
   category: "Forms"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/autocomplete.html"
   js: _js/nds-autocomplete.js
   scss: _sass/components/_autocomplete.scss
@@ -67,7 +75,7 @@
   use_when: "The path trail showing where the current page sits: breadcrumbs, hierarchy path, back-navigation trail. On template pages it is set from front matter, not hand-written."
   icon: '<i class="hgi hgi-stroke hgi-arrow-right-double"></i>'
   category: "UI"
-  tags: ["CSS"]
+  tags: ["CSS", "API"]
   url: "/components/breadcrumb.html"
   js: _js/nds-breadcrumb.js
   scss: _sass/components/_breadcrumb.scss
@@ -95,7 +103,7 @@
   use_when: "Data visualisation: bar, line, pie, and donut charts, graphs, plots. SVG-based with no charting library. For one number with a trend line use Metric."
   icon: '<i class="hgi hgi-stroke hgi-chart"></i>'
   category: "Data"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/chart.html"
   js: _js/nds-chart.js
   scss: _sass/components/_chart.scss
@@ -133,7 +141,7 @@
   use_when: "Show source code on the page: syntax-highlighted code blocks, snippets, a copy-to-clipboard code sample."
   icon: '<i class="hgi hgi-stroke hgi-source-code"></i>'
   category: "UI"
-  tags: ["CSS"]
+  tags: ["CSS", "API"]
   url: "/components/code.html"
   js: _js/nds-code.js
   scss: _sass/components/_code.scss
@@ -162,7 +170,7 @@
   use_when: "A cookie consent banner, privacy notice, or GDPR-style acceptance bar."
   icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
   category: "Utilities"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/cookies.html"
   js: _js/nds-cookies.js
   scss: _sass/components/_cookie.scss
@@ -182,7 +190,7 @@
   use_when: "One-click copy to clipboard with a checkmark confirmation and a screen reader announcement. Use for reference numbers, links, codes, and IDs."
   icon: '<i class="hgi hgi-stroke hgi-copy-01"></i>'
   category: "Utilities"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/utilities/copy.html"
   js: _js/nds-copy.js
   scss: _sass/components/_copy.scss
@@ -265,7 +273,7 @@
   use_when: "A vertical list container for sidebar navigation, submenus, quick links, and inline notifications, in compact or expanded layouts. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
   icon: '<i class="hgi hgi-stroke hgi-sidebar-right"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/drawer.html"
   js: _js/nds-drawer.js
   scss: _sass/components/_drawer.scss
@@ -275,7 +283,7 @@
   use_when: "A menu opened from a trigger: dropdown menu, action menu, kebab or overflow menu, context actions, a sort or filter popover. The shared engine behind most NDS menus."
   icon: '<i class="hgi hgi-stroke hgi-more-vertical"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/dropmenu.html"
   js: _js/nds-dropmenu.js
   scss: _sass/components/_dropmenu.scss
@@ -295,7 +303,7 @@
   use_when: "The no-data state: empty table, no search results, zero state, nothing-here placeholder. Adapts its markup to the parent container."
   icon: '<i class="hgi hgi-stroke hgi-desert"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/empty.html"
   js: _js/nds-empty.js
   scss: _sass/components/_empty.scss
@@ -313,7 +321,7 @@
   use_when: "Download what is on the page as a file: export to CSV or Excel, print or save a table as PDF, download a report. Works on any table, card list, or marked-up container, and honours the current selection and pagination."
   icon: '<i class="hgi hgi-stroke hgi-file-export"></i>'
   category: "Data"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/export.html"
   js: _js/nds-export.js
   scss: _sass/components/_export.scss
@@ -341,7 +349,7 @@
   use_when: "Any file input: drag-and-drop upload, attachment field, document upload, image picker, with preview and validation."
   icon: '<i class="hgi hgi-stroke hgi-upload-04"></i>'
   category: "Forms"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/upload.html"
   js: _js/nds-upload.js
   scss: _sass/components/_upload.scss
@@ -370,7 +378,7 @@
   use_when: "A button pinned to a corner of the viewport: FAB, floating add button, back-to-top, or a stack of quick actions."
   icon: '<i class="hgi hgi-stroke hgi-add-circle"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/fab.html"
   js: _js/nds-fab.js
   scss: _sass/components/_fab.scss
@@ -441,7 +449,7 @@
   use_when: "Click an image to open it fullscreen: lightbox, image preview, gallery viewer, with zoom and next and previous navigation."
   icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/ipv.html"
   js: _js/nds-ipv.js
   scss: _sass/components/_ipv.scss
@@ -509,7 +517,7 @@
   use_when: "Locale-aware thousand separators applied to any number already on the page."
   icon: '<i class="hgi hgi-stroke hgi-math"></i>'
   category: "Utilities"
-  tags: ["JS"]
+  tags: ["JS", "API"]
   url: "/utilities/numbers.html"
   js: _js/nds-numbers.js
 
@@ -518,7 +526,7 @@
   use_when: "Segmented one-time code fields with auto-advance: OTP, verification code, PIN entry, two-factor code. Pair with Cooldown Button for the resend action."
   icon: '<i class="hgi hgi-stroke hgi-key-01"></i>'
   category: "Forms"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/otp.html"
   js: _js/nds-otp.js
   scss: _sass/components/_otp.scss
@@ -528,7 +536,7 @@
   use_when: "Choosing a new password: sign-up, change password, password reset. Rule chips update per keystroke and block submit until they pass. Pair with Text Fields for the rest of the form."
   icon: '<i class="hgi hgi-stroke hgi-square-lock-01"></i>'
   category: "Forms"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/password.html"
   js: _js/nds-password.js
   scss: _sass/components/_password.scss
@@ -538,7 +546,7 @@
   use_when: "Page-by-page navigation for long lists and tables, with a per-page picker. Pairs with Tables and Filter."
   icon: '<i class="hgi hgi-stroke hgi-paragraph-bullets-point-01"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/pagination.html"
   js: _js/nds-pagination.js
   scss: _sass/components/_pagination.scss
@@ -548,7 +556,7 @@
   use_when: "A surface that slides in from any edge of the viewport: slide-over, off-canvas panel, side sheet, detail panel, filter panel. For a dialog centred over the page use Modal; for a sidebar navigation list use Drawer."
   icon: '<i class="hgi hgi-stroke hgi-layout-right"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/panels.html"
   js: _js/nds-panels.js
   scss: _sass/components/_panels.scss
@@ -567,7 +575,7 @@
   use_when: "Show completion: progress bar, percentage indicator, upload progress. For labelled step-by-step stages use Stepper."
   icon: '<i class="hgi hgi-stroke hgi-loading-01"></i>'
   category: "UI"
-  tags: ["CSS"]
+  tags: ["CSS", "API"]
   url: "/components/progress.html"
   js: _js/nds-progress.js
   scss: _sass/components/_progress.scss
@@ -604,18 +612,27 @@
   use_when: "Star ratings, both read-only display and user input."
   icon: '<i class="hgi hgi-stroke hgi-star"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/rating.html"
   js: _js/nds-rating.js
   scss: _sass/components/_rating.scss
+
+- title: "Refresh"
+  description: "One call that tells every live component the contents of a container changed"
+  use_when: "You added, removed, or replaced rows, cards, or list items with JavaScript and the filters, counters, or controls around them are now stale. One call updates every affected component instead of calling each one with its own argument. Reach for it on any CRUD screen, after an AJAX list swap, or whenever content arrives after page load. Server-driven lists are deliberately left alone."
+  icon: '<i class="hgi hgi-stroke hgi-refresh"></i>'
+  category: "Core"
+  tags: ["JS", "API"]
+  url: "/core/refresh.html"
+  js: _js/nds-loader.js
 
 - title: "Request"
   description: "Fetch wrapper with a timeout, a response size cap, and errors you can branch on"
   use_when: "Call an API from the browser: a fetch wrapper applying a timeout, a response size cap, and a status check, handing back parsed JSON or raw text with errors you can branch on. Use it anywhere you would reach for fetch. NDS components never fetch for you; wire data through this."
   icon: '<i class="hgi hgi-stroke hgi-connect"></i>'
-  category: "Utilities"
-  tags: ["JS"]
-  url: "/utilities/request.html"
+  category: "Core"
+  tags: ["JS", "API"]
+  url: "/core/request.html"
   js: _js/nds-core.js
 
 - title: "Saudi Cities"
@@ -631,7 +648,7 @@
   use_when: "Wrap content that overflows its container: a scrollable region with faded edges and a sticky show-more button. Auto-detects whether it scrolls horizontally or vertically."
   icon: '<i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/scroll-more.html"
   js: _js/nds-scroll-more.js
   scss: _sass/components/_scroll-more.scss
@@ -650,7 +667,7 @@
   use_when: "Show how many items are selected: a 5-selected-of-48 counter, select-all state, or a bulk-action bar over tables, card grids, and any checkbox list."
   icon: '<i class="hgi hgi-stroke hgi-check-list"></i>'
   category: "Data"
-  tags: ["JS"]
+  tags: ["JS", "API"]
   url: "/components/selection.html"
   js: _js/nds-selection.js
 
@@ -699,7 +716,7 @@
   use_when: "A range input dragged along a track: a single value, or dual thumbs for a min-max span such as a price or date range."
   icon: '<i class="hgi hgi-stroke hgi-arrow-left-right"></i>'
   category: "Forms"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/slider.html"
   js: _js/nds-slider.js
   scss: _sass/components/_slider.scss
@@ -718,7 +735,7 @@
   use_when: "Show progress through a multi-stage flow: step indicator, wizard progress, numbered stages. For a plain percentage bar use Progress."
   icon: '<i class="hgi hgi-stroke hgi-right-to-left-list-number"></i>'
   category: "UI"
-  tags: ["CSS"]
+  tags: ["CSS", "API"]
   url: "/components/stepper.html"
   js: _js/nds-stepper.js
   scss: _sass/components/_stepper.scss
@@ -728,7 +745,7 @@
   use_when: "A carousel or slideshow: touch-enabled image slider, content slides, testimonial rotator."
   icon: '<i class="hgi hgi-stroke hgi-sliders-horizontal"></i>'
   category: "UI"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/swiper.html"
   js: _js/nds-swiper.js
   scss: _sass/components/_swiper.scss

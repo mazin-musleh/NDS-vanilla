@@ -334,6 +334,15 @@
         - label: "Prose"
           url: "/layout/prose"
           href: "/layout/prose.html"
+    - label: "Core"
+      is_group: true
+      children:
+        - label: "Refresh"
+          url: "/core/refresh"
+          href: "/core/refresh.html"
+        - label: "Request"
+          url: "/core/request"
+          href: "/core/request.html"
     - label: "Utilities"
       is_group: true
       children:
@@ -361,9 +370,6 @@
         - label: "Numbers"
           url: "/utilities/numbers"
           href: "/utilities/numbers.html"
-        - label: "Request"
-          url: "/utilities/request"
-          href: "/utilities/request.html"
         - label: "Saudi Cities"
           url: "/utilities/saudi-cities"
           href: "/utilities/saudi-cities.html"

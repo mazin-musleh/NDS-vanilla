@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "29/07/2026 - 04:31 PM"
+last_edit: "09/08/2026 - 09:52 PM"
 ---
 
 <!-- Choosing a mode -->
@@ -1395,6 +1395,10 @@ document.addEventListener('nds:pagination:change', async (e) => {
 // force a recalculation, e.g. after filtering:
 NDS.Pagination.refresh(contentContainer);                     // reset to page 1
 NDS.Pagination.refresh(contentContainer, { keepPage: true }); // stay on current page
+
+// Changed the list itself? Prefer NDS.Init.refresh(container), which updates every
+// component affected by the change and keeps the user's current page. It never touches
+// a manual / data-driven nav. See Refresh under Core.
 
 // Manual / data-driven: when the server's total page count changes, rebuild the
 // nav controls. Keeps the current page by default; pass a page number to jump.

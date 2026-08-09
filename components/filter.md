@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "06/08/2026 - 03:36 AM"
+last_edit: "09/08/2026 - 09:52 PM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -2289,6 +2289,12 @@ const hidden = filter.getHiddenItems();     // Array of hidden card elements
 filter.reset();     // Clear all filters and search, show all items
 filter.clear();     // Clear all inputs without re-showing items
 filter.refresh();   // Re-resolve target container, re-scan items, regenerate auto filters
+
+// Changed the list itself? Prefer NDS.Init.refresh(container): it refreshes this
+// filter plus every other component affected by the change, with no instance lookup.
+// See Refresh under Core. AJAX-mode filters are skipped there, because the
+// server owns the result set and re-filtering its rows in the browser could hide them.
+NDS.Filter.refresh(container);   // Or scope it to filters alone (client-side only)
 
 // ── Manual control ──────────────────────────────────
 filter.applyFilters();  // Trigger filtering logic manually
