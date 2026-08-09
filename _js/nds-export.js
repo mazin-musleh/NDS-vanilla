@@ -96,8 +96,12 @@
             if (!tbody) return [];
             // Paginated tables hide off-page rows via .nds-page-item + [hidden].
             // Export must see every page, so reach for the source list and ignore the hidden flag.
+            // Scope the paged check to this table: a sub-row's nested <table> would
+            // otherwise .closest() into the OUTER tbody's .nds-paged-content and
+            // then look for .nds-page-item rows the sub table never has.
             const paged = tbody.closest('.nds-paged-content');
-            const rows = (paged
+            const isOwnPaged = paged && source.contains(paged);
+            const rows = (isOwnPaged
                 ? Array.from(tbody.querySelectorAll(':scope > tr.nds-page-item'))
                 : Array.from(tbody.rows))
                 .filter(row => !row.classList.contains('nds-sub') && !isRowFiltered(row));
