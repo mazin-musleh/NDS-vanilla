@@ -32,7 +32,7 @@ ANCHORS = ('_source/_js/nds-core.js', '_source/_sass/_mixins.scss',
            '_source/templates/form-template.md',
            '_source/examples/console-demo.md',
            '_source/utilities/copy.md', '_source/layout/section.md',
-           '_source/ui-shell/head.md')
+           '_source/ui-shell/head.md', '_source/core/request.md')
 
 
 def collect_refs(block):
