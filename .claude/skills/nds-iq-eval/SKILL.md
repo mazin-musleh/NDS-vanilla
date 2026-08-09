@@ -31,7 +31,7 @@ Sonnet is the default deliberately: it is the tier the file must not lean on. St
 2. **Run.** Spawn one fresh `general-purpose` agent per model with the harness prompt below. All models of a sweep go in one parallel batch.
 3. **Grade in-session.** Diff each answer against the scenario's rubric. Only divergences become findings. No grader agents — the main session grades.
 4. **Verify before proposing.** For each finding, re-read the exact file sentences involved: is the text genuinely ambiguous or incomplete (CONFIRMED), or did the agent fail despite clear text (agent noise — drop it, or mark PLAUSIBLE if unsure)? A finding that survives gets a minimal proposed fix that extends an existing principle — never a new rule per incident.
-5. **Report.** In-conversation only (no report files): verdict first (n/N scenarios clean per model), then numbered findings, each with the divergence, the file sentence, the proposed fix, and numbered reply options (apply / skip / discuss), recommended action always in the list.
+5. **Report.** In-conversation by default: verdict first (n/N scenarios clean per model), stamped with each runner's self-reported model version — `sonnet` is an alias that serves different versions on different machines and dates, so the alias alone makes results incomparable — then numbered findings, each with the divergence, the file sentence, the proposed fix, and numbered reply options (apply / skip / discuss), recommended action always in the list. On explicit ask ("save the report"), also write it to this skill's `reports/eval-<YYYY-MM-DD>-<mode>-<model>.md`, following the structure of the reports already there (mode, model version, file state, verdict, scoreboard, findings, resolution).
 6. **Evolve (explicit `evolve` only).** Add session findings as scenarios with rubrics and provenance, update rubrics the file edits invalidated, dedupe, and overwrite `last-evaluated.md` with the file state this run evaluated. Never write skill files without the explicit ask.
 
 ## Harness prompt (comprehension)
@@ -80,7 +80,8 @@ not silently improvise.
 
 {SCENARIOS}
 
-Return your answers as your final message, numbered, nothing else.
+Return, as your final message: first line = your exact model name and model
+ID from your environment info, then your answers, numbered, nothing else.
 ```
 
 ## Behavior mode (micro-fixtures)
@@ -97,4 +98,4 @@ The fixtures are deliberately skeletal — stubs with just enough structure for 
 
 ## Scenario file
 
-`scenarios.md` — one `## S<n> <slug>` per scenario: `mode`, `rules` (file sentences under test), `provenance`, `setup`, `prompt`, `rubric` (MUST / MUST NOT / cite), optional `artifacts` (behavior mode), optional `baseline` (last known result per model). Rubrics never enter runner prompts.
+`scenarios.md` — one `## S<n> <slug>` per scenario: `mode`, `rules` (file sentences under test), `provenance`, `setup`, `prompt`, `rubric` (MUST / MUST NOT / cite), optional `artifacts` (behavior mode), optional `baseline` (last known result per model, with the resolved model version when known — the alias alone is ambiguous across machines and dates). Rubrics never enter runner prompts.
