@@ -96,7 +96,8 @@
         {
             // Deferred: rule chips are server-rendered at data-status="neutral"
             // (matches empty state — no CLS), and validity is only consulted at
-            // submit. Init runs on the local idle pass, well before either.
+            // submit. Ships in the delegated bundle — init's check() recomputes
+            // from the current value, so keystrokes in the pre-bundle gap recover.
             name: 'Password',
             selector: '.nds-form-container.nds-password',
             init: () => NDS.Password?.init?.(),

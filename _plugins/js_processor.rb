@@ -65,7 +65,7 @@ class JSProcessor
       # otp (auto-advance/paste is first-interaction-critical on OTP/2FA pages).
       # They stay so they wire on the local idle pass, not after an injected
       # bundle. Reveal is gated on this bundle, so it's kept lean.
-      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-forms.js', 'nds-otp.js', 'nds-password.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-taginput.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
+      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-forms.js', 'nds-otp.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-taginput.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
       # Delegated — deferred components verified safe to load late. Injected by
       # nds-loader.js AFTER the critical pass (never a render-blocking defer tag), so
       # its download never gates the reveal. Components migrate in here over time
@@ -73,7 +73,7 @@ class JSProcessor
       # drop `critical: true` from its loader registry entry (location is owned here, not the
       # registry — the build generates the namespace→bundle map from these lists).
       # nds-sort.js leads the list: it's the shared sort engine for filter/tables.
-      'nds-delegated.min.js' => ['nds-sort.js', 'nds-filter.js', 'nds-pagination.js', 'nds-swiper.js', 'nds-stepper.js', 'nds-breadcrumb.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-expandable.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-slider.js', 'nds-tables.js', 'nds-selection.js', 'nds-panels.js', 'nds-fab.js'],
+      'nds-delegated.min.js' => ['nds-sort.js', 'nds-filter.js', 'nds-pagination.js', 'nds-swiper.js', 'nds-stepper.js', 'nds-breadcrumb.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-expandable.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-slider.js', 'nds-tables.js', 'nds-selection.js', 'nds-panels.js', 'nds-fab.js', 'nds-password.js'],
       # Extras — heavy, page-specific, zero-inbound leaf components. Injected by
       # nds-loader.js only when the page contains one of them (selector-gated), so
       # plain pages never download/parse them. May later be split into smaller

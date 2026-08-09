@@ -6,19 +6,37 @@
  *   NDS.Password.create(el)           wire one — pass the .nds-form-container
  *   NDS.Password.destroy(el)          tear one down
  *   NDS.Password.check(el)            recompute rules/match now
- *   instance.getStrength()            → {score, allPass, rules:{name:bool}}
+ *   NDS.Password.addRule(name, test)  register a custom rule — test(value, ctx)
+ *                                     returns bool (ctx.minLength available); chips
+ *                                     with that data-rule name then count like the
+ *                                     built-ins and gate submit
+ *   instance.getStrength()            → last computed {strength, allPass, rules:{name:bool}}
+ *                                     (no recompute, no event — check() forces one)
  * Events (bubble from the .nds-form-container):
- *   nds:password:change   detail {value, strength, allPass, rules} — every input event
+ *   nds:password:change   detail {strength, allPass, rules} — every input event. The
+ *                         raw value is deliberately absent; a listener that needs it
+ *                         reads the container's input.
  * Hooks:
  *   .nds-password                on .nds-form-container (opt-in marker)
- *   data-password-min-length     length rule threshold (default 8)
+ *   minlength (on the input)     length rule threshold — the native HTML attribute
+ *                                (default 8). The browser enforces it natively too,
+ *                                so length gates even with this JS absent.
  *   data-password-match          selector for the source input (confirm mode)
  *   [data-rule="length|upper|lower|digit|special"]   on feedback chips inside the
  *                                container's feedback area — data-status is toggled
  *                                neutral/success/error per keystroke
+ *   data-rule-pattern            on a chip: regex the value must fully satisfy — makes
+ *                                any data-rule name a rule with no JS. Wins over a
+ *                                built-in name; an invalid regex warns and the chip
+ *                                goes inert.
+ *   data-password-strength       stamped on the container per check (count of passing
+ *                                rules) — the CSS hook for a strength meter
  * Gotchas:
  *   - strength = the count of PASSING rule chips authored in the markup, so it ranges
  *     0..N. Ship all five chips for a 0..5 score; ship two for 0..2.
+ *   - A chip whose data-rule is neither built-in, patterned, nor addRule-registered is
+ *     inert: stays neutral, not counted, no gate. Rules resolve per keystroke, so a
+ *     late addRule() activates its chips on the next input — no rewire needed.
  *   - Match mode resolves data-password-match at init. A source input that hydrates
  *     later needs a NDS.Password.reinit() (or a targeted create() on the confirm
  *     container).
@@ -28,9 +46,9 @@
 (function () {
     'use strict';
 
-    // Rule tests. length reads container.dataset.passwordMinLength (default 8).
-    // Closed set — the five industry defaults. Consumers with a custom rule ship
-    // their own chip and inspect nds:password:change.
+    // Rule tests. length reads the input's native minlength attr (default 8).
+    // The five industry defaults; consumers extend via addRule() or a chip's
+    // data-rule-pattern.
     var RULES = {
         length:  function (v, ctx) { return v.length >= ctx.minLength; },
         upper:   function (v) { return /[A-Z]/.test(v); },
@@ -39,11 +57,30 @@
         special: function (v) { return /[^A-Za-z0-9]/.test(v); }
     };
 
+    // A chip's test: data-rule-pattern (compiled once, cached on the chip) wins,
+    // else the RULES entry (built-in or addRule-registered). null = inert chip.
+    function resolveTest(chip) {
+        var pattern = chip.getAttribute('data-rule-pattern');
+        if (pattern) {
+            if (chip._ndsRuleTest === undefined) {
+                try {
+                    var re = new RegExp(pattern);
+                    chip._ndsRuleTest = function (v) { return re.test(v); };
+                } catch (e) {
+                    console.warn('NDS Password: invalid data-rule-pattern', chip);
+                    chip._ndsRuleTest = null;
+                }
+            }
+            return chip._ndsRuleTest;
+        }
+        return RULES[chip.getAttribute('data-rule')] || null;
+    }
+
     var STRINGS = {
         en: { weak: 'This password does not meet the rules', mismatch: 'The two passwords do not match' },
         ar: { weak: 'كلمة المرور لا تستوفي الشروط', mismatch: 'كلمتا المرور غير متطابقتين' }
     };
-    var S = function () { return STRINGS[NDS.langKey] || STRINGS.en; };
+    var S = function () { return STRINGS[NDS.langKey]; };
 
     class NDSPassword {
         constructor(container) {
@@ -60,9 +97,12 @@
                 return;
             }
 
-            this.minLength = parseInt(container.getAttribute('data-password-min-length'), 10) || 8;
-            this.ruleChips = Array.from(container.querySelectorAll('[data-rule]'))
-                .filter(function (chip) { return RULES[chip.getAttribute('data-rule')]; });
+            // Native attribute — the browser enforces it too, so the length rule
+            // still gates before this JS loads (or with it deleted).
+            this.minLength = parseInt(this.input.getAttribute('minlength'), 10) || 8;
+            // Keep every authored chip — tests resolve per check, so a rule
+            // registered after init (addRule) activates its chips on the next input.
+            this.ruleChips = Array.from(container.querySelectorAll('[data-rule]'));
 
             this.matchSelector = container.getAttribute('data-password-match') || '';
             this.matchSource = this.matchSelector ? document.querySelector(this.matchSelector) : null;
@@ -107,43 +147,54 @@
         check() {
             var value = this.input.value;
             var passing = 0;
+            var active = 0;
             var results = {};
             var ctx = { minLength: this.minLength };
 
             this.ruleChips.forEach(function (chip) {
-                var name = chip.getAttribute('data-rule');
-                var pass = RULES[name](value, ctx);
-                results[name] = pass;
+                var test = resolveTest(chip);
+                if (!test) return; // inert — stays neutral, never counted
+                var pass = test(value, ctx);
+                active += 1;
+                results[chip.getAttribute('data-rule')] = pass;
                 // No paint until the user has typed something — a rule chip
                 // reads as neutral guidance while the field is empty.
                 chip.dataset.status = !value ? 'neutral' : (pass ? 'success' : 'error');
                 if (pass) passing += 1;
             });
 
-            var allPass = this.ruleChips.length === 0 || passing === this.ruleChips.length;
+            var allPass = active === 0 || passing === active;
+            if (active) this.container.setAttribute('data-password-strength', passing);
 
             // customValidity precedence: rules first (specific, per-field), then match.
             // Match error only fires when BOTH fields have text — an empty confirm
             // must not show mismatch. Rules message wins if both are set.
             var msg = '';
-            if (this.ruleChips.length && !allPass && value) {
+            if (!allPass && value) {
                 msg = S().weak;
             } else if (this.matchSource && value && this.matchSource.value && this.matchSource.value !== value) {
                 msg = S().mismatch;
             }
             this.input.setCustomValidity(msg);
 
+            // No raw value in the detail — a listener that needs it reads the input.
+            this.last = { strength: passing, allPass: allPass, rules: results };
             this.container.dispatchEvent(new CustomEvent('nds:password:change', {
-                detail: { value: value, strength: passing, allPass: allPass, rules: results },
+                detail: this.last,
                 bubbles: true
             }));
-            return { score: passing, allPass: allPass, rules: results };
+            return this.last;
         }
 
-        getStrength() { return this.check(); }
+        getStrength() { return this.last; }
 
         destroy() {
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
+            // Lift the submit gate and repaint chips — a stale customValidity
+            // has no owner left to clear it and would block the form forever.
+            this.input.setCustomValidity('');
+            this.ruleChips.forEach(function (chip) { chip.dataset.status = 'neutral'; });
+            this.container.removeAttribute('data-password-strength');
             this.container.removeAttribute('data-nds-password-initialized');
             this.container.ndsPassword = null;
         }
@@ -166,6 +217,7 @@
             return inst.valid ? inst : null;
         },
         destroy: function (element) { if (element.ndsPassword) element.ndsPassword.destroy(); },
-        check: function (element) { return element.ndsPassword ? element.ndsPassword.check() : null; }
+        check: function (element) { return element.ndsPassword ? element.ndsPassword.check() : null; },
+        addRule: function (name, test) { RULES[name] = test; }
     };
 })();

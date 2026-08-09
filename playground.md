@@ -170,7 +170,7 @@ direction: rtl
 
       <form class="nds-form" data-ajax id="pg-password-form">
         <!-- New password: 5 strength chips, min length 10 -->
-        <div class="nds-form-container nds-password" data-required data-password-min-length="10">
+        <div class="nds-form-container nds-password" data-required>
           <div class="nds-form-header">
             <label for="pg-new-password"><span class="nds-label">New password</span></label>
           </div>
@@ -180,7 +180,7 @@ direction: rtl
                 <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
               </button>
             </div>
-            <input type="password" id="pg-new-password" name="new-password" class="nds-input" autocomplete="new-password" required>
+            <input type="password" id="pg-new-password" name="new-password" class="nds-input" autocomplete="new-password" minlength="10" required>
             <div class="nds-form-action">
               <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
                 <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -207,6 +207,11 @@ direction: rtl
             <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
               <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
               <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
+            </span>
+            <!-- Custom rule via data-rule-pattern — no JS behind this one -->
+            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="nospace" data-rule-pattern="^\S+$">
+              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+              <span class="nds-feedback-message">No spaces</span>
             </span>
           </div>
         </div>
