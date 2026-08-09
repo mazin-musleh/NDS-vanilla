@@ -73,7 +73,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: recognize the ask as the named parallel-files exception; propose it knowingly — second assets folder, NDS-on-NDS collision costs named ("which NDS?" on greps/copy sources/bugs); rule #7 approval before file #1. (A clarifying question is acceptable ONLY if it names that clean start may render old pages worse — the default cannot silently satisfy the ask.)
   - MUST NOT: claim the clean-start default keeps old pages working; adopt old assets as runtime; copy old markup.
-  - cite: "may render worse on it" / "picks parallel files, knowingly, with a second assets folder"
+  - cite: "The one exception is when the dev explicitly needs the old UI serving while the port runs — parallel files then, with a second assets folder, taken knowingly for those costs" / "may render worse on it"
 - baseline: v3 — fable PASS, opus PASS; sonnet SOFT-MISS pre-fix, PASS after "may render worse on it" landed (scoped run 2026-08-03). Scoped 2026-08-03 (v4 greenfield edits): sonnet PASS via the clarifying-question route (render-worse + second assets folder both named).
 
 ## S6 form-region-swap
@@ -217,7 +217,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: copy the vertical card verbatim from the code block; add `nds-rowView` from the reference table to the card root; change nothing else structurally.
   - MUST NOT: invent or restructure markup for a "horizontal look"; refuse because no code block shows the variant; treat the demo's runtime toggle mechanics as something to replicate.
-  - cite: "Copy canonical markup verbatim. Never invent it."
+  - cite: "modifier-class composition: adding a class documented in the component's Modifier Classes reference table onto the copied base markup — the table exists for this" / "Copy canonical markup verbatim. Never invent it."
 - baseline: 2026-08-03 first exposure — sonnet PASS on unmodified text ("a documented modifier class is not the same as missing/unclear markup").
 
 ## S17 banner-first-install
