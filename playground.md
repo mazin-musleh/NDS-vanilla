@@ -158,3 +158,100 @@ direction: rtl
     </div>
   </div>
 </section>
+
+<!-- NDS Password: strength rules + confirm-match. LTR for readability while testing. -->
+<section class="nds-content-section" dir="ltr" lang="en">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Password component</h2>
+      <p class="nds-section-description">Empty submit blocks (required). Weak password blocks (rules). Mismatched confirm blocks (match). Live status paints on the chips.</p>
+    </div>
+    <div class="nds-section-body">
+
+      <form class="nds-form" data-ajax id="pg-password-form">
+        <!-- New password: 5 strength chips, min length 10 -->
+        <div class="nds-form-container nds-password" data-required data-password-min-length="10">
+          <div class="nds-form-header">
+            <label for="pg-new-password"><span class="nds-label">New password</span></label>
+          </div>
+          <div class="nds-form-control">
+            <div class="nds-form-action">
+              <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+              </button>
+            </div>
+            <input type="password" id="pg-new-password" name="new-password" class="nds-input" autocomplete="new-password" required>
+            <div class="nds-form-action">
+              <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="nds-form-footer" data-feedback-target>
+            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+              <span class="nds-feedback-message">At least 10 characters</span>
+            </span>
+            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
+              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+              <span class="nds-feedback-message">One capital letter (A-Z)</span>
+            </span>
+            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
+              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+              <span class="nds-feedback-message">One small letter (a-z)</span>
+            </span>
+            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
+              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+              <span class="nds-feedback-message">One number (0-9)</span>
+            </span>
+            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
+              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+              <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Retype: match mode, points at #pg-new-password -->
+        <div class="nds-form-container nds-password" data-required data-password-match="#pg-new-password">
+          <div class="nds-form-header">
+            <label for="pg-retype-password"><span class="nds-label">Retype new password</span></label>
+          </div>
+          <div class="nds-form-control">
+            <div class="nds-form-action">
+              <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+              </button>
+            </div>
+            <input type="password" id="pg-retype-password" name="retype-password" class="nds-input" autocomplete="new-password" required>
+            <div class="nds-form-action">
+              <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
+                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="nds-form-action">
+          <button type="submit" class="nds-btn nds-primary"><span class="nds-label">Submit</span></button>
+        </div>
+      </form>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var form = document.getElementById('pg-password-form');
+          form.addEventListener('nds:formValid', function () {
+            NDS.Alert.create({
+              variant: 'success',
+              title: 'Password accepted',
+              description: 'All rules passed and both fields match.',
+              display: 'toast',
+              position: 'top',
+              duration: 3000
+            });
+          });
+        });
+      </script>
+
+    </div>
+  </div>
+</section>

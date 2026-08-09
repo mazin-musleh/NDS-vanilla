@@ -94,6 +94,14 @@
             init: () => NDS.OTP?.init?.(),
         },
         {
+            // Deferred: rule chips are server-rendered at data-status="neutral"
+            // (matches empty state — no CLS), and validity is only consulted at
+            // submit. Init runs on the local idle pass, well before either.
+            name: 'Password',
+            selector: '.nds-form-container.nds-password',
+            init: () => NDS.Password?.init?.(),
+        },
+        {
             name: 'Tabs',
             selector: '.nds-tabs',
             init: () => NDS.Tabs?.init?.(),
