@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.7.x"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "08/08/2026 - 11:36 PM"
+last_edit: "09/08/2026 - 09:46 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -89,7 +89,7 @@ sidemenu_mode: false
                 <ol>
                     <li><strong>Download</strong> <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from the <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a> page.</li>
                     <li><strong>Extract</strong> the archive into a gitignored <code class="nds-inline-code lang-html">.nds/</code> folder at the project root. This is the canonical home: the instruction file records the path and is committed, so a project-relative folder works on every machine; a custom location (a sibling directory, a shared extract) works only where it exists and is the dev's explicit exception.</li>
-                    <li><strong>Record</strong> the template folder's path. The archive holds one top-level <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}</code> folder; that folder, not the folder you extracted into, becomes your <code class="nds-inline-code lang-html">NDS_ROOT</code>.</li>
+                    <li><strong>Record</strong> the path. The archive holds one top-level <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}</code> folder. Rename it to <code class="nds-inline-code lang-html">nds-vanilla-template</code>, dropping the version, so your <code class="nds-inline-code lang-html">NDS_ROOT</code> is <code class="nds-inline-code lang-html">.nds/nds-vanilla-template/</code>. The path is right when <code class="nds-inline-code lang-html">NDS_ROOT/_site/</code> sits directly inside it. Dropping the version is what lets every later upgrade replace the folder's contents without changing your anchor.</li>
                 </ol>
                 <h3 id="structure">Template Structure</h3>
                 <div class="nds-code">
@@ -113,7 +113,7 @@ LICENSE         - License terms
                     <li><strong>Runtime assets</strong>: static CSS, JavaScript, fonts, and icons at <code class="nds-inline-code lang-html">_site/assets/</code> to be copied into your project.</li>
                 </ul>
 
-                <h2 id="rules">2. Setup</h2>
+                <h2 id="setup">2. Setup</h2>
                 <p>One prompt runs the whole setup: the agent installs NDS IQ, asks for paths, then hands back the first plan for your review.</p>
 
                 <h3 id="instructions-block">Setup Prompt</h3>
@@ -125,7 +125,12 @@ LICENSE         - License terms
                         </button>
                     </div>
                     <code class="lang-prompt">
-Download this file raw (curl or equivalent, never a web-fetch tool, which re-renders what it fetches) and save it as `NDS-IQ.md` at this project's root. Verify the saved copy's first line starts with `# NDS IQ` and names an `instructions v` revision, then read it top to bottom and follow its "Install and upgrade this file" section; its setup flow starts from whatever state this project is in (existing UI, fresh build, or prior NDS work): https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md
+Download this file raw to `NDS-IQ.md` at this project's root, with curl or an equivalent HTTP client. Never a web-fetch tool: those re-render what they fetch and save a corrupt copy.
+https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md
+
+The saved file must start with `# NDS IQ`. If it does not, the fetch mangled it: delete it and retry with a real client.
+
+Then read it top to bottom and follow it. Everything after the download is the file's job.
                     </code>
                 </div>
                 <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
@@ -174,6 +179,7 @@ Download this file raw (curl or equivalent, never a web-fetch tool, which re-ren
                 <p>One-time only: future sessions load the agent's instruction file automatically at start, and its anchor points them at the rulebook.</p>
                 <h3 id="plan-review">Plan Review</h3>
                 <p>Once paths are set, the agent inventories this project and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> at the project root as a markdown table (page, route, legacy libraries, NDS target, status). It stops there for your review; nothing gets built until you approve.</p>
+                <p>The review raises project-wide decisions only: the asset URL prefix, the porting strategy for an existing UI, what to do with any prior NDS work, direction and locale, and your build pacing. Page-level questions wait for that page's own build session, so a large plan does not front-load them all on you.</p>
                 <p>The plan carries state between AI sessions, since they do not share chat memory. Every session after the first reads and updates it.</p>
                 <h3 id="manual-install">Manual Install (optional)</h3>
                 <p>To install by hand, or to read what the agent installs, the full rulebook is below. Save it as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at your project root, then add the anchor — its exact text is in the file's own <em>Install and upgrade this file</em> section — to your agent instruction file with your two paths filled in. <strong>Copy the file exactly as written, all of it.</strong> A paraphrase reads correct but silently drops rules the build depends on later.</p>
@@ -213,7 +219,7 @@ Download this file raw (curl or equivalent, never a web-fetch tool, which re-ren
                             <li>Stop for your go.</li>
                         </ol>
                     </li>
-                    <li><strong>One continuous run</strong>: the agent answers its own questions from the guide's defaults (existing shape, data scale, hero rules), verifies each page in the browser as it builds, and delivers a single report at the end. Every decision made by default and every check it could not run is listed there, not buried.</li>
+                    <li><strong>One continuous run</strong>: the agent answers its own questions from NDS IQ's defaults (existing shape, data scale, hero rules), verifies each page in the browser as it builds, and delivers a single report at the end. Every decision made by default and every check it could not run is listed there, not buried.</li>
                 </ul>
                 <p><strong>Whichever pace, hold it to these:</strong></p>
                 <ul>
@@ -256,8 +262,8 @@ On mobile the dashboard header wraps to two lines and the search box overflows t
                 <h3 id="verification">Browser Verification</h3>
                 <p>Before any page is claimed built, the agent verifies it in the browser in two passes:</p>
                 <ul>
-                    <li><strong>Behavioral</strong>: load the page, scan the console for <code class="nds-inline-code lang-html">NDS</code>-prefixed warnings, then run <code class="nds-inline-code lang-js">NDS.Init.audit()</code> for silent failures (unregistered icons, unclaimed filter/pagination containers).</li>
-                    <li><strong>Visual</strong>: check at desktop and mobile widths for unstyled flashes on load, missing gaps, mis-nested wrappers, dark mode on the content, and the page reading as one design.</li>
+                    <li><strong>Behavioral</strong>: load the page, scan the console for <code class="nds-inline-code lang-html">NDS</code>-prefixed warnings, then run <code class="nds-inline-code lang-js">NDS.Init.audit()</code> for silent failures (unregistered icons, unclaimed filter/pagination containers). The agent also exercises what the page wires: submit, filter, advance a step. Required fields get tested empty one component type at a time, since each type validates through different code.</li>
+                    <li><strong>Visual</strong>: check at desktop and mobile widths for unstyled flashes on load, missing gaps, mis-nested wrappers, dark mode on the content, and the page reading as one design. A page built from a template or example is compared side by side against that page's built copy in the template folder, which serves as the visual spec.</li>
                 </ul>
                 <p>The agent won't claim a page verified from reading its code alone.</p>
                 <div class="nds-alert nds-card nds-inline" data-status="neutral" role="alert">
@@ -294,7 +300,7 @@ Continue: read NDS-PLAN.md and propose the next step.
                 <p>Review it and send it to <a class="nds-color" href="https://github.com/mazin-musleh/NDS-vanilla/issues">GitHub Issues</a>, or privately to the maintainer. Every report feeds the next revision of the system and these instructions.</p>
 
                 <h2 id="upgrade">4. Upgrade</h2>
-                <p>When a new version of NDS is published, paste the prompt below. The agent handles the whole upgrade: downloads the release into <code class="nds-inline-code lang-html">NDS_ROOT</code>, then runs the upgrade workflow from NDS IQ (version compare, runtime replace, changelog sweep) and reports every change.</p>
+                <p>When a new version of NDS is published, paste the prompt below. The agent handles the whole upgrade: replaces the contents of your template folder, so <code class="nds-inline-code lang-html">NDS_ROOT</code> keeps pointing at the same path, then runs the upgrade workflow from NDS IQ (version compare, runtime replace, changelog sweep) and reports every change.</p>
                 <p>The last step updates the rules themselves. If a newer revision of <code class="nds-inline-code lang-html">NDS-IQ.md</code> is published, the agent replaces your copy whole: no merging, no partial patches. Your anchor is never touched, so the two paths survive every update.</p>
 
                 <div class="nds-code">
@@ -304,7 +310,7 @@ Continue: read NDS-PLAN.md and propose the next step.
                         </button>
                     </div>
                     <code class="lang-prompt">
-Upgrade NDS to the latest release.
+Upgrade the NDS template to the latest release.
                     </code>
                 </div>
                 <h3 id="update-rules">Rules Update</h3>
@@ -316,7 +322,7 @@ Upgrade NDS to the latest release.
                         </button>
                     </div>
                     <code class="lang-prompt">
-Update NDS IQ to the latest revision.
+Update the NDS IQ rules file to the latest revision.
                     </code>
                 </div>
                 <p>The agent compares versions and replaces the file whole, only when a newer revision exists. One guard applies: if your runtime is behind the latest release, the agent proposes the full upgrade instead, and the rules ride it.</p>

@@ -3,7 +3,7 @@ layout: page
 title: NDS IQ
 since: "1.6.x"
 updated: "1.7.x"
-last_edit: "08/08/2026 - 11:36 PM"
+last_edit: "09/08/2026 - 10:08 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -54,6 +54,19 @@ sidemenu_mode: false
                 <p>Revisions are driven by <strong>evidence, not speculation</strong>. NDS runs real adoption and migration projects with AI agents, and each failure an agent hits becomes a candidate rule. A finding earns its sentence only after verification against the source: reported gaps that turn out to be agent noise are dropped, not codified.</p>
                 <h3 id="tested">Tested per Revision</h3>
                 <p>The rules must not depend on a strong model to be read correctly. Before a revision publishes, a scenario suite replays real failure cases against fresh agents on the weakest model tier the rules serve. A new rule goes through a <strong>fail, fix, pass loop</strong>: the failure is reproduced against the old text, the rule lands, and the same scenario must pass against the new text. Passing scenarios stay in the suite as regression tripwires for every later edit.</p>
+                <div class="nds-alert nds-card nds-color" data-status="success" role="alert">
+                    <span class="nds-feedback nds-alert-icon nds-outline">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
+                    </span>
+                    <div class="nds-alert-content">
+                        <div class="nds-alert-text">
+                            <span class="nds-alert-title">Validated on the weakest tier</span>
+                            <p class="nds-alert-description">Every revision is tested against Claude Sonnet, the lowest model tier these rules support. A rule that only a strong model reads correctly counts as a bug in the file, not a limit of the agent. Before each release the same suite runs across three tiers. Your agent does not need to be the strongest one to get the same result.</p>
+                        </div>
+                    </div>
+                </div>
 
                 <h2 id="governs">What It Governs</h2>
                 <p>A map of the system. The letter of every rule lives in the Get Started guide.</p>
