@@ -523,6 +523,16 @@
   js: _js/nds-otp.js
   scss: _sass/components/_otp.scss
 
+- title: "Password"
+  description: "Password field with live strength rules and confirm-match checking"
+  use_when: "Choosing a new password: sign-up, change password, password reset. Rule chips update per keystroke and block submit until they pass. Pair with Text Fields for the rest of the form."
+  icon: '<i class="hgi hgi-stroke hgi-square-lock-01"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/password.html"
+  js: _js/nds-password.js
+  scss: _sass/components/_password.scss
+
 - title: "Pagination"
   description: "Page-by-page navigation for large data sets"
   use_when: "Page-by-page navigation for long lists and tables, with a per-page picker. Pairs with Tables and Filter."

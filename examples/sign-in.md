@@ -111,16 +111,15 @@ breadcrumb: [["Examples", "/examples"]]
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                  <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="signin-password" name="password" class="nds-input" placeholder="Enter your password"
                     autocomplete="current-password" required>
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                     </button>
                   </div>
                 </div>
@@ -352,96 +351,107 @@ breadcrumb: [["Examples", "/examples"]]
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                  <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="current-password" name="current-password" class="nds-input"
                     autocomplete="current-password" required>
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
+                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                    </button>
                   </div>
                 </div>
               </div>
 
-              <!-- New password, with the rules as permanent feedback -->
-              <div class="nds-form-container" data-required>
+              <!-- New password: nds-password reads the rule chips, minlength feeds the length rule -->
+              <div class="nds-form-container nds-password" data-required>
                 <div class="nds-form-header">
                   <label for="new-password">
                     <span class="nds-label">New password</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                  <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="new-password" name="new-password" class="nds-input" autocomplete="new-password"
-                    required>
+                    minlength="10" required aria-describedby="new-password-rules">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
+                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                    </button>
                   </div>
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
-                  <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
+                  <div class="nds-password-rules" id="new-password-rules">
+                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+                      <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                      </span>
+                      <span class="nds-feedback-message">At least 10 characters</span>
                     </span>
-                    <span class="nds-feedback-message">At least 10 characters</span>
-                  </span>
-                  <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
+                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
+                      <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                      </span>
+                      <span class="nds-feedback-message">One capital letter (A-Z)</span>
                     </span>
-                    <span class="nds-feedback-message">One capital letter (A-Z)</span>
-                  </span>
-                  <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
+                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
+                      <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                      </span>
+                      <span class="nds-feedback-message">One small letter (a-z)</span>
                     </span>
-                    <span class="nds-feedback-message">One small letter (a-z)</span>
-                  </span>
-                  <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
+                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
+                      <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                      </span>
+                      <span class="nds-feedback-message">One number (0-9)</span>
                     </span>
-                    <span class="nds-feedback-message">One number (0-9)</span>
-                  </span>
-                  <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
+                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
+                      <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                      </span>
+                      <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
                     </span>
-                    <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
-                  </span>
+                  </div>
+                  <span class="nds-password-status" role="status" aria-live="polite"></span>
                 </div>
               </div>
 
-              <!-- Retype -->
-              <div class="nds-form-container" data-required>
+              <!-- Retype: data-password-match points at the field above -->
+              <div class="nds-form-container nds-password" data-required data-password-match="#new-password">
                 <div class="nds-form-header">
                   <label for="retype-password">
                     <span class="nds-label">Retype new password</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                  <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                   <input type="password" id="retype-password" name="retype-password" class="nds-input"
-                    autocomplete="new-password" required>
+                    autocomplete="new-password" required aria-describedby="retype-password-rules">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
+                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                    </button>
                   </div>
+                </div>
+                <div class="nds-form-footer" data-feedback-target>
+                  <div class="nds-password-rules" id="retype-password-rules">
+                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="match">
+                      <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                      </span>
+                      <span class="nds-feedback-message">Matches the new password</span>
+                    </span>
+                  </div>
+                  <span class="nds-password-status" role="status" aria-live="polite"></span>
                 </div>
               </div>
             </div>
@@ -575,8 +585,6 @@ breadcrumb: [["Examples", "/examples"]]
     var otpForm = document.getElementById('otp-form');
     var otpGroup = otpForm.querySelector('.nds-otp-group');
     var passwordForm = document.getElementById('password-form');
-    var newPassword = document.getElementById('new-password');
-    var retypePassword = document.getElementById('retype-password');
     var mobileForm = document.getElementById('mobile-form');
     var captchaCode = '';
     var expectedCode = '';
@@ -731,42 +739,9 @@ breadcrumb: [["Examples", "/examples"]]
 
     // --- Change password ----------------------------------------------------
 
-    var rules = [
-      { name: 'length', test: function (v) { return v.length >= 10; } },
-      { name: 'upper', test: function (v) { return /[A-Z]/.test(v); } },
-      { name: 'lower', test: function (v) { return /[a-z]/.test(v); } },
-      { name: 'digit', test: function (v) { return /[0-9]/.test(v); } },
-      { name: 'special', test: function (v) { return /[^A-Za-z0-9]/.test(v); } }
-    ];
-
-    function checkRules() {
-      var value = newPassword.value;
-      var allPass = true;
-      rules.forEach(function (rule) {
-        var pass = rule.test(value);
-        var el = passwordForm.querySelector('[data-rule="' + rule.name + '"]');
-        el.dataset.status = !value ? 'neutral' : (pass ? 'success' : 'error');
-        if (!pass) allPass = false;
-      });
-      // Block submit through the native constraint, so nds:formValid never fires
-      // on a weak password and the form component owns the error styling.
-      newPassword.setCustomValidity(allPass ? '' : 'This password does not meet the rules');
-      return allPass;
-    }
-
-    function checkRetype() {
-      retypePassword.setCustomValidity(
-        retypePassword.value && retypePassword.value !== newPassword.value
-          ? 'The two passwords do not match'
-          : ''
-      );
-    }
-
-    newPassword.addEventListener('input', function () {
-      checkRules();
-      if (retypePassword.value) checkRetype();
-    });
-    retypePassword.addEventListener('input', checkRetype);
+    // Rules and confirm-match come from nds-password: the chips carry data-rule,
+    // the retype container carries data-password-match, and the component blocks
+    // submit through setCustomValidity. Nothing to wire here.
 
     passwordForm.addEventListener('nds:formValid', function () {
       withLoading(passwordForm.querySelector('button[type="submit"]'), 1500, function () {
@@ -776,7 +751,8 @@ breadcrumb: [["Examples", "/examples"]]
           input.value = '';
           NDS.Forms.syncState(input);
         });
-        checkRules();
+        // Repaint the chips and lift the submit block against the now-empty value.
+        passwordForm.querySelectorAll('.nds-password').forEach(NDS.Password.check);
         show('account');
         toast('success', 'Password updated', 'Use the new password the next time you sign in.');
       });

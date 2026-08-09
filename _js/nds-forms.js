@@ -1261,7 +1261,10 @@
                         input.value = '';
                     }
                     Utils.triggerEvents(input);
-                    FieldSync.update(input, formControl);
+                    // Skip validation: clearing is an edit like typing, so it must
+                    // not raise "required" on a field the user just emptied. The
+                    // input event above already cleared any error being shown.
+                    FieldSync.update(input, formControl, true);
                 });
 
                 // The clear button hides itself once the field is empty, which

@@ -67,55 +67,67 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
               </div>
 
-              <!-- Password -->
-              <div class="nds-form-container" data-required>
+              <!-- Password: the chip carries data-rule, so nds-password checks it live -->
+              <div class="nds-form-container nds-password" data-required>
                 <div class="nds-form-header">
                   <label for="password">
                     <span class="nds-label">Password</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                  <input type="password" id="password" class="nds-input" placeholder="Create a password" autocomplete="new-password" minlength="8" required>
+                  <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+                  <input type="password" id="password" class="nds-input" placeholder="Create a password" autocomplete="new-password" minlength="8" required aria-describedby="password-rules">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
+                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                    </button>
                   </div>
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
-                  <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
+                  <div class="nds-password-rules" id="password-rules">
+                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent data-rule="length">
+                      <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                      </span>
+                      <span class="nds-feedback-message">At least 8 characters</span>
                     </span>
-                    <span class="nds-feedback-message">At least 8 characters</span>
-                  </span>
+                  </div>
+                  <span class="nds-password-status" role="status" aria-live="polite"></span>
                 </div>
               </div>
 
-              <!-- Confirm Password -->
-              <div class="nds-form-container" data-required>
+              <!-- Confirm Password: data-password-match points at the field above -->
+              <div class="nds-form-container nds-password" data-required data-password-match="#password">
                 <div class="nds-form-header">
                   <label for="confirm-password">
                     <span class="nds-label">Confirm password</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                  <input type="password" id="confirm-password" class="nds-input" placeholder="Re-enter your password" autocomplete="new-password" required>
+                  <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+                  <input type="password" id="confirm-password" class="nds-input" placeholder="Re-enter your password" autocomplete="new-password" required aria-describedby="confirm-password-rules">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
+                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                    </button>
                   </div>
+                </div>
+                <div class="nds-form-footer" data-feedback-target>
+                  <div class="nds-password-rules" id="confirm-password-rules">
+                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent data-rule="match">
+                      <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                      </span>
+                      <span class="nds-feedback-message">Matches the password</span>
+                    </span>
+                  </div>
+                  <span class="nds-password-status" role="status" aria-live="polite"></span>
                 </div>
               </div>
 
@@ -261,8 +273,6 @@ breadcrumb: [["Examples", "/examples"]]
     };
     var form1 = document.getElementById('registration-form-1');
     var form2 = document.getElementById('registration-form-2');
-    var password = document.getElementById('password');
-    var confirmPassword = document.getElementById('confirm-password');
     var otpGroup = form2.querySelector('.nds-otp-group');
     var expectedCode = '';
     var demoCode = document.getElementById('registration-demo-code');
@@ -298,21 +308,8 @@ breadcrumb: [["Examples", "/examples"]]
       }, delay);
     }
 
-    // Cross-field check: confirm password must match password.
-    confirmPassword.addEventListener('input', function () {
-      confirmPassword.setCustomValidity(
-        confirmPassword.value && confirmPassword.value !== password.value
-          ? 'Passwords do not match'
-          : ''
-      );
-    });
-    password.addEventListener('input', function () {
-      if (confirmPassword.value) {
-        confirmPassword.setCustomValidity(
-          confirmPassword.value !== password.value ? 'Passwords do not match' : ''
-        );
-      }
-    });
+    // The confirm field carries data-password-match, so nds-password owns the
+    // cross-field check and blocks submit on a mismatch. Nothing to wire here.
 
     // Step 1 — Create account
     form1.addEventListener('nds:formValid', function () {

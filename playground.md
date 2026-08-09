@@ -175,44 +175,46 @@ direction: rtl
             <label for="pg-new-password"><span class="nds-label">New password</span></label>
           </div>
           <div class="nds-form-control">
-            <div class="nds-form-action">
-              <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-              </button>
-            </div>
-            <input type="password" id="pg-new-password" name="new-password" class="nds-input" autocomplete="new-password" minlength="10" required>
+            <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+            <input type="password" id="pg-new-password" name="new-password" class="nds-input" autocomplete="new-password" minlength="10" required aria-describedby="pg-new-password-rules">
             <div class="nds-form-action">
               <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
                 <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
               </button>
+              <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
           <div class="nds-form-footer" data-feedback-target>
-            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
-              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-              <span class="nds-feedback-message">At least 10 characters</span>
-            </span>
-            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
-              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-              <span class="nds-feedback-message">One capital letter (A-Z)</span>
-            </span>
-            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
-              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-              <span class="nds-feedback-message">One small letter (a-z)</span>
-            </span>
-            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
-              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-              <span class="nds-feedback-message">One number (0-9)</span>
-            </span>
-            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
-              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-              <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
-            </span>
-            <!-- Custom rule via data-rule-pattern — no JS behind this one -->
-            <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="nospace" data-rule-pattern="^\S+$">
-              <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-              <span class="nds-feedback-message">No spaces</span>
-            </span>
+            <div class="nds-password-rules" id="pg-new-password-rules">
+              <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                <span class="nds-feedback-message">At least 10 characters</span>
+              </span>
+              <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
+                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                <span class="nds-feedback-message">One capital letter (A-Z)</span>
+              </span>
+              <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
+                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                <span class="nds-feedback-message">One small letter (a-z)</span>
+              </span>
+              <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
+                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                <span class="nds-feedback-message">One number (0-9)</span>
+              </span>
+              <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
+                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
+              </span>
+              <!-- Custom rule via data-rule-pattern — no JS behind this one -->
+              <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="nospace" data-rule-pattern="^\S+$">
+                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                <span class="nds-feedback-message">No spaces</span>
+              </span>
+            </div>
+            <span class="nds-password-status" role="status" aria-live="polite"></span>
           </div>
         </div>
 
@@ -222,17 +224,26 @@ direction: rtl
             <label for="pg-retype-password"><span class="nds-label">Retype new password</span></label>
           </div>
           <div class="nds-form-control">
-            <div class="nds-form-action">
-              <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-              </button>
-            </div>
-            <input type="password" id="pg-retype-password" name="retype-password" class="nds-input" autocomplete="new-password" required>
+            <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+            <input type="password" id="pg-retype-password" name="retype-password" class="nds-input" autocomplete="new-password" required aria-describedby="pg-retype-password-rules">
             <div class="nds-form-action">
               <button class="nds-btn nds-subtle nds-clear" hidden type="button" aria-label="Clear password">
                 <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
               </button>
+              <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+              </button>
             </div>
+          </div>
+          <!-- Live match chip — the built-in "match" rule reads the source input -->
+          <div class="nds-form-footer" data-feedback-target>
+            <div class="nds-password-rules" id="pg-retype-password-rules">
+              <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="match">
+                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                <span class="nds-feedback-message">Matches the new password</span>
+              </span>
+            </div>
+            <span class="nds-password-status" role="status" aria-live="polite"></span>
           </div>
         </div>
 

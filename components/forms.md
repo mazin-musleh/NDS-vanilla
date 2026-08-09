@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "09/08/2026 - 01:19 AM"
+last_edit: "09/08/2026 - 08:34 PM"
 lang: en
 direction: ltr
 ---
@@ -1117,7 +1117,7 @@ direction: ltr
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Password Input</h2>
-      <p class="nds-section-description">Password field with visibility toggle and Arabic character filtering</p>
+      <p class="nds-section-description">Password field with visibility toggle and Arabic character filtering. For live strength rules and confirm-match checking, see <a class="nds-color" href="{{ 'components/password' | relative_url }}">Password</a></p>
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
@@ -1206,15 +1206,14 @@ direction: ltr
                         </label>
                       </div>
                       <div class="nds-form-control">
-                        <div class="nds-form-action">
-                          <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                            <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                          </button>
-                        </div>
+                        <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
                         <input type="password" id="demo-passwordInput" class="nds-input" placeholder="Enter password..." autocomplete="new-password">
                         <div class="nds-form-action">
                           <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                          </button>
+                          <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                            <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
                           </button>
                         </div>
                       </div>
@@ -1252,15 +1251,14 @@ direction: ltr
     &lt;/label&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-control"&gt;
-    &lt;div class="nds-form-action"&gt;
-      &lt;button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password"&gt;
-        &lt;i class="nds-icon nds-hgi-view-off" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
+    &lt;i class="nds-icon nds-hgi-lock-password" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;input type="password" id="password-input-1" class="nds-input" placeholder="Enter password..." autocomplete="new-password"&gt;
     &lt;div class="nds-form-action"&gt;
       &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden&gt;
         &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password"&gt;
+        &lt;i class="nds-icon nds-hgi-view-off" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
