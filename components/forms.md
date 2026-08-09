@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "09/08/2026 - 08:34 PM"
+last_edit: "10/08/2026 - 12:14 AM"
 lang: en
 direction: ltr
 ---
@@ -2356,12 +2356,29 @@ NDS.Forms.clearStatus(container);</code>
         </table>
       </div>
       <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Validation Attributes</h3>
+        <p>Validation runs on the browser's own constraint API. These are standard HTML attributes, not NDS ones, and they go on the <code class="nds-inline-code lang-html">&lt;input&gt;</code>. NDS supplies the message text in Arabic and English and places it in the field footer.</p>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Attribute</th><th>Message when the value fails it</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">required</code></td><td>This field is required. Prefer <code class="nds-inline-code lang-html">data-required</code> on the container: it sets this attribute for you and adds the asterisk.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">type="email"</code></td><td>Please enter a valid email address</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">type="url"</code></td><td>Please enter a valid URL</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">minlength</code></td><td>Input is too short (minimum N characters)</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">maxlength</code></td><td>Input is too long (maximum N characters). The browser also blocks typing past the limit, so this message appears only for a value set in code or pasted.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">pattern</code></td><td>Please match the requested format. The value must match the whole expression, so <code class="nds-inline-code lang-html">pattern="[0-9]{10}"</code> accepts exactly ten digits and nothing else. Give the field a <code class="nds-inline-code lang-html">data-error-message</code> that states the rule: the default text does not say what the format is.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">min</code> / <code class="nds-inline-code lang-html">max</code></td><td>Value must be at least N / Value must be no more than N. On number inputs these also bound the stepper buttons: see the Data Attributes table below.</td></tr>
+          </tbody>
+        </table>
+        <p>Any other failure reads <em>Invalid input</em>. A field that a component validates itself, such as a date picker, carries that component's own message instead.</p>
+      </div>
+      <div class="nds-block nds-prose">
           <h3 class="nds-block-title">Data Attributes</h3>
         <table class="nds-table nds-responsive">
           <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
           <tbody>
             <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-container</code> to mark the field as required. Automatically syncs to the input's <code class="nds-inline-code lang-html">required</code> attribute and adds the asterisk indicator.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-container</code> to override the default browser validation message with custom text.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td>Set on the <code class="nds-inline-code lang-html">&lt;input&gt;</code> to replace every validation message that field would otherwise show, whichever constraint failed. For a checkbox or radio group, set it on the <code class="nds-inline-code lang-html">nds-form-group</code> instead. It is read from those two elements only, not from the container.</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-permanent</code></td><td>Set on a feedback element inside the footer. Permanent feedback hides during validation errors and restores when cleared.</td></tr>
             <tr><td><code class="nds-inline-code lang-html">min</code></td><td>Set on number inputs to define the minimum allowed value (default: 0).</td></tr>
             <tr><td><code class="nds-inline-code lang-html">max</code></td><td>Set on number inputs to define the maximum allowed value (default: 1000).</td></tr>
