@@ -92,25 +92,54 @@
                 document.fonts.forEach((f) => { if (f.family === fontName && f.status === 'loaded') ok = true; });
                 return ok;
             };
+            // A face for this family the browser is actively fetching. The budget
+            // has to measure THIS, not wall-clock from init: the @font-face sheet
+            // rides behind main CSS to stay out of the LCP window, so on a slow
+            // link most of a fixed budget burns before the download can start, and
+            // the timeout then kills the listener before the font can land.
+            const hasPendingFace = () => {
+                let pending = false;
+                document.fonts.forEach((f) => { if (f.family === fontName && f.status === 'loading') pending = true; });
+                return pending;
+            };
+
+            let timer;
+            const teardown = () => {
+                clearTimeout(timer);
+                document.fonts.removeEventListener('loadingdone', onDone);
+                document.fonts.removeEventListener('loading', onLoading);
+            };
             const onDone = () => {
                 if (settled || !hasLoadedFace()) return;
                 settled = true;
-                clearTimeout(timer);
-                document.fonts.removeEventListener('loadingdone', onDone);
+                teardown();
                 markAsLoaded();
             };
-            const timer = setTimeout(() => {
-                if (settled) return;
-                settled = true;
-                document.fonts.removeEventListener('loadingdone', onDone);
-                fail();
-            }, timeout);
+            // Re-arm once our own face is genuinely in flight, so the budget covers
+            // the download instead of the wait for the deferred sheet. Bounded by
+            // the fetch itself: 'loaded' stamps, 'error' stops re-arming and the
+            // last window expires into fail().
+            const onLoading = () => {
+                if (settled || !hasPendingFace()) return;
+                arm();
+            };
+            function arm() {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    if (settled) return;
+                    settled = true;
+                    teardown();
+                    fail();
+                }, timeout);
+            }
 
             // The icons' own usage starts the download once the (possibly deferred)
             // face applies; `loadingdone` fires when it completes. load() kicks the
             // already-present case; the immediate onDone() catches an already-loaded
             // font (whose loadingdone may have fired before we subscribed).
             document.fonts.addEventListener('loadingdone', onDone);
+            document.fonts.addEventListener('loading', onLoading);
+            arm();
             document.fonts.load(spec).catch(() => {});
             document.fonts.load('bold ' + spec).catch(() => {});
             onDone();
