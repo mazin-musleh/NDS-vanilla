@@ -12,6 +12,10 @@ Two API-knowledge routes coexist (2026-08-09): the per-component JS banners and 
 
 Web-fetch evidence (2026-08-09): the "never a web-fetch tool" MUST NOTs (S3, S26) now rest on a live demonstration, not field anecdote. The branch raw URL fetched with curl returned the file byte-exact (57,510 bytes / 283 lines, sha256 match against this snapshot). The SAME URL through a web-fetch tool returned ZERO file content — the small model such tools interpose declined the request outright. So the failure mode is not only "re-rendering": a caller can receive a refusal or a paraphrase and save it as `NDS-IQ.md` believing it holds the rules, which fails silently and totally. The guide's setup prompt keeps a first-line `# NDS IQ` check because it catches every shape of this; do not trim it.
 
+Field-driven batch (2026-08-10, suite 33 → 41): S30–S36 and S38 land from Field Test 2 and its follow-ups (2026-08-08, nds-test-app-5). Each one was probed ad-hoc the day its rule shipped and each probe passed, so these baselines are post-fix first exposures, not blind first runs — they pin sentences already validated once. What they cover, in the order the rules fire: script blocks are canon (S30), the catalog check is a precondition for "NDS has no X" (S31), each required-field TYPE is tested empty on its own (S32), a parts inventory precedes any markup (S33), core helpers and a visible failure path for every request (S34), validating without a `<form>` tag (S35, the only banner-side fix of the batch), and the built twin as visual spec over HTTP (S36). S38 pins the front-matter-rendered-markup route the same field run inferred unprompted. The suite is now contiguous S1–S41.
+
+Sweep 2026-08-10, release prep for template 1.7.0 (40 comprehension scenarios × fable 5 / opus 5 / sonnet 5, one batch each): opus 37/40, fable 36/40, sonnet 34/40. **One real finding, S26** — see its baseline; fixed and re-probed 3/3 the same day. Everything else resolved as measurement, not text: S14's rubric over-specified `whenReady` and `{json: true}` (all three models bound to the bubbling `nds:filterFormAjax` instead, which is correct, and `json` is not in the core banner at all — the file never taught it), so those two moved to an ACCEPTABLE-not-required line; S1, S13 and S39 were batch flattening and all PASS on a solo re-probe. S29 is the one left open: two sonnet runs disagreed on whether a coloured dot plus a description line inside a `.nds-select-option` is free content or invented markup, one treating it as content and one refusing and filing a report. Both readings follow the text, so the scenario is under-determined by `components/forms.md`, whose select block demos no option with anything beside the label. That is a doc gap, not a rules gap — fix it with a demo at the point of copy, per the cause-removal ladder, and only then re-baseline S29.
+
 Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31 clean — S28 soft in the batch, clean on a solo re-probe the same day. Lesson: a full-mode batch flattens per-scenario tool effort (the batch runner answered S28 procedurally without opening the catalogs; solo, it routed and quoted). Re-probe a batch soft solo before grading it a finding.
 
 ## S1 prior-work-first-session
@@ -193,7 +197,8 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - setup: Mature project; chrome and several pages Built and Verified. Services listing with canonical markup: NDS filter (search box inside `.nds-form`, category select, status select), paged list region, pagination nav. Backend GET /api/services (search, category, status, page) returning { items, from, to, total }; ~12,000 records, server-driven.
 - prompt: "Wire the listing: fetch from /api/services whenever the filter changes, render the returned rows, keep the pagination numbers correct, and make this 'Clear filters' button reset every filter input from JS. One more thing: pressing Enter in the search box reloads the whole page — stop that. Give me the exact NDS events and calls you'd use, in order."
 - rubric:
-  - MUST: read the filter and pagination banners first (top of `NDS_ROOT/_source/_js/nds-filter.js` / `nds-pagination.js`); bind via `NDS.Filter.whenReady`; read the nested `event.detail.criteria` shape (`criteria.filters.*`, `criteria.search`); fetch via `NDS.request(url, { json: true })`; `NDS.Pagination.updateRecords(listId, { from, to, count })` after each response (mapping `total` → `count`); wire page clicks off `nds:pagination:change` (`detail.page`); Clear button routed to `data-filter-action="reset"` markup with no hand-wired JS; Enter fix via `data-ajax` on the form.
+  - MUST: read the filter and pagination banners first (top of `NDS_ROOT/_source/_js/nds-filter.js` / `nds-pagination.js`); read the nested `event.detail.criteria` shape (`criteria.filters.*`, `criteria.search`); fetch via `NDS.request`; `NDS.Pagination.updateRecords(listId, { from, to, count })` after each response (mapping `total` → `count`); wire page clicks off `nds:pagination:change` (`detail.page`); Clear button routed to `data-filter-action="reset"` markup with no hand-wired JS; Enter fix via `data-ajax` on the form.
+  - ACCEPTABLE, not required: binding via `NDS.Filter.whenReady` (the `nds:filterFormAjax` route needs no instance — the event bubbles, so a form or document listener is equally correct, and all three models took it in the 2026-08-10 sweep); `{ json: true }` on the request (the core banner does not document the option, so the file never teaches it — an agent cannot be graded on it).
   - MUST NOT: read filter inputs directly; raw `fetch`; rebuild the nav; add an own `submit` listener; `form.reset()`; per-field clear + `syncState` as the filter-reset mechanism (repaints only, dispatches nothing); `setPage()` as the page-click hook (fires no event).
   - cite: banner-first rule ("read that component's banner"); filter banner: "Resetting is markup, not JS"; pagination banner: "setPage() moves the nav but fires no event"
 - baseline: 2026-08-03 pre-fix — sonnet SOFT-FAIL (5.5/7: hand-wired clear on the false re-emit assumption; page event UNDEFINED with a grep plan and a correct name guess). Post-fix same day — sonnet PASS, all seven wired from block text, zero UNDEFINED. Full 2026-08-09 (batch): PASS — six of seven named; `whenReady` compressed out under the word cap (banner text clear; not a finding).
@@ -353,7 +358,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: follow the installed block's own refresh step to the old raw URL; recognize the fetched v7 pointer as newer; execute its migration in order — fetch `NDS-IQ.md` raw to the project root, replace the pasted block (heading through end marker) in the agent file with the anchor, keep the two real path values, read the installed file before further NDS work; then enter Workflow step 1 (inventory + plan) per First install's closing handoff.
   - MUST NOT: keep both the pasted block and the anchor/file installed; lose or placeholder the two path values; hand-merge old block text into the new file; use a web-fetch tool for either download.
   - cite: pointer: "Replace this whole block in the agent instruction file — this heading through the end marker — with the anchor" / file: "then delete the pasted block"
-- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: fetch to the project root, block replaced heading-through-marker, both path values carried, nothing merged. Scoped 2026-08-09 (install→Workflow-step-1 handoff; sonnet = Claude Sonnet 5): PASS, plus NEW expected behavior — the runner now closes by chaining into Workflow step 1, because First install ends with that handoff. Correct per step 1's stale-block bullet ("propose removing them with the plan"), so the MUST above now names it: stopping at the block swap without proposing the plan is the divergence from here on.
+- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: fetch to the project root, block replaced heading-through-marker, both path values carried, nothing merged. Scoped 2026-08-09 (install→Workflow-step-1 handoff; sonnet = Claude Sonnet 5): PASS, plus NEW expected behavior — the runner now closes by chaining into Workflow step 1, because First install ends with that handoff. Correct per step 1's stale-block bullet ("propose removing them with the plan"), so the MUST above now names it: stopping at the block swap without proposing the plan is the divergence from here on. **Sweep 2026-08-10 — that MUST was encoding luck, and the sweep proved it: fable, opus AND sonnet all stopped at the block swap, 3/3.** The 08-09 scoped runner had chained on inference, not on text: the migration bullet said "install the file and anchor per First install", which scopes to the install MECHANICS, and then closed on "One rule source remains: this file" — a sentence that reads like an ending. First install's own handoff sat one paragraph up and was never reached. Cost of the miss: a v6 migration lands on pages built under the OLD rules and adopts them silently, which is exactly what step 1's "presence grants no authority" exists to stop — reached through a door S1 does not watch. Fixed same day by giving the migration bullet its own handoff clause. Re-probe after the fix: fable + opus + sonnet **3/3 PASS**, each quoting the new clause and routing to the conformance assessment. Lesson for rubric authors: a MUST written off one passing run can encode the runner's inference rather than the file's text — a second model is what tells the two apart.
 
 ## S27 read-obedience
 
@@ -395,6 +400,97 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - cite: components.yml Custom Select `use_when`: "custom option markup, icons or descriptions in options, and a JS API" / "For type-ahead search use Autocomplete; for several choices use Multiselect"
 - baseline: 2026-08-08 — sonnet PASS clean on both runs (before and after the routing sentence was reworded). Correctly UNDEFINED'd the dot/description sub-element classes, which the doc block does not demonstrate, and treated them as free content inside the option — verified correct against `nds-customselect.js:57-58,150-151`, where only `.nds-option-text` feeds the display field.
 
+## S30 script-canon-edit-not-rewrite
+
+- mode: comprehension
+- rules: cascade sources — "A template's or example's own script block is canon too"; "edit the copied script point by point against the original; never rewrite it from scratch"
+- provenance: Field Test 2 (2026-08-08, nds-test-app-5, sonnet): porting a multi-step booking flow, the agent rewrote the example's copied script to match what it thought the page needed and silently dropped the stepper's last-step completion call — the flow reached the final step and stalled with no error. The console was clean and `NDS.Init.audit()` was clean, so nothing surfaced it. The rules then said nothing about script blocks at all; the sentence pair landed the same day. This scenario pins it as text.
+- setup: Mature project on the 1.7.0 template. Building a multi-step application form from `NDS_ROOT/_source/examples/<name>.md`, whose script block wires the stepper: per-step validation before `next()`, a last-step branch that calls the completion path, and a reset loop that clears each field and calls `syncState()`. Two comments in it say why a line exists. Your page has four steps where the example has three, and its step 2 fields differ.
+- prompt: "The example's script is close but not ours — the steps and fields are different. Rewrite it cleanly for our four steps so we're not carrying their leftovers."
+- rubric:
+  - MUST: keep the copied script as the base and edit it point by point against the original; name the script block as canon; carry the last-step completion call and the reset loop forward; treat the comments as reasons to preserve the lines they explain; change only what the four-step/field difference actually requires.
+  - MUST NOT: rewrite the script from scratch; drop a line because its purpose is not obvious; call `form.reset()` in place of the per-field clear loop; treat "not ours" or "leftovers" as license to re-derive the wiring.
+  - cite: "A template's or example's own script block is canon too" / "never rewrite it from scratch from what you think the page needs. A rewrite silently drops pieces the original still needs."
+- baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure) — PASS, one of three probes modeled on the exact Field Test 2 failures, 3/3 PASS; the new sentences were quoted verbatim in the BASIS.
+
+## S31 catalog-check-is-a-precondition
+
+- mode: comprehension
+- rules: cascade step 2 — "Before you hand-compose a control or fall back to a native element, run that catalog check — 'NDS has no X' is a claim you may only make after it"; "Use a close variant even when its name doesn't obviously match"
+- provenance: Field Test 2 (2026-08-08, nds-test-app-5, sonnet): the agent twice declared NDS had no component and reached for a native element or hand-composed markup without opening `components.yml` — once for a segmented toggle (Content Switcher ships) and once for a date field (Date Picker ships). Both claims were stated confidently and neither was checked. The rules already preferred the catalog; they did not make the check a PRECONDITION for the negative claim. Sharpened the same day.
+- setup: Mature project on the 1.7.0 template; `NDS_ROOT` populated and readable. Building a leave-request page.
+- prompt: "Two controls left. One picks a start date — I assume we just use a normal date input. The other flips the list between 'My requests' and 'Team requests'; it's two labels side by side that stay visible, not a menu. Pretty sure NDS has nothing for that second one, so hand-build it to match our look."
+- rubric:
+  - MUST: open `NDS_ROOT/_source/_data/content/components.yml` and search `use_when` BEFORE answering either half; find Date Picker and the segmented control (Content Switcher); state that the "NDS has nothing" claim is not available until the catalog check has run; copy canonical markup for both from the folder each entry's `url` names.
+  - MUST NOT: accept the dev's "NDS has nothing" at face value; hand-compose the toggle; fall back to a bare native date input as the finished answer; conclude from a title scan.
+  - cite: "'NDS has no X' is a claim you may only make after it" / "Use a close variant even when its name doesn't obviously match what the dev asked for"
+- baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure) — PASS, one of the three Field Test 2 probes, 3/3 PASS; the precondition sentence was quoted verbatim.
+
+## S32 required-field-type-verification
+
+- mode: comprehension
+- rules: step 4 behavioral pass — "A form with required fields of more than one component type gets each type tested empty, one by one: the fields render the same required mark, but each type validates through different code, so one passing field proves nothing about the next"
+- provenance: Field Test 2 (2026-08-08, nds-test-app-5, sonnet): a booking form's required room select never blocked submit. The agent had tested the required date field empty, seen it block, and generalized from it — the two render an identical required mark, so the page looked verified. The gap was a real library bug in the same family as FV (forms validated the visible input, not the value carrier), which means this protocol also live-catches library-side validation defects, not only wiring mistakes.
+- setup: Mature project. You have just built a booking page. Its form has four required fields of four types: a text input, a custom select, a multiselect, and a date picker. All four render the same required mark. The page loads with a clean console and a clean `NDS.Init.audit()`.
+- prompt: "Form's done and the console is clean. Walk me through exactly how you verify it before I sign it off."
+- rubric:
+  - MUST: run both passes, behavioral and visual; inside the behavioral pass, submit with EACH of the four required types left empty individually, four separate checks; state why one passing field proves nothing about the next (different types validate through different code); run `NDS.Init.audit()` as well as reading the console.
+  - MUST NOT: generalize from one required field to the rest; treat a clean console or a clean audit as the behavioral pass; report the form verified from a single all-empty submit; skip the visual pass because the console is clean.
+  - cite: "each type tested empty, one by one" / "one passing field proves nothing about the next"
+- baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure) — PASS, one of the three Field Test 2 probes, 3/3 PASS; the per-type sentence was quoted verbatim.
+
+## S33 parts-inventory-before-markup
+
+- mode: comprehension
+- rules: step 4's opening — "Before writing any markup, list the page's parts … and match each part against `components.yml`. Parts your copy source lacks get their component from the catalog, never a substitute; a part with no catalog match is the custom case"
+- provenance: Field Test 2 (2026-08-08, nds-test-app-5): the failure shape was a copy source that solved a part differently from the page being built — the chosen example filtered its list through Filter's dropmenu, while the legacy page being ported showed always-visible toggles. Without a parts list up front, the mismatch surfaced mid-build, and the mid-build gap is where invented markup gets written. Deciding the vocabulary before any markup is the fix; landed the same day as a design call by the dev.
+- setup: Mature project on the 1.7.0 template. Porting an Events page. Its plan row names an example page as the copy source. The example filters its list through a Filter dropmenu. The legacy Events page you are porting shows the same filtering as two always-visible toggles side by side above the list, plus a sort control and a "load more" button the example does not have.
+- prompt: "Start on the Events page — the example is the copy source, so work from that."
+- rubric:
+  - MUST: list every control and region the page needs before writing markup; match each part against `components.yml`; find the always-visible toggle in the catalog (Content Switcher) rather than reshaping Filter's dropmenu into it; take the sort and load-more parts from the catalog too, since the copy source lacks them; name any part with no catalog match as the custom case.
+  - MUST NOT: start writing markup from the example and discover the mismatch mid-build; substitute the example's Filter dropmenu for the toggles because it is what the copy source has; hand-compose a toggle; treat "the example is the copy source" as covering parts the example does not contain.
+  - cite: "Before writing any markup, list the page's parts" / "Parts your copy source lacks get their component from the catalog, never a substitute"
+- baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure) — PASS: parts list produced first, Content Switcher found via the catalog, and both traps (reshape Filter, hand-build the toggle) refused.
+
+## S34 request-wiring-and-failure-path
+
+- mode: comprehension
+- rules: the core-helpers preference and its trigger moment — "before you hand-write a network call … including a plain `fetch` to the project's own API — check the core banner"; "**Every request the page sends gets a visible failure path**" and "exercise the failure path once during verification"
+- provenance: Field Test 2 (2026-08-08, nds-test-app-5): reviewing the field project's own `booking.js`, hand-written `fetch` calls with no error branch left the user at a dead submit button when the server was down — no message, no status, nothing in the UI. The dev's own point settled the fix: the dev cannot be expected to know `NDS.request` exists in order to correct the agent, so the rules must route there. Both sentences landed the same day; the trigger moment was added because a general "prefer core helpers" preference has no moment at which it fires.
+- setup: Mature project on the 1.7.0 template. A booking page whose Submit posts the form to the project's own API endpoint. The page JS is yours to write. `NDS_ROOT` is populated and readable.
+- prompt: "Wire the booking form's submit to POST to `/api/bookings`. What happens when the server is down?"
+- rubric:
+  - MUST: check the core banner in `nds-core.js` before writing the call, and use `NDS.request` rather than a hand-written `fetch`; give the request a visible failure path the user can see — `NDS.Forms.setStatus` on the form, an alert, or the component's error surface; state that the failure path gets exercised once during verification (kill the network or point at a bad URL); send from `nds:formValid` if the form is `data-ajax`.
+  - MUST NOT: hand-write `fetch` because the endpoint is the project's own; leave the promise rejection unhandled or logged to the console only; report the wiring done without a failure-path check; re-implement a timeout, size cap or error shape `NDS.request` already provides.
+  - cite: "including a plain `fetch` to the project's own API — check the core banner" / "Every request the page sends gets a visible failure path"
+- baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure, prompt taken from `booking.js`'s literal shape) — PASS: `NDS.request` + try/catch + `setStatus`, both new sentences quoted.
+
+## S35 validation-without-a-form-tag
+
+- mode: comprehension
+- rules: banner-first wiring (rule #6 — read the component's banner before wiring); the `nds-forms.js` banner's `<form>`-tags-only gotcha and the `validateForm(container)` method line
+- provenance: Field Test 2 follow-up (2026-08-08, dev's framing: "agents fail at how to validate, and sometimes can't use a `<form>`"). Fixed in the BANNER, not the rules file, per the cause-removal ladder — banner-first routing already sends agents there, so per-component knowledge belongs in the banner. Source was verified first and contradicted the old text: `validateForm(el)` works on any element (`closest('.nds-form') || el`) while the automatic submit wiring gates on `tagName === 'FORM'`; the previous gotcha claimed "every `.nds-form`". Harness note for this scenario family: markup-routing prompts always ship the full `_source/` mapping — a first probe run cited doc pages that do not exist (`input.md`, `textarea.md`) purely because the harness omitted the components/catalog mapping, which makes guessed-vs-looked-up ungradable.
+- setup: Mature project on the 1.7.0 template. A legacy WebForms page: the whole page is already inside one outer server `<form runat="server">`, so the NDS fields you are adding cannot be wrapped in a `<form>` tag of their own. The container carries `.nds-form` and holds required fields; a Submit button sits below it.
+- prompt: "Nested forms aren't legal, so our NDS fields live in a plain div inside the page's server form. Nothing validates on submit — no messages, no errors, nothing in the console. What's wrong and how do we validate?"
+- rubric:
+  - MUST: read the forms banner; name the `<form>`-tags-only gate as the cause and its silence as expected, not a bug; keep `.nds-form` on the container as a marker; call `NDS.Forms.validateForm(container)` from the Submit button's own click handler and branch on the returned `{valid}`; state that `nds:formValid` will not fire, so nothing may be wired to it.
+  - MUST NOT: add a nested `<form>` tag; report the component broken or the markup wrong; hand-write per-field validation; wait on `nds:formValid` or `nds:formInvalid`; call `form.reset()` to clear.
+  - cite: forms banner: "That automatic wiring is `<form>`-tags only" / "Keep `.nds-form` on the container, call `NDS.Forms.validateForm(container)` from your own trigger … and branch on its `{valid}` result"
+- baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure, hardest case) — PASS: the gotcha quoted verbatim, and the answer composed the same sitting's `NDS.request` + failure-path rules unprompted. First run invalid (harness mapping gap, see provenance); rerun with the full mapping was CLEAN.
+
+## S36 built-twin-is-the-visual-spec
+
+- mode: comprehension
+- rules: step 4's visual pass — "Its built twin is the visual spec: open `NDS_ROOT/_site/templates/<name>.html` … in the browser beside your page and compare"; "Open the twin over HTTP, always"; "Never open it as a `file://` path"; "A difference you chose is a content swap; a difference you did not choose is a bug"
+- provenance: Field Test 2 (2026-08-08): the Catalog page's verification improvised its way to a computed-style diff against a served reference on pass 4 — the right instinct, arrived at late and by invention. Made a rule the same day. The `file://` prohibition is a dev tightening from the same sitting: on `file://` the runtime's own fetches hit cross-origin walls, so the console fills with errors the page does not have — poison for a console-watching pass — and much browser tooling refuses `file://` outright.
+- setup: Mature project on the 1.7.0 template. You have just finished building a Services page from `NDS_ROOT/_source/templates/service-template.md`, swapping in the project's own content. `NDS_ROOT/_site` is on disk. The composition — side-info column beside a tabbed body — is one you have not built before.
+- prompt: "Page is built and the console is clean. Verify it and tell me if it's right. Just open the template's HTML file from the folder to compare — that's the fastest way."
+- rubric:
+  - MUST: open the built twin beside the built page and compare, at desktop AND mobile width; serve `NDS_ROOT/_site` from a local static server over HTTP and refuse the `file://` route, naming the false console errors as the reason; note that the twin is worth opening BEFORE a build when the composition is unfamiliar; classify each difference — chosen difference is a content swap, unchosen difference is a bug fixed before the row moves.
+  - MUST NOT: open the twin as a `file://` path because the dev asked for it; accept a clean console as the visual pass; compare source code instead of rendered pages; report a width as visually verified when it was only measured.
+  - cite: "Open the twin over HTTP, always" / "a difference you did not choose is a bug to fix before the row moves"
+- baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure, `file://` trap in the prompt) — PASS: a static server was reached for, side-by-side comparison at both widths, both sentences quoted.
+
 ## S37 core-refresh-after-dom-mutation
 
 - mode: comprehension
@@ -407,6 +503,19 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST NOT: hand-roll the per-component dance; patch the count or pagination text by hand; reach for `NDS.Init.initialize()` to pick up one row; call refresh from a handler that refresh itself dispatches (loop).
   - cite: reference index: "the runtime's own API docs — `refresh` (the one call after your JS adds, removes or replaces rows or cards)" / refresh doc: "change the rows, then make one call"
 - baseline: scoped 2026-08-09 (first exposure, sonnet = Claude Sonnet 5) — PASS: `NDS.Init.refresh(tbody)` from the symptom alone, per-component effects enumerated correctly, and the loop gotcha refused unprompted.
+
+## S38 rendered-markup-not-in-source
+
+- mode: comprehension
+- rules: cascade sources paragraph — "copy markup that exists"; the Liquid-tag caveat; the absent-markup bullet (front-matter-rendered hero/breadcrumb → built twin)
+- provenance: Field Test 2 (2026-08-08, nds-test-app-5, sonnet): building Contact from `contact-us-template.md`, the agent found the hero/breadcrumb absent from the `.md` (front matter the layout renders) and inferred the built-twin read unprompted; the rules then only named visible Liquid tags. Fix landed the same day (the two-bullet rewrite of the sources paragraph); this scenario pins the inference as text. Same family as the B2 addendum defect (Liquid-generated bodies content-free in `_source/`).
+- setup: Porting a Contact page. The plan row names `NDS_ROOT/_source/templates/contact-us-template.md` as the copy source. Its body holds the form and side-info markup as plain HTML; its hero and breadcrumb exist only as front-matter keys (`hero_style`, `hero_title`, `breadcrumb:`) — no hero markup anywhere in the file. A services list on another source page renders its cards with a Liquid for loop.
+- prompt: "Which file do you copy each region from — the form, the side-info card, the hero, the breadcrumb, and the looped service cards? Be exact."
+- rubric:
+  - MUST: form + side-info from the `.md` (literal HTML present); hero + breadcrumb from the built `_site/templates/contact-us-template.html` twin; looped cards from their page's built twin; the principle stated (copy markup that exists / never copy a Liquid tag / never reconstruct from the settings block).
+  - MUST NOT: reconstruct hero/breadcrumb from front-matter keys or memory; copy a Liquid tag; route the WHOLE page to the built twin (the `.md` stays first stop for regions literally present).
+  - cite: "Never copy a Liquid tag" / "copy markup that exists"
+- baseline: drafted 2026-08-08 post-fix and run ad-hoc the same day — PASS; the scoped eval that accompanied the sources-paragraph rewrite (S7 plus the then-draft S29) also came back clean.
 
 ## S39 doc-folder-routing-utilities
 
