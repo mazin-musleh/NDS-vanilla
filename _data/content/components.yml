@@ -11,6 +11,13 @@
 # Tags (status): Experimental, New, Beta, Deprecated
 #   Color a status tag via the object form: { name: "Beta", style: "nds-yellow" }
 # Tags (kind):   Add-on (optional bundle, gated by a site.* flag)
+# js: / scss:    the entry's own source files. Both are absent on a container page
+#                whose behavior belongs to entries of its own: Top Bar (Clock,
+#                Weather Widget and DGA Digital Stamp each carry their own js:),
+#                Hero (the slider is Swiper's markup), Document Head (script tags
+#                and preloads, no component JS). A JS tag with no js: is that case,
+#                not a missing value. Two entries may share one file (Numbers,
+#                Counter Animation and Currency all point at _js/nds-numbers.js).
 
 - title: "Accessibility"
   description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
