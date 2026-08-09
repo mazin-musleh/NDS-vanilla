@@ -46,7 +46,7 @@ def collect_refs(block):
     return {p for p in refs if '<' not in p and '*' not in p}
 
 
-def build_stub_zip(version, refs_from):
+def build_stub_zip(version, refs_from, iq_bytes=None):
     """A zip carrying every name verify() reads.
 
     Paths come from `refs_from` (the PRE-mutation rules file): the zip is built
@@ -57,6 +57,10 @@ def build_stub_zip(version, refs_from):
     pkg = f'nds-vanilla-template-v{version}/'
     with open(IQ, encoding='utf8') as f:
         block = f.read()
+    # iq_bytes stages a deliberately corrupted offline copy. Every other case
+    # mutates the SOURCE, which build_stub_zip re-reads, so source and zip move
+    # together and can never break the byte-identical guard — that one needs the
+    # zip corrupted on its own.
     guide_html = '<h1>guide</h1>' + block   # the guides render the include
     buf, written = io.BytesIO(), set()
 
@@ -69,7 +73,7 @@ def build_stub_zip(version, refs_from):
         put(pkg + '_site/index.html', '<a href="../index.html">ok</a>')
         put(pkg + 'CHANGELOG.md', f'## [{version}]\n')
         put(pkg + 'README.md', 'see `_site/index.html`\n')
-        put(pkg + 'NDS-IQ.md', block)
+        put(pkg + 'NDS-IQ.md', iq_bytes if iq_bytes is not None else block)
         for name in ('get-started', 'integration-quality'):
             put(f'{pkg}_site/guides/{name}.html', guide_html)
         for anchor in ANCHORS:
@@ -159,6 +163,22 @@ def main():
         if not ok:
             failures.append(f'{label}: expected '
                             f'{"a pass" if expect is None else repr(expect)}, got: {msg}')
+
+    # The offline copy must be the source with LF endings. This one cannot be
+    # driven from CASES: those mutate the source, and the stub zip is rebuilt
+    # from the source, so the two never diverge. Corrupt the staged copy alone.
+    with open(IQ, encoding='utf8') as f:
+        source = f.read()
+    zip_path = build_stub_zip(VERSION, refs_from=source,
+                              iq_bytes=source.replace('\n', '\r\n'))
+    try:
+        mkrelease.verify(zip_path, VERSION)
+        ok, detail = False, 'accepted a CRLF offline copy'
+    except SystemExit as e:
+        ok, detail = 'source with LF endings' in str(e), str(e)
+    print(f'  {"pass" if ok else "FAIL"}  zip ships a CRLF copy of the rules file')
+    if not ok:
+        failures.append(f'CRLF offline copy: {detail}')
 
     # The duplicate stamp belongs to the sweep, which must refuse to guess
     # which copy is authoritative.
