@@ -55,7 +55,7 @@ agent never sees. ONE exception: where the rules file routes you to a read
 under NDS_ROOT, simulate it against this repo:
 - NDS_ROOT/_source/<path>  is  C:\Projects\NDS-vanilla\<path>. The zip's
   _source/ is a straight copy of the repo's own folders, so strip the prefix:
-  _js, _sass, components, utilities, layout, ui-shell, templates, examples,
+  _js, _sass, components, utilities, layout, ui-shell, core, templates, examples,
   _data/content. For a _source/_js/<f>.js read, read only its top banner comment.
 - NDS_ROOT/_site/<path>  is  C:\Projects\NDS-vanilla\_site\<path>, when a build
   exists. If it does not, report the read as unavailable and continue — never
