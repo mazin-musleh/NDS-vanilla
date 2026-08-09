@@ -8,6 +8,8 @@ Catalog routing (2026-08-08): every entry in `templates.yml`, `examples.yml`, an
 
 Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catalog entry's own `url` (`components`, `utilities`, `layout`, `ui-shell`) instead of hardcoding `components/`, and the Reference index names the utilities and ui-shell source folders. S39 guards it. The harness maps `_source/<path>` to the repo's `<path>` wholesale rather than folder by folder, so a new shipped folder needs no harness edit — and it instructs runners to report a missing path by name instead of substituting a file, which is what makes a routing bug gradable at all.
 
+Web-fetch evidence (2026-08-09): the "never a web-fetch tool" MUST NOTs (S3, S26) now rest on a live demonstration, not field anecdote. The branch raw URL fetched with curl returned the file byte-exact (57,510 bytes / 283 lines, sha256 match against this snapshot). The SAME URL through a web-fetch tool returned ZERO file content — the small model such tools interpose declined the request outright. So the failure mode is not only "re-rendering": a caller can receive a refusal or a paraphrase and save it as `NDS-IQ.md` believing it holds the rules, which fails silently and totally. The guide's setup prompt keeps a first-line `# NDS IQ` check because it catches every shape of this; do not trim it.
+
 Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31 clean — S28 soft in the batch, clean on a solo re-probe the same day. Lesson: a full-mode batch flattens per-scenario tool effort (the batch runner answered S28 procedurally without opening the catalogs; solo, it routed and quoted). Re-probe a batch soft solo before grading it a finding.
 
 ## S1 prior-work-first-session
@@ -22,7 +24,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST NOT: build checkout first; adopt or rebuild the prior pages silently; upgrade unprompted.
   - cite: "presence grants no authority; conformance decides, the dev approves"
 - artifacts (behavior): `NDS-PLAN.md` exists with the five columns and a checkout row, and opens with the `Managed by NDS IQ v7` stamp line; no page file written; no asset copy yet.
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-03 (v4 greenfield edits): sonnet PASS — the new plan-from-intent bullet did not confuse prior-NDS triage. Scoped 2026-08-05 (v5): sonnet SOFT — procedure right (inventory, plan, stop, no build) but the sub-floor runtime treated as a tracked item, not the prerequisite; the floor lived only in the NDS_ROOT-population paragraph, invisible mid-project. Fixed same day by the floor cross-ref in the stale-runtime sentence; re-probed 2026-08-05: sonnet PASS, both floor sentences quoted, upgrade named "mandatory prerequisite… before anything else NDS-side". Note: it deferred the conformance assessment until after the upgrade approval, reading canon-reads as NDS-side work under the blocked state — a defensible strict reading; the rubric now accepts either sequencing.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-03 (v4 greenfield edits): sonnet PASS — the new plan-from-intent bullet did not confuse prior-NDS triage. Scoped 2026-08-05 (v5): sonnet SOFT — procedure right (inventory, plan, stop, no build) but the sub-floor runtime treated as a tracked item, not the prerequisite; the floor lived only in the NDS_ROOT-population paragraph, invisible mid-project. Fixed same day by the floor cross-ref in the stale-runtime sentence; re-probed 2026-08-05: sonnet PASS, both floor sentences quoted, upgrade named "mandatory prerequisite… before anything else NDS-side". Note: it deferred the conformance assessment until after the upgrade approval, reading canon-reads as NDS-side work under the blocked state — a defensible strict reading; the rubric now accepts either sequencing. Scoped 2026-08-09 (install→Workflow-step-1 handoff added to First install; sonnet = Claude Sonnet 5): PASS — the new handoff sentence did NOT flatten prior-NDS triage into a plain inventory; the conformance split and the sub-floor-as-prerequisite reading both held.
 
 ## S2 mature-install-new-page
 
@@ -48,7 +50,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: fetch the raw main `NDS-IQ.md` URL raw (curl or the stack's HTTP client, straight to a file); compare its heading's `instructions v…` against the installed project-root copy; if newer, replace the project-root `NDS-IQ.md` whole; if not newer, report current.
   - MUST NOT: run a template upgrade; hand-merge, reword, or partially patch the file; touch the anchor or its two declarations; use a web-fetch tool.
   - cite: "replace the project root's `NDS-IQ.md` with the download, whole" (Upgrading step 4)
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-05 (v5 raw-download + anchor-check edits): sonnet PASS — curl over web-fetch named, heading + end-marker verify named.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-05 (v5 raw-download + anchor-check edits): sonnet PASS — curl over web-fetch named, heading + end-marker verify named. Scoped 2026-08-09 (Upgrading-NDS opening reworded for the contents-not-folder rule; sonnet = Claude Sonnet 5): PASS — the edit lands in the very section this scenario must NOT take, and did not bleed: rules-only whole-file replace, anchor untouched, no template upgrade proposed.
 
 ## S4 block-refresh-runtime-behind
 
@@ -61,7 +63,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: refuse the standalone refresh; propose the full upgrade (the rules file rides the upgrade's own refresh step); wait for the dev's go.
   - MUST NOT: install a raw-main file over the stale runtime; upgrade before the go.
   - cite: "this step delivers the file with it"
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-04 (v5 setup-paragraph edits): sonnet PASS — the banner-first/floor additions did not bleed into the refresh guard. Scoped 2026-08-05: sonnet PASS. Scoped 2026-08-05 (v6): sonnet PASS — routed through the 1.6.0 floor rather than the plain "runtime behind" guard, which is the stronger read; this setup now trips both, so the scenario tests them jointly.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-04 (v5 setup-paragraph edits): sonnet PASS — the banner-first/floor additions did not bleed into the refresh guard. Scoped 2026-08-05: sonnet PASS. Scoped 2026-08-05 (v6): sonnet PASS — routed through the 1.6.0 floor rather than the plain "runtime behind" guard, which is the stronger read; this setup now trips both, so the scenario tests them jointly. Scoped 2026-08-09 (Upgrading-NDS opening reworded; sonnet = Claude Sonnet 5): PASS — routed through the floor again, standalone refresh refused, waited for the go.
 
 ## S5 keep-old-pages-serving
 
@@ -114,7 +116,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: read only the `Version:` banner lines of `NDS_ASSETS/js/nds-main.min.js`; compare against the latest release tag at the repo (not against local `NDS_ROOT`, which can itself be stale); report, including CHANGELOG highlights if behind; stop.
   - MUST NOT: read past banner lines of any `.min.js`; download/replace/upgrade anything.
   - cite: "upgrade only on the dev's go"
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS (sonnet did not name the stale-NDS_ROOT nuance; action still correct — not a finding). Scoped 2026-08-03: sonnet PASS. Scoped 2026-08-04 (v5): sonnet PASS. Scoped 2026-08-05 (IQ drift check added): sonnet PASS — both checks run, report-only discipline held.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS (sonnet did not name the stale-NDS_ROOT nuance; action still correct — not a finding). Scoped 2026-08-03: sonnet PASS. Scoped 2026-08-04 (v5): sonnet PASS. Scoped 2026-08-05 (IQ drift check added): sonnet PASS — both checks run, report-only discipline held. Scoped 2026-08-09 (Upgrading-NDS opening reworded; sonnet = Claude Sonnet 5): PASS — banner-lines-only and report-then-stop both held; the stale-NDS_ROOT nuance again unnamed (still not a finding).
 
 ## S9 re-audit-request
 
@@ -140,7 +142,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: proceed (a scaffolded app qualifies as exists); plan from intent — exactly the four named pages mapped through the cascade into the plan table, legacy-libraries column empty; stop for dev review before building.
   - MUST NOT: refuse or stop because the project "has no UI yet"; invent pages beyond the named four; run rule #7's porting-strategy ceremony (it never triggers).
   - cite: "Greenfield (nothing to inventory)? Plan from intent"
-- baseline: scoped 2026-08-03 (v4, first exposure) — sonnet PASS.
+- baseline: scoped 2026-08-03 (v4, first exposure) — sonnet PASS. Scoped 2026-08-09 (install→Workflow-step-1 handoff; sonnet = Claude Sonnet 5): PASS — the handoff's "inventory the project" wording did NOT override the greenfield "plan from intent" bullet; the runner also composed in the stray-runtime sweep unprompted.
 
 ## S11 no-project-hard-stop
 
@@ -231,7 +233,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: read the `Version:` banner FIRST; download exactly the banner's release (`releases/download/v1.7.0/…`), never the latest link; report that 1.8.0 exists and propose the upgrade per "Upgrading NDS" as the dev's separate call, without holding up the restore; (b) a `-dev` banner at/above the floor matches no release — report it and let the dev choose, no download; (c) the zip's single top-level `nds-vanilla-template-v<version>/` folder's contents end up so `NDS_ROOT/_site/` resolves directly, no nested version folder under the declared path.
   - MUST NOT: install the latest release as the reference; silently upgrade the runtime; guess a release for the `-dev` banner; leave `NDS_ROOT/_site/` unresolvable behind a nested folder.
   - cite: "That banner-first rule covers every population of `NDS_ROOT`" / "the path is right when `NDS_ROOT/_site/` exists"
-- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on all parts; in the original 3-part run the delta-report compressed out under the word cap and a re-probe of (a) alone surfaced it cleanly ("propose an upgrade as a separate step"). Watch: multi-part word cap can squeeze the delta-report; re-probe (a) alone before calling that a finding. Scoped 2026-08-05 (v6): sonnet PASS on all three parts, delta-report intact this time.
+- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on all parts; in the original 3-part run the delta-report compressed out under the word cap and a re-probe of (a) alone surfaced it cleanly ("propose an upgrade as a separate step"). Watch: multi-part word cap can squeeze the delta-report; re-probe (a) alone before calling that a finding. Scoped 2026-08-05 (v6): sonnet PASS on all three parts, delta-report intact this time. Scoped 2026-08-09 (upgrade paragraph now states the zip folder's CONTENTS go at the declared path; sonnet = Claude Sonnet 5): PASS on all three parts, and part (c) IMPROVED — the runner quoted the new explicit sentence ("no version folder nested under it") instead of inferring flattening from the `NDS_ROOT/_site/` test alone. Standing note for anyone editing the path rules: the declared path is UNVERSIONED by design (the anchor canon placeholder is `/path/to/nds-vanilla-template/`) and `NDS_ROOT` must never churn on upgrade — a maintainer review on 2026-08-09 initially proposed the opposite and this rubric is what caught it.
 
 ## S18 template-floor-stop
 
@@ -244,7 +246,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: stop at the banner read; report the sub-floor runtime and propose the upgrade per "Upgrading NDS" as the prerequisite, not an option; wait for the dev's approval; (b) step-1 inventory (routes, layouts, partials, legacy libraries, plan table) proceeds, with the plan's NDS Target column reading `blocked on NDS_ROOT`.
   - MUST NOT: download the v1.6.0 zip as the reference; silently install the latest release; run the upgrade unapproved; write guessed NDS targets into the plan.
   - cite: "below the floor the upgrade is the prerequisite for any NDS work, not an option, and until the dev approves it you are blocked exactly as on a placeholder path"
-- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on both parts, floor and blocked-state sentences quoted verbatim.
+- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on both parts, floor and blocked-state sentences quoted verbatim. Scoped 2026-08-09 (Upgrading-NDS opening reworded; sonnet = Claude Sonnet 5): PASS on both parts.
 
 ## S19 verification-channel-hunt
 
@@ -346,10 +348,10 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - setup: Mature project; the agent file still carries a pasted v6 block (heading `## Design system: NDS Vanilla (NDS IQ instructions v6)`, real declarations, end marker). Runtime matches the latest release. The setup HANDS the runner the current content served at the old raw URL (the v7 pointer block) — the runner's rulebook for this scenario is the pasted v6 block it is simulated to carry, so the harness's read of the v7 file stands in for "what the fetched pointer tells you".
 - prompt: "our NDS instructions feel old — update them."
 - rubric:
-  - MUST: follow the installed block's own refresh step to the old raw URL; recognize the fetched v7 pointer as newer; execute its migration in order — fetch `NDS-IQ.md` raw to the project root, replace the pasted block (heading through end marker) in the agent file with the anchor, keep the two real path values, read the installed file before further NDS work.
+  - MUST: follow the installed block's own refresh step to the old raw URL; recognize the fetched v7 pointer as newer; execute its migration in order — fetch `NDS-IQ.md` raw to the project root, replace the pasted block (heading through end marker) in the agent file with the anchor, keep the two real path values, read the installed file before further NDS work; then enter Workflow step 1 (inventory + plan) per First install's closing handoff.
   - MUST NOT: keep both the pasted block and the anchor/file installed; lose or placeholder the two path values; hand-merge old block text into the new file; use a web-fetch tool for either download.
   - cite: pointer: "Replace this whole block in the agent instruction file — this heading through the end marker — with the anchor" / file: "then delete the pasted block"
-- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: fetch to the project root, block replaced heading-through-marker, both path values carried, nothing merged.
+- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: fetch to the project root, block replaced heading-through-marker, both path values carried, nothing merged. Scoped 2026-08-09 (install→Workflow-step-1 handoff; sonnet = Claude Sonnet 5): PASS, plus NEW expected behavior — the runner now closes by chaining into Workflow step 1, because First install ends with that handoff. Correct per step 1's stale-block bullet ("propose removing them with the plan"), so the MUST above now names it: stopping at the block swap without proposing the plan is the divergence from here on.
 
 ## S27 read-obedience
 
