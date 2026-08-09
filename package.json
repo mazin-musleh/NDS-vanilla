@@ -1,6 +1,6 @@
 {
   "name": "nds-vanilla",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Vanilla HTML/CSS/JS implementation of Saudi Arabia's National Design System. RTL/LTR native, zero runtime dependencies.",
   "scripts": {
     "build": "bundle exec jekyll build",
@@ -27,6 +27,7 @@
     "url": "https://github.com/mazin-musleh/NDS-vanilla/issues"
   },
   "devDependencies": {
+    "puppeteer-core": "^25.1.0",
     "terser": "^5.43.1"
   }
 }

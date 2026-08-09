@@ -6,8 +6,8 @@ hero_description: One call that tells every live NDS component the contents of a
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.6.x"
-updated: "1.6.x"
+since: "1.7.0"
+updated: "1.7.0"
 last_edit: "09/08/2026 - 09:49 PM"
 ---
 

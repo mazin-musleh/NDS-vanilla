@@ -6,6 +6,91 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-08-10
+
+### Added
+- **Password** — new component: a password field that checks strength rules on every keystroke, confirms a retyped password matches, and blocks submit until both pass. Rule chips take a built-in rule, a `data-rule-pattern` regex, or a rule registered with `NDS.Password.addRule()`; `data-password-strength` on the container is the CSS hook for a strength meter. See the [Password doc page](https://mazin-musleh.github.io/NDS-vanilla/components/password.html).
+- **NDS.Init.refresh** — one call after a list mutates: `NDS.Init.refresh(container)` tells every live component that the container's contents changed, so filters, counters, sorting, and row controls follow the new rows. It walks the loader registry, so a component updates because it is registered, not because the caller remembered it. See the [Refresh doc page](https://mazin-musleh.github.io/NDS-vanilla/core/refresh.html).
+- **Prose** — new layout layer: a classless flowing-content region for editor and CMS output. `.nds-prose` styles bare headings, paragraphs, lists, blockquotes, tables, and `<hr>` with no per-element classes. See the [Prose doc page](https://mazin-musleh.github.io/NDS-vanilla/layout/prose.html).
+- **NDS IQ v7** — the consumer rules ship as a file, not a pasted block. `NDS-IQ.md` sits at the zip top level and on raw main, and the agent reads it on demand, once a session. Only a small anchor with the project's two paths goes into the project's own instruction file. See the [NDS IQ guide](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html).
+- **JS source banners** — every runtime JS file opens with a public-surface banner listing its methods, events, hooks, and gotchas, so the `_source/` copy answers API questions without a full read. The release build fails on a missing or drifted banner.
+- Release zip — `_source/` now carries the raw page sources for docs, templates, and examples (`components/`, `utilities/`, `layout/`, `ui-shell/`, `core/`, `templates/`, `examples/`) beside the JS and SCSS.
+- Catalogs — every entry in `components.yml`, `templates.yml`, and `examples.yml` carries `use_when`, the job the entry does in the words developers use.
+- Examples — Sign In: national single sign-on with a credentials fallback, captcha on a cooldown refresh, delivery-method choice, one-time code, change password, change mobile, and sign out. See the [Sign In example](https://mazin-musleh.github.io/NDS-vanilla/examples/sign-in.html).
+- Examples — Manage Records: a CRUD screen built on table sub-rows, with create, edit, delete, bulk delete, and CSV export. See the [Manage Records example](https://mazin-musleh.github.io/NDS-vanilla/examples/manage-records.html).
+- Examples — Faculty CV: a long-form profile with stacked wrappers on one card, a reversed vertical stepper as a career timeline, and a paginated publication list. See the [Faculty CV example](https://mazin-musleh.github.io/NDS-vanilla/examples/faculty-cv.html).
+- Filter — `NDS.Filter.refresh(root)` re-resolves items and regenerates auto filters after the DOM changes. A refresh holds the user's page; a real criteria change still resets to page 1.
+- Selection — `NDS.Selection.refresh()` recounts every selection target.
+- Sort — `NDS.Sort.refresh()` re-runs the active sort after items arrive.
+- Sort — a selector string that matches in the document but not inside the root now warns once, instead of silently sorting nothing.
+- Custom select — `NDS.CustomSelect.setValue(el, value)` and `NDS.CustomSelect.clear(el)`. Both work before the menu is built and while it is portaled open; `setValue` returns `false` for an unknown value, so display and submit value never diverge.
+- Dropmenu — `NDS.Dropmenu.destroy(element)` is now public, so a consumer discarding a wrapper has a supported teardown.
+- Autocomplete — `data-strict`: typed text must match a picked suggestion, enforced at submit through a hidden nameless value carrier. The submitted form data does not change.
+- Stepper — `nds-cardView` cards each step's content in vertical layout and the whole widget in radial. `--stepper-gap`, `--stepper-card-lift`, and `--stepper-content-width` are real knobs a consumer stylesheet can win against.
+- Stepper — a divider used as a step label, aligned to the circle centre through `--divider-lift`.
+- Divider — `nds-start` and `nds-end` drop one flanking line so the label sits flush. `--divider-line-start` and `--divider-line-end` cap either line.
+- Section — `--section-wrapper-gap` sets the space between stacked wrappers in one section. See the [Section doc page](https://mazin-musleh.github.io/NDS-vanilla/layout/section.html).
+- Buttons — `.nds-btn.nds-col` stacks the icon above the label and fills its slot.
+- Code — `.nds-code-tags`, an authored chip strip beside the language tag.
+- Tags — `--tag-label-max` dials the label cap; a long label truncates instead of escaping its container.
+- Scroll more — `--scroll-padding` pads the scroll end so the last child's border and focus ring are not clipped.
+- Table of contents — `--toc-skeleton-rows` reserves the auto-populated list height and a loading skeleton fills it until init.
+- Hero — the sub hero can carry a portrait beside its title, separate from the existing background image (`hero_avatar` on the Jekyll sources in `_source/`).
+
+### Changed
+- Events — the five remaining legacy event names now follow `nds:<component>:<verb>`, matching multiselect, filter, pagination, and dropmenu. Listeners on the old names stop firing; see Migrating below.
+- Document Head — deferred stylesheets ship as `data-nds-defer` preloads that one head script converts to real links. The inline `onload` handlers are gone, so a nonce or hash can grant the head script; the `<noscript>` fallbacks are gone with them. The icon sheets load from `nds-main.min.js` and need no CSP grant, and the `use_hgi_font` config key is removed. A head kept from 1.6.0 still works — the loader falls back to the stylesheet filename and skips any icon sheet the head already added — so re-copying the head is an improvement, not a migration step.
+- Prose — `.nds-section-body` no longer styles bare prose. Prose surfaces opt in with `.nds-prose`, and component internals get nothing by default; the list rhythm, sub-list spacing, and `ol` marker cycle move into the prose layer, so `.nds-prose` and the editor match.
+- Prose — paragraph flow moves to `--spacing-xl`, headings are restated as multiples of that gap, and running text caps at `--paragraph-max-width`. Tables, code, and demos keep the full column.
+- Cards — canonical markup keeps `.nds-card-actions` a sibling of `.nds-card-content`, so a long form scrolls without taking its buttons out of reach. Actions nested inside the content still work; a modal pins them.
+- Utilities — `nds-note` is a standalone utility with the four status tints. `nds-required-notice` stays as the legacy alias.
+- Utilities — `nds-center-sm`, `-md`, `-lg`, and `-xl` are removed.
+- Toolbar — `.nds-bar-text` and `.nds-results-count` read the primary paragraph colour, and a toolbar inside `.nds-sub` takes a tighter default bottom margin.
+- Mainnav — the desktop nav container gap widens from `lg` to `4xl`. Mobile stays at `lg`.
+- Focus — the reset ring folds into `:where()`, so a component box-shadow overrides it on source order. A focused link gains padding for the outline without shifting the text around it.
+- Code — the light-mode syntax property colour moves to blue-700 for stronger contrast on cards, and the prompt lexer colours a full URL as one token.
+- Password ships in the delegated bundle. Chips are server-rendered neutral, and init recovers any keystroke typed before the bundle lands.
+- Filter — `NDS.Filter.create()` now registers exactly like the loader path: init stamp, backref, target registry, and the ready event.
+- Date picker — panel listeners hang off a per-open `AbortController`, and the instance-lifetime ones off the instance controller.
+
+### Fixed
+- Icon font — the load budget is measured from the download, not from init, so the HGI icon font no longer times out and leaves every content icon invisible for the life of the page. Under slow-4G the sheet landed well past the old 15s deadline.
+- Sort — the original order is snapshotted on first apply, not at init, so items that arrive late can still be restored. Reset no longer re-attaches a deleted row.
+- Sort — triggers authored inside a portaled dropmenu resolve through the portal-aware walk, so the trigger icon keeps tracking the active sort.
+- Filter — every control inside a portaled menu stays reachable to `refresh()`, the live sort-trigger getter, the count slot, and the accordion count tags.
+- Filter — the "All" radio is restored when a chip is cleared and when `setFilterValues()` empties a group. A radio option whose own value holds commas now matches on URL replay.
+- Filter — all four `nds:filterForm*` events and the relayed `nds:formValid` / `nds:formInvalid` bubble, so a form-level listener fires.
+- Filter — `showNoResultsAlert()` is guarded against a missing filter target, which is the normal shape in form and AJAX modes.
+- Filter and Sort — an AJAX swap no longer leaves the sort engine rooted on the replaced container, and the swapped-in container is stamped so it is not held hidden.
+- Accordion — a group built after the first pass wires its header, and the toggle index resolves at click time so a late item cannot misdirect earlier buttons.
+- Date picker — the hour cycle is pinned, so 00:00 to 00:59 Riyadh no longer reads as a day forward and break "today", the Today button, and the year window.
+- Date picker — closing one picker no longer wipes every other picker's conversion memo, and `destroy()` releases the two lifecycle listeners it used to leave behind.
+- Tables — row checkboxes are read live, so rows created or deleted at runtime enter the counts and `nds:table:selection` reports them. `selectedIndexes` reports DOM order, as the doc page already stated, and a table that starts empty and gains rows still wires up.
+- Export — a sub-row's nested table no longer walks up to the outer paged container and exports zero rows.
+- Forms — a required custom select validates through its hidden value carrier, instead of passing whatever it held.
+- Forms — `type="number"` inside an NDS field no longer paints the browser's spin buttons.
+- Forms — the clear button hands focus back to the field it emptied instead of dropping it to `<body>`.
+- Autocomplete — a programmatic `input` dispatch triggers the fetch, and an autocomplete outside a forms-managed container fetches at all.
+- Buttons — a cooldown button reserves the widest of its three labels from first paint, so the box no longer resizes under the user's finger.
+- Hero — the sub-hero background image no longer creates a stacking context that traps overflowing content, so an open dropmenu paints above the section below.
+- Layout — the side-info flex rule is scoped to its own section body, so nested wrappers keep their block layout. Wrapper spacing no longer relies on margin collapsing.
+- Table of contents — no entry reads as active until a heading is reached, and the auto-populated list reserves its height so the article does not jump on mobile.
+- Scroll more — the scroll end is padded, so the last item's border and focus ring are not clipped. Tab strips opt out.
+- Content switcher — the panel drops its inline padding, since the strip is `fit-content` and there is no edge to align to. A panel that is itself a card keeps its own gutter.
+- Loader — injected bundles go into the body, not the head. Injection is post-reveal, so a body-tail script is the right slot.
+- Tags — a label wider than its card or cell truncates instead of overflowing.
+- Modal — actions that consumer markup still nests inside the scrolling content are pinned, so a long form cannot push them out of reach.
+- High contrast — the sub-hero image suppression follows the image to its new pseudo-element.
+
+### Migrating from v1.6.0
+
+- Replace all runtime assets: copy `_site/assets/` from the release zip over `NDS_ASSETS/`. Every file carries the new version banner, so overwrite everything rather than cherry-picking the changed bundles.
+- Events — five legacy names now carry the `nds:` prefix. Listeners on the old names stop firing. Rename them: `selectChange` → `nds:customselect:change`, `ratingChange` → `nds:rating:change`, `nds-modal-opened` / `nds-modal-closed` → `nds:modal:opened` / `nds:modal:closed`, `nds-digitalStamp-opened` / `nds-digitalStamp-closed` → `nds:digitalStamp:opened` / `nds:digitalStamp:closed`, and `switchChange` → `nds:switchChange`.
+- Prose — `.nds-section-body` no longer styles bare `<p>`, `<ul>`, `<ol>`, `<table>`, or `<pre>`. Add `nds-prose` to the wrapper that holds them, or wrap them in `<div class="nds-block nds-prose">`. Component internals are unaffected.
+- `.nds-card-form` is removed, along with the `.nds-card > .nds-form` flex override. A `<form class="nds-form">` inside a card stays `display: contents`, so the card's own column reaches `.nds-card-content` directly. Replace `.nds-card-form` with `.nds-card-meta` where you used it as a column wrapper.
+- `.nds-center-sm`, `.nds-center-md`, `.nds-center-lg`, and `.nds-center-xl` are removed. Write the media query in your own stylesheet; `.nds-center` is unchanged.
+- NDS IQ — the rules are no longer a block pasted into your agent instruction file. Save `NDS-IQ.md` at your project root and replace the pasted block with the anchor. Delete everything from the old block's `## Design system: NDS Vanilla` heading through its `<!-- end NDS instructions -->` marker; the anchor and the full steps are in the file's "Install and upgrade this file" section. The rules require template 1.7.0 or later.
+
 ## [1.6.0] - 2026-08-02
 
 ### Added
@@ -429,7 +514,10 @@ Replace your bundled `nds-main.min.css` and `nds-main.min.js` with the v1.0.1 ve
 - Five project-specific Claude Code skills for contributors.
 - MIT license, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policies.
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.6.0...v1.7.0
+[1.6.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.5.0...v1.6.0
+[1.5.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.2.0...v1.3.0

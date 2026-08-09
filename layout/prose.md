@@ -6,8 +6,8 @@ hero_description: Default styling for classless flowing content, so the headings
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.6.x"
-updated: "1.6.x"
+since: "1.7.0"
+updated: "1.7.0"
 last_edit: "08/08/2026 - 01:45 AM"
 ---
 

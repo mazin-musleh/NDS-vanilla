@@ -6,8 +6,8 @@ hero_description: A password field that checks strength rules as the user types,
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.6.x"
-updated: "1.6.x"
+since: "1.7.0"
+updated: "1.7.0"
 last_edit: "09/08/2026 - 09:07 PM"
 ---
 
