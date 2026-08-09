@@ -4,6 +4,8 @@
  * Methods:
  *   NDS.Selection.init()            wire the document listener (the loader calls this)
  *   NDS.Selection.reinit()          recount every widget after the DOM changed
+ *   NDS.Selection.refresh()         same recount, as the NDS.Init.refresh hook — takes no
+ *                                   container, because the widget sits outside the list
  *   NDS.Selection.recount(listId)   recount one list's widgets
  *   NDS.Selection.destroy()         detach the listener
  * Events:
@@ -120,5 +122,14 @@
         _offs = [];
     }
 
-    NDS.Selection = { init, reinit: recountAll, recount, destroy };
+    // refresh ignores the container on purpose: recountAll queries [data-selection-target]
+    // (a handful of elements on any page) and recounts each, so scoping buys nothing and
+    // risks the silent miss NDS.Init.refresh exists to remove — a wrapper handed in that
+    // holds the list, rather than the list itself, would match nothing.
+    // It calls init() first because the walk dispatches an owner's refresh INSTEAD of its
+    // init: on a page that had no [data-selection-target] at load the document listener
+    // was never wired, so counting once would leave the widget frozen on the first click.
+    // init() self-guards, but it RETURNS EARLY when already wired, so it cannot be the
+    // whole hook — recountAll() has to run either way.
+    NDS.Selection = { init, reinit: recountAll, refresh: () => { init(); recountAll(); }, recount, destroy };
 })();

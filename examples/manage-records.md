@@ -1101,16 +1101,11 @@ hideFeedback: true
       };
     }
 
-    // Rows changed. Table selection and the sub-row toggle read the DOM live, so
-    // they need nothing here. What does need a sweep is every component INSIDE a
-    // new row: each one instances per element and only on an explicit scan.
+    // Rows changed. One call tells every live component, so nothing can be
+    // forgotten: components inside a new row get scanned, and the ones driving the
+    // list from outside it (filter, selection, sort) re-resolve against it.
     function refreshWidgets() {
-      NDS.Dropmenu.reinit();
-      NDS.Numbers.reinit();
-      NDS.Pagination.refresh(tbody);
-      NDS.Selection.reinit();
-      var filter = NDS.Filter.getByTarget('requestsTableBody');
-      if (filter) filter.refresh();
+      NDS.Init.refresh(tbody);
     }
 
     // A dropmenu instance holds a document-level listener, so tear it down before

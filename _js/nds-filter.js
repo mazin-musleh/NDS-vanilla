@@ -8,6 +8,12 @@
  *   NDS.Filter.getInstance(elOrSel)    resolve the instance from any surface element
  *   NDS.Filter.getByTarget(targetId)   resolve the instance by its data-filter-target id
  *   NDS.Filter.whenReady(el, cb)       run cb with the instance, now or on ready
+ *   NDS.Filter.refresh(root)           re-resolve items + regenerate auto filters for every
+ *                                      CLIENT-SIDE instance whose target is root, sits inside
+ *                                      it, or wraps it — no getByTarget() lookup first. Omit
+ *                                      root for all. AJAX-mode filters are skipped: the server
+ *                                      owns their result set. Prefer NDS.Init.refresh(root),
+ *                                      which calls this and every other affected component
  * Events (bubble from the filter surface element):
  *   nds:filter:ready       detail = the instance
  *   nds:filter:change      detail {filter, criteria, totalItems, visibleItems, hiddenItems}
@@ -2279,7 +2285,7 @@
                 this.dismissNoResultsAlert();
 
                 this._commitAppliedUi();
-                this.updatePagination();
+                this.updatePagination(this._pageOptions());
 
                 // Always dispatch change event, even when clearing all criteria
                 this.dispatchFilterEvent(this.items.length);
@@ -2308,7 +2314,7 @@
             });
 
             this.dispatchFilterEvent(visibleCount);
-            this.updatePagination();
+            this.updatePagination(this._pageOptions());
             this.updateNoResultsAlert(visibleCount);
             this._commitAppliedUi();
 
@@ -2633,7 +2639,11 @@
         // PAGINATION INTEGRATION
         // ==============================================
 
-        updatePagination() {
+        // options is forwarded to pagination. A criteria CHANGE resets to page 1, which
+        // is right: the result set is different, so the old page number is meaningless.
+        // A refresh() is not a criteria change — the rows moved under an unchanged filter
+        // — so it passes { keepPage: true } and the user stays where they were.
+        updatePagination(options = {}) {
             if (!this.targetContainer) return;
 
             // Walk up to find the .nds-paged-content wrapper (pagination expects this as the container).
@@ -2641,7 +2651,7 @@
             // no-ops when there's none, so we just hand it the wrapper.
             const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
                                  this.targetContainer.parentElement?.closest('.nds-paged-content');
-            if (pagedContent) NDS.Pagination.refresh(pagedContent);
+            if (pagedContent) NDS.Pagination.refresh(pagedContent, options);
         }
 
         // ==============================================
@@ -2694,8 +2704,20 @@
             });
             this._flushAccordionInit();
 
-            // Reapply current filters
-            this.applyFilters();
+            // Reapply current filters. The criteria did not change, only the rows, so
+            // pagination must hold the user's page — see _pageOptions/updatePagination.
+            // A row edited on page 3 that snapped the list back to page 1 was the bug.
+            this._refreshing = true;
+            try {
+                this.applyFilters();
+            } finally {
+                this._refreshing = false;
+            }
+        }
+
+        // Page-1 reset belongs to a criteria change, not to a re-scan of the same filter.
+        _pageOptions() {
+            return this._refreshing ? { keepPage: true } : {};
         }
 
         setSearchValue(value) {
@@ -2875,6 +2897,51 @@
         },
 
         getByTarget: (targetId) => _instancesByTarget.get(targetId) || null,
+
+        /**
+         * Re-resolve items and regenerate auto-scanned filters for every instance
+         * whose target container is `root`, sits inside it, or contains it. This is
+         * the NDS.Init.refresh(container) entry point: a filter is identified by its
+         * data-filter-target, never by the mutated container, so the caller cannot be
+         * expected to resolve the instance first — that lookup is the trap this
+         * removes. No arg (or document) refreshes every live filter.
+         *
+         * AJAX-mode instances are SKIPPED. The server owns the result set there: it
+         * ran the query, chose the rows and returned exactly one page of them.
+         * instance.refresh() would re-filter those rows client-side against criteria
+         * the server has already applied — and client matching (data-filter-value
+         * equality) is not server matching (full-text, joins, collation), so rows the
+         * server deliberately returned can be hidden. It also regenerates the filter
+         * options from the visible page only, shrinking a server-supplied option list
+         * to whatever the current 20 rows happen to contain. A server-driven filter
+         * refetches through its own submit path; nothing here should second-guess it.
+         * @param {Element|Document} [root] - the container whose contents changed
+         */
+        refresh: (root) => {
+            // Claim any filter surface that did not exist at page load FIRST. The walk
+            // dispatches an owner's refresh INSTEAD of its init, so without this an
+            // injected [data-filter-target] region is never instanced — and the crit
+            // hold keyed on data-nds-filter-initialized would keep it hidden forever.
+            // Idempotent: createInstance skips a target already in the registry.
+            initializeFilters();
+
+            const scope = root && root !== document ? root : null;
+            _instancesByTarget.forEach(instance => {
+                // isFormMode, not isAjaxMode: a <form data-filter-submit> WITHOUT
+                // data-ajax is server-driven too — the browser submits and the server
+                // returns the filtered page. Re-scanning it would rebuild the option
+                // list from the rows currently rendered and hand back unchecked inputs,
+                // so the next real submit would silently drop the applied filter.
+                if (instance.isFormMode) return;
+                const target = instance.targetId
+                    ? document.getElementById(instance.targetId)
+                    : instance.targetContainer;
+                // No scope: refresh all. Scoped: the target is root, inside it, or
+                // wraps it (a tbody handed in for a table-level target).
+                if (scope && target && !(scope === target || scope.contains(target) || target.contains(scope))) return;
+                instance.refresh();
+            });
+        },
 
         /**
          * Execute callback when a filter is ready, handling the race condition
