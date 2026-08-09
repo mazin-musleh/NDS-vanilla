@@ -37,7 +37,7 @@
   use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. For a blocking message over the page use Modal."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "UI"
-  tags: ["CSS", "API"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/alert.html"
   js: _js/nds-alert.js
   scss: _sass/components/_alert.scss
@@ -75,7 +75,7 @@
   use_when: "The path trail showing where the current page sits: breadcrumbs, hierarchy path, back-navigation trail. On template pages it is set from front matter, not hand-written."
   icon: '<i class="hgi hgi-stroke hgi-arrow-right-double"></i>'
   category: "UI"
-  tags: ["CSS", "API"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/breadcrumb.html"
   js: _js/nds-breadcrumb.js
   scss: _sass/components/_breadcrumb.scss
@@ -141,7 +141,7 @@
   use_when: "Show source code on the page: syntax-highlighted code blocks, snippets, a copy-to-clipboard code sample."
   icon: '<i class="hgi hgi-stroke hgi-source-code"></i>'
   category: "UI"
-  tags: ["CSS", "API"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/code.html"
   js: _js/nds-code.js
   scss: _sass/components/_code.scss
@@ -209,7 +209,7 @@
   use_when: "Append a currency symbol automatically from a data attribute. Covers SAR and international symbols on prices, fees, and totals."
   icon: '<i class="hgi hgi-stroke hgi-coins-dollar"></i>'
   category: "Utilities"
-  tags: ["CSS"]
+  tags: ["JS", "CSS"]
   url: "/utilities/numbers.html#currencyFormat"
   js: _js/nds-numbers.js
 
@@ -315,6 +315,7 @@
   category: "Utilities"
   tags: ["JS", "CSS"]
   url: "/utilities/expandable-content.html"
+  js: _js/nds-expandable.js
 
 - title: "Export"
   description: "Declarative CSV, Excel, and PDF downloads from any table, card list, or marked-up container"
@@ -408,6 +409,7 @@
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/header.html"
+  js: _js/nds-mainnav.js
 
 - title: "Hero"
   description: "Full-width page banners with slider and call-to-action"
@@ -575,7 +577,7 @@
   use_when: "Show completion: progress bar, percentage indicator, upload progress. For labelled step-by-step stages use Stepper."
   icon: '<i class="hgi hgi-stroke hgi-loading-01"></i>'
   category: "UI"
-  tags: ["CSS", "API"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/progress.html"
   js: _js/nds-progress.js
   scss: _sass/components/_progress.scss
@@ -735,7 +737,7 @@
   use_when: "Show progress through a multi-stage flow: step indicator, wizard progress, numbered stages. For a plain percentage bar use Progress."
   icon: '<i class="hgi hgi-stroke hgi-right-to-left-list-number"></i>'
   category: "UI"
-  tags: ["CSS", "API"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/stepper.html"
   js: _js/nds-stepper.js
   scss: _sass/components/_stepper.scss
@@ -813,7 +815,7 @@
   use_when: "A resizable multi-line text field for comments, messages, and descriptions."
   icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
   category: "Forms"
-  tags: ["CSS"]
+  tags: ["JS", "CSS"]
   url: "/components/forms.html#textareaInput"
   js: _js/nds-forms.js
   scss: _sass/components/_forms.scss
@@ -825,6 +827,7 @@
   category: "Foundations"
   tags: ["CSS", "JS"]
   url: "/components/themes.html"
+  js: _js/nds-theme.js
 
 - title: "TOC"
   description: "Auto-populated in-page table of contents with active-section tracking"
