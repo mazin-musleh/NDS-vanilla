@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "07/08/2026 - 07:09 PM"
+last_edit: "10/08/2026 - 12:31 AM"
 ---
 
 <!-- Modal Dialog -->
@@ -282,6 +282,7 @@ last_edit: "07/08/2026 - 07:09 PM"
                     <li>Don't use for success messages or non-blocking notifications. Use an Alert or Toast instead</li>
                     <li>For multi-step workflows inside a modal, use the <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> component to guide users through each stage. For workflows too complex for a modal, use a dedicated page instead</li>
                     <li>Don't stack modals. If one modal needs to open another, restructure the flow so a single modal handles the decision</li>
+                    <li>Add <code class="nds-inline-code lang-html">data-portal</code> to every menu-based control you put inside a modal: a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a>, a <a class="nds-color" href="{{ 'components/forms' | relative_url }}">select</a>, a <a class="nds-color" href="{{ 'components/multiselect' | relative_url }}">Multiselect</a>, an <a class="nds-color" href="{{ 'components/autocomplete' | relative_url }}">Autocomplete</a>, or a <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a>. The modal card scrolls its own content and creates a stacking context, so an in-place menu is clipped at the card edge or hidden behind it. The attribute goes on the <code class="nds-inline-code lang-html">.nds-dropmenu</code> wrapper, which for a multiselect is the inner <code class="nds-inline-code lang-html">[data-multiselect-dropmenu]</code> element rather than the field root</li>
                     <li>Choose <code class="nds-inline-code lang-html">nds-sm</code> for simple confirmation prompts with one or two buttons. Use the default size when the modal includes a short form or longer description. Use <code class="nds-inline-code lang-html">nds-lg</code> for content-heavy modals like terms of service or data previews. Use <code class="nds-inline-code lang-html">nds-full</code> for immersive tasks like image editing or document previews</li>
                     <li>Keep titles clear and contextual to the required action</li>
                     <li>Limit content to a single focused message or task</li>
