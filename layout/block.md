@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "31/07/2026 - 05:11 AM"
+last_edit: "10/08/2026 - 12:42 AM"
 ---
 
 <!-- Block Structure -->
@@ -178,7 +178,7 @@ section.nds-content-section nds-demo-section
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-frame"></i>
+                            <i class="hgi hgi-stroke hgi-artboard"></i>
                             <span class="nds-label">Container Query Anchor</span>
                         </span>
                         <p class="nds-item-desc">Each block establishes a named <code class="nds-inline-code lang-html">block</code> CSS container. Descendants like <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">grids</a> and <a class="nds-color" href="{{ 'components/quote' | relative_url }}">quotes</a> respond to the block's actual width, not the viewport — correct sizing in multi-column layouts where the block is narrower than the section.</p>

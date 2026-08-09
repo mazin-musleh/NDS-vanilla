@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "21/07/2026 - 09:08 PM"
+updated: "1.7.0"
+last_edit: "10/08/2026 - 12:42 AM"
 ---
 
 <!-- Vertical Overflow -->
@@ -433,6 +433,7 @@ last_edit: "21/07/2026 - 09:08 PM"
                         <tr><td><code class="nds-inline-code lang-html">--scroll-fade</code></td><td><code class="nds-inline-code lang-html">48px</code></td><td>Length of the edge fade gradient on the overflow side(s)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--scroll-gap</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Gap between the content and the show-more button</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--scroll-divider</code></td><td><code class="nds-inline-code lang-html">--divider-color</code></td><td>Color of the border between content and button</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--scroll-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-xs</code></td><td>Padding at the scroll end, so the last item's border and focus ring are not clipped. Follows the scroll axis; the start edge is left flush. Set <code class="nds-inline-code lang-html">0</code> to opt out</td></tr>
                     </tbody>
                 </table>
             </div>

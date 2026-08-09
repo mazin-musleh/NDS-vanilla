@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.x"
-last_edit: "08/08/2026 - 05:57 PM"
+updated: "1.7.0"
+last_edit: "10/08/2026 - 12:42 AM"
 ---
 
 <!-- Section Structure Overview -->
@@ -1335,7 +1335,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-frame"></i>
+                            <i class="hgi hgi-stroke hgi-artboard"></i>
                             <span class="nds-label">Container Query Anchor</span>
                         </span>
                         <p class="nds-item-desc">The wrapper establishes a named <code class="nds-inline-code lang-html">section</code> CSS container. Nested <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">grids</a> and components respond to the actual column width, not just the viewport — correct sizing in sidebar layouts where the content column is narrower than the screen.</p>

@@ -59,7 +59,7 @@
 - title: "FAQ Template"
   description: "Frequently asked questions layout with a flat sub-hero, large accordion list, and a feedback call-to-action card for routing unresolved inquiries to support."
   use_when: "A frequently asked questions or knowledge-base page: a searchable and filterable accordion list, plus a still-need-help card that routes to support."
-  icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-message-question"></i>'
   category: "Content"
   tags: ["DGA", "Accordion", "Cards"]
   url: "/templates/faq-template.html"

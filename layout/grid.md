@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "10/08/2026 - 12:42 AM"
 ---
 
 <!-- Basic Grid -->
@@ -480,7 +480,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-frame"></i>
+                            <i class="hgi hgi-stroke hgi-artboard"></i>
                             <span class="nds-label">Container-Aware (opt-in)</span>
                         </span>
                         <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-cq</code> to any ancestor (section wrapper, block, or custom element) to make the grid respond to that ancestor's width via CSS container queries — correct column counts inside sidebars or narrowed columns. Opt-in to avoid globally trapping <code class="nds-inline-code lang-html">position: fixed</code> descendants.</p>

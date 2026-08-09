@@ -12,16 +12,18 @@
 // inside a multi-line string, a computed key, or an early `return {` in an IIFE can misparse.
 // Upgrade path: an acorn walk over the namespace object if a surface outgrows the regexes.
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { basename, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-// The single source of truth for which files carry a banner: 53 components + core, loader,
-// accessibility, theme. Hard-excluded: nds-showcase.js, nds-theme-foundation-day.js,
-// nds-theme-hajj.js, nds-fontLoading.js. ns = the NDS.<Name> namespace Methods verify
-// against; null = multi-namespace file (core) — its banner Methods verify existence-only.
+// The single source of truth for which files carry a banner: 54 components + core, loader,
+// accessibility, theme. ns = the NDS.<Name> namespace Methods verify against; null =
+// multi-namespace file (core) — its banner Methods verify existence-only.
+// Exclusions live in EXCLUDED below, not in this comment: --all asserts SCOPE ∪ EXCLUDED
+// covers _js/ exactly, so a new component cannot be silently skipped (nds-password.js was,
+// for three days — it shipped after the rollout and nothing noticed).
 const SCOPE = [
     ['nds-accessibility.js', 'Accessibility'],
     ['nds-accordion.js', 'Accordion'],
@@ -59,6 +61,7 @@ const SCOPE = [
     ['nds-otp.js', 'OTP'],
     ['nds-pagination.js', 'Pagination'],
     ['nds-panels.js', 'Panel'],
+    ['nds-password.js', 'Password'],
     ['nds-progress.js', 'Progress'],
     ['nds-rating.js', 'Rating'],
     ['nds-scroll-more.js', 'ScrollMore'],
@@ -81,6 +84,15 @@ const SCOPE = [
     ['nds-user-feedback.js', 'UserFeedback'],
     ['nds-voice-input.js', 'VoiceInput'],
 ];
+
+// Deliberately bannerless: two seasonal themes and a showcase file (docs-site only, no
+// public surface), and fontLoading (internal to the reveal gate, nothing wires to it).
+const EXCLUDED = new Set([
+    'nds-fontLoading.js',
+    'nds-showcase.js',
+    'nds-theme-foundation-day.js',
+    'nds-theme-hajj.js',
+]);
 
 // Event literals a file dispatches that its banner deliberately omits, keyed by file name.
 // Every shipped event now carries the nds: prefix, so verifyFile's gate covers them all.
@@ -400,6 +412,15 @@ const [mode, arg] = process.argv.slice(2);
 
 if (mode === '--all') {
     let bad = 0;
+    // Coverage first: a file in neither list is an unreviewed public surface, and every
+    // check below would pass by never looking at it.
+    const known = new Set([...SCOPE.map(([f]) => f), ...EXCLUDED]);
+    const unlisted = readdirSync(join(REPO, '_js')).filter((f) => f.endsWith('.js') && !known.has(f));
+    if (unlisted.length) {
+        console.error(`_js/ holds files in neither SCOPE nor EXCLUDED: ${unlisted.join(', ')}`);
+        console.error('Add each to SCOPE (with its NDS.<Name> namespace) or to EXCLUDED.');
+        process.exit(1);
+    }
     for (const [file, ns] of SCOPE) {
         const source = readFileSync(join(REPO, '_js', file), 'utf8');
         const issues = verifyFile(file, ns, source);

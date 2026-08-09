@@ -18,6 +18,13 @@
 #                and preloads, no component JS). A JS tag with no js: is that case,
 #                not a missing value. Two entries may share one file (Numbers,
 #                Counter Animation and Currency all point at _js/nds-numbers.js).
+# icon:          RESERVED, not dead. No template renders it today: the index cards
+#                and the home page print title/description/tags, and llms.txt prints
+#                the text fields. Its siblings do render theirs (examples/index.md
+#                and templates/index.md print {{ ex.icon }} / {{ tpl.icon }}), so
+#                this one is kept ready for the same use. Keep every value distinct
+#                and registered in _sass/_hgiRoundedStroke.scss. Do not delete the
+#                field for being unread.
 
 - title: "Accessibility"
   description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
@@ -71,7 +78,7 @@
 - title: "Block"
   description: "Titled content grouping primitive for sub-sections inside a section body"
   use_when: "Group a titled sub-section inside a section body: paragraphs, lists, and tables under one heading, without starting a whole new page section. Use when content needs a heading but not its own Section."
-  icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-search-list-01"></i>'
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/block.html"
@@ -337,7 +344,7 @@
 - title: "Featured Icons"
   description: "Decorative icon containers with shape and color options"
   use_when: "A decorative icon in a shaped container: circled icons on cards, feature-list bullets, step icons, support-channel tiles."
-  icon: '<i class="hgi hgi-stroke hgi-star"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-sparkles"></i>'
   category: "UI"
   tags: ["CSS"]
   url: "/components/featured-icons.html"
@@ -456,7 +463,7 @@
 - title: "Image Popup Viewer"
   description: "IPV fullscreen image preview with zoom and navigation"
   use_when: "Click an image to open it fullscreen: lightbox, image preview, gallery viewer, with zoom and next and previous navigation."
-  icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-zoom-in-area"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/ipv.html"
@@ -494,7 +501,7 @@
 - title: "Modal"
   description: "Focused dialog overlays for confirmations and forms"
   use_when: "A dialog over the page: modal, popup, confirmation prompt, a form in an overlay, a delete confirmation. For a surface that slides in from an edge use Panels."
-  icon: '<i class="hgi hgi-stroke hgi-browser"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-layers-01"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/modal.html"
@@ -504,7 +511,7 @@
 - title: "Multiselect"
   description: "Multi-option select over a native checkbox group: removable chips, JSON-populated options, staged or instant commit"
   use_when: "Pick several options from a list: multi-select dropdown, checkbox dropdown, grouped option lists, selections shown as removable chips. Submits natively as a checkbox array. For free typed values use Tag Input; for one choice use Custom Select."
-  icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-checkmark-square-02"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/multiselect.html"
@@ -563,7 +570,7 @@
 - title: "Panels"
   description: "Content-agnostic surface that slides in from any edge of the viewport"
   use_when: "A surface that slides in from any edge of the viewport: slide-over, off-canvas panel, side sheet, detail panel, filter panel. For a dialog centred over the page use Modal; for a sidebar navigation list use Drawer."
-  icon: '<i class="hgi hgi-stroke hgi-layout-right"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-square-arrow-up-01"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/panels.html"
@@ -592,7 +599,7 @@
 - title: "Prose"
   description: "Default styling for classless flowing content from editors and CMSs"
   use_when: "Style classless HTML you do not control: CMS output, rich text editor content, markdown, imported articles. Wrap it once and the headings, paragraphs, lists, quotes, and tables inside read correctly."
-  icon: '<i class="hgi hgi-stroke hgi-text-font"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-text-align-left"></i>'
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/prose.html"
@@ -791,7 +798,7 @@
 - title: "Tag Input"
   description: "Free-text tags committed as removable chips while typing, posted natively as an array"
   use_when: "A field where typed free text becomes removable chips, committing on Enter or comma and submitting natively as an array. Use for keywords, skills, or email recipients. To pick from a fixed list instead use Multiselect."
-  icon: '<i class="hgi hgi-stroke hgi-tags"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-tag-02"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/taginput.html"
@@ -857,7 +864,7 @@
 - title: "Toolbar"
   description: "Controls bar above a table, list, or grid: result counts and applied filters lead, export and actions trail"
   use_when: "The controls bar above a table, list, or grid: result counts and applied filters lead, search, export, and actions trail. Use it so every data screen shares one layout."
-  icon: '<i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-more-horizontal"></i>'
   category: "UI"
   tags: ["CSS"]
   url: "/components/toolbar.html"

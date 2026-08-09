@@ -9,7 +9,7 @@ hero_title: "Government Services"
 hero_description: "Browse all available government digital services"
 sidemenu_mode: false
 exclude_showcase: false
-last_edit: "14/07/2026 - 04:13 PM"
+last_edit: "10/08/2026 - 12:42 AM"
 ---
 
 <section id="servicesList" class="nds-content-section">
@@ -73,15 +73,15 @@ last_edit: "14/07/2026 - 04:13 PM"
                     <span class="nds-label">Most Searched:</span>
                     <div class="nds-chips">
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
-                            <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
+                            <i class="hgi hgi-stroke hgi-plus-sign"></i>
                             <span class="nds-label">Tag 1</span>
                         </button>
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
-                            <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
+                            <i class="hgi hgi-stroke hgi-plus-sign"></i>
                             <span class="nds-label">Tag 2</span>
                         </button>
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
-                            <i class="hgi hgi-stroke hgi-rounded hgi-plus-sign"></i>
+                            <i class="hgi hgi-stroke hgi-plus-sign"></i>
                             <span class="nds-label">Tag 3</span>
                         </button>
                     </div>
