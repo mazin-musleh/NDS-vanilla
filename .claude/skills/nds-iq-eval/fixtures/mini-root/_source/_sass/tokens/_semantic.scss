@@ -1,0 +1,21 @@
+// Fixture stub of the semantic tier. Names are real (they must be, or a runner
+// that quotes one cannot be graded); values are placeholders.
+:root {
+    --background-primary: #0d6efd;
+    --background-primary-light: #e7f1ff;
+    --background-primary-strong: #0a58ca;
+    --text-primary: #0d6efd;
+    --text-oncolor-primary: #ffffff;
+    --border-primary: #0d6efd;
+    --icon-primary: #0d6efd;
+}
+
+:root[data-theme~="dark"] {
+    --background-primary: #4d8bfd;
+    --background-primary-light: #10233f;
+    --background-primary-strong: #7aa9fe;
+    --text-primary: #4d8bfd;
+    --text-oncolor-primary: #0b1220;
+    --border-primary: #4d8bfd;
+    --icon-primary: #4d8bfd;
+}

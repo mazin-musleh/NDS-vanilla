@@ -1,0 +1,14 @@
+// Fixture stub of the component tier — the per-component dial a consumer
+// rebinds. Real names, placeholder values.
+:root {
+    --button-background-primary-default: var(--colors-primary-600);
+    --button-background-primary-hovered: var(--colors-primary-700);
+    --button-background-primary-pressed: var(--colors-primary-900);
+    --button-text-primary: var(--text-oncolor-primary);
+}
+
+:root[data-theme~="dark"] {
+    --button-background-primary-default: var(--colors-primary-500);
+    --button-background-primary-hovered: var(--colors-primary-400);
+    --button-background-primary-pressed: var(--colors-primary-300);
+}

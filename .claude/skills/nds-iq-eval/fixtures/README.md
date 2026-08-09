@@ -12,13 +12,28 @@ Do not grow them toward realism.
   - `_source/_js/` = banner stubs (real banner comment + one stub line) for the
     banner-first scenarios (S6/S14/S15/S25). Frozen copies from the 1.7.0 cycle;
     refresh a stub if its real banner changes materially.
-  - `_source/{components,layout,templates,examples}/*.md` = doc `.md` source
-    twins of the `_site` pages — v7 routes markup reads to `.md` first.
+  - `_source/{components,layout,ui-shell,utilities,core,templates,examples}/*.md`
+    = doc `.md` source twins of the `_site` pages — v7 routes markup reads to
+    `.md` first. Mirror the real zip's folder set: rule #3 takes the folder from
+    the catalog entry's own `url`, so a folder the zip ships and this tree lacks
+    sends a runner to a path that does not exist, and the run fails for a reason
+    that has nothing to do with the rules.
+  - `_source/_sass/tokens/*.scss` = semantic and component tier stubs, real
+    names and placeholder values. Without them a styling scenario has no knob or
+    token to reach, and a runner correctly falls to rule #5's last resort — a
+    pass that grades as a fail.
+  - **Every `url:` in the catalog must resolve to a stub in this tree.** Add the
+    entry and the stub together; a catalogued entry with no doc file is the same
+    fake failure as a missing folder.
   - `NDS-IQ.md` (top level) = heading + pairing-stamp stub of the zip's copy of
     the rules file; the upgrade flow compares against it.
-- `mini-app/` = a fake consumer ASP.NET MVC app mid-legacy: two `.cshtml` pages
-  (Bootstrap + jQuery-table flavored). Scenario setups may add broken `.nds-*`
-  pages or old NDS assets under `wwwroot/`.
+- `mini-app/` = a fake consumer ASP.NET MVC app mid-legacy: two legacy `.cshtml`
+  pages (Bootstrap + jQuery-table flavored) plus `Home/Dashboard.cshtml`, an
+  NDS-built page carrying a canonical department multiselect for the wiring
+  scenarios to attach JS to. Scenario setups may add broken `.nds-*` pages or old
+  NDS assets under `wwwroot/`. A scenario whose setup says a surface already
+  exists needs that surface HERE — otherwise the runner is asked to wire
+  something it would have to invent, and refusing is the correct answer.
 
 Behavior runs always work on scratchpad COPIES (see SKILL.md), never on these
 originals.

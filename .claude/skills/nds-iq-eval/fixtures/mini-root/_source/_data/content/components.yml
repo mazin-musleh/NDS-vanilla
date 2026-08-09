@@ -14,3 +14,23 @@
   use_when: "A type-ahead field: search suggestions, live search, combobox, async option loading. To pick several values use Multiselect."
   url: /components/autocomplete.html
   tags: [form, search, select]
+- title: Side Menu
+  description: Vertical navigation column beside the main content.
+  use_when: "A left or right navigation column on a section landing or console page: side nav, section menu, in-page navigation rail."
+  url: /ui-shell/sidemenu.html
+  tags: [navigation, chrome]
+- title: Copy
+  description: One-click copy to clipboard with confirmation.
+  use_when: "Copy a value to the clipboard: reference numbers, links, codes, and IDs."
+  url: /utilities/copy.html
+  tags: [utility, clipboard]
+- title: Refresh
+  description: One call after your JS changes a container's contents.
+  use_when: "Rows or cards were added, removed or replaced by your own JS and the filter, count, or pagination went stale."
+  url: /core/refresh.html
+  tags: [API, core]
+- title: Request
+  description: The shared fetch wrapper.
+  use_when: "Any network call from page JS, including one to the project's own API."
+  url: /core/request.html
+  tags: [API, core]
