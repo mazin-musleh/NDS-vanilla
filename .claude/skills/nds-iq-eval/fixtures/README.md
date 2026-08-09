@@ -25,6 +25,10 @@ Do not grow them toward realism.
   - **Every `url:` in the catalog must resolve to a stub in this tree.** Add the
     entry and the stub together; a catalogued entry with no doc file is the same
     fake failure as a missing folder.
+  - **Every `nds-hgi-*` used in fixture markup must be listed in `icons.yml`.**
+    Only registered names paint in the inline set, so a missing one is a silent
+    solid box that `NDS.Init.audit()` reports — an agent then correctly flags a
+    page that is actually fine, and the run pays attention to a harness fault.
   - `NDS-IQ.md` (top level) = heading + pairing-stamp stub of the zip's copy of
     the rules file; the upgrade flow compares against it.
 - `mini-app/` = a fake consumer ASP.NET MVC app mid-legacy: two legacy `.cshtml`
