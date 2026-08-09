@@ -8,6 +8,8 @@ Catalog routing (2026-08-08): every entry in `templates.yml`, `examples.yml`, an
 
 Doc-folder routing (2026-08-08): rule #3 now takes the doc folder from the catalog entry's own `url` (`components`, `utilities`, `layout`, `ui-shell`) instead of hardcoding `components/`, and the Reference index names the utilities and ui-shell source folders. S39 guards it. The harness maps `_source/<path>` to the repo's `<path>` wholesale rather than folder by folder, so a new shipped folder needs no harness edit — and it instructs runners to report a missing path by name instead of substituting a file, which is what makes a routing bug gradable at all.
 
+Two API-knowledge routes coexist (2026-08-09): the per-component JS banners and the new `_source/core/*.md` docs (`refresh`, `request`). Adding the second one risked ambiguity at the wiring moment — which does an agent read? Measured on first exposure: none. Component surface → banner; core call → core doc. S25 and S37 hold that split; a future edit that blurs it should re-run both.
+
 Web-fetch evidence (2026-08-09): the "never a web-fetch tool" MUST NOTs (S3, S26) now rest on a live demonstration, not field anecdote. The branch raw URL fetched with curl returned the file byte-exact (57,510 bytes / 283 lines, sha256 match against this snapshot). The SAME URL through a web-fetch tool returned ZERO file content — the small model such tools interpose declined the request outright. So the failure mode is not only "re-rendering": a caller can receive a refusal or a paraphrase and save it as `NDS-IQ.md` believing it holds the rules, which fails silently and totally. The guide's setup prompt keeps a first-line `# NDS IQ` check because it catches every shape of this; do not trim it.
 
 Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31 clean — S28 soft in the batch, clean on a solo re-probe the same day. Lesson: a full-mode batch flattens per-scenario tool effort (the batch runner answered S28 procedurally without opening the catalogs; solo, it routed and quoted). Re-probe a batch soft solo before grading it a finding.
@@ -338,7 +340,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST NOT: (a) dredge the full source when the banner answers; hand-write listeners or `data-*` guesses without the banner read; (b) grep or dredge the 1.6.0 source and wire anyway; invent the surface from memory; treat the missing banner as a mere inconvenience instead of the floor signal it is.
   - cite: "read that component's banner" / "a banner below 1.7.0 has no supported reference to install"
 - artifacts (behavior): page JS binds `nds:multiselect:change` by exact name and calls `populate(...)`; no invented `data-*` attributes; no listener on inner `.nds-*` elements the banner doesn't expose.
-- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: banner read first, `nds:multiselect:change` + `populate()`; (b) routed the bannerless 1.6.0 template to the floor, refused a source dredge.
+- baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: banner read first, `nds:multiselect:change` + `populate()`; (b) routed the bannerless 1.6.0 template to the floor, refused a source dredge. Scoped 2026-08-09, part (a) only (sonnet = Claude Sonnet 5): PASS — run specifically to test whether the new `_source/core/*.md` API docs compete with banner-first routing. They do not: the runner went to the BANNER for a component surface and to the CORE DOC for a core call, no hesitation, no conflict. Risk tested and cleared — do not "fix" it.
 
 ## S26 pasted-block-migration
 
@@ -393,6 +395,19 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - cite: components.yml Custom Select `use_when`: "custom option markup, icons or descriptions in options, and a JS API" / "For type-ahead search use Autocomplete; for several choices use Multiselect"
 - baseline: 2026-08-08 — sonnet PASS clean on both runs (before and after the routing sentence was reworded). Correctly UNDEFINED'd the dot/description sub-element classes, which the doc block does not demonstrate, and treated them as free content inside the option — verified correct against `nds-customselect.js:57-58,150-151`, where only `.nds-option-text` feeds the display field.
 
+## S37 core-refresh-after-dom-mutation
+
+- mode: comprehension
+- rules: rule #3's `<folder>` list (now including `core`); the Reference index's `_source/core/*.md` line ("the runtime's own API docs — `refresh` … and `request` … These document calls, not markup"); the catalog-first precondition
+- provenance: 2026-08-09 — `NDS.Init.refresh(container)` shipped (`ae630561`) to retire a four-call dance with four different argument conventions: `NDS.Tables.reinit()` (no args) · `NDS.Pagination.refresh(contentEl)` (the CONTENT element, not the nav) · `NDS.Selection.reinit()` (no args) · `NDS.Filter.getByTarget(id).refresh()` (resolve the instance first). Every miss failed SILENTLY — nothing warns. Field evidence: `examples/manage-records.md`'s own `refreshWidgets()`. The `core/` doc folder is the route to it; this scenario proves an agent reaches the one call from a symptom description that never names it.
+- setup: Mature project. A records page built with NDS: a table with a filter, a result count, per-page control and pagination nav, all canonical markup, all working. A create modal saves a new record through the project's own API, and the page JS then inserts the new row into the table body directly.
+- prompt: "After we save a new record and insert the row with JS, the result count and the pagination stop matching what's on screen, and the new rows are ignored by the filter until a full page reload. What's the correct way to handle this in NDS?"
+- rubric:
+  - MUST: route to `NDS_ROOT/_source/core/refresh.md`; call `NDS.Init.refresh(container)` ONCE against the mutated container, after the DOM change; name what it re-resolves (filter item set, selection counts, pagination records).
+  - MUST NOT: hand-roll the per-component dance; patch the count or pagination text by hand; reach for `NDS.Init.initialize()` to pick up one row; call refresh from a handler that refresh itself dispatches (loop).
+  - cite: reference index: "the runtime's own API docs — `refresh` (the one call after your JS adds, removes or replaces rows or cards)" / refresh doc: "change the rows, then make one call"
+- baseline: scoped 2026-08-09 (first exposure, sonnet = Claude Sonnet 5) — PASS: `NDS.Init.refresh(tbody)` from the symptom alone, per-component effects enumerated correctly, and the loop gotcha refused unprompted.
+
 ## S39 doc-folder-routing-utilities
 
 - mode: comprehension
@@ -403,8 +418,8 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: land on the Copy entry in `components.yml`; name the read path as `NDS_ROOT/_source/utilities/copy.md`; copy a canonical `lang-html` block verbatim; pick the target-based variant, since the reference number is already rendered in the page markup, and set its `data-copy-target` to a CSS selector for that element.
   - MUST NOT: report the doc source as missing or unreachable; route to `_source/components/copy.md`; substitute the built `_site` twin without saying why; hand-write clipboard JS; conclude NDS has no copy utility.
-  - cite: rule #3: "`<folder>` is the one the catalog entry's `url` names: `components`, `utilities`, `layout`, or `ui-shell`" / components.yml Copy `use_when`: "reference numbers, links, codes, and IDs"
-- baseline: 2026-08-08 first exposure — sonnet PASS, routed to `utilities/copy.md` and printed the path unprompted, chose the target-based demo on the right reasoning ("value already rendered in markup"), refused hand-written clipboard JS.
+  - cite: rule #3: "`<folder>` is the one the catalog entry's `url` names: `components`, `utilities`, `layout`, `ui-shell`, or `core`" / components.yml Copy `use_when`: "reference numbers, links, codes, and IDs"
+- baseline: 2026-08-08 first exposure — sonnet PASS, routed to `utilities/copy.md` and printed the path unprompted, chose the target-based demo on the right reasoning ("value already rendered in markup"), refused hand-written clipboard JS. Scoped 2026-08-09 (rule #3's folder list gained `core`; sonnet = Claude Sonnet 5): PASS — the added folder did not disturb the `utilities` route, and the variant choice was justified from the doc's own sentence ("for dynamic values that change after page load, prefer `data-copy-target`"), a stronger basis than this baseline's original reasoning.
 
 ## S40 theme-rebind-dark-mirror
 
