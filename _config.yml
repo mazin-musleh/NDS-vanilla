@@ -172,6 +172,7 @@ exclude:
   - .jekyll-cache
   - AGENTS.md
   - CLAUDE.md
+  - EDITORIAL.md
   - TODO.md
   - .claude
   - .github

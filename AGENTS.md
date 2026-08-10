@@ -179,6 +179,8 @@ Documentation pages under `components/`, `ui-shell/`, `layout/`, and `utilities/
 
 These are sentence mechanics, not a voice — each surface keeps its own register (doc pages stay plain technical book tone, per the doc skill). If the `ste100-writer` skill is installed it adds an approved-word check; the rules above stand without it.
 
+**Vocabulary and framing live in `EDITORIAL.md`** — the canonical term list (NDS IQ, AI coding agent, validated baseline, canonical markup), how to describe NDS IQ and AI-assisted development, the claim ladder (`designed to` / `supported` / `validated` / `tested`), and the tone each surface takes (homepage, README, Get Started, the NDS IQ guide). Read it before you write or refine any user-facing prose, and before you rewrite existing prose — its "Refining Existing Content" rules govern that. The register above is how to build a sentence; `EDITORIAL.md` is which words go in it.
+
 ## Git Commits
 
 - Do NOT add `Co-Authored-By` lines to commit messages

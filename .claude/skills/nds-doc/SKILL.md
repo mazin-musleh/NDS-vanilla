@@ -317,6 +317,7 @@ Do NOT document things the developer already gets from copying the code examples
 
 ### Content Rules
 
+- **Read `EDITORIAL.md` before writing prose.** It carries the canonical NDS term list, how to describe NDS IQ, the claim ladder (`designed to` / `supported` / `validated` / `tested`), and the doc-page tone. The rules below are what this skill adds on top.
 - **Be brief.** Every sentence must earn its place. A section description is one or two sentences, a Built-in Features description is one line, a Best Practices bullet is one clause. Say the thing and stop: no restating the title, no explaining the same point twice in different words, no trailing "so that…" clause that repeats what the sentence already said. If a sentence can be cut without losing information the developer acts on, cut it.
 - **Write for the developer using the system, not for its maintainers.** No repo tooling (`scripts/*.mjs`, build steps, SCSS internals), no "how we register icons/tokens" mechanics. If the reader cannot act on it from their own project, it belongs in a skill or a source comment, not on a doc page.
 - **NEVER use em dashes** in any generated content. Use colons, commas, periods, or restructure instead.
