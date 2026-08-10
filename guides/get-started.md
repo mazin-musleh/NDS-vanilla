@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.7.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "09/08/2026 - 11:47 PM"
+last_edit: "10/08/2026 - 02:53 AM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -125,13 +125,24 @@ LICENSE         - License terms
                         </button>
                     </div>
                     <code class="lang-prompt">
-Download this file raw to `NDS-IQ.md` at this project's root, with curl or an equivalent HTTP client. Never a web-fetch tool: those re-render what they fetch and save a corrupt copy.
+Download this to `NDS-IQ.md` at the project root with curl or your HTTP client. Do not use a web-fetch tool: it saves a re-rendered copy.
 https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md
 
-The saved file must start with `# NDS IQ`. If it does not, the response was not downloaded as raw content: delete the file and retry with a real HTTP client.
-
-Then read it from top to bottom and follow it. Everything after the download is defined by the file itself.
+Confirm it starts with `# NDS IQ`, then read it top to bottom and follow it. Everything after that is defined by the file.
                     </code>
+                </div>
+                <div class="nds-alert nds-card nds-inline" data-status="info" role="alert">
+                    <span class="nds-feedback nds-alert-icon">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
+                    </span>
+                    <div class="nds-alert-content">
+                        <div class="nds-alert-text">
+                            <span class="nds-alert-title">Add project-specific context:</span>
+                            <p class="nds-alert-description">Provide any information that affects how the work should be carried out, such as the technology stack, view or route locations, existing integrations, or project constraints. This is optional; NDS IQ's workflow will identify and ask for any required information during setup and planning.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
                     <span class="nds-feedback nds-alert-icon">
