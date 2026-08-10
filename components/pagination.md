@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "09/08/2026 - 09:52 PM"
+last_edit: "10/08/2026 - 10:47 PM"
 ---
 
 <!-- Choosing a mode -->
