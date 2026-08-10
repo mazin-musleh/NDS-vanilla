@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.0"
-last_edit: "07/08/2026 - 09:44 PM"
+updated: "1.7.x"
+last_edit: "10/08/2026 - 10:24 PM"
 ---
 
 <!-- Standard Card -->

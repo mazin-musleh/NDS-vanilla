@@ -224,6 +224,7 @@
     width: 100%;
     white-space: wrap;
     flex: 1;
+    max-width: var(--paragraph-max-width);
   }
 
   .nds-card-title {
