@@ -379,17 +379,21 @@ class JSProcessor
       begin
         compressed_content = compress_with_terser(original_content)
 
-        # Header comment (no timestamp — keeps git diffs stable on rebuild)
+        # Header comment (no timestamp — keeps git diffs stable on rebuild).
+        # Docs-only outputs (@output_overrides — showcase + event themes) skip the
+        # version line: they never ship to a consumer, and the stamp dirties the
+        # file on every version bump.
         project_title = @config['title'] || 'National Design System'
         version = @config['version'] || ''
         author_name = @config['author'] || 'Unknown'
         author_profile = @config['author_profile'] || ''
         license = @config['license'] || 'MIT'
         repo_url = @config['repository_url'] || 'https://github.com/mazin-musleh/NDS-vanilla'
+        docs_only = @output_overrides.key?(File.basename(file_path))
 
         header_comment = "/*!\n"
         header_comment += " * #{project_title}\n"
-        header_comment += " * Version: #{version}\n" unless version.empty?
+        header_comment += " * Version: #{version}\n" unless version.empty? || docs_only
         header_comment += " * License: #{license}\n"
         header_comment += " * Repository: #{repo_url}\n"
         header_comment += " * Author: #{author_name}\n"
