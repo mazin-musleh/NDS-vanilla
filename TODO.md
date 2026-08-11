@@ -60,7 +60,7 @@ Order: 1 before 3's `last-evaluated.md` overwrite; 2 and 3 ride one `evolve`.
 
 **Doc gap**
 
-- [ ] **S29 stays open.** Two sonnet runs split on whether a coloured dot plus a description line inside `.nds-select-option` is free content or invented markup. Both readings follow the text, so the scenario is under-determined by `components/forms.md`, which demos no option with anything beside the label. One demo there settles it — a doc fix at the point of copy, per the cause-removal ladder, NOT a rules edit. Re-baseline S29 after.
+- [x] **S29 stays open.** Two sonnet runs split on whether a coloured dot plus a description line inside `.nds-select-option` is free content or invented markup. Both readings follow the text, so the scenario is under-determined by `components/forms.md`, which demos no option with anything beside the label. One demo there settles it — a doc fix at the point of copy, per the cause-removal ladder, NOT a rules edit. Re-baseline S29 after. *(Fixed 2026-08-11: Option 3 in the Custom Select demo now carries `hgi-record` icon + `.nds-note`; verified in browser that customselect reads only `.nds-option-text` for the trigger value. Re-baseline S29 next eval cycle.)*
 
 **Artifact + hygiene**
 

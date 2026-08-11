@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "10/08/2026 - 12:14 AM"
+last_edit: "11/08/2026 - 09:35 AM"
 lang: en
 direction: ltr
 ---
@@ -1529,7 +1529,9 @@ direction: ltr
                             <span class="nds-option-text">Option 2</span>
                           </button>
                           <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3">
+                            <i class="hgi hgi-stroke hgi-record" aria-hidden="true"></i>
                             <span class="nds-option-text">Option 3</span>
+                            <span class="nds-note">Free decoration is allowed inside an option</span>
                           </button>
                         </div>
                       </div>
@@ -1581,7 +1583,9 @@ direction: ltr
           &lt;span class="nds-option-text"&gt;Option 2&lt;/span&gt;
         &lt;/button&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3"&gt;
+          &lt;i class="hgi hgi-stroke hgi-record" aria-hidden="true"&gt;&lt;/i&gt;
           &lt;span class="nds-option-text"&gt;Option 3&lt;/span&gt;
+          &lt;span class="nds-note"&gt;Free decoration is allowed inside an option&lt;/span&gt;
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
