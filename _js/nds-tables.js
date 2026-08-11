@@ -43,6 +43,9 @@
  *   - Column hides persist in localStorage whenever the table has an id.
  *   - Hiding a column stamps data-export-skip on its <th> so exports match the view, and a
  *     header with no text falls back to its data-export-label for the menu entry.
+ *   - The column menu's rows come from buildRow(): div.nds-form-container.nds-check-container
+ *     wrapping div.nds-form-header > label[for] > span.nds-label and div.nds-form-control >
+ *     the input — the same skeleton nds-filter generates. Hand-written rows must match it.
  */
 /**
  * NDS Tables Component

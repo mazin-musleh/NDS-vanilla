@@ -11,8 +11,9 @@
  *   NDS.Filter.refresh(root)           re-resolve items + regenerate auto filters for every
  *                                      CLIENT-SIDE instance whose target is root, sits inside
  *                                      it, or wraps it — no getByTarget() lookup first. Omit
- *                                      root for all. AJAX-mode filters are skipped: the server
- *                                      owns their result set. Prefer NDS.Init.refresh(root),
+ *                                      root for all. Form-mode filters are skipped, AJAX or
+ *                                      not: the server owns their result set. Prefer
+ *                                      NDS.Init.refresh(root),
  *                                      which calls this and every other affected component
  * Events (bubble from the filter surface element):
  *   nds:filter:ready       detail = the instance
@@ -49,6 +50,15 @@
  *   - Declare data-filter-items only where a live filter exists: a crit rule holds such a
  *     container as skeleton until an instance stamps data-nds-filter-initialized, with no
  *     console warning — NDS.Init.audit() is what reports an unclaimed one.
+ *   - .nds-filter is a pure anchor; submit mode is a SEPARATE form carrying the same target:
+ *       <form data-filter-target="results" data-filter-submit method="get">
+ *       <div class="nds-filter" data-filter-target="results">…</div>
+ *     Without data-ajax the browser submits and the server returns the filtered page; add
+ *     data-ajax on that form for AJAX submission instead.
+ *   - Auto-generated options come from _buildFilterInput(): div.nds-form-container plus
+ *     nds-{check,radio,switch}-container, wrapping div.nds-form-header > label[for] >
+ *     span.nds-label and div.nds-form-control > the input. Hand-written options must match
+ *     that shape — read the generator, do not guess it.
  *   - Resetting is markup, not JS: a [data-filter-action="reset"] button inside the surface
  *     clears every input and re-emits nds:filter:change. Hand-clearing fields + syncState
  *     repaints only — it dispatches nothing.
