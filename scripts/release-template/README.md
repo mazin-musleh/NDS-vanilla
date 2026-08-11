@@ -17,4 +17,4 @@ A versioned, read-only build of the National Design System (Saudi Arabia). Keep 
 - Copy what you need OUT of this folder into your project; never point production pages at files in here.
 - Never read or edit `*.min.js` / `*.min.css` — the readable source is in `_source/`, once populated.
 - Copy component markup verbatim from the doc pages; don't invent or adapt it from memory.
-- To upgrade: replace this folder with the new release (update your anchor's `NDS_ROOT` line if the folder name carries the version), then paste the upgrade prompt from the guide — your agent compares the bundle version banners, replaces the assets under `NDS_ASSETS`, and sweeps your pages per the CHANGELOG's "Migrating from" sections.
+- To upgrade: replace this folder's contents with the new release's (the declared `NDS_ROOT` path stays the same), then paste the upgrade prompt from the guide — your agent compares the bundle version banners, replaces the assets under `NDS_ASSETS`, and sweeps your pages per the CHANGELOG's "Migrating from" sections.
