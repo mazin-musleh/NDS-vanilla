@@ -523,25 +523,30 @@ fieldset {
             }
         }
 
+        // The affix rules target the button-shaped widget that sits flush
+        // against the input; scoping to .nds-btn names that intent and skips
+        // whatever else lives in the affix (multiselect's prefix carries an
+        // .nds-dropmenu-menu popover as a sibling of its trigger, and that
+        // menu must keep its own rounded corners).
         &.nds-suffix {
-            >* {
+            >.nds-btn {
                 border-start-start-radius: 0;
                 border-end-start-radius: 0;
             }
 
-            >*:last-child {
+            >.nds-btn:last-child {
                 border-start-end-radius: var(--_input-radius);
                 border-end-end-radius: var(--_input-radius);
             }
         }
 
         &.nds-prefix {
-            >* {
+            >.nds-btn {
                 border-start-end-radius: 0;
                 border-end-end-radius: 0;
             }
 
-            >*:first-child {
+            >.nds-btn:first-child {
                 border-start-start-radius: var(--_input-radius);
                 border-end-start-radius: var(--_input-radius);
             }
