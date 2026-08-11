@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "09/08/2026 - 01:19 AM"
+last_edit: "12/08/2026 - 12:41 AM"
 ---
 
 <!-- Autocomplete Input -->
@@ -184,7 +184,7 @@ last_edit: "09/08/2026 - 01:19 AM"
                 <i class="hgi hgi-stroke hgi-search-list-01"></i>
                 <span class="nds-label">Search Box Auto-submit</span>
               </span>
-              <p class="nds-item-desc">When the container also has class <code class="nds-inline-code lang-html">nds-search-box</code>, selecting a result automatically clicks the nearest <code class="nds-inline-code lang-html">.nds-search-btn</code> to submit the search without extra interaction.</p>
+              <p class="nds-item-desc">When the container also has class <code class="nds-inline-code lang-html">nds-search-box</code>, selecting a result automatically clicks the nearest <code class="nds-inline-code lang-html">.nds-search-btn</code> to submit the search without extra interaction. On a data screen the search box sits in a <a href="{{ 'components/toolbar' | relative_url }}" class="nds-color">Toolbar</a>, beside the filters and the result count.</p>
             </div>
         </div>
       </div>

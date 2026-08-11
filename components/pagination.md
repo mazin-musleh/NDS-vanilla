@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "11/08/2026 - 09:31 AM"
+last_edit: "12/08/2026 - 12:41 AM"
 ---
 
 <!-- Choosing a mode -->
@@ -935,7 +935,7 @@ last_edit: "11/08/2026 - 09:31 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Records Counter</h2>
-            <p class="nds-section-description">A "Showing x to y of z" line that pagination keeps live. Point any element at the paged container with <code class="nds-inline-code lang-html">data-paged-target="id"</code> and mark number slots inside it: the sentence, language, and emphasis stay yours, only the numbers are stamped. With an active <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a>, the count is the filtered count automatically</p>
+            <p class="nds-section-description">A "Showing x to y of z" line that pagination keeps live. Point any element at the paged container with <code class="nds-inline-code lang-html">data-paged-target="id"</code> and mark number slots inside it: the sentence, language, and emphasis stay yours, only the numbers are stamped. With an active <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a>, the count is the filtered count automatically. On a data screen the counter belongs in a <a class="nds-color" href="{{ 'components/toolbar' | relative_url }}">Toolbar</a> above the list, where result counts lead the bar</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
