@@ -95,12 +95,12 @@ sidemenu_mode: false
 
                 <div class="nds-tab-content">
 
-                    <div class="nds-tab-panel" role="tabpanel" id="panel-faq-all" aria-labelledby="tab-faq-all" tabindex="0" style="padding:0;">
-                        <div class="nds-accordion nds-lg" id="faq-all-items" data-filter-items="nds-accordion-item">
+                    <div class="nds-tab-panel nds-flush" role="tabpanel" id="panel-faq-all" aria-labelledby="tab-faq-all" tabindex="0">
+                        <div class="nds-accordion nds-lg nds-paged-content" id="faq-all-items" data-filter-items="nds-accordion-item" style="--per-page:5;">
                             {% for item in faqs %}
                             {% assign hid = "faq-all-h-" | append: item.id %}
                             {% assign cid = "faq-all-c-" | append: item.id %}
-                            <div class="nds-accordion-item">
+                            <div class="nds-accordion-item nds-page-item">
                                 <h3 class="nds-accordion-header" id="{{ hid }}">
                                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                                         aria-expanded="false" aria-controls="{{ cid }}">
@@ -122,17 +122,18 @@ sidemenu_mode: false
                             </div>
                             {% endfor %}
                         </div>
+                        <nav class="nds-pagination" data-auto-pagination="faq-all-items" aria-label="Pagination"></nav>
                     </div>
 
                     {% for category in categories %}
-                    <div class="nds-tab-panel" role="tabpanel" id="panel-faq-{{ category }}" aria-labelledby="tab-faq-{{ category }}"
-                        aria-hidden="true" tabindex="-1" hidden style="padding:0;">
-                        <div class="nds-accordion nds-lg" id="faq-{{ category }}-items">
+                    <div class="nds-tab-panel nds-flush" role="tabpanel" id="panel-faq-{{ category }}" aria-labelledby="tab-faq-{{ category }}"
+                        aria-hidden="true" tabindex="-1" hidden>
+                        <div class="nds-accordion nds-lg nds-paged-content" id="faq-{{ category }}-items" style="--per-page:5;">
                             {% for item in faqs %}
                             {% if item.category == category %}
                             {% assign hid = "faq-" | append: category | append: "-h-" | append: item.id %}
                             {% assign cid = "faq-" | append: category | append: "-c-" | append: item.id %}
-                            <div class="nds-accordion-item">
+                            <div class="nds-accordion-item nds-page-item">
                                 <h3 class="nds-accordion-header" id="{{ hid }}">
                                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
                                         aria-expanded="false" aria-controls="{{ cid }}">
@@ -155,6 +156,7 @@ sidemenu_mode: false
                             {% endif %}
                             {% endfor %}
                         </div>
+                        <nav class="nds-pagination" data-auto-pagination="faq-{{ category }}-items" aria-label="Pagination"></nav>
                     </div>
                     {% endfor %}
 
