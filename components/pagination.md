@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "10/08/2026 - 10:47 PM"
+last_edit: "11/08/2026 - 08:36 AM"
 ---
 
 <!-- Choosing a mode -->
@@ -27,7 +27,7 @@ last_edit: "10/08/2026 - 10:47 PM"
                 </ul>
             </div>
             <div class="nds-block">
-                <p class="nds-section-description"><code class="nds-inline-code lang-html">nds-paged-content</code> and <code class="nds-inline-code lang-html">nds-page-item</code> belong to <strong>auto</strong> only — manual and data-driven navs never use them.</p>
+                <p class="nds-section-description"><code class="nds-inline-code lang-html">nds-paged-content</code> and <code class="nds-inline-code lang-html">nds-page-item</code> are the canonical container/item shape for all three modes. <code class="nds-inline-code lang-html">data-auto-pagination</code> on the nav is what triggers client slicing; without it the markers stay for the records counter (<code class="nds-inline-code lang-html">data-paged-target</code>), empty state (<code class="nds-inline-code lang-html">data-empty-message</code>), and filter targets.</p>
             </div>
         </div>
     </div>
