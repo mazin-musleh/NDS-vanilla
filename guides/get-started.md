@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-updated: "1.7.x"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
+updated: "1.7.1"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
 last_edit: "11/08/2026 - 10:54 PM"
 lang: en
 direction: ltr

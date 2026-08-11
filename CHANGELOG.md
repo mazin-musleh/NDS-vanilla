@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-08-12
+
+### Added
+- **Custom Select** — an option can now carry a description line under its label, plus free decoration such as an icon or a coloured dot. The canonical shape nests `.nds-label` inside `.nds-option-text`, with an optional `.nds-description` beside it. Flat options keep working unchanged: the label reader falls back to the option text's own content, so the trigger never shows the description glued to the label. See the [Forms doc page](https://mazin-musleh.github.io/NDS-vanilla/components/forms.html#selectDropdown).
+- **FAQ template** — each tab's accordion paginates, five entries per page.
+- **NDS IQ v0.8** — the consumer rules became version-agnostic. They no longer require a minimum template version, `_source/` is populated from the matching release tag, the update check compares file content with a first-line check that catches a corrupt download, and the revision number is now a display indicator. Also adds a catalog check before any native element or hand-built control, a Content-Security-Policy check at install, and an adoption sweep of each release's Added, Changed, and Fixed notes during an upgrade. See the [NDS IQ guide](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html).
+
+### Changed
+- **Alert, Card, Definition List** — running text caps at `--paragraph-max-width`, so long copy keeps a readable line length.
+- **Dropmenu** — menus render a thin scrollbar. A classic bar is most of a compact menu's width, and `max-content` sizing ignores it, so items overflowed and clipped.
+- **Date Picker** — the dropdown no longer reserves a scrollbar gutter; the thin scrollbar above replaces it.
+- **JS source banners** — Filter and Tables now document the DOM shape their generators emit (`_buildFilterInput()` and `buildRow()`), so hand-written filter options and column-menu rows match what the component builds. Filter also documents `data-filter-submit` form mode and its two-line markup.
+- **Docs** — Pagination and Autocomplete cross-reference [Toolbar](https://mazin-musleh.github.io/NDS-vanilla/components/toolbar.html). Pagination states that the container and item markers are canonical for every mode, and cross-references `nds-empty` from its server-pagination section.
+
+### Fixed
+- **Accordion** — `destroy()` releases the container backref and the init stamp, so `create()` and `init()` rebuild the accordion instead of handing back a dead controller.
+- **Button** — a disabled button inside a button group no longer keeps an enabled-coloured inner seam.
+- **Forms** — the `.nds-prefix` and `.nds-suffix` radius override is scoped to `.nds-btn`, so it no longer reaches other prefix content.
+- **Foundation Day theme** — the mobile section-title override is scoped to its slide instead of the whole page.
+- **Filter banner** — corrected: `refresh()` skips form-mode filters whether or not they carry `data-ajax`. A `data-filter-submit` form without `data-ajax` is server-driven too, and re-scanning it would rebuild the options from the rendered rows and drop the applied filter.
+- **Release zip** — the bundled `NDS-IQ.md` copy ships with LF line endings.
+
+### Migrating from v1.7.0
+
+- Replace all runtime assets: copy `_site/assets/` from the release zip over `NDS_ASSETS/`. Every file carries the new version banner, so overwrite everything rather than merging.
+
 ## [1.7.0] - 2026-08-10
 
 ### Added
