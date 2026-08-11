@@ -86,13 +86,13 @@ ID from your environment info, then your answers, numbered, nothing else.
 
 ## Behavior mode (micro-fixtures)
 
-Comprehension asks "what would you do"; behavior mode checks what an agent actually does — plan files written, markup copied verbatim, stopping at gates, and (v7) whether the anchor's read trigger actually fires. Costs more, so: one scenario, one agent, explicit ask.
+Comprehension asks "what would you do"; behavior mode checks what an agent actually does — plan files written, markup copied verbatim, stopping at gates, and (v0.7) whether the anchor's read trigger actually fires. Costs more, so: one scenario, one agent, explicit ask.
 
 1. Copy `fixtures/mini-root/` and `fixtures/mini-app/` to the scratchpad.
 2. Write the ANCHOR into the fixture app's `AGENTS.md` (the two declaration lines pointing at the copied mini-root and `mini-app/wwwroot/assets/`, plus the read trigger and hard stops, exactly as the Install section of `_includes/NDS-IQ.md` specifies) and copy the CURRENT `_includes/NDS-IQ.md` to the fixture app root as `NDS-IQ.md`. Do NOT tell the runner to read it — whether it reads is part of what behavior mode measures.
 3. Apply the scenario's `setup:` mutations (e.g. stamp the banner version, drop a broken `.nds-*` page in, delete the root `NDS-IQ.md` for read-obedience part d).
 4. Spawn one agent: work dir = the fixture app copy, task = the scenario prompt. Tell it the project serves at a fictional URL and browser verification is unavailable (it should emit the checklist per the rules).
-5. Grade the artifacts against the rubric's `artifacts:` list (e.g. `NDS-PLAN.md` exists with the five columns and the `Managed by NDS IQ v7` opener; no page file written; copied markup byte-matches the fixture doc block).
+5. Grade the artifacts against the rubric's `artifacts:` list (e.g. `NDS-PLAN.md` exists with the five columns and the `Managed by NDS IQ` opener; no page file written; copied markup byte-matches the fixture doc block).
 
 The fixtures are deliberately skeletal — stubs with just enough structure for the rules file's references to resolve. Do not grow them toward realism; a bigger fixture is a slower, costlier eval with no extra signal. `fixtures/README.md` maps what each file stands in for.
 
