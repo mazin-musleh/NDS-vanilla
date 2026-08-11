@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "11/08/2026 - 08:36 AM"
+last_edit: "11/08/2026 - 09:31 AM"
 ---
 
 <!-- Choosing a mode -->
@@ -194,7 +194,7 @@ last_edit: "11/08/2026 - 08:36 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Data-Driven Pagination</h2>
-            <p class="nds-section-description">Set a page count and optional active page on an empty nav element, and the component builds the numbered controls automatically. By default they are buttons you wire through the change event (SPA); add a <code class="nds-inline-code lang-html">data-page-url</code> template to render navigable links instead, for no-JS full-reload server pagination</p>
+            <p class="nds-section-description">Set a page count and optional active page on an empty nav element, and the component builds the numbered controls automatically. By default they are buttons you wire through the change event (SPA); add a <code class="nds-inline-code lang-html">data-page-url</code> template to render navigable links instead, for no-JS full-reload server pagination. When a server response returns zero records, drop <code class="nds-inline-code lang-html">nds-empty</code> into the content region with <code class="nds-inline-code lang-html">data-empty-message</code> for the zero-state — see the <a class="nds-color" href="{{ 'components/empty' | relative_url }}">Empty</a> component.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
