@@ -5,7 +5,7 @@ hero_title: Text Fields - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.7.x-dev"
+updated: "1.7.x"
 last_edit: "11/08/2026 - 10:15 AM"
 lang: en
 direction: ltr

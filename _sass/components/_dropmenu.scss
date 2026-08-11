@@ -28,12 +28,11 @@
     overflow: hidden;
     overflow-y: auto;
     max-height: 400px;
-    // A classic ~15px bar is most of a compact menu (pagination's is 60px wide)
-    // and `max-content` sizing ignores it, so items overflowed into the
-    // hidden overflow-x and clipped. Thin shrinks it; stable reserves the
-    // gutter so the menu's intrinsic width includes it.
+    // A classic ~15px bar is most of a compact menu (pagination's is 60px
+    // wide) and `max-content` sizing ignores it, so items overflowed into
+    // the hidden overflow-x and clipped. Thin shrinks it to a size where the
+    // overflow is visually inconsequential.
     scrollbar-width: thin;
-    scrollbar-gutter: stable;
     // Stop scroll momentum from chaining to the page when the inner
     // scroll hits its end — otherwise the page-scroll listener closes
     // the menu as soon as the user hits top or bottom.
