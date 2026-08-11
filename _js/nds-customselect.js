@@ -42,6 +42,19 @@
     // readonly, non-submitting display surface, so its label is DERIVED from the
     // matching option's text — never hand-authored. Display-only: no dropmenu
     // build. No-op once a label is present. init() runs it over every
+    // The visible label for an option. Prefers a nested .nds-label inside
+    // .nds-option-text (the shape that carries a description alongside the
+    // label — reading .textContent would return "Label Description" glued
+    // together and leak into the trigger). Falls back to .nds-option-text's
+    // own text for the plain-label shape every existing consumer uses.
+    function optionLabel(option) {
+        if (!option) return '';
+        var t = option.querySelector('.nds-option-text');
+        if (!t) return '';
+        var label = t.querySelector('.nds-label');
+        return label ? label.textContent : t.textContent;
+    }
+
     // select-input on the page, so a pre-filled label paints without waiting
     // for the field's deferred build.
     function restoreDisplay(selectInput) {
@@ -54,8 +67,8 @@
         var options = formControl.querySelectorAll('.nds-select-option');
         for (var i = 0; i < options.length; i++) {
             if (options[i].dataset.value === current) {
-                var t = options[i].querySelector('.nds-option-text');
-                selectInput.value = t ? t.textContent : current;
+                var label = optionLabel(options[i]);
+                selectInput.value = label || current;
                 return;
             }
         }
@@ -147,8 +160,7 @@
 
         var hiddenInput = formControl.querySelector('.nds-select-value');
         var value = option ? (option.dataset.value || '') : '';
-        var optionText = option && option.querySelector('.nds-option-text');
-        var text = option ? (optionText ? optionText.textContent : value) : '';
+        var text = option ? (optionLabel(option) || value) : '';
 
         selectInput.value = text;
         if (hiddenInput) hiddenInput.value = value;

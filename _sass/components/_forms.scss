@@ -209,10 +209,29 @@
 // Custom-select option buttons carry .nds-btn, so the dropmenu's
 // .nds-dropmenu-item:not(.nds-btn) inline-padding rule skips them and
 // they render flush against the menu edge with centered text. Restore
-// left alignment + inline gutter to match native <option> behavior.
+// left alignment + a full spacing-md padding box so the two-line shape
+// (label + description) has breathing room top and bottom.
 .nds-select-option {
     justify-content: flex-start;
-    padding-inline: var(--spacing-md);
+    padding: var(--spacing-md);
+
+    // A leading icon sits with the label row, not centered against a taller
+    // label + description stack. No-op on plain-label options (the button's
+    // default align-items already sits it beside a single-row label).
+    > :is(i, svg, img) {
+        align-self: flex-start;
+    }
+
+    // .nds-option-text is the label container. Flex-column with an xs gap so
+    // an option that nests .nds-label + .nds-description stacks them with a
+    // small breather. Plain-text options (single anonymous text child) render
+    // as one row — gap only shows between siblings, so no visible change.
+    .nds-option-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
 }
 
 :is(.nds-form-container, .nds-form-group) {

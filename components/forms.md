@@ -5,8 +5,8 @@ hero_title: Text Fields - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.7.0"
-last_edit: "11/08/2026 - 09:35 AM"
+updated: "1.7.x-dev"
+last_edit: "11/08/2026 - 10:15 AM"
 lang: en
 direction: ltr
 ---
@@ -1520,18 +1520,26 @@ direction: ltr
                       <div class="nds-select-dropdown" hidden>
                         <div class="nds-select-options">
                           <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="">
-                            <span class="nds-option-text">Choose an option...</span>
+                            <span class="nds-option-text">
+                              <span class="nds-label">Choose an option...</span>
+                            </span>
                           </button>
                           <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option1">
-                            <span class="nds-option-text">Option 1</span>
+                            <span class="nds-option-text">
+                              <span class="nds-label">Option 1</span>
+                            </span>
                           </button>
                           <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option2">
-                            <span class="nds-option-text">Option 2</span>
+                            <span class="nds-option-text">
+                              <span class="nds-label">Option 2</span>
+                            </span>
                           </button>
                           <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3">
-                            <i class="hgi hgi-stroke hgi-record" aria-hidden="true"></i>
-                            <span class="nds-option-text">Option 3</span>
-                            <span class="nds-note">Free decoration is allowed inside an option</span>
+                            <i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i>
+                            <span class="nds-option-text">
+                              <span class="nds-label">Option 3</span>
+                              <span class="nds-description">Free decoration is allowed inside an option</span>
+                            </span>
                           </button>
                         </div>
                       </div>
@@ -1574,18 +1582,26 @@ direction: ltr
     &lt;div class="nds-select-dropdown" hidden&gt;
       &lt;div class="nds-select-options"&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value=""&gt;
-          &lt;span class="nds-option-text"&gt;Choose an option...&lt;/span&gt;
+          &lt;span class="nds-option-text"&gt;
+            &lt;span class="nds-label"&gt;Choose an option...&lt;/span&gt;
+          &lt;/span&gt;
         &lt;/button&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option1"&gt;
-          &lt;span class="nds-option-text"&gt;Option 1&lt;/span&gt;
+          &lt;span class="nds-option-text"&gt;
+            &lt;span class="nds-label"&gt;Option 1&lt;/span&gt;
+          &lt;/span&gt;
         &lt;/button&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option2"&gt;
-          &lt;span class="nds-option-text"&gt;Option 2&lt;/span&gt;
+          &lt;span class="nds-option-text"&gt;
+            &lt;span class="nds-label"&gt;Option 2&lt;/span&gt;
+          &lt;/span&gt;
         &lt;/button&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3"&gt;
-          &lt;i class="hgi hgi-stroke hgi-record" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;span class="nds-option-text"&gt;Option 3&lt;/span&gt;
-          &lt;span class="nds-note"&gt;Free decoration is allowed inside an option&lt;/span&gt;
+          &lt;i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"&gt;&lt;/i&gt;
+          &lt;span class="nds-option-text"&gt;
+            &lt;span class="nds-label"&gt;Option 3&lt;/span&gt;
+            &lt;span class="nds-description"&gt;Free decoration is allowed inside an option&lt;/span&gt;
+          &lt;/span&gt;
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
