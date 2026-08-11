@@ -97,7 +97,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: route via the forms banner (top of `NDS_ROOT/_source/_js/nds-forms.js`); `NDS.Forms.initializeContainer(el)` on the swapped region, then `NDS.Forms.syncState(input)` per written field.
   - MUST NOT: `form.reset()`; own listeners on `.nds-*` elements.
   - cite: "read that component's banner" / forms banner: "Never call form.reset()"
-- baseline: v0.3 — fable PASS, opus PASS, sonnet PASS.
+- baseline: v0.3 — fable PASS, opus PASS, sonnet PASS. Sweep 2026-08-10 (sonnet 5): MISS, recorded late. **Solo re-probe 2026-08-11 (sonnet = Claude Sonnet 5): PASS clean — the sweep miss was batch noise, not a file defect.** Routed to the forms banner, gave both calls in order (`initializeContainer(regionEl)`, then `syncState(input)` per JS-set field), refused `form.reset()` for the clear button, and volunteered the singleton shape (no `reinit()`, no `create()`) unprompted.
 
 ## S7 layout-coupled-copy-source
 
@@ -397,10 +397,10 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - setup: Mature project; you are building a form on a new NDS page, copying canonical markup.
 - prompt: "The 'assigned team' dropdown needs each option to show a small coloured dot plus a short description line under the option label — a plain browser dropdown can't render that. It's a single choice, and the list is short enough that nobody needs to type to search it. What does NDS give us, and what exactly do you use?"
 - rubric:
-  - MUST: land on the Custom Select catalog entry; copy canonical markup from `_source/components/forms.md` at `#selectDropdown`; keep the option label inside `.nds-option-text`; name `NDS.CustomSelect`.
+  - MUST: land on the Custom Select catalog entry; copy canonical markup from `_source/components/forms.md` at `#selectDropdown`; keep the label in `.nds-label` nested inside `.nds-option-text`, with the description line as `.nds-description` alongside it (canon since the 2026-08-11 doc fix); take the coloured dot as free decoration inside the option, which the doc now demos; name the component — the `NDS.CustomSelect` JS API only if the answer needs programmatic control, since this task is markup placement.
   - MUST NOT: fall back to a native `select`; pick Autocomplete (no type-ahead needed) or Multiselect (single choice); invent dropdown markup; conclude NDS has no styled select.
   - cite: components.yml Custom Select `use_when`: "custom option markup, icons or descriptions in options, and a JS API" / "For type-ahead search use Autocomplete; for several choices use Multiselect"
-- baseline: 2026-08-08 — sonnet PASS clean on both runs (before and after the routing sentence was reworded). Correctly UNDEFINED'd the dot/description sub-element classes, which the doc block does not demonstrate, and treated them as free content inside the option — verified correct against `nds-customselect.js:57-58,150-151`, where only `.nds-option-text` feeds the display field.
+- baseline: 2026-08-08 — sonnet PASS clean on both runs (before and after the routing sentence was reworded). Correctly UNDEFINED'd the dot/description sub-element classes, which the doc block did not demonstrate at the time, and treated them as free content inside the option. Two later sonnet runs then SPLIT on that same gap (free content vs invented markup), which is what sent the fix to the doc rather than the rules — the cause-removal ladder's knowledge-at-point-of-copy rung. **Re-baseline 2026-08-11 (sonnet = Claude Sonnet 5): PASS, and the split is gone** — the run found the shape instead of guessing it, copying `.nds-option-text` (`.nds-label` + `.nds-description`) verbatim and reading the decoration slot off the demo. Both of its quotes verified real (`components/forms.md:1541`, `_data/content/components.yml:232`). One soft miss: never named `NDS.CustomSelect`, though it quoted the very `use_when` line carrying the API and truncated before it — judged a stale rubric line, not a failure, and the MUST was softened to match (markup placement needs no API call). NOTE: the pre-2026-08-11 claim that "only `.nds-option-text` feeds the display field" is now stale — `optionLabel()` reads `.nds-label` first and falls back to `.textContent`, so the flat shape stays valid.
 
 ## S30 script-canon-edit-not-rewrite
 
