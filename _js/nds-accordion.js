@@ -326,6 +326,14 @@
             this.buttons.forEach(button => {
                 if (button._ndsAcc === this) delete button._ndsAcc;
             });
+            // Release the container backref + init stamp so create()/init() can
+            // rebuild — without this, create() returns the dead controller and
+            // init() calls refresh() on it. Identity-guard the delete: a later
+            // controller may already own the root.
+            if (this.accordionContainer.ndsAccordion === this) {
+                delete this.accordionContainer.ndsAccordion;
+            }
+            this.accordionContainer.removeAttribute('data-nds-accordion-initialized');
         }
     }
 
