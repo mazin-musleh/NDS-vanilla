@@ -6,7 +6,8 @@ Cleared at the 1.7.1 release (2026-08-12). That release shipped the whole v0.8 r
 
 ## Open
 
-_Nothing open._
+- [ ] **Baseline compaction in `scenarios.md` — targeted, boundary-sanctioned (queued 2026-08-12, post-1.7.1).** Per-scenario baselines never compact, so old arcs bury the current state (S1's is a small essay). Squash ONLY the pre-v0.8 history on the nine re-shaped/flipped scenarios — S1, S3, S4, S8, S17, S18, S25(b), S26, S47 — whose old numbers the header already declares "not comparable" (they measured the gated/opposite behavior). Each squashes to one summary sentence; KEEP: the latest result per model, standing do-not-repeat notes (e.g. S36's reverted re-order), and open watches (S1 upgrade verb, S36 `file://` rationale). Git keeps the full text. No behavior change, no rubric edits, no runs needed. Full-suite compaction (all 46) deliberately NOT chosen — riskier of losing a load-bearing nuance for little extra read-cost gain.
+- [ ] **Clean old eval reports (`.claude/skills/nds-iq-eval/reports/`) — same pass.** Superseded run reports (pre-v0.8 file states) can go. CAUTION before deleting any: baselines, the watch list, and TODO history cite reports by path AND line number (e.g. `reports/eval-2026-08-09-full-sonnet.md:35` is a live watch-list flag) — grep the repo for each filename first; a cited report stays, or its citation moves into the baseline it supports.
 
 ## Standing decisions — do not re-propose without the named evidence
 
