@@ -94,6 +94,8 @@ Comprehension asks "what would you do"; behavior mode checks what an agent actua
 4. Spawn one agent: work dir = the fixture app copy, task = the scenario prompt. Tell it the project serves at a fictional URL and browser verification is unavailable (it should emit the checklist per the rules).
 5. Grade the artifacts against the rubric's `artifacts:` list (e.g. `NDS-PLAN.md` exists with the five columns and the `Managed by NDS IQ` opener; no page file written; copied markup byte-matches the fixture doc block).
 
+**Runners are not neutral — check the artifacts for host-persona bleed before grading.** The runner inherits this session's system prompt, so a persona active in the host (an output style, a `/`-invoked mode) reaches it and shapes what it writes. Observed on an S25 run: the runner annotated its uncertainty with `ponytail:` comments, which is the host's persona, not anything NDS IQ asks for. Nothing was invalidated there — every graded behavior was still an NDS-IQ one — but a graded artifact carrying a house style the rules never named is a measurement of the host, not the file. Scan for it, discount what it explains, and say so in the report. If it touched a MUST, re-run the scenario from a session without that persona.
+
 The fixtures are deliberately skeletal — stubs with just enough structure for the rules file's references to resolve. Do not grow them toward realism; a bigger fixture is a slower, costlier eval with no extra signal. `fixtures/README.md` maps what each file stands in for.
 
 ## Scenario file
