@@ -2,8 +2,8 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-updated: "1.7.0"
-last_edit: "09/08/2026 - 11:27 PM"
+updated: "1.7.x"
+last_edit: "11/08/2026 - 10:54 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -84,19 +84,20 @@ sidemenu_mode: false
                 <p>The rules are supported by a <strong>workflow</strong> (inventory, plan, build, verify) and a <strong>plan file</strong> (<code class="nds-inline-code lang-html">NDS-PLAN.md</code>) that carries state between sessions, allowing a new session to continue from where the previous one stopped.</p>
 
                 <h2 id="revisions">Revision History</h2>
-                <p>The rules are versioned independently of the template: a plain integer that increments with each published revision.</p>
+                <p>The rules are versioned independently of the template. The revision number reports how mature the rule set is, and its sub-1.0 form marks the system as beta.</p>
 
-                <p>The current revision is stamped in the file's own heading (<code class="nds-inline-code lang-html">instructions v{{ _iq_v }}</code>) and shown on the green chip beside the rendered copy below. During an upgrade, the installed copy is compared with the published revision to determine whether an update is needed. The anchor has no version because it does not need to change between revisions.</p>
+                <p>The current revision is stamped in the file's own heading (<code class="nds-inline-code lang-html">instructions v{{ _iq_v }}</code>) and shown on the green chip beside the rendered copy below. The number is an indicator for the reader only: no check, gate, or upgrade step compares it. An update check compares the <strong>content</strong> of the installed file against the published file, and any difference means a newer revision exists. The anchor has no version because it does not change between revisions.</p>
                 <table class="nds-table nds-responsive">
-                    <thead><tr><th>Revision</th><th>Template</th><th>Highlights</th></tr></thead>
+                    <thead><tr><th data-align="center">Revision</th><th>Highlights</th></tr></thead>
                     <tbody>
-                        <tr><td>v1</td><td>1.6.0</td><td>Shipped with template 1.6.0, before revision stamps were introduced. An installed heading without a version is treated as v1.</td></tr>
-                        <tr><td>v2</td><td>1.6.0</td><td>First stamped revision: porting strategy, chrome coverage, plan discipline, and the findings report file.</td></tr>
-                        <tr><td>v3</td><td>1.6.0</td><td>Conformance triage for pre-existing NDS work, plan lifecycle, update checks, and dual block-refresh paths.</td></tr>
-                        <tr><td>v4</td><td>1.6.0</td><td>Introduced the NDS IQ name, greenfield project handling, the spike rule, JS wiring facts, and the menu portal fact.</td></tr>
-                        <tr><td>v5</td><td>1.6.0</td><td>From two field cycles: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template floor, checking for existing automation before falling back to a verification checklist, raw-file fetch discipline, the project's own globals as legacy UI, clean resets over inherited attempts, and image geometry on swapped assets.</td></tr>
-                        <tr><td>v6</td><td>1.6.0</td><td>Stale NDS instructions in the agent file join the prior attempt's footprint: superseded block copies, hand-written conventions, and leftover notes, all proposed for removal through the plan.</td></tr>
-                        <tr><td>v7</td><td>1.7.0</td><td>New install model: the rules move out of the agent file into <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root and are read on demand, with a version-free anchor left behind. Rewritten for that model. JS wiring reads the per-component banner shipped in each source file; page and component markup route to the raw documentation, template, and example sources in <code class="nds-inline-code lang-html">_source/</code>.</td></tr>
+                        <tr><td>v0.1</td><td>Shipped with template 1.6.0, before revision stamps were introduced. A copy whose heading carries no version came from this revision.</td></tr>
+                        <tr><td>v0.2</td><td>First stamped revision: porting strategy, chrome coverage, plan discipline, and the findings report file.</td></tr>
+                        <tr><td>v0.3</td><td>Conformance triage for pre-existing NDS work, plan lifecycle, update checks, and dual block-refresh paths.</td></tr>
+                        <tr><td>v0.4</td><td>Introduced the NDS IQ name, greenfield project handling, the spike rule, JS wiring facts, and the menu portal fact.</td></tr>
+                        <tr><td>v0.5</td><td>From two field cycles: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template requirement, checking for existing automation before falling back to a verification checklist, raw-file fetch discipline, the project's own globals as legacy UI, clean resets over inherited attempts, and image geometry on swapped assets.</td></tr>
+                        <tr><td>v0.6</td><td>Stale NDS instructions in the agent file join the prior attempt's footprint: superseded block copies, hand-written conventions, and leftover notes, all proposed for removal through the plan.</td></tr>
+                        <tr><td>v0.7</td><td>New install model: the rules move out of the agent file into <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root and are read on demand, with a version-free anchor left behind. Rewritten for that model. JS wiring reads the per-component banner shipped in each source file; page and component markup route to the raw documentation, template, and example sources in <code class="nds-inline-code lang-html">_source/</code>.</td></tr>
+                        <tr><td>v0.8</td><td>Version gates removed: the rules became version-agnostic. They no longer require a minimum template version, and <code class="nds-inline-code lang-html">_source/</code> is populated from the matching release tag. The update check compares file content, and a first-line check catches a corrupt download. The revision number became a display indicator. Also added: a catalog check before any native element or hand-built control, a Content-Security-Policy check at install, and an adoption sweep of each release's Added, Changed, and Fixed notes during an upgrade.</td></tr>
                     </tbody>
                 </table>
 
@@ -108,13 +109,12 @@ sidemenu_mode: false
                     <li><strong>Template upgrade</strong>: the matching revision rides along, as the last step of the upgrade workflow.</li>
                     <li><strong>Standalone update</strong>: on ask, the agent fetches the latest revision straight from the repository, even between template releases.</li>
                 </ul>
-                <p>Both paths follow the same process: compare the installed file's revision with the published one, and replace the file as a whole when it is behind. There is no merging, partial patching, or manual editing of an installed copy. The anchor is never changed, so an update <strong>does not overwrite local configuration</strong> — the project-specific paths remain there while the rules file is replaced. The agent handles the process; the upgrade prompt in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> is the interface.</p>
-                <p>Projects still running a pasted v6 block migrate on their next refresh: the old raw URL now serves a pointer that carries them to the file-and-anchor model, then the pasted block is deleted.</p>
+                <p>Both paths follow the same process: compare the installed file with the published one, and replace the installed file as a whole when the two differ. There is no merging, partial patching, or manual editing of an installed copy. The anchor is never changed, so an update <strong>does not overwrite local configuration</strong> — the project-specific paths remain there while the rules file is replaced. The agent handles the process; the upgrade prompt in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> is the interface.</p>
 
                 <h2 id="compatibility">Compatibility</h2>
                 <p>Agent-agnostic by design, validated end to end with Claude Code.</p>
 
-                <p>The rules assume a capable local coding agent with file access and a shell, but do not depend on a specific vendor. Claude Code is the reference agent used to build and validate the system; other agents follow the same instruction set. The Revision History table identifies the template release each revision is validated against, and that release is also its minimum supported version. A revision may depend on artifacts introduced by its corresponding template. For example, v7 uses the per-file JS banners and raw page sources added in template 1.7.0. An older template must be upgraded before the rules drive any NDS work.</p>
+                <p>The rules assume a capable local coding agent with file access and a shell, but do not depend on a specific vendor. Claude Code is the reference agent used to build and validate the system; other agents follow the same instruction set. The rules work with any template release. An older release may lack a piece the current revision names, most often the per-file JS banners added in template 1.7.0. The rules then read the component's documentation source and its JavaScript source instead. The agent reports the gap and proposes the upgrade, and the developer decides.</p>
 
                 <h2 id="the-instructions">The Instructions</h2>
                 <p>The complete rulebook, rendered from the same source shipped with the template. The installation flow is covered in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>

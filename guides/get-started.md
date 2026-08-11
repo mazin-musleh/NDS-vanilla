@@ -2,8 +2,8 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-updated: "1.7.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "10/08/2026 - 02:53 AM"
+updated: "1.7.x"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
+last_edit: "11/08/2026 - 10:54 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -112,6 +112,7 @@ LICENSE         - License terms
                     <li><strong>Reference documentation</strong>: component pages at <code class="nds-inline-code lang-html">_site/components/*.html</code> containing the canonical markup the agent copies.</li>
                     <li><strong>Runtime assets</strong>: static CSS, JavaScript, fonts, and icons at <code class="nds-inline-code lang-html">_site/assets/</code> to be copied into your project.</li>
                 </ul>
+                <p>Some releases ship <code class="nds-inline-code lang-html">_source/</code> in the zip and some do not. When it is missing, the agent populates it on install from that release tag's Source code zip. Either way, <code class="nds-inline-code lang-html">_source/</code> is present after install, so the listing above shows the installed folder.</p>
 
                 <h2 id="setup">2. Setup</h2>
                 <p>A single setup prompt starts the process: the agent installs NDS IQ, asks for the required paths, and prepares the initial plan for your review.</p>
@@ -177,7 +178,7 @@ Confirm it starts with `# NDS IQ`, then read it top to bottom and follow it. Eve
                 </ol>
                 <p>The agent instruction file is <code class="nds-inline-code lang-html">CLAUDE.md</code> for Claude Code, <code class="nds-inline-code lang-html">AGENTS.md</code> for Cursor and Codex.</p>
                 <p>Only the anchor is loaded on every turn. The rulebook is read <strong>on demand, once per session</strong>, when NDS work starts, so the rulebook costs nothing on non-UI days.</p>
-                <p>The URL tracks the latest published revision. On later sessions, NDS IQ's upgrade workflow checks the installed revision and handles any required update against the template.</p>
+                <p>The URL always serves the latest published revision. On later sessions, NDS IQ's upgrade workflow compares the installed file with the published one and replaces the installed file when the two differ.</p>
                 <h3 id="paths">Paths</h3>
                 <p>The anchor declares two paths as placeholders. During installation, the agent asks for the actual values and writes them into the two declaration lines. Until those values are set, NDS IQ blocks NDS work rather than guessing at a location. For a manual installation, those two lines are the only project-specific edits: <code class="nds-inline-code lang-html">NDS-IQ.md</code> is never edited, and any <code class="nds-inline-code lang-html">/path/to/…</code> inside it is instructional.</p>
                 <table class="nds-table nds-responsive">
@@ -280,8 +281,8 @@ Continue: read NDS-PLAN.md and propose the next step.
                 <p>Review the report and send it to <a class="nds-color" href="https://github.com/mazin-musleh/NDS-vanilla/issues">GitHub Issues</a>, or share it privately with the maintainer. Verified findings feed future revisions of the system and its instructions.</p>
 
                 <h2 id="upgrade">4. Upgrade</h2>
-                <p>When a new NDS version is published, use the prompt below. The agent handles the upgrade. It replaces the contents of the template folder, so <code class="nds-inline-code lang-html">NDS_ROOT</code> continues to point to the same location. It then runs the NDS IQ upgrade workflow — version comparison, runtime replacement, and changelog review — and reports the resulting changes.</p>
-                <p>The final step updates the rules themselves. If a newer revision of <code class="nds-inline-code lang-html">NDS-IQ.md</code> is available, the agent replaces the installed file as a whole — no merging or partial patches. The anchor is never changed, so the two project paths survive every update.</p>
+                <p>When a new NDS version is published, use the prompt below. The agent handles the upgrade. It replaces the contents of the template folder, so <code class="nds-inline-code lang-html">NDS_ROOT</code> continues to point to the same location. It then runs the NDS IQ upgrade workflow — version comparison, runtime replacement, and changelog review — and reports both the breaking changes it applied and the new features the project could adopt.</p>
+                <p>The final step updates the rules themselves. The agent downloads the published <code class="nds-inline-code lang-html">NDS-IQ.md</code>, confirms it starts with <code class="nds-inline-code lang-html"># NDS IQ</code>, and replaces the installed file as a whole — no merging or partial patches. A file that already matches is replaced by an identical copy, so the step is always safe to run. The anchor is never changed, so the two project paths survive every update.</p>
 
                 <div class="nds-code">
                     <div class="nds-code-action">
@@ -305,7 +306,7 @@ Upgrade the NDS template to the latest release.
 Update the NDS IQ rules file to the latest revision.
                     </code>
                 </div>
-                <p>The agent compares the installed and published revisions and replaces the file only when a newer revision exists. One guard applies: if the runtime is behind the latest template release, the agent proposes the full template upgrade instead, with the rules update included.</p>
+                <p>The agent downloads the published file, compares it with the installed copy, and replaces the installed copy when the two differ. A rules update never depends on the template version. If the runtime is behind the latest release, the agent reports that separately and proposes the template upgrade.</p>
 
             </article>
         </div>

@@ -25,15 +25,16 @@ body:
     id: iq-version
     attributes:
       label: IQ version
-      description: From the `instructions vN` stamp in your project's `NDS-IQ.md` heading (or, on older installs, the pasted block's heading).
+      description: From the `instructions v0.N` stamp in your project's `NDS-IQ.md` heading. An older install may show a plain number (`v7`, `v6`, …) — pick the matching `v0.N`.
       options:
-        - "v7"
-        - "v6"
-        - "v5"
-        - "v4"
-        - "v3"
-        - "v2"
-        - "v1"
+        - "v0.8"
+        - "v0.7"
+        - "v0.6"
+        - "v0.5"
+        - "v0.4"
+        - "v0.3"
+        - "v0.2"
+        - "v0.1"
         - other / unknown
     validations:
       required: true
