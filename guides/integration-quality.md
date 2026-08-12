@@ -2,8 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-updated: "1.7.1"
-last_edit: "11/08/2026 - 10:54 PM"
+last_edit: "12/08/2026 - 05:28 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -90,14 +89,15 @@ sidemenu_mode: false
                 <table class="nds-table nds-responsive">
                     <thead><tr><th data-align="center">Revision</th><th>Highlights</th></tr></thead>
                     <tbody>
-                        <tr><td>v0.1</td><td>Shipped with template 1.6.0, before revision stamps were introduced. A copy whose heading carries no version came from this revision.</td></tr>
-                        <tr><td>v0.2</td><td>First stamped revision: porting strategy, chrome coverage, plan discipline, and the findings report file.</td></tr>
-                        <tr><td>v0.3</td><td>Conformance triage for pre-existing NDS work, plan lifecycle, update checks, and dual block-refresh paths.</td></tr>
-                        <tr><td>v0.4</td><td>Introduced the NDS IQ name, greenfield project handling, the spike rule, JS wiring facts, and the menu portal fact.</td></tr>
-                        <tr><td>v0.5</td><td>From two field cycles: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template requirement, checking for existing automation before falling back to a verification checklist, raw-file fetch discipline, the project's own globals as legacy UI, clean resets over inherited attempts, and image geometry on swapped assets.</td></tr>
-                        <tr><td>v0.6</td><td>Stale NDS instructions in the agent file join the prior attempt's footprint: superseded block copies, hand-written conventions, and leftover notes, all proposed for removal through the plan.</td></tr>
-                        <tr><td>v0.7</td><td>New install model: the rules move out of the agent file into <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root and are read on demand, with a version-free anchor left behind. Rewritten for that model. JS wiring reads the per-component banner shipped in each source file; page and component markup route to the raw documentation, template, and example sources in <code class="nds-inline-code lang-html">_source/</code>.</td></tr>
+                        <tr><td>v0.9</td><td>From field reports across three consumer projects. A rules update always fetches the published file and never compares two local copies. A replacement that lands mid-session is re-read before work continues. A template folder that is present but older than the runtime is refreshed on its own. The install step states that the release folder's contents move to a stable, version-free path. The source is read before a question is asked, and before one from the developer is answered. Each page records its chrome shape, so an app of sign-in screens skips the chrome it has no use for. A developer can waive the plan for a single page. The findings report also covers rule gaps that an agent's own mistakes surface, and the styling rules state what a strict Content-Security-Policy does to inline knobs.</td></tr>
                         <tr><td>v0.8</td><td>Version gates removed: the rules became version-agnostic. They no longer require a minimum template version, and <code class="nds-inline-code lang-html">_source/</code> is populated from the matching release tag. The update check compares file content, and a first-line check catches a corrupt download. The revision number became a display indicator. Also added: a catalog check before any native element or hand-built control, a Content-Security-Policy check at install, and an adoption sweep of each release's Added, Changed, and Fixed notes during an upgrade.</td></tr>
+                        <tr><td>v0.7</td><td>New install model: the rules move out of the agent file into <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root and are read on demand, with a version-free anchor left behind. Rewritten for that model. JS wiring reads the per-component banner shipped in each source file; page and component markup route to the raw documentation, template, and example sources in <code class="nds-inline-code lang-html">_source/</code>.</td></tr>
+                        <tr><td>v0.6</td><td>Stale NDS instructions in the agent file join the prior attempt's footprint: superseded block copies, hand-written conventions, and leftover notes, all proposed for removal through the plan.</td></tr>
+                        <tr><td>v0.5</td><td>From two field cycles: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template requirement, checking for existing automation before falling back to a verification checklist, raw-file fetch discipline, the project's own globals as legacy UI, clean resets over inherited attempts, and image geometry on swapped assets.</td></tr>
+                        <tr><td>v0.4</td><td>Introduced the NDS IQ name, greenfield project handling, the spike rule, JS wiring facts, and the menu portal fact.</td></tr>
+                        <tr><td>v0.3</td><td>Conformance triage for pre-existing NDS work, plan lifecycle, update checks, and dual block-refresh paths.</td></tr>
+                        <tr><td>v0.2</td><td>First stamped revision: porting strategy, chrome coverage, plan discipline, and the findings report file.</td></tr>
+                        <tr><td>v0.1</td><td>Shipped with template 1.6.0, before revision stamps were introduced. A copy whose heading carries no version came from this revision.</td></tr>
                     </tbody>
                 </table>
 

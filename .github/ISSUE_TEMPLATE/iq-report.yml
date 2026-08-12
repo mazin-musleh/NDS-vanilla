@@ -28,6 +28,7 @@ body:
       label: IQ version
       description: From the `instructions v0.N` stamp in your project's `NDS-IQ.md` heading. An older install may show a plain number (`v7`, `v6`, …) — pick the matching `v0.N`.
       options:
+        - "v0.9"
         - "v0.8"
         - "v0.7"
         - "v0.6"
