@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.7.0"
-last_edit: "08/08/2026 - 07:22 AM"
+last_edit: "12/08/2026 - 04:37 PM"
 ---
 
 <!-- Page Setup -->
@@ -227,6 +227,7 @@ i.hgi-stroke { opacity: 0; }
                     <tbody>
                         <tr><td>Inline script in <code class="nds-inline-code lang-html">&lt;head&gt;</code> (theme guard + deferred stylesheets)</td><td>A nonce or a hash</td></tr>
                         <tr><td>Inline critical gate (<code class="nds-inline-code lang-html">&lt;style&gt;</code>), if you use it</td><td>A nonce or a hash in <code class="nds-inline-code lang-css">style-src</code></td></tr>
+                        <tr><td>Inline knobs on copied markup (<code class="nds-inline-code lang-html">style="--gap: …"</code>)</td><td>Move the knob to your own class. A <code class="nds-inline-code lang-html">style</code> attribute needs <code class="nds-inline-code lang-css">'unsafe-inline'</code>, and no nonce or hash can cover one</td></tr>
                         <tr><td>All stylesheets and script bundles</td><td><code class="nds-inline-code lang-css">'self'</code></td></tr>
                         <tr><td>Icon sheets the loader adds</td><td>Nothing — same origin as your other files</td></tr>
                         <tr><td>UI icons (<code class="nds-inline-code lang-html">nds-icon</code>)</td><td><code class="nds-inline-code lang-css">img-src data:</code> — each icon is an inline SVG mask</td></tr>

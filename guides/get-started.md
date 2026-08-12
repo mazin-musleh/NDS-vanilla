@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.7.1"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "11/08/2026 - 10:54 PM"
+last_edit: "12/08/2026 - 04:37 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -89,7 +89,7 @@ sidemenu_mode: false
                 <ol>
                     <li><strong>Download</strong> <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from the <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a> page.</li>
                     <li><strong>Extract</strong> the archive into a gitignored <code class="nds-inline-code lang-html">.nds/</code> folder at the project root. This is the canonical location: the instruction file records the path and is committed, so the same project-relative path works across machines. A custom location, such as a sibling directory or shared extract, works only where that location exists and must be an explicit developer choice.</li>
-                    <li><strong>Record</strong> the path. The archive contains one top-level <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}</code> folder. Rename it to <code class="nds-inline-code lang-html">nds-vanilla-template</code>, removing the version, so <code class="nds-inline-code lang-html">NDS_ROOT</code> points to <code class="nds-inline-code lang-html">.nds/nds-vanilla-template/</code>. The path is correct when <code class="nds-inline-code lang-html">NDS_ROOT/_site/</code> exists directly inside it. Keeping the folder name version-free allows future upgrades to replace its contents without changing the anchor.</li>
+                    <li><strong>Record</strong> the path. The archive contains one top-level <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}</code> folder. Rename it to <code class="nds-inline-code lang-html">nds-vanilla-template</code>, removing the version, or move its contents into a folder of that name. Either way, <code class="nds-inline-code lang-html">NDS_ROOT</code> points to <code class="nds-inline-code lang-html">.nds/nds-vanilla-template/</code>. The path is correct when <code class="nds-inline-code lang-html">NDS_ROOT/_site/</code> exists directly inside it, with no versioned folder left underneath. Keeping the folder name version-free allows future upgrades to replace its contents without changing the anchor.</li>
                 </ol>
                 <h3 id="structure">Template Structure</h3>
                 <div class="nds-code">
@@ -126,10 +126,10 @@ LICENSE         - License terms
                         </button>
                     </div>
                     <code class="lang-prompt">
-Download this to `NDS-IQ.md` at the project root with curl or your HTTP client. Do not use a web-fetch tool: it saves a re-rendered copy.
+Download the raw file to `NDS-IQ.md` at the project root using `curl` or another direct HTTP client. Do not use a web-fetch tool: it may save a re-rendered copy.
 https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md
 
-Confirm it starts with `# NDS IQ`, then read it top to bottom and follow it. Everything after that is defined by the file.
+Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. This is the project's UI-layer rulebook. All NDS work runs by its rules.
                     </code>
                 </div>
                 <div class="nds-alert nds-card nds-inline" data-status="info" role="alert">
@@ -141,7 +141,7 @@ Confirm it starts with `# NDS IQ`, then read it top to bottom and follow it. Eve
                     <div class="nds-alert-content">
                         <div class="nds-alert-text">
                             <span class="nds-alert-title">Add project-specific context:</span>
-                            <p class="nds-alert-description">Provide any information that affects how the work should be carried out, such as the technology stack, view or route locations, existing integrations, or project constraints. This is optional; NDS IQ's workflow will identify and ask for any required information during setup and planning.</p>
+                            <p class="nds-alert-description">Optionally include project details the agent should know, such as the technology stack, view or route locations, existing integrations, or constraints. NDS IQ will ask for any required information during setup and planning.</p>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@ Confirm it starts with `# NDS IQ`, then read it top to bottom and follow it. Eve
                     <div class="nds-alert-content">
                         <div class="nds-alert-text">
                             <span class="nds-alert-title">Fresh session only:</span>
-                            <p class="nds-alert-description">Use this as the first turn of a fresh session, never in the middle of an existing task. Existing conversation context can compete with the setup instructions and cause the agent to treat installation as a one-off task rather than establishing the project configuration.</p>
+                            <p class="nds-alert-description">Run this as the first turn of a fresh session. Existing conversation context may cause the agent to treat setup as a one-off task instead of establishing the project configuration.</p>
                         </div>
                     </div>
                 </div>
@@ -166,8 +166,8 @@ Confirm it starts with `# NDS IQ`, then read it top to bottom and follow it. Eve
                     </span>
                     <div class="nds-alert-content">
                         <div class="nds-alert-text">
-                            <span class="nds-alert-title">First-run tip:</span>
-                            <p class="nds-alert-description">The first run works well in <strong>plan mode</strong>, or your agent's equivalent read-only planning mode. The agent inventories the project without making changes, presents project-wide decisions as structured questions, and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> only after you approve.</p>
+                            <span class="nds-alert-title">Run in edit mode:</span>
+                            <p class="nds-alert-description">This prompt creates <code class="nds-inline-code lang-html">NDS-IQ.md</code> and updates your agent instruction file. Use a mode that allows file changes. If the agent asks for approval to access the internet, approve it. In Claude Code, you can run the download yourself with <code class="nds-inline-code lang-html">!</code>. After setup, NDS IQ still stops at <code class="nds-inline-code lang-html">NDS-PLAN.md</code> for your review before any implementation begins.</p>
                         </div>
                     </div>
                 </div>
@@ -193,6 +193,18 @@ Confirm it starts with `# NDS IQ`, then read it top to bottom and follow it. Eve
                 <p>Once the paths are set, the agent inventories the project and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> at the project root as a markdown table containing the page, route, legacy libraries, NDS target, and status. It stops for your review; no implementation begins until you approve the plan.</p>
                 <p>The review covers project-wide decisions only: the asset URL prefix, the porting strategy for an existing UI, how to handle prior NDS work, direction and locale, and build pacing. Page-level questions are deferred to each page's build session, so the initial review does not front-load every implementation detail.</p>
                 <p>The plan carries state between AI sessions because sessions do not share chat memory. Every subsequent session reads it before proposing work and updates it as progress changes.</p>
+                <p>The setup prompt installs NDS IQ and stops there. The plan normally follows on its own, because the rulebook hands off to it. If it does not, or if you prefer to plan later, start it with one line:</p>
+                <div class="nds-code">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <code class="lang-prompt">
+Inventory the project and write NDS-PLAN.md for my review.
+                    </code>
+                </div>
+                <p>The plan is not mandatory. For a single page, or a first trial of NDS, say so in the request: the work is built under the same rules and the same browser verification, with no plan file. The one cost is memory — a later session has no record of what was built or what it still needs. The plan returns whenever you ask for it, or when the work grows past one page.</p>
                 <h3 id="manual-install">Manual Install (optional)</h3>
                 <p>To install manually, or to inspect exactly what the agent installs, use the complete rulebook below. Save it as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, then add the anchor — its exact text is in the file's own <em>Install and upgrade this file</em> section — to the agent instruction file with the two project paths filled in. <strong>Copy the file exactly as written.</strong> A paraphrase can appear equivalent while silently omitting rules required later in the build.</p>
                 <p>The template zip also contains <code class="nds-inline-code lang-html">NDS_ROOT/NDS-IQ.md</code>, matched to that template release. Use it when the offline copy is preferred over the latest published revision.</p>
