@@ -11,7 +11,8 @@ hero_tags:
   - label: Beta
     style: nds-yellow
 hero_description: "The instruction system that gives AI agents a consistent way to build with NDS: how it is engineered, tested, versioned, and kept current in a project."
-breadcrumb: ["Guides"]
+breadcrumb:
+  - ["Guides", "/guides"]
 layout_class: nds-wSideInfo
 sidemenu_mode: false
 ---

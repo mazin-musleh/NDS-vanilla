@@ -11,7 +11,8 @@ hero_tags:
   - label: Beta
     style: nds-yellow
 hero_description: "A complete workflow for installing NDS, building UI with an AI coding agent, verifying the result, and keeping the system current."
-breadcrumb: ["Guides"]
+breadcrumb:
+  - ["Guides", "/guides"]
 layout_class: nds-wSideInfo
 sidemenu_mode: false
 ---
