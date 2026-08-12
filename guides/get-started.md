@@ -128,7 +128,7 @@ LICENSE         - License terms
 Download the raw file to `NDS-IQ.md` at the project root using `curl` or another direct HTTP client. Do not use a web-fetch tool: it may save a re-rendered copy.
 https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md
 
-Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. This is the project's UI-layer rulebook. All NDS work runs by its rules.
+Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. This is the project's UI-layer rulebook. All NDS work runs by its rules. Set up NDS IQ in this project as its install section describes.
                     </code>
                 </div>
                 <div class="nds-alert nds-card nds-inline" data-status="info" role="alert">
@@ -192,7 +192,7 @@ Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. T
                 <p>Once the paths are set, the agent inventories the project and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> at the project root as a markdown table containing the page, route, legacy libraries, NDS target, and status. It stops for your review; no implementation begins until you approve the plan.</p>
                 <p>The review covers project-wide decisions only: the asset URL prefix, the porting strategy for an existing UI, how to handle prior NDS work, direction and locale, and build pacing. Page-level questions are deferred to each page's build session, so the initial review does not front-load every implementation detail.</p>
                 <p>The plan carries state between AI sessions because sessions do not share chat memory. Every subsequent session reads it before proposing work and updates it as progress changes.</p>
-                <p>The setup prompt installs NDS IQ and stops there. The plan normally follows on its own, because the rulebook hands off to it. If it does not, or if you prefer to plan later, start it with one line:</p>
+                <p>The setup prompt ends with the plan: after installing, the agent inventories the project and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> for your review. If it stops earlier, or you prefer to plan later, start it with one line:</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
