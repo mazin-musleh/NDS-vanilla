@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "12/08/2026 - 05:28 PM"
+last_edit: "12/08/2026 - 11:34 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -37,88 +37,74 @@ sidemenu_mode: false
             <article class="nds-prose">
 
                 <h2 id="overview">Overview</h2>
-                <p>What NDS IQ is, how it is structured, and where it lives in a project.</p>
-
-                <p><strong>NDS IQ (Integration Quality)</strong> is the instruction system that gives AI agents a consistent way to build with NDS. It covers the full workflow: installing the runtime, porting or building pages, verifying the result in the browser, and upgrading the project.</p>
-                <p>It installs as two pieces. The rules live in <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, while a short <strong>anchor</strong> is added to the project's agent instruction file (<code class="nds-inline-code lang-html">CLAUDE.md</code> or <code class="nds-inline-code lang-html">AGENTS.md</code>). The anchor defines the two paths the system needs and tells each session to read the rules before NDS work begins. Only the anchor is loaded on every turn; the rules are read <strong>on demand, once per session</strong>, so a project pays for the full instruction set only on the days it builds UI.</p>
-                <p>This separation keeps the rules file universal: every project uses the same copy, while project-specific values remain in the anchor. When the rules change, the installed file is replaced as a whole rather than edited in place.</p>
-                <p>Installation, the workflow, and the complete rule text are covered in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>. This page focuses on the system itself: how it is built, tested, versioned, and kept current.</p>
+                <p><strong>NDS IQ (Integration Quality)</strong> is the instruction system for building with NDS consistently. It covers runtime setup, page implementation, browser verification, porting, and upgrades.</p>
+                <p>It installs as two pieces: <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root and a short <strong>anchor</strong> in <code class="nds-inline-code lang-html">CLAUDE.md</code> or <code class="nds-inline-code lang-html">AGENTS.md</code>. The anchor contains the project paths and tells the agent to read the rules before NDS work. The rules are loaded on demand, once per session.</p>
+                <p>The rules are universal; project-specific values stay in the anchor. Updates replace <code class="nds-inline-code lang-html">NDS-IQ.md</code> as a whole. Installation and usage are covered in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
 
                 <h2 id="how-built">How It Is Built</h2>
-                <p>Every rule comes from three sources: component internals, real migrations, and regression testing.</p>
-
                 <h3 id="from-source">From the Source Outward</h3>
-                <p>The rules start with the components themselves: initialization lifecycles, event surfaces, state cascades, and dependencies between components. Anything an agent should not have to guess — markup structure, API shapes, or attribute contracts — is defined explicitly. What can be safely derived is left to the agent.</p>
+                <p>Component lifecycles, events, state, dependencies, markup, APIs, and attribute contracts are defined where agents should not have to guess. Safe-to-derive details are left to the agent.</p>
                 <h3 id="hardened">Hardened by Real Migrations</h3>
-                <p>Revisions are driven by <strong>evidence, not speculation</strong>. NDS is used in real adoption and migration work with AI agents, and failures observed in those projects become candidates for new rules. A finding is added only after it is verified against the source. Issues that turn out to be agent noise are discarded rather than turned into rules.</p>
+                <p>Rules are based on <strong>evidence, not speculation</strong>. Failures from real AI-assisted migrations become rule candidates only after verification against the NDS source.</p>
                 <h3 id="tested">Tested per Revision</h3>
-                <p>The rules should not depend on a high-end model to be interpreted correctly. Before a revision is published, a scenario suite replays real failure cases against fresh agents on the baseline model tier the rules support. A new rule goes through a <strong>fail, fix, pass loop</strong>: the failure is reproduced against the existing text, the rule is added, and the same scenario must pass against the revised text. Passing scenarios remain in the suite as regression checks for future revisions.</p>
+                <p>Each revision is tested against real failure scenarios on the baseline model tier it supports. New rules follow a <strong>fail, fix, pass</strong> loop, and passing scenarios remain as regression tests.</p>
+
                 <div class="nds-alert nds-card nds-color" data-status="success" role="alert">
                     <span class="nds-feedback nds-alert-icon nds-outline">
-                        <span class="nds-feedback-icon">
-                            <i class="nds-icon" aria-hidden="true"></i>
-                        </span>
+                        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                     </span>
                     <div class="nds-alert-content">
                         <div class="nds-alert-text">
-                            <span class="nds-alert-title">A reliable baseline across AI models</span>
-                            <p class="nds-alert-description">NDS IQ is built to help AI agents produce consistent results across models, rather than relying on the capabilities of the most advanced model available. <strong>Claude Sonnet</strong> is the validated baseline for NDS IQ, providing a reliable level of performance for any project. More capable models can build on this baseline with greater accuracy and reasoning.</p>
+                            <span class="nds-alert-title">Validated baseline</span>
+                            <p class="nds-alert-description"><strong>Claude Sonnet</strong> is the validated baseline for NDS IQ. The rules are designed to produce consistent results across capable AI models.</p>
                         </div>
                     </div>
                 </div>
 
                 <h2 id="governs">What It Governs</h2>
-                <p>A map of the system. The complete rule text lives in the Get Started guide.</p>
-
-                <p>Seven hard rules:</p>
+                <p>Seven hard rules define the core constraints:</p>
                 <ol>
-                    <li><strong>Read-only template</strong>: nothing under the NDS reference folder is ever edited.</li>
-                    <li><strong>No minified reads</strong>: minified bundles are opaque; use the readable source shipped beside them.</li>
-                    <li><strong>Canonical markup</strong>: component HTML is copied from the documentation, never invented.</li>
-                    <li><strong>Sections and primitives</strong>: page content is composed through the NDS layout system.</li>
-                    <li><strong>Knobs and tokens first</strong>: styling uses custom properties before selector overrides.</li>
+                    <li><strong>Read-only template</strong>: never edit the NDS reference folder.</li>
+                    <li><strong>No minified reads</strong>: use the readable source beside minified bundles.</li>
+                    <li><strong>Canonical markup</strong>: copy component HTML from the documentation.</li>
+                    <li><strong>Sections and primitives</strong>: compose pages through the NDS layout system.</li>
+                    <li><strong>Knobs and tokens first</strong>: use custom properties before selector overrides.</li>
                     <li><strong>No legacy libraries</strong>: NDS and vanilla JS replace the legacy jQuery-era stack.</li>
-                    <li><strong>Approved porting strategy</strong>: replacing an existing UI begins with a plan approved by the developer.</li>
+                    <li><strong>Approved porting strategy</strong>: plan existing-UI replacement before implementation.</li>
                 </ol>
-                <p>The rules are supported by a <strong>workflow</strong> (inventory, plan, build, verify) and a <strong>plan file</strong> (<code class="nds-inline-code lang-html">NDS-PLAN.md</code>) that carries state between sessions, allowing a new session to continue from where the previous one stopped.</p>
+                <p>The rules are supported by the <strong>inventory → plan → build → verify</strong> workflow and <code class="nds-inline-code lang-html">NDS-PLAN.md</code>, which carries project state between sessions.</p>
 
                 <h2 id="revisions">Revision History</h2>
-                <p>The rules are versioned independently of the template. The revision number reports how mature the rule set is, and its sub-1.0 form marks the system as beta.</p>
-
-                <p>The current revision is stamped in the file's own heading (<code class="nds-inline-code lang-html">instructions v{{ _iq_v }}</code>) and shown on the green chip beside the rendered copy below. The number is an indicator for the reader only: no check, gate, or upgrade step compares it. An update check compares the <strong>content</strong> of the installed file against the published file, and any difference means a newer revision exists. The anchor has no version because it does not change between revisions.</p>
+                <p>NDS IQ is versioned independently from the template. The revision is shown in the rulebook heading and indicates the maturity of the beta rule set.</p>
+                <p>Updates compare the <strong>content</strong> of the installed and published rulebooks. A difference means a newer revision exists. The anchor has no version because it remains unchanged.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th data-align="center">Revision</th><th>Highlights</th></tr></thead>
                     <tbody>
-                        <tr><td>v0.9</td><td>From field reports across three consumer projects. A rules update always fetches the published file and never compares two local copies. A replacement that lands mid-session is re-read before work continues. A template folder that is present but older than the runtime is refreshed on its own. The install step states that the release folder's contents move to a stable, version-free path. The source is read before a question is asked, and before one from the developer is answered. Each page records its chrome shape, so an app of sign-in screens skips the chrome it has no use for. A developer can waive the plan for a single page. The findings report also covers rule gaps that an agent's own mistakes surface, and the styling rules state what a strict Content-Security-Policy does to inline knobs.</td></tr>
-                        <tr><td>v0.8</td><td>Version gates removed: the rules became version-agnostic. They no longer require a minimum template version, and <code class="nds-inline-code lang-html">_source/</code> is populated from the matching release tag. The update check compares file content, and a first-line check catches a corrupt download. The revision number became a display indicator. Also added: a catalog check before any native element or hand-built control, a Content-Security-Policy check at install, and an adoption sweep of each release's Added, Changed, and Fixed notes during an upgrade.</td></tr>
-                        <tr><td>v0.7</td><td>New install model: the rules move out of the agent file into <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root and are read on demand, with a version-free anchor left behind. Rewritten for that model. JS wiring reads the per-component banner shipped in each source file; page and component markup route to the raw documentation, template, and example sources in <code class="nds-inline-code lang-html">_source/</code>.</td></tr>
-                        <tr><td>v0.6</td><td>Stale NDS instructions in the agent file join the prior attempt's footprint: superseded block copies, hand-written conventions, and leftover notes, all proposed for removal through the plan.</td></tr>
-                        <tr><td>v0.5</td><td>From two field cycles: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template requirement, checking for existing automation before falling back to a verification checklist, raw-file fetch discipline, the project's own globals as legacy UI, clean resets over inherited attempts, and image geometry on swapped assets.</td></tr>
-                        <tr><td>v0.4</td><td>Introduced the NDS IQ name, greenfield project handling, the spike rule, JS wiring facts, and the menu portal fact.</td></tr>
-                        <tr><td>v0.3</td><td>Conformance triage for pre-existing NDS work, plan lifecycle, update checks, and dual block-refresh paths.</td></tr>
-                        <tr><td>v0.2</td><td>First stamped revision: porting strategy, chrome coverage, plan discipline, and the findings report file.</td></tr>
-                        <tr><td>v0.1</td><td>Shipped with template 1.6.0, before revision stamps were introduced. A copy whose heading carries no version came from this revision.</td></tr>
+                        <tr><td>v0.9</td><td>Field-tested across three projects. Added safer update handling, stable template paths, source-first guidance, page chrome planning, single-page plan waivers, findings for rule gaps, and Content-Security-Policy guidance.</td></tr>
+                        <tr><td>v0.8</td><td>Removed version gates and made the rules version-agnostic. Added content-based updates, source population from matching releases, download checks, catalog checks, CSP checks, and release-note review.</td></tr>
+                        <tr><td>v0.7</td><td>Moved the rules into <code class="nds-inline-code lang-html">NDS-IQ.md</code> with a version-free anchor. Added source-based guidance for JavaScript wiring and canonical markup.</td></tr>
+                        <tr><td>v0.6</td><td>Added cleanup guidance for stale NDS instructions, superseded blocks, conventions, and notes.</td></tr>
+                        <tr><td>v0.5</td><td>Added release-folder handling, runtime-banner-first installs, raw-file fetch discipline, legacy UI guidance, clean resets, and image geometry checks.</td></tr>
+                        <tr><td>v0.4</td><td>Introduced the NDS IQ name, greenfield handling, spike guidance, JS wiring facts, and menu portal guidance.</td></tr>
+                        <tr><td>v0.3</td><td>Added conformance triage, plan lifecycle, update checks, and block-refresh paths.</td></tr>
+                        <tr><td>v0.2</td><td>Added porting strategy, chrome coverage, plan discipline, and the findings report.</td></tr>
+                        <tr><td>v0.1</td><td>Initial release with template 1.6.0, before revision stamps were introduced.</td></tr>
                     </tbody>
                 </table>
 
                 <h2 id="staying-current">Staying Current</h2>
-                <p>How a new revision is delivered to an installed project.</p>
-
-                <p>Two paths deliver updates:</p>
                 <ul>
-                    <li><strong>Template upgrade</strong>: the matching revision rides along, as the last step of the upgrade workflow.</li>
-                    <li><strong>Standalone update</strong>: on ask, the agent fetches the latest revision straight from the repository, even between template releases.</li>
+                    <li><strong>Template upgrade</strong>: updates the matching rules revision as part of the upgrade.</li>
+                    <li><strong>Standalone update</strong>: fetches the latest published revision on demand.</li>
                 </ul>
-                <p>Both paths follow the same process: compare the installed file with the published one, and replace the installed file as a whole when the two differ. There is no merging, partial patching, or manual editing of an installed copy. The anchor is never changed, so an update <strong>does not overwrite local configuration</strong> — the project-specific paths remain there while the rules file is replaced. The agent handles the process; the upgrade prompt in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> is the interface.</p>
+                <p>Both paths compare the installed and published files, then replace the rulebook when they differ. There is no merging or partial patching. The anchor and project paths remain unchanged. Use the upgrade prompts in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
 
                 <h2 id="compatibility">Compatibility</h2>
-                <p>Agent-agnostic by design, validated end to end with Claude Code.</p>
-
-                <p>The rules assume a capable local coding agent with file access and a shell, but do not depend on a specific vendor. Claude Code is the reference agent used to build and validate the system; other agents follow the same instruction set. The rules work with any template release. An older release may lack a piece the current revision names, most often the per-file JS banners added in template 1.7.0. The rules then read the component's documentation source and its JavaScript source instead. The agent reports the gap and proposes the upgrade, and the developer decides.</p>
+                <p>NDS IQ is agent-agnostic and assumes a capable local coding agent with file and shell access. It is validated end to end with Claude Code.</p>
+                <p>The rules work with any template release. If an older release lacks a feature referenced by the current rules, the agent falls back to the relevant documentation and source, reports the gap, and can propose an upgrade.</p>
 
                 <h2 id="the-instructions">The Instructions</h2>
-                <p>The complete rulebook, rendered from the same source shipped with the template. The installation flow is covered in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
-
+                <p>The complete rulebook is rendered below from the same source shipped with the template.</p>
                 <div class="nds-code nds-expandable">
                     <span class="nds-code-tags lang-markdown">
                         <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>
@@ -137,9 +123,8 @@ sidemenu_mode: false
                 </div>
 
                 <h2 id="feeding-back">Feeding the Next Revision</h2>
-                <p>Adoption findings close the loop created by real migrations.</p>
-
-                <p>When adoption reveals a real NDS gap — a missing method, misleading documentation, or a reproducible bug — the agent records it in an optional <code class="nds-inline-code lang-html">NDS-REPORT.md</code> at the project root. The report is written to contain <strong>nothing project-private</strong>, so it can be shared safely. Verified findings sent to <a class="nds-color" href="https://github.com/mazin-musleh/NDS-vanilla/issues">GitHub Issues</a> can become a rule or source fix in a later revision, closing the same feedback loop that produced most of the rules on this page. Details are covered under Reporting Findings in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
+                <p>Real adoption findings feed future revisions. Record verified NDS gaps, misleading documentation, or reproducible bugs in the optional <code class="nds-inline-code lang-html">NDS-REPORT.md</code>. The report is designed to contain no project-private information.</p>
+                <p>Send verified findings to <a class="nds-color" href="https://github.com/mazin-musleh/NDS-vanilla/issues">GitHub Issues</a>. They can become a rule or source fix in a later revision.</p>
 
             </article>
         </div>

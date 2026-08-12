@@ -19,7 +19,19 @@ Write as a technical product/documentation team would write for experienced deve
 
 The writing should feel like **technical documentation for a production system**, not product advertising.
 
-## 2. NDS Terminology
+## 2. Do Not Repeat Yourself (DRY)
+
+State each fact once, in the place the reader will look for it.
+
+- A fact already shown in a table, code block, numbered step, or alert is not restated in the prose around it. The prose adds what those cannot say, or it says nothing.
+- When two sections need the same fact, keep it in the section where the reader acts on it and reference it by name from the other.
+- Do not summarize a list immediately before or after it.
+- Do not restate a heading in the first sentence under it.
+- A rule that lives in NDS IQ is not copied into a guide. The guide states what the developer does; NDS IQ states how the agent does it.
+
+Repetition is not emphasis. Every duplicate is a second copy that can drift out of sync, and the reader pays for the same fact twice.
+
+## 3. NDS Terminology
 
 Use these terms consistently:
 
@@ -47,7 +59,7 @@ For example:
 - Prefer **“canonical markup”** over “correct markup” when referring to markup sourced from NDS.
 - Prefer **“reference implementation”** over “example implementation” when the implementation is intended to serve as an authoritative reference.
 
-## 3. How to Describe NDS IQ
+## 4. How to Describe NDS IQ
 
 Do not describe NDS IQ as something that “teaches” or “trains” an AI model.
 
@@ -67,7 +79,7 @@ The important distinction is:
 
 **The model provides the capability. NDS IQ provides the rules and workflow for using that capability with NDS.**
 
-## 4. How to Describe AI-Assisted Development
+## 5. How to Describe AI-Assisted Development
 
 Keep the developer and agent responsibilities distinct.
 
@@ -95,7 +107,7 @@ Prefer this framing:
 
 Avoid implying that the developer needs to know the internal NDS implementation before asking the agent to perform a task.
 
-## 5. Terminology for Prompts and Requests
+## 6. Terminology for Prompts and Requests
 
 When documenting everyday agent usage, call them **asks**, **requests**, or **tasks**, not “commands” unless they are actual shell commands.
 
@@ -116,7 +128,7 @@ It normally does **not** need to specify:
 
 NDS IQ determines those implementation details.
 
-## 6. Technical Claims
+## 7. Technical Claims
 
 Do not strengthen a claim simply to make the documentation sound better.
 
@@ -148,7 +160,7 @@ Always distinguish between:
 
 Do not use these terms interchangeably.
 
-## 7. Refining Existing Content
+## 8. Refining Existing Content
 
 When rewriting existing NDS content:
 
@@ -163,7 +175,7 @@ When rewriting existing NDS content:
 
 The goal is **better technical writing, not different technical content**.
 
-## 8. Preferred Before / After Patterns
+## 9. Preferred Before / After Patterns
 
 ### Marketing → Technical
 
@@ -215,7 +227,7 @@ Prefer:
 
 > Provide project-specific context such as the technology stack, view or route locations, existing integrations, and constraints the agent must respect.
 
-## 9. Tone by Documentation Type
+## 10. Tone by Documentation Type
 
 ### Homepage
 
@@ -269,7 +281,7 @@ Explain:
 - how they are upgraded
 - what assumptions they make about the agent
 
-## 10. Final Editorial Test
+## 11. Final Editorial Test
 
 Before returning refined NDS content, ask:
 
@@ -278,6 +290,7 @@ Before returning refined NDS content, ask:
 - Are NDS terms used consistently?
 - Did I preserve the original meaning?
 - Did I remove unnecessary filler?
+- Did I state each fact once, rather than restating what a table, code block, or list already shows?
 - Did I distinguish the AI model from NDS IQ?
 - Did I distinguish developer responsibilities from agent responsibilities?
 - Did I use “validated,” “tested,” and “supported” accurately?
