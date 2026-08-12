@@ -22,6 +22,9 @@ Determine hero sliders source:
                         {%- if slide.src_small %}
                         <source media="(max-width: 768px)" srcset="{{ slide.src_small | relative_url }}">
                         {%- endif %}
+                        {%- if slide.src_mid %}
+                        <source media="(max-width: 1646px)" srcset="{{ slide.src_mid | relative_url }}">
+                        {%- endif %}
                         <img src="{{ slide.src | relative_url }}" class="nds-hero-image" alt=""
                             {%- if slide.position %} style="object-position: {{ slide.position }};"{%- endif %}
                             fetchpriority="high">
@@ -30,6 +33,9 @@ Determine hero sliders source:
                     <picture>
                         {%- if slide.src_small %}
                         <source media="(max-width: 768px)" data-srcset="{{ slide.src_small | relative_url }}">
+                        {%- endif %}
+                        {%- if slide.src_mid %}
+                        <source media="(max-width: 1646px)" data-srcset="{{ slide.src_mid | relative_url }}">
                         {%- endif %}
                         <img data-src="{{ slide.src | relative_url }}" class="nds-hero-image" alt=""
                             {%- if slide.position %} style="object-position: {{ slide.position }};"{%- endif %}>

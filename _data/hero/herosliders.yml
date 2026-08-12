@@ -1,8 +1,9 @@
 # Hero Slider Configuration
 # ─────────────────────────
 # Each slide supports:
-#   src:        Background image path (required)
-#   src_small:  Mobile background image path
+#   src:        Background image path (required) — used above 1646px
+#   src_small:  Mobile background image path — used up to 768px
+#   src_mid:    Optional mid-size image — used from 769px to 1646px
 #   overlay:    Background overlay opacity (0-1, default: 0.7)
 #   position:   Background image position (default: "center center")
 #   class:      Custom CSS class added to the slide
@@ -23,6 +24,7 @@
 
 - src: assets/img/riyadhcenter_IQ.webp
   src_small: assets/img/riyadhcenter_IQ_sm.webp
+  src_mid: assets/img/riyadhcenter_IQ_md.webp
   overlay: 0.6
   position: 20% 50%
   content: |
@@ -35,6 +37,7 @@
 
 - src: assets/img/riyadhcenter_IQ.webp
   src_small: assets/img/riyadhcenter_IQ_sm.webp
+  src_mid: assets/img/riyadhcenter_IQ_md.webp
   overlay: 0.6
   position: 20% 50%
   content: |

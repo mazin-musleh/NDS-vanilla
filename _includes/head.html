@@ -16,7 +16,12 @@
     {%- assign _first = _hs[0] %}
     {%- if _first.src_small %}
     <link rel="preload" as="image" href="{{ _first.src_small | relative_url }}" media="(max-width: 768px)" fetchpriority="high">
+    {%- if _first.src_mid %}
+    <link rel="preload" as="image" href="{{ _first.src_mid | relative_url }}" media="(min-width: 769px) and (max-width: 1646px)" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ _first.src | relative_url }}" media="(min-width: 1647px)" fetchpriority="high">
+    {%- else %}
     <link rel="preload" as="image" href="{{ _first.src | relative_url }}" media="(min-width: 769px)" fetchpriority="high">
+    {%- endif %}
     {%- else %}
     <link rel="preload" as="image" href="{{ _first.src | relative_url }}" fetchpriority="high">
     {%- endif %}
