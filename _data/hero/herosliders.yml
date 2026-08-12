@@ -21,37 +21,25 @@
 #
 #   Use {relative_url} for any paths — resolves to site baseurl (works from any page).
 
-- src: assets/img/riyadhcenter_ai.webp
-  src_small: assets/img/riyadhcenter3s.webp
-  overlay: 0.7
-  position: center 60%
+- src: assets/img/riyadhcenter_IQ.webp
+  src_small: assets/img/riyadhcenter_IQ_sm.webp
+  overlay: 0.6
+  position: 20% 50%
   content: |
     <h1 class="nds-section-title">Vanilla Design System</h1>
-    <p class="nds-section-description">An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies.</p>
+    <p class="nds-section-description" style="max-width:550px;">An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies.</p>
     <div class="nds-section-action">
       <a href="{relative_url}/guides/get-started.html" class="nds-btn nds-primary nds-oncolor nds-md"><i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i><span class="nds-label">Get Started</span></a>
       <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" rel="noopener" class="nds-btn nds-secondary-outline nds-oncolor nds-md nds-external"><i class="hgi hgi-stroke hgi-github"></i><span class="nds-label">View on GitHub</span></a>
     </div>
 
-- src: assets/img/riyadhcenter_ai.webp
-  src_small: assets/img/riyadhcenter3s.webp
-  overlay: 0.7
-  position: center 60%
+- src: assets/img/riyadhcenter_IQ.webp
+  src_small: assets/img/riyadhcenter_IQ_sm.webp
+  overlay: 0.6
+  position: 20% 50%
   content: |
     <h1 class="nds-section-title">Vanilla Design System</h1>
-    <p class="nds-section-description">An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies.</p>
-    <div class="nds-section-action">
-      <a href="{relative_url}/guides/get-started.html" class="nds-btn nds-primary nds-oncolor nds-md"><i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i><span class="nds-label">Get Started</span></a>
-      <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" rel="noopener" class="nds-btn nds-secondary-outline nds-oncolor nds-md nds-external"><i class="hgi hgi-stroke hgi-github"></i><span class="nds-label">View on GitHub</span></a>
-    </div>
-
-- src: assets/img/riyadhcenter_ai.webp
-  src_small: assets/img/riyadhcenter3s.webp
-  overlay: 0.7
-  position: center 60%
-  content: |
-    <h1 class="nds-section-title">Vanilla Design System</h1>
-    <p class="nds-section-description">An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies.</p>
+    <p class="nds-section-description" style="max-width:550px;">An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies.</p>
     <div class="nds-section-action">
       <a href="{relative_url}/guides/get-started.html" class="nds-btn nds-primary nds-oncolor nds-md"><i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i><span class="nds-label">Get Started</span></a>
       <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" rel="noopener" class="nds-btn nds-secondary-outline nds-oncolor nds-md nds-external"><i class="hgi hgi-stroke hgi-github"></i><span class="nds-label">View on GitHub</span></a>
