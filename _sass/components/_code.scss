@@ -172,9 +172,22 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
         content: none;
       }
 
-      // Wrap at the same readable measure as body prose.
+      // Wrap at the same readable measure as body prose. Hanging indent so a
+      // wrapped line reads as a continuation, not a new one — without it a
+      // wrapped markdown table row restarts at column 0 and looks like a row.
       .nds-code-line {
         max-width: var(--paragraph-max-width);
+        padding-inline-start: 2ch;
+        text-indent: -2ch;
+      }
+
+      // A table row keeps its authored line: wrapping it hides the cell breaks,
+      // so it opts out of the prose measure and rides the block's own scroll.
+      .nds-code-table-row {
+        white-space: pre;
+        max-width: none;
+        padding-inline-start: 0;
+        text-indent: 0;
       }
     }
 

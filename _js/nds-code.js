@@ -82,9 +82,15 @@
             return;
         }
 
+        // Prose blocks soft-wrap, which shreds a markdown table: every wrapped
+        // row restarts at column 0. Table rows opt out of the wrap and scroll
+        // instead, so the pipes stay aligned as authored.
+        const prose = lang === 'markdown' || lang === 'prompt';
+
         let html = '';
         for (let i = 0; i < lines.length; i++) {
-            html += '<span class="nds-code-line">' + renderTokens(lines[i]) + '</span>\n';
+            const row = prose && lineIsTableRow(lines[i]) ? ' nds-code-table-row' : '';
+            html += '<span class="nds-code-line' + row + '">' + renderTokens(lines[i]) + '</span>\n';
         }
         codeElement.innerHTML = html.trim();
         labelLanguage(codeElement, lang);
@@ -242,6 +248,16 @@
         // Drop trailing blank lines (indentation before the closing </code>).
         while (lines.length > 0 && lineIsBlank(lines[lines.length - 1])) lines.pop();
         return lines;
+    }
+
+    // A markdown table row (or its `|---|---|` divider): first non-blank token
+    // text starts with a pipe.
+    function lineIsTableRow(lineTokens) {
+        for (let i = 0; i < lineTokens.length; i++) {
+            const text = lineTokens[i].value.trim();
+            if (text !== '') return text[0] === '|';
+        }
+        return false;
     }
 
     function lineIsBlank(lineTokens) {
