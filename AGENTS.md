@@ -21,6 +21,10 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 - **NEVER use `sed`** for file edits — it rewrites every file it opens even with no match, polluting git diffs.
 - **For mass/bulk edits** — write a targeted script (Python, Ruby, etc.) that reads each file, checks for a match, and only writes back files that actually changed. Preserve existing line endings (write LF, not CRLF) and check `git diff --numstat` after — the repo is `autocrlf=true` with no `.gitattributes`, so a script that re-encodes line endings pollutes the diff.
 
+## Model Usage (Fable sessions)
+
+When the session runs on Fable, delegate mechanical and easy work — bulk edits, file writes, routine lookups, boilerplate — to `opus` or `sonnet` subagents via the Agent tool (`model` override) to save tokens. Keep Fable itself for complex tasks, decision-making, and review of the subagents' output.
+
 ## Using Components (CRITICAL)
 
 **NEVER guess a component's markup structure.** Before placing any NDS component on a page, open its doc page at `components/[name].md` and copy the canonical markup from its code block (or the live demo above it). Class names, element nesting, required modifier classes, `data-*` attributes, and ARIA roles must match the doc exactly. Also check `examples/*.md` for real-world usage patterns. If the doc is missing or unclear, read the component's SCSS in `_sass/components/_[name].scss` — do not invent structure from memory.
