@@ -2,14 +2,11 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "13/08/2026 - 03:51 PM"
+last_edit: "13/08/2026 - 10:48 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
 hero_style: nds-flat
-hero_tags:
-  - label: Beta
-    style: nds-yellow
 hero_description: "A complete workflow for installing NDS, building UI with an AI coding agent, verifying the result, and keeping the system current."
 breadcrumb:
   - ["Guides", "/guides"]

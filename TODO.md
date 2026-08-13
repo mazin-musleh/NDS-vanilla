@@ -6,6 +6,10 @@ Cleared at the 1.7.1 release (2026-08-12). That release shipped the whole v0.8 r
 
 ## Open
 
+- [x] **NDS IQ v1.0 full rewrite — SHIPPED 2026-08-13 (commit pending push).** Plan + 77-rule ledger in `~/.claude/plans/nds-iq-v1-{rewrite,inventory}.md`. Rewritten whole: timeline structure, principles P1–P5, tables; 69.6K → 41.4K chars. Validation: audit 77/77 ×2; Sonnet 63/63 ×2, Opus 63/63, Fable 63/63 (sweep pre-approved by the plan — standing rule since: opus/fable runs need fresh per-run permission); behavior S27 4/4. Six drops caught and restored (incl. the `_mixins.scss` index row via `check-release-guards.py`); S56 rubric overfit fixed; cites re-quoted. Guides: v1.0 history row, Beta tags dropped. Freeze LIFTED at ship. **Open tails:** S42 behavior re-run after the publish push; deeper size cuts (→~30K) as scheduled v1.x rounds with per-run approval for strong-tier legs; deletion candidate queued below.
+
+- [ ] **v1.x behavior-deletion candidate (post-v1.0, needs its own approval): drop the iframe-for-mobile sentence** in §Verify — obsoleted by the create-a-channel rung (a scripted browser sets any viewport); no scenario guards it, so the strike retires nothing. One sentence; scoped run on S19/S60 after.
+
 - [ ] **Baseline compaction in `scenarios.md` — targeted, boundary-sanctioned (queued 2026-08-12, post-1.7.1).** Per-scenario baselines never compact, so old arcs bury the current state (S1's is a small essay). Squash ONLY the pre-v0.8 history on the nine re-shaped/flipped scenarios — S1, S3, S4, S8, S17, S18, S25(b), S26, S47 — whose old numbers the header already declares "not comparable" (they measured the gated/opposite behavior). Each squashes to one summary sentence; KEEP: the latest result per model, standing do-not-repeat notes (e.g. S36's reverted re-order), and open watches (S1 upgrade verb, S36 `file://` rationale). Git keeps the full text. No behavior change, no rubric edits, no runs needed. Full-suite compaction (all 46) deliberately NOT chosen — riskier of losing a load-bearing nuance for little extra read-cost gain.
 - [x] **Review the 2026-08-12 field triage (21 items, three consumer projects).** Done 2026-08-12: reviewed with Fable, executed as the NDS IQ v0.9 batch (`~/.claude/plans/review-the-report-claude-skills-nds-iq-e-fluttering-tarjan.md`) — rules edits for R1/R2/R3/R4/R6/R9/R10/R11/R12/R13/R21 plus the plan-waiver path, scenarios S48–S54, the get-started setup prompt (R8) and the head-doc CSP row. Everything else from the triage is parked, queued, or on the watch list below.
 
@@ -37,7 +41,7 @@ These are settled calls, kept so they are not re-litigated. Each names what woul
 - **A release-notes vs CHANGELOG drift check: CLOSED, YAGNI.** `scripts/check-release-body.py` was built then reverted after review: one author, one session, monthly-ish releases, and a check nobody remembers to run shares the failure mode of the invariant it enforces. Reopen only on a real drift incident naming a released version.
 - **R20 — two-download `_source/` population STAYS (2026-08-12, user call).** The template zip ships no `_source/`; the rules populate it from the same tag's Source code zip. Triage proposed shipping `_source/` in the zip or a companion asset. Rejected: the current shape works against every template version an agent may meet, including releases cut before the rule existed, and it keeps the release script simple. Reopen only on the user's own initiative.
 
-- **Eval scenario numbering:** S1–S60 are written (S43 was never used — a numbering skip, not a retirement). **Next free is S61.**
+- **Eval scenario numbering:** S1–S66 are written (S43 was never used — a numbering skip, not a retirement). **Next free is S67.**
 
 ## Watch list — not tasks, things a later run should notice
 

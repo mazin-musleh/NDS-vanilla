@@ -2,14 +2,11 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "13/08/2026 - 03:51 PM"
+last_edit: "13/08/2026 - 10:48 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
 hero_style: nds-flat
-hero_tags:
-  - label: Beta
-    style: nds-yellow
 hero_description: "The instruction system that gives AI agents a consistent way to build with NDS: how it is engineered, tested, versioned, and kept current in a project."
 breadcrumb:
   - ["Guides", "/guides"]
@@ -76,11 +73,12 @@ sidemenu_mode: false
                 <p>The rules are supported by the <strong>inventory → plan → build → verify</strong> workflow and <code class="nds-inline-code lang-html">NDS-PLAN.md</code>, which carries project state between sessions.</p>
 
                 <h2 id="revisions">Revision History</h2>
-                <p>NDS IQ is versioned independently from the template. The revision is shown in the rulebook heading and indicates the maturity of the beta rule set.</p>
+                <p>NDS IQ is versioned independently from the template. The revision is shown in the rulebook heading and indicates the maturity of the rule set.</p>
                 <p>Updates compare the <strong>content</strong> of the installed and published rulebooks. A difference means a newer revision exists. The anchor has no version because it remains unchanged.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th data-align="center">Revision</th><th>Highlights</th></tr></thead>
                     <tbody>
+                        <tr><td>v1.0</td><td>Full rewrite, out of beta. The same rules reordered around the work: standing principles, tables for edit kinds, bans, and stop states, and a 40% shorter read. Validated against the complete scenario suite on three model tiers before release.</td></tr>
                         <tr><td>v0.10</td><td>Field-tested on one production project. Set <code class="nds-inline-code lang-html">.nds/</code> as the fixed template home, and added runtime bundle cross-checks, an install-time CSP sweep, a no-browser smoke check for page verification, named bans for copy edits, and source-first fix proposals.</td></tr>
                         <tr><td>v0.9</td><td>Field-tested across three projects. Added safer update handling, stable template paths, source-first guidance, page chrome planning, single-page plan waivers, findings for rule gaps, and Content-Security-Policy guidance.</td></tr>
                         <tr><td>v0.8</td><td>Removed version gates and made the rules version-agnostic. Added content-based updates, source population from matching releases, download checks, catalog checks, CSP checks, and release-note review.</td></tr>

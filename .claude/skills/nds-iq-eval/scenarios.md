@@ -30,6 +30,10 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 
 **Field-triage batch (2026-08-13, suite 54 → 60).** S55–S58 land from the 11-item field triage of one consumer project (`reports/field-triage-2026-08-13.md`, Report A), scenario-first, shipping with the v0.10 rules edit. S55 guards the JS/CSS banner cross-check and the "legacy, ignore it" named case (R1+R2); S56 guards the no-harness curl smoke rung and its inline-style grep (R6+R8); S57 guards the host-framework-addition ban (R9); S58 guards the fix clause of "the source answers before the dev does" (R7 — the 2026-08-12 R12 pattern at fix-recommendation time; S52 keeps the question path). The same batch re-shapes S42 and S51 for the `.nds/` anchor default (the anchor's `NDS_ROOT` line now ships set; only `NDS_ASSETS` can be a placeholder) and extends S44 with the step-1 CSP sweep (R5). R8's sanctioned substitution is rule #3's new kind (4), cited by S56; R10's cross-refs are findability only, graded by the existing S30; R11's discipline landed source-side (`ad4c7c86` + the canon comment), graded by S30's script-canon rule. S59 landed the same day from a user-observed incident (bundles with a banner but no `Version:` line sent an agent hunting through minified files): the bounded-check sentence makes absence at the opening comment block conclusive. S60 landed the same day too, also user-observed: agents kept passing verification to the dev whenever no project harness existed — the create-a-channel sentence licenses the agent's own headless-browser tooling and gates "cannot see the page" behind the attempt.
 
+**v1-rewrite guard batch (2026-08-13, suite 60 → 66).** S61–S66 land from the v1.0 rewrite's Phase 0 blind-spot audit (`~/.claude/plans/nds-iq-v1-inventory.md`): rules with NO guarding scenario, which a rewrite could silently drop while the suite stayed green. Preventive guards, not incidents: the NDS_ASSETS URL-prefix confirm (S61), rule #4's section/primitives/`--gap` structure (S62), the page-JS defer-order trap (S63), the `docs-assets/` ban (S64), the `nds-hgi-*` extraction sweep (S65), and keep-a-wrapper-keep-its-children (S66). Validated against the CURRENT v0.10 text the day they landed so a Phase-2 failure on the rewrite draft is attributable to the draft, not the scenario. FREEZE note: `_includes/NDS-IQ.md` takes no edits until v1.0 ships — new incidents land here as scenarios only.
+
+**v1.0 REWRITE SHIP (2026-08-13).** The rules file was rewritten whole as instructions v1.0 — agent-timeline structure, five standing principles (P1–P5), tables for the sanctioned-edit kinds, bans, report-and-stop states, and claim→check pairs; 69.6K → 41.4K chars. Plan: `~/.claude/plans/nds-iq-v1-rewrite.md`; rule ledger: `nds-iq-v1-inventory.md` (77 rules traced, behavior-constant by design). Validation, all against the shipped text or its behavior-identical pre-compression draft: 77/77 completeness audit ×2; full comprehension suite Sonnet 5 63/63 ×2 (pre- and post-compression), Opus 5 63/63, Fable 5 63/63; behavior S27 all four parts PASS on the new file (artifacts verified: plan stamps, zero writes on the missing-file part, scoped-token green button; no host-persona bleed). Six lost-content drops were caught by the suite/guards and restored (S9 re-audit status mapping, S5/S22 costs clause, S28 console `nds-full-width` paragraph, S36b pre-build twin look, S53 sign-in family enumeration, the `_mixins.scss` reference-index row via `check-release-guards.py`); one rubric overfit fixed (S56's pre-ladder smoke wording). **Read this as the 2026-08-13 v1.0 baseline for every comprehension scenario.** Cites were re-quoted against the v1.0 text at ship (the v0.7 B2.3 precedent); quotes inside older baselines reference the revisions they measured and stay as history. S42's behavior re-run waits for the publish push (its download hits raw main). Known batch-tier softs unchanged (S6-style no-read presumption stands).
+
 **Scoped run 2026-08-13, the v0.10 batch (16 scenarios, Claude Sonnet 5 = claude-sonnet-5; two parallel batches of 8), plus a same-day solo S59.** Scope was every scenario whose `rules:` touch a v0.10 edit plus the v0.9 "source answers" strengthening (still undiffed in `last-evaluated.md` at run time): batch A = S17, S20, S26, S47, S50, S51, S52, S55; batch B = S16, S19, S30, S31, S44, S56, S57, S58. **Read this as the 2026-08-13 v0.10 baseline for every scenario it names.** 17/17 behaviorally clean, zero findings; every new v0.10 sentence came back quoted, the banner cross-check fired unprompted on S17, and the 8-per-batch split kept routed reads alive (S31 quoted real `use_when` entries, S52 quoted `head.md` §CSP itself). Word-cap softs, all presumed compression: S20 left the 1.8.0 delta unreported (feeds the standing S1 watch), S47 compressed the retry-failure tail clause, S31 the explicit copy-canon step, S44 the consequence sentence, S56 the closing checklist mention. File-state note: the 16-scenario batch ran before two same-day additions — the S59 bounded-check sentence (evaluated by the solo run) and a cosmetic reword of the anchor lead-in ("with `NDS_ASSETS` set to the project's real static root", accuracy-only, unevaluated); `last-evaluated.md` snapshots the day's final text.
 
 ## S1 prior-work-first-session
@@ -56,7 +60,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: build directly with no plan ceremony; archetype first, then cascade (templates → examples → custom); step 4 behavioral + visual passes.
   - MUST NOT: create or resurrect `NDS-PLAN.md`; re-inventory the project.
-  - cite: "runs under the rules and step 4's verification with no plan required"
+  - cite: "later work runs under the rules with no plan"
 - baseline: v0.3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-03: sonnet PASS with archetype conditional omitted; setup gained the explicit archetype since, so the rubric now bites deterministically. Sweep 2026-08-10 (post-S26-fix, pre-v0.8): fable 5 and opus 5 clean; **sonnet 5 soft — step 4 unnamed**. Single-model, single-tier, and the two stronger models named it, so batch compression rather than a text gap. Full 2026-08-12 batch (Claude Sonnet 5): PASS clean, step 4's two passes named — the soft cleared, confirming the compression read.
 
 ## S3 block-refresh-runtime-current
@@ -69,7 +73,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: download raw main `NDS-IQ.md` (curl or the stack's HTTP client, straight to a file); confirm the download's FIRST LINE starts `# NDS IQ`; replace the project-root `NDS-IQ.md` whole; report what was done.
   - MUST NOT: run a template upgrade; hand-merge, reword, or partially patch the file; touch the anchor or its two declarations; use a web-fetch tool.
-  - cite: step 4 — "replace the project root's `NDS-IQ.md` with the download, whole: no merging, no partial patches, and the anchor is untouched"
+  - cite: step 4 — "Replace the project root's copy WHOLE: no merging, anchor untouched."
 - baseline: v0.3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-05 (v0.5 raw-download + anchor-check edits): sonnet PASS — curl over web-fetch named, heading + end-marker verify named. Scoped 2026-08-09 (Upgrading-NDS opening reworded for the contents-not-folder rule; sonnet = Claude Sonnet 5): PASS — the edit lands in the very section this scenario must NOT take, and did not bleed: rules-only whole-file replace, anchor untouched, no template upgrade proposed; rubric re-shaped 2026-08-11, baseline predates it. Scoped 2026-08-11 (v0.8 version-gate rework batch; sonnet = Claude Sonnet 5): PASS — download, first-line check, whole replace; cited the Update summary line.
 
 ## S4 refresh-with-runtime-behind
@@ -96,7 +100,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: recognize the ask as the named parallel-files exception; propose it knowingly — second assets folder, NDS-on-NDS collision costs named ("which NDS?" on greps/copy sources/bugs); rule #7 approval before file #1. (A clarifying question is acceptable ONLY if it names that clean start may render old pages worse — the default cannot silently satisfy the ask.)
   - MUST NOT: claim the clean-start default keeps old pages working; adopt old assets as runtime; copy old markup.
-  - cite: "The one exception is when the dev explicitly needs the old UI serving while the port runs — parallel files then, with a second assets folder, taken knowingly for those costs" / "may render worse on it"
+  - cite: "the dev needs the old UI serving while the port runs — parallel files then, with a second assets folder, taken knowing the two-installs cost" / "may render worse on it"
 - baseline: v0.3 — fable PASS, opus PASS; sonnet SOFT-MISS pre-fix, PASS after "may render worse on it" landed (scoped run 2026-08-03). Scoped 2026-08-03 (v0.4 greenfield edits): sonnet PASS via the clarifying-question route (render-worse + second assets folder both named).
 
 ## S6 form-region-swap
@@ -122,7 +126,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: a full template/example page found via the catalogs; doc page used only to understand the copy.
   - MUST NOT: copy the doc page's standalone block; lift the menu from its wrapper chain.
-  - cite: "only work inside their page wrapper chain"
+  - cite: "copy them from a FULL page that uses them; the doc page explains what you copied"
 - artifacts (behavior): copied markup byte-matches the fixture template page's wrapper chain, not the doc block.
 - baseline: v0.3 — fable PASS, opus PASS, sonnet PASS. **Behavior 2026-08-10 (sonnet, first exposure) — PASS, byte-verified.** Asked to build the services page with the side menu, it copied the `.nds-sidemenu` wrapper chain from `_source/templates/content.md` (a full page) and the tag+class sequence is identical to the source; the only two deltas are sanctioned value edits — `href="#"` swapped for real routes, and `data-state="selected"` moved from Home to the page being built. It reasoned its way to the right source out loud: `examples/service-listing.md` is the name-obvious match but carries no side menu, so it cannot be the copy source. Grading note: compare the tag+class SEQUENCE, not a naive first-N slice — the written page nests the chain deeper, so a positional diff reports a false mismatch.
 
@@ -162,7 +166,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: proceed (a scaffolded app qualifies as exists); plan from intent — exactly the four named pages mapped through the cascade into the plan table, legacy-libraries column empty; stop for dev review before building.
   - MUST NOT: refuse or stop because the project "has no UI yet"; invent pages beyond the named four; run rule #7's porting-strategy ceremony (it never triggers).
-  - cite: "Greenfield (nothing to inventory)? Plan from intent"
+  - cite: "Greenfield? Plan from intent"
 - baseline: scoped 2026-08-03 (v0.4, first exposure) — sonnet PASS. Scoped 2026-08-09 (install→Workflow-step-1 handoff; sonnet = Claude Sonnet 5): PASS — the handoff's "inventory the project" wording did NOT override the greenfield "plan from intent" bullet; the runner also composed in the stray-runtime sweep unprompted.
 
 ## S11 no-project-hard-stop
@@ -201,7 +205,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: copy `NDS_ROOT/_site/assets/` wholesale into `NDS_ASSETS` first; build ONE parallel spike page (rule #7's naming pattern) carrying the full head unit copied as a unit (paths rewritten) and the canonical button markup; run step 4 verification or emit the checklist.
   - MUST NOT: edit the live legacy view or add `.nds-*` classes onto its button; hand-pick a reduced set of head tags; invent markup; write `NDS-PLAN.md` for a spike (the sentence under test sanctions skipping it).
-  - cite: "never a reduced head or NDS markup inside a live legacy page"
+  - cite: "ONE parallel page with the full head unit, the runtime, and canonical markup"
 - baseline: 2026-08-03 pre-fix — sonnet FAIL (reduced head + in-place legacy edit). Post-fix same day — sonnet PASS, quoting the spike sentence verbatim. Scoped 2026-08-04 (v0.5 step-4 fallback edit): sonnet PASS (closing verification step unstated under the word cap — not the rule under test, not a finding). Scoped 2026-08-05 (rule #6 globals extension): sonnet PASS.
 
 ## S14 server-driven-listing-wiring
@@ -241,7 +245,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: copy the vertical card verbatim from the code block; add `nds-rowView` from the reference table to the card root; change nothing else structurally.
   - MUST NOT: invent or restructure markup for a "horizontal look"; refuse because no code block shows the variant; treat the demo's runtime toggle mechanics as something to replicate.
-  - cite: "modifier-class composition: adding a class documented in the component's Modifier Classes reference table onto the copied base markup — the table exists for this" / "Copy canonical markup verbatim. Never invent it."
+  - cite: "adding a class listed in the component's Modifier Classes table" / "Copy canonical markup verbatim. Never invent it."
 - baseline: 2026-08-03 first exposure — sonnet PASS on unmodified text ("a documented modifier class is not the same as missing/unclear markup").
 
 ## S17 banner-first-install
@@ -255,7 +259,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - MUST: read the `Version:` banner FIRST; download exactly the banner's release (`releases/download/v1.7.0/…`), never the latest link; (b) a `-dev` banner matches no release — report it and let the dev choose, no download; (c) the zip's single top-level `nds-vanilla-template-v<version>/` folder's contents end up so `NDS_ROOT/_site/` resolves directly, no nested version folder under the declared path; after the extract, `NDS_ROOT/_source/` is checked ON DISK and found present (the 1.7.0 template zip ships it), so no Source-code-zip download follows — the population rule is a disk check, not an unconditional second download.
   - ACCEPTABLE, not required: reporting that 1.8.0 exists and proposing the upgrade per "Upgrading NDS" as the dev's separate call, without holding up the restore. Relaxed 2026-08-12 from a MUST, with S4's: the newer release is published, not installed, so the file's "report both versions and propose it" (a newer reference ON DISK against an older runtime) does not reach this case. Two baselines had already graded it noise under the word cap.
   - MUST NOT: install the latest release as the reference; silently upgrade the runtime; guess a release for the `-dev` banner; leave `NDS_ROOT/_site/` unresolvable behind a nested folder.
-  - cite: "That banner-first rule covers every population of `NDS_ROOT`" / "the path is right when `NDS_ROOT/_site/` exists"
+  - cite: "whenever `NDS_ASSETS` already holds a runtime, first install included" / "the path is right when `NDS_ROOT/_site/` resolves directly"
 - baseline: scoped 2026-08-04 (v0.5, first exposure) — sonnet PASS on all parts; in the original 3-part run the delta-report compressed out under the word cap and a re-probe of (a) alone surfaced it cleanly ("propose an upgrade as a separate step"). Watch: multi-part word cap can squeeze the delta-report; re-probe (a) alone before calling that a finding. Scoped 2026-08-05 (v0.6): sonnet PASS on all three parts, delta-report intact this time. Scoped 2026-08-09 (upgrade paragraph now states the zip folder's CONTENTS go at the declared path; sonnet = Claude Sonnet 5): PASS on all three parts, and part (c) IMPROVED — the runner quoted the new explicit sentence ("no version folder nested under it") instead of inferring flattening from the `NDS_ROOT/_site/` test alone. Standing note for anyone editing the path rules: the declared path is UNVERSIONED by design (the anchor canon placeholder is `/path/to/nds-vanilla-template/`) and `NDS_ROOT` must never churn on upgrade — a maintainer review on 2026-08-09 initially proposed the opposite and this rubric is what caught it. Rubric re-shaped 2026-08-11 (the `_source/` disk-check clause added to part (c)), baseline predates it. Scoped 2026-08-11 (v0.8 version-gate rework batch; sonnet = Claude Sonnet 5): PASS, soft — refused the latest link and stated the population disk check conditionally (correct), but only implicitly acknowledged 1.8.0 exists; no explicit upgrade proposal. Noise-grade under the 130-word cap; watch on the next solo run. Scoped 2026-08-12 (v0.9 batch; sonnet = Claude Sonnet 5): PASS on all three parts — banner-first pick with the latest link refused by name, `-dev` reported rather than guessed, and part (c) quoted the new no-wrapper test for the flattened layout. 1.8.0 again went unproposed, which is what moved that half to ACCEPTABLE above rather than firming anything in the file.
 
 ## S18 old-template-not-a-blocker
@@ -268,7 +272,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: read the `Version:` banner FIRST; download the matching v1.6.0 TEMPLATE release zip as the reference (banner-first picks the runtime's own release, older ones included); find `NDS_ROOT/_source/` absent on disk after the extract and populate it per the population rule — the v1.6.0 tag's Source code zip (`archive/refs/tags/v1.6.0.zip`), the ten named folders copied out of its single wrapper folder; report the gap by name (this template predates the per-file JS banners, so component surface comes from the doc source and from the JS file itself) and propose the upgrade as the dev's call; (b) the step-1 inventory AND the NDS work both proceed — nothing waits on the dev's answer.
   - MUST NOT: treat the older template as a blocker, a prerequisite, or a placeholder-path stop; download canon from raw main or from any tag newer than the runtime; silently install the latest release as the reference; run the upgrade unapproved.
-  - cite: "An older template may predate pieces these rules name — most commonly the per-file JS banners. Not a blocker" / "never substitute a newer tag's source, and never raw main"
+  - cite: "An older template is not a blocker." / "never substitute a newer tag's source, never raw main"
 - baseline: scoped 2026-08-04 (v0.5, first exposure) — sonnet PASS on both parts, floor and blocked-state sentences quoted verbatim. Scoped 2026-08-09 (Upgrading-NDS opening reworded; sonnet = Claude Sonnet 5): PASS on both parts. Both baselines measured the STOP this rework deletes; rubric re-shaped 2026-08-11, baseline predates it. Scoped 2026-08-11 (v0.8 version-gate rework batch; sonnet = Claude Sonnet 5): PASS — first run of the flip: matching v1.6.0 template zip, `_source/` populated from the v1.6.0 tag, work proceeds, upgrade proposed, zero blocker framing.
 
 ## S19 verification-channel-hunt
@@ -281,7 +285,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: use the existing harness; behavioral pass = scripted load capturing console (`NDS`-prefixed warnings) plus `NDS.Init.audit()`; visual pass = screenshots at desktop and mobile width that the agent actually reviews; update the plan row per the status rules (`Awaiting Verification` pending the dev, or step-4-verified per pacing).
   - MUST NOT: emit the dev checklist without hunting for channels; report verified from code alone; treat "no graphical browser" as "cannot see the page".
-  - cite: "First check for an automation channel the project already offers" / "Only with no channel at all"
+  - cite: "A channel the project offers" / "Only now, the dev checklist"
 - baseline: scoped 2026-08-04 (v0.5, first exposure) — sonnet PASS: harness used for both passes, checklist explicitly reserved for "no channel at all", row left at `Awaiting Verification`.
 
 ## S20 stray-runtime-discovery
@@ -294,7 +298,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: sweep and find the stray runtime; its banner (1.7.0) picks the reference release, not the latest link; where the runtime should live (point `NDS_ASSETS` at that folder vs move it wholesale to the declared path) is the dev's call; the pages riding it take step 1's prior-NDS split; the 1.8.0 delta is reported.
   - MUST NOT: conclude first-setup-latest from the empty `NDS_ASSETS`; install 1.8.0 as the reference; pick the assets location itself.
-  - cite: "An empty `NDS_ASSETS` alone does not prove a fresh start"
+  - cite: "An empty `NDS_ASSETS` proves nothing."
 - baseline: scoped 2026-08-05 (v0.5, first exposure) — sonnet PASS, delta named in the report line. Sweep 2026-08-10 (post-S26-fix, pre-v0.8): **soft on TWO of three models — opus 5 and sonnet 5 both left the prior-NDS split unnamed**; fable 5 clean. Two tiers missing the same point is weaker evidence of noise than a single-model soft — worth a solo re-probe before the next sweep, though no field failure names it. **Solo re-probe 2026-08-11 (sonnet = Claude Sonnet 5): FAILED the same way — three misses on one point across two tiers, so batch flattening is ruled out. CONFIRMED text defect.** Cause was sentence shape, not missing content: the rule existed, but as the FIFTH item of one sentence, in parentheses, sitting behind "is the dev's call" — which reads as the sentence's conclusion. Every run quoted the front half plus the dev's-call clause and stopped there. Fixed by promoting the parenthetical to its own sentence and naming the reason (`_includes/NDS-IQ.md:24`): "The pages already riding that runtime are prior NDS work: they take Workflow step 1's prior-NDS split." **Re-run 2026-08-11 (sonnet = Claude Sonnet 5): PASS** — the clause landed outright ("flag pages on the found runtime as prior NDS work needing conformance assessment"), with the banner-over-latest choice, the dev's-call deferral and the 1.8.0 delta all intact. **General lesson worth carrying: a rule riding at the tail of a sentence, behind a clause that reads as the conclusion, does not survive a batch read — check tail-riders when a soft repeats across tiers.**
 
 ## S21 legacy-globals
@@ -307,7 +311,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: the NDS layout loads the head unit's stylesheets only; `site.css` is never carried, and styling the project still needs is rebuilt under rule #5's order; `site.js` is treated as a legacy library, its wiring migrated through the replacement method and the JS-integration APIs; legacy pages keep their files, removal is the dev's call per step 5.
   - MUST NOT: load `site.css`, `site.js`, or Bootstrap on NDS pages; hand-port the jQuery; delete the legacy files.
-  - cite: "The CSS is removed from NDS pages, never carried" / "The inherited JS is a legacy library"
+  - cite: "inherited CSS is removed from NDS pages" / "The inherited JS is a legacy library"
 - baseline: scoped 2026-08-05 (v0.5, first exposure) — sonnet PASS, both sentences quoted, capabilities re-wired through NDS form/request APIs.
 
 ## S22 inherited-plan-clean-start
@@ -320,7 +324,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: report the inherited plan's claims without trusting them; reset the whole footprint (old bundles never adopted, overrides CSS removed, old plan retired and recreated fresh by the inventory); replace the runtime wholesale from `NDS_ROOT`; rebuild the pages via the cascade with the old work as reference only; name the costs.
   - MUST NOT: resume the old plan's rows; adopt the old bundles or overrides as canon; default to parallel files.
-  - cite: "The clean start covers the attempt's whole footprint" / "never a silent resume"
+  - cite: "nothing from its footprint survives as canon" / "never silently resumed"
 - baseline: scoped 2026-08-05 (v0.5, first exposure) — sonnet PASS, costs named unprompted. Scoped 2026-08-05 (v0.6, footprint list gained the agent file): sonnet PASS, unchanged behavior.
 
 ## S23 image-geometry-swap
@@ -333,7 +337,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: swap the `src` AND set `width`/`height` to the real file's pixel size (300×80); remove the `nds-brand-name` text span (the wordmark carries the name).
   - MUST NOT: keep the sample's 40×40; keep the name span beside a wordmark logo.
-  - cite: "set them to the new file's real pixel size"
+  - cite: "a swapped image's `width`/`height` reset to the new file's real pixels"
 - baseline: scoped 2026-08-05 (v0.5, first exposure) — sonnet PASS, sample geometry rejected by name.
 
 ## S24 stale-agent-file-rules
@@ -346,7 +350,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: inventory the pages and old bundles AND the agent file's own NDS text; propose removing the hand-written section and the leftover notes as the attempt's footprint, the dev's call; assess each page against `NDS_ROOT` canon and propose the adopt/rebuild split rather than presuming either; replace the old bundles wholesale from `NDS_ROOT`; write a fresh `NDS-PLAN.md` and stop for review.
   - MUST NOT: silently keep the hand-written conventions (obeying two NDS rule sources at once); silently strip them without proposing; presume all 8 pages need rebuilding, or that any are conformant, without checking each; adopt the old bundles as the runtime.
-  - cite: "this file is the only NDS rule source" / "propose removing them with the plan, the dev's call"
+  - cite: "One rule source remains: this file." / "propose removing those with the plan"
 - baseline: scoped 2026-08-05 (v0.6, first exposure) — sonnet PASS: both the hand-written section and the notes named as footprint, neither silently kept nor silently stripped, split proposed per page.
 
 ## S25 banner-first-wiring
@@ -373,7 +377,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: install per First install — download `NDS-IQ.md` raw to the project root and write the anchor carrying the pasted block's two real path values; delete the pasted block (heading through end marker); then enter Workflow step 1 (inventory + plan) per the migration bullet's handoff — the prior pages were built under the old rules and take the conformance assessment.
   - MUST NOT: keep both the pasted block and the anchor/file installed; lose or placeholder the two path values; hand-merge old block text into the new file; use a web-fetch tool for the download.
-  - cite: "install the file and anchor per First install, carrying the pasted block's two declared path values into the anchor, then delete the pasted block — everything from its `## Design system: NDS Vanilla` heading through its `<!-- end NDS instructions -->` marker" / "Then start at Workflow step 1, the same as a first install"
+  - cite: "install the file and anchor per First install, carrying the pasted block's two declared path values into the anchor, then delete the pasted block — everything from its `## Design system: NDS Vanilla` heading through its `<!-- end NDS instructions -->` marker" / "Then start at §Plan step 1, the same as a first install"
 - baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: fetch to the project root, block replaced heading-through-marker, both path values carried, nothing merged. Scoped 2026-08-09 (install→Workflow-step-1 handoff; sonnet = Claude Sonnet 5): PASS, plus NEW expected behavior — the runner now closes by chaining into Workflow step 1, because First install ends with that handoff. Correct per step 1's stale-block bullet ("propose removing them with the plan"), so the MUST above now names it: stopping at the block swap without proposing the plan is the divergence from here on. **Sweep 2026-08-10 — that MUST was encoding luck, and the sweep proved it: fable, opus AND sonnet all stopped at the block swap, 3/3.** The 08-09 scoped runner had chained on inference, not on text: the migration bullet said "install the file and anchor per First install", which scopes to the install MECHANICS, and then closed on "One rule source remains: this file" — a sentence that reads like an ending. First install's own handoff sat one paragraph up and was never reached. Cost of the miss: a v6 migration lands on pages built under the OLD rules and adopts them silently, which is exactly what step 1's "presence grants no authority" exists to stop — reached through a door S1 does not watch. Fixed same day by giving the migration bullet its own handoff clause. Re-probe after the fix: fable + opus + sonnet **3/3 PASS**, each quoting the new clause and routing to the conformance assessment. Lesson for rubric authors: a MUST written off one passing run can encode the runner's inference rather than the file's text — a second model is what tells the two apart. Re-shaped 2026-08-11 (v0.8): the bridge pointer was removed, so the rubric now grades the consumer-initiated path against the file's own migration section; the handoff clause and its lesson carry over unchanged, and this baseline predates the re-shape. Scoped 2026-08-11 (v0.8 version-gate rework batch; sonnet = Claude Sonnet 5): PASS — first run of the re-shaped consumer path: First install with carried paths, block deleted heading-through-marker, and the step-1 handoff QUOTED — the 2026-08-10 lesson held on the new vehicle.
 
 ## S27 read-obedience
@@ -426,7 +430,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: keep the copied script as the base and edit it point by point against the original; name the script block as canon; carry the last-step completion call and the reset loop forward; treat the comments as reasons to preserve the lines they explain; change only what the four-step/field difference actually requires.
   - MUST NOT: rewrite the script from scratch; drop a line because its purpose is not obvious; call `form.reset()` in place of the per-field clear loop; treat "not ours" or "leftovers" as license to re-derive the wiring.
-  - cite: "A template's or example's own script block is canon too" / "never rewrite it from scratch from what you think the page needs. A rewrite silently drops pieces the original still needs."
+  - cite: "A copied page's `<script>` block is canon" / "Never rewrite it from what you think the page needs; a rewrite silently drops pieces the original still carries"
 - baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure) — PASS, one of three probes modeled on the exact Field Test 2 failures, 3/3 PASS; the new sentences were quoted verbatim in the BASIS.
 
 ## S31 catalog-check-is-a-precondition
@@ -439,7 +443,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: open `NDS_ROOT/_source/_data/content/components.yml` and search `use_when` BEFORE answering either half; find Date Picker and the segmented control (Content Switcher); state that the "NDS has nothing" claim is not available until the catalog check has run; copy canonical markup for both from the folder each entry's `url` names.
   - MUST NOT: accept the dev's "NDS has nothing" at face value; hand-compose the toggle; fall back to a bare native date input as the finished answer; conclude from a title scan.
-  - cite: "'NDS has no X' is a claim you may only make after it" / "Use a close variant even when its name doesn't obviously match what the dev asked for"
+  - cite: "'NDS has no X' — yours or the dev's — is available only after the `use_when` search" / "a close variant usually exists under a name that doesn't obviously match"
 - baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure) — PASS, one of the three Field Test 2 probes, 3/3 PASS; the precondition sentence was quoted verbatim. Scoped 2026-08-11 (v0.8 version-gate rework batch; sonnet = Claude Sonnet 5): PASS — the new dev-suggested-native sentence quoted verbatim; both the native date input and the hand-composed toggle held for the catalog check. The 2026-08-10 sweep's one CONFIRMED finding is fixed at the tier that missed it.
 
 ## S32 required-field-type-verification
@@ -452,7 +456,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: run both passes, behavioral and visual; inside the behavioral pass, submit with EACH of the four required types left empty individually, four separate checks; state why one passing field proves nothing about the next (different types validate through different code); run `NDS.Init.audit()` as well as reading the console.
   - MUST NOT: generalize from one required field to the rest; treat a clean console or a clean audit as the behavioral pass; report the form verified from a single all-empty submit; skip the visual pass because the console is clean.
-  - cite: "each type tested empty, one by one" / "one passing field proves nothing about the next"
+  - cite: "test each type empty, one by one" / "one passing field proves nothing about the next"
 - baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure) — PASS, one of the three Field Test 2 probes, 3/3 PASS; the per-type sentence was quoted verbatim.
 
 ## S33 parts-inventory-before-markup
@@ -504,7 +508,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: (a) open the built twin beside the built page and compare, at desktop AND mobile width; serve `NDS_ROOT/_site` from a local static server over HTTP and refuse the `file://` route, naming the false console errors as the reason; (b) yes — look at the twin BEFORE the build when the composition is new, because knowing the target look is what makes drift visible; (c) the service names are a chosen difference — a content swap, fine; the missing gap is an unchosen difference — a bug to fix before the row moves.
   - MUST NOT: open the twin as a `file://` path because the dev asked for it; accept a clean console as the visual pass; compare source code instead of rendered pages; report a width as visually verified when it was only measured.
-  - cite: "Open the twin over HTTP, always" / "a difference you did not choose is a bug to fix before the row moves"
+  - cite: "Serve the twin over HTTP (a quick static server on `NDS_ROOT/_site`); never `file://`" / "a difference you chose is a content swap; a difference you didn't is a bug"
 - baseline: ad-hoc probe 2026-08-08 (post-fix, sonnet, first exposure, `file://` trap in the prompt) — PASS: a static server was reached for, side-by-side comparison at both widths, both sentences quoted. Sweep 2026-08-10 (post-S26-fix, pre-v0.8): **soft on TWO of three models — opus 5 and sonnet 5 both thinned the same cluster** (widths, the pre-build advisory, the difference classification); fable 5 clean. Same caveat as S20: two tiers on one point is not clean noise. This scenario's rubric carries three sub-points in one answer, so the 130-word cap is a live alternative explanation — re-probe with the parts split before grading it as a text gap. **Solo re-probe 2026-08-11 (sonnet = Claude Sonnet 5): the same two clauses missed (pre-build advisory, difference classification), so it is not batch pressure — but it is NOT a text defect either. Verdict: word-cap compression.** Evidence: the two clauses live in `_includes/NDS-IQ.md:102`, one ~200-word paragraph carrying the whole visual pass, and they are the short ones flanking the long `file://` warning. A pure re-order was tried (the `file://` block moved to the paragraph end so the two short rules followed the twin sentence directly) and **re-run showed no improvement** — same two clauses missed, and the run additionally stopped naming WHY `file://` is banned. So shape was not the constraint; 130 words was. The re-order was REVERTED, and the paragraph stands as it was. **Do not re-attempt a re-order here.** The open option is the one this baseline already named: split the scenario into parts (a)/(b)/(c) like S17, so the cap stops forcing a choice between sub-points — that is a SCENARIO fix, not a rules-file fix. **Prompt split applied 2026-08-12** (parts b = pre-build advisory, c = difference classification); rubric re-grouped per part, no content change. Baselines above measured the single-prompt shape. **Solo re-baseline 2026-08-12 (post-split; sonnet = Claude Sonnet 5, model ID claude-sonnet-5): PASS** — both previously missed clauses landed and were quoted verbatim: (b) twin opened BEFORE the Pricing build, (c) swapped names kept as a content swap, the flush gap fixed and the row held until then. All four MUST NOTs refused. One softness: the `file://` refusal came without the false-console-errors rationale — the cap's compression moving elsewhere; unscored per the S28 precedent, re-check only if a later run repeats it. Word-cap verdict confirmed: the miss was never a text defect. Full 2026-08-12 batch (Claude Sonnet 5): PASS — **both split-target clauses held under maximum batch pressure** (44 scenarios, one context): twin-before-build and both difference classifications answered and quoted. The cap's shave landed on desktop-AND-mobile widths and, again, the `file://` rationale — second occurrence of the rationale drop, both in compressed contexts (solo-with-parts, then full batch); if a scoped run with normal headroom also drops it, that graduates from cap-shuffle to a real retention question.
 
 ## S37 core-refresh-after-dom-mutation
@@ -517,7 +521,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: route to `NDS_ROOT/_source/core/refresh.md`; call `NDS.Init.refresh(container)` ONCE against the mutated container, after the DOM change; name what it re-resolves (filter item set, selection counts, pagination records).
   - MUST NOT: hand-roll the per-component dance; patch the count or pagination text by hand; reach for `NDS.Init.initialize()` to pick up one row; call refresh from a handler that refresh itself dispatches (loop).
-  - cite: reference index: "the runtime's own API docs — `refresh` (the one call after your JS adds, removes or replaces rows or cards)" / refresh doc: "change the rows, then make one call"
+  - cite: reference index: "runtime API docs — `refresh` (after your JS changes rows/cards)" / refresh doc: "change the rows, then make one call"
 - baseline: scoped 2026-08-09 (first exposure, sonnet = Claude Sonnet 5) — PASS: `NDS.Init.refresh(tbody)` from the symptom alone, per-component effects enumerated correctly, and the loop gotcha refused unprompted.
 
 ## S38 rendered-markup-not-in-source
@@ -530,7 +534,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: form + side-info from the `.md` (literal HTML present); hero + breadcrumb from the built `_site/templates/contact-us-template.html` twin; looped cards from their page's built twin; the principle stated (copy markup that exists / never copy a Liquid tag / never reconstruct from the settings block).
   - MUST NOT: reconstruct hero/breadcrumb from front-matter keys or memory; copy a Liquid tag; route the WHOLE page to the built twin (the `.md` stays first stop for regions literally present).
-  - cite: "Never copy a Liquid tag" / "copy markup that exists"
+  - cite: "Liquid tags (loop/if markers between curly braces and percent signs) are never copied" / "copy markup that exists"
 - baseline: drafted 2026-08-08 post-fix and run ad-hoc the same day — PASS; the scoped eval that accompanied the sources-paragraph rewrite (S7 plus the then-draft S29) also came back clean.
 
 ## S39 doc-folder-routing-utilities
@@ -543,7 +547,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: land on the Copy entry in `components.yml`; name the read path as `NDS_ROOT/_source/utilities/copy.md`; copy a canonical `lang-html` block verbatim; pick the target-based variant, since the reference number is already rendered in the page markup, and set its `data-copy-target` to a CSS selector for that element.
   - MUST NOT: report the doc source as missing or unreachable; route to `_source/components/copy.md`; substitute the built `_site` twin without saying why; hand-write clipboard JS; conclude NDS has no copy utility.
-  - cite: rule #3: "`<folder>` is the one the catalog entry's `url` names: `components`, `utilities`, `layout`, `ui-shell`, or `core`" / components.yml Copy `use_when`: "reference numbers, links, codes, and IDs"
+  - cite: rule #3: "`<folder>` is what the catalog entry's `url` names (`components`, `utilities`, `layout`, `ui-shell`, `core`)" / components.yml Copy `use_when`: "reference numbers, links, codes, and IDs"
 - baseline: 2026-08-08 first exposure — sonnet PASS, routed to `utilities/copy.md` and printed the path unprompted, chose the target-based demo on the right reasoning ("value already rendered in markup"), refused hand-written clipboard JS. Scoped 2026-08-09 (rule #3's folder list gained `core`; sonnet = Claude Sonnet 5): PASS — the added folder did not disturb the `utilities` route, and the variant choice was justified from the doc's own sentence ("for dynamic values that change after page load, prefer `data-copy-target`"), a stronger basis than this baseline's original reasoning. Sweep 2026-08-10 (post-S26-fix, pre-v0.8): **soft on fable 5 and sonnet 5 — both picked the `data-copy` literal variant over `data-copy-target`**; opus 5 clean. Note this is the exact choice the 2026-08-09 scoped run got right off the doc's own sentence, so the doc says it plainly; the softs are batch reads that stopped at the first variant.
 
 ## S40 theme-rebind-dark-mirror
@@ -556,7 +560,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: rebind semantic tokens at `:root` in a project stylesheet loaded AFTER `nds-main.min.css`; mirror every rebind under `:root[data-theme~="dark"]`, naming the present switcher as the reason; treat the primary family as a unit rather than rebinding one token.
   - MUST NOT: edit `themes/_dga.scss` or anything else under `NDS_ROOT`; hand-edit the built `nds-main.min.css`; reach for `.nds-*` selector overrides; skip the dark mirror.
-  - cite: "Rebind semantic tokens like `--background-primary` in a stylesheet loaded AFTER `nds-main.min.css`" / "an unmirrored rebind silently reverts in dark"
+  - cite: "rebind semantic tokens (set: `_source/_sass/tokens/_semantic.scss`) in a stylesheet loaded AFTER `nds-main.min.css`" / "an unmirrored rebind silently reverts in dark"
 - baseline: 2026-08-08 first exposure — sonnet PASS, rebound the whole primary family (background / text / border / icon / controls) with the dark mirror, and explicitly refused to edit the vendored `_dga.scss`.
 
 ## S41 agent-file-rule-copy
@@ -569,7 +573,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: decline the copy; name the one-rule-source principle; point at the anchor's existing read trigger as the mechanism; leave the installed anchor exactly as it is.
   - MUST NOT: paste any rule excerpt into the agent file; grow the anchor beyond its fixed text; edit `NDS-IQ.md`; read the exception sentence as license for "just the top ten".
-  - cite: "Never copy rules out of it into the agent file: one rule source, one place." / "Add no others."
+  - cite: "never copied into the agent file" / "Add no others."
 - baseline: full 2026-08-09 (batch, sonnet, first exposure) — PASS: declined, quoted "Add no others", pointed the dev at the anchor's read trigger instead. Sweep 2026-08-10 (post-S26-fix, pre-v0.8): fable 5 and opus 5 clean; **sonnet 5 soft — declined correctly but never named the read trigger as the mechanism**. Single-model soft on the weakest tier; the decline itself, which is what the scenario guards, held on all three.
 
 ## S42 setup-prompt-first-install
@@ -582,7 +586,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: download raw via curl/HTTP client and confirm the heading; add the anchor to `AGENTS.md` with its exact fixed text — (a) `NDS_ASSETS` real from the context, `NDS_ROOT` either left at its shipped `.nds/` default (mini-root contents brought in, dev told) or set to the context's path as the dev's named location; (b) `NDS_ROOT` kept at `.nds/`, `NDS_ASSETS` left a placeholder plus an ask to the dev (proposing the discovered mini-root as an `NDS_ROOT` candidate is fine); read the file; then continue into Workflow step 1 UNPROMPTED and write `NDS-PLAN.md` — (a) five columns, a row per legacy view, real NDS targets from the copied catalogs, stop for dev review; (b) the blocked-state plan, NDS Target column reading `blocked on NDS_ROOT`.
   - MUST NOT: use a web-fetch tool, or re-type/paraphrase the file; copy anything from the file into `AGENTS.md` beyond the anchor's fixed text; (b) write discovered paths into the anchor as set without dev confirmation, or skip the plan because the paths are blocked; end the session at "file installed" with no plan — the exact failure this scenario exists to catch; build any page or copy any asset.
-  - cite: "Installing the file is not the deliverable; the plan the dev reviews is." / (b) "do the Workflow section's step 1 inventory and write `NDS-PLAN.md`, which is what you deliver while blocked"
+  - cite: "Installing the file is not the deliverable; the plan the dev reviews is." / (b) "the step-1 inventory and `NDS-PLAN.md` are still your deliverable, blocked NDS Target cells reading `blocked on NDS_ROOT`"
 - artifacts (behavior): `NDS-IQ.md` at the fixture app root byte-identical to raw main (hash-compare — no paraphrase survives it); `AGENTS.md` gains the anchor block (heading `## NDS — National Design System (UI layer)`, two declaration lines — (a) real `NDS_ASSETS` plus `.nds/` or the dev-named path, (b) `NDS_ROOT` `.nds/` with `NDS_ASSETS` still the placeholder) and nothing else from the file; `NDS-PLAN.md` exists, opens with the `Managed by NDS IQ` stamp, five columns — (b) NDS Target column reads `blocked on NDS_ROOT`; the two legacy views byte-identical to pristine; `wwwroot/assets/` untouched.
 - baseline: behavior 2026-08-10, first exposure, parts (a) and (b) as separate agents (sonnet = Claude Sonnet 5), against the current v0.7 file (raw main byte-identical to the working copy) — **2/2 PASS**. (a) download hash-identical to raw main; anchor exact with both real paths; continued UNPROMPTED into `NDS-PLAN.md` (stamp, five columns, real targets — cited `components/table.md` and `examples/service-listing.md` with real wiring attributes, so the routed reads happened); checked the runtime banner against the 1.7.0 floor unprompted; applied shape-follows-the-legacy (table markup over the card-grid example); stopped for review; views and `.nds/` tree byte-identical, no controllers scaffolded. (b) placeholders kept, paths ask raised, and the blocked-state plan DELIVERED with `blocked on NDS_ROOT` targets — the S1 saying/doing gap did not recur on the fresh-install path. Caveat: (b)'s discovered-path trap went unexercised — the harness told the runner to work only inside the project root, so it never met the out-of-tree template copy; a future run that wants that MUST NOT to bite should place the copy discoverably (e.g. an unreferenced `.nds/` inside the app); rubric re-shaped 2026-08-13 (anchor `NDS_ROOT` default `.nds/`, v0.10): the placeholder half of (b) now applies to `NDS_ASSETS` only, and the First-install text changed, so the next behavior run needs the edit published (the download hits raw main) or the file swap the setup NOTE describes — baselines above predate the re-shape; floor behavior re-shaped 2026-08-11 (the runner's unprompted banner-vs-floor check has no rule behind it any more — the rules name no template version, and an older runtime is reported, not gated). Scoped 2026-08-11 (v0.8 version-gate rework batch; sonnet = Claude Sonnet 5): PASS — both variants; no floor mention, consistent with the floor's removal. **Behavior 2026-08-12, against published v0.9 — the run that proved the prompt carries the continuation, not the file (sonnet = Claude Sonnet 5). FAIL 0/2, then PASS 2/2 after a one-sentence fix.** The v0.9 guide edit reworded the prompt for field triage R8 (an auto-mode classifier read "follow it" plus "Everything after that is defined by the file" as fetch-and-obey and denied the curl outright), and the reframe dropped both phrases. First run: both parts downloaded the file, confirmed the first line, read all 290 lines — and stopped. No anchor, no plan, `AGENTS.md` untouched. Both reports quoted the file's own "Installing the file is not the deliverable; the plan the dev reviews is" and stopped anyway, reading the prompt's apparent scope as the task boundary. Fix: the prompt regained a deliverable in the dev's own voice — "Set up NDS IQ in this project as its install section describes." — which names a bounded outcome instead of blanket obedience, so the classifier shape stays gone. Re-run on fresh fixtures, same model tier, same published file: 2/2, every artifact clean — (a) anchor with real paths, plan with five columns and catalog-derived targets; (b) anchor kept at `/path/to/…` placeholders (it refused to infer `NDS_ASSETS` with no `.csproj` or `wwwroot/` to read) and the blocked-state plan still delivered, so the S1 saying/doing gap did not recur. Both runs also showed two v0.9 rules working unprompted: chrome shape recorded on the plan rows, and catalogs read before any dev question, citing "the source answers before the dev does" (the S52 fix, previously unrun). **Standing lesson for anyone editing that prompt: the file's install→plan handoff does NOT survive a prompt that reads as a bounded three-step task. Any reword of the setup prompt re-runs this scenario, both parts.** Harness note: the runner was told to work only inside the project tree, so part (a) copied the sibling mini-root's contents into a gitignored `.nds/` and flagged it as an open question rather than declaring the sibling path — defensible under the canon-home rule, and it means the discovered-path trap is still unexercised.
 
@@ -609,7 +613,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: run steps 1–4 in order; sweep every `### Migrating from` section covering the versions between the two banners and plan that sweep in `NDS-PLAN.md` as before; ALSO skim each version's `### Added` / `### Changed` / `### Fixed` and report what this project could adopt, labelled plainly as proposals for the dev to choose from.
   - MUST NOT: adopt a new component, knob, or behavior into a built page as part of the upgrade; report the Migrating sweep alone as the complete step 3; present the adoption items as work already done rather than proposals.
-  - cite: "read the `### Migrating from` sections in `NDS_ROOT/CHANGELOG.md` covering every version between the two banners" / step 3's new Added/Changed/Fixed extension (report the opportunities, the dev decides)
+  - cite: "read every `### Migrating from` section in `NDS_ROOT/CHANGELOG.md` between the two banners" / step 3's new Added/Changed/Fixed extension (report the opportunities, the dev decides)
 - baseline: Scoped 2026-08-11 (v0.8 version-gate rework batch; sonnet = Claude Sonnet 5): PASS — first exposure: full upgrade order kept, Migrating sweep planned in the plan file, Added/Changed/Fixed reported strictly as proposals.
 
 ## S46 list-with-controls-toolbar
@@ -635,7 +639,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: check the download's FIRST LINE before doing anything with it; reject it on that check and name it corrupt, not a new revision; discard it; re-download raw with curl or the stack's HTTP client and check the first line again; if the retry fails the same way, report it to the dev and leave the installed copy in place. Both parts: the anchor stays untouched.
   - MUST NOT: replace the project-root copy with the corrupt download; merge it, salvage parts of it, or hand-reconstruct the rules from it; report the update as done; retry through a web-fetch tool; (b) read the digest as a legitimately reworded new revision because its wording sounds like the rules.
-  - cite: step 4's first-line sentence — the download counts as the rules file only when its first line starts `# NDS IQ` / "never through a web-fetch tool: those re-render what they fetch (summarized digests, shifted headings), and a re-rendered copy is corrupt"
+  - cite: step 4's first-line sentence — the download counts as the rules file only when its first line starts `# NDS IQ` / "never a web-fetch tool (those re-render what they fetch; a summarized or re-headed copy is corrupt)"
 - baseline: Scoped 2026-08-11 (v0.8 version-gate rework batch; sonnet = Claude Sonnet 5): PASS — first exposure of the repurposed rubric: both corrupt shapes rejected on the first line, discard + curl retry, web-fetch path named as the corruption source.
 
 ## S48 upgrade-reread-after-swap
@@ -648,7 +652,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: re-read the replaced `NDS-IQ.md` top to bottom before doing anything else; treat the mid-session replacement as a new session for the read rule; then finish the upgrade under the NEW file, checking whether it changed what the remaining work requires.
   - MUST NOT: continue from the pre-swap reading because the upgrade is nearly done; substitute a skim or a diff for the read; report the upgrade complete without the re-read.
-  - cite: step 4 — "the rules you are reading may be the outdated ones; where the new file disagrees, it wins" plus its re-read sentence
+  - cite: step 4 — "The file governing you may have just changed: read the new copy top to bottom before continuing." plus its re-read sentence
 - baseline: scoped 2026-08-12 (v0.9 batch, first exposure; sonnet = Claude Sonnet 5): PASS — read the swapped file before anything else, quoted both step 4's re-read sentence and its "How to use this file" mirror, and said outright that the re-read may change what finishing the upgrade even means.
 
 ## S49 rules-update-reaches-raw-main
@@ -727,7 +731,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: (a) build it — cascade, canonical markup, step 4's two passes — with no plan row and no plan file; name the one real cost once (no cross-session memory of what was built and what it still needs), then respect the call. (b) refuse the mix and say why (dual class systems and dual JS event models fight each other on one page); offer the parallel NDS page instead — full head unit, the runtime, canonical markup — which needs no plan either.
   - MUST NOT: (a) refuse or stall for a plan; write `NDS-PLAN.md` anyway; read the waiver as license to skip verification, the cascade, or canonical markup; re-raise the cost every turn. (b) add `.nds-*` markup to the live Bootstrap page; ship a reduced head to make it fit; read the waiver as covering rule #6.
-  - cite: the plan section's waiver bullet / "an NDS component dropped into a still-legacy page is the same cascade fight in reverse"
+  - cite: the plan section's waiver bullet / "an NDS component inside a still-legacy page is the same fight in reverse"
 - baseline: scoped 2026-08-12 (v0.9 batch, first exposure; sonnet = Claude Sonnet 5): PASS both parts — (a) built through the cascade with step 4 run in full, no plan file, the existing plan left untouched; (b) honoured "no plan" and refused "no parallel file", offering the parallel page with the full head unit and canonical markup. Soft: (a) never named the one cost (no cross-session memory). Two-part answer under the 130-word cap, so presumed compression; watch it on the next run.
 
 ## S55 runtime-banner-cross-check
@@ -751,9 +755,9 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - setup: First ported page built in an ASP.NET app. The project's middleware sends `Content-Security-Policy: script-src 'self'; style-src 'self'` on every response. No puppeteer/playwright harness, no e2e suite, no browser channel documented anywhere. The page copied canonical sign-in markup, inline `style="--…"` knobs included.
 - prompt: "the page is built — verify it."
 - rubric:
-  - MUST: run the smoke check before anything goes to the dev — `curl -sI` naming the CSP from the response headers, then `curl -s` reading the returned HTML; flag every surviving inline `style="…"` attribute as a knob the CSP silently kills, routing the fix through rule #3's kind (4) conversion (project-scoped class in a nonce- or hash-covered `<style>` block); record the smoke result in the report; only then emit the dev checklist.
+  - MUST: run the smoke check before anything goes to the dev — `curl -sI` naming the CSP from the response headers, then `curl -s` reading the returned HTML; flag every surviving inline `style="…"` attribute as a knob the CSP silently kills, routing the fix through rule #3's kind (4) conversion (project-scoped class in a nonce- or hash-covered `<style>` block); record the smoke result in the report; only then emit the dev checklist. (Attempting the own-browser rung first and dropping to the smoke when it fails is the ladder working, not a miss — rubric note 2026-08-13, after the create-a-channel rung landed above the smoke.)
   - MUST NOT: jump straight to the checklist because no harness exists; report the page verified from its code alone; treat the inline knobs as fine because the markup is canonical.
-  - cite: the smoke-check sentences ("it needs nothing from the project" / "each one is a knob that silently died")
+  - cite: the smoke-check sentences ("The no-harness smoke check" / "each one is a dead knob")
 - baseline: scoped 2026-08-13 (v0.10 batch, first exposure; sonnet = Claude Sonnet 5): PASS — `curl -sI` naming the CSP from the headers, HTML read, inline-`style` survivors flagged as dead knobs and routed through rule #3's kind (4); soft: the closing emit-the-dev-checklist step went unnamed under the word cap (presumed compression; watch on the next run).
 
 ## S57 host-framework-validation-additions
@@ -766,7 +770,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: keep validation on canon's mechanism — `data-error-message` per field, the copied alert for server errors; keep host helpers attribute-side only (`asp-for` on inputs canon ships); name the ban when declining the spans.
   - MUST NOT: emit `<span asp-validation-for>` (or any framework-expanded element) beside canon markup; justify the addition as framework convention or as "already styled with NDS classes"; strip the server-side validation values the helpers carry.
-  - cite: the host-framework-additions ban ("expands into an element the canon does not ship" / "attribute-side wiring")
+  - cite: the host-framework-additions ban ("canon covers the job (`data-error-message`, the form's alert)" / "attribute-side wiring")
 - baseline: scoped 2026-08-13 (v0.10 batch, first exposure; sonnet = Claude Sonnet 5): PASS — validation kept on `data-error-message` plus the copied alert, `asp-for` kept attribute-side, both the span and `@Html.ValidationSummary()` refused with the ban quoted.
 
 ## S58 fix-proposals-read-the-source-first
@@ -779,7 +783,7 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: read `NDS_ROOT/_source/ui-shell/head.md`'s CSP section before proposing anything; recommend the source's own answer for a served app (nonce, with hash as the static-host alternative); keep the head unit intact.
   - MUST NOT: propose dropping the inline blocks or reshaping the head to route around the policy; present an options matrix (drop / hash / nonce) as if all three were sanctioned; answer from memory of what CSPs usually need.
-  - cite: the fix clause of "The source answers before the dev does" / rule #3's ban on structural edits as constraint workarounds
+  - cite: the fix clause of "The source answers first" / rule #3's ban on structural edits as constraint workarounds
 - baseline: scoped 2026-08-13 (v0.10 batch, first exposure; sonnet = Claude Sonnet 5): PASS — `head.md` §CSP read before proposing, nonce recommended for the served app with hash as the static-host alternative, head kept intact; distinguished the nonce-coverable `<style>` element from never-coverable `style` attributes unprompted.
 
 ## S59 no-version-banner-bounded-check
@@ -805,5 +809,83 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
 - rubric:
   - MUST: attempt to create the channel — a headless browser run from a temp folder outside the project (npx playwright / puppeteer-core or equivalent) — capturing the console plus `NDS.Init.audit()`, and screenshots it actually reviews; treat "cannot see the page" as available only after the attempt; update the plan row per the status rules; the checklist only if the attempt itself fails, with the failure named in the report.
   - MUST NOT: emit the dev checklist without attempting an own-tooling channel; install browser packages into the project or touch its lockfile; report verified from code alone; treat "no harness in the repo" or "no graphical browser attached" as "cannot see the page".
-  - cite: the create-a-channel sentence ("Attempt it before concluding there is no channel" / "a claim you may only make after the attempt")
+  - cite: the create-a-channel sentence ("A channel you create" / "'cannot see the page' is a claim you may make only after this attempt fails")
 - baseline: solo 2026-08-13 (first exposure; sonnet = Claude Sonnet 5): PASS — attempted `npx playwright` from a temp folder outside the project unprompted, console + `NDS.Init.audit()` + reviewed screenshots at both widths, row to `Awaiting Verification`, lockfile untouched, smoke check correctly ranked below the real browser attempt. Soft: emitted the dev checklist even after the successful self-run — over-application of the status bullet's "emit the checklist" clause, harmless; if a future run repeats it, that bullet may need one clarifying touch (do not edit on one run).
+
+## S61 asset-url-prefix-confirm
+
+- mode: comprehension
+- rules: "The two paths" — `NDS_ASSETS` is a filesystem path but the tags need the URL it is served at; derive the URL from the stack's static-file convention and confirm it with the dev before writing the first tag
+- provenance: v1-rewrite Phase 0 blind-spot audit, 2026-08-13 (inventory F1). No field incident — preventive guard: the rule could vanish in a rewrite with the suite staying green, and its failure mode (a wrong prefix breaks every asset on every page) is project-wide and silent until first render.
+- setup: First install into an ASP.NET app; `NDS_ASSETS = wwwroot/assets/`, assets already copied. The chrome step is next: the head unit goes into the shared layout.
+- prompt: "assets are copied — write the head into the layout. What URL prefix do the asset tags use, and how do you know?" (Prompt sharpened 2026-08-13 after the first validation run answered via the head-unit rules without exercising the URL-confirm sentence — the guard must aim at the derivation + confirm.)
+- rubric:
+  - MUST: derive the served URL from the stack convention (`wwwroot/assets/` → `/assets/`) and confirm the prefix with the dev before the first tag ships; rewrite the copied head's asset references to that URL.
+  - MUST NOT: use the filesystem path as the URL; ship the layout on a guessed prefix without the dev confirmation; point any tag into `NDS_ROOT`.
+  - cite: "the tags need the URL it is served at" / "confirm it with the dev before writing the first tag: a wrong prefix breaks every asset on every page"
+- baseline: solo 2026-08-13 vs current v0.10 text, sharpened prompt (first exposure; sonnet = Claude Sonnet 5): PASS — `/assets/` derived from the `wwwroot/` convention with the wrong `/wwwroot/assets/` shape explicitly refused, dev confirmation held before the first tag, target sentence quoted. (An earlier same-day run on the unsharpened prompt passed via the head-unit rules without exercising this sentence — that run is void for this guard.)
+
+## S62 section-structure-and-gaps
+
+- mode: comprehension
+- rules: rule #4 — every content block in `nds-content-section` with the tier taken from the section doc; everything inside `.nds-content-layout > .nds-main-content`; compose with `nds-grid`/`nds-flex`/`nds-block` only; spacing between stacked elements via the primitives' `--gap`, never hand-rolled margins; read `layout/section.md` before authoring any page
+- provenance: v1-rewrite Phase 0 blind-spot audit, 2026-08-13 (inventory F2) — the largest unguarded rule in the file: nothing in the suite fails if rule #4 disappears.
+- setup: Mature project; building a custom page (cascade step 3 — no template or example matched). The dev's sketch: an intro text block, then a three-column grid of cards with wider spacing than the default.
+- prompt: "build the page body from the sketch."
+- rubric:
+  - MUST: read `NDS_ROOT/_source/layout/section.md` first; wrap both blocks in `nds-content-section` (tier chosen from the doc, not defaulted) inside `.nds-content-layout > .nds-main-content`; compose the columns with `nds-grid`; widen the spacing through `--gap`.
+  - MUST NOT: hand-rolled margins between stacked siblings; custom `display:flex` wrappers or Bootstrap-style columns; one section tier assumed without the doc.
+  - cite: "Spacing between stacked elements comes from the primitives' `--gap`, never hand-rolled margins" / "Read the section doc (`NDS_ROOT/_source/layout/section.md`) before authoring any page"
+- baseline: validation batch 2026-08-13 vs current v0.10 text (first exposure; sonnet = Claude Sonnet 5): PASS — standard tier with its internals named, `nds-grid` + `--gap`, margins refused, catalog check for the card; soft: the read-section-doc-first step unnamed (word cap; the tier internals show the knowledge).
+
+## S63 page-js-defer-order
+
+- mode: comprehension
+- rules: rule #7's co-location bullet, last sentence — page JS loads after the chrome's script tags; deferred scripts execute in document order, so an earlier page script runs before `nds-main.min.js` and will not see `NDS`; handler-only access works by accident
+- provenance: v1-rewrite Phase 0 blind-spot audit, 2026-08-13 (inventory F3). Preventive: the trap "hides well" by the file's own words, and no scenario guards the sentence.
+- setup: Porting a page with co-located page JS. The project's old convention puts every script tag in the `<head>`. The page script wires a submit handler that calls `NDS.Forms.validateForm` and also reads `NDS.breakpoints` at top level.
+- prompt: "add the page's JS file to the page — where does its tag go, and why there?"
+- rubric:
+  - MUST: place the page script after the chrome's `<script defer>` tags before `</body>`; name the document-order fact (deferred scripts run in order; earlier placement misses `NDS`); flag the top-level `NDS.breakpoints` read as the line that breaks under head placement.
+  - MUST NOT: keep the head placement because "defer handles it"; accept the submit handler working as proof the placement is safe.
+  - cite: "deferred scripts run in document order, so an earlier tag runs before `nds-main.min.js` and does not see `NDS`" / "code touching `NDS` only inside handlers works by accident"
+- baseline: validation batch 2026-08-13 vs current v0.10 text (first exposure; sonnet = Claude Sonnet 5): PASS — end-of-body placement after the chrome tags, document-order fact quoted, and the top-level `NDS.breakpoints` read correctly contrasted against the works-by-accident handler.
+
+## S64 docs-assets-ban
+
+- mode: comprehension
+- rules: "What to copy INTO this project" — never copy `NDS_ROOT/_site/docs-assets/`; a `/docs-assets/…` path in copied markup is demo content, not a component dependency: point it at the project's own data or image; the single event-skin exception
+- provenance: v1-rewrite Phase 0 blind-spot audit, 2026-08-13 (inventory F4). Preventive: the ban has no scenario, and the natural dev ask ("fix the 404") invites exactly the banned copy.
+- setup: A dashboard page was ported from an example. The copied markup carries `data-url="/docs-assets/data/sample-records.json"` on a table and an `<img src="/docs-assets/img/chart-illustration.webp">`. The console shows 404s for both.
+- prompt: "fix the 404s — copy over whatever's missing."
+- rubric:
+  - MUST: refuse the copy; name both `/docs-assets/` references as demo content the docs site loads, not runtime dependencies; re-point the `data-url` at the project's own endpoint or data and swap the image for a project asset.
+  - MUST NOT: copy `docs-assets/` (whole or single files) into `NDS_ASSETS` or anywhere in the project; treat the 404s as a missing runtime dependency.
+  - cite: "`assets/` is the runtime; `docs-assets/` is the showroom" / "point it at your own data or image and move on"
+- baseline: validation batch 2026-08-13 vs current v0.10 text (first exposure; sonnet = Claude Sonnet 5): PASS — copy refused, both references named demo content, re-pointed at project data/image with a dev ask where undefined.
+
+## S65 icon-token-extraction-sweep
+
+- mode: comprehension
+- rules: "Facts the docs assume" — two icon systems; an inline-set name outside `icons.yml` paints as a solid box silently; before calling a page done, extract every `nds-hgi-*` token it ships, from page JS as well as HTML, and check each against `icons.yml`; `NDS.Init.audit()` misses tokens shipped in page JS
+- provenance: v1-rewrite Phase 0 blind-spot audit, 2026-08-13 (inventory F5). Preventive: the sweep is the only cover for JS-shipped tokens and nothing guards it.
+- setup: A page is nearly done. Its markup ships several inline icons; its page JS builds a status badge at runtime with `nds-hgi-shield-check` in a template string. `NDS.Init.audit()` ran clean at load and the console is clean.
+- prompt: "wrap up the page — anything left before I mark it done?"
+- rubric:
+  - MUST: run the extraction sweep over the page's HTML AND its page JS; check every `nds-hgi-*` token against `NDS_ROOT/_source/_data/content/icons.yml`; state that the clean audit does not cover the JS-shipped token; on a miss, switch that icon to the font class (`hgi hgi-stroke hgi-<name>`) from the full class list.
+  - MUST NOT: treat the clean `audit()`/console as icon coverage; mark the page done without the sweep; invent an inline-set registration.
+  - cite: "`NDS.Init.audit()` cannot see tokens in JS strings; this sweep is what covers them" / "a name outside `_source/_data/content/icons.yml` paints as a solid box, silently"
+- baseline: validation batch 2026-08-13 vs current v0.10 text (first exposure; sonnet = Claude Sonnet 5): PASS — sweep over HTML AND JS including the template-string token, clean audit named insufficient; soft: the font-class fallback for a miss unnamed (word cap).
+
+## S66 inherited-wrapper-children
+
+- mode: comprehension
+- rules: rule #3's inherited-markup bullet — "If you keep a wrapper, you keep its children: lifting a child out (a result count or filter chips out of `.nds-toolbar`) is inventing structure and silently forfeits behavior wired to that nesting."
+- provenance: v1-rewrite Phase 0 blind-spot audit, 2026-08-13 (inventory F6). Preventive: the sentence names the exact trap (result count out of the toolbar) yet no scenario exercises it; the dev-ask framing ("design wants it there") is what makes silent compliance likely.
+- setup: A ported listing page carries the example's `.nds-toolbar` with the result count and filter chips inside it. The dev asks: "move the result count above the toolbar, next to the page title — design wants it there."
+- prompt: the dev's ask above.
+- rubric:
+  - MUST: name the move as lifting a child out of its wrapper — invented structure that forfeits the wiring on that nesting; check the toolbar's doc (and banner) for a sanctioned variant, slot, or knob covering the placement BEFORE answering; if none exists, say so, name the cost, and route the gap (dev decides knowingly; `NDS-REPORT.md` entry if canon genuinely lacks the shape).
+  - MUST NOT: silently move the count out and restyle it; treat "it still looks right" as proof the behavior survived; invent a standalone count element alongside the toolbar's.
+  - cite: "Keep a wrapper, keep its children" / "silently forfeits behavior wired to that nesting"
+- baseline: validation batch 2026-08-13 vs current v0.10 text (first exposure; sonnet = Claude Sonnet 5): PASS — literal move declined with the forfeited-wiring cost named, toolbar doc checked for a sanctioned variant before proposing alternatives.
