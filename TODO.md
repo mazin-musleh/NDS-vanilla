@@ -19,6 +19,8 @@ Cleared at the 1.7.1 release (2026-08-12). That release shipped the whole v0.8 r
 
 - [ ] **Queued: a dedicated CSP guide page (`guides/csp.md` or similar).** Policy recipe (it exists in `ui-shell/head.md` today), nonce vs hash, per-stack nonce wiring, the knob strategy under strict CSP, and how to verify (the console error prints the expected hash). The v0.9 batch landed the two smallest pieces — one CSP row in the head doc, one clause in rule #5 — and this page is where the rest goes. User decides the cycle.
 
+- [ ] **`nds-iq-eval` skill — lower the ceremony of running a full batch (raised 2026-08-13).** The 2026-08-13 sonnet 4.6 run went through a Python extract of `setup:`+`prompt:` per scenario, three tmp batch files on disk, then hand-copied into three Agent prompts. Root cause: scenarios.md hits the `Read` 25K-token cap so the runner reached for a script, then over-invested. Two cheap fixes the next full run could take: (a) either commit the split-and-render step as `scripts/build-eval-batches.py` (one command → three prompt-ready text blocks on stdout, no tmp files), or (b) note in `SKILL.md`'s workflow that scenarios.md must be read in two `Read` offset chunks and the batch scenario blocks assembled inline in the Agent spawn — no disk round-trip. Preference: (b), lazier — the split-and-render script is only worth minting if a third full run reproduces the friction. Neither is a rules-file issue; skill-side only.
+
 ## Standing decisions — do not re-propose without the named evidence
 
 These are settled calls, kept so they are not re-litigated. Each names what would reopen it.
