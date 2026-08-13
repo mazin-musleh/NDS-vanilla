@@ -102,6 +102,15 @@
                 document.fonts.forEach((f) => { if (f.family === fontName && f.status === 'loading') pending = true; });
                 return pending;
             };
+            // A registered face the browser never started fetching. Happens when
+            // every glyph of this family starts hidden (e.g. inside an unselected
+            // tab panel): the fetch only starts at first paint, so no load event
+            // ever fires and the window below would expire into a permanent fail.
+            const hasIdleFace = () => {
+                let idle = false;
+                document.fonts.forEach((f) => { if (f.family === fontName && f.status === 'unloaded') idle = true; });
+                return idle;
+            };
 
             let timer;
             const teardown = () => {
@@ -127,6 +136,19 @@
                 clearTimeout(timer);
                 timer = setTimeout(() => {
                     if (settled) return;
+                    // Idle face at expiry: the deferred sheet applied but no
+                    // glyph painted, so the init-time load() ran before the face
+                    // existed and nothing since has started the fetch. Force it
+                    // (load() fetches even for hidden glyphs) and wait one more
+                    // window. Bounded: after the kick the face is loading/
+                    // loaded/error — never 'unloaded' — so this fires at most
+                    // once per face.
+                    if (hasIdleFace()) {
+                        document.fonts.load(spec).catch(() => {});
+                        document.fonts.load('bold ' + spec).catch(() => {});
+                        arm();
+                        return;
+                    }
                     settled = true;
                     teardown();
                     fail();
