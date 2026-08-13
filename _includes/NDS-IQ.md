@@ -20,7 +20,7 @@ The anchor in the project's agent file (`CLAUDE.md` / `AGENTS.md`) declares the 
 **`NDS_ASSETS`** — the folder INSIDE this project the runtime assets are copied to: the project's real static root (`wwwroot/`, `public/assets/`, …). Never a path under `NDS_ROOT`.
 
 - It is a filesystem path; the tags need the URL it is served at. Derive that from the stack's convention (`public/assets/` → `/assets/`, `wwwroot/` → `/`) and confirm it with the dev before writing the first tag — a wrong prefix breaks every asset on every page.
-- Still a placeholder (`/path/to/…`)? Stop and ask the dev. While a path is unsettled no NDS-side work runs; the step-1 inventory and `NDS-PLAN.md` are still your deliverable, blocked NDS Target cells reading `blocked on NDS_ROOT`.
+- Still a placeholder (`/path/to/…`)? Stop and ask the dev. While a path is unsettled no NDS-side work runs; the step-1 inventory and `NDS-PLAN.md` are still your deliverable. Never write guessed NDS targets: a blocked path leaves the NDS Target cells reading `blocked on NDS_ROOT` until the real catalogs are readable.
 
 Path hygiene, always:
 
