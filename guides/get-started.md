@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "12/08/2026 - 11:02 PM"
+last_edit: "13/08/2026 - 03:51 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -83,8 +83,7 @@ sidemenu_mode: false
                 <h3 id="download">Download and Extract</h3>
                 <ol>
                     <li><strong>Download</strong> <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from the <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a> page.</li>
-                    <li><strong>Extract</strong> it into a gitignored <code class="nds-inline-code lang-html">.nds/</code> folder at the project root.</li>
-                    <li><strong>Rename</strong> the extracted versioned folder to <code class="nds-inline-code lang-html">nds-vanilla-template</code>. The final path must be <code class="nds-inline-code lang-html">.nds/nds-vanilla-template/</code>, with <code class="nds-inline-code lang-html">_site/</code> directly inside it.</li>
+                    <li><strong>Extract</strong> its contents into a gitignored <code class="nds-inline-code lang-html">.nds/</code> folder at the project root. The final path must be <code class="nds-inline-code lang-html">.nds/</code>, with <code class="nds-inline-code lang-html">_site/</code> directly inside it and no versioned folder in between.</li>
                 </ol>
 
                 <h3 id="structure">Template Structure</h3>
@@ -95,15 +94,17 @@ sidemenu_mode: false
                         </button>
                     </div>
                     <code class="lang-markdown">
-README.md       - Overview and entry-point documentation
-NDS-IQ.md       - NDS IQ instructions
-_site/          - Compiled documentation and runtime assets
-_source/        - Source files and catalogs (added on install)
-CHANGELOG.md    - Release history and migration notes
-LICENSE         - License terms
+.nds/
+├── README.md          - Overview and entry-point documentation
+├── NDS-IQ.md          - NDS IQ instructions
+├── _site/             - Compiled documentation and runtime assets
+│   ├── components/    - Canonical component markup
+│   └── assets/        - Runtime CSS, JS, fonts, and i18n
+├── _source/           - Source files and catalogs (added on install)
+├── CHANGELOG.md       - Release history and migration notes
+└── LICENSE            - License terms
                     </code>
                 </div>
-                <p><code class="nds-inline-code lang-html">_site/</code> contains the canonical component markup under <code class="nds-inline-code lang-html">_site/components/</code> and runtime assets under <code class="nds-inline-code lang-html">_site/assets/</code>.</p>
 
                 <h2 id="setup">2. Setup</h2>
                 <p>Run the setup prompt once. It installs NDS IQ, configures the project paths, and creates the initial plan for review.</p>
@@ -146,11 +147,11 @@ Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. T
                 <p>Use <code class="nds-inline-code lang-html">CLAUDE.md</code> for Claude Code and <code class="nds-inline-code lang-html">AGENTS.md</code> for Cursor and Codex.</p>
 
                 <h3 id="paths">Paths</h3>
-                <p>The anchor declares two project-specific paths. The agent fills both in during setup and asks only when the choice is ambiguous. It confirms the URL your assets are served at before writing the first asset tag. <code class="nds-inline-code lang-html">NDS-IQ.md</code> itself is never edited.</p>
+                <p>The anchor declares the two project paths. <code class="nds-inline-code lang-html">NDS_ROOT</code> ships set to <code class="nds-inline-code lang-html">.nds/</code>. The agent fills in <code class="nds-inline-code lang-html">NDS_ASSETS</code> during setup and asks only when the choice is ambiguous. It confirms the URL your assets are served at before writing the first asset tag. <code class="nds-inline-code lang-html">NDS-IQ.md</code> itself is never edited.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Variable</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">NDS_ROOT</code></td><td>The extracted NDS template directory.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">NDS_ROOT</code></td><td>The extracted NDS template directory. Ships set to <code class="nds-inline-code lang-html">.nds/</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">NDS_ASSETS</code></td><td>The directory where the application serves static assets, such as <code class="nds-inline-code lang-html">public/assets/</code> or <code class="nds-inline-code lang-html">wwwroot/</code>.</td></tr>
                     </tbody>
                 </table>
@@ -174,7 +175,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                 <p><code class="nds-inline-code lang-html">NDS-PLAN.md</code> is optional for a single-page trial. Use it when work spans multiple pages or sessions.</p>
 
                 <h3 id="manual-install">Manual Install (optional)</h3>
-                <p>For manual installation, save the complete rulebook as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, then add the anchor to the agent instruction file with the two paths filled in. The anchor's exact text is in the rulebook's own <em>Install and upgrade this file</em> section. Copy the rulebook exactly; do not paraphrase it.</p>
+                <p>For manual installation, save the complete rulebook as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, then add the anchor to the agent instruction file and fill in <code class="nds-inline-code lang-html">NDS_ASSETS</code>. The anchor's exact text is in the rulebook's own <em>Install and upgrade this file</em> section. Copy the rulebook exactly; do not paraphrase it.</p>
                 <p>The template also contains <code class="nds-inline-code lang-html">NDS_ROOT/NDS-IQ.md</code>, matched to the template release.</p>
 {%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
 {%- assign _iq_parts = _instr | split: 'instructions v' %}

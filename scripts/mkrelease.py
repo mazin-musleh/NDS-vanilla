@@ -284,7 +284,7 @@ def verify(out, version):
     # a first install and a pasted-block migration copy the anchor from there.
     # These literals appear ONLY inside the anchor code block — a string the
     # surrounding prose also uses would keep passing after the anchor lost it.
-    for canon in ('- `NDS_ROOT` = `/path/to/nds-vanilla-template/`',
+    for canon in ('- `NDS_ROOT` = `.nds/`',
                   '- `NDS_ASSETS` = `/path/to/your-project/public/assets/`',
                   'Do no NDS work before that read.',
                   'Never write `.nds-*` markup from memory'):

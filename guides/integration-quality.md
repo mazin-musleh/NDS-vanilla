@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "12/08/2026 - 11:34 PM"
+last_edit: "13/08/2026 - 03:51 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -81,6 +81,7 @@ sidemenu_mode: false
                 <table class="nds-table nds-responsive">
                     <thead><tr><th data-align="center">Revision</th><th>Highlights</th></tr></thead>
                     <tbody>
+                        <tr><td>v0.10</td><td>Field-tested on one production project. Set <code class="nds-inline-code lang-html">.nds/</code> as the fixed template home, and added runtime bundle cross-checks, an install-time CSP sweep, a no-browser smoke check for page verification, named bans for copy edits, and source-first fix proposals.</td></tr>
                         <tr><td>v0.9</td><td>Field-tested across three projects. Added safer update handling, stable template paths, source-first guidance, page chrome planning, single-page plan waivers, findings for rule gaps, and Content-Security-Policy guidance.</td></tr>
                         <tr><td>v0.8</td><td>Removed version gates and made the rules version-agnostic. Added content-based updates, source population from matching releases, download checks, catalog checks, CSP checks, and release-note review.</td></tr>
                         <tr><td>v0.7</td><td>Moved the rules into <code class="nds-inline-code lang-html">NDS-IQ.md</code> with a version-free anchor. Added source-based guidance for JavaScript wiring and canonical markup.</td></tr>

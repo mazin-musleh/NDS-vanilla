@@ -596,6 +596,10 @@ breadcrumb: [["Examples", "/examples"]]
 
     // Plain [hidden] toggling: no NDS component swaps sibling cards (Panel is a
     // slide-in surface, Stepper only stamps the indicator), so this stays native.
+    // Native toggling runs no lifecycle: state on a hidden card's children
+    // (loading, aria-busy, feedback, field values) survives the swap, so every
+    // transition path resets what it left pending — cancelLoading() below is
+    // that reset for the submit buttons.
     function show(which) {
       Object.keys(cards).forEach(function (key) {
         cards[key].toggleAttribute('hidden', key !== which);
