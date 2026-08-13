@@ -606,17 +606,32 @@ breadcrumb: [["Examples", "/examples"]]
       }
     }
 
-    // The loading state is visual only — pair it with disabled, or the button stays
-    // clickable for the whole wait and a second click queues a second submit.
+    // Visual loading only — the loading class itself guards re-entry so a second
+    // click during the wait no-ops without flipping the button to :disabled.
+    // Cancel/back paths call cancelLoading() to abort the pending work and clear
+    // the button. ponytail: setTimeout stands in for the request; a real page
+    // would carry an AbortController and call controller.abort() here.
+    var pending = null;
     function withLoading(btn, delay, done) {
       if (!btn) { done(); return; }
+      if (btn.classList.contains('nds-loading')) return;
       NDS.State.add(btn, 'loading');
-      btn.disabled = true;
-      setTimeout(function () {
+      btn.setAttribute('aria-busy', 'true');
+      var record = { btn: btn };
+      pending = record;
+      record.timer = setTimeout(function () {
+        pending = null;
         NDS.State.remove(btn, 'loading');
-        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
         done();
       }, delay);
+    }
+    function cancelLoading() {
+      if (!pending) return;
+      clearTimeout(pending.timer);
+      NDS.State.remove(pending.btn, 'loading');
+      pending.btn.removeAttribute('aria-busy');
+      pending = null;
     }
 
     function toast(variant, title, description) {
@@ -721,6 +736,7 @@ breadcrumb: [["Examples", "/examples"]]
     });
 
     document.getElementById('otp-cancel').addEventListener('click', function () {
+      cancelLoading();
       show(otpFlow === 'mobile' ? 'mobile' : 'start');
     });
 
@@ -734,7 +750,7 @@ breadcrumb: [["Examples", "/examples"]]
     });
 
     document.querySelectorAll('.back-to-start').forEach(function (btn) {
-      btn.addEventListener('click', function () { show('start'); });
+      btn.addEventListener('click', function () { cancelLoading(); show('start'); });
     });
 
     // --- Change password ----------------------------------------------------
