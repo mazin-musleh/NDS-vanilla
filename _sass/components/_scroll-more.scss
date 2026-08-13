@@ -9,15 +9,20 @@
 // so all rules target children via attribute + combinator.
 // ==============================================
 
-.nds-scroll-more {
-    // Reset public tokens so nested wrappers don't inherit from a parent.
+// Reset public tokens so nested wrappers don't inherit from a parent — a
+// direct declaration beats any inherited value regardless of specificity.
+// :where() keeps the reset at zero specificity so a consumer's single-class
+// knob rule wins even though this sheet is re-inserted at the end of <head>.
+:where(.nds-scroll-more) {
     --scroll-fade: initial;
     --scroll-max-height: initial;
     --scroll-max-width: initial;
     --scroll-gap: initial;
     --scroll-divider: initial;
     --scroll-padding: initial;
+}
 
+.nds-scroll-more {
     // Internal tokens with external fallbacks
     --_scroll-fade:       var(--scroll-fade, 48px);
     --_scroll-max-height: var(--scroll-max-height, none);

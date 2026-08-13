@@ -9,8 +9,11 @@
 // BASE CARD STYLES
 // ==============================================
 
-.nds-card {
-  // Reset public tokens so parent cards don't bleed into nested child cards.
+// Reset public tokens so parent cards don't bleed into nested child cards — a
+// direct declaration beats any inherited value regardless of specificity.
+// :where() keeps the reset at zero specificity so a consumer's single-class
+// knob rule wins even though this sheet is re-inserted at the end of <head>.
+:where(.nds-card) {
   --card-bg: initial;
   --card-bg-hover: initial;
   --card-border: initial;
@@ -27,7 +30,9 @@
   --card-width: initial;
   --card-width-min: initial;
   --card-width-max: initial;
+}
 
+.nds-card {
   // Internal custom properties with external fallbacks
   --_card-bg: var(--card-bg, var(--background-card));
   --_card-bg-hover: var(--card-bg-hover, var(--background-card-hovered));

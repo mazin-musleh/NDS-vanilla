@@ -1,8 +1,11 @@
 /* ── Grid system ── */
 @use './mixins' as *;
 
-.nds-grid {
-  // Reset public props so they don't inherit from an ancestor grid.
+// Reset public props so they don't inherit from an ancestor grid — a direct
+// declaration beats any inherited value regardless of specificity. :where()
+// keeps the reset at zero specificity so a consumer's single-class knob rule
+// wins even though this sheet is re-inserted at the end of <head>.
+:where(.nds-grid) {
   --max-col: initial;
   --mid-col: initial;
   --min-col: initial;
@@ -10,7 +13,9 @@
   --mid-track: initial;
   --min-track: initial;
   --min-width: initial;
+}
 
+.nds-grid {
   --_gap-min: var(--spacing-md);
   --_cols: var(--max-col, auto-fit);
   --_tracks: var(--max-track);
