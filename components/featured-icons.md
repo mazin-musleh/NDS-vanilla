@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.0"
-last_edit: "21/07/2026 - 01:06 PM"
+last_edit: "14/08/2026 - 11:10 PM"
 ---
 
 <!-- Featured Icons -->
@@ -217,7 +217,7 @@ last_edit: "21/07/2026 - 01:06 PM"
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Color Variants</h3>
-                <p>Brand is the default color. Use <code class="nds-inline-code lang-html">data-status</code> to set a status color variant.</p>
+                <p>Brand is the default color. <code class="nds-inline-code lang-html">data-status</code> declares the state the icon reports, and the color follows from that. It is not a color picker. The status also inherits: an icon inside a card or a drawer item that carries <code class="nds-inline-code lang-html">data-status</code> takes that color unless it sets its own. For a color with no state attached, use the matching color class instead (<code class="nds-inline-code lang-html">nds-green</code>, <code class="nds-inline-code lang-html">nds-blue</code>, and the rest).</p>
                 <table class="nds-table nds-responsive">
                     <thead>
                         <tr>
