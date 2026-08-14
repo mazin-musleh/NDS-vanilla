@@ -56,7 +56,10 @@
  *       <form data-filter-target="results" data-filter-submit method="get">
  *       <div class="nds-filter" data-filter-target="results">…</div>
  *     Without data-ajax the browser submits and the server returns the filtered page; add
- *     data-ajax on that form for AJAX submission instead.
+ *     data-ajax on that form for AJAX submission instead. The filter stamps form="<that
+ *     form's id>" on its own controls, so surfaces outside the form still submit — give
+ *     the form an id or the criteria never leave the page. nds:filterFormAjax's
+ *     hiddenInputsContainer is an empty div for the consumer to fill; nothing writes to it.
  *   - Auto-generated options come from _buildFilterInput(): div.nds-form-container plus
  *     nds-{check,radio,switch}-container, wrapping div.nds-form-header > label[for] >
  *     span.nds-label and div.nds-form-control > the input. Hand-written options must match
@@ -1403,6 +1406,12 @@
 
         setupDirectSearch(searchInput, clearBtn) {
             const signal = this.abortController.signal;
+            // Both entry paths land here — the explicit data-filter="search"
+            // element and _autoDetectDirectSearch — so the form association is
+            // set once. The dropmenu search is deliberately left out: its value
+            // is mirrored onto this input before submit, and naming both would
+            // put two `search` entries in the same FormData.
+            this._associateWithForm(searchInput);
             const searchContainer = searchInput.closest('.nds-search-box, .nds-form-control')?.parentElement ||
                                    searchInput.closest('.nds-search-content')?.parentElement ||
                                    searchInput.parentElement;
@@ -1606,6 +1615,7 @@
 
             inputs.forEach(input => {
                 input._ndsFilterBound = true;
+                this._associateWithForm(input);
                 input.addEventListener('change', () => {
                     this.updateFilterCriteria(filterName);
                     this.updateApplyButtonLabel();
@@ -2146,13 +2156,15 @@
         }
 
         // Form mode: a filter's surfaces are linked by data-filter-target, not
-        // by nesting, so generated controls may live anywhere on the page.
-        // Associate them with the submission form via HTML's native `form`
-        // attribute so FormData/GET submissions include them (matching the
-        // Apply button's association in _bindApplyButton). No-op outside form
-        // mode or when the form has no id to reference.
+        // by nesting, so its controls — authored or generated — may live
+        // anywhere on the page. Associate them with the submission form via
+        // HTML's native `form` attribute so FormData/GET submissions include
+        // them (matching the Apply button's association in _bindApplyButton).
+        // No-op outside form mode, when the form has no id to reference, or
+        // when the input already belongs to it.
         _associateWithForm(input) {
-            if (this.isFormMode && this.submissionForm.id) {
+            if (!this.isFormMode || !this.submissionForm.id) return;
+            if (input.form !== this.submissionForm) {
                 input.setAttribute('form', this.submissionForm.id);
             }
         }
@@ -2202,7 +2214,6 @@
                 input.name = `filter-${filterName}`;
                 input.value = value;
                 input.className = 'nds-switch-input';
-                this._associateWithForm(input);
 
                 const track = document.createElement('div');
                 track.className = 'nds-switch-track';
@@ -2222,7 +2233,6 @@
                 input.name = inputType === 'radio' ? groupName : `filter-${filterName}`;
                 input.value = value;
                 input.className = inputClass;
-                this._associateWithForm(input);
                 if (variant) {
                     input.classList.add(variant);
                 }
