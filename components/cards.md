@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.x"
-last_edit: "10/08/2026 - 10:24 PM"
+last_edit: "14/08/2026 - 11:03 PM"
 ---
 
 <!-- Standard Card -->
@@ -883,21 +883,21 @@ last_edit: "10/08/2026 - 10:24 PM"
             <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-stroke</code></td><td>Adds a 1px outline border around the card</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-shadow</code></td><td>Adds an elevation shadow; deepens on hover when the card is interactive</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-color</code></td><td>Tinted background fill that matches the active color variant</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>Switches the card to a horizontal row layout (header sits to the side)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Centers header, content, tags, rating, and actions horizontally</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-statistic</code></td><td>Centered metric layout with a large display number; size with <code class="nds-inline-code lang-html">nds-md</code> or <code class="nds-inline-code lang-html">nds-sm</code> on the number element</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-user</code></td><td>Compact user-card preset with a 224px default width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-full-width</code> / <code class="nds-inline-code lang-html">nds-full</code></td><td>Removes the max-width cap so the card fills its container</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Adapts text, borders, and icon tints for dark or photographic surfaces</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code>, <code class="nds-inline-code lang-html">nds-yellow</code>, <code class="nds-inline-code lang-html">nds-red</code>, <code class="nds-inline-code lang-html">nds-blue</code>, <code class="nds-inline-code lang-html">nds-green</code></td><td>Color variants that retint title, border-hover, and icon. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a matching tinted fill</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-card-actions nds-end</code></td><td>Right-aligns the actions row within the card</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-card-status</code></td><td>Absolute-positioned status badge slot pinned to the top-start corner of the card; place a tag or badge inside</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-disabled</code> / <code class="nds-inline-code lang-html">[disabled]</code></td><td>Mutes colors, dims sub-content, and removes pointer interactions</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-stroke</code></td><td>card root</td><td>Adds a 1px outline border around the card</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-shadow</code></td><td>card root</td><td>Adds an elevation shadow; deepens on hover when the card is interactive</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-color</code></td><td>card root</td><td>Tinted background fill that matches the active color variant</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>card root</td><td>Switches the card to a horizontal row layout (header sits to the side)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>card root</td><td>Centers header, content, tags, rating, and actions horizontally. It must sit on the root, not on an inner part: the card also reads it to switch the featured icon's alignment, so a misplaced <code class="nds-inline-code lang-html">nds-center</code> centers nothing and leaves the icon on the old rule</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-statistic</code></td><td>card root</td><td>Centered metric layout with a large display number; size with <code class="nds-inline-code lang-html">nds-md</code> or <code class="nds-inline-code lang-html">nds-sm</code> on the number element</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-user</code></td><td>card root</td><td>Compact user-card preset with a 224px default width</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-full-width</code> / <code class="nds-inline-code lang-html">nds-full</code></td><td>card root</td><td>Removes the max-width cap so the card fills its container</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>card root</td><td>Adapts text, borders, and icon tints for dark or photographic surfaces</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code>, <code class="nds-inline-code lang-html">nds-yellow</code>, <code class="nds-inline-code lang-html">nds-red</code>, <code class="nds-inline-code lang-html">nds-blue</code>, <code class="nds-inline-code lang-html">nds-green</code></td><td>card root</td><td>Color variants that retint title, border-hover, and icon. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a matching tinted fill</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-end</code></td><td><code class="nds-inline-code lang-html">.nds-card-actions</code></td><td>Right-aligns the actions row within the card</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-card-status</code></td><td>child of the card root</td><td>Absolute-positioned status badge slot pinned to the top-start corner of the card; place a tag or badge inside</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-disabled</code> / <code class="nds-inline-code lang-html">[disabled]</code></td><td>card root</td><td>Mutes colors, dims sub-content, and removes pointer interactions</td></tr>
                     </tbody>
                 </table>
             </div>

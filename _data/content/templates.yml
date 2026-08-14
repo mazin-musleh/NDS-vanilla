@@ -50,7 +50,7 @@
 
 - title: "About The Entity Template"
   description: "Entity landing hub with a flat sub-hero and a responsive grid of topic cards, each with a featured icon, title, and navigation arrow."
-  use_when: "A topic-hub landing page whose only job is to route onward through a grid of icon cards. Use for About Us, Departments, Sectors, Initiatives, Our Work, or any parent page that links to its sub-pages."
+  use_when: "Any page whose job is to route onward through a grid of icon cards. Use for a home page feature row or feature grid, and for topic hubs such as About Us, Departments, Sectors, Initiatives, Our Work, or any parent page that links to its sub-pages. Copy the card markup from here rather than composing it: each card carries its featured icon in its own header block."
   icon: '<i class="hgi hgi-stroke hgi-information-diamond"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
