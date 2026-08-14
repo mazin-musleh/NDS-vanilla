@@ -7,6 +7,7 @@ direction: ltr
 breadcrumb: ["Faculty Members"]
 hero_title: "Dr. Mohammed Ahmed Al-Salem"
 hero_description: "Associate Professor - College of Computer Science"
+# layout + layout_class render the page-level wrapper — it exists only in the built twin under _site/. Copy the full <body> structure from the twin; this file's body is only the inner content.
 layout_class: nds-cardView
 sidemenu_mode: top
 ---

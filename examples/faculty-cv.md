@@ -13,6 +13,7 @@ hero_style: nds-flat
 hero_actions:
   - share
 hero_float_actions: []
+# layout + layout_class render the page-level wrapper — it exists only in the built twin under _site/. Copy the full <body> structure from the twin; this file's body is only the inner content.
 layout_class: nds-wSideInfo
 sidemenu_mode: false
 ---
