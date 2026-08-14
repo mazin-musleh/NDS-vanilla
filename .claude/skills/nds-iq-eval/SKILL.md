@@ -11,6 +11,7 @@ Evaluates the consumer rules file (`_includes/NDS-IQ.md` — installed at a cons
 
 - **Scenarios are born from real incidents** (rig findings, session gaps, real dev asks), never invented hypotheticals. The suite validates that the text is followable; the user's integration rigs remain the real evidence. Record provenance on every scenario.
 - **Token discipline is a feature.** Default runs are scoped and single-model. Escalate only on explicit ask.
+- **One eval per edit-batch, never per edit.** Finish ALL of a sitting's edits (rules, catalog, docs) first, then run once against the combined diff; re-probe only findings. Firing a run after each sentence multiplies cost with no added signal — the 2026-08-14 cycle spent 5 launches (~520K subagent tokens) where 2 carried the same information.
 - **Findings are suggest-only.** A divergence becomes a proposed file edit only after verifying the text is actually ambiguous (not just an agent failure), and the user approves every edit — same contract as nds-js-audit evolve.
 - **Runners are fresh agents, never forks.** A fork inherits this conversation and biases the test. Spawn `general-purpose` agents with a `model` override.
 
@@ -18,7 +19,7 @@ Evaluates the consumer rules file (`_includes/NDS-IQ.md` — installed at a cons
 
 | Mode | What runs | Model(s) | When |
 |---|---|---|---|
-| `scoped` (default) | Scenarios whose `rules:` cover the changed lines. The diff is mechanical — working-tree `_includes/NDS-IQ.md` against the `last-evaluated.md` snapshot (commits are irrelevant: uncommitted edits scope correctly) — but the scenario match is judgment: `rules:` is prose, many scenarios quote no literal, so read each `rules:` line against the changed sentences and include every plausible match (when unsure, include) | sonnet | After any file edit |
+| `scoped` (default) | Scenarios whose `rules:` cover the changed lines. The diff is mechanical — working-tree `_includes/NDS-IQ.md` against the `last-evaluated.md` snapshot (commits are irrelevant: uncommitted edits scope correctly) — but the scenario match is judgment: `rules:` is prose, many scenarios quote no literal, so read each `rules:` line against the changed sentences and pick the SINGLE most direct scenario per changed sentence — the one whose rubric the sentence exists to satisfy. Plausible-but-indirect matches ride the next `full` run instead (that run exists to catch cross-effects); a one-word or enumeration-only edit whose reading is obvious needs no run at all, just say so | sonnet | After an edit batch |
 | `full` | Every comprehension scenario | sonnet | Before a version bump |
 | `sweep` | Every comprehension scenario | fable + opus + sonnet in parallel | Pre-release, explicit ask only |
 | `behavior <id>` | One scenario against the micro-fixtures | sonnet (or named) | Explicit ask only |
@@ -66,6 +67,11 @@ name the path you tried. Do not silently substitute a different file: a routing
 bug in the rules file surfaces here as a missing path, and a silent substitution
 hides the very defect the run exists to find.
 
+Doc pages under components/, examples/, templates/, layout/, ui-shell/ run to
+thousands of lines: NEVER Read one whole. Grep it for the section or class you
+need, then Read ~100 lines around the hit. (The rules file itself is the one
+full read.)
+
 Read only what the rules file's own workflow would have you read; nothing else. Answer strictly from the
 file's text, those routed reads, and ordinary engineering judgment.
 
@@ -101,3 +107,5 @@ The fixtures are deliberately skeletal — stubs with just enough structure for 
 ## Scenario file
 
 `scenarios.md` — one `## S<n> <slug>` per scenario: `mode`, `rules` (file sentences under test), `provenance`, `setup`, `prompt`, `rubric` (MUST / MUST NOT / cite), optional `artifacts` (behavior mode), optional `baseline` (last known result per model, with the resolved model version when known — the alias alone is ambiguous across machines and dates). Rubrics never enter runner prompts.
+
+**Read-dependent scenarios ship with an artifact-forcing prompt from day one** — a prompt that ends in a demonstrable artifact (sketch the markup, name the exact calls in order) so the answer cannot hide behind a route description. The alternative is a two-step you pay for twice: batch INCONCLUSIVE → solo re-probe (S69's first exposure, 2026-08-14, ~224K tokens for one scenario). The solo prompt's artifact ask is what settled it in one run; write that ask into the scenario's `prompt:` from the start.
