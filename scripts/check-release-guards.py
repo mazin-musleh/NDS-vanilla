@@ -128,8 +128,52 @@ CASES = [
 ]
 
 
+def sweep_cases():
+    """sweep_issue_template() reads the same heading verify() does, but with its
+    own regex — so it can hard-exit on a heading verify() accepts. That is how
+    the v0.N reader survived the move to v1.0 unnoticed: nothing exercised it."""
+    yml = os.path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'iq-report.yml')
+    with open(IQ, encoding='utf8') as f:
+        iq_original = f.read()
+    with open(yml, 'rb') as f:
+        yml_original = f.read()
+    out = []
+    try:
+        # The real file sweeps, and the dropdown carries its revision after.
+        try:
+            mkrelease.sweep_issue_template(VERSION)
+            stamp = re.search(r'instructions v(\d+\.\d+)', iq_original).group(1)
+            with open(yml, encoding='utf8') as f:
+                got = f'- "v{stamp}"' in f.read()
+            out.append(('sweep accepts the real heading', None if got else
+                        f'swept, but the iq-version dropdown has no "v{stamp}" entry'))
+        except SystemExit as e:
+            out.append(('sweep accepts the real heading', f'exited: {e}'))
+
+        # An unreadable heading must exit and say so, never sweep a wrong value.
+        with open(IQ, 'w', encoding='utf8', newline='\n') as f:
+            f.write(iq_original.replace(f'instructions v{stamp}', 'instructions rev seven'))
+        try:
+            mkrelease.sweep_issue_template(VERSION)
+            out.append(('sweep rejects an unreadable heading', 'no exit'))
+        except SystemExit as e:
+            out.append(('sweep rejects an unreadable heading',
+                        None if 'Teach this sweep' in str(e) else f'wrong message: {e}'))
+    finally:
+        with open(IQ, 'w', encoding='utf8', newline='\n') as f:
+            f.write(iq_original)
+        with open(yml, 'wb') as f:
+            f.write(yml_original)
+    return out
+
+
 def main():
     failures = []
+
+    for label, problem in sweep_cases():
+        print(f'{"ok  " if problem is None else "FAIL"}  {label}')
+        if problem is not None:
+            failures.append(f'{label}: {problem}')
 
     for label, mutate, version, expect in CASES:
         msg = run(mutate, version)

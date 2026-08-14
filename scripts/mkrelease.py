@@ -77,21 +77,21 @@ def sweep_issue_template(version):
     """Sync .github/ISSUE_TEMPLATE/iq-report.yml's dropdowns for the release.
 
     GitHub issue forms are static YAML (no Jekyll templating in .github/), so
-    the options need a per-release sweep. The template-version option is
-    prepended (past releases aren't derivable); the iq-version list is fully
-    derivable from NDS-IQ.md's `instructions v0.N` heading, so it is REBUILT —
-    any revision published between releases heals here too. Idempotent.
+    the options need a per-release sweep. Both options are prepended from the
+    current values: past releases aren't derivable, and since revisions went
+    two-segment (v1.0 follows v0.10) neither is the IQ history — a rebuilt list
+    would have to hardcode where the v0 line ended. Idempotent.
     """
     path = os.path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'iq-report.yml')
     with open(path, encoding='utf8') as f:
         text = f.read()
 
     with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
-        heading = re.search(r'instructions v0\.(\d+)', f.read())
+        heading = re.search(r'instructions v(\d+\.\d+)', f.read())
     if not heading:
-        sys.exit('_includes/NDS-IQ.md heading is not "instructions v0.<N>" — the iq-version '
-                 'dropdown is rebuilt from it. Teach this sweep the new shape first.')
-    iq = int(heading.group(1))
+        sys.exit('_includes/NDS-IQ.md heading is not "instructions v<major>.<minor>" — the '
+                 'iq-version dropdown is prepended from it. Teach this sweep the new shape first.')
+    iq = heading.group(1)
 
     def options_block(text, dropdown_id):
         pat = re.compile(
@@ -109,22 +109,12 @@ def sweep_issue_template(version):
             return text
         return text[:m.end(1)] + entry + m.group(2) + text[m.end():]
 
-    def rebuild_iq(text, n):
-        m, indent = options_block(text, 'iq-version')
-        # Every revision displays as v0.N; installs with old integer headings
-        # (v7 and earlier) map to the same digit — the form's description says so.
-        opts = ''.join(f'{indent}- "v0.{i}"\n' for i in range(n, 0, -1))
-        # Keep the form's own catch-all rather than dictating its wording.
-        tail = m.group(2).splitlines()[-1] + '\n'
-        opts += tail if not re.match(r'\s+- "?v', tail) else f'{indent}- other / unknown\n'
-        return text[:m.end(1)] + opts + text[m.end():]
-
     new = prepend(text, 'template-version', version)
-    new = rebuild_iq(new, iq)
+    new = prepend(new, 'iq-version', f'v{iq}')
     if new != text:
         with open(path, 'w', encoding='utf8', newline='\n') as f:
             f.write(new)
-        print(f'  swept .github/ISSUE_TEMPLATE/iq-report.yml (template {version}, IQ v0.{iq})')
+        print(f'  swept .github/ISSUE_TEMPLATE/iq-report.yml (template {version}, IQ v{iq})')
 
 
 def stage(version):
