@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.5.0"
-last_edit: "25/07/2026 - 08:05 PM"
+last_edit: "14/08/2026 - 06:56 AM"
 ---
 
 {%- comment %} Version notice: only when this cycle actually moved the token layer — page.updated
@@ -264,11 +264,12 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
                     <li>Reach for a <strong>primitive</strong> directly only when no semantic token carries the meaning (for example a one-off spacing or radius value)</li>
                     <li>To restyle a single component, override its <code class="nds-inline-code lang-css">--{component}-*</code> token on a scope rather than editing the component's SCSS: <code class="nds-inline-code lang-css">.my-scope { --button-background-primary-default: var(--colors-tertiary-600); }</code></li>
                     <li>To retheme the whole system, override the brand slots (<code class="nds-inline-code lang-css">--colors-primary-*</code> and friends). Semantic and component tokens re-resolve automatically. The <a class="nds-color" href="{{ 'components/themes' | relative_url }}">Themes</a> page generates a full palette from a few seed colors</li>
+                    <li>Load your override stylesheet after <code class="nds-inline-code lang-html">nds-main.min.css</code>. A token override at <code class="nds-inline-code lang-css">:root</code> has the same specificity as the NDS definition it replaces, so a sheet loaded before it loses the tie and every override silently does nothing</li>
                     <li>Do not hardcode light-mode values. Dark mode re-binds the <strong>semantic</strong> layer, so a component that references <code class="nds-inline-code lang-css">--text-default</code> flips correctly while one pinned to <code class="nds-inline-code lang-css">--colors-base-black</code> will not</li>
                     <li>Always pair a typography size token with its line-height: <code class="nds-inline-code lang-css">--typo-text-md-FS</code> with <code class="nds-inline-code lang-css">--typo-text-md-LH</code></li>
                     <li>Match spacing by value when reading the scale: <code class="nds-inline-code lang-css">--spacing-xl</code> is 16px, <code class="nds-inline-code lang-css">--spacing-md</code> is 8px</li>
                     <li>Use <strong>knobs</strong> (<code class="nds-inline-code lang-css">--btn-size</code>, <code class="nds-inline-code lang-css">--card-width</code>) for one-off instance styling and <strong>tokens</strong> for theme-wide changes; a knob set on a wrapper styles everything inside it</li>
-                    <li>When you override a component token globally, give it a dark value too by re-binding it inside <code class="nds-inline-code lang-css">:root[data-theme~="dark"]</code></li>
+                    <li>When you override a component or semantic token globally, give it a dark value too by re-binding it inside <code class="nds-inline-code lang-css">:root[data-theme~="dark"]</code>. The dark block outranks plain <code class="nds-inline-code lang-css">:root</code>, so an override without a dark twin silently reverts to the NDS default when dark mode turns on</li>
                 </ul>
             </div>
 
