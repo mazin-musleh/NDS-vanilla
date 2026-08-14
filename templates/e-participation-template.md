@@ -19,7 +19,7 @@ sidemenu_mode: false
             <p class="nds-section-description nds-full">This is an example of a section description in the Design System, where the same consistent style is maintained across all other sections. This is an example of a section description in the Design System, where the same consistent style is maintained across all other sections.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
+            <div class="nds-block nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
 
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">

@@ -15,7 +15,7 @@ sidemenu_mode: false
 <section id="socialChannels" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+            <div class="nds-block nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
 
             <!-- X Platform -->
                 <div class="nds-card nds-shadow">

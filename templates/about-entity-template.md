@@ -14,7 +14,7 @@ sidemenu_mode: false
 <section id="entityTopics" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+            <div class="nds-block nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
 
                 <!-- About us -->
                 <div class="nds-card nds-stroke">
