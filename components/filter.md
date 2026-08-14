@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.0"
-last_edit: "09/08/2026 - 09:52 PM"
+updated: "1.7.x"
+last_edit: "14/08/2026 - 06:48 PM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -2362,6 +2362,12 @@ filterEl.addEventListener('nds:filterFormSubmit', (e) =&gt; {
 // rollback() restores chips, badge, controls and URL params to their
 // pre-submission values — call it if your own request fails, so they don't
 // describe results that were never rendered.
+// hiddenInputsContainer is the .nds-filter-hidden-inputs div inside the form.
+// The filter fills it on each submit with any criteria its own controls cannot
+// carry — a slider renders two unnamed thumbs for one encoded value, so it
+// would otherwise be missing from the request while its chip says it applies.
+// The key matches the URL parameter, so a slider named "price" submits
+// price=200-600. Add your own fields to this container here.
 filterEl.addEventListener('nds:filterFormAjax', (e) =&gt; {
     const { criteria, form, hiddenInputsContainer, rollback } = e.detail;
 });

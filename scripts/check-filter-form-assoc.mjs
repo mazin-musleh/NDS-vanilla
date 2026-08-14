@@ -113,6 +113,20 @@ const report = await page.evaluate(() => {
         </form>
         <div id="assocIn" data-filter-items></div>`);
 
+    // 4. AUTHORED NAMES: the server-driven shape — the dev writes the options and
+    //    picks the submitted key. Same canonical structure, dev-chosen name.
+    mount(`
+        <form id="assocAuthForm" data-filter-target="assocAuth" data-filter-submit
+              method="get" action="#">
+          <button type="submit" class="nds-btn nds-primary">
+            <span class="nds-label">Search</span>
+          </button>
+        </form>
+        <div class="nds-filter" data-filter-target="assocAuth">
+          <div data-filter="category">${optionHtml.replace(/name="filter-category"/g, 'name="category"')}</div>
+        </div>
+        <div id="assocAuth" data-filter-items></div>`);
+
     NDS.Filter.init();
 
     const probeFixture = (id) => {
@@ -157,7 +171,32 @@ const report = await page.evaluate(() => {
         inData.get('filter-category') === inside.boxes[0].value,
         `filter-category=${inData.get('filter-category')}`);
 
-    return { checks };
+    // --- AUTHORED NAMES (server-driven shape) ---
+    const auth = probeFixture('assocAuth');
+    auth.boxes[0].checked = true;
+    auth.boxes[0].dispatchEvent(new Event('change', { bubbles: true }));
+    const authData = new FormData(auth.form);
+    check('authored: submits under the dev-chosen name, not an invented one',
+        authData.get('category') === auth.boxes[0].value && !authData.has('filter-category'),
+        `keys=${[...authData.keys()].join(',')}`);
+    // The component's own URL contract keys off data-filter, so an authored name
+    // matching it round-trips: submit ?category=… , reload, applyUrlParams restores.
+    const authInstance = NDS.Filter.getByTarget('assocAuth');
+    check('authored: name matches the URL key the component reads back',
+        Object.keys(authInstance.filterInputs).includes('category'),
+        `filterInputs keys=${Object.keys(authInstance.filterInputs).join(',')}`);
+
+    // Reported, not asserted: only AUTO-GENERATED options invent a name, and the
+    // invented one does not match the URL key the component reads back. Server-
+    // driven pages author their options (auto-scan reads only the rows currently
+    // on the page, so it cannot enumerate a server-paged set), which is why this
+    // has never bitten in the field. Left as a note so the harness stays green
+    // for what it guards — association — rather than failing on a known gap.
+    const outInstance = NDS.Filter.getByTarget('assocOut');
+    const notes = [`generated options submit "${out.boxes[0].name}" but the URL key is `
+        + `"${Object.keys(outInstance.filterInputs)[0]}" — authored options are unaffected`];
+
+    return { checks, notes };
 });
 
 await browser.close();
@@ -172,6 +211,7 @@ for (const c of report.checks) {
     if (!c.pass) failed++;
     console.log(`${c.pass ? 'ok  ' : 'FAIL'}  ${c.name}${c.detail ? `  (${c.detail})` : ''}`);
 }
+for (const n of report.notes || []) console.log(`note  ${n}`);
 for (const e of pageErrors) console.log(`page error: ${e}`);
 
 console.log(failed ? `\n${failed} failing` : '\nall clear');

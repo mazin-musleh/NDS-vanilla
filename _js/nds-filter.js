@@ -59,7 +59,12 @@
  *     data-ajax on that form for AJAX submission instead. The filter stamps form="<that
  *     form's id>" on its own controls, so surfaces outside the form still submit — give
  *     the form an id or the criteria never leave the page. nds:filterFormAjax's
- *     hiddenInputsContainer is an empty div for the consumer to fill; nothing writes to it.
+ *     Criteria that no control carries — a range filter's encoded value, an unnamed
+ *     search box — are written into .nds-filter-hidden-inputs on each submit, keyed
+ *     like the URL param, so the request matches this.criteria. A filter whose own
+ *     inputs are named is left alone (auto-generated options submit `filter-{name}`,
+ *     not `{name}`). nds:filterFormAjax exposes that container as
+ *     hiddenInputsContainer; add your own fields to it there.
  *   - Auto-generated options come from _buildFilterInput(): div.nds-form-container plus
  *     nds-{check,radio,switch}-container, wrapping div.nds-form-header > label[for] >
  *     span.nds-label and div.nds-form-control > the input. Hand-written options must match
@@ -337,6 +342,11 @@
 
             // Handle form submission
             this.submissionForm.addEventListener('submit', (e) => {
+                // Both branches read the form's named controls — AJAX through
+                // FormData, native through the browser — so criteria that no
+                // control carries must exist as real inputs before either runs.
+                this._writeCriteriaInputs();
+
                 if (this.isAjaxMode) {
                     e.preventDefault();
                     this.handleAjaxSubmit();
@@ -344,6 +354,54 @@
                     this.handleFormSubmit(e);
                 }
             }, { signal: this.abortController.signal });
+        }
+
+        /**
+         * Fill .nds-filter-hidden-inputs so the submission carries everything
+         * this.criteria claims. A range filter renders two unnamed thumbs for one
+         * encoded value, so nothing about it reaches the server otherwise — while
+         * its chip, badge and URL param all say it is applied. Rebuilt on every
+         * submit; the key is the one updateUrlParams writes, so the request and
+         * the URL agree.
+         *
+         * Only fills genuine gaps. A filter whose own controls already put
+         * something in the form is left alone even when they use a different key
+         * (auto-generated options submit `filter-{name}`) — reconciling that key
+         * would rename a parameter consumers may already read.
+         */
+        _writeCriteriaInputs() {
+            const box = this.hiddenInputsContainer;
+            if (!box) return;
+            box.textContent = '';
+
+            const add = (name, value) => {
+                if (!name) return;
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                box.appendChild(input);
+            };
+
+            for (const [name, values] of Object.entries(this.criteria.filters)) {
+                if (values.length && !this._filterReachesForm(name)) {
+                    add(name, values.join(','));
+                }
+            }
+
+            // The direct search box is the form-associated one (setupDirectSearch);
+            // an unnamed one submits nothing, so carry the keyword here instead.
+            if (this.criteria.search && !this.searchInputs.direct?.input.name) {
+                add(this.getSearchInputName(), this.criteria.search);
+            }
+        }
+
+        // Does this filter's own markup put anything in the form, under any key?
+        // A range never does — two thumbs, no name, one encoded value between them.
+        _filterReachesForm(filterName) {
+            const fd = this.filterInputs[filterName];
+            if (!fd || fd.type === 'range') return false;
+            return Array.from(fd.inputs || []).some(input => input.name);
         }
 
         /**
