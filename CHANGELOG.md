@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.7.2] - 2026-08-15
+
+### Added
+- **NDS IQ v1.0** — the consumer rules leave beta, rewritten whole: an agent-timeline structure, five standing principles, and tables for the sanctioned edit kinds, the bans, and the states that are reported rather than resolved. 69.6K → 41.4K characters, then 40.4K after the first gated trim. See the [Integration Quality guide](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html).
+- **Filter** — every active criteria now reaches the server. Criteria that no control carries, such as a range filter's encoded value, are written into `.nds-filter-hidden-inputs` on each submit and keyed like the URL param, so AJAX and native GET both send them. See the [Filter page](https://mazin-musleh.github.io/NDS-vanilla/components/filter.html).
+
+### Changed
+- **Grid, Card, Scroll-more** — public knob resets drop to zero specificity through `:where()`, so a consumer stylesheet class wins whatever the load order. Before this, the deferred main CSS re-inserted at the end of `<head>` and beat any single-class consumer rule, and an external knob sheet lost every knob.
+- **Docs** — `data-status` on [Cards](https://mazin-musleh.github.io/NDS-vanilla/components/cards.html) and [Featured Icons](https://mazin-musleh.github.io/NDS-vanilla/components/featured-icons.html) declares the state the element is in, not a colour: it renders as the matching variant, but a tint with no state belongs on the colour class. Cards' modifier and data-attribute tables now name the element each entry sits on. [Sort](https://mazin-musleh.github.io/NDS-vanilla/components/sort.html) names who owns row order once the server pages the rows, and [Document Head](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/head.html) covers inline knobs under a strict CSP.
+
+### Fixed
+- **Icon fonts** — icons no longer stay invisible when every glyph of the family starts hidden, for example inside an unselected tab panel. The browser never began the fetch, so no load event fired and the miss became permanent. The fetch is now forced once on expiry.
+- **Tabs** — a horizontal strip's own `--scroll-padding: 0` opt-out applies again, dropping an unintended 4px end padding.
+- **Filter** — `setFilterValues` and `setSearchValue` re-fetch in AJAX form mode. They previously repainted the chips, badge, and URL from new criteria without submitting, so the page stated a filter the results were never filtered by. A run of setters coalesces into one request.
+- **Filter** — the dropmenu Clear button zeroes the search box, and the change event carries a snapshot.
+- **Filter** — controls outside the submitting form are associated with it, so their criteria are no longer dropped silently.
+- **Counter** — a target written with grouping separators, such as `3,742`, counts to 3742 instead of 3.
+- **Code** — a markdown table row inside a prose block keeps its authored line instead of wrapping into what looks like a new row.
+- **Examples** — loading buttons stay clickable and abort on cancel.
+
+### Migrating from v1.7.1
+- Replace `assets/css/` and `assets/js/` with the new bundles.
+- **Filter in AJAX form mode now sends criteria your handler did not receive before.** A range filter, and any other control the component renders without a name, arrives as a hidden input keyed like its URL param. If your endpoint rejects or logs unknown parameters, accept these before upgrading.
+- **Knob resets dropped to zero specificity.** If you relied on an NDS knob reset beating your own class, your class now wins instead. Check any stylesheet that sets `--gap`, `--max-col`, or another public knob on Grid, Card, or Scroll-more.
+
 ## [1.7.1] - 2026-08-12
 
 ### Added
