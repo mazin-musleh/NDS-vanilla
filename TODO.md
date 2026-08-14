@@ -33,6 +33,16 @@ Cleared at the 1.7.1 release (2026-08-12). That release shipped the whole v0.8 r
 
 - [ ] **Example backlog, first entry (attribution default, 2026-08-14): a home/landing feature-grid example.** Rig 6's only no-copy-source page is where every invented-markup correction landed (S69's provenance) — the cascade bottoms out at scaffold-custom for a shape most consumer apps have. Ship it in `examples/` with a catalog `use_when`; then attempt the trims the new example licenses (S69-area) through the standard gates.
 
+- [ ] **INVESTIGATION — who owns ordering when the server owns the rows? (opened 2026-08-14, from the filter server-mode work).** Sort is the one thing the AJAX request still drops, and unlike the slider that may be correct — it is not in `criteria`, so the filter never claimed it. The open question is bigger than the parameter.
+
+  **Measured** (`scripts/check-filter-server-mode.mjs`): after an apply, `?sort=name&dir=asc` sits in the browser URL while the request carries none of it — the request is exactly `FormData(submissionForm)`, asserted in that harness. `updateUrlParams` deliberately preserves `sort`/`dir` as NDS.Sort's (`_js/nds-filter.js:816`), and `_applyAjaxResponse` calls `_resyncSort()` so the sort engine re-roots onto each swapped-in container.
+
+  **The concern, untested:** in server-driven mode the response holds ONE page of rows. A client-side sort then re-orders that page only, which looks correct on screen and is wrong across the result set — row 1 of page 2 may belong above everything on page 1. `_resyncSort()` says the current design intends client-side sorting to keep working after a swap, so this is a real design question, not an oversight.
+
+  **The precedent that probably decides it:** `NDS.Filter.refresh` already skips form-mode instances because "the server owns their result set" (banner, `_js/nds-filter.js:14-15`). If the server owns the rows, it plausibly owns their order too — which would point at sending `sort`/`dir` with the request and standing the client-side engine down in AJAX form mode, not at leaving both half-active.
+
+  **To investigate:** does NDS.Sort actually engage after an AJAX swap (measure, do not read); what does it do when the server paged the rows; and is the fix to carry `sort`/`dir` into the request, to disable client sort in AJAX form mode, or to leave it and document the boundary. Related: the generated-option key mismatch recorded in the R5 item above — same family of "what does the server actually receive" questions.
+
 ## Standing decisions — do not re-propose without the named evidence
 
 These are settled calls, kept so they are not re-litigated. Each names what would reopen it.
