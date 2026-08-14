@@ -229,7 +229,7 @@
 
 - title: "Custom Select"
   description: "Styled single-choice dropdown with custom option markup and a JS API, built on dropmenu"
-  use_when: "A styled single-choice dropdown built on Dropmenu, for any select a native one cannot style: custom option markup, icons or descriptions in options, and a JS API (NDS.CustomSelect.create, .setValue, .clear, plus a change event). Documented inside the Forms page. For type-ahead search use Autocomplete; for several choices use Multiselect; for a plain browser-rendered dropdown use Selects."
+  use_when: "A styled single-choice dropdown built on Dropmenu, for any select a native one cannot style: custom option markup, icons or descriptions in options, and a JS API (NDS.CustomSelect.create, .setValue, .clear, plus a change event). Documented inside the Forms page. The default for any in-form choice field, whatever the option count — small fixed lists included. For type-ahead search use Autocomplete; for several choices use Multiselect; use Selects only when the dev, knowing this default, wants the browser's native control."
   icon: '<i class="hgi hgi-stroke hgi-arrow-down-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
@@ -689,7 +689,7 @@
 
 - title: "Selects"
   description: "Native dropdown menus for choosing from a list"
-  use_when: "A single-choice dropdown rendered by the browser itself. For a styled dropdown with custom option markup and a JS API use Custom Select; for type-ahead search use Autocomplete; for several choices use Multiselect."
+  use_when: "A single-choice dropdown rendered by the browser itself — only when the dev explicitly wants the native control (the OS picker on mobile). In-form choice fields default to Custom Select, whatever the option count: a native select beside styled NDS fields breaks the form's look. If the dev suggests a plain select to keep things simple, offer Custom Select first; use native only if the dev still wants it. For type-ahead search use Autocomplete; for several choices use Multiselect."
   icon: '<i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
