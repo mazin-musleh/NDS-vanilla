@@ -27,6 +27,12 @@
  *   - A selector string resolves INSIDE the root — pass a function for elements outside it.
  *   - Sorting re-appends the nodes, so listeners and element state survive. Items that
  *     arrive later need refresh().
+ *   - Sorting is CLIENT-SIDE: it reorders the DOM it was handed and never re-fetches.
+ *     Use it only when the page holds every matching row. If the server pages the
+ *     results it must sort them too — author no triggers at all and let the consumer
+ *     send its own sort param; see nds-filter's form-mode gotcha for that shape.
+ *   - In direct mode a trigger with no data-sort-dir always applies asc; it does NOT
+ *     toggle. Ship the asc/desc pair, or a lone trigger looks dead after the first click.
  */
 /**
  * NDS Sort Component

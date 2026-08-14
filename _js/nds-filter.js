@@ -65,6 +65,17 @@
  *     inputs are named is left alone (auto-generated options submit `filter-{name}`,
  *     not `{name}`). nds:filterFormAjax exposes that container as
  *     hiddenInputsContainer; add your own fields to it there.
+ *   - Sort is NOT criteria and never rides the request — by design, not a gap.
+ *     ONE question decides who owns the order: does the server return all matching
+ *     rows, or one page? All rows (the client pages them via data-auto-pagination)
+ *     → CLIENT sort: author data-sort triggers, which ARE the client-side engine.
+ *     One page (a data-page-url nav) → SERVER sort: author no data-sort at all
+ *     (with no triggers setupSort() returns early and no engine is created) and
+ *     give the form your own named control — <select name="sort"> rides FormData
+ *     like any criterion, and the server's row order arrives untouched.
+ *     The presence of data-sort IS the switch, so the two cannot conflict; author
+ *     both and a client reorder lands on top of a server-paged response, sorting
+ *     that page only. Measured in scripts/check-filter-sort-ownership.mjs.
  *   - Auto-generated options come from _buildFilterInput(): div.nds-form-container plus
  *     nds-{check,radio,switch}-container, wrapping div.nds-form-header > label[for] >
  *     span.nds-label and div.nds-form-control > the input. Hand-written options must match
