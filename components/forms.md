@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.7.1"
-last_edit: "14/08/2026 - 03:00 AM"
+last_edit: "14/08/2026 - 11:41 PM"
 lang: en
 direction: ltr
 ---
@@ -1421,11 +1421,11 @@ direction: ltr
   </div>
 </section>
 
-<!-- Select Dropdown -->
-<section id="selectDropdown" class="nds-content-section nds-demo-section">
+<!-- Custom Select -->
+<section id="customSelect" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Select Dropdown</h2>
+      <h2 class="nds-section-title">Custom Select</h2>
       <p class="nds-section-description">Custom dropdown select with keyboard navigation and hidden input for form submission</p>
     </div>
     <div class="nds-section-body">

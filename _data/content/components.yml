@@ -233,7 +233,7 @@
   icon: '<i class="hgi hgi-stroke hgi-arrow-down-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
-  url: "/components/forms.html#selectDropdown"
+  url: "/components/forms.html#customSelect"
   js: _js/nds-customselect.js
   scss: _sass/components/_forms.scss
 

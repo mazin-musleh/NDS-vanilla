@@ -104,8 +104,8 @@
         // closest('.nds-form-control') walk stops at <body> and returns null.
         // Forward ref for the same reason in the other direction: setValue's
         // option lookup while the menu is portaled open.
-        dropdown._selectFormControl = formControl;
-        formControl._selectDropdown = dropdown;
+        dropdown._customSelectFormControl = formControl;
+        formControl._customSelectDropdown = dropdown;
         dropdown.removeAttribute('hidden');
         var optionsContainer = dropdown.querySelector('.nds-select-options');
         if (optionsContainer) optionsContainer.classList.add('nds-dropmenu-scroll');
@@ -165,7 +165,7 @@
         selectInput.value = text;
         if (hiddenInput) hiddenInput.value = value;
 
-        var scope = menu || formControl._selectDropdown || formControl;
+        var scope = menu || formControl._customSelectDropdown || formControl;
         scope.querySelectorAll('.nds-select-option').forEach(function (o) {
             if (option && o.dataset.value === value) NDS.State.add(o, 'selected');
             else NDS.State.remove(o, 'selected');
@@ -202,7 +202,7 @@
         // descendant, portaled or not — then read the back-reference
         // stamped in build(). Fall back to closest() for the in-place path.
         var menu = option.closest('.nds-select-dropdown, .nds-dropmenu-menu');
-        var formControl = (menu && menu._selectFormControl)
+        var formControl = (menu && menu._customSelectFormControl)
                         || option.closest('.nds-form-control');
         if (!formControl) return;
         apply(formControl, option, menu);
@@ -239,7 +239,7 @@
         setValue: function (el, value) {
             var formControl = formControlOf(el);
             if (!formControl) return false;
-            var scope = formControl._selectDropdown || formControl;
+            var scope = formControl._customSelectDropdown || formControl;
             var options = scope.querySelectorAll('.nds-select-option');
             for (var i = 0; i < options.length; i++) {
                 if (options[i].dataset.value === String(value)) {
