@@ -14,6 +14,7 @@ Evaluates the consumer rules file (`_includes/NDS-IQ.md` — installed at a cons
 - **One eval per edit-batch, never per edit.** Finish ALL of a sitting's edits (rules, catalog, docs) first, then run once against the combined diff; re-probe only findings. Firing a run after each sentence multiplies cost with no added signal — the 2026-08-14 cycle spent 5 launches (~520K subagent tokens) where 2 carried the same information.
 - **Findings are suggest-only.** A divergence becomes a proposed file edit only after verifying the text is actually ambiguous (not just an agent failure), and the user approves every edit — same contract as nds-js-audit evolve.
 - **Runners are fresh agents, never forks.** A fork inherits this conversation and biases the test. Spawn `general-purpose` agents with a `model` override.
+- **A new sentence must fail the floor first.** Before proposing any addition to `_includes/NDS-IQ.md`, run its scenario in `floor` mode. Stub PASSES → the model already does this and the sentence buys nothing: fix the source instead (doc, example, catalog, banner), which is where AGENTS.md's attribution default sends it anyway. Stub FAILS → the sentence is carrying real weight and can be proposed. This is the cheap half of the cause-removal ladder: it tells you whether the top rung is even needed before you argue about wording.
 
 ## Modes (cost tiers)
 
@@ -23,8 +24,17 @@ Evaluates the consumer rules file (`_includes/NDS-IQ.md` — installed at a cons
 | `full` | Every comprehension scenario | sonnet | Before a version bump |
 | `sweep` | Every comprehension scenario | fable + opus + sonnet in parallel | Pre-release, explicit ask only |
 | `behavior <id>` | One scenario against the micro-fixtures | sonnet (or named) | Explicit ask only |
+| `floor [ids]` | The named scenarios — or all of them — against `fixtures/NDS-IQ-STUB.md` instead of the real rules file. Everything else in the harness stays byte-identical; ONLY the rulebook path changes, or the comparison is void | sonnet | Before writing a new sentence; when a trim is proposed; explicit ask |
 
 Sonnet is the default deliberately: it is the tier the file must not lean on. Strong models add little signal per token; they earn their cost only in a `sweep`, where the per-model diff IS the signal.
+
+**Floor mode answers "does this sentence earn its place?"** A scenario that PASSES with a stub rulebook is measuring the model, not the file. Every scenario carries a `floor:` line from the 2026-08-14 run (24 PASS / 51 FAIL / 2 n-a — see the scenario file's preamble); a scenario with no `floor:` line has never been floor-run.
+
+- **A floor PASS is a trim CANDIDATE, never a trim.** Confirm the source actually carries the behavior, then remove the sentence and re-run its scenario: pass → remove → still-pass. Skipping that is how a rule disappears because a doc happened to answer once.
+- **A floor FAIL is the sentence earning its keep** — the strongest evidence a rule should exist. Do not trim it without a source fix that absorbs it first.
+- Floor passes cluster on **source-doc-answerable** scenarios. That is the cause-removal ladder showing up as data: when a doc, catalog or banner answers, the rules text is redundant. `ea66d4e5` (a wrapper comment added to nine sources) is the worked example — it made S36 and S38 free.
+- **The floor is not zero-knowledge.** The harness itself supplies the `_source/` map, "banners exist", the built twins, and a "say UNDEFINED" instruction that is already report-and-stop. It is CONSTANT across runs, so floor-vs-file deltas are clean, but never quote a floor score as "the file contributes X%".
+- **Tool effort dominates the result.** In the 2026-08-14 run one batch made 39 tool calls and most made 2, and the high-reading batch passed far more. Batch small (≤10) and treat any floor PASS from a 2-call batch as unproven — a lazy runner under-passes, which makes the file look more necessary than it is.
 
 ## Workflow
 

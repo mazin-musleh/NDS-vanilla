@@ -5,6 +5,25 @@ structure for the rules file's references to resolve — grading compares agent
 output against these files, so internal consistency matters, realism does not.
 Do not grow them toward realism.
 
+`NDS-IQ-STUB.md` is the exception to "behavior-mode" — it serves `floor` mode
+(SKILL.md), which is a COMPREHENSION run. It stands in for the rules file
+itself: the empty condition a scenario is measured against, so a scenario that
+passes with it as the rulebook is measuring the model rather than NDS IQ. It
+carries the two path meanings and the mandate and nothing procedural. Growing
+it raises the floor and makes the real rules file look less necessary than it
+is — missing context belongs in a scenario's `setup:`, not here.
+
+**Keep the file free of anything that announces what it is** — no explanatory
+comment, no "stub" in the heading, no version marker. A runner reads it with
+`Read`, which returns raw text, so an HTML comment is as visible as prose. This
+matters in one direction: a runner that knows its rulebook is deliberately
+empty answers UNDEFINED where it would otherwise reason, which SUPPRESSES floor
+passes and makes NDS IQ look more load-bearing than it is. The 2026-08-14 run
+hit exactly that — the heading then read `(instructions v0.0-stub)` and runners
+quoted it back ("UNDEFINED per the 3-line stub"), so that run's 24/75 is an
+undercount. Both tells were removed after. Keep the explanation here, in this
+README, where no runner reads it.
+
 - `mini-root/` = a fake extracted `NDS_ROOT` (template zip). Version banner in
   the bundle stubs is the mutable knob scenarios stamp (e.g. 1.3.0 for stale).
   It defaults to the rules' floor so runs start unblocked; sub-floor states are
