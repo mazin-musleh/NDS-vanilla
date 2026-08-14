@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.x"
-last_edit: "14/08/2026 - 11:03 PM"
+last_edit: "14/08/2026 - 11:06 PM"
 ---
 
 <!-- Standard Card -->
@@ -905,10 +905,10 @@ last_edit: "14/08/2026 - 11:03 PM"
             <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>Color variant on the card root without a class. Values: <code class="nds-inline-code lang-html">neutral</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">critical</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">success</code>. Equivalent to the corresponding color class modifier</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on the card root, or on a parent <code class="nds-inline-code lang-html">.nds-grid</code> or <code class="nds-inline-code lang-html">.nds-paged-content</code>, to render skeleton shimmer placeholders on all child cards. Equivalent to adding <code class="nds-inline-code lang-html">nds-loading</code> as a class</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>card root</td><td>Declares the state the card is in. Values: <code class="nds-inline-code lang-html">neutral</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">critical</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">success</code>. It renders as the matching color variant, but it is not a color picker. Set it only when the card really carries that state. For a tint on a card that asserts no status, use the color class instead (<code class="nds-inline-code lang-html">nds-blue</code>, <code class="nds-inline-code lang-html">nds-green</code>, and the rest), and leave <code class="nds-inline-code lang-html">data-status</code> off</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>card root, or a parent <code class="nds-inline-code lang-html">.nds-grid</code> / <code class="nds-inline-code lang-html">.nds-paged-content</code></td><td>Renders skeleton shimmer placeholders on the card, or on every child card when set on the parent. Equivalent to adding <code class="nds-inline-code lang-html">nds-loading</code> as a class</td></tr>
                     </tbody>
                 </table>
             </div>
