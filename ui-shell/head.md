@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.7.x"
-last_edit: "14/08/2026 - 09:50 PM"
+last_edit: "14/08/2026 - 10:47 PM"
 ---
 
 <!-- Page Setup -->
@@ -281,8 +281,51 @@ Content-Security-Policy:
             </div>
             <div class="nds-block nds-prose">
                 <p>Your server must make a new random value for every response. A fixed value is not a nonce. It gives an attacker the same permission your own code has.</p>
-                <p>The main bundle needs the value too. NDS loads two more script files at runtime, and the loader copies the nonce from the main bundle's tag onto them. Without it, a <strong>nonce-only</strong> policy — one with no <code class="nds-inline-code lang-css">'self'</code> in <code class="nds-inline-code lang-css">script-src</code> — blocks those two files, and the components in them never start.</p>
+                <p>The main bundle needs the value too. The loader adds more script files at runtime, and it copies the nonce from the main bundle's tag onto each one. Without it, a <strong>nonce-only</strong> policy — one with no <code class="nds-inline-code lang-css">'self'</code> in <code class="nds-inline-code lang-css">script-src</code> — blocks them, and the components they carry never start.</p>
                 <p><strong>No server?</strong> Use a hash instead. A hash covers a script by its exact text, so a static host works. Take the SHA-256 of the script's contents, base64 it, and add <code class="nds-inline-code lang-css">'sha256-…'</code> to <code class="nds-inline-code lang-css">script-src</code>. The browser tells you the right value: load the page with the policy on, and the console error prints the hash it expected. Re-do this whenever you edit the script.</p>
+            </div>
+            <div class="nds-block nds-prose">
+                <h3>Inline knobs under a strict CSP</h3>
+                <p>A <code class="nds-inline-code lang-html">style</code> attribute needs <code class="nds-inline-code lang-css">'unsafe-inline'</code>. No nonce and no hash can cover one. So under a strict policy every inline knob is dead: the value never applies, and the only warning is the browser's own CSP violation.</p>
+                <p>Find them all. Search your pages for <code class="nds-inline-code lang-html">style="--</code>. Then move each knob to a class in your own stylesheet, which <code class="nds-inline-code lang-css">'self'</code> already allows. The markup keeps its NDS classes; you add one of your own.</p>
+            </div>
+            <div class="nds-block">
+                <div class="nds-code nds-expandable">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <div class="nds-expandable-content">
+                        <code class="lang-html code">
+&lt;!-- Before — dead under a strict CSP. The knob never applies. --&gt;
+&lt;div class="nds-block nds-flex nds-col" style="--align: center;"&gt;
+
+&lt;!-- After — same NDS classes, plus one of yours. --&gt;
+&lt;div class="nds-block nds-flex nds-col signin-stack"&gt;
+                    </code>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-block nds-prose">
+                <p>Then set the knob in your stylesheet:</p>
+            </div>
+            <div class="nds-block">
+                <div class="nds-code nds-expandable">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <div class="nds-expandable-content">
+                        <code class="lang-css code">
+.signin-stack { --align: center; }
+                    </code>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-block nds-prose">
+                <p>NDS components are not affected. Their JavaScript sets styles through the CSSOM, which no policy blocks. Only knobs you wrote into a <code class="nds-inline-code lang-html">style</code> attribute need this treatment.</p>
             </div>
             <div class="nds-block nds-prose">
                 <h3>Why the stylesheets look the way they do</h3>
