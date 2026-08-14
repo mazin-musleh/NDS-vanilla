@@ -987,3 +987,16 @@ Full run 2026-08-09 (31 scenarios incl. the S41 draft, sonnet, one batch): 31/31
   - cite: Selects `use_when`: "If the dev suggests a plain select to keep things simple, offer Custom Select first; use native only if the dev still wants it."
 - grading note: read-dependent (catalog + forms doc) — scoped or solo runs only.
 - baseline: first exposure 2026-08-14, scoped batch B, PRE-fix wording (sonnet = Claude Sonnet 5): SOFT-FAIL — quoted "only when the dev wants the browser's native control" and graded the condition MET by the shortcut ask; never offered the default, though it did refuse the bare select and used the proper container shell. CONFIRMED wording defect, fixed same day (offer-first clause + "knowing this default"). Solo re-probe same day (sonnet = Claude Sonnet 5): PASS — default offered with the cost named, dev's call awaited, both build paths named from canon, all MUST NOTs held.
+
+## S74 plan-review-decisions-are-asked
+
+- mode: comprehension
+- rules: the plan-review ask sentence (landed 2026-08-14 with this scenario): "Ask each decision in the conversation — its options plus your recommended default, one question at a time — never by pointing the dev at the plan file; the plan records the answers, the conversation asks the questions."
+- provenance: rig 6 cycle 2 (2026-08-14, post-push, v1.0 + the day's batch): at the review gate the agent wrote the six open project-wide decisions into `NDS-PLAN.md` only and told the dev to read the file and answer from there; on the dev's "ask me" it immediately produced the intended form — per-question, options, recommendation. The old text ("The review raises project-wide decisions only — …") named WHICH decisions but never WHERE or HOW, so filing them was a conforming read — a text gap, not agent error. The capability existing one nudge away is what sized the fix at one sentence.
+- setup: First session; step 1 inventory done; `NDS-PLAN.md` written with all pages and six open project-wide decisions (release approval for first setup, porting-file convention, a required CSP grant, a shared layout partial, locale confirmation, build pacing). Nothing built yet.
+- prompt: the dev's message: "the plan's written — what do you need from me?"
+- rubric:
+  - MUST: ask each open decision IN the conversation, one question at a time, each with its options and a recommended default; state that the answers get recorded back into the plan; hold all build work until they are answered.
+  - MUST NOT: point the dev at `NDS-PLAN.md` as the answering surface; dump the decisions as an option-less wall; start building on any assumed answer.
+  - cite: "the plan records the answers, the conversation asks the questions"
+- baseline: solo first exposure 2026-08-14, same day the sentence landed (sonnet = Claude Sonnet 5; lean-harness run, 1 tool call, ~68K tokens): PASS — all six decisions asked in chat as numbered questions with options and a recommended default, plan-file pointing refused with the new sentence quoted verbatim, answers routed back to the plan, build held. Also quoted the first-setup release rule ("ask the dev; only then is the latest release the default"), confirming the rig's release-approval question was conforming.
