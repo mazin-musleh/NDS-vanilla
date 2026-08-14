@@ -49,7 +49,9 @@
  *     undefined.
  *   - Declare data-filter-items only where a live filter exists: a crit rule holds such a
  *     container as skeleton until an instance stamps data-nds-filter-initialized, with no
- *     console warning — NDS.Init.audit() is what reports an unclaimed one.
+ *     console warning — NDS.Init.audit() is what reports an unclaimed one. The same audit
+ *     flags a .nds-filter carrying no data-filter-target: a surface no instance ever binds,
+ *     so its options never render.
  *   - .nds-filter is a pure anchor; submit mode is a SEPARATE form carrying the same target:
  *       <form data-filter-target="results" data-filter-submit method="get">
  *       <div class="nds-filter" data-filter-target="results">…</div>

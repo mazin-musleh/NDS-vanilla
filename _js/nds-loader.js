@@ -7,7 +7,8 @@
  *                              component that drives a container from outside it)
  *   NDS.Init.config            the resolved config
  *   NDS.Init.audit()           run the debug audits by hand (unregistered inline icons,
- *                              unclaimed filter and paged containers)
+ *                              unclaimed filter and paged containers, .nds-filter
+ *                              surfaces with no data-filter-target)
  *   NDS.Init.refresh(el)       tell every live component that el's contents changed —
  *                              the one call after you add/remove/replace rows or cards.
  *                              Pass the container whose CHILDREN changed; omit it for
@@ -909,6 +910,10 @@
         document.querySelectorAll('[data-filter-items]:not([data-nds-filter-initialized])').forEach(el => {
             if (el.closest('code, .code-example')) return;
             console.warn('[NDS] audit: data-filter-items container never claimed by a filter — it stays skeleton-held. Remove the attribute or add the filter UI.', el);
+        });
+        document.querySelectorAll('.nds-filter:not([data-filter-target])').forEach(el => {
+            if (el.closest('code, .code-example')) return;
+            console.warn('[NDS] audit: .nds-filter has no data-filter-target — no filter instance binds it, so its options never render and its criteria go nowhere. Add data-filter-target="<results container id>".', el);
         });
         document.querySelectorAll('.nds-paged-content:not([data-paged-initialized])').forEach(el => {
             if (el.closest('code, .code-example')) return;
