@@ -1558,16 +1558,12 @@
                 NDS.Feedback.dismissAll(this.filterContainer);
             }
 
-            // Trigger form submission on the actual form element.
-            // Fallback gap: .submit() skips the submit event, so without
-            // requestSubmit (pre-2022 engines) the setupFormSubmission listener
-            // never fires — validation is bypassed and AJAX mode degrades to a
-            // full-page navigation.
-            if (this.submissionForm.requestSubmit) {
-                this.submissionForm.requestSubmit();
-            } else {
-                this.submissionForm.submit();
-            }
+            // requestSubmit, never .submit(): .submit() skips the submit event, so
+            // setupFormSubmission's listener never fires — validation is bypassed and
+            // AJAX mode silently degrades to a full-page navigation. The old fallback
+            // only ever reached Safari 15.4–15.6 (this file already requires :has()
+            // in querySelector), where it submitted wrongly instead of failing loudly.
+            this.submissionForm.requestSubmit();
         }
 
         updateClearButtonVisibility(input, clearBtn) {
@@ -2633,11 +2629,14 @@
         }
 
         clearDropmenuFilters() {
+            // Emptying the dropmenu search box has to zero criteria.search with it.
+            // Clearing the value alone left the keyword applied: the box read empty
+            // and the Apply count dropped, while the results stayed filtered and the
+            // search chip stayed up until the next Apply. _mirrorSearchInputs is the
+            // same pair every other clear path uses, and keeps the direct box in step.
             if (this.searchInputs.dropmenu) {
-                this.searchInputs.dropmenu.input.value = '';
-                if (this.searchInputs.dropmenu.clearBtn) {
-                    this.searchInputs.dropmenu.clearBtn.hidden = true;
-                }
+                this.criteria.search = '';
+                this._mirrorSearchInputs('');
             }
 
             this._resetFilterInputs();
@@ -2703,7 +2702,11 @@
             const event = new CustomEvent('nds:filter:change', {
                 detail: {
                     filter: this,
-                    criteria: { ...this.criteria },
+                    // getCriteria(), not a shallow spread: the spread handed out the
+                    // live criteria.filters object, so a consumer holding an old
+                    // detail.criteria saw it track later changes and every
+                    // what-changed comparison read as unchanged.
+                    criteria: this.getCriteria(),
                     totalItems: hasCount ? this.items.length : null,
                     visibleItems: hasCount ? visibleCount : null,
                     hiddenItems: hasCount ? this.items.length - visibleCount : null
