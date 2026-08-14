@@ -58,7 +58,7 @@
  *     Without data-ajax the browser submits and the server returns the filtered page; add
  *     data-ajax on that form for AJAX submission instead. The filter stamps form="<that
  *     form's id>" on its own controls, so surfaces outside the form still submit — give
- *     the form an id or the criteria never leave the page. nds:filterFormAjax's
+ *     the form an id or the criteria never leave the page.
  *     Criteria that no control carries — a range filter's encoded value, an unnamed
  *     search box — are written into .nds-filter-hidden-inputs on each submit, keyed
  *     like the URL param, so the request matches this.criteria. A filter whose own
