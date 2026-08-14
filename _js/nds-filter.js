@@ -1544,6 +1544,9 @@
          */
         submitForm(triggerBtn) {
             if (!this.submissionForm) return;
+            // This call is the submission, so drop any commit queued in the same
+            // tick — a setter followed by submitForm() sends one request.
+            this._commitQueued = false;
             // Track which button triggered this submit so its spinner shows at
             // submit and clears via the AJAX lifecycle (native submits self-clear
             // on navigation). null for programmatic submits with no button.
@@ -2337,8 +2340,27 @@
         // definition so a new commit path can't pick the wrong half — the chip,
         // clear and range-reset paths all route here.
         _commitCriteriaChange() {
-            if (this.isAjaxMode) this.submitForm();
-            else this.applyFilters();
+            if (!this.isAjaxMode) {
+                this.applyFilters();
+                return;
+            }
+
+            // Coalesce. Setting three filters in a row is one intent, but each
+            // submit is a server round-trip, so queue on a microtask and let a
+            // run of criteria changes collapse into one request. An explicit
+            // submitForm() in the same tick supersedes the queued one — it
+            // clears the flag, so the consumer's own call is the one that goes.
+            this._commitQueued = true;
+            if (this._commitScheduled) return;
+            this._commitScheduled = true;
+            Promise.resolve().then(() => {
+                this._commitScheduled = false;
+                // destroy() aborts this signal; without the check a queued
+                // commit would fetch on behalf of a dead instance.
+                if (!this._commitQueued || this.abortController.signal.aborted) return;
+                this._commitQueued = false;
+                this.submitForm();
+            });
         }
 
         applyFilters() {
@@ -2806,7 +2828,12 @@
             this._mirrorSearchInputs(value);
 
             this.updateApplyButtonLabel();
-            this.applyFilters();
+            // Not applyFilters(): in AJAX mode that repaints chips, badge and URL
+            // from the new criteria without fetching, so the page would state a
+            // keyword the displayed results were never filtered by. Same commit
+            // path as removeFilterValue — the closest sibling, also a programmatic
+            // criteria change.
+            this._commitCriteriaChange();
         }
 
         setFilterValues(filterName, values) {
@@ -2823,7 +2850,9 @@
 
             this.updateFilterCriteria(filterName);
             this.updateApplyButtonLabel();
-            this.applyFilters();
+            // See setSearchValue — commit, don't just repaint, so AJAX mode
+            // re-fetches instead of showing chips for an unrequested filter.
+            this._commitCriteriaChange();
         }
 
         populateFilter(filterName, values, inputType = null) {

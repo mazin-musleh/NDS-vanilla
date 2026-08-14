@@ -88,6 +88,10 @@ const report = await page.evaluate(async () => {
           <div data-filter="price" data-filter-type="slider"
                data-filter-min="0" data-filter-max="1000" data-filter-step="10"></div>
         </div>
+        <div class="nds-filter-applied" data-filter-target="srv" hidden>
+          <span class="nds-label">Applied Filters:</span>
+          <div class="nds-chips"></div>
+        </div>
         <div id="srvTarget" data-filter-items></div>`;
     document.body.appendChild(host);
     // The target id the form-mode instance swaps is its data-filter-target ("srv"),
@@ -181,23 +185,108 @@ const report = await page.evaluate(async () => {
         detail: formKeys === reqKeys ? `yes — both [${reqKeys}]` : `NO — form [${formKeys}] vs request [${reqKeys}]`,
     });
 
-    // --- which public API calls re-fetch? ---
-    const probeApi = async (label, fn) => {
-        const before = sent.length;
-        try { fn(); } catch (e) { findings.push({ id: `API ${label}`, detail: `threw: ${e.message}` }); return; }
+    // --- what does each public API call leave on screen? ---
+    //
+    // Counting requests is not enough. What matters is whether the UI still
+    // describes the results that are actually displayed. The rows on screen came
+    // from the last request; the chips, badge and URL are rendered from criteria.
+    // When those two drift apart the page states a filter it is not showing, so
+    // each probe re-establishes a known applied state, runs one method, and
+    // compares "what criteria now claims" against "what was last fetched".
+    const claimOf = (crit) => {
+        const p = new URLSearchParams();
+        for (const [name, values] of Object.entries(crit.filters)) {
+            if (values.length) p.set(name, values.join(','));
+        }
+        if (crit.search) p.set('search', crit.search);
+        p.sort();
+        return p.toString();
+    };
+    // Same shape, read back from the request the server actually answered.
+    // Empty-valued params are dropped on both sides: an empty search box submits
+    // `search=`, which is the absence of a filter, not a different one.
+    const fetchedClaim = () => {
+        const u = new URLSearchParams(sent[sent.length - 1]?.url.split('?')[1] || '');
+        const p = new URLSearchParams();
+        for (const [k, v] of u.entries()) if (v) p.set(k.replace(/^filter-/, ''), v);
+        p.sort();
+        return p.toString();
+    };
+    const chipCount = () => document.querySelectorAll('[data-filter-target="srv"] .nds-chips > *').length;
+
+    // The search box was typed into directly earlier to prove it reaches
+    // FormData. Left set, it would inject a keyword criteria never knows about
+    // and every comparison below would read as drift.
+    search.value = '';
+
+    const restoreApplied = async () => {
+        f.setFilterValues('category', ['news']);
+        f.submitForm();
         await settle();
-        findings.push({ id: `API ${label}`, detail: sent.length > before ? 're-fetched' : 'NO re-fetch' });
     };
 
-    await probeApi('setFilterValues("category", ["news"])', () => f.setFilterValues('category', ['news']));
+    // driftOk: this method is documented not to refresh the view, or is private.
+    const probeApi = async (label, fn, driftOk = false) => {
+        await restoreApplied();
+        const before = sent.length;
+        try { fn(); } catch (e) { findings.push({ id: `API ${label}`, detail: `threw: ${e.message}`, fail: true }); return; }
+        await settle();
+        const refetched = sent.length > before;
+        const claims = claimOf(f.criteria);
+        const showing = fetchedClaim();
+        const drift = claims !== showing;
+        findings.push({
+            id: `API ${label}`,
+            detail: `${refetched ? 're-fetched' : 'no re-fetch'} | chips=${chipCount()}`
+                + ` | claims [${claims || '-'}] vs showing [${showing || '-'}]`
+                + (drift ? (driftOk ? '  (drift expected)' : '  <-- DRIFT') : ''),
+            fail: drift && !driftOk,
+        });
+    };
+
+    // Must differ from what restoreApplied() just applied, or the call changes
+    // nothing and the probe reports "no drift" for a method it never exercised.
+    await probeApi('setFilterValues("tags", ["beta"])', () => f.setFilterValues('tags', ['beta']));
     await probeApi('setSearchValue("bridges")', () => f.setSearchValue('bridges'));
     await probeApi('removeFilterValue("category","news") [chip X]', () => f.removeFilterValue('category', 'news'));
-    await probeApi('clear()', () => f.clear());
+    // Documented as "clear all inputs without re-showing items" — it deliberately
+    // does not refresh the view, so criteria emptying ahead of the results is its
+    // contract, not a defect. Chips stay standing, matching the results.
+    await probeApi('clear()', () => f.clear(), true);
     await probeApi('clearDropmenuFilters() [clear BUTTON]', () => f.clearDropmenuFilters());
     await probeApi('reset()', () => f.reset());
     await probeApi('applyFilters()', () => f.applyFilters());
     await probeApi('submitForm() [documented escape hatch]', () => f.submitForm());
-    await probeApi('setRangeValues via _setRangeValues', () => f._setRangeValues('price', 100, 400));
+    // Private (underscore) — listed for completeness, not a consumer surface.
+    await probeApi('_setRangeValues (internal)', () => f._setRangeValues('price', 100, 400), true);
+
+    // The migration cost of routing setters through _commitCriteriaChange: a
+    // consumer following the docs (setter, then submitForm) now issues two
+    // requests. Counted here rather than assumed — and _buildAjaxRequest aborts
+    // the in-flight controller before starting the next, so the question is
+    // whether the first is merely wasted or actually renders.
+    const combo = async (label, fn) => {
+        await restoreApplied();
+        const before = sent.length;
+        fn();
+        await settle();
+        const n = sent.length - before;
+        findings.push({
+            id: `ASSERT ${label}`,
+            detail: `${n} request(s)` + (n === 1 ? '' : ' — expected 1'),
+            fail: n !== 1,
+        });
+    };
+
+    await combo('setter + submitForm() = one request', () => {
+        f.setFilterValues('tags', ['beta']);
+        f.submitForm();
+    });
+    await combo('three setters in a row = one request', () => {
+        f.setFilterValues('tags', ['beta']);
+        f.setFilterValues('category', ['news']);
+        f.setSearchValue('bridges');
+    });
 
     // Does a range survive the URL round-trip the rollback path relies on?
     if (thumbs.length === 2) {
@@ -206,6 +295,64 @@ const report = await page.evaluate(async () => {
         f.updateUrlParams();
         findings.push({ id: 'slider round-trips through the URL', detail: window.location.search || '(no params)' });
     }
+
+    // --- CONTROL: client-side mode must be untouched ---
+    //
+    // The setters were rerouted for every mode, not just AJAX, so a client-side
+    // filter is the control group: _commitCriteriaChange falls through to
+    // applyFilters there, and setFilterValues must still hide rows and fire no
+    // request. Without this the change could silently turn ordinary filtering
+    // into a no-op and the AJAX assertions above would never notice.
+    // A new instance reads the live URL in applyUrlParams(), so it would inherit
+    // the search and filters the AJAX probes above left there — hiding every row
+    // for a keyword this fixture never set. Reset before mounting.
+    history.replaceState({}, '', location.pathname);
+
+    const cliHost = document.createElement('div');
+    cliHost.innerHTML = `
+        <div class="nds-filter" data-filter-target="cli">
+          <div data-filter="cat">
+            <div class="nds-form-container nds-check-container">
+              <div class="nds-form-control">
+                <input type="checkbox" id="cli-0" class="nds-check-input" name="cat" value="news">
+              </div>
+              <div class="nds-form-header"><label for="cli-0"><span class="nds-label">News</span></label></div>
+            </div>
+          </div>
+        </div>
+        <div id="cli" data-filter-items="nds-card">
+          <div class="nds-card"><span data-filter="cat" data-filter-value="news">News item</span></div>
+          <div class="nds-card"><span data-filter="cat" data-filter-value="events">Events item</span></div>
+        </div>`;
+    document.body.appendChild(cliHost);
+    NDS.Filter.init();
+
+    const cli = NDS.Filter.getByTarget('cli');
+    const cards = [...cliHost.querySelectorAll('#cli .nds-card')];
+    const hidden = () => cards.filter((c) => c.hasAttribute('data-filtered')).length;
+    const beforeCli = sent.length;
+
+    findings.push({
+        id: 'CONTROL client-side instance is not in form mode',
+        detail: cli && !cli.isFormMode ? 'ok' : 'FAIL',
+        fail: !cli || cli.isFormMode,
+    });
+
+    cli?.setFilterValues('cat', ['news']);
+    await settle();
+    findings.push({
+        id: 'ASSERT client-side setFilterValues still filters',
+        detail: `${hidden()}/2 hidden (want 1), ${sent.length - beforeCli} request(s) (want 0)`,
+        fail: hidden() !== 1 || sent.length !== beforeCli,
+    });
+
+    cli?.setFilterValues('cat', []);
+    await settle();
+    findings.push({
+        id: 'ASSERT client-side clearing re-shows every row',
+        detail: `${hidden()}/2 hidden (want 0)`,
+        fail: hidden() !== 0,
+    });
 
     NDS.request = realRequest;
     return { findings, requestCount: sent.length, errors };
