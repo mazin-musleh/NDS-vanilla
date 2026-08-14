@@ -29,6 +29,8 @@ Cleared at the 1.7.1 release (2026-08-12). That release shipped the whole v0.8 r
 
 - [ ] **`nds-iq-eval` skill — lower the ceremony of running a full batch (raised 2026-08-13).** The 2026-08-13 sonnet 4.6 run went through a Python extract of `setup:`+`prompt:` per scenario, three tmp batch files on disk, then hand-copied into three Agent prompts. Root cause: scenarios.md hits the `Read` 25K-token cap so the runner reached for a script, then over-invested. Two cheap fixes the next full run could take: (a) either commit the split-and-render step as `scripts/build-eval-batches.py` (one command → three prompt-ready text blocks on stdout, no tmp files), or (b) note in `SKILL.md`'s workflow that scenarios.md must be read in two `Read` offset chunks and the batch scenario blocks assembled inline in the Agent spawn — no disk round-trip. Preference: (b), lazier — the split-and-render script is only worth minting if a third full run reproduces the friction. Neither is a rules-file issue; skill-side only.
 
+- [ ] **Example backlog, first entry (attribution default, 2026-08-14): a home/landing feature-grid example.** Rig 6's only no-copy-source page is where every invented-markup correction landed (S69's provenance) — the cascade bottoms out at scaffold-custom for a shape most consumer apps have. Ship it in `examples/` with a catalog `use_when`; then attempt the trims the new example licenses (S69-area) through the standard gates.
+
 ## Standing decisions — do not re-propose without the named evidence
 
 These are settled calls, kept so they are not re-litigated. Each names what would reopen it.
@@ -41,7 +43,7 @@ These are settled calls, kept so they are not re-litigated. Each names what woul
 - **A release-notes vs CHANGELOG drift check: CLOSED, YAGNI.** `scripts/check-release-body.py` was built then reverted after review: one author, one session, monthly-ish releases, and a check nobody remembers to run shares the failure mode of the invariant it enforces. Reopen only on a real drift incident naming a released version.
 - **R20 — two-download `_source/` population STAYS (2026-08-12, user call).** The template zip ships no `_source/`; the rules populate it from the same tag's Source code zip. Triage proposed shipping `_source/` in the zip or a companion asset. Rejected: the current shape works against every template version an agent may meet, including releases cut before the rule existed, and it keeps the release script simple. Reopen only on the user's own initiative.
 
-- **Eval scenario numbering:** S1–S66 are written (S43 was never used — a numbering skip, not a retirement). **Next free is S67.**
+- **Eval scenario numbering:** S1–S77 are written (S43 was never used — a numbering skip, not a retirement). **Next free is S78.**
 
 ## Watch list — not tasks, things a later run should notice
 
