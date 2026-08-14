@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.x"
-last_edit: "14/08/2026 - 06:48 PM"
+last_edit: "14/08/2026 - 09:05 PM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -1736,6 +1736,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                                 <div class="nds-block">
                                     <p>Add a separate <code class="nds-inline-code lang-html">&lt;form&gt;</code> element with <code class="nds-inline-code lang-html">data-filter-target</code> linking it to the filter anchor, plus <code class="nds-inline-code lang-html">data-filter-submit</code> and <code class="nds-inline-code lang-html">data-ajax</code> attributes. Set the <code class="nds-inline-code lang-html">action</code> attribute to the API endpoint URL.</p>
                                     <p><code class="nds-inline-code lang-html">.nds-filter</code> stays a pure anchor — the form drives submission. HTML responses are automatically injected into the target container. For JSON responses, listen for the <code class="nds-inline-code lang-js">nds:filterFormComplete</code> event and render the data yourself.</p>
+                                    <p>Give the form an <code class="nds-inline-code lang-html">id</code> when any filter surface sits outside it. Surfaces are linked by <code class="nds-inline-code lang-html">data-filter-target</code>, not by nesting, so a search box or dropmenu can be a sibling of the form. The filter associates those controls with the form through the <code class="nds-inline-code lang-html">id</code>. Without an <code class="nds-inline-code lang-html">id</code> the outside controls submit nothing, and the request carries no filter values.</p>
                                 </div>
                             </div>
                         </div>
@@ -2269,6 +2270,10 @@ NDS.Filter.whenReady('.nds-filter', (instance) =&gt; {
 filter.setFilterValues('department', ['Engineering', 'Design']);  // Check/uncheck existing inputs
 filter.setSearchValue('Ahmed');
 filter.removeFilterValue('department', 'Design');
+// In AJAX mode each of these re-fetches, so the chips never describe results
+// the server was not asked for. Calls in the same tick collapse into one
+// request, and your own submitForm() replaces the queued one — so a run of
+// setters followed by submitForm() still sends a single request.
 filter.removeSearchFilter();                 // Clear the search keyword, keep the other filters
 filter.resetRangeFilter('price');            // Put a slider filter back to its full span
 
@@ -2286,8 +2291,9 @@ const visible = filter.getVisibleItems();   // Array of visible card elements
 const hidden = filter.getHiddenItems();     // Array of hidden card elements
 
 // ── Reset and refresh ───────────────────────────────
-filter.reset();     // Clear all filters and search, show all items
-filter.clear();     // Clear all inputs without re-showing items
+filter.reset();     // Clear all filters and search, show all items. AJAX mode re-fetches
+filter.clear();     // Clear all inputs without re-showing items. AJAX mode does NOT
+                    // re-fetch, so the chips and the rows both stay until you submit
 filter.refresh();   // Re-resolve target container, re-scan items, regenerate auto filters
 
 // Changed the list itself? Prefer NDS.Init.refresh(container): it refreshes this
@@ -2297,7 +2303,8 @@ filter.refresh();   // Re-resolve target container, re-scan items, regenerate au
 NDS.Filter.refresh(container);   // Or scope it to filters alone (client-side only)
 
 // ── Manual control ──────────────────────────────────
-filter.applyFilters();  // Trigger filtering logic manually
+filter.applyFilters();  // Trigger filtering logic manually. In form mode it repaints
+                        // chips, badge and URL and never submits — use submitForm()
 filter.submitForm();    // Submit the form (form submission mode only)
 filter.destroy();       // Show all items and remove initialization flag
 
