@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.7.x"
-last_edit: "12/08/2026 - 04:37 PM"
+last_edit: "14/08/2026 - 09:50 PM"
 ---
 
 <!-- Page Setup -->
@@ -152,6 +152,10 @@ i.hgi-stroke { opacity: 0; }
                     </div>
 
                 </div>
+            </div>
+            <div class="nds-block nds-prose">
+                <h3>The version stamp</h3>
+                <p>Change the <code class="nds-inline-code lang-html">?ver=</code> value every time you upgrade NDS. A stale stamp serves the old bundles from the browser cache.</p>
             </div>
             <div class="nds-block nds-prose">
                 <h3>Two ways to load critical CSS</h3>

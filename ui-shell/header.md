@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "26/07/2026 - 09:20 PM"
+last_edit: "14/08/2026 - 09:47 PM"
 ---
 
 <!-- Header Structure -->
@@ -495,6 +495,7 @@ header
                     <li>Keep primary nav items between 3 and 8 links. Overflow handling activates automatically, but excessive items reduce usability.</li>
                     <li>Use dropdown menus for grouping related pages under a single primary nav item. Organize content into columns using <code class="nds-inline-code lang-html">nds-colView</code> for category-based layouts or <code class="nds-inline-code lang-html">nds-rowView</code> for flat lists.</li>
                     <li>Reserve the secondary nav for utility actions: search, language toggle, user profile, notifications. These persist across all breakpoints as icon-only buttons on smaller screens.</li>
+                    <li>Pages with no header still need a language switch. Put it in the page's own top area. The <a class="nds-color" href="{{ 'examples/sign-in' | relative_url }}">Sign in</a> example puts it in the card header, next to the brand logo.</li>
                     <li>Use <code class="nds-inline-code lang-html">nds-CTA</code> on a nav item to visually highlight a primary call-to-action button in the navigation bar.</li>
                     <li>Do not use the main navigation for in-page section links. Use <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switching between content panels on the same page, or anchor links within the page body.</li>
                     <li>Do not place critical actions only inside dropdown menus. Users on mobile may not discover them. Promote key actions to the primary or secondary nav level.</li>
