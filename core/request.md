@@ -142,17 +142,13 @@ try {
     </div>
     <div class="nds-section-body">
       <table class="nds-table nds-responsive">
-        <div class="nds-block">
-            <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
-        </div>
-        <div class="nds-block">
-            <tbody>
-              <tr><td><code class="nds-inline-code lang-js">timeout</code></td><td>15000</td><td>Milliseconds before the request aborts. Set <code class="nds-inline-code lang-js">0</code> to opt out entirely, for a long poll or a stream.</td></tr>
-              <tr><td><code class="nds-inline-code lang-js">maxBytes</code></td><td>1048576</td><td>Ceiling on the response body, in bytes. Raise it for HTML fragments, which run larger than JSON payloads.</td></tr>
-              <tr><td><code class="nds-inline-code lang-js">json</code></td><td>sniffed</td><td>Forces the JSON branch on or off. Without it the <code class="nds-inline-code lang-js">Content-Type</code> header decides. Pass <code class="nds-inline-code lang-js">true</code> when the endpoint returns JSON but the host may mislabel it.</td></tr>
-              <tr><td><code class="nds-inline-code lang-js">signal</code></td><td>none</td><td>Your own <code class="nds-inline-code lang-js">AbortSignal</code>, combined with the timeout rather than replacing it.</td></tr>
-            </tbody>
-        </div>
+        <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code class="nds-inline-code lang-js">timeout</code></td><td>15000</td><td>Milliseconds before the request aborts. Set <code class="nds-inline-code lang-js">0</code> to opt out entirely, for a long poll or a stream.</td></tr>
+          <tr><td><code class="nds-inline-code lang-js">maxBytes</code></td><td>1048576</td><td>Ceiling on the response body, in bytes. Raise it for HTML fragments, which run larger than JSON payloads.</td></tr>
+          <tr><td><code class="nds-inline-code lang-js">json</code></td><td>sniffed</td><td>Forces the JSON branch on or off. Without it the <code class="nds-inline-code lang-js">Content-Type</code> header decides. Pass <code class="nds-inline-code lang-js">true</code> when the endpoint returns JSON but the host may mislabel it.</td></tr>
+          <tr><td><code class="nds-inline-code lang-js">signal</code></td><td>none</td><td>Your own <code class="nds-inline-code lang-js">AbortSignal</code>, combined with the timeout rather than replacing it.</td></tr>
+        </tbody>
       </table>
     </div>
   </div>
@@ -167,28 +163,20 @@ try {
     </div>
     <div class="nds-section-body">
       <table class="nds-table nds-responsive">
-        <div class="nds-block">
-            <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
-        </div>
-        <div class="nds-block">
-            <tbody>
-              <tr><td><code class="nds-inline-code lang-js">isJson</code></td><td>boolean</td><td>Whether the body was treated as JSON.</td></tr>
-              <tr><td><code class="nds-inline-code lang-js">data</code></td><td>object | string</td><td>Parsed JSON, or the raw text when it is not JSON. An empty body yields an empty string.</td></tr>
-            </tbody>
-        </div>
+        <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code class="nds-inline-code lang-js">isJson</code></td><td>boolean</td><td>Whether the body was treated as JSON.</td></tr>
+          <tr><td><code class="nds-inline-code lang-js">data</code></td><td>object | string</td><td>Parsed JSON, or the raw text when it is not JSON. An empty body yields an empty string.</td></tr>
+        </tbody>
       </table>
       <table class="nds-table nds-responsive">
-        <div class="nds-block">
-            <thead><tr><th>Failure</th><th>How to detect it</th></tr></thead>
-        </div>
-        <div class="nds-block">
-            <tbody>
-              <tr><td>Non-OK status</td><td><code class="nds-inline-code lang-js">error.status</code> holds the HTTP code, <code class="nds-inline-code lang-js">error.url</code> the request URL, and <code class="nds-inline-code lang-js">error.body</code> a best-effort slice of the response body (first ~512 bytes, <code class="nds-inline-code lang-js">undefined</code> if the read failed). Surface it in the toast or log so the operator sees what the server actually said.</td></tr>
-              <tr><td>Timeout reached</td><td><code class="nds-inline-code lang-js">error.name === 'TimeoutError'</code></td></tr>
-              <tr><td>Aborted by your signal</td><td><code class="nds-inline-code lang-js">error.name === 'AbortError'</code>. Usually means a newer request replaced this one, so most callers stay silent here.</td></tr>
-              <tr><td>Over <code class="nds-inline-code lang-js">maxBytes</code></td><td>Neither a status nor a recognised name is present.</td></tr>
-            </tbody>
-        </div>
+        <thead><tr><th>Failure</th><th>How to detect it</th></tr></thead>
+        <tbody>
+          <tr><td>Non-OK status</td><td><code class="nds-inline-code lang-js">error.status</code> holds the HTTP code, <code class="nds-inline-code lang-js">error.url</code> the request URL, and <code class="nds-inline-code lang-js">error.body</code> a best-effort slice of the response body (first ~512 bytes, <code class="nds-inline-code lang-js">undefined</code> if the read failed). Surface it in the toast or log so the operator sees what the server actually said.</td></tr>
+          <tr><td>Timeout reached</td><td><code class="nds-inline-code lang-js">error.name === 'TimeoutError'</code></td></tr>
+          <tr><td>Aborted by your signal</td><td><code class="nds-inline-code lang-js">error.name === 'AbortError'</code>. Usually means a newer request replaced this one, so most callers stay silent here.</td></tr>
+          <tr><td>Over <code class="nds-inline-code lang-js">maxBytes</code></td><td>Neither a status nor a recognised name is present.</td></tr>
+        </tbody>
       </table>
     </div>
   </div>
