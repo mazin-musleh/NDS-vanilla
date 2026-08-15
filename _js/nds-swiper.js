@@ -3,6 +3,7 @@
  * Methods:
  *   NDS.Swiper.init() / .reinit()   scan + initialize .nds-swiper
  *   NDS.Swiper.create(el)           instance one swiper
+ *   NDS.Swiper.destroy(el)          tear one down — the NDS.Init.destroy entry point
  *   instance.next() / .prev()       move by one page
  *   instance.goTo(index)            move to a slide index
  *   instance.destroy()
@@ -673,6 +674,14 @@
             const instance = new NDSSwiper(element);
             if (instance.valid) element._ndsSwiper = instance;
             return instance;
+        },
+        // NDS.Init.destroy's second shape. The expando is underscore-prefixed and
+        // documented as such, so the walk that scans for `nds*` backrefs cannot see it —
+        // the registry opts in with destroyEach and hands each .nds-swiper here.
+        destroy: (element) => {
+            const instance = element?._ndsSwiper;
+            if (!instance) return;
+            instance.destroy();
         }
     };
 

@@ -10,12 +10,14 @@
 //   THROW     one component's destroy explodes and takes the rest of the walk with it.
 //
 // Drives a real page — components/filter.html — and destroys a CLONE of its own demo
-// markup, so the harness cannot drift from canon.
+// markup, so the harness cannot drift from canon. Then manage-records for the relocated
+// nodes (FAB, portaled menu) and an open modal, then a breadth sweep over every doc and
+// example page with a coverage line for the registry components no page exercised.
 //
 //   node scripts/check-init-destroy.mjs [baseUrl]
 // Defaults to the dev server. Start it with `bundle exec jekyll serve` if it is down.
 import puppeteer from 'puppeteer-core';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
 const CHROME = [
@@ -223,7 +225,106 @@ report.push(...await records.evaluate(async () => {
     return out;
 }));
 
+// ═══ sweep: breadth ══════════════════════════════════════════════════════════
+// The two fixtures above prove the contract in depth on the components they compose.
+// This proves it in BREADTH: every doc and example page, the same three questions —
+// did destroy release everything, did any stamp survive, does the page mount again —
+// plus a coverage line naming the registry components no page exercised. The page list
+// is read from the repo, so a component that ships with a doc page joins the sweep on
+// its own; it is not a hand-picked list that goes stale.
+const pageList = (dir) => readdirSync(new URL(`../${dir}/`, import.meta.url))
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => `${dir}/${f.replace(/\.md$/, '.html')}`);
+const PAGES = [...pageList('components'), ...pageList('examples'), 'index.html', 'playground.html'];
+
+const results = [];
+const queue = [...PAGES];
+
+async function sweepOne(tab, errs, path) {
+    await tab.goto(`${BASE}/${path}`, { waitUntil: 'networkidle0' });
+    await tab.evaluate(() => Promise.all([
+        window.NDS.loadBundle('delegated').catch(() => {}),
+        window.NDS.loadBundle('extras').catch(() => {}),
+    ]));
+    await new Promise((r) => setTimeout(r, 900));
+
+    const live = await tab.evaluate(() => NDS.Init.components
+        // Markup a code sample shows is never initialized (the init pass skips it), so it
+        // is not coverage either — same exclusion the pass itself uses.
+        .filter((c) => c.selector && [...document.querySelectorAll(c.selector)].some((el) => !el.closest('code, .code-example')))
+        .map((c) => c.name));
+
+    // Only teardown-time errors count. A demo that throws on its own is a different bug.
+    errs.length = 0;
+    const r = await tab.evaluate(async () => {
+        const kinds = () => [...new Set([document.body, ...document.body.querySelectorAll('*')]
+            .flatMap((el) => Object.keys(el).filter((k) => k.startsWith('nds') && typeof el[k]?.destroy === 'function')))];
+        const stamps = () => [...new Set([...document.querySelectorAll('*')]
+            .flatMap((el) => [...el.attributes].map((a) => a.name).filter((n) => /^data-nds-.*-initialized$/.test(n))))];
+
+        const before = kinds();
+        NDS.Init.destroy(document.body);
+        await new Promise((res) => setTimeout(res, 250));
+        const leftKinds = kinds();
+        const leftStamps = stamps();
+
+        NDS.Init.refresh(document.body);
+        await new Promise((res) => setTimeout(res, 250));
+        const back = kinds();
+        return { before, leftKinds, leftStamps, missing: before.filter((k) => !back.includes(k)) };
+    });
+    return { path, live, ...r, errors: [...errs] };
+}
+
+await Promise.all(Array.from({ length: 4 }, async () => {
+    const tab = await browser.newPage();
+    const errs = [];
+    tab.on('pageerror', (e) => errs.push(e.message));
+    await tab.setViewport({ width: 1400, height: 1000 });
+    for (let path = queue.shift(); path; path = queue.shift()) {
+        try {
+            results.push(await sweepOne(tab, errs, path));
+        } catch (e) {
+            results.push({ path, live: [], before: [], leftKinds: [], leftStamps: [], missing: [], errors: [`sweep threw: ${e.message}`] });
+        }
+    }
+    await tab.close();
+}));
+
+// 74 pages fail the same way at once, so report by CULPRIT with a page count, not
+// page by page — the per-page list is 60 lines of the same two names.
+const byCulprit = (pick) => {
+    const hits = new Map();
+    for (const r of results) for (const name of pick(r)) hits.set(name, (hits.get(name) || 0) + 1);
+    return [...hits].sort((a, b) => b[1] - a[1]).map(([name, n]) => `${name} ×${n}`);
+};
+const culprits = (pick, label) => {
+    const list = byCulprit(pick);
+    return { name: label, pass: !list.length, detail: list.join(', ') || 'clean' };
+};
+report.push(
+    culprits((r) => r.leftKinds, `sweep: ${PAGES.length} pages, destroy released every instance`),
+    culprits((r) => r.missing.map((k) => `${k} (${r.path})`), 'sweep: every destroyed component mounts again'),
+    culprits((r) => r.errors.map((e) => `${r.path}: ${e}`), 'sweep: teardown threw on no page'),
+);
+
+// Informational, not a gate: a registry component with no page carrying its markup is
+// untested by this check, and that is worth reading even when everything passes.
+const registry = await page.evaluate(() => NDS.Init.components.filter((c) => c.selector).map((c) => c.name));
+const covered = new Set(results.flatMap((r) => r.live));
+const uncovered = registry.filter((n) => !covered.has(n));
+
 await browser.close();
+
+// Informational, not a gate. A stamp survives for two reasons and this cannot tell them
+// apart: the component was torn down and left its stamp on (one-way — the mounts-again
+// assert above already fails for those), or the walk never reached it, in which case the
+// stamp is the only visible trace that a component sat this teardown out. Read the list.
+const stampsLeft = byCulprit((r) => r.leftStamps);
+console.log(`coverage: ${registry.length - uncovered.length}/${registry.length} registry components exercised`
+    + (uncovered.length ? ` — never seen: ${uncovered.join(', ')}` : ''));
+if (stampsLeft.length) console.log(`stamps surviving teardown (triage): ${stampsLeft.join(', ')}`);
+
 
 let failed = 0;
 for (const r of report) {

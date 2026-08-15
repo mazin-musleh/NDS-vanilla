@@ -186,6 +186,10 @@
             if (this.renderAbortController) { this.renderAbortController.abort(); this.renderAbortController = null; }
             if (this._offResize) { this._offResize(); this._offResize = null; }
             this.el.innerHTML = '';
+            // Drop the init sentinel with the instance: leaving it on makes teardown
+            // one-way — the init sweep skips a stamped element, so a view that unmounts
+            // and mounts again gets an emptied chart no instance will ever claim.
+            this.el.removeAttribute('data-nds-chart-initialized');
             delete this.el.ndsChart;
         }
 
@@ -1058,7 +1062,11 @@
             if (d.chartSeries) config.series = tryParse(d.chartSeries) || config.series;
             if (d.chartLabels) config.labels = tryParse(d.chartLabels) || config.labels;
 
-            if (config.type || config.series) {
+            // Series, not type: every render path reads series (the legend maps it even
+            // for pie), so claiming an element on data-chart-type alone builds an instance
+            // that throws. The markup for a JS-created chart carries the type as a hint
+            // and gets its data from NDS.Chart.create — this sweep must leave those alone.
+            if (config.series) {
                 el.ndsChart = new NDSChartInstance(el, config);
                 el.setAttribute('data-nds-chart-initialized', '');
             }

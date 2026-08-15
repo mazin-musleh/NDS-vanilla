@@ -275,6 +275,11 @@
 
             // Remove states
             NDS.State.remove(this.expandableContainer, 'expanded', 'expandable');
+
+            // Drop the init sentinel last: leaving it on makes teardown one-way — the
+            // init sweep skips a stamped container, so a view that unmounts and mounts
+            // again gets markup no instance will ever claim.
+            this.expandableContainer.removeAttribute('data-nds-expandable-initialized');
         }
     }
 

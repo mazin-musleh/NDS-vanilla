@@ -189,6 +189,7 @@
             name: 'Swiper',
             selector: '.nds-swiper',
             init: () => NDS.Swiper?.init?.(),
+            destroyEach: true,
         },
         {
             name: 'Upload',
@@ -221,6 +222,7 @@
             name: 'Sideinfo',
             selector: '.nds-sideinfo',
             init: () => NDS.Sideinfo?.init?.(),
+            destroyEach: true,
             critical: true,
         },
         {
@@ -245,6 +247,7 @@
             name: 'Toc',
             selector: '.nds-toc',
             init: () => NDS.Toc?.init?.(),
+            destroyEach: true,
             critical: true,
         },
         {

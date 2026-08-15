@@ -4,6 +4,7 @@
  * Methods:
  *   NDS.Toc.init() / .reinit()   scan + initialize .nds-toc
  *   NDS.Toc.create(el)           instance one table of contents
+ *   NDS.Toc.destroy(el)          tear one down — the NDS.Init.destroy entry point
  *   instance.update()            re-pick the active entry now
  *   instance.destroy()
  * Events:
@@ -226,7 +227,17 @@
     NDS.Toc = {
         init: initializeComponents,
         reinit: initializeComponents,
-        create: (el) => { const inst = new NDSToc(el); if (inst.valid) el._ndsToc = inst; return inst; }
+        create: (el) => { const inst = new NDSToc(el); if (inst.valid) el._ndsToc = inst; return inst; },
+        // NDS.Init.destroy's second shape — the underscore expando is invisible to the
+        // backref walk, so the registry opts in with destroyEach. Drops the expando too:
+        // destroy() leaves the instance unusable, and a surviving backref hands the next
+        // reader a dead one.
+        destroy: (el) => {
+            const inst = el?._ndsToc;
+            if (!inst) return;
+            inst.destroy();
+            delete el._ndsToc;
+        }
     };
 
 })();

@@ -3,6 +3,7 @@
  * Methods:
  *   NDS.Sideinfo.init() / .reinit()   scan + initialize .nds-sideinfo
  *   NDS.Sideinfo.create(el)           instance one card
+ *   NDS.Sideinfo.destroy(el)          tear one down — the NDS.Init.destroy entry point
  *   instance.destroy()
  * Events:
  *   (none)
@@ -182,6 +183,16 @@
             const instance = new NDSSideInfo(element);
             if (instance.valid) element._ndsSideInfo = instance;
             return instance;
+        },
+        // NDS.Init.destroy's second shape — the underscore expando is invisible to the
+        // backref walk, so the registry opts in with destroyEach. Drops the expando too:
+        // destroy() leaves the instance unusable, and a surviving backref hands the next
+        // reader a dead one.
+        destroy: (element) => {
+            const instance = element?._ndsSideInfo;
+            if (!instance) return;
+            instance.destroy();
+            delete element._ndsSideInfo;
         }
     };
 
