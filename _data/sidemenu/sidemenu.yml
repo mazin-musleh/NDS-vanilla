@@ -322,6 +322,9 @@
     - label: "Layout"
       is_group: true
       children:
+        - label: "Page Shell"
+          url: "/layout/page-shell"
+          href: "/layout/page-shell.html"
         - label: "Grid"
           url: "/layout/grid"
           href: "/layout/grid.html"
