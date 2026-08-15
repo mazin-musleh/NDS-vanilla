@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "15/08/2026 - 07:54 PM"
 ---
 
 <!-- Side Menu Structure -->
@@ -34,7 +34,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-aside.nds-sidemenu
+aside.nds-sidemenu (direct child of div.nds-content-layout.nds-wSideMenu)
 &#9500;&#9472;&#9472; button.nds-sidemenu-toggle.nds-btn.nds-peek
 &#9474;   &#9500;&#9472;&#9472; i.hgi.hgi-stroke.hgi-menu-02.nds-icon
 &#9474;   &#9492;&#9472;&#9472; span.nds-label.nds-truncate (toggle label, hidden on desktop)
@@ -528,7 +528,7 @@ aside.nds-sidemenu
                             <i class="hgi hgi-stroke hgi-layout-04"></i>
                             <span class="nds-label">Dual Responsive Modes</span>
                         </span>
-                        <p class="nds-item-desc">Choose between a slide-in sidebar panel or a top dropdown bar for mobile. Switch modes by adding <code class="nds-inline-code lang-html">nds-top</code> to the sidemenu or setting <code class="nds-inline-code lang-html">sidemenu_mode: top</code> in front matter.</p>
+                        <p class="nds-item-desc">Choose between a slide-in sidebar panel or a top dropdown bar for mobile. Switch modes by adding <code class="nds-inline-code lang-html">nds-top</code> to the sidemenu.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -577,7 +577,7 @@ aside.nds-sidemenu
                     <li>Always set <code class="nds-inline-code lang-html">data-state="active"</code> on the current page's <code class="nds-inline-code lang-html">&lt;li&gt;</code> so users can orient themselves</li>
                     <li>Group related pages under a single accordion parent with a clear category label. Avoid mixing unrelated items in the same group</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-cardView</code> to the layout wrapper when the page design calls for rounded, card-like containers. This applies border-radius to the sidebar</li>
-                    <li>Hide the side menu entirely with <code class="nds-inline-code lang-html">sidemenu_mode: false</code> in front matter on pages that do not need section navigation (landing pages, full-width dashboards)</li>
+                    <li>Hide the side menu entirely on pages that do not need section navigation (landing pages, full-width dashboards): omit the <code class="nds-inline-code lang-html">&lt;aside&gt;</code> and drop <code class="nds-inline-code lang-html">nds-wSideMenu</code> from the layout wrapper</li>
                 </ul>
             </div>
 
@@ -590,6 +590,11 @@ aside.nds-sidemenu
                             <td><code class="nds-inline-code lang-html">nds-top</code></td>
                             <td><code class="nds-inline-code lang-html">.nds-sidemenu</code></td>
                             <td>Switches mobile behavior from slide-in sidebar to top dropdown bar</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-wSideMenu</code></td>
+                            <td><code class="nds-inline-code lang-html">.nds-content-layout</code></td>
+                            <td>Required. The layout hides a direct-child <code class="nds-inline-code lang-html">&lt;aside&gt;</code> unless it carries this class (or <code class="nds-inline-code lang-html">nds-wSideInfo</code>)</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-cardView</code></td>

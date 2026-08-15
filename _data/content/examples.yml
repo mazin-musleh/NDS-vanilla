@@ -34,7 +34,7 @@
 
 - title: "Faculty Profile"
   description: "Faculty member page with profile, tabbed content, and structured academic information."
-  use_when: "A profile page for one person: avatar header, tabbed sections, a definition list of structured fields, and tables of related records. Use for staff bios, employee profiles, member directory detail pages, or any view-this-person screen."
+  use_when: "A profile page for one person: avatar header, tabbed sections, a definition list of structured fields, and tables of related records. Sits in a card-view content layout beside a side menu, through nds-cardView and nds-wSideMenu. It is the only example whose side menu becomes a top dropdown bar on mobile, through nds-top on the aside. Use for staff bios, employee profiles, member directory detail pages, or any view-this-person screen."
   icon: '<i class="hgi hgi-stroke hgi-school"></i>'
   category: "Content"
   tags: ["Tabs", "Avatar", "Definition List"]
@@ -50,7 +50,7 @@
 
 - title: "Academic Program"
   description: "Degree program page with expandable content, curriculum, and admission information."
-  use_when: "A detail page for one program or offering: overview text, stat tiles, tabbed sections, expandable blocks, and detail tables. Use for courses, training programs, grant schemes, initiatives, or any about-this-thing page too long for a card."
+  use_when: "A detail page for one program or offering: overview text, stat tiles, tabbed sections, expandable blocks, and detail tables. Sits in a card-view content layout beside a side menu, through nds-cardView and nds-wSideMenu. Use for courses, training programs, grant schemes, initiatives, or any about-this-thing page too long for a card."
   icon: '<i class="hgi hgi-stroke hgi-mortarboard-02"></i>'
   category: "Content"
   tags: ["Expandable", "Accordion"]

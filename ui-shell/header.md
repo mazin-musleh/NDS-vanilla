@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.x"
-last_edit: "15/08/2026 - 09:58 AM"
+last_edit: "15/08/2026 - 07:54 PM"
 ---
 
 <!-- Header Structure -->
@@ -41,7 +41,7 @@ header
 &#9474;
 &#9500;&#9472;&#9472; div#nds-digitalStamp (expandable panel, hidden by default)
 &#9474;   &#9492;&#9472;&#9472; div.nds-content-wrapper
-&#9474;       &#9492;&#9472;&#9472; div.nds-digitalStamp-notices.nds-grid
+&#9474;       &#9492;&#9472;&#9472; div.nds-digitalStamp-notices
 &#9474;           &#9500;&#9472;&#9472; div.nds-digitalStamp-card (notice cards)
 &#9474;           &#9474;   &#9500;&#9472;&#9472; div.nds-digitalStamp-icon
 &#9474;           &#9474;   &#9492;&#9472;&#9472; div.nds-digitalStamp-content
