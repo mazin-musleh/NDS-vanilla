@@ -5,6 +5,9 @@
  *   NDS.Modal.open(idOrEl)      open a .nds-modal
  *   NDS.Modal.close()           close whatever is open — takes no argument
  *   NDS.Modal.isOpen()          is a modal open?
+ *   NDS.Modal.destroy(root)     release an open modal inside root before its markup is
+ *                               removed — drops the backdrop and the scroll lock at once.
+ *                               NDS.Init.destroy(view) calls it for you
  * Events (bubble from the .nds-modal):
  *   nds:modal:opened   detail (none) — after the open state paints
  *   nds:modal:closed   detail (none) — after the close animation finishes, not on the click
@@ -122,6 +125,33 @@
   }
 
   /**
+   * Release an open modal whose element is inside `root`, before that markup is removed.
+   *
+   * The listeners this component installs are delegated on document and belong to the page,
+   * not to any modal, so there is nothing per-element to release. What CANNOT survive the
+   * removal is the open state: the backdrop is showing, the page is scroll-locked (body
+   * carries an inline top offset), and the focus trap is reading `activeModal`. Remove the
+   * markup without this and the app is left with an overlay it cannot dismiss and a page
+   * that will not scroll — the modal element is gone, so nothing can call close().
+   *
+   * Teardown is immediate, with no closing animation and no nds:modal:closed event: the
+   * view is leaving, so there is nothing to animate, and re-entering app code mid-unmount
+   * is a hazard rather than a courtesy.
+   */
+  function destroy(root) {
+    if (!activeModal) return 0;
+    const scope = root || document;
+    if (scope !== document && scope !== activeModal && !scope.contains?.(activeModal)) return 0;
+
+    document.removeEventListener('keydown', trapFocus);
+    NDS.Backdrop?.hide();
+    activeModal.setAttribute('hidden', '');
+    NDS.State.clear(activeModal);
+    activeModal = null;
+    return 1;
+  }
+
+  /**
    * Initialize event listeners
    */
   function init() {
@@ -176,7 +206,8 @@
     init,
     open,
     close,
-    isOpen: () => activeModal !== null
+    isOpen: () => activeModal !== null,
+    destroy
   };
 
 })();

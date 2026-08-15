@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.0"
-last_edit: "10/08/2026 - 12:31 AM"
+updated: "1.7.x"
+last_edit: "15/08/2026 - 08:20 AM"
 ---
 
 <!-- Modal Dialog -->
@@ -371,6 +371,13 @@ NDS.Modal.isOpen(); // returns true if any modal is open
 // ── Re-initialize ───────────────────────────────────────
 // Call after dynamically adding new modal triggers to the page
 NDS.Modal.init();
+
+// ── Release an open modal before removing its markup ────
+// An open modal holds the backdrop and locks page scroll.
+// Remove the markup while it is open and the overlay stays,
+// the page will not scroll, and nothing is left to close it.
+NDS.Modal.destroy(viewElement);
+NDS.Init.destroy(viewElement);  // or this, which covers every component
 
 // ── Events ──────────────────────────────────────────────
 // Fired on the modal element, bubbles up to document

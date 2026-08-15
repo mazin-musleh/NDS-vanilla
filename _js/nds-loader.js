@@ -473,6 +473,10 @@
             name: 'Modal',
             selector: '.nds-modal',
             init: () => NDS.Modal?.init?.(),
+            // Not a per-element teardown: its listeners are delegated on document and
+            // belong to the page. This releases the OPEN state — backdrop and scroll lock —
+            // which would otherwise outlive the markup with nothing left to close it.
+            destroy: (root) => NDS.Modal?.destroy?.(root),
         },
         {
             name: 'Alert',
