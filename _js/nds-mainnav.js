@@ -2,6 +2,9 @@
  * Rides: nds-backdrop (dims the page behind an open drawer or dropdown; soft)
  * Methods:
  *   NDS.Mainnav.init()               wire the one nav on the page
+ *   NDS.Mainnav.reinit()             re-resolve the markup and wire it again — for a nav
+ *                                    that mounted after the bundle ran, or was replaced by
+ *                                    a route change. NDS.Init.refresh() calls it
  *   NDS.Mainnav.toggleNavbar()       open or close the collapsed drawer
  *   NDS.Mainnav.toggleDropdown(e)    open or close a nav dropdown — takes the click EVENT,
  *                                    not an element; the .nds-dropdown is resolved from
@@ -13,13 +16,14 @@
  *    .nds-nav-actions, .nds-mainNav-toggler opens #ndsNavCollapse, and a
  *    .nds-nav-item.nds-PAB stays reachable in minimal mode)
  * Gotchas:
- *   - One nav per page. The module caches its DOM references when the file loads, so a
- *     nav swapped in later is not picked up.
+ *   - One nav per page. DOM references resolve when the file loads; a nav that mounts LATER
+ *     (a framework rendering the chrome after the deferred bundle) or is swapped in by a
+ *     route change needs reinit() — until then CSS paints the nav and nothing works.
  *   - Minimal (mobile) mode starts under --nds-minimal-nav-bp, default 960px. Set that
  *     custom property on :root to move it.
  *   - A .nds-PAB item is MOVED into the minimal bar and moved back — do not reparent one
  *     yourself at runtime.
- *   - There is no reinit() and no destroy().
+ *   - There is no destroy().
  */
 // NDS Navigation Controller
 //
@@ -45,20 +49,31 @@
     // alone is touched ~25× across this file.
     // The two dynamic refs (`minimal`, created on first mobile pass; reset to null
     // when removed) are kept in sync by managePABPlacement().
-    const _nav = document.querySelector('.nds-main-nav');
     const DOM = {
-        nav: _nav,
-        collapse: _nav?.querySelector('#ndsNavCollapse') || null,
-        collapseContent: _nav?.querySelector('.nds-collapse-content') || null,
-        container: _nav?.querySelector('.nds-nav-container') || null,
-        primary: _nav?.querySelector('.nds-nav-primary') || null,
-        secondary: _nav?.querySelector('.nds-nav-actions') || null,
-        brand: _nav?.querySelector('.nds-brand') || null,
-        toggler: _nav?.querySelector('.nds-mainNav-toggler') || null,
-        minimal: _nav?.querySelector('.nds-nav-minimal') || null,
-        showMore: null,
+        nav: null, collapse: null, collapseContent: null, container: null,
+        primary: null, secondary: null, brand: null, toggler: null,
+        minimal: null, showMore: null,
     };
-    DOM.showMore = DOM.collapseContent?.querySelector('.nds-show-more') || null;
+
+    // Re-resolvable rather than captured once: the module runs when the bundle does, and a
+    // framework consumer may not have rendered the chrome yet. Capturing null there left
+    // the whole nav inert for the session with no warning — CSS painted it, nothing worked.
+    // Fields are reassigned in place so the ~25 `DOM.collapse` reads elsewhere keep working.
+    function captureDOM() {
+        const nav = document.querySelector('.nds-main-nav');
+        DOM.nav = nav;
+        DOM.collapse = nav?.querySelector('#ndsNavCollapse') || null;
+        DOM.collapseContent = nav?.querySelector('.nds-collapse-content') || null;
+        DOM.container = nav?.querySelector('.nds-nav-container') || null;
+        DOM.primary = nav?.querySelector('.nds-nav-primary') || null;
+        DOM.secondary = nav?.querySelector('.nds-nav-actions') || null;
+        DOM.brand = nav?.querySelector('.nds-brand') || null;
+        DOM.toggler = nav?.querySelector('.nds-mainNav-toggler') || null;
+        DOM.minimal = nav?.querySelector('.nds-nav-minimal') || null;
+        DOM.showMore = DOM.collapseContent?.querySelector('.nds-show-more') || null;
+        return !!DOM.collapse;
+    }
+    captureDOM();
 
     // State helpers — delegated to NDS.State (nds-core.js)
     const { add: addState, remove: removeState, has: hasState } = NDS.State;
@@ -233,11 +248,17 @@
             if (state.isMinimal) {
                 const maxH = getPrimaryMaxHeight();
                 const scrollHeight = DOM.primary.scrollHeight;
-                if (scrollHeight === 0) { this.schedule('low', 50); return; }
+                // 0 means "not laid out yet", so retry. But a CHILDLESS primary measures 0
+                // forever and the retry never ends — ~9 wake-ups a second for as long as the
+                // drawer stays open. Falling through is also the right answer for it: an
+                // empty list cannot overflow.
+                if (scrollHeight === 0 && DOM.primary.firstElementChild) { this.schedule('low', 50); return; }
                 if (isFinite(maxH) && maxH > 0) hasOverflow = scrollHeight > maxH + 2;
             } else {
                 const { scrollWidth, clientWidth } = DOM.primary;
-                if (scrollWidth === 0 && clientWidth === 0) { this.schedule('low', 50); return; }
+                // Same guard as the minimal branch above: only retry when there is content
+                // whose layout could still arrive.
+                if (scrollWidth === 0 && clientWidth === 0 && DOM.primary.firstElementChild) { this.schedule('low', 50); return; }
                 hasOverflow = scrollWidth > clientWidth;
             }
 
@@ -954,6 +975,7 @@
     let _eventsAbortController = null;
     let _offResize = null;
     const _offElementResizes = [];
+    const _offDOMWatches = [];
     let _initDone = false;
 
     function _bindGlobalEvents(signal) {
@@ -1020,12 +1042,14 @@
     }
 
     function _bindMutationAndResizeObservers() {
-        // mainnav is a singleton so the init-guard below prevents duplicate
-        // registrations; that's why the unsubscribe handles NDS.onDOMAdd /
-        // onDOMRemove now return aren't captured here.
+        // Captured, unlike before: reinit() re-runs this, and an uncaptured pooled
+        // subscriber would stack one closure per re-run for the page lifetime.
+        _offDOMWatches.splice(0).forEach(off => off());
         const navChanged = NDS.debounce(() => { state._navChanged = true; scheduleUpdate(); }, 100);
-        NDS.onDOMAdd('.nds-nav-item, .nds-dropdown', navChanged);
-        NDS.onDOMRemove('.nds-nav-item, .nds-dropdown', navChanged);
+        _offDOMWatches.push(
+            NDS.onDOMAdd('.nds-nav-item, .nds-dropdown', navChanged),
+            NDS.onDOMRemove('.nds-nav-item, .nds-dropdown', navChanged),
+        );
 
         // Steady-state resize: coalesce storms before the recompute.
         // CSS flex owns the width budget, but JS still owns the has-more
@@ -1079,10 +1103,35 @@
     // ==============================================
     // INITIALIZATION
     // ==============================================
+    // Re-resolve the markup and wire it, whether or not a prior pass found anything.
+    //
+    // Two cases reach here, and both are the same fix. A nav that did not exist when the
+    // bundle ran (a framework consumer whose chrome mounts after the deferred script — the
+    // cold-load case, where every DOM ref captured null and the nav was inert for the whole
+    // session), and a nav REPLACED at runtime by a route change, where the refs point at
+    // detached nodes. Neither used to recover, and neither said anything: CSS paints the
+    // chrome either way, so it looks correct and no click does anything.
+    //
+    // Only a CHANGE OF NODE counts. This is the NDS.Init.refresh hook, so it fires on every
+    // refresh call a page makes — most about a table or a card grid, nothing to do with the
+    // nav — and re-wiring on each one would re-attach every listener and reset an open
+    // drawer for nothing. Items added or removed INSIDE a live nav need no call at all: the
+    // onDOMAdd/onDOMRemove watchers already pick those up.
+    //
+    // Safe to call repeatedly. setupEventListeners aborts the previous batch, and the
+    // pooled onResize / onElementResize / onDOMAdd handles are all released before re-registering.
+    function reinit() {
+        const live = document.querySelector('.nds-main-nav');
+        if (!live) return;
+        if (_initDone && DOM.nav === live && live.isConnected) return;
+        if (!captureDOM()) return;
+        _initDone = false;
+        init();
+    }
+
     function init() {
-        // Entry guard: mainnav is a singleton; a second init() call would stack
-        // pooled subscribers because the unsubscribe handles from
-        // NDS.onDOMAdd / onDOMRemove aren't captured (see setupEventListeners).
+        // Entry guard: mainnav is a singleton, so repeat init() calls are no-ops. Use
+        // reinit() when the markup itself changed — it re-resolves DOM and rewires.
         if (_initDone || !DOM.collapse) return;
         _initDone = true;
 
@@ -1138,6 +1187,7 @@
 
     NDS.Mainnav = {
         init,
+        reinit,
         toggleNavbar: () => toggleNavbar(),
         toggleDropdown: (e) => toggleDropdown(e),
     };

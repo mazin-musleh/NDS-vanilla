@@ -74,6 +74,12 @@
             name: 'Mainnav',
             selector: '.nds-main-nav',
             init: () => NDS.Mainnav?.init?.(),
+            // An owner hook, not a scanner: the nav resolves its own markup, and the
+            // container a consumer passes is usually the view INSIDE the chrome, which no
+            // selector test against `.nds-main-nav` would ever match. reinit() re-resolves
+            // and rewires, which is what a nav mounted after the bundle (or replaced by a
+            // route change) needs — a plain init() would no-op on the stale guard.
+            refresh: () => NDS.Mainnav?.reinit?.(),
         },
         {
             // Deferred: the saved theme is stamped pre-paint by the inline FOUC

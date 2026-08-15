@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "14/08/2026 - 09:47 PM"
+updated: "1.7.x"
+last_edit: "15/08/2026 - 09:58 AM"
 ---
 
 <!-- Header Structure -->
@@ -552,7 +552,7 @@ header
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The header initializes automatically when <code class="nds-inline-code lang-html">.nds-main-nav</code> exists on the page, and wires its own click handling through event delegation: the hamburger toggle and dropdown triggers respond without any inline <code class="nds-inline-code lang-html">onclick</code> attributes. The toggle functions below are exposed on the <code class="nds-inline-code lang-js">NDS.Mainnav</code> namespace for driving the nav from external scripts.</p>
+                <p>The header initializes automatically when <code class="nds-inline-code lang-html">.nds-main-nav</code> exists on the page, and wires its own click handling through event delegation: the hamburger toggle and dropdown triggers respond without any inline <code class="nds-inline-code lang-html">onclick</code> attributes. The functions below are exposed on the <code class="nds-inline-code lang-js">NDS.Mainnav</code> namespace for driving the nav from external scripts. If your app renders the header itself, read the re-initialize note at the end of the block.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -577,9 +577,24 @@ NDS.Mainnav.toggleNavbar();
 NDS.Mainnav.toggleDropdown(event);
 
 // ── Re-initialize ────────────────────────────
-// Call after dynamically adding or removing nav items.
-// Re-runs layout calculations, overflow detection,
-// responsive breakpoint checks, and PAB placement.
+// Call when the nav ELEMENT itself is new. Two cases,
+// both silent without it: the nav renders after the
+// bundle runs, which happens when a framework mounts
+// the chrome, or a route change replaces the nav. In
+// both, the CSS still paints the nav and no click works.
+NDS.Mainnav.reinit();
+
+// Or make the one call that covers every component.
+NDS.Init.refresh(document.body);
+
+// Adding or removing nav ITEMS inside a live nav needs
+// no call. The header watches for that and re-runs its
+// overflow and placement work on its own. Re-running on
+// an unchanged nav is a no-op, so both calls above are
+// safe to make as often as you like.
+
+// init() wires the nav once, on page load. Calling it
+// again does nothing, so reach for reinit() instead.
 NDS.Mainnav.init();
 
 // For top bar widget APIs (date, clock, weather, DGA stamp)
