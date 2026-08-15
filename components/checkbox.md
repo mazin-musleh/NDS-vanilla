@@ -21,130 +21,128 @@ last_edit: "28/06/2026 - 01:27 PM"
     <div class="nds-section-body">
       <div class="nds-showcase">
 
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-action">
-                  <div class="nds-dropmenu demo-toggle-menu">
-                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-action">
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">SM</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-check-container", "sizeToggle"]'>
                       <span class="nds-label">SM</span>
                     </button>
-                    <div class="nds-dropmenu-menu" hidden>
-                      <div class="nds-dropmenu-scroll">
-                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                          data-toggler='["", ".nds-check-container", "sizeToggle"]'>
-                          <span class="nds-label">SM</span>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                          data-toggler='["nds-md", ".nds-check-container", "sizeToggle"]'>
-                          <span class="nds-label">MD</span>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                          data-toggler='["nds-lg", ".nds-check-container", "sizeToggle"]'>
-                          <span class="nds-label">LG</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["nds-neutral", ".nds-check", "variantToggle"]'>
-                    <span class="nds-label">Neutral</span>
-                  </button>
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["indeterminate", ".nds-check", "stateToggle", "prop"]'>
-                    <span class="nds-label">Indeterminate</span>
-                  </button>
-                  <div class="nds-dropmenu demo-toggle-menu">
-                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                      <span class="nds-label">State</span>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-check-container", "sizeToggle"]'>
+                      <span class="nds-label">MD</span>
                     </button>
-                    <div class="nds-dropmenu-menu" hidden>
-                      <div class="nds-dropmenu-scroll">
-                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                          data-toggler='["", ".nds-form-container", "formState"]'>
-                          <span class="nds-label">Default</span>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                          data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                          <span class="nds-label">Required</span>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                          data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                          <span class="nds-label">Disabled</span>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                          data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                          <span class="nds-label">Readonly</span>
-                        </button>
-                      </div>
-                    </div>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lg", ".nds-check-container", "sizeToggle"]'>
+                      <span class="nds-label">LG</span>
+                    </button>
                   </div>
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                    <span class="nds-label">Remove bg</span>
-                  </button>
                 </div>
               </div>
-              <div class="demo-container">
-                <div class="state-demo">
-                  <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
-                    <div class="nds-form-container nds-check-container" data-required>
-                      <div class="nds-form-header" data-feedback-target>
-                        <label for="demo-checkbox-single">
-                          <span class="nds-label">I agree to the terms and conditions</span>
-                          <span class="nds-info">You must accept our terms to continue with the registration</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <input type="checkbox" id="demo-checkbox-single" name="agreement" value="accepted" class="nds-check">
-                      </div>
-                    </div>
-                    <button class="nds-btn nds-primary nds-sm" type="submit">
-                      <span class="nds-label">Submit</span>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["nds-neutral", ".nds-check", "variantToggle"]'>
+                <span class="nds-label">Neutral</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["indeterminate", ".nds-check", "stateToggle", "prop"]'>
+                <span class="nds-label">Indeterminate</span>
+              </button>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
                     </button>
-                  </form>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="nds-label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="nds-label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="demo-code">
-              <div class="nds-tabs nds-code nds-divided">
-                <div class="nds-tab-list-container nds-scroll-more">
-                  <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                      aria-controls="panel-checkbox-single-1" id="tab-checkbox-single-1">
-                      <span class="nds-tab-label">HTML</span>
-                    </button>
-                  </nav>
-                  <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                <span class="nds-label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
+                <div class="nds-form-container nds-check-container" data-required>
+                  <div class="nds-form-header" data-feedback-target>
+                    <label for="demo-checkbox-single">
+                      <span class="nds-label">I agree to the terms and conditions</span>
+                      <span class="nds-info">You must accept our terms to continue with the registration</span>
+                    </label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input type="checkbox" id="demo-checkbox-single" name="agreement" value="accepted" class="nds-check">
+                  </div>
+                </div>
+                <button class="nds-btn nds-primary nds-sm" type="submit">
+                  <span class="nds-label">Submit</span>
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="demo-code">
+          <div class="nds-tabs nds-code nds-divided">
+            <div class="nds-tab-list-container nds-scroll-more">
+              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                  aria-controls="panel-checkbox-single-1" id="tab-checkbox-single-1">
+                  <span class="nds-tab-label">HTML</span>
+                </button>
+              </nav>
+              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-single-1"
+                aria-labelledby="tab-checkbox-single-1">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                    <i class="nds-icon nds-hgi-copy-01"></i>
                   </button>
                 </div>
-                <div class="nds-tab-content">
-                  <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-single-1"
-                    aria-labelledby="tab-checkbox-single-1">
-                    <div class="nds-code-action">
-                      <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                        <i class="nds-icon nds-hgi-copy-01"></i>
-                      </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                      <code class="lang-html code">
+                <div class="nds-expandable-content">
+                  <code class="lang-html code">
 &lt;div class="nds-form-container nds-check-container" data-required&gt;
   &lt;div class="nds-form-header" data-feedback-target&gt;
-    &lt;label for="checkbox-single"&gt;
-      &lt;span class="nds-label"&gt;I agree to the terms and conditions&lt;/span&gt;
-      &lt;span class="nds-info"&gt;You must accept our terms to continue&lt;/span&gt;
-    &lt;/label&gt;
+&lt;label for="checkbox-single"&gt;
+  &lt;span class="nds-label"&gt;I agree to the terms and conditions&lt;/span&gt;
+  &lt;span class="nds-info"&gt;You must accept our terms to continue&lt;/span&gt;
+&lt;/label&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-control"&gt;
-    &lt;input type="checkbox" id="checkbox-single" name="agreement" value="accepted" class="nds-check" required&gt;
+&lt;input type="checkbox" id="checkbox-single" name="agreement" value="accepted" class="nds-check" required&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-                  </code>
-                    </div>
-                  </div>
+              </code>
                 </div>
               </div>
-              </div>
             </div>
+          </div>
+          </div>
         </div>
 
       </div>
@@ -161,196 +159,194 @@ last_edit: "28/06/2026 - 01:27 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-action">
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["disabled", ".nds-check-group", "disabledToggle", "data-state"]'>
-                    <span class="nds-label">Disabled</span>
-                  </button>
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["nds-rowView", ".nds-check-group", "layoutToggle"]'>
-                    <span class="nds-label">Row View</span>
-                  </button>
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                    <span class="nds-label">Remove bg</span>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-action">
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["disabled", ".nds-check-group", "disabledToggle", "data-state"]'>
+                <span class="nds-label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["nds-rowView", ".nds-check-group", "layoutToggle"]'>
+                <span class="nds-label">Row View</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                <span class="nds-label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
+              <fieldset class="nds-form-group nds-check-group" data-min-checked="2" data-max-checked="4">
+                <legend class="nds-label">Select 2-4 interests</legend>
+                <div class="nds-form-container nds-check-container">
+                  <div class="nds-form-header">
+                    <label for="demo-valid-checkbox1">
+                      <span class="nds-label">Technology</span>
+                    </label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input type="checkbox" id="demo-valid-checkbox1" name="valid-interests" value="technology"
+                      class="nds-check">
+                  </div>
+                </div>
+                <div class="nds-form-container nds-check-container">
+                  <div class="nds-form-header">
+                    <label for="demo-valid-checkbox2">
+                      <span class="nds-label">Sports</span>
+                    </label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input type="checkbox" id="demo-valid-checkbox2" name="valid-interests" value="sports"
+                      class="nds-check">
+                  </div>
+                </div>
+                <div class="nds-form-container nds-check-container">
+                  <div class="nds-form-header">
+                    <label for="demo-valid-checkbox3">
+                      <span class="nds-label">Entertainment</span>
+                    </label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input type="checkbox" id="demo-valid-checkbox3" name="valid-interests" value="entertainment"
+                      class="nds-check">
+                  </div>
+                </div>
+                <div class="nds-form-container nds-check-container">
+                  <div class="nds-form-header">
+                    <label for="demo-valid-checkbox4">
+                      <span class="nds-label">Education</span>
+                    </label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input type="checkbox" id="demo-valid-checkbox4" name="valid-interests" value="education"
+                      class="nds-check">
+                  </div>
+                </div>
+                <div class="nds-form-container nds-check-container">
+                  <div class="nds-form-header">
+                    <label for="demo-valid-checkbox5">
+                      <span class="nds-label">Travel</span>
+                    </label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input type="checkbox" id="demo-valid-checkbox5" name="valid-interests" value="travel"
+                      class="nds-check">
+                  </div>
+                </div>
+                <div class="nds-form-container nds-check-container">
+                  <div class="nds-form-header">
+                    <label for="demo-valid-checkbox6">
+                      <span class="nds-label">Food</span>
+                    </label>
+                  </div>
+                  <div class="nds-form-control">
+                    <input type="checkbox" id="demo-valid-checkbox6" name="valid-interests" value="food"
+                      class="nds-check">
+                  </div>
+                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
+              </fieldset>
+              <button class="nds-btn nds-primary nds-sm" type="submit">
+                <span class="nds-label">Submit</span>
+              </button>
+              </form>
+            </div>
+          </div>
+          <div class="demo-code">
+          <div class="nds-tabs nds-code nds-divided">
+            <div class="nds-tab-list-container nds-scroll-more">
+              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                  aria-controls="panel-checkbox-validation-1" id="tab-checkbox-validation-1">
+                  <span class="nds-tab-label">HTML</span>
+                </button>
+              </nav>
+              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-validation-1"
+                aria-labelledby="tab-checkbox-validation-1">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                    <i class="nds-icon nds-hgi-copy-01"></i>
                   </button>
                 </div>
-              </div>
-              <div class="demo-container">
-                <div class="state-demo">
-                  <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
-                  <fieldset class="nds-form-group nds-check-group" data-min-checked="2" data-max-checked="4">
-                    <legend class="nds-label">Select 2-4 interests</legend>
-                    <div class="nds-form-container nds-check-container">
-                      <div class="nds-form-header">
-                        <label for="demo-valid-checkbox1">
-                          <span class="nds-label">Technology</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <input type="checkbox" id="demo-valid-checkbox1" name="valid-interests" value="technology"
-                          class="nds-check">
-                      </div>
-                    </div>
-                    <div class="nds-form-container nds-check-container">
-                      <div class="nds-form-header">
-                        <label for="demo-valid-checkbox2">
-                          <span class="nds-label">Sports</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <input type="checkbox" id="demo-valid-checkbox2" name="valid-interests" value="sports"
-                          class="nds-check">
-                      </div>
-                    </div>
-                    <div class="nds-form-container nds-check-container">
-                      <div class="nds-form-header">
-                        <label for="demo-valid-checkbox3">
-                          <span class="nds-label">Entertainment</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <input type="checkbox" id="demo-valid-checkbox3" name="valid-interests" value="entertainment"
-                          class="nds-check">
-                      </div>
-                    </div>
-                    <div class="nds-form-container nds-check-container">
-                      <div class="nds-form-header">
-                        <label for="demo-valid-checkbox4">
-                          <span class="nds-label">Education</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <input type="checkbox" id="demo-valid-checkbox4" name="valid-interests" value="education"
-                          class="nds-check">
-                      </div>
-                    </div>
-                    <div class="nds-form-container nds-check-container">
-                      <div class="nds-form-header">
-                        <label for="demo-valid-checkbox5">
-                          <span class="nds-label">Travel</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <input type="checkbox" id="demo-valid-checkbox5" name="valid-interests" value="travel"
-                          class="nds-check">
-                      </div>
-                    </div>
-                    <div class="nds-form-container nds-check-container">
-                      <div class="nds-form-header">
-                        <label for="demo-valid-checkbox6">
-                          <span class="nds-label">Food</span>
-                        </label>
-                      </div>
-                      <div class="nds-form-control">
-                        <input type="checkbox" id="demo-valid-checkbox6" name="valid-interests" value="food"
-                          class="nds-check">
-                      </div>
-                    </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
-                  </fieldset>
-                  <button class="nds-btn nds-primary nds-sm" type="submit">
-                    <span class="nds-label">Submit</span>
-                  </button>
-                  </form>
-                </div>
-              </div>
-              <div class="demo-code">
-              <div class="nds-tabs nds-code nds-divided">
-                <div class="nds-tab-list-container nds-scroll-more">
-                  <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                      aria-controls="panel-checkbox-validation-1" id="tab-checkbox-validation-1">
-                      <span class="nds-tab-label">HTML</span>
-                    </button>
-                  </nav>
-                  <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="nds-tab-content">
-                  <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-checkbox-validation-1"
-                    aria-labelledby="tab-checkbox-validation-1">
-                    <div class="nds-code-action">
-                      <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                        <i class="nds-icon nds-hgi-copy-01"></i>
-                      </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                      <code class="lang-html code">
+                <div class="nds-expandable-content">
+                  <code class="lang-html code">
 &lt;fieldset class="nds-form-group nds-check-group" data-min-checked="2" data-max-checked="4"&gt;
   &lt;legend class="nds-label"&gt;Select 2-4 interests&lt;/legend&gt;
   &lt;div class="nds-form-container nds-check-container"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="checkbox1"&gt;
-        &lt;span class="nds-label"&gt;Technology&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;input type="checkbox" id="checkbox1" name="interests" value="technology" class="nds-check"&gt;
-    &lt;/div&gt;
+&lt;div class="nds-form-header"&gt;
+  &lt;label for="checkbox1"&gt;
+    &lt;span class="nds-label"&gt;Technology&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="nds-form-control"&gt;
+  &lt;input type="checkbox" id="checkbox1" name="interests" value="technology" class="nds-check"&gt;
+&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-container nds-check-container"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="checkbox2"&gt;
-        &lt;span class="nds-label"&gt;Sports&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;input type="checkbox" id="checkbox2" name="interests" value="sports" class="nds-check"&gt;
-    &lt;/div&gt;
+&lt;div class="nds-form-header"&gt;
+  &lt;label for="checkbox2"&gt;
+    &lt;span class="nds-label"&gt;Sports&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="nds-form-control"&gt;
+  &lt;input type="checkbox" id="checkbox2" name="interests" value="sports" class="nds-check"&gt;
+&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-container nds-check-container"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="checkbox3"&gt;
-        &lt;span class="nds-label"&gt;Entertainment&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;input type="checkbox" id="checkbox3" name="interests" value="entertainment" class="nds-check"&gt;
-    &lt;/div&gt;
+&lt;div class="nds-form-header"&gt;
+  &lt;label for="checkbox3"&gt;
+    &lt;span class="nds-label"&gt;Entertainment&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="nds-form-control"&gt;
+  &lt;input type="checkbox" id="checkbox3" name="interests" value="entertainment" class="nds-check"&gt;
+&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-container nds-check-container"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="checkbox4"&gt;
-        &lt;span class="nds-label"&gt;Education&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;input type="checkbox" id="checkbox4" name="interests" value="education" class="nds-check"&gt;
-    &lt;/div&gt;
+&lt;div class="nds-form-header"&gt;
+  &lt;label for="checkbox4"&gt;
+    &lt;span class="nds-label"&gt;Education&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="nds-form-control"&gt;
+  &lt;input type="checkbox" id="checkbox4" name="interests" value="education" class="nds-check"&gt;
+&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-container nds-check-container"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="checkbox5"&gt;
-        &lt;span class="nds-label"&gt;Travel&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;input type="checkbox" id="checkbox5" name="interests" value="travel" class="nds-check"&gt;
-    &lt;/div&gt;
+&lt;div class="nds-form-header"&gt;
+  &lt;label for="checkbox5"&gt;
+    &lt;span class="nds-label"&gt;Travel&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="nds-form-control"&gt;
+  &lt;input type="checkbox" id="checkbox5" name="interests" value="travel" class="nds-check"&gt;
+&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-container nds-check-container"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="checkbox6"&gt;
-        &lt;span class="nds-label"&gt;Food&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;input type="checkbox" id="checkbox6" name="interests" value="food" class="nds-check"&gt;
-    &lt;/div&gt;
+&lt;div class="nds-form-header"&gt;
+  &lt;label for="checkbox6"&gt;
+    &lt;span class="nds-label"&gt;Food&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class="nds-form-control"&gt;
+  &lt;input type="checkbox" id="checkbox6" name="interests" value="food" class="nds-check"&gt;
+&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/fieldset&gt;
-                  </code>
-                    </div>
-                  </div>
+              </code>
                 </div>
               </div>
-              </div>
             </div>
+          </div>
+          </div>
         </div>
 
       </div>
@@ -367,41 +363,33 @@ last_edit: "28/06/2026 - 01:27 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                <span class="nds-label">Form Integration</span>
-              </span>
-              <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> and <code class="nds-inline-code lang-html">required</code> states between inputs and containers.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Form Integration</span>
+          </span>
+          <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> and <code class="nds-inline-code lang-html">required</code> states between inputs and containers.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-minus-sign"></i>
-                <span class="nds-label">Indeterminate State</span>
-              </span>
-              <p class="nds-item-desc">Set via <code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code>. Auto-clears on user click. Fires <code class="nds-inline-code lang-js">nds:indeterminateChange</code> event with <code class="nds-inline-code lang-js">detail.indeterminate</code> boolean.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-minus-sign"></i>
+            <span class="nds-label">Indeterminate State</span>
+          </span>
+          <p class="nds-item-desc">Set via <code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code>. Auto-clears on user click. Fires <code class="nds-inline-code lang-js">nds:indeterminateChange</code> event with <code class="nds-inline-code lang-js">detail.indeterminate</code> boolean.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-                <span class="nds-label">Group Validation</span>
-              </span>
-              <p class="nds-item-desc">Min/max constraints with <code class="nds-inline-code lang-html">data-min-checked</code> and <code class="nds-inline-code lang-html">data-max-checked</code>. Auto-revalidates on change once an error is shown. Call <code class="nds-inline-code lang-js">NDS.Forms.clearStatus()</code> to reset.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
+            <span class="nds-label">Group Validation</span>
+          </span>
+          <p class="nds-item-desc">Min/max constraints with <code class="nds-inline-code lang-html">data-min-checked</code> and <code class="nds-inline-code lang-html">data-max-checked</code>. Auto-revalidates on change once an error is shown. Call <code class="nds-inline-code lang-js">NDS.Forms.clearStatus()</code> to reset.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-layout-01"></i>
-                <span class="nds-label">Responsive Layout</span>
-              </span>
-              <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">nds-rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layout-01"></i>
+            <span class="nds-label">Responsive Layout</span>
+          </span>
+          <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">nds-rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>
         </div>
       </div>
     </div>

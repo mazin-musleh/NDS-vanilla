@@ -20,59 +20,47 @@ last_edit: "15/08/2026 - 10:22 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-refresh"></i>
-                <span class="nds-label">One call, one argument</span>
-              </span>
-              <p class="nds-item-desc">The same call covers a table, a card grid, or any list. You never have to remember which component wants the content element and which wants an id.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-refresh"></i>
+            <span class="nds-label">One call, one argument</span>
+          </span>
+          <p class="nds-item-desc">The same call covers a table, a card grid, or any list. You never have to remember which component wants the content element and which wants an id.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-hierarchy-square-01"></i>
-                <span class="nds-label">Driven by the registry</span>
-              </span>
-              <p class="nds-item-desc">Components are updated because they are registered, not because you listed them. A page that gains a component later is covered without changing your code.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-hierarchy-square-01"></i>
+            <span class="nds-label">Driven by the registry</span>
+          </span>
+          <p class="nds-item-desc">Components are updated because they are registered, not because you listed them. A page that gains a component later is covered without changing your code.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-target-02"></i>
-                <span class="nds-label">Scoped to what changed</span>
-              </span>
-              <p class="nds-item-desc">Components with nothing in the container are left alone. Call it with no argument to sweep the whole document instead.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-target-02"></i>
+            <span class="nds-label">Scoped to what changed</span>
+          </span>
+          <p class="nds-item-desc">Components with nothing in the container are left alone. Call it with no argument to sweep the whole document instead.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-cloud"></i>
-                <span class="nds-label">Safe for server-driven lists</span>
-              </span>
-              <p class="nds-item-desc">Nothing here re-sorts, re-pages, or re-filters a result set your server produced. Server pagination and AJAX filters are left exactly as they arrived.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-cloud"></i>
+            <span class="nds-label">Safe for server-driven lists</span>
+          </span>
+          <p class="nds-item-desc">Nothing here re-sorts, re-pages, or re-filters a result set your server produced. Server pagination and AJAX filters are left exactly as they arrived.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-package"></i>
-                <span class="nds-label">Loads no bundles</span>
-              </span>
-              <p class="nds-item-desc">A component whose bundle has not arrived is skipped rather than triggered. It has initialized nothing yet, and it reads the new content when it does load.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-package"></i>
+            <span class="nds-label">Loads no bundles</span>
+          </span>
+          <p class="nds-item-desc">A component whose bundle has not arrived is skipped rather than triggered. It has initialized nothing yet, and it reads the new content when it does load.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-repeat"></i>
-                <span class="nds-label">Safe to call twice</span>
-              </span>
-              <p class="nds-item-desc">Calling it again on settled content leaves the page as it was, so you can call it after every mutation without tracking whether you already did. A client-side filter in scope re-announces its result with <code class="nds-inline-code lang-js">nds:filter:change</code> each time.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-repeat"></i>
+            <span class="nds-label">Safe to call twice</span>
+          </span>
+          <p class="nds-item-desc">Calling it again on settled content leaves the page as it was, so you can call it after every mutation without tracking whether you already did. A client-side filter in scope re-announces its result with <code class="nds-inline-code lang-js">nds:filter:change</code> each time.</p>
         </div>
       </div>
     </div>
@@ -88,32 +76,31 @@ last_edit: "15/08/2026 - 10:22 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-label">Refresh after a row changes</div>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Refresh after a row changes</div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-refresh-basic-1" id="tab-refresh-basic-1">
+                    <span class="nds-tab-label">JS</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
               </div>
-              <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                  <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                        aria-controls="panel-refresh-basic-1" id="tab-refresh-basic-1">
-                        <span class="nds-tab-label">JS</span>
-                      </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-refresh-basic-1"
+                  aria-labelledby="tab-refresh-basic-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
-                  <div class="nds-tab-content">
-                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-refresh-basic-1"
-                      aria-labelledby="tab-refresh-basic-1">
-                      <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                          <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                      </div>
-                      <code class="lang-js code">
+                  <code class="lang-js code">
 const tbody = document.getElementById('requestsTableBody');
 
 // Add, edit, or delete rows however your app does it
@@ -121,12 +108,11 @@ tbody.appendChild(buildRow(record));
 
 // Then tell NDS the contents changed
 NDS.Init.refresh(tbody);
-                  </code>
-                    </div>
-                  </div>
+              </code>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -193,44 +179,42 @@ NDS.Init.refresh(tbody);
       </div>
 
       <div class="nds-showcase">
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-label">Destroy a view before it is removed</div>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Destroy a view before it is removed</div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-refresh-destroy-1" id="tab-refresh-destroy-1">
+                    <span class="nds-tab-label">JS</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
               </div>
-              <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                  <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                        aria-controls="panel-refresh-destroy-1" id="tab-refresh-destroy-1">
-                        <span class="nds-tab-label">JS</span>
-                      </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-refresh-destroy-1"
+                  aria-labelledby="tab-refresh-destroy-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
-                  <div class="nds-tab-content">
-                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-refresh-destroy-1"
-                      aria-labelledby="tab-refresh-destroy-1">
-                      <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                          <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                      </div>
-                      <code class="lang-js code">
+                  <code class="lang-js code">
 // Mount a view, then keep it in step as its rows change
 NDS.Init.refresh(view);
 
 // Before the view is removed, release everything inside it
 NDS.Init.destroy(view);
 view.remove();
-                  </code>
-                    </div>
-                  </div>
+              </code>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>

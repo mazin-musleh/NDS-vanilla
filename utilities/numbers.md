@@ -155,9 +155,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="nds-block nds-prose">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Counter Options</div>
@@ -222,7 +220,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     </div>
                     </div>
                 </div>
-            </div>
+                </div>
 
             </div>
         </div>
@@ -287,9 +285,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="nds-block nds-prose">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Animated Amounts</div>
@@ -353,7 +349,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     </div>
                     </div>
                 </div>
-            </div>
+                </div>
 
             </div>
         </div>

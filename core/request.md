@@ -20,59 +20,47 @@ last_edit: "29/07/2026 - 03:35 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-clock-01"></i>
-                <span class="nds-label">Timeout by default</span>
-              </span>
-              <p class="nds-item-desc">Every call aborts after 15 seconds unless you set your own. A stalled endpoint surfaces as a rejection instead of a spinner that never stops.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-clock-01"></i>
+            <span class="nds-label">Timeout by default</span>
+          </span>
+          <p class="nds-item-desc">Every call aborts after 15 seconds unless you set your own. A stalled endpoint surfaces as a rejection instead of a spinner that never stops.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-database"></i>
-                <span class="nds-label">Response size cap</span>
-              </span>
-              <p class="nds-item-desc">Bodies are streamed and cancelled the moment they pass <code class="nds-inline-code lang-js">maxBytes</code>, so an unexpectedly huge response is refused rather than parsed.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-database"></i>
+            <span class="nds-label">Response size cap</span>
+          </span>
+          <p class="nds-item-desc">Bodies are streamed and cancelled the moment they pass <code class="nds-inline-code lang-js">maxBytes</code>, so an unexpectedly huge response is refused rather than parsed.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-cancel-01"></i>
-                <span class="nds-label">Abort composition</span>
-              </span>
-              <p class="nds-item-desc">Pass your own <code class="nds-inline-code lang-js">signal</code> and it is combined with the timeout, so a superseding request and an expiry both cancel cleanly through one channel.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-cancel-01"></i>
+            <span class="nds-label">Abort composition</span>
+          </span>
+          <p class="nds-item-desc">Pass your own <code class="nds-inline-code lang-js">signal</code> and it is combined with the timeout, so a superseding request and an expiry both cancel cleanly through one channel.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-source-code"></i>
-                <span class="nds-label">JSON or text, decided for you</span>
-              </span>
-              <p class="nds-item-desc">The <code class="nds-inline-code lang-js">Content-Type</code> header picks the branch, and <code class="nds-inline-code lang-js">json: true</code> forces parsing when you know the endpoint better than its headers do.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-source-code"></i>
+            <span class="nds-label">JSON or text, decided for you</span>
+          </span>
+          <p class="nds-item-desc">The <code class="nds-inline-code lang-js">Content-Type</code> header picks the branch, and <code class="nds-inline-code lang-js">json: true</code> forces parsing when you know the endpoint better than its headers do.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-alert-circle"></i>
-                <span class="nds-label">Errors you can branch on</span>
-              </span>
-              <p class="nds-item-desc">Failures carry <code class="nds-inline-code lang-js">status</code> and <code class="nds-inline-code lang-js">name</code>, so retry logic never has to match on a message string.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            <span class="nds-label">Errors you can branch on</span>
+          </span>
+          <p class="nds-item-desc">Failures carry <code class="nds-inline-code lang-js">status</code> and <code class="nds-inline-code lang-js">name</code>, so retry logic never has to match on a message string.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-sliders-horizontal"></i>
-                <span class="nds-label">Every fetch option still works</span>
-              </span>
-              <p class="nds-item-desc">Anything you would pass to <code class="nds-inline-code lang-js">fetch</code>, including <code class="nds-inline-code lang-js">method</code>, <code class="nds-inline-code lang-js">headers</code>, <code class="nds-inline-code lang-js">body</code>, and <code class="nds-inline-code lang-js">credentials</code>, is forwarded untouched.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-sliders-horizontal"></i>
+            <span class="nds-label">Every fetch option still works</span>
+          </span>
+          <p class="nds-item-desc">Anything you would pass to <code class="nds-inline-code lang-js">fetch</code>, including <code class="nds-inline-code lang-js">method</code>, <code class="nds-inline-code lang-js">headers</code>, <code class="nds-inline-code lang-js">body</code>, and <code class="nds-inline-code lang-js">credentials</code>, is forwarded untouched.</p>
         </div>
       </div>
     </div>
@@ -88,32 +76,31 @@ last_edit: "29/07/2026 - 03:35 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-label">Read JSON from an endpoint</div>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Read JSON from an endpoint</div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-request-basic-1" id="tab-request-basic-1">
+                    <span class="nds-tab-label">JS</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
               </div>
-              <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                  <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                        aria-controls="panel-request-basic-1" id="tab-request-basic-1">
-                        <span class="nds-tab-label">JS</span>
-                      </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-request-basic-1"
+                  aria-labelledby="tab-request-basic-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
-                  <div class="nds-tab-content">
-                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-request-basic-1"
-                      aria-labelledby="tab-request-basic-1">
-                      <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                          <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                      </div>
-                      <code class="lang-js code">
+                  <code class="lang-js code">
 try {
   const { data } = await NDS.request('/api/services', { json: true });
   renderServices(data);
@@ -121,12 +108,11 @@ try {
   if (error.status === 404) return showEmptyState();
   showError();
 }
-                  </code>
-                    </div>
-                  </div>
+              </code>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -192,33 +178,32 @@ try {
     <div class="nds-section-body">
       <div class="nds-showcase">
 
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-label">Cancel a request that a newer one replaces</div>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Cancel a request that a newer one replaces</div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-request-abort-1" id="tab-request-abort-1">
+                    <span class="nds-tab-label">JS</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
               </div>
-              <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                  <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                        aria-controls="panel-request-abort-1" id="tab-request-abort-1">
-                        <span class="nds-tab-label">JS</span>
-                      </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-abort-1"
+                  aria-labelledby="tab-request-abort-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
-                  <div class="nds-tab-content">
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-abort-1"
-                      aria-labelledby="tab-request-abort-1">
-                      <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                          <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                      </div>
-                      <div class="nds-expandable-content">
-                        <code class="lang-js code">
+                  <div class="nds-expandable-content">
+                    <code class="lang-js code">
 let controller;
 
 async function search(term) {
@@ -228,54 +213,52 @@ async function search(term) {
 
   setLoading(true);
   try {
-    const { data } = await NDS.request(`/api/search?q=${encodeURIComponent(term)}`,
-                                       { signal, json: true });
-    renderResults(data);
+const { data } = await NDS.request(`/api/search?q=${encodeURIComponent(term)}`,
+                                   { signal, json: true });
+renderResults(data);
   } catch (error) {
-    // A newer search aborted this one. It owns the loading state now,
-    // so clearing it here would kill a spinner that is still needed.
-    if (error.name === 'AbortError') return;
-    showError();
+// A newer search aborted this one. It owns the loading state now,
+// so clearing it here would kill a spinner that is still needed.
+if (error.name === 'AbortError') return;
+showError();
   } finally {
-    if (controller.signal === signal) setLoading(false);
+if (controller.signal === signal) setLoading(false);
   }
 }
-                    </code>
-                      </div>
-                    </div>
+                </code>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
 
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-label">Leave the page consistent when a request fails</div>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Leave the page consistent when a request fails</div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-request-rollback-1" id="tab-request-rollback-1">
+                    <span class="nds-tab-label">JS</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
               </div>
-              <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                  <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                        aria-controls="panel-request-rollback-1" id="tab-request-rollback-1">
-                        <span class="nds-tab-label">JS</span>
-                      </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-rollback-1"
+                  aria-labelledby="tab-request-rollback-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
-                  <div class="nds-tab-content">
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-rollback-1"
-                      aria-labelledby="tab-request-rollback-1">
-                      <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                          <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                      </div>
-                      <div class="nds-expandable-content">
-                        <code class="lang-js code">
+                  <div class="nds-expandable-content">
+                    <code class="lang-js code">
 // Taking over Filter's AJAX submission. Chips, badge and URL params are
 // already committed when this fires, so a failed request has to put them
 // back: otherwise they describe results that were never rendered.
@@ -285,16 +268,15 @@ filterEl.addEventListener('nds:filterFormAjax', (e) =&gt; {
   const params = new URLSearchParams(new FormData(e.detail.form));
 
   NDS.request(`/api/search?${params}`, { json: true })
-    .then(({ data }) =&gt; renderResults(data.Records))
-    .catch(() =&gt; e.detail.rollback());
+.then(({ data }) =&gt; renderResults(data.Records))
+.catch(() =&gt; e.detail.rollback());
 });
-                    </code>
-                      </div>
-                    </div>
+                </code>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
 
       </div>

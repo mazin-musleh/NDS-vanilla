@@ -87,10 +87,8 @@ last_edit: "02/08/2026 - 11:35 PM"
                     </div>
                     </div>
                 </div>
-            </div>
 
             <!-- Code Block with Line Numbers -->
-            <div class="nds-block">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Code Block with Line Numbers</div>
@@ -164,10 +162,8 @@ NDS.Alert.create({
                     </div>
                     </div>
                 </div>
-            </div>
 
             <!-- Expandable Code Block -->
-            <div class="nds-block">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Expandable Code Block</div>
@@ -261,7 +257,7 @@ async function handleFormSubmit(form) {
                     </div>
                     </div>
                 </div>
-            </div>
+                </div>
 
             </div>
         </div>
@@ -372,10 +368,8 @@ async function handleFormSubmit(form) {
                     </div>
                     </div>
                 </div>
-            </div>
 
             <!-- Multiple Tabs -->
-            <div class="nds-block">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Multiple Tabs</div>
@@ -534,10 +528,8 @@ NDS.Alert.create({
                     </div>
                     </div>
                 </div>
-            </div>
 
             <!-- Hidden Tabbed Code (inside demo cards) -->
-            <div class="nds-block nds-prose">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Hidden Code in Demo Cards</div>
@@ -583,7 +575,7 @@ NDS.Alert.create({
                     </div>
                     </div>
                 </div>
-            </div>
+                </div>
 
             </div>
         </div>

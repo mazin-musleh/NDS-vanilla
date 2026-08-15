@@ -985,9 +985,7 @@ last_edit: "16/08/2026 - 12:40 AM"
                     </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="nds-block">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Per-Column Alignment</div>
@@ -1085,7 +1083,7 @@ last_edit: "16/08/2026 - 12:40 AM"
                     </div>
                     </div>
                 </div>
-            </div>
+                </div>
             </div>
         </div>
     </div>

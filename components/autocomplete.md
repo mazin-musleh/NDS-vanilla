@@ -20,95 +20,93 @@ last_edit: "12/08/2026 - 12:41 AM"
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-action">
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                    <span class="nds-label">Required</span>
-                  </button>
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                    <span class="nds-label">Disabled</span>
-                  </button>
-                  <button class="nds-btn nds-subtle demo-toggle-btn"
-                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                    <span class="nds-label">Remove bg</span>
-                  </button>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-action">
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
+                <span class="nds-label">Required</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
+                <span class="nds-label">Disabled</span>
+              </button>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                <span class="nds-label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container" id="autocomplete-demo" data-url="{{ '/docs-assets/data/services-autocomplete.json' | relative_url }}"
+                data-name="Title" data-query-param="q">
+                <div class="nds-form-header">
+                  <label for="demo-autocompleteInput">
+                    <span class="nds-label">Search services</span>
+                  </label>
                 </div>
-              </div>
-              <div class="demo-container">
-                <div class="state-demo">
-                  <div class="nds-form-container" id="autocomplete-demo" data-url="{{ '/docs-assets/data/services-autocomplete.json' | relative_url }}"
-                    data-name="Title" data-query-param="q">
-                    <div class="nds-form-header">
-                      <label for="demo-autocompleteInput">
-                        <span class="nds-label">Search services</span>
-                      </label>
-                    </div>
-                    <div class="nds-form-control">
-                      <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                      <input type="text" id="demo-autocompleteInput" autocomplete="on"
-                        placeholder="Type to search...">
-                      <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                          <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
+                <div class="nds-form-control">
+                  <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                  <input type="text" id="demo-autocompleteInput" autocomplete="on"
+                    placeholder="Type to search...">
+                  <div class="nds-form-action">
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                    </button>
                   </div>
                 </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
-              <div class="demo-code">
-              <div class="nds-tabs nds-code nds-divided">
-                <div class="nds-tab-list-container nds-scroll-more">
-                  <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                      aria-controls="panel-autocomplete-1" id="tab-autocomplete-1">
-                      <span class="nds-tab-label">HTML</span>
-                    </button>
-                  </nav>
-                  <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="demo-code">
+          <div class="nds-tabs nds-code nds-divided">
+            <div class="nds-tab-list-container nds-scroll-more">
+              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                  aria-controls="panel-autocomplete-1" id="tab-autocomplete-1">
+                  <span class="nds-tab-label">HTML</span>
+                </button>
+              </nav>
+              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-autocomplete-1"
+                aria-labelledby="tab-autocomplete-1">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                    <i class="nds-icon nds-hgi-copy-01"></i>
                   </button>
                 </div>
-                <div class="nds-tab-content">
-                  <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-autocomplete-1"
-                    aria-labelledby="tab-autocomplete-1">
-                    <div class="nds-code-action">
-                      <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                        <i class="nds-icon nds-hgi-copy-01"></i>
-                      </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                      <code class="lang-html code">
+                <div class="nds-expandable-content">
+                  <code class="lang-html code">
 &lt;div class="nds-form-container" data-url="/api/services" data-name="Title"&gt;
   &lt;div class="nds-form-header"&gt;
-    &lt;label for="autocomplete-1"&gt;
-      &lt;span class="nds-label"&gt;Search services&lt;/span&gt;
-    &lt;/label&gt;
+&lt;label for="autocomplete-1"&gt;
+  &lt;span class="nds-label"&gt;Search services&lt;/span&gt;
+&lt;/label&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-control"&gt;
-    &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;input type="text" id="autocomplete-1" autocomplete="on"
-      placeholder="Type to search..."&gt;
-    &lt;div class="nds-form-action"&gt;
-      &lt;button class="nds-btn nds-subtle nds-clear" type="button"
-        aria-label="Clear input" hidden&gt;
-        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
+&lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;input type="text" id="autocomplete-1" autocomplete="on"
+  placeholder="Type to search..."&gt;
+&lt;div class="nds-form-action"&gt;
+  &lt;button class="nds-btn nds-subtle nds-clear" type="button"
+    aria-label="Clear input" hidden&gt;
+    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
-                  </code>
-                    </div>
-                  </div>
+              </code>
                 </div>
               </div>
-              </div>
             </div>
+          </div>
+          </div>
         </div>
       </div>
     </div>
@@ -124,68 +122,54 @@ last_edit: "12/08/2026 - 12:41 AM"
     </div>
     <div class="nds-section-body">
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                <span class="nds-label">Auto-initialization</span>
-              </span>
-              <p class="nds-item-desc">Initializes automatically on any input with <code class="nds-inline-code lang-html">autocomplete="on"</code> inside a container with <code class="nds-inline-code lang-html">data-url</code>. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Autocomplete.reinit()</code>. The instance itself is built on the field's first focus, which covers every path a user takes but not a field that JS drives before anyone touches it: to write a value and fetch against a field that has never been focused, construct it first with <code class="nds-inline-code lang-js">NDS.Autocomplete.create(container)</code>.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Initializes automatically on any input with <code class="nds-inline-code lang-html">autocomplete="on"</code> inside a container with <code class="nds-inline-code lang-html">data-url</code>. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Autocomplete.reinit()</code>. The instance itself is built on the field's first focus, which covers every path a user takes but not a field that JS drives before anyone touches it: to write a value and fetch against a field that has never been focused, construct it first with <code class="nds-inline-code lang-js">NDS.Autocomplete.create(container)</code>.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-search-list-01"></i>
-                <span class="nds-label">Result Highlighting</span>
-              </span>
-              <p class="nds-item-desc">Matching characters in results are highlighted with <code class="nds-inline-code lang-html">&lt;mark&gt;</code> tags. Results display in a dropdown built on the NDS Dropmenu component.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-search-list-01"></i>
+            <span class="nds-label">Result Highlighting</span>
+          </span>
+          <p class="nds-item-desc">Matching characters in results are highlighted with <code class="nds-inline-code lang-html">&lt;mark&gt;</code> tags. Results display in a dropdown built on the NDS Dropmenu component.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-keyboard"></i>
-                <span class="nds-label">Keyboard Navigation</span>
-              </span>
-              <p class="nds-item-desc">Arrow keys navigate results, Enter selects the active item, Escape closes the dropdown, Tab closes without selecting, Home jumps to the first item, End jumps to the last item. The active item scrolls into view automatically.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Navigation</span>
+          </span>
+          <p class="nds-item-desc">Arrow keys navigate results, Enter selects the active item, Escape closes the dropdown, Tab closes without selecting, Home jumps to the first item, End jumps to the last item. The active item scrolls into view automatically.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-loading-03"></i>
-                <span class="nds-label">Debounced Fetching</span>
-              </span>
-              <p class="nds-item-desc">API requests are debounced at 300ms. Previous in-flight requests are cancelled via AbortController. Loading state shows on the input during fetch.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Debounced Fetching</span>
+          </span>
+          <p class="nds-item-desc">API requests are debounced at 300ms. Previous in-flight requests are cancelled via AbortController. Loading state shows on the input during fetch.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-globe-02"></i>
-                <span class="nds-label">Bilingual Support</span>
-              </span>
-              <p class="nds-item-desc">Works with Arabic and English content. Empty state message adapts to the page language. RTL and LTR layouts supported.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-globe-02"></i>
+            <span class="nds-label">Bilingual Support</span>
+          </span>
+          <p class="nds-item-desc">Works with Arabic and English content. Empty state message adapts to the page language. RTL and LTR layouts supported.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-                <span class="nds-label">Form Integration</span>
-              </span>
-              <p class="nds-item-desc">Selected values sync to the input. Clear button resets the selection. Works with the forms validation and status API.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
+            <span class="nds-label">Form Integration</span>
+          </span>
+          <p class="nds-item-desc">Selected values sync to the input. Clear button resets the selection. Works with the forms validation and status API.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-search-list-01"></i>
-                <span class="nds-label">Search Box Auto-submit</span>
-              </span>
-              <p class="nds-item-desc">When the container also has class <code class="nds-inline-code lang-html">nds-search-box</code>, selecting a result automatically clicks the nearest <code class="nds-inline-code lang-html">.nds-search-btn</code> to submit the search without extra interaction. On a data screen the search box sits in a <a href="{{ 'components/toolbar' | relative_url }}" class="nds-color">Toolbar</a>, beside the filters and the result count.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-search-list-01"></i>
+            <span class="nds-label">Search Box Auto-submit</span>
+          </span>
+          <p class="nds-item-desc">When the container also has class <code class="nds-inline-code lang-html">nds-search-box</code>, selecting a result automatically clicks the nearest <code class="nds-inline-code lang-html">.nds-search-btn</code> to submit the search without extra interaction. On a data screen the search box sits in a <a href="{{ 'components/toolbar' | relative_url }}" class="nds-color">Toolbar</a>, beside the filters and the result count.</p>
         </div>
       </div>
     </div>
