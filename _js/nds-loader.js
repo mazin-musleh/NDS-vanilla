@@ -526,6 +526,7 @@
             name: 'Fab',
             selector: '.nds-fab, .nds-fab-dock',
             init: () => NDS.Fab?.init?.(),
+            destroy: (root) => NDS.Fab?.destroy?.(root),
         },
         // Topbar widgets — placed last because they're non-critical chrome
         // (digital stamp, clock, hijri date, weather, city). Their updates are
@@ -1122,9 +1123,24 @@
         // refresh hook is a registry field: NDS.Slider.destroy() with NO argument releases
         // every slider on the page, so guessing the signature would reach outside root.
         for (const component of COMPONENTS) {
-            if (!component.destroyEach) continue;
             const ns = NDS[component.name];
-            if (!ns || ns.__ndsStub || typeof ns.destroy !== 'function') continue;
+            if (!ns || ns.__ndsStub) continue;
+
+            // Third shape, and the reason it exists: a component that MOVED its element out
+            // of the container (Fab docks to <body>). No scan of root can find it any more,
+            // so only the component knows which of its elements belong to this view. Its
+            // hook takes root and returns how many it released — the mirror of an owner's
+            // refresh hook, and just as deliberately a registry field.
+            if (component.destroy) {
+                try {
+                    destroyed += component.destroy(root) || 0;
+                } catch (error) {
+                    console.warn(`[NDS:destroy] ${component.name} failed:`, error);
+                }
+                continue;
+            }
+
+            if (!component.destroyEach || typeof ns.destroy !== 'function') continue;
             // destroySelector for the components whose stamp and teardown target is not
             // the element the scan initializes from (Slider: input scanned, container stamped).
             const selector = component.destroySelector || component.selector;

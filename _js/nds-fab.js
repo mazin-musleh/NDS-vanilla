@@ -5,6 +5,9 @@
  *   NDS.Fab.init() / .reinit()          route every .nds-fab into its dock
  *   NDS.Fab.register(fab, override)     route one FAB now — for a FAB another component
  *                                       injected; override forces an edge
+ *   NDS.Fab.destroy(fabOrContainer)     un-route a FAB back to where it was authored, or
+ *                                       every FAB authored inside a container. Returns the
+ *                                       count. NDS.Init.destroy(view) calls the second form
  *   NDS.Fab.dock(pos)                   the dock element at that edge, created if missing
  *   NDS.Fab.resolvePos(fab, override)   which edge this FAB resolves to
  * Events:
@@ -22,6 +25,9 @@
  *   - The OUTERMOST .nds-fab wins — a nested one is skipped, so a group is never emptied.
  *   - The FAB carries the position; the docks are static edge slots. FABs resolving to the
  *     same edge stack together.
+ *   - Routing MOVES the FAB to a dock on <body>, so it leaves the view that authored it.
+ *     A view removed without NDS.Fab.destroy() (or NDS.Init.destroy) leaves its FAB behind,
+ *     pinned over the next screen — the destroy call is what puts it back first.
  */
 /**
  * NDS Fab — routes floating action buttons into fixed edge docks.
@@ -102,6 +108,7 @@
             el = document.createElement('div');
             el.className = 'nds-fab-dock';
             el.dataset.fabDockPos = want;   // always stamp (incl. 'right') so the DOM is unambiguous
+            el._ndsFabCreated = true;       // ours to remove once it empties; an authored dock is not
             document.body.appendChild(el);
         }
         return el;
@@ -112,6 +119,10 @@
     // `override` forces a position, ignoring the FAB's own data-fab-pos.
     function register(fab, override) {
         if (!fab) return null;
+        // Remember where the FAB was authored BEFORE the first move, so destroy() can put
+        // it back. Recorded once: a re-register (a direction flip re-routes every FAB)
+        // reads the dock as the parent, which would overwrite the real origin with a slot.
+        if (!fab._ndsFabOrigin) fab._ndsFabOrigin = { parent: fab.parentNode, nextSibling: fab.nextSibling };
         const d = dock(resolvePos(fab, override));
         d.appendChild(fab);
         [...d.children].sort((a, b) => order(a) - order(b)).forEach(c => d.appendChild(c));
@@ -175,8 +186,12 @@
         });
     }
 
-    // One-time page-level setup, wired on the first routed FAB.
+    // One-time page-level setup, wired on the first routed FAB. The subscriptions are
+    // shared by every FAB on the page, so they are released only when the last one goes
+    // (teardownRuntime) — never on an individual destroy().
     let runtimeSet = false;
+    let runtimeOffs = [];
+    let runtimeSentinel = null;
     function setupRuntime() {
         if (runtimeSet) return;
         runtimeSet = true;
@@ -190,26 +205,88 @@
         sentinel.className = 'nds-fab-sentinel';
         NDS.aria.hidden(sentinel, true);
         document.body.appendChild(sentinel);
-        NDS.onIntersect(sentinel, (entry) => {
+        runtimeSentinel = sentinel;
+        runtimeOffs.push(NDS.onIntersect(sentinel, (entry) => {
             // Skip on a short page (sentinel always in view) so the FAB isn't
             // hidden permanently — only tuck when there's room to scroll.
             const scrollable = document.documentElement.scrollHeight - window.innerHeight > 4;
             document.documentElement.toggleAttribute('data-fab-tucked', entry.isIntersecting && scrollable);
-        }, { rootMargin: '0px 0px 120px 0px' });
+        }, { rootMargin: '0px 0px 120px 0px' }));
 
         // One pooled observer for every panel on the page.
-        NDS.onAttrChange('.nds-panel', ['data-state'], (panels) => panels.forEach(ridePanel));
+        runtimeOffs.push(NDS.onAttrChange('.nds-panel', ['data-state'], (panels) => panels.forEach(ridePanel)));
 
         // Re-route on a runtime direction flip: a logical start/end (or auto)
         // FAB resolves to the opposite edge, so it must move to stay with its
         // panel (which flips via CSS). Physical FABs and the docks don't move.
-        NDS.onAttrChange('html', ['dir'], () => {
+        runtimeOffs.push(NDS.onAttrChange('html', ['dir'], () => {
             document.querySelectorAll('.nds-fab').forEach(fab => {
                 if (fab.closest('code, .code-example')) return;
                 if (fab.parentElement?.closest('.nds-fab')) return;   // outermost wins, as in init()
                 register(fab);
             });
+        }));
+    }
+
+    // Released only when the page holds no routed FAB. setupRuntime() can wire it again
+    // from scratch, so a FAB added after a full teardown still tucks and rides.
+    function teardownRuntime() {
+        runtimeOffs.forEach(off => off());
+        runtimeOffs = [];
+        runtimeSentinel?.remove();
+        runtimeSentinel = null;
+        runtimeSet = false;
+        document.documentElement.removeAttribute('data-fab-tucked');
+    }
+
+    // Un-route one FAB, or every FAB authored inside a container.
+    //
+    // The container form is what NDS.Init.destroy needs, and it cannot be a plain scan:
+    // register() MOVED the button to a dock on <body>, so a docked FAB is no longer inside
+    // the view that authored it and no querySelectorAll on that view will ever find it.
+    // The origin recorded at register() time is the only link back, so the match is on
+    // where the FAB CAME FROM, not on where it sits now.
+    //
+    // Putting it back matters beyond tidiness: a framework unmounts the view by removing
+    // its own subtree, and a FAB left in the dock is not in that subtree, so it survives as
+    // an orphan pinned over the next screen. Restored to its origin, it leaves with the
+    // view. The `hidden` attribute goes back on too — it is how the FAB shipped, so a later
+    // register() reveals it exactly as it did the first time.
+    function destroy(elOrRoot) {
+        if (!elOrRoot) return 0;
+
+        if (elOrRoot.classList?.contains('nds-fab')) {
+            const fab = elOrRoot;
+            if (!fab.hasAttribute(INIT_ATTR)) return 0;   // never routed — nothing was taken
+            const origin = fab._ndsFabOrigin;
+            if (origin?.parent?.isConnected) {
+                const before = origin.nextSibling?.parentNode === origin.parent ? origin.nextSibling : null;
+                origin.parent.insertBefore(fab, before);
+                fab.setAttribute('hidden', '');
+            } else {
+                fab.remove();   // authored inside a view the app already removed
+            }
+            delete fab._ndsFabOrigin;
+            fab.removeAttribute(INIT_ATTR);
+            fab.removeAttribute('data-fab-riding');
+            fab.style.removeProperty('--_fab-ride');
+
+            // Drop the empty slots we created; an authored dock stays, it is the app's.
+            document.querySelectorAll('.nds-fab-dock').forEach(d => {
+                if (d._ndsFabCreated && !d.children.length) d.remove();
+            });
+            if (!document.querySelector('.nds-fab[' + INIT_ATTR + ']')) teardownRuntime();
+            return 1;
+        }
+
+        let count = 0;
+        document.querySelectorAll('.nds-fab[' + INIT_ATTR + ']').forEach(fab => {
+            const parent = fab._ndsFabOrigin?.parent;
+            if (elOrRoot === document || (parent && (parent === elOrRoot || elOrRoot.contains?.(parent)))) {
+                count += destroy(fab);
+            }
         });
+        return count;
     }
 
     // Route every .nds-fab. Idempotent: a FAB stamped on a prior pass (or by an
@@ -234,6 +311,7 @@
         init,
         reinit: init,
         register,
+        destroy,
         dock,
         resolvePos,
     };

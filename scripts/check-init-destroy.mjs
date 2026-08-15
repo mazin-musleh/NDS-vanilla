@@ -131,6 +131,16 @@ report.push(...await records.evaluate(async () => {
     const before = kinds();
     ok('setup: the page composes several component types', before.size >= 3, [...before].join(', '));
 
+    // Fab is the one component that MOVES its element out of the view that authored it,
+    // so a scan of that view can never find it again. Prove the round trip, not just the
+    // stamp: docked before, back where it was authored after, and hidden as it shipped.
+    const fab = document.querySelector('.nds-fab-dock .nds-fab');
+    const fabOrigin = fab?._ndsFabOrigin?.parent;
+    // Direct parent, not contains(): this page authors its FAB straight in <body>, and the
+    // dock lives in <body> too, so containment reads true in both states.
+    ok('setup: a FAB is docked away from its origin', !!fab && !!fabOrigin && fab.parentElement !== fabOrigin,
+        fab?.parentElement?.className || 'no docked FAB on this page');
+
     const count = NDS.Init.destroy(document.body);
     await new Promise((r) => setTimeout(r, 300));
 
@@ -138,15 +148,22 @@ report.push(...await records.evaluate(async () => {
     ok('destroy reported a matching count', count >= before.size, `returned ${count} for ${before.size} types`);
     // Every stamp the page carries, not a hand-picked few: a destroy() that releases its
     // listeners but keeps its stamp is one-way, and the view can never mount again.
-    // KNOWN GAP, named so it cannot rot into silence: Fab ships no destroy() at all. It
-    // also MOVES the button into a dock on <body> and installs page-level pooled observers
-    // shared by every FAB, so teardown is a design call, not a missing line.
-    const KNOWN_GAP = 'data-nds-fab-initialized';
     const stamps = () => [...document.querySelectorAll('*')]
         .flatMap(el => [...el.attributes].map(a => a.name).filter(n => /^data-nds-.*-initialized$/.test(n)));
-    const left = [...new Set(stamps())];
-    ok('no init stamp survives (except the known Fab gap)', left.every(n => n === KNOWN_GAP), left.join(', ') || 'clean');
-    ok('the Fab gap is still exactly one component', left.length <= 1, left.join(', ') || 'none');
+    ok('no init stamp survives', stamps().length === 0, [...new Set(stamps())].join(', ') || 'clean');
+
+    ok('the FAB went back to where it was authored', !fab || fab.parentElement === fabOrigin, fab?.parentElement?.className || 'n/a');
+    ok('the FAB is hidden again, as it shipped', !fab || fab.hasAttribute('hidden'), fab?.outerHTML.slice(0, 60) || 'n/a');
+    ok('the docks we created are gone', document.querySelectorAll('.nds-fab-dock').length === 0,
+        `${document.querySelectorAll('.nds-fab-dock').length} left`);
+    ok('the page-level FAB runtime is released', !document.querySelector('.nds-fab-sentinel')
+        && !document.documentElement.hasAttribute('data-fab-tucked'));
+
+    // Mounting again must work after a full teardown: the shared runtime rebuilds itself.
+    NDS.Init.refresh(document.body);
+    await new Promise((r) => setTimeout(r, 300));
+    ok('a FAB routes again after teardown', !fab || !!document.querySelector('.nds-fab-dock .nds-fab'),
+        document.querySelector('.nds-fab-dock .nds-fab')?.className || 'none re-docked');
 
     return out;
 }));

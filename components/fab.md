@@ -5,8 +5,8 @@ hero_title: Floating Action Button - National Design System
 hero_description: Pins to an edge of the viewport for a primary or persistent action, stacking with others on the same edge and, when it opens a panel, following that panel to its edge.
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
-updated: "1.5.0"
-last_edit: "26/07/2026 - 12:56 AM"
+updated: "1.7.x"
+last_edit: "15/08/2026 - 07:52 AM"
 lang: en
 direction: ltr
 ---
@@ -573,7 +573,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'bottom' | 'start' | 'end'
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>Authored <code class="nds-inline-code lang-js">.nds-fab</code> elements route automatically, so most pages never call this API. Use <strong>NDS.Fab.register</strong> for a FAB built at runtime or injected by another component.</p>
+                <p>Authored <code class="nds-inline-code lang-js">.nds-fab</code> elements route automatically, so most pages never call this API. Use <strong>NDS.Fab.register</strong> for a FAB built at runtime or injected by another component, and <strong>NDS.Fab.destroy</strong> before you remove the markup that holds one.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -597,6 +597,14 @@ const dock = NDS.Fab.dock('right');     // the .nds-fab-dock on that edge
 
 // ── Re-scan authored FABs (e.g. after injecting HTML) ─
 NDS.Fab.init();
+
+// ── Un-route before you remove the markup ────────────
+// Routing moves the FAB to a dock on the body, so removing
+// the view that authored it leaves the FAB behind, pinned
+// over the next screen. This puts it back first.
+NDS.Fab.destroy(fabElement);   // one FAB
+NDS.Fab.destroy(viewElement);  // every FAB authored inside a container
+NDS.Init.destroy(viewElement); // or this, which covers every component
 </code>
                     </div>
                 </div>
