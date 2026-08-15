@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.7.0"
-updated: "1.7.2"
-last_edit: "09/08/2026 - 09:49 PM"
+updated: "1.7.x"
+last_edit: "15/08/2026 - 07:26 AM"
 ---
 
 <!-- Overview -->
@@ -181,6 +181,66 @@ NDS.Init.refresh(tbody);
 </section>
 
 <!-- Usage Guidelines -->
+<!-- Teardown -->
+<section id="refreshDestroy" class="nds-content-section nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Teardown</h2>
+      <p class="nds-section-description"><code class="nds-inline-code lang-js">NDS.Init.destroy()</code> is the mirror call. Use <code class="nds-inline-code lang-js">refresh()</code> when the contents of a container changed and the container stays. Use <code class="nds-inline-code lang-js">destroy()</code> when the container itself is about to go away. It returns the number of instances it released.</p>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-block nds-prose">
+        <p>A page that loads once never needs this call. Nothing is removed, so nothing has to be released. A framework app is different: it swaps one view for another on every navigation. Each component in the old view holds listeners, observers, and menus that now point at markup the browser has thrown away. Nothing warns you, and the page keeps working, so the cost only shows up after many navigations.</p>
+        <p>Call it on the root element of the view you are about to remove, not on one list inside it. A filter toolbar can sit beside the grid it drives, so a call on the grid alone misses it.</p>
+        <p>Teardown is not one way. Each component clears its own init marker, so the same markup can be mounted again later with <code class="nds-inline-code lang-js">refresh()</code>.</p>
+      </div>
+
+      <div class="nds-showcase">
+        <div class="nds-block">
+            <div class="nds-demo-card">
+              <div class="demo-header">
+                <div class="demo-label">Destroy a view before it is removed</div>
+              </div>
+              <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided">
+                  <div class="nds-tab-list-container nds-scroll-more">
+                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                        aria-controls="panel-refresh-destroy-1" id="tab-refresh-destroy-1">
+                        <span class="nds-tab-label">JS</span>
+                      </button>
+                    </nav>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div class="nds-tab-content">
+                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-refresh-destroy-1"
+                      aria-labelledby="tab-refresh-destroy-1">
+                      <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                          <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                      </div>
+                      <code class="lang-js code">
+// Mount a view, then keep it in step as its rows change
+NDS.Init.refresh(view);
+
+// Before the view is removed, release everything inside it
+NDS.Init.destroy(view);
+view.remove();
+                  </code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Usage guidelines -->
 <section id="refreshGuidelines" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
@@ -199,14 +259,14 @@ NDS.Init.refresh(tbody);
           <li>You do not need it after a filter, sort, or pagination interaction. Those components already keep each other in step.</li>
           <li>Call it after your response has been written to the DOM, not when the request resolves. It reads the page, so the rows must be in place.</li>
           <li>Do not call it from a handler for an event it can cause, such as a filter change. That is how a refresh loop starts.</li>
-          <li>Tear down what you remove before you remove it. A dropmenu inside a deleted row holds a document listener, so call <code class="nds-inline-code lang-js">NDS.Dropmenu.destroy()</code> on it first. Refreshing does not clean up detached elements.</li>
+          <li>Tear down what you remove before you remove it. Call <code class="nds-inline-code lang-js">NDS.Init.destroy(element)</code> on it first. Refreshing does not clean up detached elements.</li>
           <li>Server-driven list? Read Server-Driven Lists above before adding calls of your own. Most of what you might reach for is deliberately not done for you.</li>
         </ul>
       </div>
 
       <div class="nds-block nds-prose">
         <h3 class="nds-block-title">What it does not do</h3>
-        <p>It updates components against the DOM as it stands. It does not fetch, build rows, or manage loading state, and it does not undo work you did by hand: a component you configured through its own API keeps that configuration. It also does not destroy anything. Elements you removed from the page are your responsibility to tear down first.</p>
+        <p>It updates components against the DOM as it stands. It does not fetch, build rows, or manage loading state, and it does not undo work you did by hand: a component you configured through its own API keeps that configuration. It also does not destroy anything. Elements you are about to remove need <code class="nds-inline-code lang-js">NDS.Init.destroy()</code> first, described under Teardown above.</p>
       </div>
 
       <div class="nds-block nds-prose">
@@ -245,9 +305,17 @@ grid.innerHTML = html;
 NDS.Init.refresh(grid);
 
 // Remove a row: tear down its listeners first, then refresh
-row.querySelectorAll('.nds-dropmenu').forEach(NDS.Dropmenu.destroy);
+NDS.Init.destroy(row);
 row.remove();
 NDS.Init.refresh(tbody);
+
+NDS.Init.destroy(container)   // release every component instance inside container,
+                              // before the container itself is removed. Returns the
+                              // number released. Omit it to sweep the whole document.
+
+// A framework view: mount, keep in step, release
+NDS.Init.refresh(view);
+NDS.Init.destroy(view);
 
 // The rest of the NDS.Init surface
 NDS.Init.audit()        // report silent failures: unregistered inline icons,

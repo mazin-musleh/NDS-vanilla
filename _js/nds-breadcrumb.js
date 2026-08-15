@@ -112,6 +112,10 @@
             if (dropdownContainer) {
                 dropdownContainer.closest('li')?.remove();
             }
+            // Releasing the stamp is what keeps destroy two-way: without it the same
+            // markup stays marked as claimed, so no later init() or NDS.Init.refresh()
+            // can ever collapse it again.
+            this.breadcrumbNav.removeAttribute('data-nds-breadcrumb-initialized');
         }
     }
 
