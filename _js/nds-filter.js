@@ -3085,7 +3085,20 @@
                 return;
             }
 
-            // Not yet — ready bubbles from the representative element
+            // Not yet. Ready fires on the representative surface only, and bubbling
+            // never reaches siblings — a search box sitting beside the .nds-filter
+            // would wait forever. Match at the document by target id instead; an
+            // element without one (an ancestor wrapper) still gets the bubble.
+            const id = container.getAttribute('data-filter-target');
+            if (id) {
+                const onReady = (e) => {
+                    if (e.detail?.targetId !== id) return;
+                    document.removeEventListener('nds:filter:ready', onReady);
+                    callback(e.detail);
+                };
+                document.addEventListener('nds:filter:ready', onReady);
+                return;
+            }
             container.addEventListener('nds:filter:ready', (e) => {
                 callback(e.detail);
             }, { once: true });
