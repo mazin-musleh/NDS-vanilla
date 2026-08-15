@@ -10,7 +10,7 @@
 
 - title: "Services List"
   description: "Filterable government services catalog with search and category filters."
-  use_when: "A browsable catalog of items shown as cards, with keyword search, category filters, and pagination. Use for any service directory, product listing, document library, resource index, or list-all-X page."
+  use_when: "A browsable catalog of items shown as cards, with keyword search, category filters, and pagination. Use for any service directory, product listing, document library, resource index, or list-all-X page. The plain content-page shape: full chrome, sub hero, no side columns."
   icon: '<i class="hgi hgi-stroke hgi-grid-view"></i>'
   category: "Service"
   tags: ["Filter", "Search", "Pagination"]
@@ -18,7 +18,7 @@
 
 - title: "Registration"
   description: "Sign-up form with field validation, a matching password check, and an OTP step."
-  use_when: "A standalone create-account or sign-up flow, with field validation, a confirm-password match check, and an OTP verification step. The page carries no topbar, header, or footer, so use it for any full-screen auth flow."
+  use_when: "A standalone create-account or sign-up flow, with field validation, a confirm-password match check, and an OTP verification step. The page carries no topbar, header, or footer (the minimal chrome shape), so use it for any full-screen auth flow."
   icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
   category: "Form"
   tags: ["Forms", "OTP", "Validation"]
@@ -26,7 +26,7 @@
 
 - title: "Sign In"
   description: "National single sign-on with a credentials fallback, one-time code, and account settings."
-  use_when: "A standalone login page: national single sign-on as the primary path, a username and password fallback, an OTP step, and a resend button with a cooldown timer. No topbar, header, or footer."
+  use_when: "A standalone login page: national single sign-on as the primary path, a username and password fallback, an OTP step, and a resend button with a cooldown timer. No topbar, header, or footer (the minimal chrome shape)."
   icon: '<i class="hgi hgi-stroke hgi-login-circle-01"></i>'
   category: "Form"
   tags: ["Forms", "OTP", "Cooldown Button", "Alert"]
@@ -42,7 +42,7 @@
 
 - title: "Faculty CV"
   description: "Long-form academic profile with a table of contents, a career timeline, qualifications, and paginated publications."
-  use_when: "A profile page read top to bottom instead of through tabs, with a sticky table of contents tracking the sections as you scroll: a portrait and name in the hero, a contact menu, a card grid of key fields, a prose block, a dated career timeline built from a reversed vertical stepper so the newest entry sits on top, qualification cards, and a long list of records split into pages. Use for a CV, resume, portfolio, staff bio, work history, or any person page whose sections are too long to hide behind tabs."
+  use_when: "A profile page read top to bottom instead of through tabs, with a sticky table of contents tracking the sections as you scroll: a portrait and name in the hero, a contact menu, a card grid of key fields, a prose block, a dated career timeline built from a reversed vertical stepper so the newest entry sits on top, qualification cards, and a long list of records split into pages. Use for a CV, resume, portfolio, staff bio, work history, or any person page whose sections are too long to hide behind tabs. The table of contents is the side info column, through nds-wSideInfo on the content layout."
   icon: '<i class="hgi hgi-stroke hgi-profile"></i>'
   category: "Content"
   tags: ["Stepper", "TOC", "Divider", "Pagination", "Cards"]
@@ -58,7 +58,7 @@
 
 - title: "Manage Records"
   description: "Records screen with create, edit and delete, expandable detail rows, and export."
-  use_when: "The data-heavy admin screen, and the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request, including replacements for third-party table plugins. Carries a large table with keyword search, multi-field filters (checkbox, range, date), column sorting, pagination with a per-page picker, a show/hide column picker, row selection with a live count, per-row edit and delete actions, expandable sub-rows for detail, add and edit modals, an empty-state message, and CSV export. Runs fully in the browser, so no server is needed."
+  use_when: "The data-heavy admin screen, and the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request, including replacements for third-party table plugins. Carries a large table with keyword search, multi-field filters (checkbox, range, date), column sorting, pagination with a per-page picker, a show/hide column picker, row selection with a live count, per-row edit and delete actions, expandable sub-rows for detail, add and edit modals, an empty-state message, and CSV export. Runs fully in the browser, so no server is needed. Runs edge-to-edge beside a side menu through nds-full-width on body, like the Console."
   icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'
   category: "Dashboard"
   tags: ["Tables", "Sub-Rows", "Modal", "Filter"]

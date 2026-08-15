@@ -10,7 +10,7 @@
 
 - title: "Form Template"
   description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
-  use_when: "Any multi-step form or wizard: service application, request submission, registration workflow, onboarding, or checkout. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile."
+  use_when: "Any multi-step form or wizard: service application, request submission, registration workflow, onboarding, or checkout. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-wSideInfo on the content layout."
   icon: '<i class="hgi hgi-stroke hgi-file-edit"></i>'
   category: "Form"
   tags: ["DGA", "Forms", "Stepper", "Side Info", "Grid"]
@@ -26,7 +26,7 @@
 
 - title: "Contact Us Template"
   description: "Contact page with two-column form, country-code prefix, select, textarea, file upload, and a side info card with emergency contacts."
-  use_when: "A contact or enquiry page: a two-column message form with a country-code phone prefix, select, textarea, and file upload, beside a card listing phone, email, and emergency contacts. Use for contact us, feedback, support request, or get-in-touch pages."
+  use_when: "A contact or enquiry page: a two-column message form with a country-code phone prefix, select, textarea, and file upload, beside a card listing phone, email, and emergency contacts. Use for contact us, feedback, support request, or get-in-touch pages. The contacts card is the side info column (nds-wSideInfo)."
   icon: '<i class="hgi hgi-stroke hgi-mail-01"></i>'
   category: "Service"
   tags: ["DGA", "Forms", "Upload", "Side Info", "Grid"]
@@ -34,7 +34,7 @@
 
 - title: "Content Template"
   description: "Long-form editorial layout with article-style sections, numbered sub-sections, and a sticky on-this-page table of contents for in-page navigation."
-  use_when: "Any long-form editorial page: policy, terms of use, privacy notice, regulation, news article, press release, or a written guide. Carries article sections, numbered sub-sections, and a sticky on-this-page table of contents."
+  use_when: "Any long-form editorial page: policy, terms of use, privacy notice, regulation, news article, press release, or a written guide. Carries article sections, numbered sub-sections, and a sticky on-this-page table of contents. The table of contents is the side info column (nds-wSideInfo)."
   icon: '<i class="hgi hgi-stroke hgi-book-open-01"></i>'
   category: "Content"
   tags: ["DGA", "Side Info", "Article", "TOC"]
@@ -98,7 +98,7 @@
 
 - title: "404 Template"
   description: "Custom error page with illustration and back-to-home action."
-  use_when: "Any error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is built as a hero section, not from the empty-state component."
+  use_when: "Any error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is built as a hero section, not from the empty-state component, and it ships its own centered wrapper with no content layout."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "Service"
   tags: ["DGA", "Empty State"]

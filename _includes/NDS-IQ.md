@@ -1,4 +1,4 @@
-# NDS IQ — building UI with the National Design System (instructions v1.1)
+# NDS IQ — building UI with the National Design System (instructions v2.0)
 
 ## How to use this file
 
@@ -148,13 +148,13 @@ Install facts:
 - **Never copy `NDS_ROOT/_site/docs-assets/`.** One exception: an event skin you actually want — copy that single `docs-assets/events/<event>/` folder and its one script tag.
 - **An empty `NDS_ASSETS` proves nothing.** Sweep the project for a stray `nds-main.min.js` and the layouts loading it before concluding first setup. Found one → the P5 table. Nothing anywhere → first setup: ask the dev; only then is the latest release the default.
 - **A present `NDS_ROOT` is not automatically current.** At session start compare its bundle banner (`NDS_ROOT/_site/assets/js/nds-main.min.js`) against `NDS_ASSETS`'s. Older reference = the normal state on a fresh clone (`.nds/` is gitignored) and a RE-DOWNLOAD, not an upgrade: fetch the release the RUNTIME names, replace the folder's contents, repopulate `_source/`. The failure is silent and one-directional — a stale reference has you verify new-runtime pages against old canon and call them conformant. Newer reference = the P5 table.
-- **An older template is not a blocker.** `_source/` still populates from its matching tag — canon always matches the runtime; never substitute a newer tag's source, never raw main. A JS file there without a banner is still readable: take its surface from the doc source and the file itself. Report the gap; propose the upgrade.
+- **An older template is not a blocker.** It may predate pieces these rules name — a doc page, the per-file JS banners. `_source/` still populates from its matching tag — canon always matches the runtime; never substitute a newer tag's source, never raw main. A JS file there without a banner is still readable: take its surface from the doc source and the file itself. Report the gap; propose the upgrade.
 
 ## Plan
 
 NDS is a UI layer: it does not choose a stack, define routes, or scaffold an app. The project must already exist and serve — a fresh scaffold with no UI qualifies. No project at all? Say so and stop.
 
-**Step 1 — inventory.** List routes, layouts, shared partials, existing pages, legacy UI libraries. Client-side views count as pages: N views = N rows; dropping one is a dev decision recorded as its own row. Map each page through the composition cascade (§Build) and record its chrome shape — full, console, minimal, or standalone — from the same catalog entry; chrome shape is per page, not per app. Sweep the response headers and middleware for a `Content-Security-Policy`: a locked `script-src` or `style-src` breaks the head and every inline knob silently, and only in the browser — read `ui-shell/head.md` §CSP and put the grant in the plan before the first page ships.
+**Step 1 — inventory.** List routes, layouts, shared partials, existing pages, legacy UI libraries. Client-side views count as pages: N views = N rows; dropping one is a dev decision recorded as its own row. Map each page through the composition cascade (§Build) and record its chrome shape — full, console, or minimal — from the same catalog entry; chrome shape is per page, not per app. Sweep the response headers and middleware for a `Content-Security-Policy`: a locked `script-src` or `style-src` breaks the head and every inline knob silently, and only in the browser — read `ui-shell/head.md` §CSP and put the grant in the plan before the first page ships.
 
 - **Greenfield?** Plan from intent: the dev's page list through the same cascade, legacy columns empty. Pages the dev has not named do not exist.
 - **Structurally identical pages** (list/create/edit families) map once: one archetype, siblings "same as <archetype>", rows separate for status.
@@ -173,15 +173,11 @@ NDS is a UI layer: it does not choose a stack, define routes, or scaffold an app
 
 ## Build
 
-**Chrome first, inner components second.** Build each chrome shape the plan names once, then its pages. A shape without a topbar, mainnav, footer, or hero skips those steps without asking. (`_source/examples/sign-in.md` = the minimal shape end to end — sign-in, OTP, and password screens in one example; `console-demo.md` = console; `registration.md` = standalone, no chrome.)
+**Chrome first, inner components second.** Build each chrome shape the plan names once, then its pages. (`_source/examples/sign-in.md` = the minimal shape end to end — sign-in, OTP, and password screens in one example; `registration.md` shares the same shape; `console-demo.md` = console.)
 
 1. **Document head** — copy as a unit from `NDS_ROOT/_site/index.html`; `ui-shell/head.html` explains every entry. Rewrite asset references to `NDS_ASSETS` URLs. Do not reduce the set or reorder it. Two entries are page-specific — the `<title>` and the hero-image preloads: share the head through the stack's layout mechanism with a slot for those two, and a page with a hero ships its preload (the miss regresses LCP invisibly). Never hand-add `nds-delegated.min.js` or `nds-extras.min.js` — the loader injects them. Replace the placeholder favicon. A project CSP gets checked here (§Plan step 1): the head carries one inline script — grant it a nonce or hash, or half the styling never loads.
-2. **Master layout** — `<header>`/`<main>`/`<footer>` skeleton; content inside `.nds-content-layout > .nds-main-content`. Runtime `<script defer>` tags at the end of `<body>`, copied from `index.html` and re-pointed: `nds-main.min.js`, plus `nds-accessibility.min.js` if the panel stays (the loader never injects that one). Set `<html dir>` and `lang` from the project's locale logic — a multilingual project keeps its mechanism and stamps both per page. NDS derives everything live from those two (`NDS.lang`, `NDS.isRTL`); region subtags normalize; non-Arabic locales fall back to English labels.
-3. **Topbar + main navigation** — `_site/ui-shell/topbar.html` + `_site/ui-shell/mainnav.html`. Brand slot: the project's logo on `.nds-brand-logo`, text span removed unless the logo is a bare mark.
-4. **Footer** — `_site/ui-shell/footer.html`.
-5. **Accessibility panel + cookie popup** — from `index.html`.
-6. **Sub-hero / page hero** — `_site/ui-shell/hero.html`, when the page carries one.
-7. Only then, inner components.
+2. **Master layout** — never write the skeleton from prose: copy the full `<body>` structure from a built `_site/` page whose chrome matches the shape the plan recorded, side menu included, and swap the content. `_source/layout/page-shell.md` is the shell reference: the shapes, the classes that switch them, and which built page carries each. A template that predates the reference is the older-template case, not a blocker: the shapes are in its built pages — pick by inspection, report the gap. The copy brings the topbar, main navigation, footer, accessibility panel, cookie popup, and hero with it; what the shape's page lacks stays out, without asking. Runtime `<script defer>` tags at the end of `<body>`, copied from `index.html` and re-pointed: `nds-main.min.js`, plus `nds-accessibility.min.js` if the panel stays (the loader never injects that one). Set `<html dir>` and `lang` from the project's locale logic — a multilingual project keeps its mechanism and stamps both per page. NDS derives everything live from those two (`NDS.lang`, `NDS.isRTL`); region subtags normalize; non-Arabic locales fall back to English labels.
+3. **Brand slot** — the project's logo on `.nds-brand-logo`, text span removed unless the logo is a bare mark. Only then, inner components.
 
 Admin consoles, back-office, and internal tools run edge-to-edge from one class: `nds-full-width` on `<body>` widens the chrome and the content layout together. They also move the hero INSIDE `.nds-main-content` so it sits beside the side menu; `_source/examples/console-demo.md` shows both.
 
@@ -281,7 +277,7 @@ Every path below is absolute; never `cd` into `NDS_ROOT` or `NDS_ASSETS` (a rela
 | Path | Holds |
 |---|---|
 | `_source/components/*.md` | doc sources: canonical `lang-html` markup, `data-*` tables, ARIA. First stop for any component. (`user-feedback.md` and `multiselect.md` keep a demo behind an include; their built twins show it) |
-| `_source/utilities/*.md`, `_source/layout/*.md`, `_source/ui-shell/*.md` | same format: utilities, layout primitives (`section`, `grid`, `flex`, `block`), chrome |
+| `_source/utilities/*.md`, `_source/layout/*.md`, `_source/ui-shell/*.md` | same format: utilities, the page shell reference (`page-shell`) and layout primitives (`section`, `grid`, `flex`, `block`), chrome |
 | `_source/core/*.md` | runtime API docs — `refresh` (after your JS changes rows/cards, and after a framework re-renders or routes into a view), `destroy` (before unmounting one), and `request`. Calls, not markup |
 | `_source/templates/*.md`, `_source/examples/*.md` | full-page sources; built twins in `_site/templates/`, `_site/examples/` |
 | `_source/_data/content/*.yml` | the catalogs: `components.yml`, `templates.yml`, `examples.yml`, `icons.yml` |
