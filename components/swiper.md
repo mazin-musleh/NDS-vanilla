@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.1.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.7.x"
+last_edit: "15/08/2026 - 10:04 PM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -933,6 +933,8 @@ swiper.next();           // Go to next page
 
 // ── Cleanup ──
 swiper.destroy();        // Remove listeners, pagination, and reset state
+NDS.Swiper.destroy(el);  // The same teardown from the namespace. NDS.Init.destroy()
+                         // calls this for every swiper in a container it releases.
 
 // ── Factory ──
 const el = document.querySelector('.my-swiper');

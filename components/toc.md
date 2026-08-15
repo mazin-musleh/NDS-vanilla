@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.0"
-last_edit: "08/08/2026 - 04:43 AM"
+updated: "1.7.x"
+last_edit: "15/08/2026 - 10:04 PM"
 ---
 
 <!-- Auto-Populated TOC -->
@@ -413,6 +413,8 @@ instance.entries;          // Array of { link, li, target }
 
 // ── Manually tear down and re-wire ──────────────────
 instance.destroy();        // Remove click + scroll listeners, clear state
+NDS.Toc.destroy(toc);      // The same teardown from the namespace. NDS.Init.destroy()
+                           // calls this for every TOC in a container it releases.
 instance.update();         // Recompute active entry from current scroll
 </code>
                     </div>

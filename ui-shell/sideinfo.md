@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.7.x"
+last_edit: "15/08/2026 - 10:04 PM"
 ---
 
 <!-- Side Info Structure -->
@@ -489,6 +489,8 @@ const instance = NDS.Sideinfo.create(aside);
 
 // ── Manually tear down and re-wire ──────────────────
 instance.destroy();         // Remove listeners, clear CSS variable
+NDS.Sideinfo.destroy(aside);// The same teardown from the namespace. NDS.Init.destroy()
+                            // calls this for every column in a container it releases.
 instance.updatePosition();  // Recompute the hero-alignment offset
 instance.updateStickyState();// Re-check whether sticky fits the viewport
 </code>
