@@ -6,8 +6,8 @@ hero_description: "The body structure every NDS page is built on, covering the c
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.7.x"
-updated: "1.7.x"
+since: "1.8.0"
+updated: "1.8.0"
 last_edit: "15/08/2026 - 11:18 PM"
 ---
 

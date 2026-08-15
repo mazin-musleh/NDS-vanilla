@@ -9,6 +9,7 @@ body:
       label: Template version
       description: From the zip filename or your project's NDS bundle.
       options:
+        - "1.8.0"
         - "1.7.2"
         - "1.7.1"
         - "1.7.0"
@@ -29,6 +30,7 @@ body:
       label: IQ version
       description: From the `instructions vN.N` stamp in your project's `NDS-IQ.md` heading. An older install may show a plain number (`v7`, `v6`, …) — pick the matching `v0.N`.
       options:
+        - "v2.0"
         - "v1.0"
         - "v0.10"
         - "v0.9"

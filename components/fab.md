@@ -5,7 +5,7 @@ hero_title: Floating Action Button - National Design System
 hero_description: Pins to an edge of the viewport for a primary or persistent action, stacking with others on the same edge and, when it opens a panel, following that panel to its edge.
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
-updated: "1.7.x"
+updated: "1.8.0"
 last_edit: "15/08/2026 - 07:52 AM"
 lang: en
 direction: ltr

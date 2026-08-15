@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-08-16
+
+### Added
+- **`NDS.Init.destroy(container)`** — the teardown mirror of `refresh`. It releases every component instance inside a container before that container is removed and returns the count, so a framework can free NDS state on unmount. Teardown restores a relocated node as well: a docked FAB returns to the element that authored it, a portaled dropmenu returns to its wrapper, and an open modal releases its backdrop and scroll lock, so a view removed mid-open cannot strand an overlay the app is unable to dismiss. Five components gained their own `destroy()` so the walk can reach them — see the [Refresh](https://mazin-musleh.github.io/NDS-vanilla/core/refresh.html), [FAB](https://mazin-musleh.github.io/NDS-vanilla/components/fab.html), [Modal](https://mazin-musleh.github.io/NDS-vanilla/components/modal.html), [Swiper](https://mazin-musleh.github.io/NDS-vanilla/components/swiper.html), [Table of Contents](https://mazin-musleh.github.io/NDS-vanilla/components/toc.html) and [Side Info](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/sideinfo.html) pages.
+- **Main Navigation** — `reinit()` recovers a nav that mounted after the deferred bundle ran. It is registered as a `refresh` hook and acts only when the node actually changed. Before this, a framework that rendered the chrome late left every reference null for the session: CSS painted the nav, nothing worked, and no warning appeared. See the [Main Navigation page](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/mainnav.html).
+- **Main Navigation page** — the nav is now its own reference instead of a section inside Document Header.
+- **Page Shell reference** — names the page shapes, the wrapper classes each one carries, how the side menu and side info nest, and which built page to copy for each shape. See the [Page Shell page](https://mazin-musleh.github.io/NDS-vanilla/layout/page-shell.html).
+- **NDS IQ v2.0** — §Build copies the page skeleton from a built page instead of writing it from prose, and routes to the Page Shell reference. §Verify is headless-first: one browser sets its own viewport, so the desktop and mobile passes are the same run. See the [Integration Quality guide](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html).
+
+### Changed
+- **Document Head** — the gated critical-CSS setup is now the default HTML tab, so anyone copying canon gets it without reading the prose first. The blocking `<link>` sits below it as the swap to make when a strict CSP cannot grant the inline block a nonce or hash. See the [Document Head page](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/head.html).
+- **Side Menu, Document Header** — both now name the layout parent an aside needs, `nds-wSideMenu` on `.nds-content-layout`, without which the layout hides the aside. The Jekyll front-matter steps drop to site notes: a consumer project has no front matter. See the [Side Menu page](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/sidemenu.html).
+- **Hero, Main Navigation** — the Jekyll-only sections open with a site note, so a consumer knows the mechanism is this site's and not the system's.
+
+### Fixed
+- **Chart** — `initCharts` claimed any `.nds-chart` carrying `data-chart-type` even when the series comes from `NDS.Chart.create`, then threw while building the legend. It fires on plain init, so a chart built through `create` on a marked element has never worked.
+- **Filter** — `whenReady` now fires for sibling surfaces that were already ready when init ran.
+- **Tables** — `nds-responsive` is documented as what it is: a legacy marker with no effect. Every table is wrapped in the horizontal-scroll container automatically, with or without the class, and the modifier row still credited the class with the wrap. See the [Tables page](https://mazin-musleh.github.io/NDS-vanilla/components/tables.html).
+- **Block** — the doc claimed every block establishes a named CSS container. It does not. `container-type` is opt-in through `.nds-cq`, deliberately not on every block, because a container traps `position: fixed` descendants such as modals and dropmenus. See the [Block page](https://mazin-musleh.github.io/NDS-vanilla/layout/block.html).
+- **Documentation markup** — a block sweep had wrapped each definition item and each demo card in its own `.nds-block`. Definition lists lost every divider, because the item became the only child of its wrapper and `:last-child` matched every time. Showcases doubled the gap between demo cards. Four tables carried a `<div>` between `<table>` and `<thead>`, which the browser hoists out of the table.
+
+### Migrating from v1.7.2
+- Replace `assets/css/` and `assets/js/` with the new bundles.
+
 ## [1.7.2] - 2026-08-15
 
 ### Added
@@ -565,7 +589,10 @@ Replace your bundled `nds-main.min.css` and `nds-main.min.js` with the v1.0.1 ve
 - Five project-specific Claude Code skills for contributors.
 - MIT license, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policies.
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.7.2...v1.8.0
+[1.7.2]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.7.1...v1.7.2
+[1.7.1]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.7.0...v1.7.1
 [1.7.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.4.1...v1.5.0
