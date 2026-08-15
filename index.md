@@ -99,7 +99,7 @@ bundle_sizes:
                     <div class="nds-alert-content">
                         <div class="nds-alert-text">
                             <span class="nds-alert-title">Important</span>
-                            <p class="nds-alert-description">The default visual identity — design tokens, colors, logos, and the digital-stamp component — is exclusive to Saudi Arabia government entities. Non-government projects must replace these with the adopting organization's own identity before deployment.</p>
+                            <p class="nds-alert-description">The default visual identity is exclusive to Saudi Arabia government entities. It covers design tokens, colors, logos, and the digital-stamp component. Non-government projects must replace these with the adopting organization's own identity before deployment.</p>
                         </div>
                         <div class="nds-alert-actions">
                             <a href="{{ '/components/themes.html' | relative_url }}" class="nds-link">Theming guide</a>
@@ -511,7 +511,7 @@ bundle_sizes:
                             <i class="hgi hgi-stroke hgi-layers-01"></i>
                             <span class="nds-label">5-Stage Reveal</span>
                         </span>
-                        <p class="nds-item-desc">First paint is divided into five render-safe stages — inline critical skeleton → critical stylesheet → main stylesheet → main JavaScript → icons and font. Each stage either renders correctly or remains hidden, preventing unstyled flashes; icons load last to stay outside the LCP window.</p>
+                        <p class="nds-item-desc">First paint is divided into five render-safe stages: inline critical skeleton → critical stylesheet → main stylesheet → main JavaScript → icons and font. Each stage either renders correctly or remains hidden, preventing unstyled flashes; icons load last to stay outside the LCP window.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
