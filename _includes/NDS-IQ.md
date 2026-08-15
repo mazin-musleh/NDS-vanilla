@@ -1,4 +1,4 @@
-# NDS IQ — building UI with the National Design System (instructions v1.0)
+# NDS IQ — building UI with the National Design System (instructions v1.1)
 
 ## How to use this file
 
@@ -38,7 +38,7 @@ Five rules the sections below reference by name.
 |---|---|
 | "NDS has no X" — or the dev's "just use a native X" | search `use_when` across the catalogs (§Build) |
 | "the release is X" / "no version known" | the banner check (P2) |
-| "cannot see the page" | the own-browser attempt (§Verify) |
+| "cannot see the page" | the headless attempt (§Verify) |
 | "no CSP to worry about" | the response-header sweep (§Plan step 1) |
 | "this page is done" | both §Verify passes + the icon sweep (§Build) |
 
@@ -242,12 +242,13 @@ Never report a page verified from reading its code. Two passes, in the browser, 
 - **Behavioral pass** — load the page; NDS init warnings are `NDS`-prefixed. Run `NDS.Init.audit()`: it reports the silent failures a clean console misses (unregistered icons, unclaimed containers). `window.NDSInitConfig = { enableLogging: true }` before the NDS scripts makes it automatic during active work. Exercise what the page wires — submit, filter, advance a step.
 - **Visual pass** — a clean console proves nothing about layout. Look at the page at desktop and mobile width: spacing present, every icon a glyph, sticky/width behavior real, dark mode correct, the page reading as one design. Measured is not seen — a probed width is reported as measured, never visually verified.
 
-**Cannot see the page? Take the first rung that works:**
+**Run both passes in a headless browser you drive** — it sets its own viewport, so desktop and mobile are the same run, not a fallback you have to reach. Use whatever the environment already has: the project's own e2e harness, Playwright, Puppeteer, a scriptable headless Chrome. Keep it out of the project — never install into the project or touch its lockfile. A scripted run capturing console + `NDS.Init.audit()` is the behavioral pass; screenshots you actually look at are the visual one. **P1: "cannot see the page" is a claim you may make only after the headless attempt fails** — the failure (no network, no binary, a sandbox) named in the report.
 
-1. **A channel the project offers** — a puppeteer/playwright harness, an e2e suite, a documented probe. A scripted run capturing console + `NDS.Init.audit()` is the behavioral pass; screenshots you actually look at are the visual one.
-2. **A channel you create** — `npx playwright` or `puppeteer-core` from a temp folder OUTSIDE the project (never install into the project or touch its lockfile), or a browser tool your own harness ships. **P1: "cannot see the page" is a claim you may make only after this attempt fails** — the failure (no network, no binary, a sandbox) named in the report.
-3. **The no-harness smoke check** — `curl -sI` the page: status, `Content-Security-Policy`, anything that silently breaks a browser. Then `curl -s` and read the HTML: head unit intact, page scripts referenced, no server error leaked as text, and under a strict CSP no surviving inline `style="…"` (each one is a dead knob; rule #3 edit 4 is the fix). The result goes in the report.
-4. **Only now, the dev checklist**, naming the page plus any check it specifically needs:
+**Cannot drive one? Take the first rung that works, and name in the report what the page was not checked at:**
+
+1. **A browser tool your own harness ships** — also the rung for a page behind a login only that browser holds. It covers the console and the widths it can reach; a width it cannot reach is an UNMET pass, never a waived one.
+2. **The no-harness smoke check** — `curl -sI` the page: status, `Content-Security-Policy`, anything that silently breaks a browser. Then `curl -s` and read the HTML: head unit intact, page scripts referenced, no server error leaked as text, and under a strict CSP no surviving inline `style="…"` (each one is a dead knob; rule #3 edit 4 is the fix). The result goes in the report.
+3. **Only now, the dev checklist**, naming the page plus any check it specifically needs:
 
     [VERIFICATION CHECKLIST FOR DEV]
     - [ ] Check console for `NDS`-prefixed warnings.
