@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.7.x"
-last_edit: "15/08/2026 - 07:26 AM"
+last_edit: "15/08/2026 - 10:22 PM"
 ---
 
 <!-- Overview -->
@@ -193,6 +193,7 @@ NDS.Init.refresh(tbody);
         <p>A page that loads once never needs this call. Nothing is removed, so nothing has to be released. A framework app is different: it swaps one view for another on every navigation. Each component in the old view holds listeners, observers, and menus that now point at markup the browser has thrown away. Nothing warns you, and the page keeps working, so the cost only shows up after many navigations.</p>
         <p>Call it on the root element of the view you are about to remove, not on one list inside it. A filter toolbar can sit beside the grid it drives, so a call on the grid alone misses it.</p>
         <p>Teardown is not one way. Each component clears its own init marker, so the same markup can be mounted again later with <code class="nds-inline-code lang-js">refresh()</code>.</p>
+        <p>Two components move their element out of your view while it is open. A FAB routes to a dock on <code class="nds-inline-code lang-html">&lt;body&gt;</code>. A dropmenu with <code class="nds-inline-code lang-html">data-portal</code> sends its open menu to the same place. Teardown puts both back where you wrote them, so the node leaves with your view instead of staying on the page after it.</p>
       </div>
 
       <div class="nds-showcase">
