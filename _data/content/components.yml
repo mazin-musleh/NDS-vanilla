@@ -417,13 +417,12 @@
   scss: _sass/_grid.scss
 
 - title: "Header"
-  description: "Top bar and primary navigation shell with mega menus and mobile drawer"
-  use_when: "The site header: primary navigation, mega menus, logo, search, and the mobile drawer. Layout-coupled, so copy it from a full template page rather than in isolation."
+  description: "The region at the top of the page where the top bar, digital stamp panel, and main navigation compose"
+  use_when: "How the top bar, the DGA digital stamp panel, and the main navigation compose into one header region, with the full structure tree. Layout-coupled, so copy it from a full template page rather than in isolation. For the navigation bar itself, its dropdown menus and its JS API, use Main Navigation. For the government branding strip use Top Bar."
   icon: '<i class="hgi hgi-stroke hgi-navigation-01"></i>'
   category: "UI Shell"
-  tags: ["JS", "CSS", "API"]
+  tags: ["CSS"]
   url: "/ui-shell/header.html"
-  js: _js/nds-mainnav.js
 
 - title: "Hero"
   description: "Full-width page banners with slider and call-to-action"
@@ -488,6 +487,15 @@
   tags: ["CSS"]
   url: "/components/loading.html"
   scss: _sass/components/_loading.scss
+
+- title: "Main Navigation"
+  description: "Primary navigation bar with branding, mega-menu dropdowns, utility actions, and a mobile drawer"
+  use_when: "The primary navigation bar of a site: branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, utility actions, and the mobile hamburger drawer. Use for main nav, top nav, navbar, site navigation, primary menu, or mega menu requests. Documented on its own page, split out of Header. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar."
+  icon: '<i class="hgi hgi-stroke hgi-menu-02"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS", "API"]
+  url: "/ui-shell/mainnav.html"
+  js: _js/nds-mainnav.js
 
 - title: "Metric"
   description: "Dashboard tile pairing a key statistic with an inline sparkline"
