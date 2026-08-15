@@ -50,7 +50,7 @@ Five rules the sections below reference by name.
 |---|---|
 | a component's markup and usage | `NDS_ROOT/_source/<folder>/<name>.md` — `<folder>` from the catalog entry's `url` |
 | chrome, head, CSP, i18n, direction | `NDS_ROOT/_source/ui-shell/*.md` |
-| runtime calls (`refresh`, `request`) | `NDS_ROOT/_source/core/*.md` |
+| runtime calls (`refresh`, `destroy`, `request`); a framework view that mounts, re-renders, or unmounts | `NDS_ROOT/_source/core/*.md` |
 | a component's JS surface | the banner atop `NDS_ROOT/_source/_js/nds-<name>.js` (§JS wiring) |
 | what exists at all | the catalogs in `NDS_ROOT/_source/_data/content/` |
 
@@ -282,7 +282,7 @@ Every path below is absolute; never `cd` into `NDS_ROOT` or `NDS_ASSETS` (a rela
 |---|---|
 | `_source/components/*.md` | doc sources: canonical `lang-html` markup, `data-*` tables, ARIA. First stop for any component. (`user-feedback.md` and `multiselect.md` keep a demo behind an include; their built twins show it) |
 | `_source/utilities/*.md`, `_source/layout/*.md`, `_source/ui-shell/*.md` | same format: utilities, layout primitives (`section`, `grid`, `flex`, `block`), chrome |
-| `_source/core/*.md` | runtime API docs — `refresh` (after your JS changes rows/cards) and `request`. Calls, not markup |
+| `_source/core/*.md` | runtime API docs — `refresh` (after your JS changes rows/cards, and after a framework re-renders or routes into a view), `destroy` (before unmounting one), and `request`. Calls, not markup |
 | `_source/templates/*.md`, `_source/examples/*.md` | full-page sources; built twins in `_site/templates/`, `_site/examples/` |
 | `_source/_data/content/*.yml` | the catalogs: `components.yml`, `templates.yml`, `examples.yml`, `icons.yml` |
 | `_source/_js/nds-<name>.js` | component behavior source, opening with the banner (§JS wiring) |

@@ -12,6 +12,7 @@ breaks the rules file one way and asserts the matching guard notices.
 Runs against the REAL repo files with the zip parts stubbed, so it needs no
 build and cuts no release. The mutated file is restored in a finally block.
 """
+import html
 import io
 import os
 import re
@@ -42,7 +43,13 @@ def collect_refs(block):
             and not p.startswith('_source/')}
 
 
-def build_stub_zip(version, refs_from, iq_bytes=None):
+# The doc copy groups its rules under comment headings and the served gate is
+# minified, so the guard has to strip comments before comparing. Keep one here
+# or that stripping goes unexercised.
+GATE_CSS = '/* colors */ html{background-color:#fff}i.hgi-stroke{opacity:0}'
+
+
+def build_stub_zip(version, refs_from, iq_bytes=None, gate_doc=None):
     """A zip carrying every name verify() reads.
 
     Paths come from `refs_from` (the PRE-mutation rules file), so a case that
@@ -66,7 +73,15 @@ def build_stub_zip(version, refs_from, iq_bytes=None):
                 written.add(name)
                 z.writestr(name, data)
 
-        put(pkg + '_site/index.html', '<a href="../index.html">ok</a>')
+        # The gate guard compares index.html's inline <style> against the copy
+        # head.md prints. Both must exist or the guard cannot run at all, so the
+        # stub carries a matching pair; gate_doc stages a drifted doc side.
+        put(pkg + '_site/index.html',
+            f'<a href="../index.html">ok</a><style>{GATE_CSS}</style>')
+        put(pkg + '_site/ui-shell/head.html',
+            '<div id="panel-setup-html">&lt;style&gt;'
+            + html.escape(gate_doc if gate_doc is not None else GATE_CSS, quote=False)
+            + '&lt;/style&gt;</div><div id="panel-setup-js"></div>')
         put(pkg + 'CHANGELOG.md', f'## [{version}]\n')
         put(pkg + 'README.md', 'see `_site/index.html`\n')
         put(pkg + 'NDS-IQ.md', iq_bytes if iq_bytes is not None else block)
@@ -198,6 +213,27 @@ def main():
     print(f'  {"pass" if ok else "FAIL"}  zip ships a CRLF copy of the rules file')
     if not ok:
         failures.append(f'CRLF offline copy: {detail}')
+
+    # head.md's copy of the inline critical gate is hand-maintained against the
+    # generated one, so it can drift — and silently had. Same shape as the CRLF
+    # case: the doc side has to be corrupted on its own.
+    # Two shapes of drift: a rule that vanished, and a rule whose VALUE moved
+    # while its selector stayed put. The second is the one a selector-only
+    # comparison waved through, so it gets its own case.
+    for label, drifted in (
+        ('a rule goes missing', GATE_CSS.replace('i.hgi-stroke', 'i.hgi-gone')),
+        ('a rule keeps its selector but changes value',
+         GATE_CSS.replace('opacity:0', 'opacity:1')),
+    ):
+        zip_path = build_stub_zip(VERSION, refs_from=source, gate_doc=drifted)
+        try:
+            mkrelease.verify(zip_path, VERSION)
+            ok, detail = False, 'accepted a drifted critical gate'
+        except SystemExit as e:
+            ok, detail = 'has drifted' in str(e), str(e)
+        print(f'  {"pass" if ok else "FAIL"}  critical gate drift: {label}')
+        if not ok:
+            failures.append(f'critical gate drift ({label}): {detail}')
 
     print()
     for f in failures:

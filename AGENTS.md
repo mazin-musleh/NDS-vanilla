@@ -12,6 +12,8 @@ bundle exec jekyll serve      # Dev server (port 4002, auto-displays network IP)
 ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js)
 ```
 
+**After editing `_sass/_fold.scss`** — regenerate the inline critical-gate block in `ui-shell/head.md` from the rendered `<style>` in a built page. That block is canonical markup a consumer copies into their own `<head>`, and it is a hand-maintained copy of what `_includes/critical-inline.html` compiles, so it drifts silently: `61763016` added the dark-mode brand rule to the fold and the doc went five weeks without it. `verify()` compares the two and fails the release when they diverge.
+
 ## Files to Ignore
 
 - **NEVER read** any `.min.js` or `.min.css` files (minified output) — grepping or size-checking the built output is fine, just don't Read the blob into context. (`.min.scss` files are Sass source, not covered.)

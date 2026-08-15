@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.7.2"
-last_edit: "14/08/2026 - 10:47 PM"
+last_edit: "15/08/2026 - 08:59 PM"
 ---
 
 <!-- Page Setup -->
@@ -27,9 +27,6 @@ last_edit: "14/08/2026 - 10:47 PM"
                         </button>
                         <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-js" id="tab-setup-js">
                             <span class="nds-tab-label">JavaScript</span>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-gate" id="tab-setup-gate">
-                            <span class="nds-tab-label">Critical Gate</span>
                         </button>
                     </nav>
                     <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
@@ -50,8 +47,38 @@ last_edit: "14/08/2026 - 10:47 PM"
   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Page Title&lt;/title&gt;
 
-  &lt;!-- Critical CSS — render-blocking, so first paint has the real tokens (no flash). --&gt;
-  &lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"&gt;
+  &lt;style&gt;
+  /* -- Colors: the first-paint fills. Edit here to re-skin the shell. -- */
+  html[data-theme~=dark] :where(.nds-main-nav .nds-brand.nds-oncolor :is(img,svg)){filter:brightness(0) invert(1)}
+  html{background-color:var(--background-body, #f9fafb)}
+  html[data-theme~=dark]{background-color:var(--background-body, #111927)}
+  :where(.nds-topbar){background-color:var(--background-topbar, #f3f4f6)}
+  html[data-theme~=dark] :where(.nds-topbar){background-color:var(--background-topbar, #111927)}
+  :where(.nds-main-nav){background-color:var(--background-nav, #fff)}
+  html[data-theme~=dark] :where(.nds-main-nav){background-color:var(--background-nav, #1f2a37)}
+  :where(.nds-hero-image-wrapper)::before{content:"";position:absolute;inset:0;background:color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent);pointer-events:none}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  /* -- Layout reservations and gates (structure) -- */
+  html :where(header){display:contents}
+  html :where(.nds-topbar){height:40px}
+  html :where(.nds-main-nav){height:var(--nds-nav-height, 72px)}
+  html .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child){display:none}
+  :where(.nds-topbar&gt;*,.nds-main-nav&gt;*,.nds-hero-section .nds-section-action,.nds-content-layout,.nds-user-feedback-section,.nds-footer){visibility:hidden}
+  html:not([data-nds-loaded]) main{overflow-x:clip}
+  :root{--nds-icons-opacity: 0}
+  i.hgi-stroke{opacity:0}
+  :is(.nds-hidden,[hidden],[data-state~=hidden],[data-filtered]){display:none !important}
+  :where(.nds-hero-section){position:relative;height:550px}
+  :where(.nds-hero-section.nds-sub){height:auto;min-height:220px}
+  :where(.nds-hero-image-wrapper){position:absolute;inset:0}
+  :where(.nds-hero-image){width:100%;height:100%;object-fit:cover;display:block}
+  :where(.nds-hero-section :is(.nds-section-body,.nds-section-wrapper,.nds-breadcrumb-nav)){visibility:hidden}
+  &lt;/style&gt;
+
+  &lt;!-- Critical CSS — non-blocking; the gate above holds the layout until it lands. --&gt;
+  &lt;link rel="preload" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"
+    as="style" fetchpriority="high" data-nds-defer&gt;
 
   &lt;!-- Main CSS — deferred; the inline script applies it, the loader adds the icon sheets after it. --&gt;
   &lt;link rel="preload" href="assets/css/nds-main.min.css?ver={{ site.latest_release }}"
@@ -112,45 +139,6 @@ document.head.appendChild(l);
                         </div>
                     </div>
 
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-gate" aria-labelledby="tab-setup-gate" hidden>
-                        <div class="nds-code-action">
-                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <div class="nds-expandable-content">
-                            <code class="lang-css code">
-/* Optional. This is step 1 of the gated setup — the two steps are under the tabs. */
-
-/* ── Colors — the FCP skeleton's fills; edit here to re-skin first paint. ── */
-html { background-color: var(--background-body, #f9fafb); }
-html[data-theme~=dark] { background-color: var(--background-body, #111927); }
-:where(.nds-topbar) { background-color: var(--background-topbar, #f3f4f6); }
-html[data-theme~=dark] :where(.nds-topbar) { background-color: var(--background-topbar, #111927); }
-:where(.nds-main-nav) { background-color: var(--background-nav, #fff); }
-html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #1f2a37); }
-:where(.nds-hero-image-wrapper)::before { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent); pointer-events: none; }
-
-/* ── Layout reservations + gates (structure) ── */
-html :where(header) { display: contents; }
-html :where(.nds-topbar) { height: 40px; }
-html :where(.nds-main-nav) { height: var(--nds-nav-height, 72px); }
-html .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) { display: none; }
-:where(.nds-topbar &gt; *, .nds-main-nav &gt; *, .nds-hero-section .nds-section-action, .nds-content-layout, .nds-user-feedback-section, .nds-accessibility-toggle, .nds-footer) { visibility: hidden; }
-html:not([data-nds-loaded]) main { overflow-x: clip; }
-:root { --nds-icons-opacity: 0; }
-i.hgi-stroke { opacity: 0; }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
-:where(.nds-hero-section) { position: relative; height: 550px; }
-:where(.nds-hero-section.nds-sub) { height: auto; min-height: 220px; }
-:where(.nds-hero-image-wrapper) { position: absolute; inset: 0; }
-:where(.nds-hero-image) { width: 100%; height: 100%; object-fit: cover; display: block; }
-:where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) { visibility: hidden; }
-                        </code>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div class="nds-block nds-prose">
@@ -158,12 +146,9 @@ i.hgi-stroke { opacity: 0; }
                 <p>Change the <code class="nds-inline-code lang-html">?ver=</code> value every time you upgrade NDS. A stale stamp serves the old bundles from the browser cache.</p>
             </div>
             <div class="nds-block nds-prose">
-                <h3>Two ways to load critical CSS</h3>
-                <p>The HTML tab uses a plain stylesheet link. It blocks the first paint until critical CSS arrives, so the first thing on screen already has the real tokens and nothing flashes. This is the simplest setup, and it needs no inline style block.</p>
-                <p>The gated setup paints sooner on a slow network. You inline a small style block that draws the page shell, then load critical CSS without blocking. The shell holds the layout until the real styles land. This site runs the gated setup.</p>
-                <p>To switch, do both steps.</p>
-                <p><strong>Step 1.</strong> Copy the Critical Gate tab into a <code class="nds-inline-code lang-html">&lt;style&gt;</code> block in the head. Put it above the critical CSS link.</p>
-                <p><strong>Step 2.</strong> Replace the critical CSS link with this one:</p>
+                <h3>Switching to a blocking critical stylesheet</h3>
+                <p>The setup above is the gated one, and it is what this site runs. The inline style block draws the page shell so the page paints before critical CSS arrives, and the shell holds the layout until the real styles land. That block is the same shell this site serves, one rule per line so you can edit the colors.</p>
+                <p>Use a blocking stylesheet instead when a strict Content Security Policy cannot grant a nonce or a hash for that inline block. Delete the <code class="nds-inline-code lang-html">&lt;style&gt;</code> block, then replace the preload link under it with a plain stylesheet link:</p>
             </div>
             <div class="nds-block">
                 <div class="nds-code nds-expandable">
@@ -174,15 +159,13 @@ i.hgi-stroke { opacity: 0; }
                     </div>
                     <div class="nds-expandable-content">
                         <code class="lang-html code">
-&lt;link rel="preload" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"
-  as="style" fetchpriority="high" data-nds-defer&gt;
+&lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"&gt;
                     </code>
                     </div>
                 </div>
             </div>
             <div class="nds-block nds-prose">
-                <p>Never do step 2 alone. Without the gate the page paints raw HTML first, then jumps when critical CSS lands.</p>
-                <p>The gate is an inline style block, so a strict Content Security Policy needs a nonce or a hash for it. See the CSP section below.</p>
+                <p>It blocks the first paint until critical CSS arrives, so the first thing on screen already has the real tokens and nothing flashes. Never remove the style block on its own: without the gate the page paints raw HTML first, then jumps when critical CSS lands.</p>
             </div>
         </div>
     </div>
@@ -230,7 +213,7 @@ i.hgi-stroke { opacity: 0; }
                     <thead><tr><th>Part</th><th>What it needs</th></tr></thead>
                     <tbody>
                         <tr><td>Inline script in <code class="nds-inline-code lang-html">&lt;head&gt;</code> (theme guard + deferred stylesheets)</td><td>A nonce or a hash</td></tr>
-                        <tr><td>Inline critical gate (<code class="nds-inline-code lang-html">&lt;style&gt;</code>), if you use it</td><td>A nonce or a hash in <code class="nds-inline-code lang-css">style-src</code></td></tr>
+                        <tr><td>Inline critical gate (<code class="nds-inline-code lang-html">&lt;style&gt;</code>), unless you switched to the blocking stylesheet</td><td>A nonce or a hash in <code class="nds-inline-code lang-css">style-src</code></td></tr>
                         <tr><td>Inline knobs on copied markup (<code class="nds-inline-code lang-html">style="--gap: …"</code>)</td><td>Move the knob to your own class. A <code class="nds-inline-code lang-html">style</code> attribute needs <code class="nds-inline-code lang-css">'unsafe-inline'</code>, and no nonce or hash can cover one</td></tr>
                         <tr><td>All stylesheets and script bundles</td><td><code class="nds-inline-code lang-css">'self'</code></td></tr>
                         <tr><td>Icon sheets the loader adds</td><td>Nothing — same origin as your other files</td></tr>

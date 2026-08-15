@@ -213,6 +213,41 @@ def verify(out, version):
     if banners.returncode:
         sys.exit('check-banners.mjs --all failed:\n' + banners.stdout + banners.stderr)
 
+    # head.md prints the inline critical gate as canonical markup a consumer
+    # copies into their own <head>. It is a hand-maintained copy of what
+    # _includes/critical-inline.html compiles from _sass/_fold.scss, so it can
+    # drift — and it silently had, shipping a gate missing the dark-mode brand
+    # rule. Compare the doc's block against the one the site actually serves.
+    def _rules(css):
+        # Comments first: the served gate is minified and carries none, the doc
+        # copy groups its rules under headings, and an unstripped comment glues
+        # itself onto the next selector and reads as a difference.
+        css = re.sub(r'\s+', ' ', re.sub(r'/\*.*?\*/', '', css, flags=re.S))
+        # Whole rules, not selectors alone — a changed value (a reserved height,
+        # an overlay alpha) keeps its selector, and comparing selectors would
+        # wave it through. Punctuation is de-spaced so the doc's formatting and
+        # the minified original normalize to the same string.
+        return {re.sub(r'\s*([,>{:;])\s*', r'\1', r).strip().rstrip(';}') + '}'
+                for r in re.findall(r'[^{}]+\{[^{}]*\}', css)}
+
+    live_page = z.read(root + '_site/index.html').decode('utf8')
+    doc_page = z.read(root + '_site/ui-shell/head.html').decode('utf8')
+    live_m = re.search(r'<style>(.*?)</style>', live_page, re.S)
+    i, j = doc_page.find('id="panel-setup-html"'), doc_page.find('id="panel-setup-js"')
+    doc_m = re.search(r'&lt;style&gt;(.*?)&lt;/style&gt;', doc_page[i:j], re.S)
+    if not live_m or not doc_m:
+        sys.exit('Critical gate: could not locate the inline gate in index.html '
+                 'or the copied block in ui-shell/head.html.')
+    live_r = _rules(live_m.group(1))
+    doc_r = _rules(html.unescape(doc_m.group(1)))
+    if live_r != doc_r:
+        missing = sorted(live_r - doc_r)
+        extra = sorted(doc_r - live_r)
+        sys.exit('Critical gate in ui-shell/head.md has drifted from the one the '
+                 'site serves. Regenerate it from the rendered <style> block.\n'
+                 + ''.join(f'  missing from the doc: {s}\n' for s in missing)
+                 + ''.join(f'  in the doc only:      {s}\n' for s in extra))
+
     # The rules file's checks run against its SOURCE include (the guide
     # renders the same include; raw main and the zip top level serve it
     # byte-identical). The file is universal — no per-project values — so a
