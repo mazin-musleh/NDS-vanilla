@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.x"
-last_edit: "15/08/2026 - 08:06 PM"
+last_edit: "15/08/2026 - 11:26 PM"
 ---
 
 
@@ -360,7 +360,7 @@ last_edit: "15/08/2026 - 08:06 PM"
 
             <div class="nds-block nds-prose" style="margin-top: var(--spacing-3xl);">
                 <h3 class="nds-block-title">Data-Driven Dropdowns</h3>
-                <p>Pages that use the Jekyll-driven nav (see <code class="nds-inline-code lang-html">_data/mainnav/mainnav.yml</code>) render dropdown content from two includes that map to the layouts above:</p>
+                <p>Site note: the includes below belong to this documentation site's own Jekyll build, not to your project. Pages here render dropdown content from <code class="nds-inline-code lang-html">_data/mainnav/mainnav.yml</code> through two includes that map to the layouts above. In your own project, copy the dropdown markup instead:</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Template</th><th>Layout</th><th>Data Source</th></tr></thead>
                     <tbody>
@@ -481,7 +481,7 @@ last_edit: "15/08/2026 - 08:06 PM"
                     <li>Do not add more than one level of dropdown nesting. The component supports single-level dropdowns only.</li>
                     <li>Set the brand logo dimensions explicitly with <code class="nds-inline-code lang-html">width</code> and <code class="nds-inline-code lang-html">height</code> attributes to prevent layout shift during page load.</li>
                     <li>Use <code class="nds-inline-code lang-html">nds-icon-only</code> on secondary nav items that should display as icon buttons at every width. For labels that should collapse only on smaller screens, stamp <code class="nds-inline-code lang-html">data-hidden="sm md sr"</code> on the label as the markup above shows: the <code class="nds-inline-code lang-html">sr</code> token keeps the accessible name while the label is visually hidden. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility.</li>
-                    <li>Mark nav items that must stay reachable at every breakpoint with <code class="nds-inline-code lang-html">nds-PAB</code>. Search, language, and account are the usual ones. JavaScript moves the item into the minimal bar and returns it to the position you authored, so do not reparent a PAB item yourself at runtime.</li>
+                    <li>Mark nav items that must stay reachable at every breakpoint with <code class="nds-inline-code lang-html">nds-PAB</code>. Search, language, and account are the usual ones. Do not mark every action: unmarked items stay in the expanded menu, and a minimal bar carrying everything defeats it. JavaScript moves the item into the minimal bar and returns it to the position you authored, so do not reparent a PAB item yourself at runtime.</li>
                     <li>A PAB carrying <code class="nds-inline-code lang-html">nds-CTA</code> is placed first in the minimal bar, ahead of the other persistent items. Use that when the call to action must be the one control a small screen never hides.</li>
                 </ul>
             </div>

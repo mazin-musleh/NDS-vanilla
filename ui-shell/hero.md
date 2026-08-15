@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "08/08/2026 - 11:05 PM"
+last_edit: "15/08/2026 - 11:11 PM"
 ---
 
 <!-- Sub Hero -->
@@ -703,7 +703,7 @@ last_edit: "08/08/2026 - 11:05 PM"
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Jekyll Front Matter</h3>
-                <p>When using the <code class="nds-inline-code lang-html">page</code> layout, the sub hero renders automatically from these front matter fields. No HTML required.</p>
+                <p>Site note: this table applies to this documentation site's own Jekyll build, not to your project. With the <code class="nds-inline-code lang-html">page</code> layout, these front matter fields generate the sub hero markup shown above. In your own project, copy the HTML.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Field</th><th>Description</th></tr></thead>
                     <tbody>
