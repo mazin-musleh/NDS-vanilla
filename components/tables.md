@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "09/08/2026 - 09:52 PM"
+last_edit: "16/08/2026 - 12:40 AM"
 ---
 
 <!-- Basic Table Section -->
@@ -1986,7 +1986,7 @@ last_edit: "09/08/2026 - 09:52 PM"
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-compact</code></td><td>Reduces row height to 48px. Override with <code class="nds-inline-code lang-html">--table-row-height</code> for custom values</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-responsive</code></td><td>Marks the table for automatic wrapping in a horizontal-scroll container (<code class="nds-inline-code lang-html">.nds-table-wrapper</code>). Pair with <code class="nds-inline-code lang-html">--max-width</code> / <code class="nds-inline-code lang-html">--min-width</code> to tune the scroll breakpoint</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-responsive</code></td><td>Legacy marker with no effect: every table is wrapped in the horizontal-scroll container (<code class="nds-inline-code lang-html">.nds-table-wrapper</code>) automatically, with or without this class. Safe to keep or omit. Tune the scroll with <code class="nds-inline-code lang-html">--max-width</code> / <code class="nds-inline-code lang-html">--min-width</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-mask</code></td><td>Applies gradient fade masks on the overflow edges when the table scrolls horizontally. Off by default. Note: mask clips descendants to the wrapper and breaks overflowing UI like dropmenus, tooltips, and popovers that escape table bounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-interactive</code></td><td>Enables hover background changes on rows so the table reads as clickable. Off by default to keep static data tables from suggesting interactivity</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sortable</code></td><td>Enables column sorting. Use <code class="nds-inline-code lang-html">nds-col-header</code> with <code class="nds-inline-code lang-html">nds-sort-btn nds-icon-only</code> inside sortable <code class="nds-inline-code lang-html">&lt;th&gt;</code> elements</td></tr>
