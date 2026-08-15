@@ -141,6 +141,39 @@ report.push(...await records.evaluate(async () => {
     ok('setup: a FAB is docked away from its origin', !!fab && !!fabOrigin && fab.parentElement !== fabOrigin,
         fab?.parentElement?.className || 'no docked FAB on this page');
 
+    // The FAB case again, in a second shape: `data-portal` moves the open MENU to <body>,
+    // so it leaves the view that authored it and no scan of that view can find it. Scoped
+    // to one cell — destroy(document.body) below would hold both halves and prove nothing.
+    // A menu left behind is a click-eating overlay in <body> that nothing owns.
+    const dm = document.querySelector('td .nds-dropmenu[data-portal]');
+    const dmHost = dm?.closest('td');
+    if (dm) {
+        dm.querySelector('.nds-dropmenu-trigger').click();
+        await new Promise((r) => setTimeout(r, 350));
+        const menu = NDS.Dropmenu.menuOf(dm);
+        ok('setup: an open menu portaled out of its container',
+            !!menu && menu.parentElement === document.body && !dmHost.contains(menu),
+            menu?.parentElement?.tagName || 'no menu resolved');
+
+        NDS.Init.destroy(dmHost);
+        await new Promise((r) => setTimeout(r, 350));
+        ok('the portaled menu went back inside its container', dmHost.contains(menu),
+            menu.parentElement?.className || menu.parentElement?.tagName);
+        ok('the menu is hidden again, as it shipped',
+            menu.hasAttribute('hidden') && !menu.hasAttribute('data-portal'),
+            menu.outerHTML.slice(0, 60));
+        ok('no menu is stranded in <body>', !document.body.querySelector(':scope > .nds-dropmenu-menu'),
+            `${document.body.querySelectorAll(':scope > .nds-dropmenu-menu').length} left`);
+
+        // Two-way, and it re-arms the instance for the page-wide destroy below.
+        NDS.Init.refresh(dmHost);
+        await new Promise((r) => setTimeout(r, 300));
+        ok('the dropmenu re-initializes after destroy', !!dm.ndsDropmenu,
+            dm.hasAttribute('data-nds-dropmenu-initialized') ? 'stamped' : 'not stamped');
+    } else {
+        ok('setup: an open menu portaled out of its container', false, 'no [data-portal] dropmenu in a table cell');
+    }
+
     const count = NDS.Init.destroy(document.body);
     await new Promise((r) => setTimeout(r, 300));
 
