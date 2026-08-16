@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.8.0"
-last_edit: "15/08/2026 - 11:18 PM"
+last_edit: "16/08/2026 - 11:38 PM"
 ---
 
 <!-- Page Shell Anatomy -->
@@ -222,6 +222,27 @@ div.nds-content-layout.nds-wSideInfo
                     <li>Side info is content-level, not a layout column. Keep the aside inside its <code class="nds-inline-code lang-html">nds-sideinfo-section</code> next to the text it tracks</li>
                     <li>Text-heavy pages can flatten the page hero with <code class="nds-inline-code lang-html">nds-flat</code> on the hero section. See <a class="nds-color" href="{{ 'ui-shell/hero' | relative_url }}">Hero</a> for the hero's own variants</li>
                 </ul>
+            </div>
+
+            <div class="nds-block nds-prose">
+                <h3 class="nds-block-title">Framework Wrappers</h3>
+                <p>React, Vue, and Angular add elements the shell does not expect. The shell styles direct children, so one extra element in the wrong place breaks the layout. Two places matter.</p>
+                <p><strong>The mount root.</strong> A framework mounts into an element inside <code class="nds-inline-code lang-html">body</code>, such as <code class="nds-inline-code lang-html">&lt;div id="root"&gt;</code>. That element sits between <code class="nds-inline-code lang-html">body</code> and the chrome. <code class="nds-inline-code lang-html">body</code> is a vertical flex column, and <code class="nds-inline-code lang-html">main</code> grows to fill the space left over. A mount root breaks that chain, so the footer sits in the middle of the page when the content is short. Give the mount root <code class="nds-inline-code lang-css">display: contents</code>, or pass the same flex rules through it. Nothing else in the shell depends on that position: chrome width, content width, section width, striping, and the side menu are all unaffected.</p>
+                <div class="nds-code">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <code class="lang-css code">
+/* The mount root disappears from the layout. */
+#root { display: contents; }
+
+/* Or, when the app styles, measures, or positions #root itself. */
+#root { flex: 1; display: flex; flex-direction: column; }
+                    </code>
+                </div>
+                <p><strong>Wrappers inside the layout.</strong> Return a fragment from a component, so the sections land where the shell expects them. A plain <code class="nds-inline-code lang-html">div</code> inside <code class="nds-inline-code lang-html">nds-content-layout</code> takes the side menu's grid column, and the page then collapses to the width of that column. A plain <code class="nds-inline-code lang-html">div</code> inside <code class="nds-inline-code lang-html">nds-main-content</code> sets no width of its own, so narrow content such as a sign-in form pulls away from the page edges. Sections set their own full width, which is why the wrapper is the part that breaks.</p>
             </div>
 
             <div class="nds-block">
