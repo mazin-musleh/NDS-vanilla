@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.7.2"
-last_edit: "15/08/2026 - 08:59 PM"
+last_edit: "17/08/2026 - 02:49 AM"
 ---
 
 <!-- Page Setup -->
@@ -206,7 +206,7 @@ document.head.appendChild(l);
         </div>
         <div class="nds-section-body">
             <div class="nds-block nds-prose">
-                <p>A strict policy blocks inline code. NDS keeps its inline code to one small script, so you have one thing to allow. You allow it with a <strong>nonce</strong> or with a <strong>hash</strong>. Both work. Pick the one that fits your app.</p>
+                <p>A strict policy blocks inline code. NDS keeps its inline code to one small script, so you have one thing to allow. You allow it with a <strong>nonce</strong> or with a <strong>hash</strong>. Prefer the nonce whenever your server renders responses. Use the hash only on a static host: a hash must match the script's bytes exactly, and that match breaks easily.</p>
             </div>
             <div class="nds-block">
                 <table class="nds-table nds-responsive">
@@ -265,7 +265,7 @@ Content-Security-Policy:
             <div class="nds-block nds-prose">
                 <p>Your server must make a new random value for every response. A fixed value is not a nonce. It gives an attacker the same permission your own code has.</p>
                 <p>The main bundle needs the value too. The loader adds more script files at runtime, and it copies the nonce from the main bundle's tag onto each one. Without it, a <strong>nonce-only</strong> policy — one with no <code class="nds-inline-code lang-css">'self'</code> in <code class="nds-inline-code lang-css">script-src</code> — blocks them, and the components they carry never start.</p>
-                <p><strong>No server?</strong> Use a hash instead. A hash covers a script by its exact text, so a static host works. Take the SHA-256 of the script's contents, base64 it, and add <code class="nds-inline-code lang-css">'sha256-…'</code> to <code class="nds-inline-code lang-css">script-src</code>. The browser tells you the right value: load the page with the policy on, and the console error prints the hash it expected. Re-do this whenever you edit the script.</p>
+                <p><strong>No server?</strong> Use a hash instead. A hash covers the script's contents between the tags, byte for byte — indentation, line endings, everything. A file saved with Windows CRLF line endings hashes differently from the same script saved with LF, and a formatter or minifier that touches the script kills the match too. Hash the contents only, never the tags. Take the SHA-256 of the script's contents, base64 it, and add <code class="nds-inline-code lang-css">'sha256-…'</code> to <code class="nds-inline-code lang-css">script-src</code>. The browser tells you the right value for the bytes it actually served: load the page with the policy on, and the console error prints the hash it expected. Re-do this whenever anything edits the script.</p>
             </div>
             <div class="nds-block nds-prose">
                 <h3>Inline knobs under a strict CSP</h3>
