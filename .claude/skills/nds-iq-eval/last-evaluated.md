@@ -1,4 +1,4 @@
-# NDS IQ — building UI with the National Design System (instructions v2.0)
+# NDS IQ — building UI with the National Design System (instructions v2.1)
 
 ## How to use this file
 
@@ -154,7 +154,7 @@ Install facts:
 
 NDS is a UI layer: it does not choose a stack, define routes, or scaffold an app. The project must already exist and serve — a fresh scaffold with no UI qualifies. No project at all? Say so and stop.
 
-**Step 1 — inventory.** List routes, layouts, shared partials, existing pages, legacy UI libraries. Client-side views count as pages: N views = N rows; dropping one is a dev decision recorded as its own row. Map each page through the composition cascade (§Build) and record its chrome shape — full, console, or minimal — from the same catalog entry; chrome shape is per page, not per app. Sweep the response headers and middleware for a `Content-Security-Policy`: a locked `script-src` or `style-src` breaks the head and every inline knob silently, and only in the browser — read `ui-shell/head.md` §CSP and put the grant in the plan before the first page ships.
+**Step 1 — inventory.** List routes, layouts, shared partials, existing pages, legacy UI libraries. Client-side views count as pages: N views = N rows; dropping one is a dev decision recorded as its own row. Map each page through the composition cascade (§Build) and record its chrome shape — full, console, or minimal — from the same catalog entry; chrome shape is per page, not per app. Sweep the response headers and middleware for a `Content-Security-Policy`: a locked `script-src` or `style-src` breaks the head and every inline knob silently, and only in the browser — read `ui-shell/head.md` §CSP and put the grant in the plan before the first page ships. Open every stylesheet the current UI loads globally — a `<link>` in the master layout, an `import` in the shared JS entry — and grep it for element-level selectors (`body`, `h1`, `a`, `input`). Those rules reach every page the same entry serves, NDS pages included (rule #6). Record each hit in the plan; the porting-strategy proposal (rule #7) must name how NDS pages escape them.
 
 - **Greenfield?** Plan from intent: the dev's page list through the same cascade, legacy columns empty. Pages the dev has not named do not exist.
 - **Structurally identical pages** (list/create/edit families) map once: one archetype, siblings "same as <archetype>", rows separate for status.
