@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.8.0"
-last_edit: "14/08/2026 - 09:05 PM"
+updated: "1.8.x"
+last_edit: "16/08/2026 - 04:39 PM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -2219,17 +2219,15 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     </tbody>
                 </table>
 
-                <h4>State and Status (form submission mode)</h4>
-                <p>In form mode, the filter sets these attributes on the <code class="nds-inline-code lang-html">.nds-filter</code> anchor element via <code class="nds-inline-code lang-js">NDS.State</code> and <code class="nds-inline-code lang-js">NDS.Status</code>. These drive the built-in SCSS rules below.</p>
+                <h4>State (form submission mode)</h4>
+                <p>In form mode, the filter sets this attribute on the <code class="nds-inline-code lang-html">.nds-filter</code> anchor element via <code class="nds-inline-code lang-js">NDS.State</code>.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Selector</th><th>Effect</th><th>When set</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-state~="submitting"]</code></td><td><code class="nds-inline-code">pointer-events: none</code></td><td>Set on the anchor when a standard or AJAX form submission is in flight. Cleared when the response arrives.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-status="success"]</code></td><td>Search inputs get <code class="nds-inline-code">border-color: var(--border-success)</code></td><td>Set on successful AJAX response. Auto-cleared after 3 seconds.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-status="error"]</code></td><td>Search inputs get <code class="nds-inline-code">border-color: var(--border-error)</code></td><td>Set on AJAX request failure. Auto-cleared after 5 seconds.</td></tr>
                     </tbody>
                 </table>
-                <p>Because a failed submission deliberately leaves the results untouched, the border tint is the only thing on screen that moves — so filter also raises an error toast via <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> (soft dependency: skipped if <code class="nds-inline-code lang-js">nds-alert.js</code> isn't bundled). Call <code class="nds-inline-code lang-js">preventDefault()</code> on <code class="nds-inline-code lang-js">nds:filterFormError</code> to suppress it.</p>
+                <p>Because a failed submission deliberately leaves the results untouched, nothing on screen moves — so filter raises an error toast via <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> (soft dependency: skipped if <code class="nds-inline-code lang-js">nds-alert.js</code> isn't bundled). Call <code class="nds-inline-code lang-js">preventDefault()</code> on <code class="nds-inline-code lang-js">nds:filterFormError</code> to suppress it.</p>
                 <p>A failure also rolls the applied state back to what the displayed results represent: chips, the filter-button badge, the dropmenu controls and the URL params all return to their pre-submission values. Without it a failed Clear would show no chips over results that are still filtered. The trade-off is that an unsaved selection made in the dropmenu is discarded along with the failed submission.</p>
             </div>
 

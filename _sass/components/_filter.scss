@@ -13,16 +13,11 @@
 .nds-filter {
     --dropmenu-min-width: 250px;
 
-    // Submission states — set on the anchor by nds-filter.js while a form
-    // submits; the success/error rings land on whichever search input exists.
+    // Submission state — set on the anchor by nds-filter.js while a form
+    // submits. A failed submit signals through the error toast, not a ring on
+    // the search field.
     &[data-state~="submitting"] {
         pointer-events: none;
-    }
-    &[data-status="success"] :is(.nds-search-input, .nds-form-control input) {
-        border-color: var(--border-success);
-    }
-    &[data-status="error"] :is(.nds-search-input, .nds-form-control input) {
-        border-color: var(--border-error);
     }
 }
 

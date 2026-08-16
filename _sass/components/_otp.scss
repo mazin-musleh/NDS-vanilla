@@ -89,6 +89,23 @@
         }
     }
 
+    // ==============================================
+    // VALIDATION STATUS (data-status attribute)
+    // ==============================================
+
+    // setStatus targets the group, so data-status lands one level above the
+    // .nds-otp-container that _forms.scss styles from; cascade it down or the
+    // boxes stay neutral while the feedback text says the code is wrong.
+    // Error only, per the binary-outline rule in _forms.scss.
+
+    &[data-status="error"] .nds-otp-container>.nds-form-control {
+        border-color: var(--form-field-border-error);
+
+        &::before {
+            background-color: var(--form-field-border-error);
+        }
+    }
+
 }
 
 // ==============================================

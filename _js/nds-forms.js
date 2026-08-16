@@ -5,7 +5,8 @@
  *   NDS.Forms.initializeContainer(el)      initialize one container
  *   NDS.Forms.initForm(form)               wire one .nds-form (submit validation)
  *   NDS.Forms.setStatus({element, status, message, permanent})   set field status
- *                                          (error/success/warning/info/neutral)
+ *                                          (a field carries 'error', 'help' or
+ *                                          nothing; anything else renders neutral)
  *   NDS.Forms.clearStatus(el)              clear it
  *   NDS.Forms.getStatus(el)                read {status, message}
  *   NDS.Forms.setState(el, name, add)      add/remove a field state ('required' also
@@ -222,6 +223,12 @@
                 return true;
             }
 
+            // A field carries error, help, or nothing. Anything else still
+            // renders its message, in the default colour with a polite announce
+            // — the outline and the message tint are error-only signals. Help
+            // is neutral gray too; it only swaps in the "?" icon.
+            if (status && status !== 'error' && status !== 'help') status = 'neutral';
+
             if (status) {
                 NDS.Status.set(container, status);
                 if (message) {
@@ -257,7 +264,8 @@
                         style: 'outline'
                     };
                     var feedbackOptions = Object.assign({}, defaults, options, {
-                        target: target
+                        target: target,
+                        status: status
                     });
                     delete feedbackOptions.element;
                     NDS.Feedback.create(feedbackOptions);

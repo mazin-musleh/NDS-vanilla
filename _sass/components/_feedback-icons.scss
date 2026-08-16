@@ -12,6 +12,9 @@
 
 .nds-feedback {
     align-items: center;
+    // Default message colour. A status overrides it below; without one the
+    // message reads as body text instead of inheriting whatever surrounds it.
+    color: var(--text-primary-paragraph);
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
     font-weight: var(--font-weight-medium);

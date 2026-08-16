@@ -498,7 +498,6 @@
 
             NDS.State.set(this.filterContainer, 'submitting');
             this._showTriggerLoading();
-            NDS.Status.clear(this.filterContainer);
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
 
             const { url, options } = this._buildAjaxRequest();
@@ -621,16 +620,14 @@
         }
 
         /**
-         * Settle UI state after a successful response: clear loading, set
-         * success status, refresh dependent UI, fire the complete event,
-         * schedule status auto-clear.
+         * Settle UI state after a successful response: clear loading, refresh
+         * dependent UI, fire the complete event.
          */
         _finishAjaxSubmit(eventDetail, isJson) {
             if (this.targetContainer) {
                 this.targetContainer.classList.remove('nds-loading');
             }
 
-            NDS.Status.set(this.filterContainer, 'success');
             NDS.State.clear(this.filterContainer);
             if (this._triggerBtn) { NDS.State.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
 
@@ -645,8 +642,6 @@
             // data-total-count on the target container there — re-run the count so
             // the slots reflect their updates.
             if (isJson) this.updateFilterCount();
-
-            setTimeout(() => NDS.Status.clear(this.filterContainer), 3000);
         }
 
         /**
@@ -666,7 +661,6 @@
 
             if (appliedUrl !== undefined) this._rollbackApplied(appliedUrl);
 
-            NDS.Status.set(this.filterContainer, 'error');
             NDS.State.clear(this.filterContainer);
             if (this._triggerBtn) { NDS.State.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
 
@@ -681,8 +675,6 @@
                 bubbles: true
             }));
             if (shouldToast) this._showAjaxErrorToast();
-
-            setTimeout(() => NDS.Status.clear(this.filterContainer), 5000);
         }
 
         /**
@@ -738,8 +730,8 @@
                     ? 'حدث خطأ أثناء تطبيق التصفية. النتائج المعروضة لم تتغير.'
                     : 'Something went wrong applying the filter. The results shown are unchanged.',
                 id: alertId,
-                // Matches the 5s data-status auto-clear above so both failure
-                // signals leave together.
+                // The toast is the only failure signal — the results on screen
+                // are unchanged, so nothing else marks the page.
                 duration: 5000
             });
         }
@@ -2673,7 +2665,6 @@
             // Clear form state if in form mode
             if (this.isFormMode) {
                 NDS.State.clear(this.filterContainer);
-                NDS.Status.clear(this.filterContainer);
             }
 
             this.updateApplyButtonLabel();

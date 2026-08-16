@@ -5,8 +5,8 @@ hero_title: Text Fields - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.7.1"
-last_edit: "14/08/2026 - 11:41 PM"
+updated: "1.8.x"
+last_edit: "16/08/2026 - 04:12 PM"
 lang: en
 direction: ltr
 ---
@@ -1829,7 +1829,7 @@ direction: ltr
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Form Status API</h2>
-      <p class="nds-section-description">Set error, success, warning, or info status on any form container with automatic feedback display</p>
+      <p class="nds-section-description">Set the error status on any form container with automatic feedback display. A field carries error, help, or nothing. Help is neutral gray with a "?" icon, for hint text. Any other status renders as a plain neutral message.</p>
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
@@ -1839,14 +1839,11 @@ direction: ltr
               <button class="nds-btn nds-subtle demo-toggle-btn" id="status-error-btn">
                 <span class="nds-label">Error</span>
               </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-success-btn">
-                <span class="nds-label">Success</span>
+              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-help-btn">
+                <span class="nds-label">Help</span>
               </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-warning-btn">
-                <span class="nds-label">Warning</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-info-btn">
-                <span class="nds-label">Info</span>
+              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-neutral-btn">
+                <span class="nds-label">Neutral</span>
               </button>
               <button class="nds-btn nds-subtle demo-toggle-btn" id="status-clear-btn">
                 <span class="nds-label">Clear</span>
@@ -1929,11 +1926,15 @@ direction: ltr
                   <div class="nds-expandable-content">
                     <code class="lang-javascript code">var field = document.getElementById('national-id-field');
 
-// Set status with message
+// Set the error status with a message
 NDS.Forms.setStatus({ element: field, status: 'error', message: 'This field is required' });
-NDS.Forms.setStatus({ element: field, status: 'success', message: 'Looks good!' });
-NDS.Forms.setStatus({ element: field, status: 'warning', message: 'Please review' });
+
+// A field carries error, help, or nothing. Anything else renders as a
+// plain neutral message — no red outline, no colour.
 NDS.Forms.setStatus({ element: field, status: 'neutral', message: 'Additional information' });
+
+// Help is neutral gray with a "?" icon — for hint text, not a validation result
+NDS.Forms.setStatus({ element: field, status: 'help', message: 'Use 3-20 characters' });
 
 // Clear status (restores permanent feedback if present)
 NDS.Forms.clearStatus(field);
@@ -2061,7 +2062,7 @@ var { data } = await NDS.request('/api/username?name=' + encodeURIComponent(name
 var available = data.available;
 NDS.Forms.setStatus({
   element: field,
-  status: available ? 'success' : 'error',
+  status: available ? 'neutral' : 'error',
   message: available ? 'Username is available' : 'Already taken',
 });
   } finally {
@@ -2404,11 +2405,10 @@ NDS.Forms.initializeContainer(containerElement);
 NDS.Forms.initForm(formElement);
 
 // ── Status API ──────────────────────────────────────
-// Set validation status with feedback message
+// A field carries 'error', 'help' or nothing. Anything else renders neutral.
 NDS.Forms.setStatus({ element: el, status: 'error', message: 'Required field' });
-NDS.Forms.setStatus({ element: el, status: 'success', message: 'Looks good!' });
-NDS.Forms.setStatus({ element: el, status: 'warning', message: 'Please review' });
-NDS.Forms.setStatus({ element: el, status: 'info', message: 'Hint text' });
+NDS.Forms.setStatus({ element: el, status: 'help', message: 'Use 3-20 characters' });
+NDS.Forms.setStatus({ element: el, status: 'neutral', message: 'Hint text' });
 
 // Permanent feedback (survives validation cycles)
 NDS.Forms.setStatus({ element: el, status: 'neutral', message: 'Tip text', permanent: true });
@@ -2517,14 +2517,11 @@ hiddenInput.addEventListener('change', function(e) {
       document.getElementById('status-error-btn').addEventListener('click', function () {
         NDS.Forms.setStatus({ element: statusContainer, status: 'error', message: 'This field is required' });
       });
-      document.getElementById('status-success-btn').addEventListener('click', function () {
-        NDS.Forms.setStatus({ element: statusContainer, status: 'success', message: 'Looks good!' });
+      document.getElementById('status-help-btn').addEventListener('click', function () {
+        NDS.Forms.setStatus({ element: statusContainer, status: 'help', message: 'Use 3-20 characters, letters and numbers only' });
       });
-      document.getElementById('status-warning-btn').addEventListener('click', function () {
-        NDS.Forms.setStatus({ element: statusContainer, status: 'warning', message: 'Please review this field' });
-      });
-      document.getElementById('status-info-btn').addEventListener('click', function () {
-        NDS.Forms.setStatus({ element: statusContainer, status: 'info', message: 'Additional information' });
+      document.getElementById('status-neutral-btn').addEventListener('click', function () {
+        NDS.Forms.setStatus({ element: statusContainer, status: 'neutral', message: 'Additional information' });
       });
       document.getElementById('status-clear-btn').addEventListener('click', function () {
         NDS.Forms.clearStatus(statusContainer);

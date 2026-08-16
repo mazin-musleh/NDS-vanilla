@@ -59,39 +59,14 @@
     // FORM CONTAINER STATUS (data-status attribute)
     // ==============================================
 
-    // Error state - style form control border
+    // The field outline is a binary error indicator — normal or red. Success,
+    // warning and info speak through the feedback text under the field instead;
+    // a coloured outline on every valid field is noise the message already carries.
     &[data-status="error"] > .nds-form-control {
         border-color: var(--form-field-border-error);
 
         &::before {
             background-color: var(--form-field-border-error);
-        }
-    }
-
-    // Success state
-    &[data-status="success"] > .nds-form-control {
-        border-color: var(--form-field-border-success);
-
-        &::before {
-            background-color: var(--form-field-border-success);
-        }
-    }
-
-    // Warning state
-    &[data-status="warning"] > .nds-form-control {
-        border-color: var(--form-field-border-warning);
-
-        &::before {
-            background-color: var(--form-field-border-warning);
-        }
-    }
-
-    // Info state
-    &[data-status="info"] > .nds-form-control {
-        border-color: var(--form-field-border-info);
-
-        &::before {
-            background-color: var(--form-field-border-info);
         }
     }
 
@@ -645,20 +620,30 @@ fieldset {
         display: flex;
     }
 
+    // Error is the only status a field carries. Anything else is a plain
+    // message in the default colour — see the outline rule above.
     &[data-status="error"]>.nds-feedback {
         color: var(--text-error);
     }
 
-    &[data-status="success"]>.nds-feedback {
-        color: var(--text-success);
-    }
+}
 
-    &[data-status="warning"]>.nds-feedback {
-        color: var(--text-warning);
-    }
+// A field carries error or help — nothing else tints it. setStatus folds every
+// other status to neutral, but a hand-authored data-status on the container
+// still reaches its feedback through the ancestor rules in _feedback-icons.scss
+// ([data-status="success"] .nds-feedback). Undo it for both container types.
+// `initial` sends each knob back to the neutral default the private vars
+// already fall back to, so no neutral values are copied here.
+// Descendant, not child: a data-feedback-target puts the message a level down.
+:is(.nds-form-container, .nds-form-group)[data-status]:not([data-status="error"], [data-status="help"]) {
+    --feedback-color: initial;
+    --feedback-ring: initial;
+    --feedback-icon-color: initial;
+    --feedback-icon-stroke: initial;
+    --feedback-icon-symbol: initial;
 
-    &[data-status="info"]>.nds-feedback {
-        color: var(--text-info);
+    .nds-feedback {
+        color: var(--text-primary-paragraph);
     }
 }
 

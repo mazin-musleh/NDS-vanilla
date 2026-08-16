@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "14/07/2026 - 12:13 AM"
+updated: "1.8.x"
+last_edit: "16/08/2026 - 04:24 PM"
 ---
 
 <!-- Feedback Icons -->
@@ -202,6 +202,10 @@ last_edit: "14/07/2026 - 12:13 AM"
                                                 data-toggler='["data-status=neutral", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
                                                 <span class="nds-label">Neutral</span>
                                             </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["data-status=help", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
+                                                <span class="nds-label">Help</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -359,7 +363,7 @@ last_edit: "14/07/2026 - 12:13 AM"
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <code class="nds-inline-code lang-js">NDS.Feedback.create()</code> for general-purpose feedback on any element: tooltips, notifications, hints on divs, sections, or cards</li>
-                    <li>For form validation, use <code class="nds-inline-code lang-js">NDS.Forms.setStatus()</code> instead, which creates feedback internally and also drives border colors and ARIA attributes. See <a class="nds-color" href="{{ 'components/forms' | relative_url }}">Forms</a></li>
+                    <li>For form validation, use <code class="nds-inline-code lang-js">NDS.Forms.setStatus()</code> instead, which creates feedback internally and also drives the error border and ARIA attributes. A field carries error, help, or nothing. See <a class="nds-color" href="{{ 'components/forms' | relative_url }}">Forms</a></li>
                     <li>Use icon-only feedback (no message) inside components like <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alerts</a> and form headers where the status is already communicated by surrounding context</li>
                     <li>Use feedback with message for standalone inline validation below form fields or as contextual hints</li>
                     <li>Don't use feedback icons for page-level notifications. Use an <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> instead</li>
