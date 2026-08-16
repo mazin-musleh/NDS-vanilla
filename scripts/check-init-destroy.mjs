@@ -96,8 +96,29 @@ const report = await page.evaluate(async () => {
     ok('the view re-initializes after destroy', !!NDS.Filter.getByTarget('destroyView'));
     ok('re-init rebuilt the instances', backrefs().length > 0, backrefs().join(', ') || 'none');
 
-    NDS.Init.destroy(host);
-    host.remove();
+    // The un-destroyed unmount (field report nds-test-app-7 F7): a framework view
+    // removed WITHOUT NDS.Init.destroy() left a detached instance squatting the target
+    // id, so the remount was skipped forever and the crit hold kept it hidden.
+    const stale = NDS.Filter.getByTarget('destroyView');
+    host.remove(); // no destroy() — that is the whole point
+    const remount = host.cloneNode(true);
+    remount.querySelectorAll('[data-nds-filter-initialized], [data-paged-initialized]').forEach(el => {
+        el.removeAttribute('data-nds-filter-initialized');
+        el.removeAttribute('data-paged-initialized');
+    });
+    document.body.appendChild(remount);
+    NDS.Init.refresh(remount);
+    await settle();
+
+    const claimed = NDS.Filter.getByTarget('destroyView');
+    ok('remount after an un-destroyed unmount is claimed', !!claimed && claimed !== stale,
+        !claimed ? 'null' : claimed === stale ? 'the detached instance still holds the id' : 'fresh instance');
+    ok('remount is stamped, so the crit hold releases',
+        remount.querySelectorAll('[data-nds-filter-initialized]').length > 0,
+        `${remount.querySelectorAll('[data-nds-filter-initialized]').length} stamped`);
+
+    NDS.Init.destroy(remount);
+    remount.remove();
 
     // A container with nothing initialized inside it must not throw or over-report.
     const bare = document.createElement('div');

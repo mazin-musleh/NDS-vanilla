@@ -2928,6 +2928,22 @@
     // element existing (e.g. a search-only filter).
     const _instancesByTarget = new Map();
 
+    // Resolve the LIVE instance for a target id, or null. A framework view
+    // unmounted without NDS.Init.destroy() leaves a detached instance squatting
+    // its id: every claim below would then skip the remount and the crit hold
+    // (data-nds-filter-initialized) would keep the new region hidden forever.
+    // A detached representative means that filter is gone — destroy it (which
+    // releases its pooled NDS.onDOMAdd/listener subscriptions) and free the id.
+    function liveInstance(id) {
+        const instance = _instancesByTarget.get(id);
+        if (!instance) return null;
+        if (instance.filterContainer?.isConnected) return instance;
+        console.warn(`NDS Filter: reclaiming target "${id}" — its instance was removed from the DOM without NDS.Init.destroy(). Call destroy() on unmount.`);
+        instance.destroy();
+        _instancesByTarget.delete(id);
+        return null;
+    }
+
     // Construct an instance on `representative` (the element that carries the
     // backref, init-guard attribute, and dispatches the filter's events) and
     // register it by target id.
@@ -2967,7 +2983,7 @@
         document.querySelectorAll('[data-filter-target]').forEach(el => {
             if (el.closest('code, .code-example')) return;
             const id = el.getAttribute('data-filter-target');
-            if (!id || _instancesByTarget.has(id)) return;
+            if (!id || liveInstance(id)) return;
             if (!groups.has(id)) groups.set(id, []);
             groups.get(id).push(el);
         });
@@ -2994,7 +3010,8 @@
             if (!container) return null;
             if (container.ndsFilter) return container.ndsFilter;
             const id = container.getAttribute('data-filter-target');
-            if (id && _instancesByTarget.has(id)) return _instancesByTarget.get(id);
+            const live = id && liveInstance(id);
+            if (live) return live;
             return createInstance(container);
         },
 
@@ -3007,10 +3024,10 @@
             // element's target linkage so any surface element works.
             if (container.ndsFilter) return container.ndsFilter;
             const id = container.getAttribute('data-filter-target');
-            return id ? (_instancesByTarget.get(id) || null) : null;
+            return id ? liveInstance(id) : null;
         },
 
-        getByTarget: (targetId) => _instancesByTarget.get(targetId) || null,
+        getByTarget: (targetId) => liveInstance(targetId),
 
         /**
          * Re-resolve items and regenerate auto-scanned filters for every instance
@@ -3047,6 +3064,9 @@
                 // list from the rows currently rendered and hand back unchecked inputs,
                 // so the next real submit would silently drop the applied filter.
                 if (instance.isFormMode) return;
+                // Reap an instance whose surfaces left the DOM (route change with
+                // no NDS.Init.destroy()) instead of refreshing a detached filter.
+                if (!liveInstance(instance.targetId)) return;
                 const target = instance.targetId
                     ? document.getElementById(instance.targetId)
                     : instance.targetContainer;
