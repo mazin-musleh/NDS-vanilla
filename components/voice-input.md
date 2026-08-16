@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.1.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "17/08/2026 - 02:14 AM"
 ---
 
 <!-- Overview -->
@@ -42,7 +42,6 @@ last_edit: "28/06/2026 - 01:27 PM"
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="nds-form-footer" data-feedback-target hidden></div>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +82,6 @@ last_edit: "28/06/2026 - 01:27 PM"
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.3.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "17/08/2026 - 02:14 AM"
 ---
 
 <!-- Radio Button Group -->
@@ -104,7 +104,6 @@ last_edit: "28/06/2026 - 01:27 PM"
                       <input type="radio" id="demo-radio3" name="plan" value="enterprise" class="nds-radio">
                     </div>
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </fieldset>
                 <div class="nds-flex">
                   <button class="nds-btn nds-primary nds-sm" type="submit">
@@ -174,7 +173,6 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;input type="radio" id="radio3" name="plan" value="enterprise" class="nds-radio"&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/fieldset&gt;
               </code>
                 </div>
@@ -411,7 +409,7 @@ NDS.Forms.syncState(radio);
         <ul>
           <li>Add <code class="nds-inline-code lang-html">data-required</code> to the group to require a selection before form submission</li>
           <li>Add <code class="nds-inline-code lang-html">data-error-message</code> on the group to override the default validation message</li>
-          <li>Place a <code class="nds-inline-code lang-html">nds-form-footer</code> with <code class="nds-inline-code lang-html">data-feedback-target</code> inside the group for dynamic feedback placement</li>
+          <li>A <code class="nds-inline-code lang-html">nds-form-footer</code> with <code class="nds-inline-code lang-html">data-feedback-target</code> inside the group is optional: add it when the design wants a permanent feedback position; without it, validation feedback is created in the group container</li>
           <li>Use <code class="nds-inline-code lang-html">data-state="disabled"</code> on the group to disable all radio buttons at once</li>
         </ul>
       </div>

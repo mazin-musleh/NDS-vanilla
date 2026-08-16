@@ -37,6 +37,11 @@
  *   data-ajax · data-message · data-feedback-target · data-loading-slot
  *   data-target · data-autofill-apply (auto-fill containers)
  * Gotchas:
+ *   - Feedback needs no slot markup: setStatus creates the message element in the field's
+ *     container. A bare data-feedback-target element anywhere inside the container overrides
+ *     placement (a permanent position — footer below, header above); the container may instead
+ *     carry data-feedback-target="<selector>" to pick the target. Hidden targets unhide while
+ *     a message shows and re-hide when the last one clears.
  *   - Singleton shape: init() and initializeContainer() only — no reinit(), no create().
  *   - A required custom select is validated through its hidden .nds-select-value carrier:
  *     author data-required on the .nds-select container. The readonly display input is

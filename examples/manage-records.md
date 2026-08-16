@@ -845,7 +845,6 @@ hideFeedback: true
                             </button>
                         </div>
                     </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
 
                 <div class="nds-form-container nds-select" id="record-service-field" data-required>
@@ -879,7 +878,6 @@ hideFeedback: true
                             </div>
                         </div>
                     </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
 
                 <div class="nds-form-container nds-date-picker" data-required>
@@ -896,7 +894,6 @@ hideFeedback: true
                         </div>
                         <input type="text" id="record-date" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-year-before="5" data-year-after="1" required>
                     </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
 
                 <div class="nds-form-container" data-required>
@@ -908,7 +905,6 @@ hideFeedback: true
                     <div class="nds-form-control">
                         <input type="number" id="record-amount" class="nds-input" placeholder="0" min="0" step="10" required>
                     </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
 
                 <div class="nds-form-container nds-select">
@@ -934,7 +930,6 @@ hideFeedback: true
                             </div>
                         </div>
                     </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
                 </div>
                 <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">

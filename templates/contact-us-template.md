@@ -35,7 +35,6 @@ sidemenu_mode: false
                                 </button>
                             </div>
                         </div>
-                        <div class="nds-form-footer" data-feedback-target hidden></div>
                     </div>
 
                     <!-- Last Name -->
@@ -54,7 +53,6 @@ sidemenu_mode: false
                                 </button>
                             </div>
                         </div>
-                        <div class="nds-form-footer" data-feedback-target hidden></div>
                     </div>
 
                     <!-- Email -->
@@ -73,7 +71,6 @@ sidemenu_mode: false
                                 </button>
                             </div>
                         </div>
-                        <div class="nds-form-footer" data-feedback-target hidden></div>
                     </div>
 
                     <!-- Phone with country code prefix -->
@@ -188,7 +185,6 @@ sidemenu_mode: false
                                 </button>
                             </div>
                         </div>
-                        <div class="nds-form-footer" data-feedback-target hidden></div>
                     </div>
 
                     <!-- Subject -->
@@ -207,7 +203,6 @@ sidemenu_mode: false
                                 </button>
                             </div>
                         </div>
-                        <div class="nds-form-footer" data-feedback-target hidden></div>
                     </div>
 
                     <!-- Category -->
@@ -241,7 +236,6 @@ sidemenu_mode: false
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-form-footer" data-feedback-target hidden></div>
                     </div>
 
                     <!-- How Can We Help (textarea) -->
@@ -255,7 +249,6 @@ sidemenu_mode: false
                             <textarea id="contact-message" name="message" class="nds-textarea"
                                 placeholder="Tell us a bit more about your request..." rows="5"></textarea>
                         </div>
-                        <div class="nds-form-footer" data-feedback-target hidden></div>
                     </div>
 
                     <!-- Upload files (compact browse mode) -->

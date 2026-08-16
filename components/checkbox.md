@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.1.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "17/08/2026 - 02:14 AM"
 ---
 
 <!-- Single Checkbox -->
@@ -247,7 +247,6 @@ last_edit: "28/06/2026 - 01:27 PM"
                       class="nds-check">
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </fieldset>
               <button class="nds-btn nds-primary nds-sm" type="submit">
                 <span class="nds-label">Submit</span>
@@ -339,7 +338,6 @@ last_edit: "28/06/2026 - 01:27 PM"
   &lt;input type="checkbox" id="checkbox6" name="interests" value="food" class="nds-check"&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/fieldset&gt;
               </code>
                 </div>
@@ -489,7 +487,7 @@ NDS.Forms.clearStatus(group);
           <li>Use <code class="nds-inline-code lang-html">data-max-checked="4"</code> on a group to cap the maximum number of selections</li>
           <li>Combine both for a range constraint (e.g. "select 2 to 4 options")</li>
           <li>Add <code class="nds-inline-code lang-html">data-error-message</code> on the group to override the default validation message</li>
-          <li>Place a <code class="nds-inline-code lang-html">nds-form-footer</code> with <code class="nds-inline-code lang-html">data-feedback-target</code> inside the group for dynamic feedback placement</li>
+          <li>A <code class="nds-inline-code lang-html">nds-form-footer</code> with <code class="nds-inline-code lang-html">data-feedback-target</code> inside the group is optional: add it when the design wants a permanent feedback position; without it, validation feedback is created in the group container</li>
         </ul>
       </div>
     </div>

@@ -6,7 +6,7 @@ hero_description: A free-text field that turns typed values into removable chip 
 breadcrumb: [["Components", "/components"]]
 since: "1.4.0"
 updated: "1.5.0"
-last_edit: "15/07/2026 - 03:13 AM"
+last_edit: "17/08/2026 - 02:14 AM"
 lang: en
 direction: ltr
 ---
@@ -56,7 +56,6 @@ direction: ltr
                                     <div class="nds-form-control">
                                         <input type="text" id="taginput-default-input" placeholder="Add a skill&hellip;">
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +87,6 @@ direction: ltr
   &lt;div class="nds-form-control"&gt;
     &lt;input type="text" id="taginput-default-input" placeholder="Add a skill&amp;hellip;"&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                     </div>
@@ -127,7 +125,6 @@ direction: ltr
                                         <input type="hidden" name="interests[]" value="Development">
                                         <input type="text" id="taginput-restore-input" placeholder="Add an interest&hellip;">
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +159,6 @@ direction: ltr
     &lt;input type="hidden" name="interests[]" value="Development"&gt;
     &lt;input type="text" id="taginput-restore-input" placeholder="Add an interest&amp;hellip;"&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                     </div>
@@ -199,7 +195,6 @@ direction: ltr
                                     <div class="nds-form-control">
                                         <input type="text" id="taginput-max-input" placeholder="Add up to 3 topics&hellip;">
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +226,6 @@ direction: ltr
   &lt;div class="nds-form-control"&gt;
     &lt;input type="text" id="taginput-max-input" placeholder="Add up to 3 topics&amp;hellip;"&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                     </div>

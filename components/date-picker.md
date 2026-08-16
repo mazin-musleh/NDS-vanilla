@@ -6,7 +6,7 @@ hero_description: Interactive calendar component for selecting dates with suppor
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.7.1"
-last_edit: "10/08/2026 - 10:47 PM"
+last_edit: "17/08/2026 - 02:14 AM"
 lang: en
 direction: ltr
 ---
@@ -64,7 +64,6 @@ direction: ltr
                     <input type="text" id="demo-datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
                       data-year-before="40" data-year-after="5">
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
                 <div class="nds-flex">
                   <button class="nds-btn nds-primary nds-sm" type="submit">
@@ -112,7 +111,6 @@ direction: ltr
 &lt;input type="text" id="date-picker-1" class="nds-input nds-date-input"
   placeholder="DD/MM/YYYY" data-year-before="40" data-year-after="5"&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
               </code>
                 </div>
@@ -154,7 +152,6 @@ direction: ltr
                     </div>
                     <input type="text" id="demo-datePickerIso" class="nds-input nds-date-input" placeholder="YYYY-MM-DD">
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
                 <div class="nds-form-container nds-date-picker" data-format="D.M.YY">
                   <div class="nds-form-header">
@@ -171,7 +168,6 @@ direction: ltr
                     </div>
                     <input type="text" id="demo-datePickerShort" class="nds-input nds-date-input" placeholder="D.M.YY">
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
                 <div class="nds-form-container nds-date-picker" data-format="MM/YYYY">
                   <div class="nds-form-header">
@@ -188,7 +184,6 @@ direction: ltr
                     </div>
                     <input type="text" id="demo-datePickerMonth" class="nds-input nds-date-input" placeholder="MM/YYYY">
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
                 <div class="nds-form-container nds-date-picker" data-format="YYYY">
                   <div class="nds-form-header">
@@ -205,7 +200,6 @@ direction: ltr
                     </div>
                     <input type="text" id="demo-datePickerYear" class="nds-input nds-date-input" placeholder="YYYY">
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
               </form>
             </div>
@@ -248,7 +242,6 @@ direction: ltr
 &lt;input type="text" id="date-picker-iso" class="nds-input nds-date-input"
   placeholder="YYYY-MM-DD"&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
               </code>
                 </div>
@@ -290,7 +283,6 @@ direction: ltr
                     </div>
                     <input type="text" id="demo-datePickerNoFuture" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-max-date="{{ site.time | date: '%d/%m/%Y' }}">
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
                 <div class="nds-form-container nds-date-picker">
                   <div class="nds-form-header">
@@ -307,7 +299,6 @@ direction: ltr
                     </div>
                     <input type="text" id="demo-datePickerWindow" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-min-date="01/01/2024" data-max-date="31/12/2025">
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
                 <div class="nds-form-container nds-date-picker" data-format="MM/YYYY">
                   <div class="nds-form-header">
@@ -324,7 +315,6 @@ direction: ltr
                     </div>
                     <input type="text" id="demo-datePickerMonthBounds" class="nds-input nds-date-input" placeholder="MM/YYYY" data-min-date="06/2024" data-max-date="12/2025">
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
               </form>
             </div>
@@ -368,7 +358,6 @@ direction: ltr
 &lt;input type="text" id="date-picker-no-future" class="nds-input nds-date-input"
   placeholder="DD/MM/YYYY" data-max-date="31/12/2025"&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
               </code>
                 </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "12/08/2026 - 12:41 AM"
+last_edit: "17/08/2026 - 02:14 AM"
 ---
 
 <!-- Autocomplete Input -->
@@ -56,7 +56,6 @@ last_edit: "12/08/2026 - 12:41 AM"
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -99,7 +98,6 @@ last_edit: "12/08/2026 - 12:41 AM"
   &lt;/button&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
               </code>
                 </div>

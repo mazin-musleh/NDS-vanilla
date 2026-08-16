@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.8.x"
-last_edit: "19/07/2026 - 04:00 AM"
+last_edit: "17/08/2026 - 02:14 AM"
 ---
 
 <!-- Beta notice -->
@@ -60,7 +60,6 @@ last_edit: "19/07/2026 - 04:00 AM"
                                     <div class="nds-form-control">
                                         <textarea class="nds-textarea" name="editor-standard" id="editor-standard-field" placeholder="Write here"></textarea>
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +91,6 @@ last_edit: "19/07/2026 - 04:00 AM"
   &lt;div class="nds-form-control"&gt;
     &lt;textarea class="nds-textarea" name="editor-standard" id="editor-standard-field" placeholder="Write here"&gt;&lt;/textarea&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                     </div>
@@ -136,7 +134,6 @@ last_edit: "19/07/2026 - 04:00 AM"
 </ul>
                                     </textarea>
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +173,6 @@ last_edit: "19/07/2026 - 04:00 AM"
 &lt;/ul&gt;
     &lt;/textarea&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                         </div>
@@ -218,7 +214,6 @@ last_edit: "19/07/2026 - 04:00 AM"
 <p>Text before and after components stays freely editable.</p>
                                     </textarea>
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -255,7 +250,6 @@ last_edit: "19/07/2026 - 04:00 AM"
 &lt;p&gt;Text before and after components stays freely editable.&lt;/p&gt;
     &lt;/textarea&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                         </div>
@@ -297,7 +291,6 @@ last_edit: "19/07/2026 - 04:00 AM"
 <p>Paste a screenshot here, upload a file, or insert one from a link.</p>
                                     </textarea>
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                                 <script>
                                 document.getElementById('editor-images-container')
@@ -349,7 +342,6 @@ last_edit: "19/07/2026 - 04:00 AM"
 &lt;p&gt;Paste a screenshot here, upload a file, or insert one from a link.&lt;/p&gt;
     &lt;/textarea&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                         </div>
@@ -413,7 +405,6 @@ document.getElementById('editor-images-container')
 <p>These notes are <strong>read only</strong>: content stays selectable and the source view still opens.</p>
                                     </textarea>
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -447,7 +438,6 @@ document.getElementById('editor-images-container')
 &lt;p&gt;These notes are &lt;strong&gt;read only&lt;/strong&gt;: content stays selectable and the source view still opens.&lt;/p&gt;
     &lt;/textarea&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                     </div>
@@ -470,7 +460,6 @@ document.getElementById('editor-images-container')
 <p>This entry is archived and its value does not submit.</p>
                                     </textarea>
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -504,7 +493,6 @@ document.getElementById('editor-images-container')
 &lt;p&gt;This entry is archived and its value does not submit.&lt;/p&gt;
     &lt;/textarea&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                     </code>
                                     </div>

@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.8.x"
-last_edit: "16/08/2026 - 04:12 PM"
+last_edit: "17/08/2026 - 02:14 AM"
 lang: en
 direction: ltr
 ---
@@ -108,7 +108,6 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -148,7 +147,6 @@ direction: ltr
   &lt;/button&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -314,7 +312,6 @@ direction: ltr
                   <input type="text" id="demo-prefixSuffix" class="nds-input" placeholder="Entered text">
                   <div class="nds-form-action nds-suffix"><span class="nds-btn nds-subtle"><span class="nds-label">Suffix</span></span></div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -351,7 +348,6 @@ direction: ltr
 &lt;input type="text" id="prefix-suffix-1" class="nds-input" placeholder="Entered text"&gt;
 &lt;div class="nds-form-action nds-suffix"&gt;&lt;span class="nds-btn nds-subtle"&gt;&lt;span class="nds-label"&gt;Suffix&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -523,7 +519,6 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -590,7 +585,6 @@ direction: ltr
   &lt;/button&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -736,7 +730,6 @@ direction: ltr
                   <input type="text" id="demo-numberInput" class="nds-input nds-center" inputmode="numeric" value="1" min="0" max="1000" step="1" placeholder="0">
                   <div class="nds-form-action nds-suffix"><button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"><i class="hgi hgi-stroke hgi-minus-sign"></i></button></div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -773,7 +766,6 @@ direction: ltr
 &lt;input type="text" id="number-input-1" class="nds-input nds-center" inputmode="numeric" value="1" min="0" max="1000" step="1" placeholder="0"&gt;
 &lt;div class="nds-form-action nds-suffix"&gt;&lt;button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"&gt;&lt;i class="hgi hgi-stroke hgi-minus-sign"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -889,7 +881,6 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -933,7 +924,6 @@ direction: ltr
   &lt;/button&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -1045,7 +1035,6 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -1086,7 +1075,6 @@ direction: ltr
   &lt;/button&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -1204,7 +1192,6 @@ direction: ltr
                       </button>
                     </div>
                   </div>
-                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
               </form>
             </div>
@@ -1249,7 +1236,6 @@ direction: ltr
   &lt;/button&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -1356,7 +1342,6 @@ direction: ltr
                   <textarea id="demo-textareaInput" class="nds-textarea" placeholder="Enter your message..."
                     rows="4"></textarea>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -1391,7 +1376,6 @@ direction: ltr
   &lt;div class="nds-form-control"&gt;
 &lt;textarea id="textarea-1" class="nds-textarea" placeholder="Enter your message..." rows="4"&gt;&lt;/textarea&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -1527,7 +1511,6 @@ direction: ltr
                     </div>
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -1589,7 +1572,6 @@ direction: ltr
   &lt;/div&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -1697,7 +1679,6 @@ direction: ltr
                     <option value="asir">Asir</option>
                   </select>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -1738,7 +1719,6 @@ direction: ltr
   &lt;option value="asir"&gt;Asir&lt;/option&gt;
 &lt;/select&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                 </code>
                   </div>
@@ -1867,7 +1847,6 @@ direction: ltr
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -1911,7 +1890,6 @@ direction: ltr
   &lt;/button&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
               </code>
                   </div>
@@ -1987,7 +1965,6 @@ var status = NDS.Forms.getStatus(field);
                     </button>
                   </div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
               </div>
             </div>
           </div>
@@ -2032,7 +2009,6 @@ var status = NDS.Forms.getStatus(field);
   &lt;/button&gt;
 &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
               </code>
                   </div>
@@ -2210,6 +2186,9 @@ NDS.Forms.clearStatus(container);</code>
         </div>
 
       </div>
+      <div class="nds-block nds-prose">
+        <p>The <code class="nds-inline-code lang-html">data-feedback-target</code> element sets where a field's feedback renders. It is optional: without one, the API creates feedback in the field's container. Place it anywhere inside the container — a <code class="nds-inline-code lang-html">nds-form-footer</code> puts messages below the input, a <code class="nds-inline-code lang-html">nds-form-header</code> puts them above. A hidden target is shown when a message lands and hidden again when the last message clears.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -2249,7 +2228,7 @@ NDS.Forms.clearStatus(container);</code>
             <i class="hgi hgi-stroke hgi-notification-03"></i>
             <span class="nds-label">Status Feedback</span>
           </span>
-          <p class="nds-item-desc">Four status types: error, success, warning, info. Feedback messages render into <code class="nds-inline-code lang-html">data-feedback-target</code> elements. Permanent hints survive validation cycles with <code class="nds-inline-code lang-html">data-permanent</code>.</p>
+          <p class="nds-item-desc">Feedback is created by the API: <code class="nds-inline-code lang-js">setStatus</code> places the message in the field's container, or in a <code class="nds-inline-code lang-html">data-feedback-target</code> element when one is present. A field shows error or help; any other status renders neutral. Permanent hints survive validation cycles with <code class="nds-inline-code lang-html">data-permanent</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -2314,7 +2293,7 @@ NDS.Forms.clearStatus(container);</code>
           <li>Use permanent feedback (<code class="nds-inline-code lang-html">data-permanent</code>) for format hints and character requirements. These persist across validation cycles: they hide when an error appears and restore when the error clears.</li>
           <li>Use prefix and suffix slots for units, currency symbols, or action buttons that contextualize the input. Prefix/suffix buttons support both subtle and solid styles, and can include icons or dropmenus for compound inputs.</li>
           <li>For compound inputs (phone + country code, amount + currency, measurement + unit), use a prefix-slot dropmenu with <code class="nds-inline-code lang-html">data-select-name</code>. The dropmenu renders a hidden input that submits with the form and keeps the trigger label compact while the dropdown rows stay descriptive. See the Phone Number with Country Code demo for the full pattern.</li>
-          <li>Always include a <code class="nds-inline-code lang-html">data-feedback-target</code> element in the form footer, even if initially hidden. The validation system needs this target to inject error, success, and warning messages.</li>
+          <li>Validation feedback needs no markup of its own: <code class="nds-inline-code lang-js">setStatus</code> and submit validation create the message element and place it in the field's container. Add a <code class="nds-inline-code lang-html">data-feedback-target</code> element only when the design wants a permanent feedback position — see the Permanent Feedback section.</li>
           <li>Set <code class="nds-inline-code lang-html">data-error-message</code> on the container to override default browser validation messages with context-specific text that guides the user toward correction.</li>
         </ul>
       </div>

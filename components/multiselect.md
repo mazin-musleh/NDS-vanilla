@@ -6,7 +6,7 @@ hero_description: A form field for picking multiple options from grouped lists, 
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.5.0"
-last_edit: "10/08/2026 - 12:31 AM"
+last_edit: "17/08/2026 - 02:14 AM"
 lang: en
 direction: ltr
 ---
@@ -138,7 +138,6 @@ direction: ltr
                                         <div class="nds-chips nds-multiselect-chips" data-multiselect-chips></div>
                                         <span class="nds-multiselect-placeholder">Select options&hellip;</span>
                                     </div>
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </div>
                             </div>
                         </div>
@@ -251,7 +250,6 @@ direction: ltr
     &lt;div class="nds-chips nds-multiselect-chips" data-multiselect-chips&gt;&lt;/div&gt;
     &lt;span class="nds-multiselect-placeholder"&gt;Select options&amp;hellip;&lt;/span&gt;
   &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                                         </code>
                                         </div>
@@ -361,7 +359,6 @@ direction: ltr
                                             <div class="nds-chips nds-multiselect-chips" data-multiselect-chips></div>
                                             <span class="nds-multiselect-placeholder">Select 2&ndash;4 options&hellip;</span>
                                         </div>
-                                        <div class="nds-form-footer" data-feedback-target hidden></div>
                                     </div>
                                     <button class="nds-btn nds-primary nds-sm" type="submit">
                                         <span class="nds-label">Submit</span>
@@ -398,7 +395,6 @@ direction: ltr
        data-min-checked="2" data-max-checked="4"&gt;
     &lt;!-- same markup as Grouped Options above: header label, dropmenu
          trigger + panel with option checkboxes, chip track, placeholder --&gt;
-    &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;button class="nds-btn nds-primary" type="submit"&gt;
     &lt;span class="nds-label"&gt;Submit&lt;/span&gt;

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.8.x"
-last_edit: "16/08/2026 - 03:53 PM"
+last_edit: "17/08/2026 - 02:14 AM"
 ---
 
 <!-- OTP Overview -->
@@ -338,7 +338,6 @@ last_edit: "16/08/2026 - 03:53 PM"
                                         </div>
                                     </div>
                                     <input type="hidden" class="nds-otp-value" name="otp-validate">
-                                    <div class="nds-form-footer" data-feedback-target hidden></div>
                                 </fieldset>
                                 <div class="nds-flex" style="--justify:center">
                                     <button class="nds-btn nds-primary nds-sm" id="otp-validate-btn">
@@ -419,7 +418,6 @@ last_edit: "16/08/2026 - 03:53 PM"
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;input type="hidden" class="nds-otp-value" name="otp"&gt;
-  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/fieldset&gt;
                                     </code>
                                     </div>

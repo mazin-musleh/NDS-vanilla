@@ -68,7 +68,6 @@ sidemenu_mode: false
                                     placeholder="DD/MM/YYYY" autocomplete="bday"
                                     data-year-before="100" data-year-after="0" required>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container" data-required>
@@ -88,7 +87,6 @@ sidemenu_mode: false
                                     </button>
                                 </div>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container" data-required>
@@ -149,7 +147,6 @@ sidemenu_mode: false
                                     </button>
                                 </div>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container" data-required>
@@ -165,7 +162,6 @@ sidemenu_mode: false
                                     </button>
                                 </div>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container">
@@ -181,7 +177,6 @@ sidemenu_mode: false
                                     </button>
                                 </div>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container" data-required>
@@ -197,7 +192,6 @@ sidemenu_mode: false
                                     </button>
                                 </div>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container" data-required>
@@ -214,7 +208,6 @@ sidemenu_mode: false
                                     </button>
                                 </div>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container" data-required
@@ -233,7 +226,6 @@ sidemenu_mode: false
                                     </button>
                                 </div>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container" data-required>
@@ -244,7 +236,6 @@ sidemenu_mode: false
                                 <input type="text" id="ft-district" name="district" class="nds-input"
                                     placeholder="Neighborhood or district" autocomplete="address-level3" required>
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                         <div class="nds-form-container">
@@ -256,7 +247,6 @@ sidemenu_mode: false
                                     placeholder="5-digit code" inputmode="numeric" pattern="[0-9]{5}"
                                     autocomplete="postal-code">
                             </div>
-                            <div class="nds-form-footer" data-feedback-target hidden></div>
                         </div>
 
                     </div>
