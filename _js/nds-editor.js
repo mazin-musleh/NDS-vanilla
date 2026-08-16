@@ -1908,8 +1908,10 @@
             if (!list) return;
             const chain = this._removeChain;
             list.innerHTML = chain.map((el, i) => ({ el, i })).reverse().map(({ el, i }, depth) =>
-                `<button type="button" class="nds-btn nds-subtle nds-destructive nds-dropmenu-item" data-editor-remove-level="${i}" style="--_remove-depth: ${depth}"><span class="nds-label">${depth ? '– ' : ''}${escapeHtml(componentNameOf(el))}</span></button>`
+                `<button type="button" class="nds-btn nds-subtle nds-destructive nds-dropmenu-item" data-editor-remove-level="${i}"><span class="nds-label">${depth ? '– ' : ''}${escapeHtml(componentNameOf(el))}</span></button>`
             ).join('');
+            // Indent knob via CSSOM, never a style attribute — a strict style-src blocks the attribute form.
+            list.querySelectorAll('[data-editor-remove-level]').forEach((btn, depth) => btn.style.setProperty('--_remove-depth', depth));
         }
 
         _confirmRemove(levelIndex) {

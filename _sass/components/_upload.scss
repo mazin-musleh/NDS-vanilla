@@ -153,7 +153,9 @@
 
         // Status-driven visibility: feedback shown by default, progress hidden
         .nds-feedback { display: flex; }
-        .nds-progress-circle { display: none; }
+        // Size default lives here, not on a style attribute — a strict style-src blocks
+        // that form. Private name keeps --progress-size free for a consumer override.
+        .nds-progress-circle { --_progress-size: var(--progress-size, 24px); display: none; }
         .nds-file-error { display: none; }
 
         // Uploading/processing: show progress, hide feedback

@@ -114,7 +114,7 @@
             '<span class="nds-feedback">' +
                 '<span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>' +
             '</span>' +
-            '<div class="nds-progress-circle" style="--progress-size: 24px; --progress-value: 0;">' +
+            '<div class="nds-progress-circle">' +
                 '<svg width="24" height="24" viewBox="0 0 24 24">' +
                     '<circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />' +
                     '<circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3" ' +

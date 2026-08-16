@@ -115,7 +115,6 @@
             if (closable || duration > 0) {
                 // Add progress class and SVG if toast has auto-dismiss
                 const progressClass = (display === 'toast' && duration > 0) ? ' nds-progress' : '';
-                const progressStyle = (display === 'toast' && duration > 0) ? ` style="--progress-duration: ${Number(duration)}ms;"` : '';
                 const progressSVG = (display === 'toast' && duration > 0) ? `
                     <div class="nds-progress-circle">
                         <svg width="100%" height="100%" viewBox="0 0 24 24">
@@ -126,7 +125,7 @@
                 ` : '';
 
                 html += `
-                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close${progressClass}" aria-label="Close"${progressStyle}>
+                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close${progressClass}" aria-label="Close">
                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         ${progressSVG}
                     </button>
@@ -134,6 +133,11 @@
             }
 
             alert.innerHTML = html;
+
+            // Knob via CSSOM, never a style attribute — a strict style-src blocks the attribute form.
+            if (display === 'toast' && duration > 0) {
+                alert.querySelector('.nds-alert-close').style.setProperty('--progress-duration', `${Number(duration)}ms`);
+            }
 
             // Build actions via DOM so caller-supplied href/class/target/label never reach the HTML parser,
             // and so target="_blank" always pairs with rel="noopener noreferrer".

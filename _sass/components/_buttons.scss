@@ -696,7 +696,7 @@
     // Inherit button colors
     --progress-track-color: var(--_btn-loading-track, var(--colors-alpha-black-10));
     --progress-color: var(--_btn-color);
-    --progress-size: calc(var(--btn-size) - 8px);
+    --_progress-size: var(--progress-size, calc(var(--btn-size) - 8px));
 
     // Hide text/percentage display
     .nds-progress-info {

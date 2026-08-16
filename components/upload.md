@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "19/07/2026 - 03:40 PM"
+updated: "1.8.x"
+last_edit: "16/08/2026 - 03:36 PM"
 ---
 
 <!-- File Upload -->
@@ -107,7 +107,7 @@ last_edit: "19/07/2026 - 03:40 PM"
                                                 </span>
                                             </span>
 
-                                            <div class="nds-progress-circle" style="--progress-size: 24px; --progress-value: 0;">
+                                            <div class="nds-progress-circle">
                                                 <svg width="24" height="24" viewBox="0 0 24 24">
                                                     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
                                                     <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
@@ -197,7 +197,7 @@ last_edit: "19/07/2026 - 03:40 PM"
         &lt;/span&gt;
       &lt;/span&gt;
 
-      &lt;div class="nds-progress-circle" style="--progress-size: 24px; --progress-value: 0;"&gt;
+      &lt;div class="nds-progress-circle"&gt;
         &lt;svg width="24" height="24" viewBox="0 0 24 24"&gt;
           &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" /&gt;
           &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"

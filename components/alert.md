@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.1"
-last_edit: "10/08/2026 - 10:24 PM"
+updated: "1.8.x"
+last_edit: "16/08/2026 - 03:36 PM"
 ---
 
 <!-- Variants -->
@@ -977,7 +977,7 @@ NDS.Alert.create({
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--alert-stripe</code></td><td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td><td>Color of the side stripe indicator</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--alert-icon-bg</code></td><td><code class="nds-inline-code lang-html">--background-neutral-light</code></td><td>Background color of the feedback icon circle</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-duration</code></td><td><code class="nds-inline-code lang-html">4000ms</code></td><td>Duration of the countdown animation on the toast close button. Set inline on <code class="nds-inline-code lang-html">.nds-alert-close</code> by the JS API when <code class="nds-inline-code lang-js">duration</code> is provided</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-duration</code></td><td><code class="nds-inline-code lang-html">4000ms</code></td><td>Duration of the countdown animation on the toast close button. Set it yourself in hand-written toast markup. The JS API sets it on <code class="nds-inline-code lang-html">.nds-alert-close</code> when you pass <code class="nds-inline-code lang-js">duration</code></td></tr>
                     </tbody>
                 </table>
             </div>

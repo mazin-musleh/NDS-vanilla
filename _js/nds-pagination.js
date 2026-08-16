@@ -1098,6 +1098,14 @@
         win.end = end;
     }
 
+    // Height via CSSOM, never a style attribute — a strict style-src blocks the
+    // attribute form, which would collapse every spacer and break the scroll math.
+    function _spacer(height) {
+        const el = document.createElement('div');
+        el.style.height = height + 'px';
+        return el;
+    }
+
     // Materialize exactly the rows [start..end] (page numbers) plus a focused
     // row we must not detach (removal OR re-append kills focus — kept rows are
     // never moved, only neighbors change around them). Spacers are cheap
@@ -1143,10 +1151,10 @@
         scroll.querySelectorAll('.nds-dropmenu-item').forEach(rowEl => {
             const p = pageNumberOf(rowEl);
             const gap = p - prev - 1;
-            if (gap > 0) rowEl.insertAdjacentHTML('beforebegin', `<div style="height:${gap * pitch}px"></div>`);
+            if (gap > 0) rowEl.insertAdjacentElement('beforebegin', _spacer(gap * pitch));
             prev = p;
         });
-        if (prev < to) scroll.insertAdjacentHTML('beforeend', `<div style="height:${(to - prev) * pitch}px"></div>`);
+        if (prev < to) scroll.insertAdjacentElement('beforeend', _spacer((to - prev) * pitch));
 
         // 4. Active row: aria-current is baked by _menuItem; data-state stays
         //    NDS.State-managed (never a literal attribute).
