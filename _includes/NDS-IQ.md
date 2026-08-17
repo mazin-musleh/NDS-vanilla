@@ -1,4 +1,4 @@
-# NDS IQ — building UI with the National Design System (instructions v2.1)
+# NDS IQ — building UI with the National Design System (instructions v2.2)
 
 ## How to use this file
 
@@ -305,12 +305,16 @@ The anchor is exactly this, with `NDS_ASSETS` set to the project's real static r
 All UI in this project is built with NDS. Before any UI, page, component, styling,
 or asset work — or when unsure whether a task touches NDS — read `NDS-IQ.md` at this
 project's root, top to bottom, once per session. Do no NDS work before that read.
+A compacted or summarized context starts a new session: read the file again before
+more NDS work.
 If the file is missing, stop and ask the dev.
 
 These hold even before the read:
 - Never edit anything under `NDS_ROOT`; never hand-edit NDS files in `NDS_ASSETS`.
 - Never write `.nds-*` markup from memory — copy from the sources `NDS-IQ.md` names.
 ```
+
+**Anchor update**: if the installed anchor lacks the compacted-context sentence above, add it word for word. Nothing else in the anchor changes.
 
 **First install**: download this file raw to `NDS-IQ.md` at the project root (curl or the stack's HTTP client, never a web-fetch tool); add the anchor to the agent file — `NDS_ROOT` ships set to `.nds/` (the canon home; only the dev's explicit call changes it), and `NDS_ASSETS` takes the project's real static root (unset by the dev, it stays a placeholder, and the placeholder rule blocks asset work until it is set); commit both. Then start at §Plan step 1: inventory the project and write `NDS-PLAN.md`. Installing the file is not the deliverable; the plan the dev reviews is.
 
