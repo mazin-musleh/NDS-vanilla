@@ -2,7 +2,7 @@
 
 
 - mode: comprehension
-- rules: the visual pass ("Look at the page at desktop and mobile width"; "A difference you chose is a content swap; a difference you didn't is a bug") — **no sentence yet covers verifying a set knob by its effect; scenario lands BEFORE the sentence**, per this file's standing rule.
+- rules: the visual pass ("Look at the page at desktop and mobile width"; "A difference you chose is a content swap; a difference you didn't is a bug") — no sentence covers verifying a set knob by its effect, and none was written: the floor run PASSED, so the model does this unaided. Trim candidacy is weakened by this scenario's own C2 leak (see `leak:`).
 - provenance: rig 6, correction 2.3 — every grid/card knob on the site was silently discarded (the consumer stylesheet lost the specificity fight against the runtime's own knob resets; source-fixed 2026-08-14, `:where()` zero-specificity resets, commit `6a95571f`), and one knob was an outright wrong property name (`--columns` for `--max-col`). Nothing surfaced either: the grid's default behavior coincided with the intended 3 columns at the one desktop width checked. "Looks right" passed; "is it driven by what I wrote" was never asked. The source fix removes THIS failure's mechanism, not the class of failure — a mistyped knob name still fails silently behind a coincidental default.
 - setup: A page is done. Its grid carries a project-scoped class setting `--max-col: 3` in the project's stylesheet. At the desktop width being tested, the grid's DEFAULT behavior also happens to produce three columns.
 - prompt: "verify the page before I sign it off."

@@ -1,8 +1,8 @@
 # nds-iq-eval scenarios — index
 
-One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak, baseline) lives in `scenarios/S<n>-<slug>.md`. Scoping reads THIS file only, then opens just the scoped files. Records follow SKILL.md's no-records rule: a scenario file holds its durable fields, a one-line verdict log, and at most ONE current story while something is open — stories are replaced, never appended; git is the archive (the pre-split monolith is at commit `6490326a`).
+One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak, baseline) lives in `scenarios/S<n>-<slug>.md`. Scoping reads THIS file only, then opens just the scoped files. Records follow SKILL.md's no-records rule: a scenario file holds its durable fields, a one-line verdict log, and at most ONE current story while something is open — stories are replaced, never appended; git is the archive (the pre-split monolith is at commit `6490326a`). `node scripts/check-scenarios.mjs` audits that shape — appended-instead-of-replaced passages, index/file mismatches, stale pre-run markers, and pointers into the release-cleared `TODO.md`. Run it whenever convenient (a sitting, a week); it is not per-commit and nothing schedules it.
 
-**Numbering:** S1–S86 are written. S43 was never used — a numbering skip, not a retirement. **Next free is S87.** Update this line whenever a scenario lands.
+**Numbering:** S1–S87 are written. S43 was never used — a numbering skip, not a retirement. **Next free is S88.** Update this line whenever a scenario lands.
 
 **Standing harness rules** (method lives in SKILL.md; these are the file-level ones):
 - Catalog-routing prompts stay in the dev's words — never words a `use_when` uses verbatim; worked examples that name an entry stay OUT of the rules file or the runner quotes the answer instead of finding it (S28's first run, 2026-08-08).
@@ -97,3 +97,4 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S84 | composition-source-members-shipped | c | shipped page carries every cited-source member | soft-FAIL 2026-08-17 (de-leaked pair) | leak:C1-fixed · OPEN → R5 |
 | S85 | framework-view-lifecycle | c | refresh on mount + destroy on unmount; no poll | PASS 2026-08-17 solo | floor:n/a (doc gate) · WATCH mechanism-naming |
 | S86 | verify-headless-entry-gate | c | ladder entry needs a named failed headless attempt | PASS 2026-08-17 (de-leaked) | floor:not run · leak:C2-fixed · OPEN → R1 field half |
+| S87 | mount-root-layout-chain | c | mount element takes display:contents; footer stays pinned | PASS 2026-08-18 (de-leaked pair) | floor:FAIL ×3 · leak:C2-fixed · behavior run rides next mini-spa |

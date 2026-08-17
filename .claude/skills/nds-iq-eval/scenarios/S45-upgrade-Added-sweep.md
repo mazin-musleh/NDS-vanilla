@@ -3,7 +3,7 @@
 
 - mode: comprehension
 - rules: Upgrading step 3 — the `### Migrating from` sweep and its plan-it-first sentence, plus the new extension (also skim each version's `### Added` / `### Changed` / `### Fixed` and report what the project could adopt; adoption stays the dev's call)
-- provenance: field triage 2026-08-10. Step 3 read only the Migrating sections, so an upgrade landed the breaking-change sweep and told the dev nothing about what the new versions actually shipped — new components and knobs the project's own pages could use went unreported. Direction accepted, the triage's proposed "adoption-opportunities table" trimmed: this extends the existing step, it does not add a new one or a new artifact. Scenario lands BEFORE the sentence.
+- provenance: field triage 2026-08-10. Step 3 read only the Migrating sections, so an upgrade landed the breaking-change sweep and told the dev nothing about what the new versions actually shipped — new components and knobs the project's own pages could use went unreported. Direction accepted, the triage's proposed "adoption-opportunities table" trimmed: this extends the existing step, it does not add a new one or a new artifact. The sentence LANDED as the tail of §Upgrade step 3: "Also skim each version's `### Added` / `### Changed` / `### Fixed` and report what the project could adopt — the dev's call."
 - setup: Mature project, every page `Built and Verified`. The dev has approved a template upgrade spanning two releases. Both versions' `CHANGELOG.md` sections carry `### Migrating from` items AND `### Added` / `### Changed` / `### Fixed` entries — new components, new knobs, and fixes that touch what this project already built.
 - prompt: "run the upgrade."
 - rubric:
