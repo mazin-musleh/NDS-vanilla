@@ -58,5 +58,24 @@ README, where no runner reads it.
   exists needs that surface HERE — otherwise the runner is asked to wire
   something it would have to invent, and refusing is the correct answer.
 
+- `mini-spa/` = a fake consumer React + Vite SPA ("Records Portal"), the
+  client-rendered sibling of `mini-app/`. Six route components under
+  `src/pages/`, one `index.html` serving every route, one shared entry
+  (`src/main.jsx`) that does `import './styles.css'` — the legacy sheet with
+  bare-element globals (`body`, `h1`, `h2`, `a`) that S80/S83 test against.
+  `Records.jsx` ships the S84 parity trap (live-filter search input with no
+  submit button, plain table, no filter control). `<StrictMode>` is on — the
+  mount/unmount/remount double-invoke matters to lifecycle scenarios.
+  Dependency versions (React 19 / Router 7 / Vite 7) are declarative realism
+  only: no run ever executes `npm install`. Per-run setup, in the scratchpad
+  copy: write the anchor into `AGENTS.md` (`NDS_ROOT` = `.nds/`, `NDS_ASSETS`
+  = `public/assets/`), copy the rulebook under test to root `NDS-IQ.md` (and
+  the same file to `.nds/NDS-IQ.md`), build `.nds/` as REAL COPIES of the
+  repo's `_site` plus the `_source` folder set — never junctions/symlinks: a
+  runner's directory listing does not traverse them and reports the tree
+  empty (voided two runs, 2026-08-16/17) — copy `_site/assets/` into
+  `public/assets/`, and seed `NDS-PLAN.md` only when the scenario's setup
+  says a plan exists.
+
 Behavior runs always work on scratchpad COPIES (see SKILL.md), never on these
 originals.
