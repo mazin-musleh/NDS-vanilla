@@ -75,7 +75,9 @@ README, where no runner reads it.
   runner's directory listing does not traverse them and reports the tree
   empty (voided two runs, 2026-08-16/17) — copy `_site/assets/` into
   `public/assets/`, and seed `NDS-PLAN.md` only when the scenario's setup
-  says a plan exists.
+  says a plan exists. Seeded artifacts follow SKILL.md's no-leak rule —
+  state only what the field artifact states; S84's exact row text is pinned
+  in its `setup:` because an enumerated row leaked its answer.
 
 Behavior runs always work on scratchpad COPIES (see SKILL.md), never on these
 originals.
