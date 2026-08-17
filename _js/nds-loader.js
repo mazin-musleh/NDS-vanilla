@@ -932,13 +932,26 @@
     }
 
     // ── Debug-build audits (CONFIG.enableLogging only) ─────────────────────
-    // Two silent-failure classes nothing else reports: an unregistered inline
+    // Silent-failure classes nothing else reports: lang/dir disagreement runs
+    // every direction-aware component the wrong way, an unregistered inline
     // icon paints a solid box (no CSS rule → computed mask-image 'none'), and
     // a promise-grammar container no component claimed stays skeleton-held
     // forever. Console-only; production builds never schedule this.
     // Runs 3s after the deferred icons CSS lands so injected bundles have
     // initialized and mask rules are computable.
     function runDebugAudits() {
+        // NDS.isRTL tests dir alone (no lang fallback), and CSS flips off the same
+        // attribute — so lang/dir disagreement runs components in one direction
+        // under content written for the other, with nothing else reporting it.
+        // Not auto-corrected: writing dir here flips the whole document a frame
+        // after paint, and cannot help the pre-JS paint at all.
+        const htmlDir = document.documentElement.dir;
+        if (NDS.isArabic && htmlDir !== 'rtl') {
+            console.warn(`[NDS] audit: <html lang="ar"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRTL reads false, so components run left-to-right under Arabic content. Set dir="rtl" in the markup.`);
+        } else if (!NDS.isArabic && htmlDir === 'rtl') {
+            console.warn(`[NDS] audit: <html dir="rtl"> with lang="${document.documentElement.lang || 'unset'}" — direction and language disagree. Set dir="ltr", or lang to an Arabic locale.`);
+        }
+
         document.querySelectorAll('[data-filter-items]:not([data-nds-filter-initialized])').forEach(el => {
             if (el.closest('code, .code-example')) return;
             console.warn('[NDS] audit: data-filter-items container never claimed by a filter — it stays skeleton-held. Remove the attribute or add the filter UI.', el);
