@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "13/08/2026 - 10:48 PM"
+last_edit: "18/08/2026 - 02:53 AM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -246,6 +246,8 @@ Continue: read NDS-PLAN.md and propose the next step.
                 </div>
 
                 <p>Implementation is complete when all plan entries are <code class="nds-inline-code lang-html">Built and Verified</code>. Entries marked <code class="nds-inline-code lang-html">Awaiting Verification</code> still require sign-off.</p>
+
+                <p>Long sessions drift. If the agent starts building without checking the plan, or asks you something the rules already answer, tell it to <strong>follow the IQ</strong>. It reads the file again and picks the workflow back up.</p>
 
                 <h3 id="legacy-cleanup">Retiring Legacy Libraries</h3>
                 <p>Removing legacy libraries is an invasive change and remains your decision. The agent reports when no ported page depends on a library; remove it only after approval.</p>
