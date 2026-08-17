@@ -575,6 +575,15 @@
   js: _js/nds-pagination.js
   scss: _sass/components/_pagination.scss
 
+- title: "Page Shell"
+  description: "The body structure every page shares, with the classes that switch chrome shape"
+  use_when: "Build the page skeleton before any content: the body structure, the chrome regions, and the classes that switch between the full, console, and minimal shapes. Read this when you start a new page, pick a chrome shape, or mount a framework app inside NDS markup."
+  icon: '<i class="hgi hgi-stroke hgi-layout-01"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/page-shell.html"
+  scss: _sass/layout/_content-layout.scss
+
 - title: "Panels"
   description: "Content-agnostic surface that slides in from any edge of the viewport"
   use_when: "A surface that slides in from any edge of the viewport: slide-over, off-canvas panel, side sheet, detail panel, filter panel. For a dialog centred over the page use Modal; for a sidebar navigation list use Drawer."

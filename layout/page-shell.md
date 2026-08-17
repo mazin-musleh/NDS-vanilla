@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.8.0"
-last_edit: "17/08/2026 - 11:53 PM"
+last_edit: "18/08/2026 - 12:49 AM"
 ---
 
 <!-- Page Shell Anatomy -->
@@ -246,8 +246,9 @@ div.nds-content-layout.nds-wSideInfo
                 <p><strong>Wrappers inside the layout.</strong> Return a fragment from a component, so the sections land where the shell expects them. A plain <code class="nds-inline-code lang-html">div</code> inside <code class="nds-inline-code lang-html">nds-content-layout</code> takes the side menu's grid column, and the page then collapses to the width of that column. A plain <code class="nds-inline-code lang-html">div</code> inside <code class="nds-inline-code lang-html">nds-main-content</code> sets no width of its own, so narrow content such as a sign-in form pulls away from the page edges. Sections set their own full width, which is why the wrapper is the part that breaks.</p>
             </div>
 
-            <div class="nds-block">
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Modifier Classes</h3>
+                <p>These classes change page layout, so they must be in the markup the browser paints first. A class added from JavaScript after the app mounts costs one frame at the wrong shape. On a server-rendered page, write the class in the template. In a client-routed app where the class depends on the route, set it with a synchronous inline script that is the first child of <code class="nds-inline-code lang-html">body</code>, before the framework mounts. A mount effect runs too late.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Applies to</th><th>Description</th></tr></thead>
                     <tbody>
