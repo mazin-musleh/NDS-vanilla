@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.8.0"
-last_edit: "15/08/2026 - 10:22 PM"
+last_edit: "17/08/2026 - 03:26 AM"
 ---
 
 <!-- Overview -->
@@ -228,6 +228,11 @@ view.remove();
       <h2 class="nds-section-title">Usage Guidelines</h2>
     </div>
     <div class="nds-section-body">
+
+      <div class="nds-block nds-prose">
+        <h3 class="nds-block-title">Framework Views</h3>
+        <p>A framework view needs no readiness check. Call <code class="nds-inline-code lang-js">window.NDS?.Init.refresh(view)</code> after mount and <code class="nds-inline-code lang-js">NDS.Init.destroy(view)</code> before unmount — that is the whole contract. A view that mounts before the runtime or one of its bundles arrives is picked up by NDS's own startup and arrival scans, and the optional chain covers the one moment where <code class="nds-inline-code lang-js">NDS</code> does not exist yet. Do not write a poll or retry helper for this; there is nothing to wait for. The one exception is a component type the first paint never had anywhere: load its bundle once — <code class="nds-inline-code lang-js">await NDS.loadBundle('extras')</code> — then call that component's <code class="nds-inline-code lang-js">init()</code>.</p>
+      </div>
 
       <div class="nds-block nds-prose">
         <h3 class="nds-block-title">Best Practices</h3>
