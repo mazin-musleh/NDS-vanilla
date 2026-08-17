@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.8.x"
-last_edit: "17/08/2026 - 02:14 AM"
+last_edit: "17/08/2026 - 03:42 AM"
 lang: en
 direction: ltr
 ---
@@ -1928,6 +1928,43 @@ var status = NDS.Forms.getStatus(field);
         </div>
 
       </div>
+      <div class="nds-block nds-prose">
+        <h3 class="nds-block-title">Server-rendered Errors</h3>
+        <p>A server-rendered page paints its own errors on load. Loop over the errors from the server, call <code class="nds-inline-code lang-js">setStatus</code> for each field, then focus the first one. <code class="nds-inline-code lang-js">setStatus</code> sets the status and inserts the message, but it never moves focus — only the caller knows which error comes first. Focus also scrolls the field into view, so an error below the fold reaches the user.</p>
+      </div>
+      <div class="nds-block">
+        <div class="nds-code nds-expandable">
+          <div class="nds-code-action">
+            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+              <i class="nds-icon nds-hgi-copy-01"></i>
+            </button>
+          </div>
+          <div class="nds-expandable-content">
+            <code class="lang-javascript code">// Errors rendered by the server, in field order
+var errors = [
+  { field: 'national-id-field', message: 'This field is required' },
+  { field: 'email-field', message: 'Enter a valid email address' }
+];
+
+var firstError = null;
+
+errors.forEach(function(error) {
+  var container = document.getElementById(error.field);
+  if (!container) return;
+
+  NDS.Forms.setStatus({ element: container, status: 'error', message: error.message });
+  if (!firstError) firstError = container;
+});
+
+// Focus the first error. A group container — an OTP fieldset, a radio group —
+// cannot take focus, so focus the first input inside it.
+if (firstError) {
+  var target = firstError.querySelector('input, textarea, select') || firstError;
+  target.focus();
+}</code>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2398,6 +2435,9 @@ NDS.Forms.clearStatus(el);
 // Get current status
 NDS.Forms.getStatus(el);
 // Returns: { status: 'error', message: '...', isValid: false }
+
+// setStatus never moves focus. For server-rendered errors, focus the first
+// field yourself — see the Form Status API section.
 
 // ── Field Sync ──────────────────────────────────────
 // Re-sync a form-control's chrome after programmatic value/checked changes.
