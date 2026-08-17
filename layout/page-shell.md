@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.8.0"
-last_edit: "16/08/2026 - 11:38 PM"
+last_edit: "17/08/2026 - 11:53 PM"
 ---
 
 <!-- Page Shell Anatomy -->
@@ -235,10 +235,11 @@ div.nds-content-layout.nds-wSideInfo
                         </button>
                     </div>
                     <code class="lang-css code">
-/* The mount root disappears from the layout. */
+/* The mount root disappears from the layout.
+   The id depends on the stack: #root, #app, app-root. */
 #root { display: contents; }
 
-/* Or, when the app styles, measures, or positions #root itself. */
+/* Or, when the app styles, measures, or positions the mount root itself. */
 #root { flex: 1; display: flex; flex-direction: column; }
                     </code>
                 </div>
