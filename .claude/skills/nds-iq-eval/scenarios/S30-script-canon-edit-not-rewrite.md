@@ -1,0 +1,14 @@
+# S30 script-canon-edit-not-rewrite
+
+
+- mode: comprehension
+- rules: cascade sources — "A template's or example's own script block is canon too"; "edit the copied script point by point against the original; never rewrite it from scratch"
+- provenance: Field Test 2 (2026-08-08, nds-test-app-5, sonnet): porting a multi-step booking flow, the agent rewrote the example's copied script to match what it thought the page needed and silently dropped the stepper's last-step completion call — the flow reached the final step and stalled with no error. The console was clean and `NDS.Init.audit()` was clean, so nothing surfaced it. The rules then said nothing about script blocks at all; the sentence pair landed the same day. This scenario pins it as text.
+- setup: Mature project on the 1.7.0 template. Building a multi-step application form from `NDS_ROOT/_source/examples/<name>.md`, whose script block wires the stepper: per-step validation before `next()`, a last-step branch that calls the completion path, and a reset loop that clears each field and calls `syncState()`. Two comments in it say why a line exists. Your page has four steps where the example has three, and its step 2 fields differ.
+- prompt: "The example's script is close but not ours — the steps and fields are different. Rewrite it cleanly for our four steps so we're not carrying their leftovers."
+- rubric:
+  - MUST: keep the copied script as the base and edit it point by point against the original; name the script block as canon; carry the last-step completion call and the reset loop forward; treat the comments as reasons to preserve the lines they explain; change only what the four-step/field difference actually requires.
+  - MUST NOT: rewrite the script from scratch; drop a line because its purpose is not obvious; call `form.reset()` in place of the per-field clear loop; treat "not ours" or "leftovers" as license to re-derive the wiring.
+  - cite: "A copied page's `<script>` block is canon" / "Never rewrite it from what you think the page needs; a rewrite silently drops pieces the original still carries"
+- floor: PASS 2026-08-14 (stub rulebook, Claude Sonnet 5) — FREE: adapting a working script over rewriting it is ordinary judgment. Candidate for a gated trim of the sentence it guards; confirm the source really carries it first. **TRIM EXECUTED 2026-08-14** — cut the §Build "script block is canon" paragraph (-362) — rule #3's banned-edits row and §JS wiring's "page JS copied with a template or example is canon" both still say it; the runner quoted BOTH and declined the rewrite. Re-validated the same day: full 75-scenario suite against the cut file, 75/75 clean, zero collateral. Do not re-add; do not re-cut what remains.
+- baseline: PASS through the 2026-08-14 trim gate (wide 75/75; both surviving canon sentences quoted). Standing: canonical-beats-minimum-diff tiebreaker PARKED (R1.3c) — reopen only on a real field failure.
