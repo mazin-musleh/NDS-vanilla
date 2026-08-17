@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.7.0"
-last_edit: "09/08/2026 - 09:07 PM"
+last_edit: "18/08/2026 - 01:37 AM"
 ---
 
 <!-- Strength Rules -->
@@ -157,7 +157,7 @@ last_edit: "09/08/2026 - 09:07 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Confirm Password</h2>
-            <p class="nds-section-description">Point a second field at the first with <code class="nds-inline-code lang-html">data-password-match</code>. The match chip updates while the user types in either field, and the submit stays blocked until the two values are equal.</p>
+            <p class="nds-section-description">Point a second field at the first with <code class="nds-inline-code lang-html">data-password-match</code>. The submit stays blocked until the two values are equal. There are two patterns for showing the result, and both are canonical.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -346,6 +346,12 @@ last_edit: "09/08/2026 - 09:07 PM"
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="nds-block nds-prose">
+                <h3 class="nds-block-title">Two Patterns</h3>
+                <p><strong>With a match chip.</strong> Use this when the confirm field sits beside strength rules, as the demo above shows. The chip joins the rule list and updates while the user types in either field, so the whole password state reads in one place.</p>
+                <p><strong>Without a chip.</strong> Use this when confirm is the only check on the field. Set <code class="nds-inline-code lang-html">data-password-match</code> and ship no rule list. The component still blocks the submit and still shows the mismatch message, because the match test does not depend on chips. This suits a short form where one more chip adds noise.</p>
+                <p>Do not add a chip only because the demo has one. Pick the pattern that matches the field's role.</p>
             </div>
         </div>
     </div>
