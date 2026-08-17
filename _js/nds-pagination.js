@@ -909,7 +909,8 @@
         if (page > 1) params.set(attr || 'page', page);
         else params.delete(attr || 'page');
         const qs = params.toString();
-        window.history.replaceState({}, '', qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
+        // Keep the hash — a hash-routed app stores its route there.
+        window.history.replaceState({}, '', (qs ? `${window.location.pathname}?${qs}` : window.location.pathname) + window.location.hash);
     }
 
     // Land a manual nav on ?page=N at init, silently — no event (not user

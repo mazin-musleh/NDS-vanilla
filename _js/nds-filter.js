@@ -52,6 +52,9 @@
  *     console warning — NDS.Init.audit() is what reports an unclaimed one. The same audit
  *     flags a .nds-filter carrying no data-filter-target: a surface no instance ever binds,
  *     so its options never render.
+ *   - A hidden auto-populated filter defers its option build to first open (data-delay="500"
+ *     on the dropmenu, options built on nds:dropmenu:prepare). An empty option list right
+ *     after load has not run yet — it is not a broken filter. Open the menu to see it.
  *   - .nds-filter is a pure anchor; submit mode is a SEPARATE form carrying the same target:
  *       <form data-filter-target="results" data-filter-submit method="get">
  *       <div class="nds-filter" data-filter-target="results">…</div>
@@ -689,9 +692,9 @@
          * applyUrlParams only sets what the params contain, it never unsets.
          */
         _rollbackApplied(appliedUrl) {
-            window.history.replaceState({}, '', appliedUrl
+            window.history.replaceState({}, '', (appliedUrl
                 ? `${window.location.pathname}${appliedUrl}`
-                : window.location.pathname);
+                : window.location.pathname) + window.location.hash);
 
             this._mirrorSearchInputs('');
             this.criteria.search = '';
@@ -895,9 +898,11 @@
                 }
             }
 
-            const newUrl = params.toString()
+            // Keep the hash: a hash-routed app stores its route there, and rebuilding
+            // the URL from pathname+search alone drops it on every filter change.
+            const newUrl = (params.toString()
                 ? `${window.location.pathname}?${params.toString()}`
-                : window.location.pathname;
+                : window.location.pathname) + window.location.hash;
 
             window.history.replaceState({}, '', newUrl);
         }
