@@ -94,7 +94,7 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S81 | rules-name-doc-the-template-lacks | c | predates clause: pick the built page by inspection | PASS 2026-08-16 solo + hole probe | floor:PASS (not a trim license) |
 | S82 | legacy-sheet-vs-project-nds-layer | c | classify by CONTENT: legacy sheet vs project NDS layer | PASS pair 2026-08-16 | floor:PASS (latent; standing guard) |
 | S83 | legacy-globals-caught-at-inventory | c | step-1 stylesheet sweep names bare-element reach | PASS 2026-08-17 confirm (v2.1) | floor:FAIL |
-| S84 | composition-source-members-shipped | c | shipped page carries every cited-source member | soft-FAIL 2026-08-17 (de-leaked pair) | leak:C1-fixed · OPEN → R5 |
+| S84 | composition-source-members-shipped | c | shipped page carries every cited-source member | PASS 2026-08-18 (behavior, edited rule) | leak:C1-fixed · 7/7 members · R5 closed |
 | S85 | framework-view-lifecycle | c | refresh on mount + destroy on unmount; no poll | PASS 2026-08-17 solo | floor:n/a (doc gate) · WATCH mechanism-naming |
 | S86 | verify-headless-entry-gate | c | ladder entry needs a named failed headless attempt | PASS 2026-08-17 (de-leaked) | floor:not run · leak:C2-fixed · OPEN → R1 field half |
-| S87 | mount-root-layout-chain | c | mount element takes display:contents; footer stays pinned | PASS 2026-08-18 (de-leaked pair) | floor:FAIL ×3 · leak:C2-fixed · behavior run rides next mini-spa |
+| S87 | mount-root-layout-chain | c | mount element takes display:contents; footer stays pinned | PASS 2026-08-18 (de-leaked pair) | floor:FAIL ×3 · leak:C2-fixed · behavior confirmed via S84 run |
