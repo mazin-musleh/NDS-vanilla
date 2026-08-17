@@ -241,7 +241,7 @@ Never report a page verified from reading its code. Two passes, in the browser, 
 
 **Run both passes in a headless browser you drive** — it sets its own viewport, so desktop and mobile are the same run, not a fallback you have to reach. Use whatever the environment already has: the project's own e2e harness, Playwright, Puppeteer, a scriptable headless Chrome. Keep it out of the project — never install into the project or touch its lockfile. A scripted run capturing console + `NDS.Init.audit()` is the behavioral pass; screenshots you actually look at are the visual one. **P1: "cannot see the page" is a claim you may make only after the headless attempt fails** — the failure (no network, no binary, a sandbox) named in the report.
 
-**Cannot drive one? Take the first rung that works, and name in the report what the page was not checked at:**
+**Cannot drive one? That takes the same named failure as the claim: the headless attempt you made and what stopped it — a browser tab your session already holds is not a reason to skip the attempt. Then take the first rung that works, and name in the report what the page was not checked at:**
 
 1. **A browser tool your own harness ships** — also the rung for a page behind a login only that browser holds. It covers the console and the widths it can reach; a width it cannot reach is an UNMET pass, never a waived one.
 2. **The no-harness smoke check** — `curl -sI` the page: status, `Content-Security-Policy`, anything that silently breaks a browser. Then `curl -s` and read the HTML: head unit intact, page scripts referenced, no server error leaked as text, and under a strict CSP no surviving inline `style="…"` (each one is a dead knob; rule #3 edit 4 is the fix). The result goes in the report.
