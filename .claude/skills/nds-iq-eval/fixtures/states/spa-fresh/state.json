@@ -1,0 +1,7 @@
+{
+  "name": "spa-fresh",
+  "fixture": "mini-spa",
+  "description": "First NDS session: anchor installed, runtime copied by assemble, no NDS-PLAN.md, no NDS markup anywhere.",
+  "source": "fixture as-is; no overlay files",
+  "leakAudited": "2026-08-17"
+}

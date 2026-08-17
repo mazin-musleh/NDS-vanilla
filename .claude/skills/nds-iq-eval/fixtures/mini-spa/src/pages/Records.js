@@ -1,4 +1,5 @@
-import { useState } from 'react'
+const h = React.createElement
+const { useState } = React
 
 const RECORDS = [
   { id: 'REC-1041', title: 'Annual facility inspection', owner: 'Facilities', updated: '2026-08-02' },
@@ -13,27 +14,27 @@ export default function Records() {
   const shown = RECORDS.filter(r =>
     (r.id + ' ' + r.title + ' ' + r.owner).toLowerCase().includes(q.toLowerCase())
   )
-  return (
-    <main className="page">
-      <h1>Records</h1>
-      <input
-        type="search"
-        placeholder="Search records"
-        value={q}
-        onChange={e => setQ(e.target.value)}
-      />
-      <table>
-        <thead>
-          <tr><th>ID</th><th>Title</th><th>Owner</th><th>Updated</th></tr>
-        </thead>
-        <tbody>
-          {shown.map(r => (
-            <tr key={r.id}>
-              <td>{r.id}</td><td>{r.title}</td><td>{r.owner}</td><td>{r.updated}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </main>
+  return h(
+    'main',
+    { className: 'page' },
+    h('h1', null, 'Records'),
+    h('input', {
+      type: 'search',
+      placeholder: 'Search records',
+      value: q,
+      onChange: e => setQ(e.target.value),
+    }),
+    h(
+      'table',
+      null,
+      h('thead', null, h('tr', null, h('th', null, 'ID'), h('th', null, 'Title'), h('th', null, 'Owner'), h('th', null, 'Updated'))),
+      h(
+        'tbody',
+        null,
+        shown.map(r =>
+          h('tr', { key: r.id }, h('td', null, r.id), h('td', null, r.title), h('td', null, r.owner), h('td', null, r.updated))
+        )
+      )
+    )
   )
 }

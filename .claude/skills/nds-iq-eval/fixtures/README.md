@@ -58,26 +58,40 @@ README, where no runner reads it.
   exists needs that surface HERE — otherwise the runner is asked to wire
   something it would have to invent, and refusing is the correct answer.
 
-- `mini-spa/` = a fake consumer React + Vite SPA ("Records Portal"), the
-  client-rendered sibling of `mini-app/`. Six route components under
-  `src/pages/`, one `index.html` serving every route, one shared entry
-  (`src/main.jsx`) that does `import './styles.css'` — the legacy sheet with
-  bare-element globals (`body`, `h1`, `h2`, `a`) that S80/S83 test against.
-  `Records.jsx` ships the S84 parity trap (live-filter search input with no
-  submit button, plain table, no filter control). `<StrictMode>` is on — the
-  mount/unmount/remount double-invoke matters to lifecycle scenarios.
-  Dependency versions (React 19 / Router 7 / Vite 7) are declarative realism
-  only: no run ever executes `npm install`. Per-run setup, in the scratchpad
-  copy: write the anchor into `AGENTS.md` (`NDS_ROOT` = `.nds/`, `NDS_ASSETS`
-  = `public/assets/`), copy the rulebook under test to root `NDS-IQ.md` (and
-  the same file to `.nds/NDS-IQ.md`), build `.nds/` as REAL COPIES of the
-  repo's `_site` plus the `_source` folder set — never junctions/symlinks: a
-  runner's directory listing does not traverse them and reports the tree
-  empty (voided two runs, 2026-08-16/17) — copy `_site/assets/` into
-  `public/assets/`, and seed `NDS-PLAN.md` only when the scenario's setup
-  says a plan exists. Seeded artifacts follow SKILL.md's no-leak rule —
-  state only what the field artifact states; S84's exact row text is pinned
-  in its `setup:` because an enumerated row leaked its answer.
+- `mini-spa/` = a fake consumer React SPA ("Records Portal"), the
+  client-rendered sibling of `mini-app/` — and it RUNS: no build step, no
+  `npm install`, ever. React 18.3.1 UMD is vendored under `vendor/` (the DEV
+  builds on purpose — StrictMode's mount/unmount/remount double-invoke, which
+  the lifecycle scenarios need, exists only there); pages are plain
+  `React.createElement` ES modules; routing is hash-based so every route
+  change is a real mount/unmount. Serve with any static server
+  (`python -m http.server 5173` in the assembled copy). The hazard markers
+  the scenarios grade against, preserved exactly: `src/main.js` injects
+  `styles.css` from the shared JS entry (invisible in `index.html` — the
+  S80/S83 discovery shape), the sheet keeps its bare-element globals (`body`,
+  `h1`, `h2`, `a`), and `src/pages/Records.js` ships the S84 parity trap
+  (live-filter search input with no submit button, plain table, no filter
+  control). `check-fixtures.mjs` guards all of these — do not remove a marker
+  without updating it.
 
-Behavior runs always work on scratchpad COPIES (see SKILL.md), never on these
-originals.
+- `states/` = checked-in run states, one folder per state a scenario names:
+  `state.json` (name, fixture, source, leakAudited) plus optional `files/`
+  overlaid onto the assembled copy. States are authored from FIELD artifacts
+  verbatim and leak-audited once — never re-narrated per run; the S84 leak
+  was born in hand-seeding (`spa-post-review`'s Records row carries the field
+  plan's own text, no member enumeration).
+
+- `tools/` = the trust chain. `check-fixtures.mjs`: fail-closed invariants
+  (catalog urls resolve, icons registered, hazard markers present, no
+  junctions/symlinks — a runner's directory listing does not traverse them
+  and reports the tree empty, which voided two runs 2026-08-16/17).
+  `assemble.mjs`: deterministic run assembly — fixture copy + `.nds/` as
+  REAL copies of the repo `_site` + `_source` set (or `--root mini` for
+  `mini-root/`), runtime into the fixture's assets path, rulebook (`real` |
+  `stub`) at root and `.nds/`, anchor extracted from the rules file's own
+  canon, state overlay, and a `run-manifest.json` stamping exactly what the
+  runner was shown (rulebook sha256, repo HEAD, state). `grade/`: mechanical
+  grade-half reporters (`s84-members.mjs`); judgment sits on top.
+
+Behavior runs always work on scratchpad COPIES built by `assemble.mjs`
+(see SKILL.md), never on these originals.

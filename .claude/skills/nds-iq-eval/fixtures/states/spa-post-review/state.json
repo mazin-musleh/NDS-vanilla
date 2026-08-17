@@ -1,0 +1,7 @@
+{
+  "name": "spa-post-review",
+  "fixture": "mini-spa",
+  "description": "Approved v2.1-format plan; chrome NOT built; brand/logo decision recorded (unblocks the S84 run-1 stall); Records row cites Manage Records with NO member enumeration.",
+  "source": "Records row text verbatim from the field plan (nds-test-app-7 NDS-PLAN.md, Application-list row shape); seeded 2026-08-17 for the de-leaked S84 pair",
+  "leakAudited": "2026-08-17 (harness-fidelity audit — member enumeration stripped; an enumerated row leaked the S84 answer)"
+}
