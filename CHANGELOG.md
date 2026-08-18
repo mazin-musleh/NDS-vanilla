@@ -6,6 +6,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-08-18
+
+### Added
+- **`NDS.Init.audit()` reports `lang` and `dir` disagreement** — `NDS.isRTL` reads `dir` alone, so `<html lang="ar">` with no `dir` runs every direction-aware component left to right under Arabic content, with nothing else reporting it.
+- **NDS IQ v2.2** — client-rendered apps get proper coverage, direction and language are a required pair, a compacted context counts as a new session, and a matched source ships all its members. See [NDS IQ](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html).
+
+### Changed
+- **Field status is error and help only** — a field's outline and its message are error signals, so `setStatus` now folds `success`, `warning` and `info` to neutral on both the container and the feedback it creates. Existing calls still run; they render neutral. See the [Forms](https://mazin-musleh.github.io/NDS-vanilla/components/forms.html) page.
+- **The feedback slot is opt-in, not required** — `setStatus` inserts into the container when no `data-feedback-target` exists, so an empty hidden slot is scaffolding rather than a requirement. The empty slots were removed from canonical markup; populated slots and header placements stay.
+
+### Fixed
+- **Filter and Pagination no longer drop the URL hash** — all three URL writers rebuilt the address from path and query alone, so the first filter change or page click wiped the route of a hash-routed app.
+- **Filter reclaims a target id from a detached instance** — a view unmounted without `NDS.Init.destroy()` left its instance holding the `data-filter-target` id, so every remount was skipped and the region stayed hidden. A detached instance is now destroyed, the id freed, and one warning names the missing teardown.
+- **Inline styles removed from shipped JS** — four components wrote a custom property through a `style` attribute, which a strict Content-Security-Policy blocks. Pagination's page menu could not scroll past its first window, the editor's remove menu lost its indent, and toast progress never animated. All four now write through the CSSOM. See [Document Head](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/head.html) for the policy notes.
+- **OTP digits paint their status** — an OTP group set to error left its digit boxes neutral while the message rendered.
+
+### Documentation
+- **[Page Shell](https://mazin-musleh.github.io/NDS-vanilla/layout/page-shell.html)** — framework wrappers and modifier timing: what a mount element and per-component wrappers do to the shell's layout, and why a layout-affecting class must be in the initial HTML.
+- **[Refresh](https://mazin-musleh.github.io/NDS-vanilla/core/refresh.html)** — the framework-view lifecycle contract: `refresh` on mount, `destroy` on unmount, no readiness check and no polling.
+- **[Forms](https://mazin-musleh.github.io/NDS-vanilla/components/forms.html)** — server-rendered errors: the loop that sets a status per field and focuses the first invalid one, including the fieldset case a group cannot focus.
+- **[Forms](https://mazin-musleh.github.io/NDS-vanilla/components/forms.html)** — where feedback goes: the slot is opt-in, and a hidden target shows and hides itself.
+- **[Password](https://mazin-musleh.github.io/NDS-vanilla/components/password.html)** — both confirm patterns: with a match chip beside strength rules, and chipless when confirm is the only check.
+
+### Migrating from v1.8.0
+- Replace the runtime: copy `_site/assets/` over your assets folder.
+- **Field status calls that used `success`, `warning` or `info` now render neutral.** The calls still run and nothing breaks; if a field relied on a green or amber outline, move that signal to page-level copy or an [Alert](https://mazin-musleh.github.io/NDS-vanilla/components/alert.html).
+- **If you copied a form's canonical markup with an empty hidden `data-feedback-target` element, you may remove it.** Leaving it in place is harmless — it renders nothing and feedback still lands there.
+
 ## [1.8.0] - 2026-08-16
 
 ### Added
