@@ -5,14 +5,14 @@
  *   NDS.CooldownButton.start(btn)    begin the cycle by hand
  *   NDS.CooldownButton.reset(btn)    end it early and restore the button
  * Events (bubble from the button):
- *   nds:cooldown:loading     the loading phase begins
+ *   nds:cooldown:loading     the loading phase begins — only fires when data-cooldown-loading > 0
  *   nds:cooldown:triggered   loading ends and the countdown starts — fire your request here
  *   nds:cooldown:tick        detail {remaining} — once a second during the countdown
  *   nds:cooldown:end         the countdown finished, or reset() was called
  * Hooks (on the .nds-cooldown button):
  *   data-cooldown           seconds — REQUIRED to opt in
  *   data-cooldown-loading   seconds to hold the loading state first, default 0
- *   data-cooldown-label     countdown text; {s} becomes the remaining seconds
+ *   data-cooldown-label     countdown text; every {s} becomes the remaining seconds
  *   data-resend-label       the label to restore from the second cycle on
  *   data-sent-title · data-sent-message   either one fires a success toast when the
  *                                         countdown starts
@@ -26,8 +26,14 @@
  *     It looks wider than its text at rest — shorten the wording, not the CSS. The
  *     data-cooldown-sizes stamp is the component's own; do not set or style it.
  *   - It is language-agnostic: write the attribute text in the page's own language.
- *   - For a toast with a different variant or position, leave the two toast attributes off
- *     and call NDS.Alert.create() from nds:cooldown:triggered.
+ *   - {s} is the only token, and every occurrence of it substitutes — a bilingual label
+ *     naming it twice fills both. This is not printf: %s and %d render literally, and a
+ *     label naming no {s} warns at wire time rather than failing silently on first click.
+ *   - The "sent" toast fires when the countdown starts — on the click, not on your
+ *     request succeeding. If the request can fail, leave the two toast attributes off
+ *     and call NDS.Alert.create() yourself from the request's own success path;
+ *     otherwise the built-in toast contradicts your error toast. Same escape hatch
+ *     for a different variant or position — fire it from nds:cooldown:triggered.
  */
 /**
  * NDS Cooldown Button
@@ -47,7 +53,7 @@
  *   NDS.CooldownButton.reset(btn);
  *
  * Events (fired on the button, bubble):
- *   nds:cooldown:loading    — loading phase begins
+ *   nds:cooldown:loading    — loading phase begins (only when data-cooldown-loading > 0)
  *   nds:cooldown:triggered  — loading ends, cooldown starts (fire toasts here)
  *   nds:cooldown:tick       — every second during cooldown; detail.remaining
  *   nds:cooldown:end        — cooldown finished or reset(); button restored
@@ -55,7 +61,7 @@
  * Attributes:
  *   data-cooldown           seconds (required to opt in)
  *   data-cooldown-loading   seconds to hold loading state first (default 0)
- *   data-cooldown-label     countdown text; {s} → remaining seconds (default "{s}")
+ *   data-cooldown-label     countdown text; every {s} → remaining seconds (default "{s}")
  *   data-resend-label       label to restore AFTER the first completed cycle
  *                           (e.g. initial "Send" becomes "Resend" from cycle 2 on).
  *                           Absent = keep the initial label across cycles.
@@ -84,6 +90,8 @@
     const SEL = '.nds-cooldown';
     const WIRED_ATTR = 'data-nds-cooldown-button-initialized';
     const DEFAULT_TEMPLATE = '{s}';
+    // Global: a bilingual label names the token once per language.
+    const TOKEN = /\{s\}/g;
 
     // One-shot init guard. A re-run of init (e.g. NDS.Init.initialize())
     // would otherwise re-stack the two pool subscriptions in init() — onDOMAdd
@@ -157,12 +165,12 @@
         const labelEl = btn.querySelector('.nds-label');
         if (!labelEl) return;
         const cfg = configFor(btn);
-        const texts = [cfg.label, labelTemplate(btn).replace('{s}', cfg.cooldown), resendLabel(btn)];
+        const texts = [cfg.label, labelTemplate(btn).replace(TOKEN, cfg.cooldown), resendLabel(btn)];
         labelEl.setAttribute('data-cooldown-sizes', texts.filter((t) => t).join('\n'));
     }
 
     function render(ctx, template, remaining) {
-        if (ctx.labelEl) ctx.labelEl.textContent = template.replace('{s}', remaining);
+        if (ctx.labelEl) ctx.labelEl.textContent = template.replace(TOKEN, remaining);
     }
 
     function start(btn) {
@@ -242,10 +250,22 @@
         if (btn && active.has(btn)) finish(btn);
     }
 
+    // An authored label with no token never counts down — it just sits there. Say so at
+    // wire time; the alternative is finding out on the first click in production, which
+    // is how %s went unnoticed in the field. search() ignores TOKEN's /g flag, so there
+    // is no lastIndex to carry between buttons.
+    function warnUnknownToken(btn) {
+        const label = btn.getAttribute('data-cooldown-label');
+        if (label && label.search(TOKEN) === -1) {
+            console.warn('NDS CooldownButton: data-cooldown-label has no {s} token, so the countdown will not show. Label: ' + JSON.stringify(label), btn);
+        }
+    }
+
     function wire(btn) {
         if (!btn || btn.hasAttribute(WIRED_ATTR)) return;
         btn.setAttribute(WIRED_ATTR, '');
         configFor(btn); // freeze cooldown durations at wire time
+        warnUnknownToken(btn);
         stampSizers(btn); // reserve the label width before the first click
         btn._cooldownAC = new AbortController();
         btn.addEventListener('click', () => {

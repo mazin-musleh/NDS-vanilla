@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.0"
-last_edit: "29/07/2026 - 02:47 AM"
+updated: "1.8.x"
+last_edit: "18/08/2026 - 03:19 PM"
 ---
 
 <!-- Resend with Success Toast -->
@@ -169,7 +169,7 @@ last_edit: "29/07/2026 - 02:47 AM"
                             <i class="hgi hgi-stroke hgi-timer-02"></i>
                             <span class="nds-label">Live Countdown Label</span>
                         </span>
-                        <p class="nds-item-desc">Swaps the button label to your template every second, with <code class="nds-inline-code lang-html">{s}</code> replaced by the seconds remaining, until the cooldown ends.</p>
+                        <p class="nds-item-desc">Swaps the button label to your template every second, with every <code class="nds-inline-code lang-html">{s}</code> replaced by the seconds remaining, until the cooldown ends.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -229,9 +229,9 @@ last_edit: "29/07/2026 - 02:47 AM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-cooldown</code></td><td>Seconds to hold the cooldown. Required to opt in. Non-positive values skip the cooldown entirely. Read once at wire time; editing after page load has no effect</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-cooldown-loading</code></td><td>Seconds to hold the loading state before the countdown begins. Default <code class="nds-inline-code lang-html">0</code>, which skips the loading phase. Read once at wire time</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-cooldown-label</code></td><td>Countdown text template. <code class="nds-inline-code lang-html">{s}</code> is replaced by the seconds remaining. Default <code class="nds-inline-code lang-html">{s}</code> (number only)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-cooldown-label</code></td><td>Countdown text template. <code class="nds-inline-code lang-html">{s}</code> is replaced by the seconds remaining, every time it appears, so a bilingual label can name it once per language. Default <code class="nds-inline-code lang-html">{s}</code> (number only). This is not printf: a label using <code class="nds-inline-code lang-html">%s</code>, <code class="nds-inline-code lang-html">%d</code>, <code class="nds-inline-code lang-html">{seconds}</code> or a typo never counts down, and logs an <code class="nds-inline-code lang-js">NDS CooldownButton</code> console warning when the button is wired</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-resend-label</code></td><td>Label to restore after the first completed cycle. Omit to keep the initial label across cycles. A mid-loading <code class="nds-inline-code lang-js">reset()</code> always restores the initial label</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-sent-title</code></td><td>Title of the success toast fired when the cooldown begins. Either this or <code class="nds-inline-code lang-html">data-sent-message</code> must be present for a toast to appear</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-sent-title</code></td><td>Title of the success toast fired when the cooldown begins. Either this or <code class="nds-inline-code lang-html">data-sent-message</code> must be present for a toast to appear. The toast fires on the click, not on your request succeeding. If the request can fail, leave both attributes off and fire the toast yourself from the request's success path</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-sent-message</code></td><td>Description of the success toast fired when the cooldown begins. Toast uses variant <code class="nds-inline-code lang-html">success</code>, position <code class="nds-inline-code lang-html">top</code>, duration <code class="nds-inline-code lang-html">4000ms</code></td></tr>
                     </tbody>
                 </table>
