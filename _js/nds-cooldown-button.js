@@ -1,25 +1,22 @@
 /* NDS.CooldownButton — public surface
- * Rides: nds-alert (the optional "sent" toast; soft — no toast without it)
+ * Rides: (none — base component)
  * Methods:
  *   NDS.CooldownButton.init()        wire every .nds-cooldown, now and later
- *   NDS.CooldownButton.start(btn)    begin the cycle by hand
+ *   NDS.CooldownButton.start(btn, opts?)  begin the cycle by hand
+ *                                    opts.seconds  run this long instead of data-cooldown
+ *                                    opts.silent   skip nds:cooldown:triggered
  *   NDS.CooldownButton.reset(btn)    end it early and restore the button
  * Events (bubble from the button):
- *   nds:cooldown:loading     the loading phase begins — only fires when data-cooldown-loading > 0
- *   nds:cooldown:triggered   loading ends and the countdown starts — fire your request here
+ *   nds:cooldown:triggered   the countdown starts — issue your request here
  *   nds:cooldown:tick        detail {remaining} — once a second during the countdown
  *   nds:cooldown:end         the countdown finished, or reset() was called
  * Hooks (on the .nds-cooldown button):
- *   data-cooldown           seconds — REQUIRED to opt in
- *   data-cooldown-loading   seconds to hold the loading state first, default 0
+ *   data-cooldown           seconds — REQUIRED, unless start() passes opts.seconds
  *   data-cooldown-label     countdown text; every {s} becomes the remaining seconds
  *   data-resend-label       the label to restore from the second cycle on
- *   data-sent-title · data-sent-message   either one fires a success toast when the
- *                                         countdown starts
  * Gotchas:
- *   - data-cooldown and data-cooldown-loading are read ONCE, when the button is wired,
- *     and cached. Editing them later has no effect. The label and toast attributes are
- *     re-read every cycle.
+ *   - data-cooldown is read ONCE, when the button is wired, and cached. Editing it
+ *     later has no effect. The label attributes are re-read every cycle.
  *   - The button needs a <span class="nds-label"> for the countdown text to land in.
  *   - That label holds itself open at the widest of its three texts (first label,
  *     countdown, resend) from first paint, so the button never resizes mid-cycle.
@@ -29,20 +26,33 @@
  *   - {s} is the only token, and every occurrence of it substitutes — a bilingual label
  *     naming it twice fills both. This is not printf: %s and %d render literally, and a
  *     label naming no {s} warns at wire time rather than failing silently on first click.
- *   - The "sent" toast fires when the countdown starts — on the click, not on your
- *     request succeeding. If the request can fail, leave the two toast attributes off
- *     and call NDS.Alert.create() yourself from the request's own success path;
- *     otherwise the built-in toast contradicts your error toast. Same escape hatch
- *     for a different variant or position — fire it from nds:cooldown:triggered.
+ *   - start() drives the whole cycle, so the two flows it does NOT own are options on
+ *     it: a send that happened elsewhere passes silent (no nds:cooldown:triggered, so
+ *     your request handler does not run twice), and a cooldown the page is RESUMING
+ *     after a reload passes the remainder as seconds. With seconds set, data-cooldown
+ *     is not required at all — the button can be driven entirely from JS.
+ *   - The countdown starts on the click, because that is when the endpoint was hit.
+ *     It does NOT wait for your request, and the component owns no loading phase —
+ *     a timer cannot know how long a response takes. For a real one, stamp the
+ *     button's own loading state from nds:cooldown:triggered and clear it when the
+ *     response lands:
+ *       btn.addEventListener('nds:cooldown:triggered', () => {
+ *         NDS.State.add(btn, 'loading');
+ *         send().finally(() => NDS.State.remove(btn, 'loading'));
+ *       });
+ *     [data-state~="loading"] hides the label, so the countdown ticks under the
+ *     spinner and is already at the right number when the state comes off. The
+ *     component never sets or clears 'loading' — it is the page's, start to finish.
+ *   - It fires no toast of its own. Raise one from the same handler's success or
+ *     failure path via NDS.Alert.create(), so a failed send never reports success.
  */
 /**
  * NDS Cooldown Button
- * Reusable button pattern: click → optional loading phase → live countdown → restore.
+ * Reusable button pattern: click → live countdown → restore.
  *
  * Declarative:
  *   <button class="nds-btn nds-subtle nds-cooldown"
  *           data-cooldown="30"
- *           data-cooldown-loading="3"
  *           data-cooldown-label="Resend in {s}s"
  *           data-resend-label="Resend">
  *     <span class="nds-label">Send code</span>
@@ -50,39 +60,34 @@
  *
  * Programmatic:
  *   NDS.CooldownButton.start(btn);
+ *   NDS.CooldownButton.start(btn, { silent: true });        // send already happened
+ *   NDS.CooldownButton.start(btn, { seconds: 20, silent: true });  // resume a remainder
  *   NDS.CooldownButton.reset(btn);
  *
  * Events (fired on the button, bubble):
- *   nds:cooldown:loading    — loading phase begins (only when data-cooldown-loading > 0)
- *   nds:cooldown:triggered  — loading ends, cooldown starts (fire toasts here)
+ *   nds:cooldown:triggered  — cooldown starts; issue the request here
  *   nds:cooldown:tick       — every second during cooldown; detail.remaining
  *   nds:cooldown:end        — cooldown finished or reset(); button restored
  *
  * Attributes:
  *   data-cooldown           seconds (required to opt in)
- *   data-cooldown-loading   seconds to hold loading state first (default 0)
  *   data-cooldown-label     countdown text; every {s} → remaining seconds (default "{s}")
  *   data-resend-label       label to restore AFTER the first completed cycle
  *                           (e.g. initial "Send" becomes "Resend" from cycle 2 on).
  *                           Absent = keep the initial label across cycles.
- *                           Mid-loading reset() always keeps the initial label.
- *   data-sent-title         optional — toast title fired when cooldown begins
- *   data-sent-message       optional — toast description fired when cooldown
- *                           begins. Either attribute present triggers a
- *                           success toast via NDS.Alert.create; no-op if
- *                           NDS.Alert is not loaded. For custom variants or
- *                           positions, listen for `nds:cooldown:triggered`
- *                           and call NDS.Alert.create yourself.
+ *
+ * The component owns the throttle and the label. The request, its loading state
+ * and its confirmation are the page's, all wired from `nds:cooldown:triggered`.
  *
  * The component is language-agnostic: the author writes whichever language the
  * page serves in the attributes and in the .nds-label span. Loading visual
  * and disabled styling are inherited from _sass/components/_buttons.scss
  * ([data-state~="loading"], :disabled).
  *
- * data-cooldown and data-cooldown-loading are READ ONCE at wire time and
- * cached per element. Editing those attributes via DevTools after the page
- * has loaded has no effect — the cached durations stand. Label and toast
- * attributes are still read at each cycle, so copy edits reflect live.
+ * data-cooldown is READ ONCE at wire time and cached per element. Editing it
+ * via DevTools after the page has loaded has no effect — the cached duration
+ * stands. The label attributes are still read at each cycle, so copy edits
+ * reflect live.
  */
 (function() {
     'use strict';
@@ -100,10 +105,10 @@
     // mutations are already handled by those long-lived subscribers.
     let _initDone = false;
 
-    // Per-button runtime: { loadingTimer, tickTimer, labelEl, originalLabel }
+    // Per-button runtime: { tickTimer, labelEl, originalLabel }
     const active = new WeakMap();
 
-    // Per-button frozen config: { cooldown, loading }. Populated on wire(),
+    // Per-button frozen config: { cooldown, label }. Populated on wire(),
     // read on start(). Prevents DevTools attribute edits from shortening
     // the cooldown mid-session.
     const config = new WeakMap();
@@ -114,7 +119,6 @@
             const labelEl = btn.querySelector('.nds-label');
             cfg = {
                 cooldown: seconds(btn.getAttribute('data-cooldown'), 0),
-                loading: seconds(btn.getAttribute('data-cooldown-loading'), 0),
                 // Authored label, frozen before any swap can overwrite it — the width
                 // reservation needs it for every later cycle.
                 label: labelEl ? labelEl.textContent.trim() : ''
@@ -141,31 +145,18 @@
         return btn.getAttribute('data-resend-label');
     }
 
-    function sendToast(btn) {
-        const title = btn.getAttribute('data-sent-title');
-        const message = btn.getAttribute('data-sent-message');
-        if (!title && !message) return;
-        // Soft dependency — component no-ops the toast if Alert isn't bundled.
-        if (!NDS.Alert || typeof NDS.Alert.create !== 'function') return;
-        NDS.Alert.create({
-            variant: 'success',
-            title: title || '',
-            description: message || '',
-            display: 'toast',
-            position: 'top',
-            duration: 4000
-        });
-    }
-
     // Hand the CSS every text this label can show — the one it was authored with, the
     // countdown at its starting number (its longest), and data-resend-label — so the
     // label reserves the widest of them from first paint and the button never resizes
     // mid-cycle. Writing one attribute; nothing is measured, nothing reflows.
-    function stampSizers(btn) {
+    // total: the duration this cycle will actually run, so a start({ seconds }) override
+    // reserves for ITS starting number rather than the attribute's.
+    function stampSizers(btn, total) {
         const labelEl = btn.querySelector('.nds-label');
         if (!labelEl) return;
         const cfg = configFor(btn);
-        const texts = [cfg.label, labelTemplate(btn).replace(TOKEN, cfg.cooldown), resendLabel(btn)];
+        const start = total == null ? cfg.cooldown : total;
+        const texts = [cfg.label, labelTemplate(btn).replace(TOKEN, start), resendLabel(btn)];
         labelEl.setAttribute('data-cooldown-sizes', texts.filter((t) => t).join('\n'));
     }
 
@@ -173,73 +164,66 @@
         if (ctx.labelEl) ctx.labelEl.textContent = template.replace(TOKEN, remaining);
     }
 
-    function start(btn) {
+    // opts.seconds  run for this many seconds instead of data-cooldown — the remainder
+    //               of a cooldown the page is resuming, or a duration the server chose.
+    // opts.silent   skip nds:cooldown:triggered, for a send that already happened
+    //               elsewhere. tick and end still fire: a resumed cooldown still has to
+    //               render its seconds and re-enable the button.
+    function start(btn, opts) {
         if (!btn || active.has(btn)) return;
 
         const cfg = configFor(btn);
-        if (cfg.cooldown <= 0) return;
+        opts = opts || {};
+        // An explicit duration is its own opt-in, so a button with no data-cooldown
+        // can still be driven entirely from JS.
+        const total = opts.seconds == null ? cfg.cooldown : seconds(opts.seconds, cfg.cooldown);
+        if (total <= 0) return;
 
-        const cooldownSec = cfg.cooldown;
-        const loadingSec = cfg.loading;
         const labelEl = btn.querySelector('.nds-label');
         const ctx = {
             labelEl,
             originalLabel: labelEl ? labelEl.textContent : '',
-            loadingTimer: null,
-            tickTimer: null,
-            triggered: false
+            tickTimer: null
         };
 
-        // The label + toast attributes are re-read every cycle, so re-stamp the
-        // width sizers in case the page changed the countdown or resend text.
-        stampSizers(btn);
+        // The label attributes are re-read every cycle, so re-stamp the width
+        // sizers in case the page changed the countdown or resend text.
+        stampSizers(btn, total);
         active.set(btn, ctx);
 
-        const beginCooldown = () => {
-            ctx.loadingTimer = null;
-            ctx.triggered = true;
-            NDS.State.remove(btn, 'loading');
-            NDS.State.add(btn, 'cooldown');
-            btn.disabled = true;
-            fire(btn, 'nds:cooldown:triggered');
-            sendToast(btn);
+        NDS.State.add(btn, 'cooldown');
+        btn.disabled = true;
+        // Fired before the first render so a listener can stamp its own 'loading'
+        // state — the countdown then ticks underneath the spinner and is already
+        // at the right number when the request resolves and the state comes off.
+        if (!opts.silent) fire(btn, 'nds:cooldown:triggered');
 
-            const template = labelTemplate(btn);
-            let remaining = cooldownSec;
-            render(ctx, template, remaining);
-            fire(btn, 'nds:cooldown:tick', { remaining });
+        const template = labelTemplate(btn);
+        let remaining = total;
+        render(ctx, template, remaining);
+        fire(btn, 'nds:cooldown:tick', { remaining });
 
-            ctx.tickTimer = setInterval(() => {
-                remaining -= 1;
-                if (remaining <= 0) {
-                    finish(btn);
-                } else {
-                    render(ctx, template, remaining);
-                    fire(btn, 'nds:cooldown:tick', { remaining });
-                }
-            }, 1000);
-        };
-
-        if (loadingSec > 0) {
-            NDS.State.add(btn, 'loading');
-            fire(btn, 'nds:cooldown:loading');
-            ctx.loadingTimer = setTimeout(beginCooldown, loadingSec * 1000);
-        } else {
-            beginCooldown();
-        }
+        ctx.tickTimer = setInterval(() => {
+            remaining -= 1;
+            if (remaining <= 0) {
+                finish(btn);
+            } else {
+                render(ctx, template, remaining);
+                fire(btn, 'nds:cooldown:tick', { remaining });
+            }
+        }, 1000);
     }
 
     function finish(btn) {
         const ctx = active.get(btn);
         if (!ctx) return;
         if (ctx.tickTimer) clearInterval(ctx.tickTimer);
-        if (ctx.loadingTimer) clearTimeout(ctx.loadingTimer);
-        NDS.State.remove(btn, 'loading', 'cooldown');
+        // 'loading' is the page's to set and clear — the component never touches it,
+        // so a request still in flight keeps its spinner past the countdown.
+        NDS.State.remove(btn, 'cooldown');
         btn.disabled = false;
         if (ctx.labelEl) {
-            // If the cooldown phase actually ran, prefer the post-send label.
-            // A mid-loading reset leaves the original label in place.
-            const resend = ctx.triggered ? resendLabel(btn) : null;
+            const resend = resendLabel(btn);
             ctx.labelEl.textContent = resend != null ? resend : ctx.originalLabel;
         }
         active.delete(btn);

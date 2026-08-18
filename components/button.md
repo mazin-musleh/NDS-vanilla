@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.8.1"
-last_edit: "07/08/2026 - 05:37 AM"
+updated: "1.8.x"
+last_edit: "18/08/2026 - 03:55 PM"
 ---
 
 <!-- Standard -->
@@ -1285,7 +1285,7 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Cooldown Button</h2>
-            <p class="nds-section-description">Click triggers a loading phase then a live countdown before the button is re-enabled</p>
+            <p class="nds-section-description">Click starts a live countdown before the button is re-enabled</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -1294,15 +1294,28 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
                         <div class="demo-container">
                             <div class="state-demo">
                                 <button class="nds-btn nds-subtle nds-cooldown"
+                                    id="btn-cooldown-demo"
                                     data-cooldown="10"
-                                    data-cooldown-loading="2"
                                     data-cooldown-label="Resend in {s}s"
-                                    data-resend-label="Resend code"
-                                    data-sent-title="Code sent"
-                                    data-sent-message="Check your inbox for the verification code.">
+                                    data-resend-label="Resend code">
                                     <i class="hgi hgi-stroke hgi-mail-send-01" aria-hidden="true"></i>
                                     <span class="nds-label">Send code</span>
                                 </button>
+                                <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var btn = document.getElementById('btn-cooldown-demo');
+                                    // The button owns the throttle and the countdown; the request
+                                    // and its loading state are the page's. See the Cooldown Button
+                                    // page for the full pattern.
+                                    btn.addEventListener('nds:cooldown:triggered', function() {
+                                        NDS.State.add(btn, 'loading');
+                                        // Stands in for the request this demo has no server for.
+                                        setTimeout(function() {
+                                            NDS.State.remove(btn, 'loading');
+                                        }, 1200);
+                                    });
+                                });
+                                </script>
                             </div>
                         </div>
                         <div class="demo-code">
@@ -1331,12 +1344,10 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
                                         </div>
                                         <code class="lang-html code">
 &lt;button class="nds-btn nds-subtle nds-cooldown"
+        id="btn-cooldown-demo"
         data-cooldown="10"
-        data-cooldown-loading="2"
         data-cooldown-label="Resend in {s}s"
-        data-resend-label="Resend code"
-        data-sent-title="Code sent"
-        data-sent-message="Check your inbox for the verification code."&gt;
+        data-resend-label="Resend code"&gt;
   &lt;i class="hgi hgi-stroke hgi-mail-send-01" aria-hidden="true"&gt;&lt;/i&gt;
   &lt;span class="nds-label"&gt;Send code&lt;/span&gt;
 &lt;/button&gt;
@@ -1506,11 +1517,8 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
                         <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td><code class="nds-inline-code lang-html">.nds-btn</code></td><td>Simulates interaction states: <code class="nds-inline-code lang-html">default</code>, <code class="nds-inline-code lang-html">hover</code>, <code class="nds-inline-code lang-html">pressed</code>, <code class="nds-inline-code lang-html">selected</code>, <code class="nds-inline-code lang-html">focused</code>, <code class="nds-inline-code lang-html">loading</code>, <code class="nds-inline-code lang-html">cooldown</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td><code class="nds-inline-code lang-html">.nds-btn</code></td><td>Applies a contextual color and swaps the icon. Values: <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">warning</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-cooldown</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Cooldown duration in seconds (required). Read once at wire time and frozen.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-cooldown-loading</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Seconds to hold the loading state before the countdown begins (default: 0)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-cooldown-label</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Label template during countdown. Use <code class="nds-inline-code lang-html">{s}</code> for remaining seconds (default: <code class="nds-inline-code lang-html">{s}</code>)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-resend-label</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Label to restore after the first completed cycle (e.g., initial "Send" becomes "Resend"). Omit to keep the original label.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-sent-title</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Optional toast title shown when the cooldown begins (requires NDS.Alert to be loaded)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-sent-message</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Optional toast description shown when the cooldown begins (requires NDS.Alert to be loaded)</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1534,8 +1542,8 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Method</th><th>Parameters</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-js">NDS.CooldownButton.start(btn)</code></td><td><code class="nds-inline-code lang-js">btn: HTMLElement</code></td><td>Programmatically triggers the cooldown cycle on the given button. No-op if the button is already in a cycle or has no <code class="nds-inline-code lang-html">data-cooldown</code> attribute.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">NDS.CooldownButton.reset(btn)</code></td><td><code class="nds-inline-code lang-js">btn: HTMLElement</code></td><td>Cancels an active cooldown or loading phase and restores the button immediately. Fires <code class="nds-inline-code lang-js">nds:cooldown:end</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">NDS.CooldownButton.start(btn, opts)</code></td><td><code class="nds-inline-code lang-js">btn: HTMLElement</code>, <code class="nds-inline-code lang-js">opts: { seconds, silent }</code></td><td>Programmatically triggers the cooldown cycle. <code class="nds-inline-code lang-js">seconds</code> runs for that duration instead of <code class="nds-inline-code lang-html">data-cooldown</code>, and is its own opt-in, so the button needs no attribute. <code class="nds-inline-code lang-js">silent</code> skips <code class="nds-inline-code lang-js">nds:cooldown:triggered</code> when the send already happened elsewhere. No-op if the button is already in a cycle, or if neither a duration nor <code class="nds-inline-code lang-html">data-cooldown</code> is set.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">NDS.CooldownButton.reset(btn)</code></td><td><code class="nds-inline-code lang-js">btn: HTMLElement</code></td><td>Cancels an active cooldown and restores the button immediately. Fires <code class="nds-inline-code lang-js">nds:cooldown:end</code>.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1546,8 +1554,7 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Event</th><th>Detail</th><th>When fired</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:loading</code></td><td></td><td>The loading phase begins (only when <code class="nds-inline-code lang-html">data-cooldown-loading</code> is greater than 0)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:triggered</code></td><td></td><td>The loading phase ends and the countdown starts. Fire toast notifications here for custom variants.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:triggered</code></td><td></td><td>The countdown starts. Issue the request here, and stamp the button's own loading state for as long as it runs. Fire toast notifications here for custom variants.</td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:cooldown:tick</code></td><td><code class="nds-inline-code lang-js">{ remaining: number }</code></td><td>Fires every second during the countdown. <code class="nds-inline-code lang-js">detail.remaining</code> is the seconds left.</td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:cooldown:end</code></td><td></td><td>The cooldown finished naturally or <code class="nds-inline-code lang-js">reset()</code> was called. The button is restored and re-enabled.</td></tr>
                     </tbody>

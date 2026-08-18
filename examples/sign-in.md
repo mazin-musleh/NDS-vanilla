@@ -165,7 +165,7 @@ breadcrumb: [["Examples", "/examples"]]
                   </svg>
                 </span>
                 <button type="button" class="nds-btn nds-secondary nds-cooldown" id="captcha-refresh" data-cooldown="5"
-                  data-cooldown-loading="1" data-cooldown-label="{s}s">
+                  data-cooldown-label="{s}s">
                   <span class="nds-label">New</span>
                 </button>
               </div>
@@ -277,8 +277,7 @@ breadcrumb: [["Examples", "/examples"]]
 
               <div class="nds-center">
                 <button type="button" class="nds-btn nds-subtle nds-cooldown" id="otp-resend" data-cooldown="30"
-                  data-cooldown-loading="1" data-cooldown-label="Resend in {s}s" data-resend-label="Resend"
-                  data-sent-title="Code sent" data-sent-message="A new code is on its way.">
+                  data-cooldown-label="Resend in {s}s" data-resend-label="Resend">
                   <span class="nds-label">Resend code</span>
                 </button>
               </div>
@@ -661,8 +660,10 @@ breadcrumb: [["Examples", "/examples"]]
 
     // The cooldown component handles the disabled state and the countdown;
     // this only fetches a fresh code when the countdown starts.
-    document.getElementById('captcha-refresh')
-      .addEventListener('nds:cooldown:triggered', newCaptcha);
+    var captchaBtn = document.getElementById('captcha-refresh');
+    captchaBtn.addEventListener('nds:cooldown:triggered', function () {
+      withLoading(captchaBtn, 800, newCaptcha);
+    });
 
     document.getElementById('credentials-btn').addEventListener('click', function () {
       show('credentials');
@@ -720,8 +721,23 @@ breadcrumb: [["Examples", "/examples"]]
       });
     });
 
-    document.getElementById('otp-resend')
-      .addEventListener('nds:cooldown:triggered', function () { sendCode(); });
+    // The cooldown button owns the throttle and the countdown label; the send and its
+    // confirmation are yours. Confirm from the outcome, never from the click — this
+    // demo issues the code locally so it cannot fail, but against a real endpoint the
+    // alert moves into the response handler and failures show an error variant.
+    var otpResendBtn = document.getElementById('otp-resend');
+    otpResendBtn.addEventListener('nds:cooldown:triggered', function () {
+      // withLoading stands in for the request: it holds data-state="loading" for as
+      // long as the call runs, then sends. The countdown ticks underneath it.
+      withLoading(otpResendBtn, 1200, function () {
+        sendCode();
+        NDS.Alert.create({
+          variant: 'success', title: 'Code sent',
+          description: 'A new code is on its way.',
+          display: 'toast', position: 'top', duration: 4000
+        });
+      });
+    });
 
     otpForm.addEventListener('nds:formValid', function () {
       if (NDS.OTP.getValue(otpGroup) !== expectedCode) {

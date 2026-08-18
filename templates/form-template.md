@@ -101,11 +101,8 @@ sidemenu_mode: false
                                     <button type="button" class="nds-btn nds-subtle nds-cooldown"
                                         id="ft-otp-resend"
                                         data-cooldown="5"
-                                        data-cooldown-loading="1.5"
                                         data-cooldown-label="Resend in {s}s"
-                                        data-resend-label="Resend"
-                                        data-sent-title="Verification code sent"
-                                        data-sent-message="A new code has been sent to your mobile number.">
+                                        data-resend-label="Resend">
                                         <span class="nds-label">Send code</span>
                                     </button>
                                 </div>
@@ -431,6 +428,35 @@ sidemenu_mode: false
 <script>
     (function () {
         const panels = document.querySelectorAll('[data-form-step]');
+
+        // The cooldown button owns the throttle and the countdown label. Send the code
+        // from its event — a bare click handler would let the user hammer the endpoint —
+        // and confirm from the outcome so a failure never reports success.
+        document.getElementById('ft-otp-resend')
+            .addEventListener('nds:cooldown:triggered', function () {
+                // Replace sendCode() with your own request. The loading state is the
+                // page's: it lasts exactly as long as the request does, and the countdown
+                // ticks underneath it.
+                var btn = document.getElementById('ft-otp-resend');
+                NDS.State.add(btn, 'loading');
+                sendCode()
+                    .then(() => NDS.Alert.create({
+                        variant: 'success', title: 'Verification code sent',
+                        description: 'A new code has been sent to your mobile number.',
+                        display: 'toast', position: 'top', duration: 4000
+                    }))
+                    .catch(() => NDS.Alert.create({
+                        variant: 'error', title: 'Could not send the code',
+                        description: 'Check your connection and try again.',
+                        display: 'toast', position: 'top', duration: 0
+                    }))
+                    .finally(() => NDS.State.remove(btn, 'loading'));
+            });
+
+        // Stands in for the request this template has no server for.
+        function sendCode() {
+            return new Promise(resolve => setTimeout(resolve, 1200));
+        }
 
         const requiredNotice = document.querySelector('#formTemplate .nds-required-notice');
         const formSection = document.getElementById('formTemplate');

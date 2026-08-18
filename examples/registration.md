@@ -212,8 +212,7 @@ breadcrumb: [["Examples", "/examples"]]
               <p class="nds-note nds-center">Didn't receive the code?</p>
               <div class="nds-center">
                 <button type="button" class="nds-btn nds-subtle nds-cooldown" id="registration-resend" data-cooldown="30"
-                  data-cooldown-loading="1" data-cooldown-label="Resend in {s}s" data-resend-label="Resend"
-                  data-sent-title="Code sent" data-sent-message="A new code is on its way.">
+                  data-cooldown-label="Resend in {s}s" data-resend-label="Resend">
                   <span class="nds-label">Resend code</span>
                 </button>
               </div>
@@ -294,6 +293,14 @@ breadcrumb: [["Examples", "/examples"]]
       NDS.OTP.clear(otpGroup);
       NDS.Forms.clearStatus(otpGroup);
       demoCode.textContent = expectedCode;
+      // Confirm from the outcome, never from the click. This demo issues the code
+      // locally so it cannot fail; against a real endpoint, move this into the
+      // response handler and show an error alert from the failure path.
+      NDS.Alert.create({
+        variant: 'success', title: 'Code sent',
+        description: 'A new code is on its way.',
+        display: 'toast', position: 'top', duration: 4000
+      });
     }
 
     // Visual loading only — the loading class itself guards re-entry so a second
@@ -365,10 +372,16 @@ breadcrumb: [["Examples", "/examples"]]
       btn.addEventListener('click', function () { cancelLoading(); show('step1'); });
     });
 
-    // Resend — the cooldown button owns the throttle, the countdown label and the
-    // sent toast. Issue the code from its event, never from a bare click handler:
-    // a plain link would let the user hammer a real send-code endpoint.
-    document.getElementById('registration-resend')
-      .addEventListener('nds:cooldown:triggered', function () { sendCode(); });
+    // Resend — the cooldown button owns the throttle and the countdown label; the
+    // send and its confirmation are yours. Issue the code from its event, never from
+    // a bare click handler: a plain link would let the user hammer a real endpoint.
+    // The loading state is the page's — against a real endpoint it lasts exactly
+    // as long as the request, and the countdown ticks underneath it.
+    var resendBtn = document.getElementById('registration-resend');
+    resendBtn.addEventListener('nds:cooldown:triggered', function () {
+      // withLoading stands in for the request: it holds data-state="loading" for as
+      // long as the call runs, then issues the code. The countdown ticks underneath.
+      withLoading(resendBtn, 1200, sendCode);
+    });
   });
 </script>
