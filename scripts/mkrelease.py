@@ -5,7 +5,7 @@
     python scripts/mkrelease.py --no-build   # reuse the existing _site
 
 scripts/check-release-guards.py proves verify()'s NDS-IQ guards still fire —
-run it after touching verify(), the sweep, or the sentences they key on.
+run it after touching verify() or the sentences it keys on.
 
 Output: dist/nds-vanilla-template-v<version>.zip, laid out as
 
@@ -71,50 +71,6 @@ def read_version():
                     sys.exit(f'_config.yml version is "{v}" — finalize it to a real number first.')
                 return v
     sys.exit('No version: line in _config.yml')
-
-
-def sweep_issue_template(version):
-    """Sync .github/ISSUE_TEMPLATE/iq-report.yml's dropdowns for the release.
-
-    GitHub issue forms are static YAML (no Jekyll templating in .github/), so
-    the options need a per-release sweep. Both options are prepended from the
-    current values: past releases aren't derivable, and since revisions went
-    two-segment (v1.0 follows v0.10) neither is the IQ history — a rebuilt list
-    would have to hardcode where the v0 line ended. Idempotent.
-    """
-    path = os.path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'iq-report.yml')
-    with open(path, encoding='utf8') as f:
-        text = f.read()
-
-    with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
-        heading = re.search(r'instructions v(\d+\.\d+)', f.read())
-    if not heading:
-        sys.exit('_includes/NDS-IQ.md heading is not "instructions v<major>.<minor>" — the '
-                 'iq-version dropdown is prepended from it. Teach this sweep the new shape first.')
-    iq = heading.group(1)
-
-    def options_block(text, dropdown_id):
-        pat = re.compile(
-            r'(id:\s*' + re.escape(dropdown_id) + r'\b[\s\S]*?options:\n)((?:\s+- .*\n)+)')
-        m = pat.search(text)
-        if not m:
-            sys.exit(f'iq-report.yml: dropdown {dropdown_id} not found.')
-        indent = re.match(r'(\s+)- ', m.group(2).splitlines()[0]).group(1)
-        return m, indent
-
-    def prepend(text, dropdown_id, value):
-        m, indent = options_block(text, dropdown_id)
-        entry = f'{indent}- "{value}"\n'
-        if entry in m.group(2):
-            return text
-        return text[:m.end(1)] + entry + m.group(2) + text[m.end():]
-
-    new = prepend(text, 'template-version', version)
-    new = prepend(new, 'iq-version', f'v{iq}')
-    if new != text:
-        with open(path, 'w', encoding='utf8', newline='\n') as f:
-            f.write(new)
-        print(f'  swept .github/ISSUE_TEMPLATE/iq-report.yml (template {version}, IQ v{iq})')
 
 
 def stage(version):
@@ -365,8 +321,6 @@ def main():
     version = read_version()
     print(f'\nPackaging v{version}\n')
 
-    sweep_issue_template(version)
-
     if not args.no_build:
         run('bundle exec jekyll build')
     run('ruby _plugins/baseurl_cleaner.rb')
@@ -376,10 +330,6 @@ def main():
     out = zip_up(dist, pkg, version)
     shutil.rmtree(pkg)
     verify(out, version)
-    # The sweep writes a TRACKED file. It is meant to land in the release
-    # commit, but nothing else says so — and an aborted run leaves it swept.
-    print('\n  Swept (tracked, commit with the release): '
-          '.github/ISSUE_TEMPLATE/iq-report.yml')
     print('  Upload:  gh release upload v%s "%s" --clobber\n' % (version, out))
 
 

@@ -3,53 +3,11 @@ description: Consumer findings from installing NDS IQ. Attach your NDS-REPORT.md
 title: "[IQ]: "
 labels: ["iq", "triage"]
 body:
-  - type: dropdown
-    id: template-version
-    attributes:
-      label: Template version
-      description: From the zip filename or your project's NDS bundle.
-      options:
-        - "1.8.0"
-        - "1.7.2"
-        - "1.7.1"
-        - "1.7.0"
-        - "1.6.0"
-        - "1.5.0"
-        - "1.4.1"
-        - "1.4.0"
-        - "1.3.0"
-        - "1.2.0"
-        - "1.1.0"
-        - "1.0.x"
-        - other / unknown
-    validations:
-      required: true
-  - type: dropdown
-    id: iq-version
-    attributes:
-      label: IQ version
-      description: From the `instructions vN.N` stamp in your project's `NDS-IQ.md` heading. An older install may show a plain number (`v7`, `v6`, …) — pick the matching `v0.N`.
-      options:
-        - "v2.0"
-        - "v1.0"
-        - "v0.10"
-        - "v0.9"
-        - "v0.8"
-        - "v0.7"
-        - "v0.6"
-        - "v0.5"
-        - "v0.4"
-        - "v0.3"
-        - "v0.2"
-        - "v0.1"
-        - other / unknown
-    validations:
-      required: true
   - type: textarea
     id: report
     attributes:
       label: Report
-      description: Drag your `NDS-REPORT.md` into this area. Add any extra context above or below the attachment.
+      description: Drag your `NDS-REPORT.md` into this area. It already names the NDS version and the instructions version. Add any extra context above or below the attachment.
       placeholder: (drag NDS-REPORT.md here)
     validations:
       required: true
