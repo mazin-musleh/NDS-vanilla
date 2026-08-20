@@ -1,6 +1,6 @@
 ---
 # === Required ===
-layout: page               # page | post | empty | minimal
+layout: page               # page | minimal
 title: Page Title
 lang: en                    # en | ar
 direction: ltr              # ltr | rtl
@@ -21,7 +21,7 @@ breadcrumb: [["Components", "/components"]]     # or mix linked + label: [["Pare
 # breadcrumb_root_url: /       # override root URL
 # sidemenu_mode:               # omit = default slider | top = top dropdown | false = hidden
 # hideFeedback: false          # hide user feedback section (page layout only)
-# last_edit: "04/12/2020 - 04:13 PM"  # DGA last-modified line at the end of the content (page/post layouts)
+# last_edit: "04/12/2020 - 04:13 PM"  # DGA last-modified line at the end of the content (page layout)
 
 # === Data Overrides ===
 # mainnav: mainnav            # loads _data/mainnav/{value}.yml (default: mainnav)
@@ -42,7 +42,4 @@ breadcrumb: [["Components", "/components"]]     # or mix linked + label: [["Pare
 # === Behavior Flags ===
 # exclude_showcase: true       # exclude showcase CSS/JS
 
-# === Post-Specific (post layout) ===
-# date: 2025-01-15
-# author: Digital Government Authority
 ---

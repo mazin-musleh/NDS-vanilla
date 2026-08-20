@@ -101,7 +101,7 @@ All page content is built from sections. Read `layout/section.md` before creatin
 ## Creating New Pages
 
 **Two base templates** — copy and fill in your values:
-- `standard-page.md` — regular pages (uses `page`/`post`/`empty`/`minimal` layouts with sub hero)
+- `standard-page.md` — regular pages (uses `page`/`minimal` layouts with sub hero)
 - `subsite.md` — subsite home pages (uses `home` layout with hero slider)
 
 ## Liquid Whitespace (`_includes/`, `_layouts/`)
