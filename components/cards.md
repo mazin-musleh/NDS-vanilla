@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.2"
-last_edit: "14/08/2026 - 11:06 PM"
+updated: "1.8.x"
+last_edit: "20/08/2026 - 06:45 AM"
 ---
 
 <!-- Standard Card -->
@@ -923,7 +923,9 @@ last_edit: "14/08/2026 - 11:06 PM"
                         <tr><td><code class="nds-inline-code lang-html">--card-border</code></td><td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td><td>Stroke color for the <code class="nds-inline-code lang-html">nds-stroke</code> variant</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-border-hover</code></td><td><code class="nds-inline-code lang-html">--border-primary</code></td><td>Stroke color when the card is hovered</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-border-active</code></td><td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td><td>Stroke color when the card is pressed</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Inner padding of the card</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--card-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Inner padding of the card, on both axes</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--card-padding-block</code></td><td><code class="nds-inline-code lang-html">--card-padding</code></td><td>Top and bottom padding alone. Set it to pad one axis without touching the other</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--card-padding-inline</code></td><td><code class="nds-inline-code lang-html">--card-padding</code></td><td>Start and end padding alone. Tab content reads it too, so a card-style tab panel keeps the same gutter</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-gap</code></td><td><code class="nds-inline-code lang-html">--spacing-3xl</code></td><td>Vertical gap between header, content, meta, and actions</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-radius</code></td><td><code class="nds-inline-code lang-html">--radius-lg</code></td><td>Corner radius</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-width</code></td><td><code class="nds-inline-code lang-html">100%</code></td><td>Card width inside its container</td></tr>

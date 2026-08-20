@@ -20,6 +20,8 @@
   --card-border-hover: initial;
   --card-border-active: initial;
   --card-padding: initial;
+  --card-padding-block: initial;
+  --card-padding-inline: initial;
   --card-gap: initial;
   --card-radius: initial;
   --card-text: initial;
@@ -39,7 +41,14 @@
   --_card-border: var(--card-border, var(--border-neutral-primary));
   --_card-border-hover: var(--card-border-hover, var(--border-primary));
   --_card-border-active: var(--card-border-active, var(--border-neutral-primary));
+  // --card-padding sets both axes; the per-axis knobs fall back to it. A variant
+  // retunes the -base value, never --_card-padding-block itself, so the knob
+  // check is written once here instead of being restated at every override.
   --_card-padding: var(--card-padding, var(--spacing-xl));
+  --_card-padding-block-base: var(--_card-padding);
+  --_card-padding-inline-base: var(--_card-padding);
+  --_card-padding-block: var(--card-padding-block, var(--_card-padding-block-base));
+  --_card-padding-inline: var(--card-padding-inline, var(--_card-padding-inline-base));
   --_card-gap: var(--card-gap, var(--spacing-3xl));
   --_card-radius: var(--card-radius, var(--radius-lg));
   --_card-text: var(--card-text, var(--text-display));
@@ -66,7 +75,7 @@
   color: var(--_card-text);
   border: 1px solid transparent;
   border-radius: var(--_card-radius);
-  padding: var(--_card-padding);
+  padding: var(--_card-padding-block) var(--_card-padding-inline);
   min-width: var(--_card-width-min);
   width: var(--_card-width);
   max-width: var(--_card-width-max);
@@ -173,6 +182,26 @@
     > :is(.nds-card-text, .nds-card-title) {
       padding-top: var(--spacing-md);
     }
+  }
+
+  // A centred card centres its header too. Wins on source order over the
+  // space-between rule above, which would otherwise pin the featured icon to
+  // the start. The close button leaves the flow so it cannot pull it off-centre.
+  &:is(.nds-center, .nds-statistic) .nds-card-header {
+    justify-content: center;
+
+    .nds-close {
+      position: absolute;
+      top: 0;
+      inset-inline-end: 0;
+    }
+  }
+
+  // A centred card reads as a statement, so it gets a taller block gutter.
+  // Retuning the -base value keeps --card-padding-block meaning exactly what it
+  // says: set it and you get that, untouched by the multiplier.
+  &.nds-center {
+    --_card-padding-block-base: calc(var(--_card-padding) * 1.5);
   }
 
   .nds-card-image:not(.nds-avatar) {

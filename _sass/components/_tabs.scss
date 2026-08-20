@@ -305,7 +305,7 @@
   }
 
   .nds-tab-content {
-    padding-inline: var(--_card-padding);
+    padding-inline: var(--_card-padding-inline);
     padding-block: var(--spacing-2xl);
 
     // Card variant zeroes the panel padding (the tab-content already
@@ -344,7 +344,7 @@
 }
 
 .nds-tab-content.nds-card {
-  padding-inline: var(--_card-padding);
+  padding-inline: var(--_card-padding-inline);
   padding-block: var(--spacing-2xl);
 
   // Same shape as the .nds-tabs.nds-card branch — zero by default
