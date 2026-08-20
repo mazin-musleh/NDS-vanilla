@@ -30,7 +30,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) declares `NDS_ROOT` and `ND
 | release known / unknown | banner check (P2) |
 | cannot see page | headless attempt (§Verify) |
 | no CSP concern | response-header sweep (§Plan) |
-| page done | both §Verify passes + icon sweep (§Build) |
+| page done | both browser passes (§Verify) |
 
 **P2 — Banner checks are bounded.** Read only a bundle's opening comment for `Version:`. If absent, the release is unknown. Never scan deeper into minified files or infer the version elsewhere → P5.
 
@@ -174,7 +174,7 @@ Create root `NDS-PLAN.md`, starting with `Managed by NDS IQ`, with columns: page
 
 **Admin/console:** add `nds-full-width` to `<body>` and place the hero inside `.nds-main-content` beside the side menu (`console-demo.md`).
 
-**Copied chrome ships as-is.** Keep self-contained chrome/widgets, including DGA stamp and dark-mode toggle; record removable items as plan checkboxes. Never infer affiliation.
+**Copied chrome ships as-is.** Chrome means the topbar, main navigation, footer, accessibility panel and its FAB, cookie popup, DGA stamp, and dark-mode toggle. Keep every self-contained piece; record removable items as plan checkboxes. Only the dev ticks them. Never infer affiliation.
 
 Before page #2, wire project-backed controls to real session/API/route data. Remove controls the project cannot back; never ship fake identity or dead widgets.
 
@@ -202,7 +202,7 @@ Before page JS, list every intended behavior and check the component catalogs/ba
 
 **Replacing a legacy library:** name the capability, search the catalogs, compose NDS components if needed, and port callbacks through NDS methods/events. Truly uncovered → vanilla inside hard rule #4; never reintroduce the legacy library for one widget.
 
-**Icons:** audit every `nds-hgi-*` token in HTML and page JS against `_source/_data/content/icons.yml`. Other glyphs use `<i class="hgi hgi-stroke hgi-<name>">` from `_source/_sass/_hgiRoundedStroke.scss`. `NDS.Init.audit()` does not see icon names inside JS strings.
+**Icons:** §Verify's behavioral pass checks every `nds-hgi-*` token. Other glyphs use `<i class="hgi hgi-stroke hgi-<name>">` from `_source/_sass/_hgiRoundedStroke.scss`.
 
 **Strict `style-src`:** before done, grep the page for `style="` and convert every canonical inline knob through hard rule #3's CSP edit.
 
@@ -231,8 +231,8 @@ If NDS has no needed surface, direct code is allowed; comment what was checked a
 
 Never verify from code inspection. A page needs both browser passes:
 
-- **Behavioral:** load it, run `NDS.Init.audit()`, inspect NDS warnings, and exercise wired behavior including one request failure path. During active work, `window.NDSInitConfig = { enableLogging: true }` may be set before NDS scripts.
-- **Visual:** inspect desktop and mobile screenshots for spacing, icons, width/sticky behavior, dark mode, and overall coherence. Measurements alone are not visual verification. **The built twin is the visual spec:** serve `NDS_ROOT/_site` over HTTP (a quick static server — never `file://`, which floods the console with false errors) and compare your page against the matching built page. A difference you chose is a content swap; a difference you didn't is a bug.
+- **Behavioral:** load it, run `NDS.Init.audit()`, inspect NDS warnings, and exercise wired behavior including one request failure path. Also check every `nds-hgi-*` token in the page HTML and its page JS against `_source/_data/content/icons.yml`: `NDS.Init.audit()` does not see icon names inside JS strings. Submit every required field type empty, one by one: the types share one required mark but each validates through different code, so one passing field proves nothing about the next. During active work, `window.NDSInitConfig = { enableLogging: true }` may be set before NDS scripts.
+- **Visual:** serve `NDS_ROOT/_site` over HTTP (a quick static server — never `file://`, which floods the console with false errors) and compare your page against the matching built page at desktop and mobile widths. **The built twin is the visual spec:** a difference you chose is a content swap; a difference you didn't is a bug. Also inspect spacing, icons, width/sticky behavior, dark mode, and overall coherence. Measurements alone are not visual verification.
 
 **Drive both passes headlessly** with existing tooling (project e2e harness, Playwright, Puppeteer, or headless Chrome); never install browser tooling into the project or change its lockfile. Behavioral = console + audit; visual = screenshots you inspect at desktop and mobile widths. Claim "cannot see the page" only after this fails; report the failure. An unreachable viewport remains unmet.
 
@@ -248,6 +248,8 @@ If the attempt fails, use the first available fallback and report what remains u
    - [ ] Check expected spacing.
    - [ ] Check every icon renders as a glyph.
    - [ ] Check dark mode on page content.
+
+Under strict `style-src`, confirm §Build's `style=` grep ran on this page; run it if not.
 
 Self-verified rows remain `Awaiting Verification`; only dev confirmation makes `Built and Verified`.
 
