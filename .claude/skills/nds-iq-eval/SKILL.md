@@ -17,6 +17,14 @@ Evaluates the consumer rules file (`_includes/NDS-IQ.md` — installed at a cons
 - **A new sentence must fail the floor first.** Before proposing any addition to `_includes/NDS-IQ.md`, run its scenario in `floor` mode. Stub PASSES → the model already does this and the sentence buys nothing: fix the source instead (doc, example, catalog, banner), which is where AGENTS.md's attribution default sends it anyway. Stub FAILS → the sentence is carrying real weight and can be proposed. This is the cheap half of the cause-removal ladder: it tells you whether the top rung is even needed before you argue about wording.
 - **The harness states only what the field state would show.** A scenario's setup, prompt, and seeded artifacts carry world-state, never the graded answer. Three leak classes (audited 2026-08-17, `leak:` labels in `scenarios.md`): a seeded artifact enumerating the items under test (S84's plan row — the proven case), a setup fact naming the capability whose discovery is graded (S86's old headless line), a prompt naming the graded surface (the S72/S79 tell). Reuse field artifacts verbatim where they exist; author a same-sitting gate run's setup BLIND — written before the sentence it will grade. A pass a leak audit voids reverts to UNMEASURED, never FAIL. A fourth class is a limit, not a leak: a fresh-context run cannot measure attention/compaction/momentum decay, so a rule whose field failure lived deep in a long session needs a long-context variant and a `baseline:` caveat naming it.
 
+## Token efficiency (hard rules)
+
+- **Cheapest instrument first, always:** a grep or mechanical check → one scoped comprehension run → behavior on the SMALLEST fixture that lets the graded behavior fire → the field rig. Reaching for a costlier instrument when a cheaper one answers the question is a violation, not a preference.
+- **Every proposed run names its expected token cost before launch.** Anything above ~300K in one launch needs the owner's explicit go.
+- **One run per question.** A scenario with a standing verdict is never re-run unless its rules text changed or a field report contradicts it. (Extends the one-eval-per-edit-batch principle.)
+- **Behavior runs grade everything their artifacts touch** — one small fixture, many verdicts. A single-scenario rig is the exception, used only when no existing state can carry it.
+- **Fixtures stay skeletal and states get reused.** A new state is authored only when no existing one can host the run — authoring and leak-auditing a state costs more than most runs.
+
 ## Modes (cost tiers)
 
 | Mode | What runs | Model(s) | When |
