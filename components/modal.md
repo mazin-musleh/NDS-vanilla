@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.8.0"
-last_edit: "15/08/2026 - 08:20 AM"
+updated: "1.8.x"
+last_edit: "20/08/2026 - 06:29 AM"
 ---
 
 <!-- Modal Dialog -->
@@ -61,9 +61,11 @@ last_edit: "15/08/2026 - 08:20 AM"
                                 <div id="modal-basic-demo" class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
                                     aria-hidden="true" hidden>
                                     <div class="nds-card-header">
-                                        <span class="nds-featured-icon nds-circle" data-status="neutral">
-                                            <i class="nds-icon nds-hgi-information-circle" aria-hidden="true"></i>
-                                        </span>
+                                        <div class="nds-card-featured-icon">
+                                            <span class="nds-featured-icon nds-circle">
+                                                <i class="nds-icon nds-hgi-information-circle" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
                                         <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
                                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                         </button>
@@ -84,14 +86,6 @@ last_edit: "15/08/2026 - 08:20 AM"
                                             <div class="nds-form-control">
                                                 <textarea id="textareaInput" class="nds-textarea"
                                                     placeholder="Enter your message..." rows="4"></textarea>
-                                            </div>
-                                            <div class="nds-form-footer">
-                                                <span class="nds-feedback nds-outline nds-sm">
-                                                    <span class="nds-feedback-icon">
-                                                        <i class="nds-icon" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="nds-feedback-message"></span>
-                                                </span>
                                             </div>
                                         </div>
 
@@ -138,9 +132,11 @@ last_edit: "15/08/2026 - 08:20 AM"
 &lt;div id="modal-basic-demo" class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
     aria-hidden="true" hidden&gt;
   &lt;div class="nds-card-header"&gt;
-    &lt;span class="nds-featured-icon nds-circle" data-status="neutral"&gt;
-      &lt;i class="nds-icon nds-hgi-information-circle" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;/span&gt;
+    &lt;div class="nds-card-featured-icon"&gt;
+      &lt;span class="nds-featured-icon nds-circle"&gt;
+        &lt;i class="nds-icon nds-hgi-information-circle" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+    &lt;/div&gt;
     &lt;button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal"&gt;
       &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
@@ -161,14 +157,6 @@ last_edit: "15/08/2026 - 08:20 AM"
         &lt;textarea id="textareaInput" class="nds-textarea"
             placeholder="Enter your message..." rows="4"&gt;&lt;/textarea&gt;
       &lt;/div&gt;
-      &lt;div class="nds-form-footer"&gt;
-        &lt;span class="nds-feedback nds-outline nds-sm"&gt;
-          &lt;span class="nds-feedback-icon"&gt;
-            &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;/span&gt;
-          &lt;span class="nds-feedback-message"&gt;&lt;/span&gt;
-        &lt;/span&gt;
-      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card-actions"&gt;
@@ -181,6 +169,122 @@ last_edit: "15/08/2026 - 08:20 AM"
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <div class="nds-dropmenu demo-toggle-menu">
+                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Status: ">
+                                        <span class="nds-label">Status: Success</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='[["data-status=success", "#modal-status-demo", "modalStatus", "attr"], ["nds-hgi-checkmark-circle-02", ".nds-featured-icon .nds-icon", "modalStatus"]]'>
+                                                <span class="nds-label">Success</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='[["data-status=error", "#modal-status-demo", "modalStatus", "attr"], ["nds-hgi-cancel-circle", ".nds-featured-icon .nds-icon", "modalStatus"]]'>
+                                                <span class="nds-label">Error</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='[["data-status=warning", "#modal-status-demo", "modalStatus", "attr"], ["nds-hgi-alert-circle", ".nds-featured-icon .nds-icon", "modalStatus"]]'>
+                                                <span class="nds-label">Warning</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='[["data-status=info", "#modal-status-demo", "modalStatus", "attr"], ["nds-hgi-information-circle", ".nds-featured-icon .nds-icon", "modalStatus"]]'>
+                                                <span class="nds-label">Info</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <button class="nds-btn nds-primary nds-lg" data-modal-target="modal-status-demo">
+                                    <span class="nds-label">Open Status Modal</span>
+                                </button>
+                                <div id="modal-status-demo" class="nds-modal nds-card nds-stroke nds-center nds-sm" data-status="success"
+                                    data-modal-static role="dialog" aria-labelledby="modal-status-title" aria-hidden="true" hidden>
+                                    <div class="nds-card-header">
+                                        <div class="nds-card-featured-icon">
+                                            <span class="nds-featured-icon nds-xl nds-circle">
+                                                <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title" id="modal-status-title">Request submitted</span>
+                                            <p class="nds-card-description">Your request reached the service. You get a message when the review is done.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-card-actions">
+                                        <button class="nds-btn nds-primary nds-lg" data-modal-close>
+                                            <span class="nds-label">Done</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-modal-status-1" id="tab-modal-status-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-modal-status-1"
+                                        aria-labelledby="tab-modal-status-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
+&lt;!-- Trigger Button --&gt;
+&lt;button class="nds-btn nds-primary nds-lg" data-modal-target="modal-status-demo"&gt;
+  &lt;span class="nds-label"&gt;Open Status Modal&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Status modal: centred card, no close button, closes only on an action --&gt;
+&lt;div id="modal-status-demo" class="nds-modal nds-card nds-stroke nds-center nds-sm" data-status="success"
+    data-modal-static role="dialog" aria-labelledby="modal-status-title" aria-hidden="true" hidden&gt;
+  &lt;div class="nds-card-header"&gt;
+    &lt;div class="nds-card-featured-icon"&gt;
+      &lt;span class="nds-featured-icon nds-xl nds-circle"&gt;
+        &lt;i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-card-content"&gt;
+    &lt;div class="nds-card-text"&gt;
+      &lt;span class="nds-card-title" id="modal-status-title"&gt;Request submitted&lt;/span&gt;
+      &lt;p class="nds-card-description"&gt;Your request reached the service. You get a message when
+          the review is done.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-card-actions"&gt;
+    &lt;button class="nds-btn nds-primary nds-lg" data-modal-close&gt;
+      &lt;span class="nds-label"&gt;Done&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+                                            </code>
                                         </div>
                                     </div>
                                 </div>
@@ -337,6 +441,10 @@ last_edit: "15/08/2026 - 08:20 AM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-modal-close</code></td>
                             <td>Set on any element inside a modal. Closes the currently open modal when clicked.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-modal-static</code></td>
+                            <td>Set on the modal. Removes both dismiss paths: no <kbd>Esc</kbd> key, no backdrop click. The modal then closes only through a <code class="nds-inline-code lang-html">data-modal-close</code> control or <code class="nds-inline-code lang-js">NDS.Modal.close()</code>. Use it when the user must pick one of the actions.</td>
                         </tr>
                     </tbody>
                 </table>

@@ -14,6 +14,8 @@
  * Hooks:
  *   data-modal-target   on a trigger — the id of the modal to open
  *   data-modal-close    on any control that should close it (.nds-modal-close works too)
+ *   data-modal-static   on the .nds-modal — no ESC, no backdrop click. It closes only
+ *                       through a [data-modal-close] control or NDS.Modal.close()
  * Gotchas:
  *   - One modal at a time: open() closes the current one first.
  *   - nds-backdrop.js must be in the bundle. Without it init() and open() log an error
@@ -65,10 +67,16 @@
       close();
     }
 
-    // Show backdrop
+    // Show backdrop. A [data-modal-static] modal drops both dismiss paths, so
+    // it closes only through a [data-modal-close] control or NDS.Modal.close()
+    // — same contract as [data-panel-static].
+    const isStatic = modal.hasAttribute('data-modal-static');
+
     NDS.Backdrop.show({
       zIndex: 1100,
-      onClick: () => close()
+      onClick: () => close(),
+      escapeClose: !isStatic,
+      clickToClose: !isStatic
     });
 
     // Show modal
@@ -190,7 +198,8 @@
 
     // ESC key handling is now in backdrop, but keep this for additional modal-specific behavior
     document.addEventListener('keydown', (e) => {
-      if ((e.key === 'Escape' || e.key === 'Esc') && activeModal) {
+      if ((e.key === 'Escape' || e.key === 'Esc') && activeModal
+          && !activeModal.hasAttribute('data-modal-static')) {
         e.preventDefault();
         close();
       }
