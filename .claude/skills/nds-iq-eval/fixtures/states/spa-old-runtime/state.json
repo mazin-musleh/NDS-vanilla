@@ -1,0 +1,11 @@
+{
+  "name": "spa-old-runtime",
+  "fixture": "mini-spa",
+  "description": "NDS installed in an earlier session: all eight runtime bundles in public/assets read 1.8.0, while the NDS_ROOT reference folder at .nds/ is newer — its CHANGELOG.md tops out at 1.8.1. public/assets also holds one file the app owns (img/favicon.svg). No NDS-PLAN.md, no NDS markup in the pages.",
+  "source": "hand-authored 2026-08-20 from the mini-spa fixture; bundle stubs carry the real release banner block with the version swapped, bodies inert; CHANGELOG entries are invented components with no relation to real NDS behavior",
+  "leakAudited": "2026-08-20 (clean — world-state only; changelog components invented, no rule restated; favicon's grading purpose lives nowhere the runner can read)",
+  "notes": [
+    ".nds/ comes from assemble.mjs (--root repo copies the repo _site and _source); this state overlays only .nds/CHANGELOG.md over the copied one.",
+    "The .nds/_site/assets bundles are left as assemble copied them — the reference runtime, not the installed one."
+  ]
+}
