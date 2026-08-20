@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.8.0"
-updated: "1.8.0"
-last_edit: "18/08/2026 - 12:49 AM"
+updated: "1.8.x"
+last_edit: "20/08/2026 - 04:15 AM"
 ---
 
 <!-- Page Shell Anatomy -->
@@ -34,7 +34,7 @@ body                                          (console pages add .nds-full-width
 &#9474;   &#9500;&#9472;&#9472; section.nds-hero-section.nds-sub      (page hero; the home shape uses the hero slider)
 &#9474;   &#9492;&#9472;&#9472; div.nds-content-layout                (shape and modifier classes go here)
 &#9474;       &#9500;&#9472;&#9472; aside.nds-sidemenu                (side menu; requires .nds-wSideMenu, first child)
-&#9474;       &#9492;&#9472;&#9472; div.nds-main-content
+&#9474;       &#9492;&#9472;&#9472; div.nds-main-content.nds-stripe   (.nds-stripe turns on section striping)
 &#9474;           &#9500;&#9472;&#9472; section.nds-content-section    (page sections, repeated)
 &#9474;           &#9492;&#9472;&#9472; ...
 &#9492;&#9472;&#9472; footer.nds-footer                         (see Footer)
@@ -145,6 +145,59 @@ div.nds-content-layout.nds-wSideInfo
     </div>
 </section>
 
+<!-- Section Striping -->
+<section id="sectionStriping" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Section Striping</h2>
+            <p class="nds-section-description">A striped page alternates the background color of its sections down the page. Striping is off until you ask for it. One class turns it on, and a second flips which sections carry the tint.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block nds-prose">
+                <h3 class="nds-block-title">Stripe Classes</h3>
+                <p>Add <code class="nds-inline-code lang-html">nds-stripe</code> to <code class="nds-inline-code lang-html">nds-main-content</code>. Every second section then takes the <code class="nds-inline-code lang-css">--background-stripe</code> color, and the first section keeps the page background.</p>
+                <p>Add <code class="nds-inline-code lang-html">nds-odd</code> beside it to flip the parity. The first section takes the tint instead, then every second one after it. Use it when the page opens on a section that must stand apart from the hero above it. <code class="nds-inline-code lang-html">nds-odd</code> does nothing on its own.</p>
+                <div class="nds-code">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <code class="lang-html code">
+&lt;!-- Tints the 2nd, 4th, and 6th section --&gt;
+&lt;div class="nds-main-content nds-stripe"&gt;
+
+&lt;!-- Tints the 1st, 3rd, and 5th section --&gt;
+&lt;div class="nds-main-content nds-stripe nds-odd"&gt;
+                    </code>
+                </div>
+                <p>Both classes work with a side menu and at every screen width. Striping counts sections, not wrappers, so a merged or added section flips the parity of every section below it. The <a class="nds-color" href="{{ 'layout/section' | relative_url }}">Section</a> page covers what that means for stacked wrappers.</p>
+            </div>
+            <div class="nds-block nds-prose">
+                <h3 class="nds-block-title">Skipped Sections</h3>
+                <p>A section that paints its own background is skipped in both parities, so a stripe never fights a colored surface. The section still holds its place in the count, so the sections around it stay on the pattern.</p>
+                <table class="nds-table nds-responsive nds-striped" style="--min-width:520px;">
+                    <thead>
+                        <tr>
+                            <th>Section class</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code>, <code class="nds-inline-code lang-html">nds-green</code></td><td>Solid brand surface</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-gradient-primary</code>, <code class="nds-inline-code lang-html">nds-gradient-green</code></td><td>Brand gradient</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Solid dark surface</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-brand</code></td><td>Tinted brand surface with an inset shadow</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-user-feedback-section</code></td><td>Feedback block with a surface of its own</td></tr>
+                    </tbody>
+                </table>
+                <p>The last-modified strip is the one section handled apart. It reads as part of the section above it, so it takes the opposite parity and always matches that section.</p>
+                <p>Card view never stripes, whichever classes you set. Each section paints as a raised card there, and a tint behind the card reads as a mistake.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="pageShellFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -180,7 +233,7 @@ div.nds-content-layout.nds-wSideInfo
                             <i class="hgi hgi-stroke hgi-layers-01"></i>
                             <span class="nds-label">Section Striping</span>
                         </span>
-                        <p class="nds-item-desc">Sections alternate background color automatically in plain layouts, skipping colored and status sections.</p>
+                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-stripe</code> to <code class="nds-inline-code lang-html">nds-main-content</code> and sections alternate background color in plain layouts, skipping colored and status sections.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -258,6 +311,8 @@ div.nds-content-layout.nds-wSideInfo
                         <tr><td><code class="nds-inline-code lang-html">nds-content-wrapper</code></td><td>layout</td><td>Applies the standard page gutter directly to the layout (minimal shape)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-middle</code></td><td>layout</td><td>Full viewport height with content centered vertically and horizontally</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-post</code></td><td>layout</td><td>Removes the first section's top padding, for article-style pages</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-stripe</code></td><td><code class="nds-inline-code lang-html">nds-main-content</code></td><td>Sections alternate background color; off without it, and card view never stripes</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-odd</code></td><td><code class="nds-inline-code lang-html">nds-main-content</code></td><td>Flips the stripe parity, so the first section is tinted; needs <code class="nds-inline-code lang-html">nds-stripe</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-full-width</code></td><td><code class="nds-inline-code lang-html">body</code></td><td>Edge-to-edge chrome and content for console pages; card view keeps its gutters</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-top</code></td><td><code class="nds-inline-code lang-html">aside.nds-sidemenu</code></td><td>Renders the side menu as a bar above the content instead of a column</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-flat</code></td><td>hero section</td><td>Removes the hero background and shadow for text-heavy pages</td></tr>

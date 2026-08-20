@@ -216,26 +216,29 @@ main {
 
     /* ── Section striping ── */
 
-    @mixin _section-striping {
-        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
+    // The slim last-edit strip reads as part of the section above it, so it
+    // takes the INVERSE parity: its predecessor always has the other parity, so
+    // inverse-strip + excluded-from-the-list = always matching the section above.
+    @mixin _section-striping($sections, $last-edit) {
+        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(#{$sections}) {
             --section-bg: var(--background-stripe);
         }
 
-        // The slim last-edit strip reads as part of the section above it, so it
-        // takes the INVERSE parity bg: its predecessor always has the other
-        // parity, so odd-strip + even-excluded = always matching the section above.
-        .nds-last-edit:nth-of-type(odd) {
+        .nds-last-edit:nth-of-type(#{$last-edit}) {
             --section-bg: var(--background-stripe);
         }
     }
 
-    &:not(.nds-wSideMenu, .nds-cardView) .nds-main-content {
-        @include _section-striping;
-    }
+    // Opt-in: .nds-stripe on .nds-main-content, at every width and with or
+    // without a side menu. The :not() list is the per-section opt-out.
+    // .nds-odd flips the parity, for pages whose first section should be tinted.
+    &:not(.nds-cardView) .nds-main-content.nds-stripe {
+        &:not(.nds-odd) {
+            @include _section-striping(even, odd);
+        }
 
-    &.nds-wSideMenu:not(.nds-cardView) .nds-main-content {
-        @include tablet(max) {
-            @include _section-striping;
+        &.nds-odd {
+            @include _section-striping(odd, even);
         }
     }
 
