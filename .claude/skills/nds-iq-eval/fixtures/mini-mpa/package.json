@@ -1,0 +1,8 @@
+{
+  "name": "records-desk",
+  "private": true,
+  "version": "3.2.0",
+  "scripts": {
+    "dev": "python -m http.server 5174"
+  }
+}

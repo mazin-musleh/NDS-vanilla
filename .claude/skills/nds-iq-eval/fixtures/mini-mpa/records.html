@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Records &mdash; Records Desk</title>
+<link rel="stylesheet" href="vendor/bootstrap.min.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Records Desk</a>
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+      <li class="nav-item"><a class="nav-link active" href="records.html">Records</a></li>
+      <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="page-header">
+    <h1>Records</h1>
+    <p class="text-muted">All records held by the office. Use the search box to narrow the list.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="input-group">
+        <input type="text" class="form-control" id="records-search" placeholder="Search by number, title or owner">
+        <button type="button" class="btn btn-primary" id="records-search-btn">Search</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <a class="btn btn-secondary" href="about.html">How to open a record</a>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered" id="records-table">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Title</th>
+          <th>Owner</th>
+          <th>Status</th>
+          <th>Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>REC-1041</td>
+          <td>Annual facility inspection</td>
+          <td>Facilities</td>
+          <td><span class="badge badge-warning">In review</span></td>
+          <td>2026-08-02</td>
+        </tr>
+        <tr>
+          <td>REC-1038</td>
+          <td>Vendor contract renewal</td>
+          <td>Procurement</td>
+          <td><span class="badge badge-success">Closed</span></td>
+          <td>2026-07-28</td>
+        </tr>
+        <tr>
+          <td>REC-1035</td>
+          <td>Staff onboarding checklist</td>
+          <td>Human Resources</td>
+          <td><span class="badge badge-success">Closed</span></td>
+          <td>2026-07-21</td>
+        </tr>
+        <tr>
+          <td>REC-1029</td>
+          <td>Quarterly budget review</td>
+          <td>Finance</td>
+          <td><span class="badge badge-warning">In review</span></td>
+          <td>2026-07-14</td>
+        </tr>
+        <tr>
+          <td>REC-1022</td>
+          <td>Incident report follow-up</td>
+          <td>Operations</td>
+          <td><span class="badge badge-danger">Late</span></td>
+          <td>2026-07-03</td>
+        </tr>
+        <tr>
+          <td>REC-1018</td>
+          <td>Fire drill record</td>
+          <td>Facilities</td>
+          <td><span class="badge badge-success">Closed</span></td>
+          <td>2026-06-30</td>
+        </tr>
+        <tr>
+          <td>REC-1014</td>
+          <td>Supplier audit notes</td>
+          <td>Procurement</td>
+          <td><span class="badge badge-danger">Late</span></td>
+          <td>2026-06-19</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="text-muted" id="records-count">7 records</p>
+
+</div>
+
+<footer class="footer bg-light">
+  <div class="container">
+    <p class="text-muted">Records Desk 3.2 &mdash; internal use only. &copy; <span class="js-year">2026</span> Facilities and Records Office.</p>
+  </div>
+</footer>
+
+<script src="vendor/jquery.min.js"></script>
+<script src="vendor/datatable-lite.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>

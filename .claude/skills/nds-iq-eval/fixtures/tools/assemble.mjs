@@ -24,10 +24,11 @@ const rootMode = args.root || 'repo'
 if (!fixture || !out) { console.error('need --fixture and --out'); process.exit(1) }
 
 // ponytail: per-fixture knobs, extend when a new fixture lands
-const ASSETS = { 'mini-spa': 'public/assets', 'mini-app': 'wwwroot/assets' }
+const ASSETS = { 'mini-spa': 'public/assets', 'mini-app': 'wwwroot/assets', 'mini-mpa': 'assets' }
 const HEADER = {
   'mini-spa': '# Records Portal\n\nBuild-free React SPA. `npm run dev` serves it at `http://localhost:5173`.',
   'mini-app': '# Fixture App\n\nASP.NET MVC app; views in `Views/`, static root `wwwroot/`.',
+  'mini-mpa': '# Records Desk\n\nPlain static site, one HTML file per page. `npm run dev` serves it at `http://localhost:5174`.',
 }
 if (!ASSETS[fixture]) { console.error(`unknown fixture ${fixture}`); process.exit(1) }
 

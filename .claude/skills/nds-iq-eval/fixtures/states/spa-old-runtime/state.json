@@ -7,5 +7,10 @@
   "notes": [
     ".nds/ comes from assemble.mjs (--root repo copies the repo _site and _source); this state overlays only .nds/CHANGELOG.md over the copied one.",
     "The .nds/_site/assets bundles are left as assemble copied them — the reference runtime, not the installed one."
-  ]
+  ],
+  "releases": {
+    "note": "Seeded stand-ins for the GitHub release artifacts. The rig serves <state>/releases/ as the download source (static server or a copy step); the folder layout mirrors the URL paths the rules file uses, so releases/download/v<v>/... and releases/archive/refs/tags/v<v>.zip resolve as relative paths. No network in this rig.",
+    "seeded": ["1.8.1"],
+    "shape": "Template zips wrap everything in nds-vanilla-template-v<v>/ and ship no _source/. Source zips wrap everything in NDS-vanilla-<v>/ and carry repo-root folders plus repo-root files. Every file inside is a skeletal stub of a few lines, except the template zip's CHANGELOG.md, which is byte-identical to this state's seeded .nds/CHANGELOG.md so the two copies of the 1.8.1 changelog cannot disagree."
+  }
 }

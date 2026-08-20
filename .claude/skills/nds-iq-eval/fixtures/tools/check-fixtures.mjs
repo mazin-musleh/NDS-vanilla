@@ -53,13 +53,24 @@ const root = path.join(FIX, 'mini-root')
       }
     }
   }
-  for (const d of ['mini-root', 'mini-app', 'mini-spa']) if (exists(path.join(FIX, d))) scan(path.join(FIX, d))
+  for (const d of ['mini-root', 'mini-app', 'mini-spa', 'mini-mpa']) if (exists(path.join(FIX, d))) scan(path.join(FIX, d))
 }
 
 // --- mini-app: surfaces scenarios assert must exist (S25 lesson) ---
 {
   const app = path.join(FIX, 'mini-app')
   ok(exists(path.join(app, 'Views', 'Home', 'Dashboard.cshtml')), 'mini-app Dashboard.cshtml missing (S25 wiring surface)')
+}
+
+// --- mini-mpa: the legacy files the port must leave alone (legacy-untouched) ---
+{
+  const mpa = path.join(FIX, 'mini-mpa')
+  for (const f of ['index.html', 'records.html', 'about.html', 'js/site.js',
+    'vendor/bootstrap.min.css', 'vendor/jquery.min.js', 'vendor/datatable-lite.js'])
+    ok(exists(path.join(mpa, ...f.split('/'))), `mini-mpa ${f} missing (legacy-untouched baseline)`)
+  const site = exists(path.join(mpa, 'js', 'site.js')) ? read(path.join(mpa, 'js', 'site.js')) : ''
+  ok(/\$\(['"]#records-table['"]\)\.dataTable\(/.test(site), 'mini-mpa site.js lost the #records-table dataTable init')
+  ok(!/nds-/.test(read(path.join(mpa, 'records.html'))), 'mini-mpa records.html carries NDS markup — the fixture is pre-NDS')
 }
 
 // --- mini-spa: no-build shape + hazard markers ---

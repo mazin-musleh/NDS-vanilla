@@ -1,0 +1,11 @@
+{
+  "name": "spa-broken-hook",
+  "fixture": "mini-spa",
+  "description": "NDS was integrated in a prior session. The app's NDS views go through one integration hook from that session, src/nds/useNdsView.js; the Records view uses it. Views go stale after route changes until a full reload. No NDS-PLAN.md.",
+  "source": "hand-authored 2026-08-20 from the mini-spa fixture; the hook is seeded as the prior session's own code; src/pages/Records.js is the fixture file with the hook's import line and its two usage lines added, nothing else changed",
+  "leakAudited": "2026-08-20 (clean — description carries the observable symptom only; hook file matches the documented broken shape with zero comments; no graded word anywhere in the state)",
+  "notes": [
+    "Runtime bundles in public/assets come from assemble.mjs (step 4 copies .nds/_site/assets); this state seeds no bundles of its own.",
+    "index.html and src/styles.css are deliberately NOT overlaid: the fixture's pages carry no NDS markup, which matches the spa-old-runtime convention and keeps this state's seed to the hook and its one caller."
+  ]
+}

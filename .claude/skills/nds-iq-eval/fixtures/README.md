@@ -74,6 +74,25 @@ README, where no runner reads it.
   control). `check-fixtures.mjs` guards all of these — do not remove a marker
   without updating it.
 
+- `mini-mpa/` = a fake consumer static multi-page site ("Records Desk"), the
+  server-rendered sibling of `mini-spa/` — no framework, no build step, no
+  `npm install`, ever. Three hand-written pages (`index.html`, `records.html`,
+  `about.html`) repeat the header/nav/footer markup per page, which is how a
+  legacy static site is actually shaped; its own JS is the single
+  `js/site.js`, jQuery-flavored. `vendor/` holds trimmed stand-ins the pages
+  really load — `bootstrap.min.css` (rules for the classes the markup uses),
+  `jquery.min.js` (a `$`/`jQuery` factory with the four methods the site
+  calls), `datatable-lite.js` (a legacy table enhancer registered on `$.fn`,
+  which `site.js` initializes on `#records-table`). Serve with any static
+  server (`python -m http.server 5174` in the assembled copy). `NDS_ASSETS`
+  assembles to `assets/`, a folder the fixture does not ship — the legacy
+  site keeps its own files in `js/` and `vendor/`, so the runtime lands in a
+  fresh folder rather than on top of legacy assets. The graded markers
+  are the legacy files themselves: `legacy-untouched.mjs` byte-compares them,
+  so an edit here changes what every past R7 run is measured against.
+  `check-fixtures.mjs` guards their presence, the `#records-table` init, and
+  that `records.html` carries no `nds-` markup.
+
 - `states/` = checked-in run states, one folder per state a scenario names:
   `state.json` (name, fixture, source, leakAudited) plus optional `files/`
   overlaid onto the assembled copy. States are authored from FIELD artifacts

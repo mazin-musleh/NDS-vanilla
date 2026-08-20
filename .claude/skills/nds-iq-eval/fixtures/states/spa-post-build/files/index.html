@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Records Portal</title>
+
+    <!-- NDS UI layer: critical-gate rules from ui-shell/head.md, verbatim. -->
+    <style>html :where(header){display:contents}html :where(.nds-topbar){height:40px}html :where(.nds-main-nav){height:var(--nds-nav-height, 72px)}html .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child){display:none}html[data-theme~=dark] :where(.nds-main-nav .nds-brand.nds-oncolor :is(img,svg)){filter:brightness(0) invert(1)}:where(.nds-topbar>*,.nds-main-nav>*,.nds-hero-section .nds-section-action,.nds-content-layout,.nds-user-feedback-section,.nds-footer){visibility:hidden}html:not([data-nds-loaded]) main{overflow-x:clip}:root{--nds-icons-opacity: 0}i.hgi-stroke{opacity:0}html{background-color:var(--background-body, #f9fafb)}html[data-theme~=dark]{background-color:var(--background-body, #111927)}:where(.nds-topbar){background-color:var(--background-topbar, #f3f4f6)}html[data-theme~=dark] :where(.nds-topbar){background-color:var(--background-topbar, #111927)}:where(.nds-main-nav){background-color:var(--background-nav, #fff)}html[data-theme~=dark] :where(.nds-main-nav){background-color:var(--background-nav, #1f2a37)}:where(.nds-hero-image-wrapper)::before{content:"";position:absolute;inset:0;background:color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent);pointer-events:none}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:is(.nds-hidden,[hidden],[data-state~=hidden],[data-filtered]){display:none !important}:where(.nds-hero-section){position:relative;height:550px}:where(.nds-hero-section.nds-sub){height:auto;min-height:220px}:where(.nds-hero-image-wrapper){position:absolute;inset:0}:where(.nds-hero-image){width:100%;height:100%;object-fit:cover;display:block}:where(.nds-hero-section :is(.nds-section-body,.nds-section-wrapper,.nds-breadcrumb-nav)){visibility:hidden}</style>
+
+    <link rel="preload" href="/public/assets/css/nds.critical.min.css" as="style" fetchpriority="high" data-nds-defer>
+    <!-- Main CSS — deferred; the head script applies it, the loader adds the icon sheets. -->
+    <link rel="preload" href="/public/assets/css/nds-main.min.css" as="style" fetchpriority="low" data-nds-defer="main">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/public/assets/img/favicon.svg" fetchpriority="low">
+
+    <!-- Framework mount root: page-shell.md "Framework Wrappers" — #root disappears from the layout. -->
+    <style>#root{display:contents}</style>
+
+    <!-- Theme/brand stamp (FOUC guard) — placed last so resource preloads kick off first.
+         One script element on purpose: a strict CSP grants it once (one nonce, one hash) instead of twice. -->
+    <script>
+        // Pre-paint FOUC guard: stamp saved data-theme before first paint, union-merged with markup/pack tokens so a stored value never clobbers them.
+        (function() {
+            var v = localStorage.getItem('nds-theme');
+            if (v) {
+                var d = document.documentElement;
+                var t = ((d.getAttribute('data-theme') || '') + ' ' + v).split(/\s+/)
+                    .filter(function (x, i, a) { return x && a.indexOf(x) === i; });
+                d.setAttribute('data-theme', t.join(' '));
+            }
+        })();
+        // Deferred styles: preload → injected stylesheet link (markers move with it). Rationale: ui-shell/head.md, CSP section.
+        (function () {
+            document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (p) {
+                var l = document.createElement('link');
+                // Clone every attribute except rel/as — keeps href, fetchpriority, integrity, crossorigin, and the data-* markers.
+                for (var i = 0; i < p.attributes.length; i++) {
+                    var a = p.attributes[i];
+                    if (a.name !== 'rel' && a.name !== 'as') l.setAttribute(a.name, a.value);
+                }
+                l.rel = 'stylesheet';
+                p.removeAttribute('data-nds-defer');
+                document.head.appendChild(l);
+            });
+        })();
+    </script>
+  </head>
+  <body>
+    <script>
+      // Route-dependent modifier (console shape): must land before framework mount,
+      // per page-shell.md "Modifier Classes" — a mount effect runs a frame too late.
+      if (location.hash.indexOf('#/nds') === 0) document.body.className = 'nds-full-width';
+    </script>
+    <div id="root"></div>
+    <script src="./vendor/react.development.js"></script>
+    <script src="./vendor/react-dom.development.js"></script>
+    <!-- NDS runtime — deferred, must land before main.js mounts the NDS world
+         (module scripts are deferred too and run in source order after this). -->
+    <script defer src="/public/assets/js/nds-main.min.js"></script>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

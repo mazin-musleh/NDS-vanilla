@@ -1,0 +1,10 @@
+{
+  "name": "spa-post-build",
+  "fixture": "mini-spa",
+  "description": "The Records gate is built: NDS head and console chrome in index.html and src/nds/, the Records page ported from the Manage Records example, plan rows at Awaiting Verification. The app serves statically; NDS runtime assets live in public/assets (see postAssemble).",
+  "source": "frozen 2026-08-20 from the R3 rig run's output (rulebook: the v3 candidate); only files differing from the fixture are seeded",
+  "leakAudited": "2026-08-20 (clean by construction — the state IS a built project, produced by a fresh runner, not hand-seeded; NDS-PLAN.md rows carry statuses and open items only)",
+  "postAssemble": [
+    "cp -r <out>/.nds/_site/assets/. <out>/public/assets/  — the runtime the build installed; real bundles are never stored in the state (fixtures stay skeletal)."
+  ]
+}
