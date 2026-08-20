@@ -1,4 +1,4 @@
-# NDS IQ — building UI with the National Design System (instructions v2.2)
+# NDS IQ — building UI with the National Design System (instructions v2.3)
 
 ## How to use this file
 
@@ -166,7 +166,7 @@ NDS is a UI layer: it does not choose a stack, define routes, or scaffold an app
 **The plan is the migration's memory between sessions.**
 
 - Statuses, exactly: `Planned`, `In Progress`, `Awaiting Verification`, `Built and Verified`. Only the dev's confirmation makes `Built and Verified`. Update at page or session boundaries; status lives in the table's Status column only — a second status system drifts, and the stale one wins on resume.
-- **Open items are tick boxes, so the dev can scan what is owed at a glance.** A question for the dev, an unmet check, a fix owed, a deferred decision — each is its own `- [ ]` line, ticked when it resolves. Prose keeps the detail; the box states the ask in one line. A box marks an item, never a page's status — status stays in the Status column. A plan from before this rule converts at its next update: reformat its open items in place, rewrite nothing else.
+- **Plan progress is tick boxes, so the dev can scan what is owed at a glance.** A question for the dev, an unmet check, a fix owed, a deferred decision — each is its own `- [ ]` line, ticked `- [x]` when it resolves. Never delete a resolved item: the ticked lines are part of the plan's memory. Prose keeps the detail; the box states the ask in one line. A box marks an item, never a page's status — status stays in the Status column. A plan from before this rule converts at its next update: reformat every item, resolved ones included, as boxes in place; rewrite nothing else.
 - **Pacing, asked once at review:** gate-by-gate (default — finish a page, propose the next, wait), or the whole plan in one run (resolve open questions by this file's defaults, verify each page as built, report at the end; rows sit `Awaiting Verification` until the dev clears the report; update rows as pages complete so a dropped session resumes cleanly).
 - All rows verified → the plan retires (keep or delete, dev's call); later work runs under the rules with no plan. The plan returns for a new multi-page effort or a dev-requested re-audit, which recreates it from the current state via this same step: passing pages enter `Awaiting Verification` for §Verify's passes, drifted pages enter `Planned` with their deltas named in the row.
 - **The dev can waive the plan** ("just build X, no plan"): the rules and §Verify still apply in full; name the one cost once (no cross-session memory), then respect the call. In a still-legacy app the waiver buys one parallel NDS page — rule #6 still bans mixing.
@@ -193,6 +193,8 @@ The chrome you copied is the docs site's own, and it ships as-is. The topbar, it
 One tier outranks all three: a page family's own `Built and Verified` archetype — siblings copy it and swap entity content.
 
 **Open a page's build session with its plan row's noted questions** — they were deferred to exactly this moment (§Plan). **Then, before any markup, list the page's parts** — every control and region, from the legacy page or the dev's brief — and match each against `components.yml`. A part the copy source lacks gets its component from the catalog, never a substitute; no match = the custom case. A controls bar above a table, list, or grid is itself a part — Toolbar — never a row composed from primitives. **P1 applies:** "NDS has no X" — yours or the dev's — is available only after the `use_when` search; ~90 components ship, and a close variant usually exists under a name that doesn't obviously match.
+
+**The parts check runs again before page JS.** Before you write page JS, list the behaviors it adds — validation rules, clearing inputs, live search, filtering, formatting — and match each against `components.yml` and the banners of the page's components. A behavior a component ships is wired through its methods and events, never rebuilt in page JS. This check is a build step, not a response to doubt: it runs even when the pattern looks too simple to check. (Core helpers — fetch, debounce, state writes — have the same rule in §JS wiring.)
 
 **The porting principle: content, flow, and data structure follow the legacy app; NDS improves the UI/UX.** Search, sorting, filtering, export, counts, validation chrome, responsive behavior are defaults to apply, not questions to ask.
 
