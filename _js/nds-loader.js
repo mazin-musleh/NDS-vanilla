@@ -9,9 +9,11 @@
  *                              NDS.Init.destroy hook for a component that keeps no
  *                              element backref and tears down from its namespace)
  *   NDS.Init.config            the resolved config
- *   NDS.Init.audit()           run the debug audits by hand (unregistered inline icons,
- *                              unclaimed filter and paged containers, .nds-filter
- *                              surfaces with no data-filter-target)
+ *   NDS.Init.audit()           run the debug audits by hand (see nds-audit.js: lang/dir,
+ *                              unregistered inline icons, unclaimed filter and paged
+ *                              containers, unmarked current-page nav link, submit-typed
+ *                              stepper controls). First call loads the audit bundle on
+ *                              demand and returns a promise; later calls are synchronous.
  *   NDS.Init.refresh(el)       tell every live component that el's contents changed —
  *                              the one call after you add/remove/replace rows or cards.
  *                              Pass the container whose CHILDREN changed; omit it for
@@ -932,52 +934,13 @@
     }
 
     // ── Debug-build audits (CONFIG.enableLogging only) ─────────────────────
-    // Silent-failure classes nothing else reports: lang/dir disagreement runs
-    // every direction-aware component the wrong way, an unregistered inline
-    // icon paints a solid box (no CSS rule → computed mask-image 'none'), and
-    // a promise-grammar container no component claimed stays skeleton-held
-    // forever. Console-only; production builds never schedule this.
+    // The checks live in nds-audit.js, its own build-owned bundle that is
+    // NEVER auto-injected: this schedule (flag-gated) and NDS.Init.audit()
+    // pull it through the NDS.Audit lazy stub, so production pages that never
+    // ask for it download zero audit bytes. Scheduling stays here — the loader
+    // owns scheduling, the module only implements the checks.
     // Runs 3s after the deferred icons CSS lands so injected bundles have
     // initialized and mask rules are computable.
-    function runDebugAudits() {
-        // NDS.isRTL tests dir alone (no lang fallback), and CSS flips off the same
-        // attribute — so lang/dir disagreement runs components in one direction
-        // under content written for the other, with nothing else reporting it.
-        // Not auto-corrected: writing dir here flips the whole document a frame
-        // after paint, and cannot help the pre-JS paint at all.
-        const htmlDir = document.documentElement.dir;
-        if (NDS.isArabic && htmlDir !== 'rtl') {
-            console.warn(`[NDS] audit: <html lang="ar"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRTL reads false, so components run left-to-right under Arabic content. Set dir="rtl" in the markup.`);
-        } else if (!NDS.isArabic && htmlDir === 'rtl') {
-            console.warn(`[NDS] audit: <html dir="rtl"> with lang="${document.documentElement.lang || 'unset'}" — direction and language disagree. Set dir="ltr", or lang to an Arabic locale.`);
-        }
-
-        document.querySelectorAll('[data-filter-items]:not([data-nds-filter-initialized])').forEach(el => {
-            if (el.closest('code, .code-example')) return;
-            console.warn('[NDS] audit: data-filter-items container never claimed by a filter — it stays skeleton-held. Remove the attribute or add the filter UI.', el);
-        });
-        document.querySelectorAll('.nds-filter:not([data-filter-target])').forEach(el => {
-            if (el.closest('code, .code-example')) return;
-            console.warn('[NDS] audit: .nds-filter has no data-filter-target — no filter instance binds it, so its options never render and its criteria go nowhere. Add data-filter-target="<results container id>".', el);
-        });
-        document.querySelectorAll('.nds-paged-content:not([data-paged-initialized])').forEach(el => {
-            if (el.closest('code, .code-example')) return;
-            console.warn('[NDS] audit: .nds-paged-content has no pagination nav — it stays skeleton-held and its data-paged-* slots never stamp. Unpaged lists use a plain container + data-filter-count.', el);
-        });
-        document.querySelectorAll('.nds-icon[class*="nds-hgi-"]').forEach(el => {
-            if (el.closest('code, .code-example')) return;
-            // The glyph paints on ::before (mask: var(--nds-icon) …), so read the
-            // pseudo — the element itself never carries a mask.
-            const cs = getComputedStyle(el, '::before');
-            const masked = (cs.maskImage && cs.maskImage !== 'none')
-                || (cs.webkitMaskImage && cs.webkitMaskImage !== 'none');
-            if (!masked) {
-                const cls = [...el.classList].find(c => c.startsWith('nds-hgi-'));
-                console.warn(`[NDS] audit: inline icon "${cls}" is not in the registered set and paints as a solid box. Use the HGI font class: <i class="hgi hgi-stroke ${cls.replace('nds-', '')}">`, el);
-            }
-        });
-    }
-
     function scheduleDebugAudits() {
         if (!CONFIG.enableLogging) return;
         // Icons CSS is loader-deferred; poll for its stamp (capped) rather than
@@ -987,7 +950,7 @@
             const iconsReady = document.documentElement.hasAttribute('data-nds-icons-loaded');
             if (iconsReady || ++tries > 20) {
                 clearInterval(timer);
-                setTimeout(runDebugAudits, 3000);
+                setTimeout(() => NDS.Audit.run(), 3000);
             }
         }, 500);
     }
@@ -1190,11 +1153,12 @@
         initialize: initializeNDS,
         components: COMPONENTS,
         config: CONFIG,
-        // On-demand run of the debug audits (unregistered inline icons,
-        // unclaimed filter/paged containers) — callable from any console or
-        // test harness regardless of the enableLogging flag, which only
-        // controls the automatic post-init sweep.
-        audit: runDebugAudits,
+        // On-demand run of the debug audits (nds-audit.js) — callable from any
+        // console or test harness regardless of the enableLogging flag, which
+        // only controls the automatic post-init sweep. The first call loads the
+        // audit bundle through the NDS.Audit lazy stub and returns a promise;
+        // later calls run synchronously.
+        audit: () => NDS.Audit.run(),
         refresh: refreshContainer,
         destroy: destroyContainer,
     };
