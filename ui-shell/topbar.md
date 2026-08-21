@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "26/07/2026 - 09:20 PM"
+last_edit: "21/08/2026 - 06:58 PM"
 ---
 
 <!-- Topbar -->
@@ -46,7 +46,7 @@ last_edit: "26/07/2026 - 09:20 PM"
                                         <div class="nds-expandable-content">
                                             <code class="lang-html code">
 &lt;div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities"&gt;
-  &lt;button class="nds-btn nds-menu-btn nds-topbar-info nds-digitalStamp-tab"
+  &lt;button class="nds-btn nds-menu-btn nds-digitalStamp-tab"
       role="button" aria-expanded="false" aria-controls="nds-digitalStamp"&gt;
     &lt;img class="nds-flag" src="flag.svg" width="20" height="14" loading="lazy" alt="Saudi Arabia Flag"&gt;
     &lt;span class="nds-digitalStamp-lg-text nds-truncate"&gt;A government website registered with the Digital Government Authority.&lt;/span&gt;
@@ -339,7 +339,7 @@ last_edit: "26/07/2026 - 09:20 PM"
                         <tr><td><code class="nds-inline-code lang-html">nds-digitalStamp-tab</code></td><td>top bar button</td><td>Styles the DGA stamp trigger with flag icon and verification text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-digitalStamp-lg-text</code></td><td>inside stamp tab</td><td>Full-length label shown on desktop, hidden on tablet and below</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-digitalStamp-sm-text</code></td><td>inside stamp tab</td><td>Short label shown on tablet and below, hidden on desktop</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-topbar-info</code></td><td>container</td><td>Groups the DGA tab contents and the right-side widget cluster</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-topbar-info</code></td><td>container</td><td>Groups the right-side widget cluster. It is a flex row with a wide gap, so it belongs on that container only — never on the digital-stamp button, whose contents it would stretch apart</td></tr>
                     </tbody>
                 </table>
             </div>

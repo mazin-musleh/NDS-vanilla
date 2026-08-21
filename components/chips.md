@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "21/08/2026 - 07:12 PM"
 ---
 
 <!-- Standard -->
@@ -355,7 +355,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Primary (green) color variant</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Primary color variant</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-green</code></td><td>Alias for <code class="nds-inline-code lang-html">nds-primary</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Neutral (gray) color variant</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-gray</code></td><td>Alias for <code class="nds-inline-code lang-html">nds-neutral</code></td></tr>

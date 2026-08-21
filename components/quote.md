@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.2.0"
-last_edit: "30/06/2026 - 11:50 PM"
+last_edit: "21/08/2026 - 07:12 PM"
 ---
 
 
@@ -172,7 +172,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                             <i class="hgi hgi-stroke hgi-moon"></i>
                             <span class="nds-label">Dark Mode Adaptive</span>
                         </span>
-                        <p class="nds-item-desc">The mark color resolves through <code class="nds-inline-code lang-html">--text-primary-strong</code>, a semantic token that automatically shifts to a lighter green in dark themes without any component-level overrides.</p>
+                        <p class="nds-item-desc">The mark color resolves through <code class="nds-inline-code lang-html">--text-primary-strong</code>, a semantic token that automatically shifts to a lighter primary tint in dark themes without any component-level overrides.</p>
                     </div>
 
                     <div class="nds-definition-item">

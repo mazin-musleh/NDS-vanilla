@@ -59,6 +59,25 @@ For example:
 - Prefer **“canonical markup”** over “correct markup” when referring to markup sourced from NDS.
 - Prefer **“reference implementation”** over “example implementation” when the implementation is intended to serve as an authoritative reference.
 
+### Never name the brand color
+
+The palette is themeable. A consumer sets `--brand-primary` and the whole ramp moves, so
+any prose that names the shipped hue is wrong on their site. Describe the ROLE, not the color.
+
+- Prefer **"deep primary"** over "dark green".
+- Prefer **"brand primary"** or **"the primary brand color"** over "brand green" or "Saudi flag green".
+- Prefer **"a lighter primary tint"** over "a lighter green".
+- Prefer **"the brand variant"** over "the green variant".
+
+This covers every surface that renders the primary family: buttons, chips, footers, sections,
+heroes, charts, ratings, swiper bullets. It applies to prose, table cells, and demo copy alike.
+
+Three things stay literal, because they are names rather than descriptions: class names
+(`nds-green`, `nds-gradient-green`), token names (`--colors-green-600`), and the documented
+DEFAULT VALUE of a theme seed (`--brand-primary` ships as DGA green — that is the value a
+consumer replaces, so naming it is the point). Status hues (success green, error red) are a
+fixed family and keep their color names.
+
 ## 4. How to Describe NDS IQ
 
 Do not describe NDS IQ as something that “teaches” or “trains” an AI model.

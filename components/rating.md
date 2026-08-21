@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "06/08/2026 - 11:13 PM"
+last_edit: "21/08/2026 - 07:12 PM"
 ---
 
 <!-- Display Rating -->
@@ -459,7 +459,7 @@ last_edit: "06/08/2026 - 11:13 PM"
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-brand</code></td>
-                            <td>Switches star colors from golden yellow to the brand green palette</td>
+                            <td>Switches star colors from golden yellow to the brand primary palette</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-rating-dropmenu</code></td>

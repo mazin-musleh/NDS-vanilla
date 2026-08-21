@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.8.x"
-last_edit: "20/08/2026 - 06:45 AM"
+last_edit: "21/08/2026 - 06:58 PM"
 ---
 
 <!-- Standard Card -->
@@ -872,6 +872,7 @@ last_edit: "20/08/2026 - 06:45 AM"
                     <li>Use <code class="nds-inline-code lang-html">nds-oncolor</code> when placing cards on dark sections, hero backgrounds, or imagery so text and borders stay readable</li>
                     <li>Make the entire card clickable by using <code class="nds-inline-code lang-html">&lt;a&gt;</code> or <code class="nds-inline-code lang-html">&lt;button&gt;</code> as the root element, not by wrapping a card in a separate link</li>
                     <li>Don't use a card for a transient status message: use an <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> instead. Don't use a card to block the user for a decision: use a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">Modal</a></li>
+                    <li>Wrap tags in <code class="nds-inline-code lang-html">nds-card-meta</code> only when a second meta row sits beside them, such as a rating. The wrapper is a flex column that groups those rows. Tags on their own go straight inside <code class="nds-inline-code lang-html">nds-card-content</code>, with no wrapper: <code class="nds-inline-code lang-html">nds-card-tags</code> is styled by the card root, not by the wrapper</li>
                     <li>Don't nest cards inside cards. If you need internal structure, use <code class="nds-inline-code lang-html">nds-card-meta</code>, <code class="nds-inline-code lang-html">nds-card-tags</code>, or a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">definition list</a> inside the content area</li>
                     <li>Place <code class="nds-inline-code lang-html">nds-card-actions</code> after <code class="nds-inline-code lang-html">nds-card-content</code>, not inside it. Only the content area scrolls inside a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">modal</a>, so buttons placed inside it scroll out of reach on a long form. Actions inside the content still work: a modal pins them to the bottom, and an <code class="nds-inline-code lang-html">nds-rowView</code> card keeps them in the content column</li>
                     <li>Add a featured icon or avatar in the header for quick visual recognition. Size up (<code class="nds-inline-code lang-html">nds-lg</code>, <code class="nds-inline-code lang-html">nds-xl</code>) on statistic cards and grid contexts where the icon carries the meaning</li>

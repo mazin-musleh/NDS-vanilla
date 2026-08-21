@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.3.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "21/08/2026 - 07:12 PM"
 ---
 
 <!-- Bar Chart -->
@@ -801,7 +801,7 @@ NDS.Chart.create('#my-chart', {
                     <li>For a headline number with a trend sparkline, use a <a class="nds-color" href="{{ 'components/metric' | relative_url }}">Metric</a> tile instead of a standalone chart</li>
                     <li>Use HTML <code class="nds-inline-code lang-html">data-chart-*</code> attributes for static charts that don't change. Use the JS API for dynamic or user-driven data that updates after load</li>
                     <li>Set axis titles (<code class="nds-inline-code lang-js">yaxis.title</code>, <code class="nds-inline-code lang-js">xaxis.title</code>) to label what the numbers represent. Without titles, the chart relies on the legend alone</li>
-                    <li>Override <code class="nds-inline-code lang-html">--chart-color-*</code> properties to match your project's brand palette. The default palette uses Saudi flag green tones</li>
+                    <li>Override <code class="nds-inline-code lang-html">--chart-color-*</code> properties to match your project's brand palette. The default series colors are drawn from the primary brand family, so a custom palette recolors them with no override</li>
                     <li>Charts auto-resize via ResizeObserver. No manual resize calls are needed when the container width changes</li>
                     <li>X-axis labels auto-rotate to 45&deg; when they would overlap (<code class="nds-inline-code lang-js">xaxis.labelRotate: 'auto'</code> by default). For dense time-series, opt into <code class="nds-inline-code lang-js">xaxis.labelDecimate: 'auto'</code> to show only every Nth label instead</li>
                 </ul>

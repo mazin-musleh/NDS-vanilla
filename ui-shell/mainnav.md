@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.8.0"
-last_edit: "15/08/2026 - 11:26 PM"
+last_edit: "21/08/2026 - 06:58 PM"
 ---
 
 
@@ -511,7 +511,8 @@ last_edit: "15/08/2026 - 11:26 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>nav-link</td><td>Marks the active page in the navigation</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>nav-link</td><td>Marks the current page. You write it, and nothing in the component removes it. This is the only attribute that highlights the current page in the main nav. <code class="nds-inline-code lang-html">aria-current="page"</code> is for screen readers and drives no styling, so a link with that alone renders with no highlight at all &mdash; set both. <code class="nds-inline-code lang-js">NDS.Init.audit()</code> reports a link that is missing it</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="active"</code></td><td>nav-link</td><td>Written and removed by the component while that link's dropdown is open. Never author it. On a current-page link it looks correct at first and then disappears, because the next dropdown close strips it. The <a class="nds-color" href="{{ 'ui-shell/sidemenu' | relative_url }}">Side Menu</a> uses the same word on its <code class="nds-inline-code lang-html">&lt;li&gt;</code> elements, where it does mean the current page &mdash; a different element doing a different job. Do not carry that spelling over to the main nav</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-hidden="sm md sr"</code></td><td>action-item label</td><td>Collapses the label to icon-only below 960px while screen readers keep the name. Omit on <code class="nds-inline-code lang-html">nds-CTA</code> items so their labels stay visible. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility</td></tr>
                     </tbody>
                 </table>

@@ -97,7 +97,7 @@ sidemenu_mode: false
                 <p>When using forms, the standard form fields used are text fields which are typically used for short text input. Statuses of the form field are default, active, focused, error, hint, and disabled. When using forms, the standard form fields used are text fields which are typically used for short text input.</p>
 
                 <h2 id="section-4" class="nds-section-title">Section 4</h2>
-                <p>Links are used when there is a need to use a linking mechanism for directing the user to another page within the portal or to an external portal. There are two types of links that can be used. <a href="#" class="nds-primary">Links within a text body</a> just like this example are underlined with a bold green color. Standalone links which can be used separately are underlined and contain an icon.</p>
+                <p>Links are used when there is a need to use a linking mechanism for directing the user to another page within the portal or to an external portal. There are two types of links that can be used. <a href="#" class="nds-primary">Links within a text body</a> just like this example are underlined with a bold primary color. Standalone links which can be used separately are underlined and contain an icon.</p>
                 <p>
                     <a href="#" class="nds-btn nds-transparent nds-color nds-trail-icon">
                         <span class="nds-label">Link example</span>

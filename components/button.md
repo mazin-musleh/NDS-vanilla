@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.8.x"
-last_edit: "18/08/2026 - 03:55 PM"
+last_edit: "21/08/2026 - 07:12 PM"
 ---
 
 <!-- Standard -->
@@ -1475,7 +1475,7 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Primary variant, green background</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Primary variant, brand primary background</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Neutral variant, dark background</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-secondary</code></td><td>Secondary solid variant, light gray background</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-secondary-outline</code></td><td>Secondary outlined variant, transparent background with border</td></tr>

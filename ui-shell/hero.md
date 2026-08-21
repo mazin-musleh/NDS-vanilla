@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "15/08/2026 - 11:11 PM"
+last_edit: "21/08/2026 - 06:58 PM"
 ---
 
 <!-- Sub Hero -->
@@ -639,6 +639,7 @@ last_edit: "15/08/2026 - 11:11 PM"
                     <li>Background images on the sub hero should have a clear subject on the start edge (right in RTL, left in LTR) — the mask keeps that edge fully opaque while fading toward the content area</li>
                     <li>Set <code class="nds-inline-code lang-html">fetchpriority="high"</code> on the first main hero slide image. It is the Largest Contentful Paint element on home pages and skipping this degrades Core Web Vitals scores</li>
                     <li>Use <code class="nds-inline-code lang-html">data-src</code> on second and later main hero slides to defer image loading until the slide is about to appear</li>
+                    <li>For a main hero with no photograph, keep the empty <code class="nds-inline-code lang-html">.nds-hero-image-wrapper</code> and drop the <code class="nds-inline-code lang-html">&lt;picture&gt;</code> inside it. Set <code class="nds-inline-code lang-html">--overlay: 1</code> so the overlay paints solid, and set <code class="nds-inline-code lang-html">--img-overlay-color</code> to the color you want. The slide keeps <code class="nds-inline-code lang-html">nds-oncolor</code>, so the text stays white and readable. Do not use <code class="nds-inline-code lang-html">nds-flat</code> here: it is a sub hero class and does nothing on the main hero</li>
                     <li>Adjust <code class="nds-inline-code lang-html">--overlay</code> per slide on the main hero to match each image's brightness. Dark images need lower values (0.4-0.5), bright outdoor images need higher values (0.6-0.8)</li>
                 </ul>
             </div>
@@ -656,7 +657,7 @@ last_edit: "15/08/2026 - 11:11 PM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-flat</code></td>
                             <td><code class="nds-inline-code lang-html">.nds-hero-section.nds-sub</code></td>
-                            <td>Removes the gradient and brand background, rendering the hero on the standard page background color</td>
+                            <td>Removes the gradient and brand background, rendering the hero on the standard page background color. Sub hero only: the rule is scoped to <code class="nds-inline-code lang-html">.nds-sub</code>, so the class has no effect on the main hero slider. Text inside a flat hero must not carry <code class="nds-inline-code lang-html">nds-oncolor</code>, which would render white on white</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-aside</code></td>
@@ -696,6 +697,11 @@ last_edit: "15/08/2026 - 11:11 PM"
                             <td><code class="nds-inline-code lang-html">--overlay</code></td>
                             <td><code class="nds-inline-code lang-html">0.7</code></td>
                             <td>Opacity of the dark overlay on the main hero image wrapper. Set on <code class="nds-inline-code lang-html">.nds-hero-image-wrapper</code> via inline style. Range: 0 (transparent) to 1 (fully opaque).</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--img-overlay-color</code></td>
+                            <td><code class="nds-inline-code lang-html">--colors-primary-950</code></td>
+                            <td>Color of that overlay. It is a global token, so set it on the wrapper to recolor one slide. Pair it with <code class="nds-inline-code lang-html">--overlay: 1</code> and an empty wrapper for a solid colored hero with no photograph.</td>
                         </tr>
                     </tbody>
                 </table>

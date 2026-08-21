@@ -40,6 +40,12 @@
  * Gotchas:
  *   - Always NDS.Filter.create(); a bare `new NDSFilter` skips the registry, the init stamp
  *     and the ready event, so getInstance/getByTarget/whenReady never see it.
+ *   - NDS.Filter rides the delegated bundle, so until that bundle lands NDS.Filter is the
+ *     loader's lazy stub and EVERY call on it returns a Promise. getInstance()/getByTarget()
+ *     are synchronous reads, so in that gap they hand back a Promise, not an instance —
+ *     truthy, with every method undefined. Only whenReady(el, cb) survives it: the stub
+ *     bridges the call and the real whenReady runs the callback with the instance. Resolve
+ *     through whenReady() from module or deferred script code.
  *   - Every surface (search box, dropmenu, chips, sort toolbar) carries the same
  *     data-filter-target — there is no privileged container element.
  *   - data-filtered is written by the filter to hide an item; CSS owns the hiding. Count

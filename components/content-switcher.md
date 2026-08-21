@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.6.0"
 updated: "1.7.0"
-last_edit: "08/08/2026 - 04:12 AM"
+last_edit: "21/08/2026 - 07:12 PM"
 ---
 
 <!-- Standard -->
@@ -220,7 +220,7 @@ last_edit: "08/08/2026 - 04:12 AM"
                             <i class="hgi hgi-stroke hgi-moon-02"></i>
                             <span class="nds-label">Dark Surface Support</span>
                         </span>
-                        <p class="nds-item-desc">The current segment turns brand green on dark backgrounds, in dark mode automatically or in light mode with one class.</p>
+                        <p class="nds-item-desc">The current segment turns brand primary on dark backgrounds, in dark mode automatically or in light mode with one class.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">

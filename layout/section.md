@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "10/08/2026 - 12:42 AM"
+last_edit: "21/08/2026 - 07:12 PM"
 ---
 
 <!-- Section Structure Overview -->
@@ -1389,8 +1389,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Centers all section content (head, action, body) in a column layout</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-horizontal</code></td><td>Switches the wrapper to a two-column grid on desktop (head start, content end)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Dark green background with on-color text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-green</code></td><td>Dark green background with on-color text (alias for nds-primary)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Deep primary background with on-color text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-green</code></td><td>Deep primary background with on-color text (alias for nds-primary)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-gradient-primary</code></td><td>Diagonal gradient background (deprecated alias: <code class="nds-inline-code lang-html">nds-gradient-green</code>), direction-aware (flips for RTL/LTR)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Dark neutral background with on-color text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-brand</code></td><td>Light brand background with inset shadow, adapts for dark mode</td></tr>

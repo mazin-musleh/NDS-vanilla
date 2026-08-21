@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.0"
-last_edit: "14/08/2026 - 11:10 PM"
+last_edit: "21/08/2026 - 07:12 PM"
 ---
 
 <!-- Featured Icons -->
@@ -228,7 +228,7 @@ last_edit: "14/08/2026 - 11:10 PM"
                     <tbody>
                         <tr>
                             <td><em>none</em></td>
-                            <td>Primary brand green (default).</td>
+                            <td>Primary brand color (default).</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-status="success"</code></td>

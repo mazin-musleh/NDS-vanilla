@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.8.0"
-last_edit: "17/08/2026 - 03:26 AM"
+last_edit: "21/08/2026 - 06:58 PM"
 ---
 
 <!-- Overview -->
@@ -134,6 +134,7 @@ NDS.Init.refresh(tbody);
           <tr><td><a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a></td><td>Re-resolves its item set so new rows are filterable, and regenerates auto-scanned options so a value that arrived at runtime becomes selectable.</td></tr>
           <tr><td><a class="nds-color" href="{{ 'components/selection' | relative_url }}">Selection</a></td><td>Recounts every widget, so the selected and total figures match the list.</td></tr>
           <tr><td><a class="nds-color" href="{{ 'components/pagination' | relative_url }}">Pagination</a></td><td>Recomputed, and your current page is kept. Auto-pagination also re-paginates itself whenever page items are added or removed, so editing a row on page 3 leaves you on page 3.</td></tr>
+          <tr><td><a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a></td><td>Re-scanned. A new value gets locale digits and separators, and a new counter is armed to run when it scrolls into view. A counter that already finished carries <code class="nds-inline-code lang-html">data-animated</code> and does not replay: remove that attribute first if you want it to count again.</td></tr>
           <tr><td><a class="nds-color" href="{{ 'components/empty' | relative_url }}">Empty</a></td><td>Nothing to do. It watches its own container and shows or clears the placeholder on its own.</td></tr>
           <tr><td><a class="nds-color" href="{{ 'components/sort' | relative_url }}">Sort</a></td><td>Nothing, by design. See Server-Driven Lists below.</td></tr>
         </tbody>
