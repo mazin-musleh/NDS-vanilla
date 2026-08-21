@@ -261,6 +261,88 @@
 }
 
 // ==============================================
+// NAVIGATION VARIANT — .nds-middle
+// Arrows flank the slide row at its vertical centre; no bullets.
+// Sits on the swiper, not the nav row: it has to cancel the pre-init height
+// reservation below, which the nav row cannot reach without :has().
+//
+// Tablet and up only. The gutter is a fixed arrow width, so on a 320px phone it
+// costs a third of the track — and swipe is the primary gesture there anyway.
+// Below the breakpoint every rule here drops and the default nav row returns,
+// bullets and reservation included, so mobile falls back to a known layout
+// rather than a special case.
+// ==============================================
+
+@include tablet(min) {
+    .nds-swiper.nds-middle {
+        // Room at both ends so the arrows sit beside the slides, never over them.
+        // --_middle-inset is where each arrow lands: 0 puts it at the swiper edge,
+        // which is the gutter the padding just opened.
+        --_middle-gutter: calc(var(--btn-size, 40px) + var(--spacing-lg));
+        --_middle-inset: 0px;
+        padding-inline: var(--_middle-gutter);
+
+        // The nav overlays, so it needs no row of its own — without this the
+        // reserved height collapses when init lands, which is the CLS the
+        // reservation exists to prevent.
+        &:not([data-nds-swiper-initialized])::after {
+            content: none;
+        }
+
+        // Both wrappers drop their boxes so the buttons position against the swiper
+        // itself. Nothing spans the track, so no invisible overlay sits over the
+        // cards and no pointer-events dance is needed to undo one.
+        .nds-swiper-navigation,
+        .nds-swiper-buttons {
+            display: contents;
+        }
+
+        .nds-prev,
+        .nds-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .nds-prev {
+            inset-inline-start: var(--_middle-inset);
+        }
+
+        .nds-next {
+            inset-inline-end: var(--_middle-inset);
+        }
+
+        .nds-swiper-pagination {
+            display: none;
+        }
+
+        // Hero is full-bleed, so reserving a gutter would inset the image. Drop the
+        // padding and overlay the arrows on the slide instead, held off the screen
+        // edge by the same viewport padding the content uses. Hero's own bottom-row
+        // nav rule targets .nds-swiper-navigation, which has no box here, so it is
+        // already inert — this replaces what it used to do.
+        //
+        // Bullets stay: a hero's slide count is worth showing, and hero pins them
+        // bottom-centre where they do not collide with the arrows.
+        &.nds-hero {
+            padding-inline: 0;
+            --_middle-inset: var(--nds-viewport-padding);
+
+            // The nav row stays boxless, or it becomes the arrows' positioning
+            // ancestor and top: 50% centres them on the row instead of the slide.
+            // Pin the bullets themselves.
+            .nds-swiper-pagination {
+                display: flex;
+                justify-content: center;
+                position: absolute;
+                inset-inline: 0;
+                bottom: var(--spacing-xl);
+            }
+        }
+    }
+}
+
+// ==============================================
 // PRE-INIT SKELETON
 // ==============================================
 // Nav reservation: .nds-swiper-navigation ships [hidden] until init

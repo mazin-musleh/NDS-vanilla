@@ -23,7 +23,7 @@ direction: ltr
 <main>
 
     <section class="nds-hero-section">
-        <div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: 3">
+        <div class="nds-swiper nds-hero nds-middle nds-oncolor nds-full-width" style="--total: 3">
             <div class="nds-swiper-wrapper">
                 <div class="nds-swiper-slide nds-content-wrapper">
                     <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
@@ -564,7 +564,7 @@ direction: ltr
                 </div>
                 <div class="nds-section-body">
                     <div class="nds-block">
-                        <div class="nds-swiper" slides-max="8" slides-mid="4" slides-min="2" peek="0">
+                        <div class="nds-swiper nds-middle" slides-max="8" slides-mid="4" slides-min="2" peek="0">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-center">
@@ -679,12 +679,12 @@ direction: ltr
                             </div>
                             <div class="nds-swiper-navigation nds-center" hidden>
                                 <div class="nds-swiper-buttons">
-                                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-prev" type="button"
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-prev" type="button"
                                         aria-label="Previous partners"></button>
-                                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-next" type="button"
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-next" type="button"
                                         aria-label="Next partners"></button>
                                 </div>
-                                <div class="nds-swiper-pagination nds-sm"></div>
+                                <div class="nds-swiper-pagination nds-md"></div>
                             </div>
                         </div>
                     </div>
