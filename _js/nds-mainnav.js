@@ -338,9 +338,9 @@
         return false;
     }
 
-    function checkTogglerVisibility() {
-        if (!DOM.toggler) return;
-
+    // One pass, two readers: the toggler hides when neither container has items,
+    // and .nds-nav-actions drops out of layout when it has none of its own.
+    function checkNavComposition() {
         // Pure markup check — no layout reads, no style recalcs.
         // The mainnav SCSS doesn't conditionally hide individual .nds-nav-item
         // via media queries; PABs are MOVED between containers by
@@ -361,8 +361,12 @@
             return false;
         };
 
-        const show = hasItems(DOM.primary) || hasItems(DOM.secondary);
-        DOM.toggler.style.display = show ? '' : 'none';
+        const primaryHas = hasItems(DOM.primary);
+        const secondaryHas = hasItems(DOM.secondary);
+
+        if (DOM.secondary) DOM.secondary.toggleAttribute('data-nav-empty', !secondaryHas);
+        if (!DOM.toggler) return;
+        DOM.toggler.style.display = (primaryHas || secondaryHas) ? '' : 'none';
     }
 
     // ==============================================
@@ -952,13 +956,13 @@
                 updatePositions();
             }
 
-            // Toggler visibility is a pure markup check (no layout reads) that
-            // depends on what's in primary/secondary, not on viewport width.
-            // It only needs to re-run when the markup composition changes
+            // Pure markup check (no layout reads) — re-run on composition changes
             // (PAB placement / mode flip / DOM mutations), not on every resize.
+            // Order matters: updateBodyClass() above moved the PABs, so the
+            // data-nav-empty stamp reads the settled DOM in the same frame.
             if (modeChanged || state._navChanged) {
                 state._navChanged = false;
-                checkTogglerVisibility();
+                checkNavComposition();
             }
         });
     }
@@ -1154,13 +1158,13 @@
         // fast-bails when nothing is open, so it's cheap on the common click.
         document.addEventListener('click', (e) => handleDocumentClick(e), { signal: _eventsAbortController.signal });
         if (!bodyClassChanged) managePABPlacement();
-        // Set toggler visibility now that PABs (if any) have been placed.
+        // Read the nav composition now that PABs (if any) have been placed.
         // scheduleUpdate's only call site for this fires on width/mode/nav
         // changes — none of which trigger on first load — so without this,
         // a page that loads in minimal with an empty collapse panel (e.g.
         // primary empty, secondary all PABs) would leave the toggler
-        // CSS-visible with nothing to expose.
-        checkTogglerVisibility();
+        // CSS-visible with nothing to expose, and .nds-nav-actions unstamped.
+        checkNavComposition();
 
         if (hasState(DOM.collapse, 'open')) updatePositions();
         setupInteractions();

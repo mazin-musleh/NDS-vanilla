@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.0"
-last_edit: "09/08/2026 - 02:18 AM"
+updated: "1.8.x"
+last_edit: "21/08/2026 - 07:53 PM"
 ---
 
 <!-- Horizontal Layout -->
@@ -1249,8 +1249,47 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
                     <li>Keep step titles short (2 to 4 words). Use the description for additional context</li>
                     <li>In radial steppers, add <code class="nds-inline-code lang-html">.nds-stepper-next</code> inside the step text to preview the upcoming step name. Omit it on the final step</li>
                     <li>Radial steppers work best with 3 to 6 steps. Fewer than 3 makes the circle progress hard to read; more than 6 makes step titles too compressed</li>
+                    <li>Use <code class="nds-inline-code lang-js">NDS.Stepper.next()</code> for form steps, not <code class="nds-inline-code lang-html">data-stepper-control</code>. A form step is gated by validation or by a request, and the attribute moves the stepper on every click. See Advancing the Stepper above</li>
                     <li>Always provide a unique <code class="nds-inline-code lang-html">id</code> on the stepper container so control buttons and the JS API can target it</li>
                 </ul>
+            </div>
+
+            <div class="nds-block nds-prose">
+                <h3 class="nds-block-title">Advancing the Stepper</h3>
+                <p>There are three ways to move a stepper. Pick by one question: can anything refuse the move?</p>
+                <ul>
+                    <li><strong>Nothing can refuse it</strong> &mdash; use <code class="nds-inline-code lang-html">data-stepper-control</code> on a button. The click moves the stepper, always. This fits a Back button, a demo, a walkthrough, and a <code class="nds-inline-code lang-html">goto</code> that starts the flow over. It needs no JavaScript.</li>
+                    <li><strong>Something can refuse it</strong> &mdash; call <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code> from the code that knows the answer. Validation, a request, a server check: the thing that decides is the thing that moves the stepper. <strong>Every form step is this case.</strong></li>
+                    <li><strong>The step number lives in your own state</strong> &mdash; write <code class="nds-inline-code lang-html">data-current</code> on the <code class="nds-inline-code lang-html">.nds-stepper</code>. The component watches the attribute and re-renders. This fits a server-rendered page or a framework view that already holds the step number.</li>
+                </ul>
+                <p>The stepper is a progress display. It never validates, never blocks, and never sends a request. A submit-typed button inside a form is handed to that form untouched: the stepper does not cancel the submit and does not move. Move it yourself once the form reports success.</p>
+                <div class="nds-block">
+                    <code class="lang-html code">
+&lt;!-- Back: nothing can refuse it --&gt;
+&lt;button type="button" class="nds-btn nds-secondary-outline"
+    data-stepper-control="previous" data-stepper-target="myStepper"&gt;
+  &lt;span class="nds-label"&gt;Back&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Continue: validation can refuse it --&gt;
+&lt;button type="button" class="nds-btn nds-primary" id="myContinue"&gt;
+  &lt;span class="nds-label"&gt;Continue&lt;/span&gt;
+&lt;/button&gt;
+                    </code>
+                    <code class="lang-js code">
+// Continue: move only if the visible step validates. validateForm() skips
+// fields inside a hidden panel, so it checks the step on screen.
+document.getElementById('myContinue').addEventListener('click', (e) =&gt; {
+  if (NDS.Forms.validateForm(e.currentTarget).valid) NDS.Stepper.next('myStepper');
+});
+
+// Final step: move only once the request succeeds. The form carries data-ajax,
+// so Forms validates, stops the POST and fires nds:formValid.
+document.getElementById('myForm').addEventListener('nds:formValid', () =&gt; {
+  sendApplication().then(() =&gt; NDS.Stepper.next('myStepper'));
+});
+                    </code>
+                </div>
             </div>
 
             <div class="nds-block">
@@ -1290,7 +1329,7 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
                         <tr><td><code class="nds-inline-code lang-html">data-current</code></td><td>Set on the <code class="nds-inline-code lang-html">.nds-stepper</code> container. The active step number (starting from 1). Updating this attribute triggers an automatic UI refresh.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-total</code></td><td>Set on the <code class="nds-inline-code lang-html">.nds-stepper</code> container. Total number of steps. Updated automatically on init but can be set manually.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-step-text</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-stepper-circle</code>. Overrides the auto-generated step number with custom text.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-stepper-control</code></td><td>Set on any button. Values: <code class="nds-inline-code lang-html">next</code>, <code class="nds-inline-code lang-html">previous</code>, or <code class="nds-inline-code lang-html">goto</code>. Buttons inside a stepper target their parent automatically.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-stepper-control</code></td><td>Set on any button. Values: <code class="nds-inline-code lang-html">next</code>, <code class="nds-inline-code lang-html">previous</code>, or <code class="nds-inline-code lang-html">goto</code>. Buttons inside a stepper target their parent automatically. The move is unconditional: the click always moves the stepper. A submit-typed button inside a form is handed to that form instead, so the stepper neither cancels the submit nor moves &mdash; see Advancing the Stepper above.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-stepper-target</code></td><td>Set on control buttons outside a stepper. The ID of the stepper to control.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-stepper-value</code></td><td>Set on <code class="nds-inline-code lang-html">goto</code> control buttons. The step number to navigate to.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="completed"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-stepper-step</code>. Marks the step as completed with a checkmark icon. Managed automatically by JS.</td></tr>

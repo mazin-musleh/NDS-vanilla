@@ -155,10 +155,9 @@
 
     // ── Row states ──
 
-    // Striping counts parent rows only — a sub row sits between two parents and
-    // would otherwise flip the phase of every row below it. Child combinators
-    // keep the rule off a nested sub-table, which stripes from its own instance.
-    > tbody > tr:nth-child(even of :not(.nds-sub)) > td {
+    // Count VISIBLE parent rows only — a sub or hidden row still holds a DOM slot
+    // and flips the phase below it. `of` list mirrors _fold.scss's hide set.
+    > tbody > tr:nth-child(even of :not(.nds-sub, .nds-hidden, [hidden], [data-state~="hidden"], [data-filtered])) > td {
         background-color: var(--table-background-row);
     }
 

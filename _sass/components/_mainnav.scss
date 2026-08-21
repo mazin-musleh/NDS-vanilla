@@ -751,6 +751,12 @@ body.nds-minimal .nds-main-nav {
         background-color: var(--_nav-bg);
         z-index: var(--_nav-z-secondary);
 
+        // Every item relocated out, or none authored: only placeholders remain, so
+        // the sticky row paints over nothing. Stamped by checkNavComposition().
+        &[data-nav-empty] {
+            display: none;
+        }
+
         &:not(:has([data-state~="open"])) {
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
             transition: border-radius var(--nds-transition);

@@ -118,8 +118,7 @@ sidemenu_mode: false
                     </div>
 
                     <div class="nds-form-actions">
-                        <button type="button" class="nds-btn nds-primary"
-                            data-stepper-control="next" data-stepper-target="formStepper">
+                        <button type="button" class="nds-btn nds-primary" data-ft-continue>
                             <span class="nds-label">Continue</span>
                         </button>
                     </div>
@@ -253,8 +252,7 @@ sidemenu_mode: false
                             data-stepper-control="previous" data-stepper-target="formStepper">
                             <span class="nds-label">Back</span>
                         </button>
-                        <button type="button" class="nds-btn nds-primary"
-                            data-stepper-control="next" data-stepper-target="formStepper">
+                        <button type="button" class="nds-btn nds-primary" data-ft-continue>
                             <span class="nds-label">Continue</span>
                         </button>
                     </div>
@@ -310,8 +308,9 @@ sidemenu_mode: false
                             data-stepper-control="previous" data-stepper-target="formStepper">
                             <span class="nds-label">Back</span>
                         </button>
-                        <button type="submit" class="nds-btn nds-primary"
-                            data-stepper-control="next" data-stepper-target="formStepper">
+                        <!-- No data-stepper-control: it would preventDefault the click
+                             and submit would never fire. Advance from nds:formValid. -->
+                        <button type="submit" class="nds-btn nds-primary" id="ft-submit">
                             <span class="nds-label">Submit Application</span>
                         </button>
                     </div>
@@ -537,9 +536,37 @@ sidemenu_mode: false
             }
         });
 
-        // The form carries data-ajax, so Forms validates on submit, stops the POST
-        // and fires nds:formValid. The stepper-control handler on the Submit
-        // Application button advances the stepper to step 4 (success).
+        // Continue is a GATED move, so JS drives it — data-stepper-control is the
+        // unconditional mover and would advance an invalid step. validateForm() skips
+        // fields in a hidden panel, so this checks the step on screen.
+        formSection.querySelectorAll('[data-ft-continue]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (NDS.Forms.validateForm(btn).valid) NDS.Stepper.next('formStepper');
+            });
+        });
+
+        // data-ajax: Forms validates on submit, stops the POST and fires nds:formValid.
+        // Advance from the request's OUTCOME, never the click — a failure must not
+        // report success. Forms skips fields in a hidden panel, so this validates step 3.
+        document.getElementById('form-template')
+            .addEventListener('nds:formValid', function () {
+                var btn = document.getElementById('ft-submit');
+                NDS.State.add(btn, 'loading');
+                // Replace submitApplication() with your own request.
+                submitApplication()
+                    .then(() => NDS.Stepper.next('formStepper'))
+                    .catch(() => NDS.Alert.create({
+                        variant: 'error', title: 'Could not submit the application',
+                        description: 'Check your connection and try again.',
+                        display: 'toast', position: 'top', duration: 0
+                    }))
+                    .finally(() => NDS.State.remove(btn, 'loading'));
+            });
+
+        // Stands in for the request this template has no server for.
+        function submitApplication() {
+            return new Promise(resolve => setTimeout(resolve, 1200));
+        }
 
         // OTP Resend: loading, cooldown, countdown, and success toast are all
         // owned by NDS.CooldownButton via data-* attrs on the button.

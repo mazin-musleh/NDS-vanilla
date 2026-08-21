@@ -25,14 +25,23 @@
  *     the closest .nds-stepper, then the first one on the page.
  *   - Per-breakpoint layout comes from marker classes nds-{horizontal|vertical|radial}-{sm
  *     |md|lg}; the component toggles the canonical nds-vertical / nds-radial to match.
- *   - Radial mode HIDES every step but the current one in CSS, so the step stamping has to
- *     land at first paint — this component is critical and ships in the main bundle.
+ *   - data-stepper-control is an UNCONDITIONAL mover: click, move, no question asked.
+ *     Right for Back, demos and walkthroughs. For a move something can refuse —
+ *     validation, a request, a server check — call NDS.Stepper.next() from whatever
+ *     knows the answer. Forms are always that case.
+ *   - A submit-typed control inside a form is HANDED OFF: no preventDefault, no move.
+ *     The form owns that click. NDS.Init.audit() reports the shape.
+ *   - Radial mode HIDES every step but the current one in CSS, so a stepper with no JS
+ *     would paint EMPTY. _stepper.scss carries a pre-init skeleton keyed on the stepper's
+ *     own data-nds-stepper-initialized stamp, which force-shows the first step until init
+ *     lands. Do not remove that stamp or the guard rules that read it.
  */
 /**
  * NDS Stepper Component
  *
- * Critical (rides nds-main.min.js, critical:true so the loader fires init()
- * during the reveal-gating pass). First-paint work is cold (no layout reads):
+ * Delegated (rides nds-delegated.min.js, injected after the reveal). First paint
+ * is CSS-owned via the pre-init skeleton; init swaps placeholders for the stamped
+ * states in place. All of its work is cold (no layout reads):
  *   - data-state stamping on every .nds-stepper-step (radial CSS hides any
  *     non-current step via display:none — without this, radial paints EMPTY).
  *   - Responsive variant translation: toggles canonical nds-vertical /
@@ -141,11 +150,14 @@
         if (_globalsWired) return;
         _globalsWired = true;
 
-        // Delegated click listener — one per page. preventDefault stops a
-        // <button type="submit"> from submitting the surrounding form.
+        // Delegated click listener — one per page.
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('[data-stepper-control]');
             if (!btn) return;
+            // A submit-typed control inside a form belongs to that form, not to us.
+            // btn.type is 'submit' for a <button> with no type, which is why this is
+            // scoped to btn.form — a bare demo button outside a form still works.
+            if (btn.form && btn.type === 'submit') return;
             e.preventDefault();
             const targetId = btn.dataset.stepperTarget;
             let stepperId;

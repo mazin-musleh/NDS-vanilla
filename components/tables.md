@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.0"
-last_edit: "16/08/2026 - 12:40 AM"
+updated: "1.8.x"
+last_edit: "21/08/2026 - 07:54 PM"
 ---
 
 <!-- Basic Table Section -->

@@ -87,13 +87,12 @@
             }
         });
 
-        // A submit-typed button carrying data-stepper-control never submits:
-        // the stepper preventDefaults the click before the browser fires
-        // `submit`, so form validation never runs and the stepper advances
-        // anyway. `button` with no type IS submit-typed inside a form.
+        // The stepper hands off a submit-typed control (see its banner), so the
+        // attribute is inert here — the author expects a move that never comes.
+        // `button` with no type IS submit-typed inside a form.
         document.querySelectorAll('form :is(button:not([type="button"]):not([type="reset"]), input[type="submit"])[data-stepper-control]').forEach(el => {
             if (el.closest('code, .code-example')) return;
-            console.warn('[NDS] audit: submit-typed button with data-stepper-control — the stepper preventDefaults the click before the form\'s submit event fires, so validation never runs and the stepper advances anyway. Use type="button" and advance only after NDS.Forms.validateForm(), or from nds:formValid.', el);
+            console.warn('[NDS] audit: submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing. A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Forms.validateForm() passes, or from nds:formValid once your request succeeds.', el);
         });
     }
 
