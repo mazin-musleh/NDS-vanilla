@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.8.x"
-last_edit: "20/08/2026 - 04:15 AM"
+last_edit: "21/08/2026 - 09:00 PM"
 ---
 
 <!-- Page Shell Anatomy -->
@@ -68,7 +68,7 @@ body                                          (console pages add .nds-full-width
                         <tr>
                             <td>Home</td>
                             <td>Bare <code class="nds-inline-code lang-html">nds-content-layout</code>, no side column. The hero slider is the first child of <code class="nds-inline-code lang-html">main</code>.</td>
-                            <td><a class="nds-color" href="{{ '/' | relative_url }}">Home page</a></td>
+                            <td><a class="nds-color" href="{{ '/templates/home-template' | relative_url }}">Home Page Template</a>, whose source carries the whole shell in one file; or this site's own <a class="nds-color" href="{{ '/' | relative_url }}">Home page</a></td>
                         </tr>
                         <tr>
                             <td>Content page</td>
@@ -87,6 +87,7 @@ body                                          (console pages add .nds-full-width
                         </tr>
                     </tbody>
                 </table>
+                <p>Two of these pages carry the same Home shape but are authored differently, and the difference matters when you read the source. This site's own home page leaves the header, hero and footer to its Jekyll layout, so its source file holds only the sections. The Home Page Template uses the <code class="nds-inline-code lang-html">shell</code> layout instead, which renders the document and the scripts and nothing else, so the page composes its own header, hero, content layout and footer and the source reads as a complete page. Read the template when you want the whole shape in one file. Either way the built HTML under <code class="nds-inline-code lang-html">_site/</code> is what a project copies.</p>
                 <p>Every <a class="nds-color" href="{{ 'templates/' | relative_url }}">DGA template</a> uses the content page shape with the side menu off. Contact Us, Content, Form, and Service add <a class="nds-color" href="#sideColumns">side info</a>. The 404 template is the one exception: it ships its own centered wrapper with no content layout.</p>
             </div>
         </div>

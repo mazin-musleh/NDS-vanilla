@@ -15,6 +15,9 @@
 - label: "DGA Templates"
   has_sub: true
   children:
+    - label: "Home Page Template"
+      url: "/templates/home-template"
+      href: "/templates/home-template.html"
     - label: "Form Template"
       url: "/templates/form-template"
       href: "/templates/form-template.html"

@@ -577,7 +577,7 @@
 
 - title: "Page Shell"
   description: "The body structure every page shares, with the classes that switch chrome shape"
-  use_when: "Build the page skeleton before any content: the body structure, the chrome regions, and the classes that switch between the full, console, and minimal shapes. Read this when you start a new page, pick a chrome shape, or mount a framework app inside NDS markup."
+  use_when: "Build the page skeleton before any content: the body structure, the chrome regions, and the classes that switch between the home, content page, minimal, and console shapes. Read this when you start a new page, pick a chrome shape, or mount a framework app inside NDS markup. It also names the two ways a page gets its chrome. A layout can inject the header, hero, and footer, which is what every page on this site does. Or the page composes them itself on the shell layout, so one file holds the whole page and its source reads as a complete document. Use the second when you want a standalone or full page in a single file, and copy the Home Page Template for it."
   icon: '<i class="hgi hgi-stroke hgi-layout-01"></i>'
   category: "Layout"
   tags: ["CSS"]

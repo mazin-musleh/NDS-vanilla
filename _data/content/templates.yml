@@ -8,6 +8,14 @@
 #   so a match here outranks any hand-composed page or an examples.yml entry.
 #   description/icon/category/tags drive the index cards; use_when renders nowhere.
 
+- title: "Home Page Template"
+  description: "Organization home page with a main hero slider, headline figures, a services card deck, a news row, and a partner logo strip."
+  use_when: "The public home or landing page of a portal, ministry, authority, or platform — the page the domain root serves. Carries the main hero slider (not a sub hero), a row of headline figures that count up, a services card deck the visitor pages through, a three-across news row, and a partner logo strip. Use for home page, landing page, portal home, or main page. Copy the hero from here rather than composing it: the main hero is a swiper and needs its full navigation block."
+  icon: '<i class="hgi hgi-stroke hgi-home-01"></i>'
+  category: "Content"
+  tags: ["DGA", "Hero", "Swiper", "Cards", "Grid", "Statistic"]
+  url: "/templates/home-template.html"
+
 - title: "Form Template"
   description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
   use_when: "Any multi-step form or wizard: service application, request submission, registration workflow, onboarding, or checkout. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-wSideInfo on the content layout."
@@ -50,7 +58,7 @@
 
 - title: "About The Entity Template"
   description: "Entity landing hub with a flat sub-hero and a responsive grid of topic cards, each with a featured icon, title, and navigation arrow."
-  use_when: "Any page whose job is to route onward through a grid of icon cards. Use for a home page feature row or feature grid, and for topic hubs such as About Us, Departments, Sectors, Initiatives, Our Work, or any parent page that links to its sub-pages. Copy the card markup from here rather than composing it: each card carries its featured icon in its own header block."
+  use_when: "Any page whose job is to route onward through a grid of icon cards. Use for a feature row or feature grid inside a larger page, and for topic hubs such as About Us, Departments, Sectors, Initiatives, Our Work, or any parent page that links to its sub-pages. Copy the card markup from here rather than composing it: each card carries its featured icon in its own header block."
   icon: '<i class="hgi hgi-stroke hgi-information-diamond"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]

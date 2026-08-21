@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'en' }}" dir="{{ page.direction | default: 'ltr' }}">
+{% include head.html %}
+{%- comment %}
+The page owns its whole body. Unlike `default`, this layout injects no header, hero,
+content layout, or footer — the page composes them itself, so its source reads as a
+complete page instead of an inner fragment. Use it for a template whose job is to show
+the full shape. Everything below <body> is the page's.
+{%- endcomment %}
+<body{% if page.body_class %} class="{{ page.body_class }}"{% endif %}>
+    {{ content }}
+    <!-- Scripts -->
+    <script defer src="{{ 'assets/js/nds-main.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
+    {%- unless site.accessibility == false %}
+    <script defer src="{{ 'assets/js/nds-accessibility.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
+    {%- endunless %}
+    {%- unless page.exclude_showcase == true %}
+    <script defer src="{{ 'docs-assets/js/nds-showcase.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
+    {%- endunless %}
+    {%- if page.custom_js %}
+    {%- for js_file in page.custom_js %}
+    <script defer src="{{ js_file | relative_url }}"></script>
+    {%- endfor %}
+    {%- endif %}
+</body>
+</html>
