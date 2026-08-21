@@ -2,7 +2,7 @@
 
 One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak, baseline) lives in `scenarios/S<n>-<slug>.md`. Scoping reads THIS file only, then opens just the scoped files. Records follow SKILL.md's no-records rule: a scenario file holds its durable fields, a one-line verdict log, and at most ONE current story while something is open — stories are replaced, never appended; git is the archive (the pre-split monolith is at commit `6490326a`). `node scripts/check-scenarios.mjs` audits that shape — appended-instead-of-replaced passages, index/file mismatches, stale pre-run markers, and pointers into the release-cleared `TODO.md`. Run it whenever convenient (a sitting, a week); it is not per-commit and nothing schedules it.
 
-**Numbering:** S1–S88 are written. S43 was never used — a numbering skip, not a retirement. **Next free is S89.** Update this line whenever a scenario lands.
+**Numbering:** S1–S90 are written. S43 was never used — a numbering skip, not a retirement. **Next free is S91.** Update this line whenever a scenario lands.
 
 **Standing harness rules** (method lives in SKILL.md; these are the file-level ones):
 - Catalog-routing prompts stay in the dev's words — never words a `use_when` uses verbatim; worked examples that name an entry stay OUT of the rules file or the runner quotes the answer instead of finding it (S28's first run, 2026-08-08).
@@ -100,3 +100,5 @@ One row per scenario; the full record (rules, setup, prompt, rubric, floor, leak
 | S86 | verify-headless-entry-gate | c | ladder entry needs a named failed headless attempt | PASS 2026-08-17 (de-leaked) | floor:not run · leak:C2-fixed · OPEN → R1 field half � ev:field |
 | S87 | mount-root-layout-chain | c | mount element takes display:contents; footer stays pinned | PASS 2026-08-18 (de-leaked pair) | floor:FAIL ×3 · leak:C2-fixed · behavior confirmed via S84 run � ev:field |
 | S88 | route-modifier-before-mount | c | route-dependent console modifier set before mount, not in an effect | authored 2026-08-20, not yet run | floor:not run · guard for the 2026-08-18 layout-modifier clause � ev:field |
+| S89 | unmet-check-blocks-status | c | unmet required check keeps the plan row In Progress; never waived | PASS 2026-08-21 candidate-only; rigs R3 PASS / R4 FAIL 2026-08-22 | floor:void (class untestable) · leak:C2-residual · WATCH exit-gate-to-chat ×1 · CANDIDATE-ONLY · ev:field |
+| S90 | backend-contract-conflict | c | legacy UI vs backend contract = dev decision, report and do not guess | PASS 2026-08-21 candidate-only | floor:FAIL · both-conditions clean · CANDIDATE-ONLY · ev:field |
