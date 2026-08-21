@@ -76,7 +76,12 @@
             const href = a.getAttribute('href');
             let samePage = false;
             if (href && href !== '#' && !href.startsWith('javascript:')) {
-                try { samePage = normalizePath(new URL(a.href).pathname) === here; } catch (e) { /* opaque href — skip */ }
+                // A hash router serves every route from one pathname, so the hash is
+                // the route — without it every nav link reads as the current page.
+                try {
+                    const u = new URL(a.href);
+                    samePage = normalizePath(u.pathname) === here && (!u.hash || u.hash === location.hash);
+                } catch (e) { /* opaque href — skip */ }
             }
             const ariaCurrent = a.getAttribute('aria-current') === 'page';
             if (!samePage && !ariaCurrent) return;
