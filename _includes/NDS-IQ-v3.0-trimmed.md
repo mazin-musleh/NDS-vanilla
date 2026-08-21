@@ -192,7 +192,7 @@ At each page start, resolve its plan-row questions, list every UI part, and matc
 
 Before page JS, list every intended behavior and check the component catalogs/banners. If NDS ships the behavior, use its methods/events; do not rebuild it. Apply the same rule to core helpers (§JS wiring).
 
-**Port content, flow, and data structure; improve UI/UX with NDS defaults.**
+**Port content, flow, and data structure; improve UI/UX with NDS defaults.** Search, sorting, filtering, export, counts, validation chrome, responsive behavior are defaults to apply, not questions to ask.
 - Legacy pages without heroes get `nds-sub`; heavy-text pages also get `nds-flat`. Hero sliders stay on home/hub pages.
 - Legacy presentation beats a template's alternate presentation; use the component's matching variant first.
 - Forms default to TWO steps: form + review. Add more only when the flow requires them.
