@@ -313,7 +313,7 @@ An explicit upgrade request is approval. Download latest and replace `NDS_ROOT` 
 
 For an update check, compare the runtime banner with the latest release and report relevant changelog changes; upgrade only on dev approval.
 
-For rules updates, compare raw main `NDS-IQ.md` content with the project-root copy, never `NDS_ROOT/NDS-IQ.md`. Any difference means a newer revision; install only on dev approval. An explicit update request runs step 4 directly.
+For rules updates, compare raw main `NDS-IQ.md` content with the project-root copy. Any difference means a newer revision; install only on dev approval. An explicit update request runs step 4 directly.
 
 Use absolute paths for writes; never `cd` into `NDS_ROOT`/`NDS_ASSETS`. After each write, inspect the destination.
 
@@ -326,7 +326,7 @@ Use absolute paths for writes; never `cd` into `NDS_ROOT`/`NDS_ASSETS`. After ea
 
 NDS IQ has two pieces:
 
-1. **`NDS-IQ.md`** at project root, committed and replaced whole on update. Source: `https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md`. `NDS_ROOT/NDS-IQ.md` is only the release's offline copy.
+1. **`NDS-IQ.md`** at project root, committed and replaced whole on update. Source: `https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md`.
 2. **Anchor** in `CLAUDE.md` / `AGENTS.md`: the only project-specific path values plus the read trigger. Install once.
 
 Use this anchor, setting `NDS_ASSETS` to the project's real static root:

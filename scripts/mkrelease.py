@@ -93,16 +93,11 @@ def stage(version):
     # shipped at the zip top level as the offline copy its own Install
     # section promises (NDS_ROOT/NDS-IQ.md; canonical source is raw main).
     shutil.copy2(os.path.join(ROOT, 'scripts', 'release-template', 'README.md'), pkg)
-    # Written with LF, not copied: the repo is autocrlf=true with no
-    # .gitattributes, so the working copy carries CRLF while git stores LF —
-    # and raw main, the canonical source, serves the LF blob. A straight copy
-    # ships a zip whose offline copy differs from raw main by 284 line endings,
-    # which contradicts the file's own "every project's copy is byte-identical"
-    # and makes the artifact depend on who packaged it. verify() asserts it.
-    with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
-        rules = f.read()
-    with open(os.path.join(pkg, 'NDS-IQ.md'), 'w', encoding='utf8', newline='\n') as f:
-        f.write(rules)
+    # The rules file is deliberately NOT shipped. It versions independently of
+    # the template, so a copy frozen at the release cut goes stale the moment the
+    # next revision lands — and a runner that finds two copies has to work out
+    # which one wins. The rules already answer that (compare raw main against the
+    # project-root copy), so the safe move is to not ship the second copy at all.
     return dist, pkg
 
 
@@ -156,7 +151,7 @@ def verify(out, version):
                      f'it, and the tag the consumer populates from carries this tree.')
 
     # A missing copy in stage() would silently ship an incomplete zip.
-    for anchor in ('NDS-IQ.md', 'README.md', '_site/guides/get-started.html',
+    for anchor in ('README.md', '_site/guides/get-started.html',
                    '_site/guides/integration-quality.html'):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
@@ -213,23 +208,6 @@ def verify(out, version):
     with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
         block = f.read()
 
-    # "byte-identical" above is a promise the file makes about itself, so check
-    # it rather than assert it in prose. The zip's offline copy must be the
-    # source with LF endings — that is what git stores and therefore what raw
-    # main serves, so a consumer who installs from the zip and verifies against
-    # raw main gets the same bytes. Compared against the source on disk, NOT the
-    # git blob: check-release-guards.py mutates the source to prove each guard
-    # fires, and a blob comparison would reject every mutated case before its
-    # own guard could run, silently disabling the whole harness.
-    shipped = z.read(root + 'NDS-IQ.md')
-    expected = block.encode('utf8')          # read with universal newlines above
-    if shipped != expected:
-        sys.exit(f'The zip\'s NDS-IQ.md is not the source with LF endings '
-                 f'({len(shipped)} vs {len(expected)} bytes, '
-                 f'CRLF {shipped.count(bytes([13, 10]))} vs {expected.count(bytes([13, 10]))}). '
-                 f'The working copy is CRLF under autocrlf=true while git stores LF, so a straight '
-                 f'copy ships an offline copy that differs from raw main and makes the zip depend '
-                 f'on who packaged it. stage() writes it with LF — check what changed there.')
 
     guides = {}
     for name in ('get-started', 'integration-quality'):
