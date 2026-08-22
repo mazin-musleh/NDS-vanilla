@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.7.2"
-last_edit: "17/08/2026 - 02:49 AM"
+last_edit: "22/08/2026 - 03:39 PM"
 ---
 
 <!-- Page Setup -->
@@ -75,6 +75,18 @@ last_edit: "17/08/2026 - 02:49 AM"
   :where(.nds-hero-image){width:100%;height:100%;object-fit:cover;display:block}
   :where(.nds-hero-section :is(.nds-section-body,.nds-section-wrapper,.nds-breadcrumb-nav)){visibility:hidden}
   &lt;/style&gt;
+
+  &lt;!-- Hero image — page-specific. Only on a page whose hero carries a photograph.
+       The hero image is the LCP element, and the browser finds it late because it sits
+       in a &lt;picture&gt; deep in the body. Preload the FIRST slide only, and repeat the
+       &lt;source&gt; breakpoints exactly so the browser preloads the same file it will use.
+       Drop these three lines on a page with no hero photo. --&gt;
+  &lt;link rel="preload" as="image" href="assets/img/hero-sm.webp"
+    media="(max-width: 768px)" fetchpriority="high"&gt;
+  &lt;link rel="preload" as="image" href="assets/img/hero-md.webp"
+    media="(min-width: 769px) and (max-width: 1646px)" fetchpriority="high"&gt;
+  &lt;link rel="preload" as="image" href="assets/img/hero.webp"
+    media="(min-width: 1647px)" fetchpriority="high"&gt;
 
   &lt;!-- Critical CSS — non-blocking; the gate above holds the layout until it lands. --&gt;
   &lt;link rel="preload" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"

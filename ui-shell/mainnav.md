@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.8.x"
-last_edit: "21/08/2026 - 06:58 PM"
+last_edit: "22/08/2026 - 05:38 PM"
 ---
 
 
@@ -356,18 +356,6 @@ last_edit: "21/08/2026 - 06:58 PM"
                     </div>
 
                 </div>
-            </div>
-
-            <div class="nds-block nds-prose" style="margin-top: var(--spacing-3xl);">
-                <h3 class="nds-block-title">Data-Driven Dropdowns</h3>
-                <p>Site note: the includes below belong to this documentation site's own Jekyll build, not to your project. Pages here render dropdown content from <code class="nds-inline-code lang-html">_data/mainnav/mainnav.yml</code> through two includes that map to the layouts above. In your own project, copy the dropdown markup instead:</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Template</th><th>Layout</th><th>Data Source</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">mainnav-column-view.html</code></td><td><code class="nds-inline-code lang-html">nds-colView</code> with optional <code class="nds-inline-code lang-html">nds-multi-column-list</code> per column</td><td>columns + items array keyed to a file in <code class="nds-inline-code lang-html">_data/content/</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">mainnav-row-list.html</code></td><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>flat items array keyed to a file in <code class="nds-inline-code lang-html">_data/content/</code></td></tr>
-                    </tbody>
-                </table>
             </div>
 
         </div>

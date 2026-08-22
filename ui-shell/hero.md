@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "21/08/2026 - 06:58 PM"
+last_edit: "22/08/2026 - 05:38 PM"
 ---
 
 <!-- Sub Hero -->
@@ -495,53 +495,56 @@ last_edit: "21/08/2026 - 06:58 PM"
                                         <div class="nds-expandable-content">
                                             <code class="lang-html code">
 &lt;section class="nds-hero-section"&gt;
-  &lt;div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: 2"&gt;
+  &lt;div class="nds-swiper nds-hero nds-middle nds-oncolor nds-full-width" style="--total: 2"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
 
-      &lt;!-- First slide: use fetchpriority="high" for LCP --&gt;
+      &lt;!-- First slide: srcset loads eagerly, fetchpriority="high" for LCP --&gt;
       &lt;div class="nds-swiper-slide nds-content-wrapper"&gt;
-        &lt;div class="nds-hero-image-wrapper"
-            style="--overlay: 0.6; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"&gt;
+        &lt;div class="nds-hero-image-wrapper" style="--overlay: 0.8;"&gt;
           &lt;picture&gt;
-            &lt;source media="(max-width: 768px)" srcset="assets/img/hero-mobile.webp"&gt;
-            &lt;img src="assets/img/hero.webp" class="nds-hero-image" alt=""
-              style="width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block;"
-              fetchpriority="high"&gt;
+            &lt;source media="(max-width: 768px)" srcset="assets/img/hero-sm.webp"&gt;
+            &lt;source media="(max-width: 1646px)" srcset="assets/img/hero-md.webp"&gt;
+            &lt;img src="assets/img/hero.webp" class="nds-hero-image" alt="" fetchpriority="high"&gt;
           &lt;/picture&gt;
         &lt;/div&gt;
         &lt;div class="nds-section-body"&gt;
           &lt;h1 class="nds-section-title"&gt;Welcome to Our Portal&lt;/h1&gt;
           &lt;p class="nds-section-description"&gt;Access government services, information, and resources.&lt;/p&gt;
-          &lt;a href="/services" class="nds-btn nds-primary nds-oncolor nds-lg"&gt;
-            &lt;span class="nds-label"&gt;Get Started&lt;/span&gt;
-          &lt;/a&gt;
+          &lt;div class="nds-section-action"&gt;
+            &lt;a href="/services" class="nds-btn nds-primary nds-oncolor nds-md"&gt;
+              &lt;span class="nds-label"&gt;Get Started&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 
-      &lt;!-- Subsequent slides: use data-src for lazy loading --&gt;
+      &lt;!-- Later slides: hidden, and data-srcset/data-src so they load on demand --&gt;
       &lt;div class="nds-swiper-slide nds-content-wrapper" hidden&gt;
-        &lt;div class="nds-hero-image-wrapper"
-            style="--overlay: 0.5; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"&gt;
+        &lt;div class="nds-hero-image-wrapper" style="--overlay: 0.8;"&gt;
           &lt;picture&gt;
+            &lt;source media="(max-width: 768px)" data-srcset="assets/img/hero-2-sm.webp"&gt;
+            &lt;source media="(max-width: 1646px)" data-srcset="assets/img/hero-2-md.webp"&gt;
             &lt;img data-src="assets/img/hero-2.webp" class="nds-hero-image" alt=""
-              style="width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block;"&gt;
+              style="object-position: 50% 50%;"&gt;
           &lt;/picture&gt;
         &lt;/div&gt;
         &lt;div class="nds-section-body"&gt;
           &lt;h2 class="nds-section-title"&gt;Digital Transformation&lt;/h2&gt;
           &lt;p class="nds-section-description"&gt;Join millions of citizens benefiting from smart government services.&lt;/p&gt;
-          &lt;a href="/about" class="nds-btn nds-secondary-outline nds-oncolor nds-lg"&gt;
-            &lt;span class="nds-label"&gt;Learn More&lt;/span&gt;
-          &lt;/a&gt;
+          &lt;div class="nds-section-action"&gt;
+            &lt;a href="/about" class="nds-btn nds-secondary-outline nds-oncolor nds-md"&gt;
+              &lt;span class="nds-label"&gt;Learn More&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 
     &lt;/div&gt;
     &lt;div class="nds-swiper-navigation" hidden&gt;
       &lt;div class="nds-swiper-buttons"&gt;
-        &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev"
+        &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" type="button"
             aria-label="Previous slide"&gt;&lt;/button&gt;
-        &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next"
+        &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" type="button"
             aria-label="Next slide"&gt;&lt;/button&gt;
       &lt;/div&gt;
       &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
@@ -638,8 +641,11 @@ last_edit: "21/08/2026 - 06:58 PM"
                     <li>For main hero slides, use the float action slot (such as a share button) for tools rather than navigation. Visitors who arrived on the page are past the "where to go" decision</li>
                     <li>Background images on the sub hero should have a clear subject on the start edge (right in RTL, left in LTR) — the mask keeps that edge fully opaque while fading toward the content area</li>
                     <li>Set <code class="nds-inline-code lang-html">fetchpriority="high"</code> on the first main hero slide image. It is the Largest Contentful Paint element on home pages and skipping this degrades Core Web Vitals scores</li>
-                    <li>Use <code class="nds-inline-code lang-html">data-src</code> on second and later main hero slides to defer image loading until the slide is about to appear</li>
-                    <li>For a main hero with no photograph, keep the empty <code class="nds-inline-code lang-html">.nds-hero-image-wrapper</code> and drop the <code class="nds-inline-code lang-html">&lt;picture&gt;</code> inside it. Set <code class="nds-inline-code lang-html">--overlay: 1</code> so the overlay paints solid, and set <code class="nds-inline-code lang-html">--img-overlay-color</code> to the color you want. The slide keeps <code class="nds-inline-code lang-html">nds-oncolor</code>, so the text stays white and readable. Do not use <code class="nds-inline-code lang-html">nds-flat</code> here: it is a sub hero class and does nothing on the main hero</li>
+                    <li>Preload that same first slide image in the page <code class="nds-inline-code lang-html">&lt;head&gt;</code>, one <code class="nds-inline-code lang-html">&lt;link rel="preload" as="image"&gt;</code> per breakpoint. The image sits in a <code class="nds-inline-code lang-html">&lt;picture&gt;</code> deep in the body, so the browser finds it late and the download starts after the page parses. Repeat the <code class="nds-inline-code lang-html">media</code> conditions from the slide's <code class="nds-inline-code lang-html">&lt;source&gt;</code> elements exactly, or the browser preloads one file and then paints another. The preload is page-specific: each page preloads its own hero image, and a page with no hero image carries none of these lines. See <a class="nds-color" href="{{ 'ui-shell/head' | relative_url }}">Head</a> for the block to copy</li>
+                    <li>Use <code class="nds-inline-code lang-html">data-src</code> on second and later main hero slides to defer image loading until the slide is about to appear. Add <code class="nds-inline-code lang-html">data-srcset</code> on their <code class="nds-inline-code lang-html">&lt;source&gt;</code> elements too — a plain <code class="nds-inline-code lang-html">srcset</code> there loads straight away and the deferral is lost</li>
+                    <li>The canonical main hero carries a photograph. If you do not have one yet, keep the <code class="nds-inline-code lang-html">&lt;picture&gt;</code> and point it at a placeholder image, then replace the file later. A hero with no image is a design choice the project makes on purpose, not the shape to fall back to when an image file is missing</li>
+                    <li>Leave <code class="nds-inline-code lang-html">--img-overlay-color</code> alone. It already carries the brand surface color and follows a brand re-tint on its own. Setting it by hand replaces a themeable token with a fixed value, and that hero then stops following the theme</li>
+                    <li>Do not use <code class="nds-inline-code lang-html">nds-flat</code> on a main hero. It is a sub hero class and does nothing here</li>
                     <li>Adjust <code class="nds-inline-code lang-html">--overlay</code> per slide on the main hero to match each image's brightness. Dark images need lower values (0.4-0.5), bright outdoor images need higher values (0.6-0.8)</li>
                 </ul>
             </div>
@@ -701,65 +707,7 @@ last_edit: "21/08/2026 - 06:58 PM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">--img-overlay-color</code></td>
                             <td><code class="nds-inline-code lang-html">--colors-primary-950</code></td>
-                            <td>Color of that overlay. It is a global token, so set it on the wrapper to recolor one slide. Pair it with <code class="nds-inline-code lang-html">--overlay: 1</code> and an empty wrapper for a solid colored hero with no photograph.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Jekyll Front Matter</h3>
-                <p>Site note: this table applies to this documentation site's own Jekyll build, not to your project. With the <code class="nds-inline-code lang-html">page</code> layout, these front matter fields generate the sub hero markup shown above. In your own project, copy the HTML.</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Field</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_title</code></td>
-                            <td>Hero heading text. Defaults to <code class="nds-inline-code lang-html">title</code> if omitted.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_description</code></td>
-                            <td>Hero description paragraph.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_brief</code></td>
-                            <td>Optional short bold lead line rendered between the title and description.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_style</code></td>
-                            <td>Modifier class added to the section element. Values: <code class="nds-inline-code lang-html">nds-flat</code>, <code class="nds-inline-code lang-html">nds-aside</code>.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_image</code></td>
-                            <td>Path to the background image for the sub hero. Resolves to the <code class="nds-inline-code lang-html">--hero_image</code> CSS variable.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_image_pos</code></td>
-                            <td>CSS <code class="nds-inline-code lang-html">background-position</code> value for the hero image. Default: <code class="nds-inline-code lang-html">50% 50%</code>.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_avatar</code></td>
-                            <td>Path to a portrait shown beside the title, in the section image slot. Use it for pages about one person or entity. Distinct from <code class="nds-inline-code lang-html">hero_image</code>, which is the background.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_tags</code></td>
-                            <td>Array of tag badge objects shown in <code class="nds-inline-code lang-html">.nds-section-meta</code>. Each item: <code class="nds-inline-code lang-html">label</code>, <code class="nds-inline-code lang-html">style</code>, <code class="nds-inline-code lang-html">icon</code>, <code class="nds-inline-code lang-html">modifiers</code>.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_actions</code></td>
-                            <td>Array of CTA button objects rendered in the standard action slot below the description. Each item: <code class="nds-inline-code lang-html">label</code>, <code class="nds-inline-code lang-html">url</code>, <code class="nds-inline-code lang-html">style</code>, <code class="nds-inline-code lang-html">icon</code>, <code class="nds-inline-code lang-html">target</code>. Use <code class="nds-inline-code lang-html">"share"</code> as a string item to render the share dropmenu.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hero_float_actions</code></td>
-                            <td>Array or object with <code class="nds-inline-code lang-html">class</code> and <code class="nds-inline-code lang-html">items</code> for the inline-end float action slot. Same item fields as <code class="nds-inline-code lang-html">hero_actions</code>. Use <code class="nds-inline-code lang-html">class: nds-minimal</code> to show icons only on mobile.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">heroaction</code></td>
-                            <td>Name of a <code class="nds-inline-code lang-html">_data/hero/*.yml</code> file to load tag and action configuration from. Defaults to <code class="nds-inline-code lang-html">heroaction</code>.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">hide_share_page</code></td>
-                            <td>Set to <code class="nds-inline-code lang-html">true</code> to suppress the share dropmenu even when it is defined in the action data file.</td>
+                            <td>Color of that overlay. It is a global token that already follows the active brand, so leave it at its default. Override it on the wrapper only to recolor one slide against the brand, and expect that slide to stay fixed while the rest of the theme changes.</td>
                         </tr>
                     </tbody>
                 </table>

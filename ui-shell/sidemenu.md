@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.0"
-last_edit: "15/08/2026 - 07:54 PM"
+last_edit: "22/08/2026 - 05:38 PM"
 ---
 
 <!-- Side Menu Structure -->
@@ -414,7 +414,7 @@ aside.nds-sidemenu (direct child of div.nds-content-layout.nds-wSideMenu)
             <div class="nds-block" style="margin-top: var(--spacing-3xl);">
                 <h3 class="nds-block-title">Mode Comparison</h3>
                 <table class="nds-table nds-responsive">
-                    <thead><tr><th>Mode</th><th>Class / Front Matter</th><th>Mobile Behavior</th><th>Best For</th></tr></thead>
+                    <thead><tr><th>Mode</th><th>Class</th><th>Mobile Behavior</th><th>Best For</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>Slider</td>
