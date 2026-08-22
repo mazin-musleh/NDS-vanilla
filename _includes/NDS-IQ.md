@@ -86,7 +86,7 @@ If the dev says a found runtime is legacy, ignore it: treat setup as new — the
 
    Apply these rules at the point of copy:
 
-   - Keep every canonical member in order. A small dataset or minimal existing page is not a reason to remove canonical members. A matched source ships every member. Name any domain-required removal to the dev before the page is complete.
+   - Keep every canonical part in order. A small dataset or minimal existing page is not a reason to remove canonical parts. A matched source ships every part. Name any domain-required removal to the dev before the page is complete.
    - Put host-framework bindings on canonical elements as attributes. Never insert framework-generated UI elements into the structure.
    - Edit a copied script point by point against its source. Never rewrite it from scratch.
    - Keep canonical wrappers with their children. Never lift a child out of its wrapper.
@@ -166,7 +166,7 @@ Inspect every globally loaded stylesheet for element selectors (`body`, `h1`, `a
 - **Second runtime:** only by explicit dev decision; use parallel files plus a second assets folder, accepting the two-runtime cost.
 - Project-rule conflict → P5.
 
-When the table requires a plan, create root `NDS-PLAN.md`. Start it with `Managed by NDS IQ`. Add columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask all project-wide decisions in ONE numbered review message. Include asset URL prefix, porting strategy, prior-NDS split, CSP grant (only when the sweep found a CSP), and pacing. Give options and a recommended default for each. Record answers in the plan. Defer page-specific questions to that page's build session.
+When the table requires a plan, create root `NDS-PLAN.md`. Start it with `Managed by NDS IQ`. Add columns for page, route, legacy libraries, NDS target, and status. Stop before building. Ask all project-wide decisions in ONE numbered review message. Include asset URL prefix, porting strategy, prior-NDS split, CSP grant (only when the sweep found a CSP), and pacing. Give options and a recommended default for each. Record answers in the plan. Defer page-specific questions to that page's build session. The plan records the answers, the conversation asks the questions — this holds for every question in every phase, not just this review.
 
 **The plan is cross-session memory.**
 
@@ -202,11 +202,13 @@ Before page #2, wire project-backed controls to real session/API/route data. Rem
 
 Search `use_when` across `templates.yml`, `examples.yml`, and `components.yml`; match by `use_when`, never title.
 
-1. Matching DGA template → copy `_source/templates/<name>.md` as-is; swap content only; never rebuild its structure.
+1. Matching DGA template → copy `_source/templates/<name>.md`.
 2. No template → closest `_source/examples/*.md`.
 3. No match → custom scaffold inside hard rule #4, reusing canonical wiring patterns.
 
-A page family's `Built and Verified` archetype outranks the cascade; siblings copy it and swap entity content.
+Whichever source matches, keep its structure and put the project's content into every part; never rebuild it. The source is a floor, not a ceiling: add the sections the project needs, matching their parts through the catalogs like any other part.
+
+A page family's `Built and Verified` archetype outranks the cascade; siblings copy it and put their own entity content into every part.
 
 At each page start, resolve its recorded questions, list every UI part, and match each against `components.yml`. Missing parts come from their canonical component; no match → custom case. A controls bar above a table/list/grid is the Toolbar component. P1 applies before claiming NDS lacks anything.
 
@@ -225,12 +227,18 @@ The existing UI means the screens being replaced, not a separate app or reposito
 
 A conflict between the existing UI and a backend contract is a dev decision. Report it and do not guess.
 
+### UI defaults
+
+**NDS UI outranks the legacy UI.** The table above gives the existing UI the content, fields, order and outcomes a page must carry. It never sets how that content is presented, and it never caps a component's feature set. A legacy page that lacked a control is a page missing a default, not a scope boundary.
+
 Search, sorting, filtering, export, counts, validation chrome, and responsive behavior are NDS UI defaults, not questions to ask. They never authorize changes to business rules or backend contracts.
+
+Hard rule #3 keeps every part a matched source ships. Map each one to the project's own data: a two-state field is a single-choice facet, a numeric field is a range. Legacy filtering by one thing is not a reason to ship one facet.
 
 - Existing pages without heroes get `nds-sub`; heavy-text pages also get `nds-flat`. Hero sliders stay on home/hub pages.
 - When required presentation differs, select a documented NDS variant first. The requirement never authorizes changes to canonical component anatomy.
 - Forms default to TWO input steps: form + review. Add more input steps only when the flow requires them. A terminal confirmation step is not an input step — keep the success step your matched source ships.
-- Greenfield work uses the dev brief. Remove unfilled template sections; never fabricate content.
+- Greenfield work uses the dev brief. In greenfield only, remove a template section the brief does not cover; never invent content to fill one.
 
 **Copy rendered markup when source markup is generated.** Do not copy Liquid tags. For front-matter-generated regions or page wrappers, copy the built twin's rendered HTML/full `<body>`.
 
@@ -240,6 +248,7 @@ Search, sorting, filtering, export, counts, validation chrome, and responsive be
 
 - Name the canonical page source, built twin, and component sources used.
 - Confirm every page part and intended behavior was matched through the catalogs and banners.
+- List the matched source's facets, controls and columns beside the page's. Equal counts, or each difference named.
 - Confirm structural changes fit hard rule #3's four sanctioned edits.
 - Check every `nds-hgi-*` token in page HTML and JS against `icons.yml`. Other glyphs use `<i class="hgi hgi-stroke hgi-<name>">` from `_source/_sass/_hgiRoundedStroke.scss`.
 - Under strict `style-src`, grep the page for `style="` and convert every canonical inline knob through hard rule #3's CSP edit.
