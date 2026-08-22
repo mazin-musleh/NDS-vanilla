@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "07/08/2026 - 09:44 PM"
+last_edit: "22/08/2026 - 09:31 PM"
 ---
 
 <!-- Variants -->
@@ -498,9 +498,9 @@ last_edit: "07/08/2026 - 09:44 PM"
                                 <div class="nds-tags">
                                     <span class="nds-tag nds-gray"><span class="nds-label">Design</span></span>
                                     <span class="nds-tag nds-blue"><span class="nds-label">Development</span></span>
-                                    <span class="nds-tag nds-green"><span class="nds-label">Approved</span></span>
-                                    <span class="nds-tag nds-yellow"><span class="nds-label">In Review</span></span>
-                                    <span class="nds-tag nds-red"><span class="nds-label">Blocked</span></span>
+                                    <span class="nds-tag nds-green"><span class="nds-label">Research</span></span>
+                                    <span class="nds-tag nds-yellow"><span class="nds-label">Analytics</span></span>
+                                    <span class="nds-tag nds-red"><span class="nds-label">Operations</span></span>
                                 </div>
                             </div>
                         </div>
@@ -528,9 +528,9 @@ last_edit: "07/08/2026 - 09:44 PM"
 &lt;div class="nds-tags"&gt;
   &lt;span class="nds-tag nds-gray"&gt;&lt;span class="nds-label"&gt;Design&lt;/span&gt;&lt;/span&gt;
   &lt;span class="nds-tag nds-blue"&gt;&lt;span class="nds-label"&gt;Development&lt;/span&gt;&lt;/span&gt;
-  &lt;span class="nds-tag nds-green"&gt;&lt;span class="nds-label"&gt;Approved&lt;/span&gt;&lt;/span&gt;
-  &lt;span class="nds-tag nds-yellow"&gt;&lt;span class="nds-label"&gt;In Review&lt;/span&gt;&lt;/span&gt;
-  &lt;span class="nds-tag nds-red"&gt;&lt;span class="nds-label"&gt;Blocked&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="nds-tag nds-green"&gt;&lt;span class="nds-label"&gt;Research&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="nds-tag nds-yellow"&gt;&lt;span class="nds-label"&gt;Analytics&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="nds-tag nds-red"&gt;&lt;span class="nds-label"&gt;Operations&lt;/span&gt;&lt;/span&gt;
 &lt;/div&gt;
                                     </code>
                                     </div>
