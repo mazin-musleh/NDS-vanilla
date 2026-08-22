@@ -414,9 +414,14 @@ direction: ltr
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description">Here you can include a brief description of the headline
-                                            in four lines. Here you can include a brief description of the headline in four
-                                            lines.</p>
+                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                            include a brief description of the headline in four lines. Here you can include
+                                            a brief description of the headline in four lines.</p>
+                                    </div>
+                                    <div class="nds-card-tags">
+                                        <span class="nds-tag nds-gray nds-sm">
+                                            <span class="nds-label">12 April 2026</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="nds-card-actions">
@@ -437,9 +442,14 @@ direction: ltr
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description">Here you can include a brief description of the headline
-                                            in four lines. Here you can include a brief description of the headline in four
-                                            lines.</p>
+                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                            include a brief description of the headline in four lines. Here you can include
+                                            a brief description of the headline in four lines.</p>
+                                    </div>
+                                    <div class="nds-card-tags">
+                                        <span class="nds-tag nds-gray nds-sm">
+                                            <span class="nds-label">12 April 2026</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="nds-card-actions">
@@ -460,9 +470,14 @@ direction: ltr
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description">Here you can include a brief description of the headline
-                                            in four lines. Here you can include a brief description of the headline in four
-                                            lines.</p>
+                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                            include a brief description of the headline in four lines. Here you can include
+                                            a brief description of the headline in four lines.</p>
+                                    </div>
+                                    <div class="nds-card-tags">
+                                        <span class="nds-tag nds-gray nds-sm">
+                                            <span class="nds-label">12 April 2026</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="nds-card-actions">
@@ -483,9 +498,14 @@ direction: ltr
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description">Here you can include a brief description of the headline
-                                            in four lines. Here you can include a brief description of the headline in four
-                                            lines.</p>
+                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                            include a brief description of the headline in four lines. Here you can include
+                                            a brief description of the headline in four lines.</p>
+                                    </div>
+                                    <div class="nds-card-tags">
+                                        <span class="nds-tag nds-gray nds-sm">
+                                            <span class="nds-label">12 April 2026</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="nds-card-actions">
@@ -506,9 +526,14 @@ direction: ltr
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description">Here you can include a brief description of the headline
-                                            in four lines. Here you can include a brief description of the headline in four
-                                            lines.</p>
+                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                            include a brief description of the headline in four lines. Here you can include
+                                            a brief description of the headline in four lines.</p>
+                                    </div>
+                                    <div class="nds-card-tags">
+                                        <span class="nds-tag nds-gray nds-sm">
+                                            <span class="nds-label">12 April 2026</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="nds-card-actions">
@@ -529,9 +554,14 @@ direction: ltr
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <span class="nds-card-title">The Title of the News Card in two Lines</span>
-                                        <p class="nds-card-description">Here you can include a brief description of the headline
-                                            in four lines. Here you can include a brief description of the headline in four
-                                            lines.</p>
+                                        <p class="nds-card-description nds-truncate" style="--truncate: 3;">Here you can
+                                            include a brief description of the headline in four lines. Here you can include
+                                            a brief description of the headline in four lines.</p>
+                                    </div>
+                                    <div class="nds-card-tags">
+                                        <span class="nds-tag nds-gray nds-sm">
+                                            <span class="nds-label">12 April 2026</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="nds-card-actions">
