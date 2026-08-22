@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.7.0"
-updated: "1.8.0"
-last_edit: "21/08/2026 - 06:58 PM"
+updated: "1.9.0"
+last_edit: "22/08/2026 - 11:06 PM"
 ---
 
 <!-- Overview -->
@@ -305,8 +305,14 @@ NDS.Init.refresh(view);
 NDS.Init.destroy(view);
 
 // The rest of the NDS.Init surface
-NDS.Init.audit()        // report silent failures: unregistered inline icons,
-                        // filter and paged containers nothing ever claimed
+await NDS.Init.audit()  // report silent failures: unregistered inline icons,
+                        // filter and paged containers nothing ever claimed,
+                        // lang and dir disagreement, a nav link that should be
+                        // marked current, a stepper control fighting its form's
+                        // submit, and a framework wrapper that breaks the shell.
+                        // The checks live in nds-audit.min.js, which is never
+                        // auto-injected — this first call loads it and returns a
+                        // promise, so a production page ships zero audit bytes.
 NDS.Init.initialize()   // full re-init of the page. Rarely what you want;
                         // prefer refresh(container)
 NDS.Init.components     // the component registry: {name, selector, init, critical}

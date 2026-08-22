@@ -5,7 +5,7 @@ hero_title: Date Picker - National Design System
 hero_description: Interactive calendar component for selecting dates with support for both Gregorian and Hijri calendars
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.8.x"
+updated: "1.9.0"
 last_edit: "22/08/2026 - 01:19 PM"
 lang: en
 direction: ltr
