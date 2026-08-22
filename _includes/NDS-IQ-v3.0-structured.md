@@ -229,7 +229,7 @@ Search, sorting, filtering, export, counts, validation chrome, and responsive be
 
 - Existing pages without heroes get `nds-sub`; heavy-text pages also get `nds-flat`. Hero sliders stay on home/hub pages.
 - When required presentation differs, select a documented NDS variant first. The requirement never authorizes changes to canonical component anatomy.
-- Forms default to TWO steps: form + review. Add more only when the flow requires them.
+- Forms default to TWO input steps: form + review. Add more input steps only when the flow requires them. A terminal confirmation step is not an input step — keep the success step your matched source ships.
 - Greenfield work uses the dev brief. Remove unfilled template sections; never fabricate content.
 
 **Copy rendered markup when source markup is generated.** Do not copy Liquid tags. For front-matter-generated regions or page wrappers, copy the built twin's rendered HTML/full `<body>`.
