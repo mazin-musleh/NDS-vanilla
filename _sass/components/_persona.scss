@@ -27,6 +27,7 @@
     .nds-persona-info {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         gap: var(--spacing-xs);
         text-align: start;
     }
