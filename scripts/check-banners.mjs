@@ -28,6 +28,7 @@ const SCOPE = [
     ['nds-accessibility.js', 'Accessibility'],
     ['nds-accordion.js', 'Accordion'],
     ['nds-alert.js', 'Alert'],
+    ['nds-audit.js', 'Audit'],
     ['nds-autocomplete.js', 'Autocomplete'],
     ['nds-backdrop.js', 'Backdrop'],
     ['nds-breadcrumb.js', 'Breadcrumb'],

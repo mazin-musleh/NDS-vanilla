@@ -138,7 +138,7 @@ CASES = [
      VERSION, 'anchor canon'),
 
     ('reference index points at a _source/ path not in the repo tree',
-     lambda t: t.replace('`_source/_sass/_mixins.scss`', '`_source/_sass/_gone.scss`'),
+     lambda t: t.replace('`_source/_sass/tokens/_semantic.scss`', '`_source/_sass/tokens/_gone.scss`'),
      VERSION, 'missing from the repo tree'),
 ]
 
@@ -154,21 +154,10 @@ def main():
             failures.append(f'{label}: expected '
                             f'{"a pass" if expect is None else repr(expect)}, got: {msg}')
 
-    # The offline copy must be the source with LF endings. This one cannot be
-    # driven from CASES: those mutate the source, and the stub zip is rebuilt
-    # from the source, so the two never diverge. Corrupt the staged copy alone.
+    # The CRLF-offline-copy case is retired: the zip no longer ships NDS-IQ.md,
+    # so there is no staged copy to corrupt and no guard left to prove.
     with open(IQ, encoding='utf8') as f:
         source = f.read()
-    zip_path = build_stub_zip(VERSION, refs_from=source,
-                              iq_bytes=source.replace('\n', '\r\n'))
-    try:
-        mkrelease.verify(zip_path, VERSION)
-        ok, detail = False, 'accepted a CRLF offline copy'
-    except SystemExit as e:
-        ok, detail = 'source with LF endings' in str(e), str(e)
-    print(f'  {"pass" if ok else "FAIL"}  zip ships a CRLF copy of the rules file')
-    if not ok:
-        failures.append(f'CRLF offline copy: {detail}')
 
     # head.md's copy of the inline critical gate is hand-maintained against the
     # generated one, so it can drift — and silently had. Same shape as the CRLF
