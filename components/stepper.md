@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.8.x"
-last_edit: "21/08/2026 - 07:53 PM"
+last_edit: "22/08/2026 - 04:26 AM"
 ---
 
 <!-- Horizontal Layout -->
@@ -1249,6 +1249,7 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
                     <li>Keep step titles short (2 to 4 words). Use the description for additional context</li>
                     <li>In radial steppers, add <code class="nds-inline-code lang-html">.nds-stepper-next</code> inside the step text to preview the upcoming step name. Omit it on the final step</li>
                     <li>Radial steppers work best with 3 to 6 steps. Fewer than 3 makes the circle progress hard to read; more than 6 makes step titles too compressed</li>
+                    <li>A horizontal stepper runs out of room on small screens. Pair it with the radial variant there: <code class="nds-inline-code lang-html">nds-radial nds-horizontal-lg</code> is radial by default and turns horizontal from the <code class="nds-inline-code lang-html">lg</code> breakpoint up. The same pairing works for vertical</li>
                     <li>Use <code class="nds-inline-code lang-js">NDS.Stepper.next()</code> for form steps, not <code class="nds-inline-code lang-html">data-stepper-control</code>. A form step is gated by validation or by a request, and the attribute moves the stepper on every click. See Advancing the Stepper above</li>
                     <li>Always provide a unique <code class="nds-inline-code lang-html">id</code> on the stepper container so control buttons and the JS API can target it</li>
                 </ul>

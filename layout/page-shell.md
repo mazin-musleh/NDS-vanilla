@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.8.x"
-last_edit: "21/08/2026 - 09:00 PM"
+last_edit: "22/08/2026 - 04:08 AM"
 ---
 
 <!-- Page Shell Anatomy -->
@@ -271,6 +271,7 @@ div.nds-content-layout.nds-wSideInfo
                     <li>Keep <strong>one</strong> <code class="nds-inline-code lang-html">nds-content-layout</code> per page and put all page content inside <code class="nds-inline-code lang-html">nds-main-content</code>, structured as <a class="nds-color" href="{{ 'layout/section' | relative_url }}">sections</a>. Never nest one content layout inside another</li>
                     <li>An <code class="nds-inline-code lang-html">aside.nds-sidemenu</code> shows only when the layout carries <code class="nds-inline-code lang-html">nds-wSideMenu</code>. Without the class the layout hides any direct aside child, so a menu that does not appear usually means the class is missing</li>
                     <li>Use the <strong>console shape</strong> for admin and back-office pages. <code class="nds-inline-code lang-html">nds-full-width</code> on <code class="nds-inline-code lang-html">body</code> is the single switch, and the hero moves inside <code class="nds-inline-code lang-html">nds-main-content</code> so it sits beside the side menu</li>
+                    <li><code class="nds-inline-code lang-html">nds-full-width</code> sets one variable, <code class="nds-inline-code lang-html">--nds-content-MaxWidth</code>, and only <code class="nds-inline-code lang-html">nds-*</code> regions read it. Non-NDS pages in the same document are unaffected, so the class stays in the markup and needs no per-route toggle</li>
                     <li>Card view keeps its gutters and card gaps under <code class="nds-inline-code lang-html">nds-full-width</code> by design: the page widens around the cards without flattening them</li>
                     <li>Use the <strong>minimal shape</strong> for sign in, OTP, and other focused flows. <code class="nds-inline-code lang-html">nds-middle</code> centers the content in the viewport, and the footer is omitted</li>
                     <li>Side info is content-level, not a layout column. Keep the aside inside its <code class="nds-inline-code lang-html">nds-sideinfo-section</code> next to the text it tracks</li>
@@ -315,6 +316,7 @@ div.nds-content-layout.nds-wSideInfo
                         <tr><td><code class="nds-inline-code lang-html">nds-stripe</code></td><td><code class="nds-inline-code lang-html">nds-main-content</code></td><td>Sections alternate background color; off without it, and card view never stripes</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-odd</code></td><td><code class="nds-inline-code lang-html">nds-main-content</code></td><td>Flips the stripe parity, so the first section is tinted; needs <code class="nds-inline-code lang-html">nds-stripe</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-full-width</code></td><td><code class="nds-inline-code lang-html">body</code></td><td>Edge-to-edge chrome and content for console pages; card view keeps its gutters</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-page-bg</code></td><td><code class="nds-inline-code lang-html">body</code></td><td>Background image on the whole page, with a layer of the page background color over it. The minimal shape uses it. Set <code class="nds-inline-code lang-html">--bg-img</code> and the opacity knobs below</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-top</code></td><td><code class="nds-inline-code lang-html">aside.nds-sidemenu</code></td><td>Renders the side menu as a bar above the content instead of a column</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-flat</code></td><td>hero section</td><td>Removes the hero background and shadow for text-heavy pages</td></tr>
                     </tbody>
@@ -339,6 +341,9 @@ div.nds-content-layout.nds-wSideInfo
                         <tr><td><code class="nds-inline-code lang-html">--main-gap</code></td><td>0</td><td>Gap between sections inside <code class="nds-inline-code lang-html">nds-main-content</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--nds-sidemenu-width</code></td><td>260px</td><td>Side column width (global token)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--nds-content-MaxWidth</code></td><td>1280px</td><td>Content max width (global token; <code class="nds-inline-code lang-html">nds-full-width</code> sets it to 100%)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bg-img</code></td><td>not set</td><td>Background image behind the page on <code class="nds-inline-code lang-html">body.nds-page-bg</code>. Set it as a <code class="nds-inline-code lang-css">url()</code> value</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bg-opacity-top</code></td><td>80%</td><td>Strength of the color veil over the image at the top of the page. Higher values hide more of the image</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bg-opacity-bottom</code></td><td>80%</td><td>Strength of the same veil at the bottom of the page</td></tr>
                     </tbody>
                 </table>
             </div>

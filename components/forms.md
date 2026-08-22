@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.8.1"
-last_edit: "17/08/2026 - 03:42 AM"
+last_edit: "22/08/2026 - 04:34 AM"
 lang: en
 direction: ltr
 ---
@@ -1590,7 +1590,7 @@ direction: ltr
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Native Select</h2>
-      <p class="nds-section-description">Standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> element wrapped in the form container for native mobile picker behavior</p>
+      <p class="nds-section-description">Standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> element wrapped in the form container for native mobile picker behavior. In-form choice fields use the <a class="nds-color" href="#customSelect">custom select</a> by default, whatever the option count. Use this one only when the design asks for the native picker</p>
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
@@ -2339,7 +2339,9 @@ NDS.Forms.clearStatus(container);</code>
         <table class="nds-table nds-responsive">
           <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
           <tbody>
-            <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Medium size with reduced height (32px) and smaller font</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-select</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Required on a container that holds a native <code class="nds-inline-code lang-html">&lt;select&gt;</code>. It hides the browser's own arrow so the NDS chevron is the only one, and sizes the control for the select. Without it both arrows render</td></tr>
+              <tr><td><code class="nds-inline-code lang-html">nds-textarea</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Required on a container that holds a <code class="nds-inline-code lang-html">&lt;textarea&gt;</code>. Without it the control keeps single-line input sizing, and the textarea loses its padding and minimum height</td></tr>
+              <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Medium size with reduced height (32px) and smaller font</td></tr>
             <tr><td><code class="nds-inline-code lang-html">nds-lighter</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the lighter surface token. Removes the input border so the fill alone defines the field boundary. Not applied to file upload containers.</td></tr>
             <tr><td><code class="nds-inline-code lang-html">nds-darker</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the darker surface token. Same border behavior as <code class="nds-inline-code lang-html">nds-lighter</code>. Not applied to file upload containers.</td></tr>
             <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">nds-form-group</code></td><td>Lays out checkbox, radio, or switch group items in a horizontal wrapping row instead of the default vertical column.</td></tr>

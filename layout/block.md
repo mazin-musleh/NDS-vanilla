@@ -2,13 +2,13 @@
 layout: page
 title: Block
 hero_title: Block Layout - National Design System
-hero_description: A lightweight content grouping primitive used inside a section body to separate titled sub-groups of paragraphs, lists, tables, and other flow content without starting a new section.
+hero_description: A lightweight spacing unit used inside a section body. It carries a bottom margin that separates the parts of a section, and takes an optional title.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "16/08/2026 - 12:47 AM"
+last_edit: "22/08/2026 - 04:48 AM"
 ---
 
 <!-- Block Structure -->
@@ -16,7 +16,7 @@ last_edit: "16/08/2026 - 12:47 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Structure</h2>
-            <p class="nds-section-description">Blocks live inside <code class="nds-inline-code lang-html">.nds-section-body</code> and hold flow content directly. An optional <code class="nds-inline-code lang-html">.nds-block-title</code> heading sits at the top of the block.</p>
+            <p class="nds-section-description">Blocks live inside <code class="nds-inline-code lang-html">.nds-section-body</code>. A block is spacing only: full width plus a bottom margin, dropped on the last one. It is not a container and it groups nothing, so put the class straight on a block component such as a stepper, tab set, or table, or on a wrapper holding flow content. An optional <code class="nds-inline-code lang-html">.nds-block-title</code> heading sits at the top. Two groups need two blocks, or the gap between them never appears.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">

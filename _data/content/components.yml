@@ -76,8 +76,8 @@
   scss: _sass/components/_avatar.scss
 
 - title: "Block"
-  description: "Titled content grouping primitive for sub-sections inside a section body"
-  use_when: "Group a titled sub-section inside a section body: paragraphs, lists, and tables under one heading, without starting a whole new page section. Use when content needs a heading but not its own Section."
+  description: "Spacing unit for content and block components inside a section body, with an optional title"
+  use_when: "Space out the parts of a section body. Put it straight on a block component such as a stepper, tab set, or table to give it the standard gap, or wrap paragraphs, lists, and tables that belong together under one optional heading. Use when content needs separation, or a heading, but not its own Section."
   icon: '<i class="hgi hgi-stroke hgi-search-list-01"></i>'
   category: "Layout"
   tags: ["CSS"]

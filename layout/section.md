@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "21/08/2026 - 07:12 PM"
+last_edit: "22/08/2026 - 04:41 AM"
 ---
 
 <!-- Section Structure Overview -->
@@ -46,7 +46,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
 │   │   └── p.nds-section-description
 │   ├── div.nds-section-action       (optional, auto width. Add .nds-nowrap to keep inline on mobile)
 │   └── div.nds-section-body      (full row below)
-│       └── div.nds-block    (optional content grouping)
+│       └── div.nds-block    (optional spacing unit — see below)
 │           ├── h3.nds-block-title   (optional)
 │           └── p, ul, ol, img...    (direct content)
 └── div.nds-section-body.nds-max-width  (outside wrapper for breakout)
@@ -1395,7 +1395,9 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Dark neutral background with on-color text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-brand</code></td><td>Light brand background with inset shadow, adapts for dark mode</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Removes all background, border, and shadow (transparent section)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-block</code></td><td>Spacing only: full width plus a bottom margin, dropped on the last one. It is not a container and it groups nothing, so put it straight on a block-level component such as a stepper, tab set, or table. Wrap elements in one only when they really are a single group; two groups need two blocks, or the gap between them never appears</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-max-width</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: breaks out of content padding to span the full available width</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-full-width</code></td><td>On a section child: spans the full viewport width, regardless of the container. <code class="nds-inline-code lang-html">nds-max-width</code> only cancels the wrapper padding, so it stops at its container edge. The two differ when the container is narrower than the screen, such as beside a side menu</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-full</code></td><td>On <code class="nds-inline-code lang-html">nds-section-subtitle</code> or <code class="nds-inline-code lang-html">nds-section-description</code>: removes the 720px paragraph width cap so the text spans the section width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-minimal</code></td><td>On float action: hides button labels on mobile (icon-only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>On float action: allows action to wrap below the title on mobile instead of floating</td></tr>
