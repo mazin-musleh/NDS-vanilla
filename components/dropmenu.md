@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.1"
-last_edit: "10/08/2026 - 10:47 PM"
+updated: "1.8.x"
+last_edit: "22/08/2026 - 01:19 PM"
 ---
 
 <!-- Standard Dropmenu -->
@@ -484,7 +484,7 @@ last_edit: "10/08/2026 - 10:47 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Dropmenu Inside Table</h2>
-            <p class="nds-section-description">Row-level action menus inside tables need <code class="nds-inline-code lang-html">data-portal</code> on the wrapper. The menu then moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> on open (viewport-anchored, <code class="nds-inline-code lang-html">position: fixed</code>) so it escapes the table cell's overflow clipping and stacking context, and it follows the trigger as the page scrolls — no auto-close on scroll. Without <code class="nds-inline-code lang-html">data-portal</code> the default in-place mode would clip behind the row border or hide under an adjacent z-indexed cell.</p>
+            <p class="nds-section-description">Row-level action menus inside tables portal on their own. The table wrapper scrolls and clips, so the menu moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> on open (viewport-anchored, <code class="nds-inline-code lang-html">position: fixed</code>), escapes the cell's clipping and stacking context, and follows the trigger as the page scrolls — no auto-close on scroll. The <code class="nds-inline-code lang-html">data-portal</code> attribute in the example below is optional now. Keep it to force the move, or drop it and get the same result.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -1197,7 +1197,12 @@ document.getElementById('my-lazy-dropmenu').addEventListener('nds:dropmenu:prepa
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-portal</code></td>
                             <td><code class="nds-inline-code lang-html">.nds-dropmenu</code></td>
-                            <td>Moves the menu to <code class="nds-inline-code lang-html">&lt;body&gt;</code> on open. Use only when the menu must escape an ancestor stacking context (a card or modal with <code class="nds-inline-code lang-html">z-index</code>, a transformed wrapper). The portaled menu uses <code class="nds-inline-code lang-html">position: fixed</code> and tracks its trigger on scroll (rAF-throttled) so it stays anchored without closing.</td>
+                            <td>Forces the menu to <code class="nds-inline-code lang-html">&lt;body&gt;</code> on open. A menu that an ancestor would clip already moves there on its own, so set this only to force the move where no ancestor demands it. The portaled menu uses <code class="nds-inline-code lang-html">position: fixed</code> and tracks its trigger on scroll (rAF-throttled) so it stays anchored without closing.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-no-portal</code></td>
+                            <td><code class="nds-inline-code lang-html">.nds-dropmenu</code></td>
+                            <td>Keeps the menu in place, even when an ancestor clips it. Set it when your own CSS or JavaScript needs the menu to stay a descendant of the wrapper — a rule such as <code class="nds-inline-code">.my-panel .nds-dropmenu-menu</code> stops matching after the menu moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>. The menu is then clipped by that ancestor, so use it for styling ownership, not to fix placement. It wins over <code class="nds-inline-code lang-html">data-portal</code>.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-anchor-cursor</code></td>
@@ -1255,8 +1260,9 @@ document.getElementById('my-lazy-dropmenu').addEventListener('nds:dropmenu:prepa
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Positioning &amp; Portal</h3>
-                <p>By default the menu uses <code class="nds-inline-code lang-html">position: absolute</code> anchored to its wrapper. It scrolls with the trigger like a native <code class="nds-inline-code lang-html">&lt;select&gt;</code> — no close-on-scroll, no DOM reparenting. Initial placement is viewport-aware: the menu flips above the trigger when space below is tight, and clamps horizontally so it never overflows the viewport.</p>
-                <p>Add <code class="nds-inline-code lang-html">data-portal</code> to the wrapper only when the menu needs to escape an ancestor stacking context (a card or modal with <code class="nds-inline-code lang-html">z-index</code>, a transformed or filtered wrapper). Portaled menus use <code class="nds-inline-code lang-html">position: fixed</code> at <code class="nds-inline-code lang-html">&lt;body&gt;</code> level and follow the trigger on scroll (rAF-throttled) instead of closing.</p>
+                <p>By default the menu uses <code class="nds-inline-code lang-html">position: absolute</code> anchored to its wrapper. It scrolls with the trigger like a native <code class="nds-inline-code lang-html">&lt;select&gt;</code> — no close-on-scroll, no DOM reparenting.</p>
+                <p>Placement runs on every open, in this order. First the menu goes below the trigger. If it does not fit below and the space above is larger, it flips above. If it fits neither side, it stays on the roomier one and scrolls: a menu with its own scroll region shrinks that region, so a search box or footer buttons stay in view, and a menu without one scrolls as a whole. The menu also clamps horizontally, so it never overflows the viewport.</p>
+                <p>A menu that an ancestor would trap or clip moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> on open by itself. The component checks the ancestors on each open, so a menu inside a modal, a scrolling table wrapper, or a transformed card portals without any attribute. Portaled menus use <code class="nds-inline-code lang-html">position: fixed</code> at <code class="nds-inline-code lang-html">&lt;body&gt;</code> level and follow the trigger on scroll (rAF-throttled) instead of closing. Add <code class="nds-inline-code lang-html">data-portal</code> to the wrapper only to force the move where no ancestor demands it. Add <code class="nds-inline-code lang-html">data-no-portal</code> to refuse the move and keep the menu inside the wrapper: use it when your own CSS or JavaScript depends on that position, and accept that the ancestor then clips the menu. Never fix a clipped menu with an <code class="nds-inline-code">overflow</code> or <code class="nds-inline-code">z-index</code> override.</p>
             </div>
 
             <div class="nds-block">

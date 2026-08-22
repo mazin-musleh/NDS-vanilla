@@ -5,8 +5,8 @@ hero_title: Date Picker - National Design System
 hero_description: Interactive calendar component for selecting dates with support for both Gregorian and Hijri calendars
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.7.1"
-last_edit: "17/08/2026 - 02:14 AM"
+updated: "1.8.x"
+last_edit: "22/08/2026 - 01:19 PM"
 lang: en
 direction: ltr
 ---
@@ -456,7 +456,8 @@ direction: ltr
           <li>Listen on the <code class="nds-inline-code lang-html">change</code> event of the input to react to selection and clear actions, both fire a native bubbling change event</li>
           <li>For server-rendered forms that may be re-inserted into the DOM after a route change, call <code class="nds-inline-code lang-js">NDS.DatePicker.reinit()</code> to wire new inputs</li>
           <li>To remove a calendar from a specific input (for example in a dynamic list row), call <code class="nds-inline-code lang-js">instance.destroy()</code> on the value returned by <code class="nds-inline-code lang-js">NDS.DatePicker.create()</code></li>
-          <li>Do not nest a date picker inside another dropmenu or portal: the calendar dropdown uses the dropmenu positioning system and expects to anchor to its own <code class="nds-inline-code lang-html">.nds-form-control</code> parent</li>
+          <li>Do not nest a date picker inside another dropmenu: the calendar dropdown uses the dropmenu positioning system and expects to anchor to its own <code class="nds-inline-code lang-html">.nds-form-control</code> parent</li>
+          <li>The picker works inside a modal, a drawer, or a scrolling box with no extra markup. The calendar detects the container on open and moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> so it is not clipped, and it flips above the field when the space below is too small. When neither side fits, the calendar scrolls inside the viewport</li>
         </ul>
       </div>
 

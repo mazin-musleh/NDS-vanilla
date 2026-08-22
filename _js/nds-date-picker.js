@@ -1764,16 +1764,35 @@
             this.elements.datesContainer.innerHTML = '';
 
             // Month/year modes render a picker grid in place of day cells.
-            if (this.state.mode === 'month') return this.renderMonthGrid();
-            if (this.state.mode === 'year') return this.renderYearGrid();
+            if (this.state.mode === 'month') {
+                this.renderMonthGrid();
+            } else if (this.state.mode === 'year') {
+                this.renderYearGrid();
+            } else {
+                var calendar = this.getCurrentCalendar();
+                var calendarData = calendar.generateCalendarData(
+                    this.getCurrentYear(),
+                    this.getCurrentMonth()
+                );
 
-            var calendar = this.getCurrentCalendar();
-            var calendarData = calendar.generateCalendarData(
-                this.getCurrentYear(),
-                this.getCurrentMonth()
-            );
+                this.generateCalendarDates(calendarData);
+            }
 
-            this.generateCalendarDates(calendarData);
+            this._reposition();
+        },
+
+        /**
+         * Re-place the panel after a render that changes its height. Stepping a
+         * month does not: the day grid always fills 42 cells. Switching MODE
+         * does — the month grid is 3x4 and the year grid its own size — and
+         * placement was decided against the height at open, so without this the
+         * panel keeps the old side and gap. No-op until the panel is open: the
+         * build renders once before there is anything to place.
+         */
+        _reposition: function () {
+            if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
+                this.dropmenuInstance.applyPosition();
+            }
         },
 
         // Month-mode body: 3×4 grid of months. Click sets state.selectedDate

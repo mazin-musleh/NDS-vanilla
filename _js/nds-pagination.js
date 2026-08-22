@@ -429,13 +429,14 @@
         });
     }
 
-    // Collect the dropmenu items inside a pagination's ellipsis menus. The
-    // ellipsis dropmenu renders in place (it never opts into data-portal), so
-    // each menu is a direct descendant. On a lazy menu this is the rendered
-    // window only — callers needing the true page span use _lazyRange /
-    // the always-visible 1,2,3,N strip buttons.
+    // Collect the dropmenu items inside a pagination's ellipsis menus. Queried
+    // portal-aware: the ellipsis menu sets no data-portal, but a pagination
+    // inside a modal or a scrolling wrapper portals on open anyway, which parks
+    // the menu at <body> and out of a plain descendant walk. On a lazy menu this
+    // is the rendered window only — callers needing the true page span use
+    // _lazyRange / the always-visible 1,2,3,N strip buttons.
     function getPaginationDropmenuItems(pagination) {
-        return Array.from(pagination.querySelectorAll('.nds-dropmenu-menu .nds-dropmenu-item'));
+        return NDS.queryAll(pagination, '.nds-dropmenu-menu .nds-dropmenu-item');
     }
 
     // All clickable page elements (in-list buttons + dropmenu items).

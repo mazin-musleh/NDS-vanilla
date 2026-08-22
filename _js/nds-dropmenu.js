@@ -12,7 +12,8 @@
  *   nds:dropmenu:closed    detail {dropmenu, trigger, menu, isOpen}
  *   nds:dropmenu:selected  detail {dropmenu, item, value}
  * Hooks:
- *   data-portal · data-anchor · data-anchor-cursor · data-position-vertical · data-delay
+ *   data-portal · data-no-portal · data-anchor · data-anchor-cursor · data-position-vertical
+ *   data-delay
  *   data-no-auto-close · data-dropmenu-no-click · data-dropmenu-no-keys · data-dropmenu-primary
  *   data-search · data-search-empty · data-search-item · data-search-value
  *   data-select-name · data-select-value · data-required · data-trigger-label · data-value
@@ -23,10 +24,12 @@
  *     Call destroy(el) first. reinit() covers the other side: wrappers you ADD.
  *   - nds:dropmenu:prepare is the lazy-content hook; opened fires after placement.
  *   - data-position-vertical is written by the component (a CSS hook), never set it yourself.
- *   - Menus render in place by default: an ancestor with overflow or its own stacking
- *     context (a modal, a scrolling table wrapper, a transformed card) clips the open menu
- *     silently. The fix is data-portal on the wrapper — never overflow or z-index overrides;
- *     sizing knobs stay on the wrapper and survive the move.
+ *   - A menu that would be clipped portals itself: on every open the component walks the
+ *     ancestors and moves the menu to <body> when one of them clips it vertically (a modal
+ *     card's content, a scrolling table wrapper). data-portal forces the move where no
+ *     ancestor demands it; data-no-portal refuses it and accepts the clip, for a wrapper
+ *     whose CSS or DOM walks must keep the menu as a descendant. Never fix clipping with
+ *     overflow or z-index overrides; sizing knobs stay on the wrapper and survive the move.
  */
 
 /**
@@ -55,6 +58,11 @@
         '--dropmenu-max-width',
         '--dropmenu-slide',
     ];
+
+    // The layer a menu paints at by default (_dropmenu.scss) — the same value
+    // the sticky mainnav sits on (--_nav-z-base). A trigger stacked ABOVE this
+    // (a modal at 1101) puts its menu over the nav.
+    const BASE_Z = 1000;
 
     // Currently-open dropmenu wrappers, tracked module-locally so open() can
     // close peers without a DOM sweep by attribute selector. Maintained in
@@ -86,12 +94,10 @@
 
             if (dropmenuElement.hasAttribute('data-nds-dropmenu-initialized')) return;
 
-            // Portal opt-in. Authors add `data-portal` on the wrapper when the
-            // menu needs to escape an ancestor stacking context (cards/modals
-            // with z-index, transform/filter wrappers). Default is in-place
-            // `position: absolute` so the menu scrolls with the trigger — no
-            // close-on-scroll, no DOM reparenting.
+            // Initial values only — open() decides both for real (see
+            // _decidePortal and the _stackingZ cache).
             this.shouldPortal = dropmenuElement.hasAttribute('data-portal');
+            this._stackZ = 0;
 
             // Backrefs so consumers walking up from a menu item can still
             // reach the wrapper after the menu is portaled to <body>. With
@@ -768,7 +774,7 @@
             // dropmenu; opening a sub-dropmenu must not close its parent.
             _openDropmenus.forEach(el => {
                 if (el === this.dropmenu) return;
-                if (el.contains(this.dropmenu)) return; // ancestor — keep open
+                if (this._isNestedIn(el)) return; // ancestor — keep open
                 if (el.ndsDropmenu) el.ndsDropmenu.close();
             });
 
@@ -792,6 +798,12 @@
             //   locked into an inline width — the menu stayed viewport-wide
             //   until the next resize re-measured it as absolute.
             // Portal: menu goes to <body> and is fixed anyway; park stays fixed.
+            // The trigger's stacking layer cannot change inside one open cycle,
+            // so walk for it once here. The portal branch below and every
+            // applyPosition() this cycle (resize, a picker changing mode) read
+            // the cache instead of re-walking the ancestor chain.
+            this._stackZ = this._stackingZ();
+            this._decidePortal();
             this.menu.style.position = this.shouldPortal ? 'fixed' : 'absolute';
             this.menu.style.left = '0px';
             this.menu.style.top = '0px';
@@ -836,12 +848,7 @@
                 // sticky bar) would paint OVER the menu. Walk the trigger's
                 // ancestor chain, take the highest numeric z-index, and only
                 // override the CSS default when it wins.
-                let z = 0;
-                for (let n = this.trigger; n && n !== document.body; n = n.parentElement) {
-                    const v = parseInt(getComputedStyle(n).zIndex, 10);
-                    if (v > z) z = v;
-                }
-                if (z > 1000) this.menu.style.zIndex = String(z);
+                if (this._stackZ > BASE_Z) this.menu.style.zIndex = String(this._stackZ);
             }
 
             addState(this.dropmenu, 'open', 'opening');
@@ -926,6 +933,95 @@
             this._cancelClose = null;
         }
 
+        /**
+         * Highest z-index on the trigger's ancestor chain — the layer the menu
+         * effectively paints at, whether it portals or not. Walks the chain, so
+         * open() calls it once per cycle and callers read `_stackZ`.
+         */
+        _stackingZ() {
+            let z = 0;
+            for (let n = this.trigger; n && n !== document.body; n = n.parentElement) {
+                const v = parseInt(getComputedStyle(n).zIndex, 10);
+                if (v > z) z = v;
+            }
+            return z;
+        }
+
+        /**
+         * Is this dropmenu nested inside `el`? Plain containment stops being
+         * true the moment `el` portals: the date-picker calendar's month/year
+         * pickers live inside the calendar MENU, which sits at <body> while
+         * open, so opening one would read as an unrelated dropmenu and close
+         * the calendar under it. Hop wrapper → owning menu → its wrapper
+         * instead — that chain reads the same in both positions.
+         */
+        _isNestedIn(el) {
+            if (el.contains(this.dropmenu)) return true;
+            let menu = this.dropmenu.closest('.nds-dropmenu-menu');
+            while (menu) {
+                const owner = menu._ownerDropmenu;
+                if (!owner) return false;
+                if (owner === el) return true;
+                menu = owner.closest('.nds-dropmenu-menu');
+            }
+            return false;
+        }
+
+        /**
+         * Decide in-place vs portal, per open rather than per construct.
+         * `data-portal` on the wrapper still forces it; otherwise any ancestor
+         * that would trap or clip the menu opts it in automatically. It has to
+         * run here, not in the constructor: the clipping ancestor often does not
+         * exist yet at init (a modal opens later, a table row renders on a page
+         * change), and a menu built inside one measured nothing at all while it
+         * was `hidden`. Called while the menu is still in place, so the walk
+         * sees its real ancestor chain.
+         */
+        _decidePortal() {
+            // Opt-out wins over both the force attribute and the auto-detection.
+            // The cost is the clip it was protecting the menu from: this is for
+            // an author who owns CSS or DOM walks scoped under the wrapper and
+            // would rather keep them than have the menu escape its container.
+            if (this.dropmenu.hasAttribute('data-no-portal')) {
+                this.shouldPortal = false;
+                return;
+            }
+            this.shouldPortal = this.dropmenu.hasAttribute('data-portal') ||
+                this._isClipped();
+        }
+
+        /**
+         * Would an ancestor cut the menu off? Overflow is the whole test: an
+         * in-place menu is `position: absolute` with the wrapper as its
+         * containing block, so a scrolling or hidden-overflow box between the
+         * wrapper and the page clips it — the modal card's content area, a
+         * table's scroll wrapper, a drawer.
+         *
+         * NOT NDS.needsPortal, which answers a different question: what traps a
+         * FIXED element (transform, contain, container-type). Those do not clip
+         * an absolute descendant, and `container-type: inline-size` sits on
+         * every `.nds-section-wrapper`, so borrowing that predicate portaled
+         * essentially every menu on every page.
+         *
+         * Vertical axis only, because a menu opens up or down. That also reads
+         * the horizontal case for free: any non-visible overflow-x EXCEPT
+         * `clip` forces overflow-y to `auto`, so a table's `overflow-x: auto`
+         * wrapper is caught here. `clip` is the exception that leaves the other
+         * axis `visible` — and `<main>` uses `overflow-x: clip` on every page,
+         * so testing both axes portaled every menu in the docs site.
+         *
+         * <body> is exempt: its overflow is the viewport's, it clips nothing a
+         * portal would rescue, and a modal that locks page scroll sets it.
+         */
+        _isClipped() {
+            for (let n = this.menu.parentElement;
+                n && n !== document.body && n !== document.documentElement;
+                n = n.parentElement) {
+                if (getComputedStyle(n).overflowY !== 'visible') return true;
+            }
+            return false;
+        }
+
         // ==============================================
         // POSITION CALCULATION
         // ==============================================
@@ -952,6 +1048,10 @@
             // are unreliable for position:fixed + block when children use
             // flex/grid or width:100%.
             this.menu.style.width = '';
+            // Same for a previous run's own-height clamp, or the menu measures
+            // at the size the last placement squeezed it to.
+            this.menu.style.maxHeight = '';
+            this.menu.style.overflowY = '';
             const vw = document.documentElement.clientWidth;
             const w = Math.min(this.menu.offsetWidth, vw - pad * 2);
             this.menu.style.width = w + 'px';
@@ -960,7 +1060,16 @@
             // sticky mainnav as the top boundary. We clamp topEdge to `pad`
             // for pages without the nav and subtract our own gap/pad from
             // the raw space values.
-            const p = NDS.flipPosition(this.trigger, this.menu);
+            // The sticky nav is a ceiling only for a menu that paints BELOW it.
+            // A trigger in a higher layer (a modal at 1101) puts its menu over
+            // the nav, so reserving nav height there is phantom margin — and it
+            // lands on ONE side: the up side loses ~nav height while the down
+            // side only gives up `pad`, so a tall menu reads "less room above",
+            // stays down, and runs off the viewport with real space going
+            // unused above it.
+            const p = NDS.flipPosition(this.trigger, this.menu, {
+                respectNav: this._stackZ <= BASE_Z
+            });
             const topEdge = Math.max(pad, p.topEdge);
             const spaceBelow = p.spaceBelow - gap - pad;
             // Recompute spaceAbove from triggerRect rather than reusing
@@ -973,10 +1082,24 @@
             const flipUp = spaceBelow < p.menuRect.height && spaceAbove > spaceBelow;
             const available = flipUp ? spaceAbove : spaceBelow;
 
+            // Last resort, after the flip has already picked the roomier side:
+            // the menu still doesn't fit, so give it a scrollbar rather than let
+            // it run off the edge. A portaled menu is position:fixed, so an
+            // off-edge part is unreachable — page scroll carries the menu along
+            // with its trigger and never reveals it.
             let clamped = false;
-            if (scroll && p.menuRect.height > available) {
-                const chrome = p.menuRect.height - scroll.getBoundingClientRect().height;
-                scroll.style.maxHeight = Math.max(80, available - chrome) + 'px';
+            if (p.menuRect.height > available) {
+                if (scroll) {
+                    // Preferred: shrink the inner list so the menu's own chrome
+                    // (search box, footer actions) stays pinned and visible.
+                    const chrome = p.menuRect.height - scroll.getBoundingClientRect().height;
+                    scroll.style.maxHeight = Math.max(80, available - chrome) + 'px';
+                } else {
+                    // No inner scroll region to give back — the date-picker
+                    // calendar is one rigid block. Scroll the whole menu.
+                    this.menu.style.maxHeight = Math.max(80, available) + 'px';
+                    this.menu.style.overflowY = 'auto';
+                }
                 clamped = true;
             }
 
@@ -992,12 +1115,11 @@
                 this.menu.removeAttribute('data-position-vertical');
             }
 
-            // Glued to the trigger edge, no vertical viewport clamp:
-            // scrollable menus were already shrunk to `available` (they fit),
-            // and a rigid menu (calendar) that fits neither side must overflow
-            // the viewport edge rather than slide over its own trigger — page
-            // scroll can reveal an off-edge menu, a covered input never
-            // recovers. Matches trackPosition(), which never clamped.
+            // Glued to the trigger edge, no vertical viewport clamp on the
+            // POSITION: everything was already shrunk to `available` above, so
+            // the menu fits the side it was placed on and must never slide over
+            // its own trigger — a covered input never recovers.
+            // Matches trackPosition(), which never clamped.
             const top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
 
             // Pass the vw read at the top — re-reading it here, after the

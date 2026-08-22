@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.8.1"
-last_edit: "16/08/2026 - 04:39 PM"
+last_edit: "22/08/2026 - 01:19 PM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -2112,7 +2112,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-target</code></td><td>ID of the container holding filterable items. Also used to link the anchor to its submission form, search box, applied-chips row, query/count slots, and filter controls.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-search</code></td><td>When the anchor is also a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a>, adds a search box above the options and filters the generated rows as the user types. Pass a number (<code class="nds-inline-code lang-html">data-search="50"</code>) to show it only once the menu holds that many options.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-portal</code></td><td>Moves the open menu to <code class="nds-inline-code lang-html">&lt;body&gt;</code>. Use it when the filter sits inside a modal, drawer, or any scrolling box that would clip the menu. Width knobs travel with the menu.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-portal</code></td><td>Forces the open menu to <code class="nds-inline-code lang-html">&lt;body&gt;</code>. A filter inside a modal, drawer, or any scrolling box already moves there on its own, so set this only where no container demands it. Width knobs travel with the menu.</td></tr>
                     </tbody>
                 </table>
 
