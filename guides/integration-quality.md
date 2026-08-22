@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "18/08/2026 - 03:06 AM"
+last_edit: "22/08/2026 - 05:58 AM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -78,6 +78,7 @@ sidemenu_mode: false
                 <table class="nds-table nds-responsive">
                     <thead><tr><th data-align="center">Revision</th><th>Highlights</th></tr></thead>
                     <tbody>
+                        <tr><td>v3.0</td><td>A 34% shorter read, organised around the work. The session picks a work mode first, each phase has entry and exit gates, and a new authority table settles who decides content, data rules, and structure. Verification sets the viewport rather than the window, and an unmet check now holds the page status open.</td></tr>
                         <tr><td>v2.2</td><td>Client-rendered apps get proper coverage: the mount element and any layout-affecting class have to be right in the initial HTML, before the framework runs. Direction and language are now a required pair. A compacted context counts as a new session, and a matched source ships all its members.</td></tr>
                         <tr><td>v2.1</td><td>Fewer questions, more defaults. The release install, the full chrome, and the bilingual locale ship as-is, and the plan review asks everything in one stop. The plan tracks open items with tick boxes, and the inventory now checks legacy stylesheets for global rules.</td></tr>
                         <tr><td>v2.0</td><td>Verification now runs headless-first, so desktop and mobile are one run. The master layout is copied from a built page, guided by the new Page Shell reference, and older templates fall back to their built pages alone. Framework views that mount, re-render, or unmount route to the refresh and destroy docs.</td></tr>
