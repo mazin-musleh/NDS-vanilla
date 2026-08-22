@@ -99,6 +99,37 @@
             if (el.closest('code, .code-example')) return;
             console.warn('[NDS] audit: submit-typed button with data-stepper-control — the stepper hands this click to the form and does not move, so the attribute does nothing. A form step is gated, so drive it from JS: call NDS.Stepper.next() after NDS.Forms.validateForm() passes, or from nds:formValid once your request succeeds.', el);
         });
+        // A framework mount root between <body> and <main> breaks the vertical
+        // flex chain: body is a flex column (min-height:100dvh) and main grows to
+        // fill it, so an untreated wrapper leaves main at content height and the
+        // footer rides up the viewport. Nothing errors and the page still paints.
+        // No <main> at all is not a finding — a client-rendered app audited before
+        // its first mount has nothing to judge yet.
+        const mainEl = document.querySelector('body main');
+        if (mainEl && mainEl.parentElement !== document.body && !mainEl.closest('code, .code-example')) {
+            for (let n = mainEl.parentElement; n && n !== document.body; n = n.parentElement) {
+                const cs = getComputedStyle(n);
+                // The two treatments layout/page-shell.md prescribes: vanish from
+                // the layout, or become the growing column yourself.
+                if (cs.display === 'contents') continue;
+                if (cs.display === 'flex' && cs.flexDirection === 'column' && parseFloat(cs.flexGrow) > 0) continue;
+                const label = n.tagName.toLowerCase() + (n.id ? `#${n.id}` : '');
+                console.warn(`[NDS] audit: <${label}> sits between <body> and <main> with display:${cs.display} — main no longer grows, so the footer rides up the viewport instead of sitting at the bottom. Give it "display: contents", or "flex: 1; display: flex; flex-direction: column" when the app styles the mount root itself. See layout/page-shell.md.`, n);
+                break; // one warning per page: the outermost break is the one to fix
+            }
+        }
+
+        // .nds-content-layout is a grid — one column, or side-menu + content under
+        // nds-wSideMenu. A component that returns a wrapper <div> instead of a
+        // fragment lands an extra element in it, which takes a column of its own.
+        document.querySelectorAll('.nds-content-layout').forEach(layout => {
+            if (layout.closest('code, .code-example')) return;
+            Array.from(layout.children).forEach(child => {
+                if (child.matches('.nds-main-content, .nds-sidemenu')) return;
+                if (getComputedStyle(child).display === 'contents') return;
+                console.warn(`[NDS] audit: <${child.tagName.toLowerCase()}> is a direct child of .nds-content-layout but is neither .nds-main-content nor .nds-sidemenu — it takes a grid column and shifts the layout. Return a fragment from the component instead of a wrapper, or give the wrapper "display: contents". See layout/page-shell.md.`, child);
+            });
+        });
     }
 
     NDS.Audit = { run };
