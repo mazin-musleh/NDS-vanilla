@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "22/08/2026 - 09:31 PM"
+last_edit: "24/08/2026 - 01:50 AM"
 ---
 
 <!-- Variants -->
@@ -31,8 +31,9 @@ last_edit: "22/08/2026 - 09:31 PM"
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-gray", ".nds-tag", "tagColor"]'>
-                                                <span class="nds-label">Gray</span>
+                                                data-toggler='["", ".nds-tag", "tagColor"]'
+                                                data-trigger-label="Gray">
+                                                <span class="nds-label">Gray (default)</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                                 data-toggler='["nds-green", ".nds-tag", "tagColor"]'>
@@ -102,7 +103,7 @@ last_edit: "22/08/2026 - 09:31 PM"
                         </div>
                         <div class="demo-container">
                             <div class="state-demo">
-                                <span class="nds-tag nds-gray">
+                                <span class="nds-tag">
                                     <span class="nds-label">Label</span>
                                 </span>
                             </div>
@@ -128,7 +129,7 @@ last_edit: "22/08/2026 - 09:31 PM"
                                             </button>
                                         </div>
                                         <code class="lang-html code">
-&lt;span class="nds-tag nds-gray"&gt;
+&lt;span class="nds-tag"&gt;
   &lt;span class="nds-label"&gt;Label&lt;/span&gt;
 &lt;/span&gt;
                                     </code>
@@ -382,8 +383,9 @@ last_edit: "22/08/2026 - 09:31 PM"
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-gray", ".nds-tag", "iconOnlyColor"]'>
-                                                <span class="nds-label">Gray</span>
+                                                data-toggler='["", ".nds-tag", "iconOnlyColor"]'
+                                                data-trigger-label="Gray">
+                                                <span class="nds-label">Gray (default)</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                                 data-toggler='["nds-green", ".nds-tag", "iconOnlyColor"]'>
@@ -441,7 +443,7 @@ last_edit: "22/08/2026 - 09:31 PM"
                         </div>
                         <div class="demo-container">
                             <div class="state-demo">
-                                <span class="nds-tag nds-gray nds-icon-only">
+                                <span class="nds-tag nds-icon-only">
                                     <i class="hgi hgi-stroke hgi-tag-01"></i>
                                 </span>
                             </div>
@@ -467,7 +469,7 @@ last_edit: "22/08/2026 - 09:31 PM"
                                             </button>
                                         </div>
                                         <code class="lang-html code">
-&lt;span class="nds-tag nds-gray nds-icon-only"&gt;
+&lt;span class="nds-tag nds-icon-only"&gt;
   &lt;i class="hgi hgi-stroke hgi-tag-01"&gt;&lt;/i&gt;
 &lt;/span&gt;
                                     </code>
@@ -496,7 +498,7 @@ last_edit: "22/08/2026 - 09:31 PM"
                         <div class="demo-container">
                             <div class="state-demo">
                                 <div class="nds-tags">
-                                    <span class="nds-tag nds-gray"><span class="nds-label">Design</span></span>
+                                    <span class="nds-tag"><span class="nds-label">Design</span></span>
                                     <span class="nds-tag nds-blue"><span class="nds-label">Development</span></span>
                                     <span class="nds-tag nds-green"><span class="nds-label">Research</span></span>
                                     <span class="nds-tag nds-yellow"><span class="nds-label">Analytics</span></span>
@@ -526,7 +528,7 @@ last_edit: "22/08/2026 - 09:31 PM"
                                         </div>
                                         <code class="lang-html code">
 &lt;div class="nds-tags"&gt;
-  &lt;span class="nds-tag nds-gray"&gt;&lt;span class="nds-label"&gt;Design&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="nds-tag"&gt;&lt;span class="nds-label"&gt;Design&lt;/span&gt;&lt;/span&gt;
   &lt;span class="nds-tag nds-blue"&gt;&lt;span class="nds-label"&gt;Development&lt;/span&gt;&lt;/span&gt;
   &lt;span class="nds-tag nds-green"&gt;&lt;span class="nds-label"&gt;Research&lt;/span&gt;&lt;/span&gt;
   &lt;span class="nds-tag nds-yellow"&gt;&lt;span class="nds-label"&gt;Analytics&lt;/span&gt;&lt;/span&gt;

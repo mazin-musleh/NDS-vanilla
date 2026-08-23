@@ -499,7 +499,7 @@
 // status cascade keys on these same aliases — so only card-specific deltas live
 // here: neutral's softer --featuredicon-color, the .nds-color alpha tints, oncolor/disabled.
 .nds-card:not(.nds-oncolor, [disabled]) {
-  &:is(.nds-neutral, [data-status="neutral"]) {
+  &:is(.nds-neutral, .nds-gray, [data-status="neutral"]) {
     --_card-border-hover-base: var(--colors-neutral-500);
     --_card-border-active-base: var(--colors-neutral-300);
     --_card-title-base: var(--colors-neutral-800);

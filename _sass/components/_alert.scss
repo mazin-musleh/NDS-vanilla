@@ -186,7 +186,7 @@
     &:is(.nds-blue,  [data-status="info"])                           { --card-title: var(--text-info); }
     &:is(.nds-yellow,[data-status="warning"])                        { --card-title: var(--text-warning); }
     &:is(.nds-red,   [data-status="error"], [data-status="critical"]){ --card-title: var(--text-error); }
-    &:is(.nds-neutral,[data-status="neutral"]) {
+    &:is(.nds-neutral,.nds-gray,[data-status="neutral"]) {
       --_card-bg-base: var(--background-neutral-light);
       @include dark { --card-bg: var(--colors-alpha-white-10); }
     }
@@ -291,7 +291,7 @@
 :is(.nds-blue,  [data-status="info"])                            { --alert-stripe: var(--background-info);      --alert-icon-bg: var(--featuredicons-background-info-light); }
 :is(.nds-yellow,[data-status="warning"])                         { --alert-stripe: var(--background-warning);   --alert-icon-bg: var(--featuredicons-background-warning-light); }
 :is(.nds-red,   [data-status="error"], [data-status="critical"]) { --alert-stripe: var(--background-error);     --alert-icon-bg: var(--featuredicons-background-error-light); }
-:is(.nds-neutral,[data-status="neutral"])                        { --alert-stripe: var(--border-neutral-light); --alert-icon-bg: var(--featuredicons-background-neutral-light); }
+:is(.nds-neutral,.nds-gray,[data-status="neutral"])              { --alert-stripe: var(--border-neutral-light); --alert-icon-bg: var(--featuredicons-background-neutral-light); }
 
 // ==============================================
 // TOAST PLACEHOLDER CONTAINERS

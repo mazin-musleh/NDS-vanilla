@@ -101,18 +101,18 @@
 
     @include dark {
       --featuredicon-dark-bg: var(--colors-primary-700);
-      &[data-status="success"] { --featuredicon-dark-bg: var(--colors-green-700); }
-      &[data-status="info"] { --featuredicon-dark-bg: var(--colors-blue-700); }
-      &[data-status="warning"] { --featuredicon-dark-bg: var(--colors-yellow-700); }
-      &[data-status="error"] { --featuredicon-dark-bg: var(--colors-red-700); }
-      &[data-status="neutral"] { --featuredicon-dark-bg: var(--colors-neutral-900); }
+      &:is(.nds-green, [data-status="success"]) { --featuredicon-dark-bg: var(--colors-green-700); }
+      &:is(.nds-blue, [data-status="info"]) { --featuredicon-dark-bg: var(--colors-blue-700); }
+      &:is(.nds-yellow, [data-status="warning"]) { --featuredicon-dark-bg: var(--colors-yellow-700); }
+      &:is(.nds-red, [data-status="error"], [data-status="critical"]) { --featuredicon-dark-bg: var(--colors-red-700); }
+      &:is(.nds-neutral, .nds-gray, [data-status="neutral"]) { --featuredicon-dark-bg: var(--colors-neutral-900); }
     }
   }
 }
 
 // ==============================================
 // INHERITED STATUS — single owner of status → icon color
-// Keyed on BOTH the color-class aliases (.nds-green etc.) and [data-status],
+// Keyed on BOTH the canon color classes (.nds-green etc.) and [data-status],
 // so the mapping cascades to a featured icon whether the status sits on the
 // icon itself or on any ancestor (a card, drawer item, …). The icon's own
 // status wins via higher specificity in the direct rules above.
@@ -146,7 +146,7 @@
   --featuredicon-dark-bg: var(--background-error);
 }
 
-:is(.nds-neutral, [data-status="neutral"]) {
+:is(.nds-neutral, .nds-gray, [data-status="neutral"]) {
   --featuredicon-bg: var(--featuredicons-background-default-light);
   --featuredicon-color: var(--featuredicons-icon-neutral);
   --featuredicon-dark-bg: var(--colors-neutral-400);

@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "21/08/2026 - 07:12 PM"
+updated: "1.9.x"
+last_edit: "24/08/2026 - 01:35 AM"
 ---
 
 <!-- Featured Icons -->
@@ -36,23 +36,23 @@ last_edit: "21/08/2026 - 07:12 PM"
                                                 <span class="nds-label">Brand (default)</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=success", ".nds-featured-icon", "iconColor", "attr"]'>
-                                                <span class="nds-label">Success</span>
+                                                data-toggler='["nds-green", ".nds-featured-icon", "iconColor"]'>
+                                                <span class="nds-label">Green</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=info", ".nds-featured-icon", "iconColor", "attr"]'>
-                                                <span class="nds-label">Info</span>
+                                                data-toggler='["nds-blue", ".nds-featured-icon", "iconColor"]'>
+                                                <span class="nds-label">Blue</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=warning", ".nds-featured-icon", "iconColor", "attr"]'>
-                                                <span class="nds-label">Warning</span>
+                                                data-toggler='["nds-yellow", ".nds-featured-icon", "iconColor"]'>
+                                                <span class="nds-label">Yellow</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=error", ".nds-featured-icon", "iconColor", "attr"]'>
-                                                <span class="nds-label">Error</span>
+                                                data-toggler='["nds-red", ".nds-featured-icon", "iconColor"]'>
+                                                <span class="nds-label">Red</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=neutral", ".nds-featured-icon", "iconColor", "attr"]'>
+                                                data-toggler='["nds-neutral", ".nds-featured-icon", "iconColor"]'>
                                                 <span class="nds-label">Neutral</span>
                                             </button>
                                         </div>
@@ -217,40 +217,48 @@ last_edit: "21/08/2026 - 07:12 PM"
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Color Variants</h3>
-                <p>Brand is the default color. <code class="nds-inline-code lang-html">data-status</code> declares the state the icon reports, and the color follows from that. It is not a color picker. The status also inherits: an icon inside a card or a drawer item that carries <code class="nds-inline-code lang-html">data-status</code> takes that color unless it sets its own. For a color with no state attached, use the matching color class instead (<code class="nds-inline-code lang-html">nds-green</code>, <code class="nds-inline-code lang-html">nds-blue</code>, and the rest).</p>
+                <p>Brand is the default color. Pick a color with a color class, the same set tags use. <code class="nds-inline-code lang-html">data-status</code> paints the same colors and says more: it declares the state the icon reports. Use the class when you want the color, and the attribute when the icon reports an outcome. The attribute also inherits, and the class does not: an icon inside a card or a drawer item that carries <code class="nds-inline-code lang-html">data-status</code> takes that color unless it sets its own.</p>
                 <table class="nds-table nds-responsive">
                     <thead>
                         <tr>
-                            <th>Attribute</th>
+                            <th>Class</th>
+                            <th>Status</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><em>none</em></td>
+                            <td><em>none</em></td>
                             <td>Primary brand color (default).</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-html">nds-green</code></td>
                             <td><code class="nds-inline-code lang-html">data-status="success"</code></td>
                             <td>Green for positive outcomes and confirmations.</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-html">nds-blue</code></td>
                             <td><code class="nds-inline-code lang-html">data-status="info"</code></td>
                             <td>Blue for informational content and tips.</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-html">nds-yellow</code></td>
                             <td><code class="nds-inline-code lang-html">data-status="warning"</code></td>
                             <td>Yellow/amber for cautionary information.</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-html">nds-red</code></td>
                             <td><code class="nds-inline-code lang-html">data-status="error"</code></td>
                             <td>Red for errors and validation failures.</td>
                         </tr>
                         <tr>
+                            <td><em>none</em></td>
                             <td><code class="nds-inline-code lang-html">data-status="critical"</code></td>
                             <td>Red, same cascade as error. Use for system-level critical alerts and outages.</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-html">nds-neutral</code></td>
                             <td><code class="nds-inline-code lang-html">data-status="neutral"</code></td>
                             <td>Gray for general purpose and default states.</td>
                         </tr>

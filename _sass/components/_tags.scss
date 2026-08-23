@@ -100,12 +100,9 @@
   // .nds-outline (no color) stays inert.
   // ==============================================
 
-  &:is(.nds-gray:where(:not([data-status])), [data-status="neutral"]) {
-    --tag-bg: var(--tag-background-neutral-light);
-    --tag-text: var(--tag-text-neutral);
-    --tag-border: var(--tag-border-neutral-light);
-    --tag-icon: var(--tag-icon-neutral);
-  }
+  // No neutral rung: the base defaults above already resolve to the neutral tokens, so
+  // .nds-gray / .nds-neutral / [data-status="neutral"] need no rule to look right — and
+  // leaving them out keeps an author's own --tag-bg winning on a plain tag.
 
   &:is(.nds-green:where(:not([data-status])), [data-status="success"]) {
     --tag-bg: var(--tag-background-success-light);
@@ -136,7 +133,7 @@
   }
 
   // Variant chrome — only applies when the tag also has a status.
-  &:is(.nds-gray, .nds-green, .nds-blue, .nds-yellow, .nds-red, [data-status]) {
+  &:is(.nds-gray, .nds-neutral, .nds-green, .nds-blue, .nds-yellow, .nds-red, [data-status]) {
     &.nds-inverted {
       --tag-text: var(--text-oncolor-primary);
       --tag-border: transparent;
@@ -147,7 +144,7 @@
 
   // Inverted — per-status solid bg (only value that differs).
   &.nds-inverted {
-    &:is(.nds-gray:where(:not([data-status])), [data-status="neutral"]) { --tag-bg: var(--tag-background-neutral); }
+    &:is(:is(.nds-gray, .nds-neutral):where(:not([data-status])), [data-status="neutral"]) { --tag-bg: var(--tag-background-neutral); }
     &:is(.nds-green:where(:not([data-status])), [data-status="success"]) { --tag-bg: var(--tag-background-success); }
     &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) { --tag-bg: var(--tag-background-info); }
     &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) { --tag-bg: var(--tag-background-warning); }
@@ -156,7 +153,7 @@
 
   // Outline — per-status full-strength border (only value that differs).
   &.nds-outline {
-    &:is(.nds-gray:where(:not([data-status])), [data-status="neutral"]) { --tag-border: var(--tag-border-neutral); }
+    &:is(:is(.nds-gray, .nds-neutral):where(:not([data-status])), [data-status="neutral"]) { --tag-border: var(--tag-border-neutral); }
     &:is(.nds-green:where(:not([data-status])), [data-status="success"]) { --tag-border: var(--tag-border-success); }
     &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) { --tag-border: var(--tag-border-info); }
     &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) { --tag-border: var(--tag-border-warning); }
