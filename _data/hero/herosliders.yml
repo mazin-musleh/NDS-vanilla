@@ -18,6 +18,7 @@
 #     <img src="{relative_url}/assets/img/logo.svg" alt="Logo">
 #     <h1 class="nds-section-title">Custom Title</h1>
 #     <p class="nds-section-description">Custom text</p>
+#   Only the first slide takes <h1>; later slides use <h2>.
 #
 #
 #   Use {relative_url} for any paths — resolves to site baseurl (works from any page).
@@ -41,7 +42,7 @@
   overlay: 0.6
   position: 20% 50%
   content: |
-    <h1 class="nds-section-title">Vanilla Design System</h1>
+    <h2 class="nds-section-title">Vanilla Design System</h2>
     <p class="nds-section-description" style="max-width:550px;">An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies.</p>
     <div class="nds-section-action">
       <a href="{relative_url}/guides/get-started.html" class="nds-btn nds-primary nds-oncolor nds-md"><i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i><span class="nds-label">Get Started</span></a>

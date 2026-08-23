@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.7.2"
-last_edit: "22/08/2026 - 03:39 PM"
+last_edit: "23/08/2026 - 03:45 PM"
 ---
 
 <!-- Page Setup -->
@@ -325,6 +325,7 @@ Content-Security-Policy:
             <div class="nds-block nds-prose">
                 <h3>Why the stylesheets look the way they do</h3>
                 <p>Each deferred stylesheet ships as a <code class="nds-inline-code lang-html">rel="preload"</code> link with a <code class="nds-inline-code lang-html">data-nds-defer</code> mark. The preload downloads the file at the right priority without blocking render. The head script then adds a normal stylesheet link for it, which reuses that download. A more common way to defer CSS is an <code class="nds-inline-code lang-html">onload</code> attribute on the link. NDS does not use one, because <strong>a nonce and a hash both cover a script element, and neither can ever cover an inline event handler</strong>. An <code class="nds-inline-code lang-html">onload</code> attribute needs <code class="nds-inline-code lang-css">'unsafe-inline'</code>, which defeats the policy. Moving the same work into a script element is what makes a strict CSP possible.</p>
+                <p>NDS needs JavaScript. The head script is what applies the deferred sheets, so a browser with JavaScript turned off loads no styles and shows a blank page. There is no fallback for this, and it is deliberate: the components need JavaScript to work at all.</p>
                 <p>The icon sheets load from <code class="nds-inline-code lang-html">nds-main.min.js</code> for the same reason. That file is already allowed by <code class="nds-inline-code lang-css">'self'</code>, so icons need no grant from you at all.</p>
             </div>
         </div>

@@ -53,6 +53,8 @@ The `--alpha-*` tier is gone; reference the palette directly:
 | `--alpha-warning-{10,20}` | `--colors-yellow-alpha-{n}` |
 | `--alpha-error-{10,20}` | `--colors-red-alpha-{n}` |
 
+These are palette tokens, so they are declared in `_sass/themes/_dga.scss`, not in `_sass/tokens/`. The files under `_sass/tokens/` only reference them.
+
 ## 3. Semantic tokens — color-named & shade-numbered removed
 
 | Removed | Use | Note |

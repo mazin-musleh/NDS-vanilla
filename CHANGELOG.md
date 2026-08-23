@@ -416,10 +416,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Digital stamp — z-index so an open stamp covers the content beneath.
 - Icons — the theme-toggle glyph hardcoded its fill (`#161616`) instead of `currentColor`, so it ignored `color` and stayed near-black in dark mode.
 
-### Migration
+### Migrating from v1.3.0
 
 - Multiselect — now a UI layer over a native checkbox group, so the checkboxes *are* the form value. Migrate old markup: add `name="…[]"` to each `<input class="nds-check">`, use `checked` for pre-selection, and remove the hidden CSV carrier inputs (`<input type="hidden" name="…[]">`).
 - Flex — `.nds-flex`'s default cross-axis alignment changed from `center` to `stretch`. Containers that relied on the implicit centering now stretch their children; set `--align: center` to restore the previous look.
+- Hidden — `.hidden`, `.nds-desktop-only` and `.nds-mobile-only` are removed. Replace them with `data-hidden="mobile"` / `data-hidden="tablet"` / `data-hidden="desktop"`, or the native `hidden` attribute for an always-hidden element. See the [Hidden doc page](https://mazin-musleh.github.io/NDS-vanilla/utilities/hidden.html).
+- Topbar, Mainnav, Search and Toolbar — breakpoint hiding moved out of the stylesheets and onto `data-hidden` stamps in the markup. The old rules are deleted, so copied chrome markup keeps every widget visible at every width until you re-copy it. Take the current markup from the [Topbar](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/topbar.html) and [Main Navigation](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/mainnav.html) doc pages, or add the stamps yourself.
 
 ## [1.3.0] - 2026-07-04
 
@@ -446,7 +448,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Replace the built bundles (`nds-main.min.*` and the loader-injected `nds-delegated`/`nds-extras`, plus the `nds-accessibility`/`nds-showcase`/theme bundles).
 - Token overrides — only consumers who **override or reference NDS token custom properties** in their own CSS are affected; classes and component rendering are otherwise unchanged. See the [Token Migration Reference](https://github.com/mazin-musleh/NDS-vanilla/blob/main/TOKEN-MIGRATION.md) for the full old→new name map.
 - Hero — copied hero markup with inline structural styles still works but those styles are now redundant (CSS owns them); a slide that doesn't stamp `--overlay` now renders at `0.7` (was `0.20`) — stamp an explicit value to pin it.
-- Head — v1.2.0 pages shipped an inline critical-gate `<style>` + async-loaded critical `<link>` (preload/`onload` swap + `<noscript>`). A copied `<head>` still works, but the inline snapshot can drift from the 1.3.0 crit file; the canonical, drift-proof setup is a single render-blocking `<link rel="stylesheet" href="assets/css/nds.critical.min.css">` (first paint stays theme/dark-correct). Redundant but harmless if left.
+- Head — v1.2.0 pages shipped an inline critical-gate `<style>` + async-loaded critical `<link>` (preload/`onload` swap + `<noscript>`). A copied `<head>` still works, but the inline snapshot can drift from the 1.3.0 crit file; the canonical, drift-proof setup is a single render-blocking `<link rel="stylesheet" href="assets/css/nds.critical.min.css">` (first paint stays theme/dark-correct). Redundant but harmless if left. **Superseded in 1.7.0** — every sheet now ships as a `data-nds-defer` preload that one head script converts to a real link; copy the current head from the [Document Head doc page](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/head.html) rather than following this note.
 
 ## [1.2.0] - 2026-07-01
 

@@ -46,7 +46,11 @@ Determine hero sliders source:
                 {%- assign _slide_content = slide.content | replace: '{relative_url}', site.baseurl %}
                 {%- else %}
                 {%- capture _slide_content %}
+                    {%- if forloop.first %}
                     <h1 class="nds-section-title">{{ slide.title }}</h1>
+                    {%- else %}
+                    <h2 class="nds-section-title">{{ slide.title }}</h2>
+                    {%- endif %}
                     <p class="nds-section-description">{{ slide.description }}</p>
                     {%- if slide.url and slide.url != '#' %}
                     <a href="{{ slide.url | relative_url }}" class="nds-btn nds-primary nds-oncolor nds-lg">
