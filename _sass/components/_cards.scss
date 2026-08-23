@@ -36,31 +36,47 @@
 
 .nds-card {
   // Internal custom properties with external fallbacks
-  --_card-bg: var(--card-bg, var(--background-card));
-  --_card-bg-hover: var(--card-bg-hover, var(--background-card-hovered));
-  --_card-border: var(--card-border, var(--border-neutral-primary));
-  --_card-border-hover: var(--card-border-hover, var(--border-primary));
-  --_card-border-active: var(--card-border-active, var(--border-neutral-primary));
+  --_card-bg-base: var(--background-card);
+  --_card-bg: var(--card-bg, var(--_card-bg-base));
+  --_card-bg-hover-base: var(--background-card-hovered);
+  --_card-bg-hover: var(--card-bg-hover, var(--_card-bg-hover-base));
+  --_card-border-base: var(--border-neutral-primary);
+  --_card-border: var(--card-border, var(--_card-border-base));
+  --_card-border-hover-base: var(--border-primary);
+  --_card-border-hover: var(--card-border-hover, var(--_card-border-hover-base));
+  --_card-border-active-base: var(--border-neutral-primary);
+  --_card-border-active: var(--card-border-active, var(--_card-border-active-base));
   // --card-padding sets both axes; the per-axis knobs fall back to it. A variant
   // retunes the -base value, never --_card-padding-block itself, so the knob
   // check is written once here instead of being restated at every override.
-  --_card-padding: var(--card-padding, var(--spacing-xl));
+  --_card-padding-base: var(--spacing-xl);
+  --_card-padding: var(--card-padding, var(--_card-padding-base));
   --_card-padding-block-base: var(--_card-padding);
   --_card-padding-inline-base: var(--_card-padding);
   --_card-padding-block: var(--card-padding-block, var(--_card-padding-block-base));
   --_card-padding-inline: var(--card-padding-inline, var(--_card-padding-inline-base));
-  --_card-gap: var(--card-gap, var(--spacing-3xl));
-  --_card-radius: var(--card-radius, var(--radius-lg));
-  --_card-text: var(--card-text, var(--text-display));
-  --_card-title: var(--card-title, var(--text-display));
-  --_card-subtitle: var(--card-subtitle, var(--text-primary-paragraph));
-  --_card-number: var(--card-number, var(--text-primary-strong));
+  --_card-gap-base: var(--spacing-3xl);
+  --_card-gap: var(--card-gap, var(--_card-gap-base));
+  --_card-radius-base: var(--radius-lg);
+  --_card-radius: var(--card-radius, var(--_card-radius-base));
+  --_card-text-base: var(--text-display);
+  --_card-text: var(--card-text, var(--_card-text-base));
+  --_card-title-base: var(--text-display);
+  --_card-title: var(--card-title, var(--_card-title-base));
+  --_card-subtitle-base: var(--text-primary-paragraph);
+  --_card-subtitle: var(--card-subtitle, var(--_card-subtitle-base));
+  --_card-number-base: var(--text-primary-strong);
+  --_card-number: var(--card-number, var(--_card-number-base));
   --_card-icon: var(--featuredicon-color, var(--featuredicons-icon-primary));
   --_card-icon-bg: var(--featuredicon-bg, var(--featuredicons-background-primary-light));
   --featuredicon-color: var(--_card-icon);
   --featuredicon-bg: var(--_card-icon-bg);
   --avatar-color: var(--_card-icon);
-  --_card-rating: var(--card-rating, var(--text-secondary-paragraph));
+  --_card-rating-base: var(--text-secondary-paragraph);
+  --_card-rating: var(--card-rating, var(--_card-rating-base));
+  // The width family stays on the public knob: --_card-width-max chains through
+  // --card-width, so a variant that retuned a -base value would drop out of that
+  // fallback and cap a full-width card at 360px.
   --_card-width: var(--card-width, 100%);
   --_card-width-min: var(--card-width-min, 0);
   --_card-width-max: var(--card-width-max, var(--card-width, 360px));
@@ -136,13 +152,13 @@
   // Color fill variant (tinted background) — default tracks brand primary.
   // Status modifiers (.nds-green/.nds-yellow/etc. or [data-status]) override below.
   &.nds-color {
-    --card-bg: var(--background-primary-light);
-    --card-bg-hover: var(--colors-primary-100);
-    --card-border: var(--border-primary-light);
-    --card-title: var(--text-primary-strong);
+    --_card-bg-base: var(--background-primary-light);
+    --_card-bg-hover-base: var(--colors-primary-100);
+    --_card-border-base: var(--border-primary-light);
+    --_card-title-base: var(--text-primary-strong);
 
     @include dark {
-      --card-bg-hover: var(--colors-primary-alpha-20);
+      --_card-bg-hover-base: var(--colors-primary-alpha-20);
     }
   }
 
@@ -484,112 +500,112 @@
 // here: neutral's softer --featuredicon-color, the .nds-color alpha tints, oncolor/disabled.
 .nds-card:not(.nds-oncolor, [disabled]) {
   &:is(.nds-neutral, [data-status="neutral"]) {
-    --card-border-hover: var(--colors-neutral-500);
-    --card-border-active: var(--colors-neutral-300);
-    --card-title: var(--colors-neutral-800);
-    --card-number: var(--colors-neutral-600);
+    --_card-border-hover-base: var(--colors-neutral-500);
+    --_card-border-active-base: var(--colors-neutral-300);
+    --_card-title-base: var(--colors-neutral-800);
+    --_card-number-base: var(--colors-neutral-600);
     --featuredicon-color: var(--colors-neutral-600); // softer than the core's neutral-700
 
     &.nds-color {
-      --card-bg: var(--colors-neutral-50);
-      --card-bg-hover: var(--colors-neutral-100);
-      --card-border: var(--border-neutral-secondary);
+      --_card-bg-base: var(--colors-neutral-50);
+      --_card-bg-hover-base: var(--colors-neutral-100);
+      --_card-border-base: var(--border-neutral-secondary);
       --featuredicon-bg: var(--featuredicons-background-neutral-light);
     }
 
     @include dark {
-      --card-title: var(--colors-neutral-200);
-      --card-number: var(--colors-neutral-400);
+      --_card-title-base: var(--colors-neutral-200);
+      --_card-number-base: var(--colors-neutral-400);
       --featuredicon-color: var(--colors-neutral-400);
 
       &.nds-color {
-        --card-bg: var(--colors-alpha-white-10);
-        --card-bg-hover: var(--colors-alpha-white-20);
-        --card-border: var(--colors-neutral-500);
+        --_card-bg-base: var(--colors-alpha-white-10);
+        --_card-bg-hover-base: var(--colors-alpha-white-20);
+        --_card-border-base: var(--colors-neutral-500);
       }
     }
   }
 
   &:is(.nds-yellow, [data-status="warning"]) {
-    --card-border-hover: var(--colors-yellow-600);
-    --card-border-active: var(--colors-yellow-300);
-    --card-title: var(--text-warning);
-    --card-number: var(--text-warning);
+    --_card-border-hover-base: var(--colors-yellow-600);
+    --_card-border-active-base: var(--colors-yellow-300);
+    --_card-title-base: var(--text-warning);
+    --_card-number-base: var(--text-warning);
 
     &.nds-color {
-      --card-bg: var(--background-warning-light);
-      --card-bg-hover: var(--colors-yellow-100);
-      --card-border: var(--border-warning-light);
+      --_card-bg-base: var(--background-warning-light);
+      --_card-bg-hover-base: var(--colors-yellow-100);
+      --_card-border-base: var(--border-warning-light);
       --featuredicon-bg: var(--colors-yellow-alpha-10);
     }
 
     @include dark {
       &.nds-color {
-        --card-bg-hover: var(--colors-yellow-alpha-20);
-        --card-border: var(--colors-yellow-700);
+        --_card-bg-hover-base: var(--colors-yellow-alpha-20);
+        --_card-border-base: var(--colors-yellow-700);
       }
     }
   }
 
   &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
-    --card-border-hover: var(--colors-red-600);
-    --card-border-active: var(--colors-red-300);
-    --card-title: var(--text-error);
-    --card-number: var(--text-error);
+    --_card-border-hover-base: var(--colors-red-600);
+    --_card-border-active-base: var(--colors-red-300);
+    --_card-title-base: var(--text-error);
+    --_card-number-base: var(--text-error);
 
     &.nds-color {
-      --card-bg: var(--background-error-light);
-      --card-bg-hover: var(--colors-red-100);
-      --card-border: var(--border-error-light);
+      --_card-bg-base: var(--background-error-light);
+      --_card-bg-hover-base: var(--colors-red-100);
+      --_card-border-base: var(--border-error-light);
       --featuredicon-bg: var(--colors-red-alpha-10);
     }
 
     @include dark {
       &.nds-color {
-        --card-bg-hover: var(--colors-red-alpha-20);
-        --card-border: var(--colors-red-700);
+        --_card-bg-hover-base: var(--colors-red-alpha-20);
+        --_card-border-base: var(--colors-red-700);
       }
     }
   }
 
   &:is(.nds-blue, [data-status="info"]) {
-    --card-border-hover: var(--colors-blue-600);
-    --card-border-active: var(--colors-blue-300);
-    --card-title: var(--text-info);
-    --card-number: var(--text-info);
+    --_card-border-hover-base: var(--colors-blue-600);
+    --_card-border-active-base: var(--colors-blue-300);
+    --_card-title-base: var(--text-info);
+    --_card-number-base: var(--text-info);
 
     &.nds-color {
-      --card-bg: var(--background-info-light);
-      --card-bg-hover: var(--colors-blue-100);
-      --card-border: var(--border-info-light);
+      --_card-bg-base: var(--background-info-light);
+      --_card-bg-hover-base: var(--colors-blue-100);
+      --_card-border-base: var(--border-info-light);
       --featuredicon-bg: var(--colors-blue-alpha-10);
     }
 
     @include dark {
       &.nds-color {
-        --card-bg-hover: var(--colors-blue-alpha-20);
-        --card-border: var(--colors-blue-700);
+        --_card-bg-hover-base: var(--colors-blue-alpha-20);
+        --_card-border-base: var(--colors-blue-700);
       }
     }
   }
 
   &:is(.nds-green, [data-status="success"]) {
-    --card-border-hover: var(--colors-green-600);
-    --card-border-active: var(--colors-green-300);
-    --card-title: var(--text-success);
-    --card-number: var(--text-success);
+    --_card-border-hover-base: var(--colors-green-600);
+    --_card-border-active-base: var(--colors-green-300);
+    --_card-title-base: var(--text-success);
+    --_card-number-base: var(--text-success);
 
     &.nds-color {
-      --card-bg: var(--background-success-light);
-      --card-bg-hover: var(--colors-green-100);
-      --card-border: var(--border-success-light);
+      --_card-bg-base: var(--background-success-light);
+      --_card-bg-hover-base: var(--colors-green-100);
+      --_card-border-base: var(--border-success-light);
       --featuredicon-bg: var(--colors-green-alpha-10);
     }
 
     @include dark {
       &.nds-color {
-        --card-bg-hover: var(--colors-green-alpha-20);
-        --card-border: var(--colors-green-700);
+        --_card-bg-hover-base: var(--colors-green-alpha-20);
+        --_card-border-base: var(--colors-green-700);
       }
     }
   }
@@ -600,18 +616,18 @@
 // ==============================================
 
 .nds-card.nds-oncolor {
-  --card-bg: var(--colors-alpha-white-10);
-  --card-bg-hover: var(--colors-alpha-white-20);
-  --card-border: var(--colors-alpha-white-20);
-  --card-border-hover: var(--colors-alpha-white-40);
-  --card-border-active: var(--colors-alpha-white-30);
-  --card-text: var(--text-oncolor-primary);
-  --card-title: var(--text-oncolor-primary);
-  --card-subtitle: var(--text-oncolor-secondary);
-  --card-number: var(--text-oncolor-primary);
+  --_card-bg-base: var(--colors-alpha-white-10);
+  --_card-bg-hover-base: var(--colors-alpha-white-20);
+  --_card-border-base: var(--colors-alpha-white-20);
+  --_card-border-hover-base: var(--colors-alpha-white-40);
+  --_card-border-active-base: var(--colors-alpha-white-30);
+  --_card-text-base: var(--text-oncolor-primary);
+  --_card-title-base: var(--text-oncolor-primary);
+  --_card-subtitle-base: var(--text-oncolor-secondary);
+  --_card-number-base: var(--text-oncolor-primary);
   --featuredicon-bg: var(--colors-alpha-white-10);
   --featuredicon-color: var(--featuredicons-icon-oncolor);
-  --card-rating: var(--colors-alpha-white-80);
+  --_card-rating-base: var(--colors-alpha-white-80);
 }
 
 

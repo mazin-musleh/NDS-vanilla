@@ -8,9 +8,9 @@
 
 .nds-cookie-popup.nds-card {
     --card-width: 100%;
-    --card-padding: var(--spacing-3xl);
-    --card-gap: var(--spacing-lg);
-    --card-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    --_card-padding-base: var(--spacing-3xl);
+    --_card-gap-base: var(--spacing-lg);
+    --_card-radius-base: var(--radius-lg) var(--radius-lg) 0 0;
 
     position: fixed;
     bottom: 0;
@@ -25,7 +25,7 @@
 
     &.nds-compact {
         @include tablet('min') {
-            --card-radius: var(--radius-lg);
+            --_card-radius-base: var(--radius-lg);
             --card-width: calc(100% - var(--spacing-4xl));
             --card-width-max: 480px;
             margin-inline: auto;

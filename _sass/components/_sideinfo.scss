@@ -29,7 +29,7 @@
     }
 
     .nds-sideinfo {
-        --card-padding: var(--spacing-4xl);
+        --_card-padding-base: var(--spacing-4xl);
         --nds-sideinfo-top-offset: 0px;
         --_sideinfo-sticky-top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--nds-sideinfo-top-offset));
         width: var(--nds-sideinfo-width);
