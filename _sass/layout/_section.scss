@@ -68,6 +68,15 @@
         --_section-text-color-base: var(--text-default);
     }
 
+    // Status section — the title takes the status hue, the same set .nds-feedback
+    // paints, so the icon and the heading read as one message.
+    &:is(.nds-404, .nds-status-section) {
+        &:is([data-status="error"], [data-status="critical"]) { --_section-title-color-base: var(--text-error); }
+        &[data-status="success"] { --_section-title-color-base: var(--text-success); }
+        &[data-status="warning"] { --_section-title-color-base: var(--text-warning); }
+        &[data-status="info"] { --_section-title-color-base: var(--text-info); }
+    }
+
     &:is(.nds-ghost, .nds-noBg) {
         @include reset-section-style( !important);
     }

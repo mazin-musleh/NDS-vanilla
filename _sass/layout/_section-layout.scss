@@ -151,9 +151,9 @@
     line-height: var(--_section-description-LH);
 }
 
-/* ── Section image ── */
+/* ── Section image / icon ── */
 
-.nds-section-image {
+:is(.nds-section-image, .nds-section-icon) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -360,11 +360,16 @@
     }
 }
 
-/* ── 404 ── */
+/* ── Status section (an outcome message: not found, submitted, failed) ──
+   .nds-404 is the old name of this variant, kept so pages copied from the
+   previous 404 template keep working. Drop it at the next major. ── */
 
-:is(.nds-hero-section, .nds-content-section).nds-404 {
+:is(.nds-hero-section, .nds-content-section):is(.nds-404, .nds-status-section) {
     max-height: unset;
-    min-height: 70svh;
+    --feedback-size: 56px;
+    display: flex;
+    align-items: center;
+    flex: 1;
 
     * {
         text-align: center;

@@ -763,6 +763,15 @@
   url: "/components/sort.html"
   js: _js/nds-sort.js
 
+- title: "Status Section"
+  description: "Whole-page or inline outcome message with a status icon, a title, and one action"
+  use_when: "Report one outcome on its own page or as a section: page not found, 404, 500, access denied, request submitted, thank-you or confirmation page, payment failed, order received, form sent. A centered icon or illustration over a title, a short message, and a way out. For a message inside a form or a page region use Alert; for a chip on its own use Feedback icons."
+  icon: '<i class="hgi hgi-stroke hgi-alert-circle"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/status-section.html"
+  scss: _sass/layout/_section-layout.scss
+
 - title: "Stepper"
   description: "Sequential step indicators for multi-stage workflows"
   use_when: "Show progress through a multi-stage flow: step indicator, wizard progress, numbered stages. For a plain percentage bar use Progress."

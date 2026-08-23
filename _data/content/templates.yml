@@ -106,7 +106,7 @@
 
 - title: "404 Template"
   description: "Custom error page with illustration and back-to-home action."
-  use_when: "Any error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is built as a hero section, not from the empty-state component, and it ships its own centered wrapper with no content layout."
+  use_when: "An error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is built as a hero section, not from the empty-state component, and it ships its own centered wrapper with no content layout. It is a status section with no status set, so it shows the illustration. For any other outcome page - request submitted, payment failed, access granted - keep this shape, set data-status on the section, and swap the illustration for a feedback icon in nds-section-icon. See the Status Section layout page."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "Service"
   tags: ["DGA", "Empty State"]
