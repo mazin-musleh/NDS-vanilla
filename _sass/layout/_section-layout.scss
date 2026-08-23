@@ -3,23 +3,37 @@
 /* ── Section layout tokens ── */
 
 :is(.nds-hero-section, .nds-content-section) {
+    // A variant retunes the -base value, never the private itself, so the public
+    // knob check is written once here instead of at every override.
+    // --section-padding-block is the exception: layouts set it on an ancestor
+    // (_content-layout), and an inherited public value outranks a base default,
+    // so variants that must beat the layout keep writing the public name.
     --_section-padding-block: var(--section-padding-block, var(--spacing-5xl));
-    --_section-padding-block-start: var(--section-padding-block-start, var(--_section-padding-block));
-    --_section-padding-block-end: var(--section-padding-block-end, var(--_section-padding-block));
-    --_section-margin-block-start: var(--section-margin-block-start, 0);
-    --_section-margin-block-end: var(--section-margin-block-end, 0);
+    --_section-padding-block-start-base: var(--_section-padding-block);
+    --_section-padding-block-start: var(--section-padding-block-start, var(--_section-padding-block-start-base));
+    --_section-padding-block-end-base: var(--_section-padding-block);
+    --_section-padding-block-end: var(--section-padding-block-end, var(--_section-padding-block-end-base));
+    --_section-margin-block-start-base: 0;
+    --_section-margin-block-start: var(--section-margin-block-start, var(--_section-margin-block-start-base));
+    --_section-margin-block-end-base: 0;
+    --_section-margin-block-end: var(--section-margin-block-end, var(--_section-margin-block-end-base));
     --_section-col-gap: var(--section-col-gap, var(--spacing-xl));
     --_section-row-gap: var(--section-row-gap, var(--spacing-4xl));
 
-    --_section-title-FS: var(--section-title-FS, var(--typo-display-clamp-md-FS));
-    --_section-title-LH: var(--section-title-LH, var(--typo-display-clamp-md-LH));
-    --_section-title-MB: var(--section-title-MB, var(--typo-display-clamp-md-MB));
+    --_section-title-FS-base: var(--typo-display-clamp-md-FS);
+    --_section-title-FS: var(--section-title-FS, var(--_section-title-FS-base));
+    --_section-title-LH-base: var(--typo-display-clamp-md-LH);
+    --_section-title-LH: var(--section-title-LH, var(--_section-title-LH-base));
+    --_section-title-MB-base: var(--typo-display-clamp-md-MB);
+    --_section-title-MB: var(--section-title-MB, var(--_section-title-MB-base));
     --_section-shape-size: var(--section-shape-size, var(--_section-title-FS));
     --_section-subtitle-FS: var(--section-subtitle-FS, var(--typo-text-clamp-lg-FS));
     --_section-subtitle-LH: var(--section-subtitle-LH, var(--typo-text-clamp-lg-LH));
     --_section-subtitle-MB: var(--section-subtitle-MB, var(--_section-title-MB));
-    --_section-description-FS: var(--section-description-FS, var(--typo-text-lg-FS));
-    --_section-description-LH: var(--section-description-LH, var(--typo-text-lg-LH));
+    --_section-description-FS-base: var(--typo-text-lg-FS);
+    --_section-description-FS: var(--section-description-FS, var(--_section-description-FS-base));
+    --_section-description-LH-base: var(--typo-text-lg-LH);
+    --_section-description-LH: var(--section-description-LH, var(--_section-description-LH-base));
     --_section-description-MB: var(--section-description-MB, var(--spacing-2xl));
     --_section-image-MB: var(--section-image-MB, var(--spacing-2xl));
 
@@ -350,6 +364,7 @@
 
 :is(.nds-hero-section, .nds-content-section).nds-404 {
     max-height: unset;
+    min-height: 70svh;
 
     * {
         text-align: center;

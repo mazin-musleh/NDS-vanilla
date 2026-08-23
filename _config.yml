@@ -21,7 +21,7 @@
 title: "NDS - Vanilla National Design System"
 description: "An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
 
-version: 1.9.0             # build stamp: released line + .x-dev during development (never the guessed next number); finalized in the release commit, which also sweeps the X.Y.x since/updated doc stamps to the real number
+version: 1.9.x-dev             # build stamp: released line + .x-dev during development (never the guessed next number); finalized in the release commit, which also sweeps the X.Y.x since/updated doc stamps to the real number
 latest_release: 1.9.0  # last published release (tag + GitHub Release artifact)
 
 # NDS IQ: the AI instruction system (block version is parsed from the include's

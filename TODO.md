@@ -7,7 +7,7 @@ Cleared at the 1.9.0 release (2026-08-22). That release shipped the Home Page Te
 
 ## Open
 
-_Nothing open._
+- **Audit the other components for variants that write their own public knob.** Section was swept in 1.9.x: a rule whose subject is the component root wrote the documented `--section-*` knob, so a consumer setting the same knob on that element lost the cascade. Variants now retune `--_section-*-base` and the public check is written once (the card `--_card-padding-block-base` pattern). Same defect class is likely elsewhere. Check: in each component file, a knob name that appears both as a `var(--x, ...)` read AND as a `--x:` declaration on the component root or a variant of it. Two legitimate exceptions, do not "fix" them: a write on an ANCESTOR (a layout setting a default for its children) is correct, and a variant that must beat such an inherited value has to keep writing the public name (`--section-padding-block`, seven sites). Cost is small and gzip eats most of it: the whole section sweep was +49 B gz critical, +77 B gz main.
 
 ## Standing decisions — do not re-propose without the named evidence
 

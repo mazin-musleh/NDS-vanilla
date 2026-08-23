@@ -230,8 +230,9 @@ $a11y-filters: (
 
 // Content sections — the coloured variants (.nds-primary / .nds-green /
 // .nds-neutral / .nds-brand / .nds-gradient-primary) and any author-set
-// --section-bg collapse to the mono palette. !important on --section-bg
-// beats the (non-important) variant tokens and inline style overrides;
+// --section-bg collapse to the mono palette. Writing the public knob outranks
+// the variants (they retune --_section-bg-base), and !important also beats an
+// author's inline knob;
 // the gradient variant also needs its `background` shorthand cleared so
 // the neutralised background-color shows through.
 :root[data-a11y~="high-contrast"] .nds-content-section {

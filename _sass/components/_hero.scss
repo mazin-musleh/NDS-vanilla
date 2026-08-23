@@ -6,16 +6,18 @@
     background-color: var(--background-hero);
     position: relative;
     background-position: center;
+    // public knob, not -base: it has to beat the value _content-layout sets on
+    // an ancestor, and an inherited public value outranks a base default.
     --section-padding-block: 0;
     height: var(--_hero-height);
     max-height: 550px;
 
     &:not(.nds-sub) {
-        --section-title-FS: var(--typo-display-clamp-lg-FS);
-        --section-title-LH: var(--typo-display-clamp-lg-LH);
-        --section-title-MB: var(--typo-display-clamp-lg-MB);
-        --section-description-FS: var(--typo-text-clamp-xl-FS);
-        --section-description-LH: var(--typo-text-clamp-xl-LH);
+        --_section-title-FS-base: var(--typo-display-clamp-lg-FS);
+        --_section-title-LH-base: var(--typo-display-clamp-lg-LH);
+        --_section-title-MB-base: var(--typo-display-clamp-lg-MB);
+        --_section-description-FS-base: var(--typo-text-clamp-xl-FS);
+        --_section-description-LH-base: var(--typo-text-clamp-xl-LH);
         overflow: hidden;
 
         img {
@@ -77,9 +79,9 @@
         --_mask-from: var(--hero-mask-from, 0%);
         --_mask-to: var(--hero-mask-to, 70%);
         --section-padding-block: var(--spacing-5xl);
-        --section-title-FS: var(--typo-display-clamp-md-FS);
-        --section-title-LH: var(--typo-display-clamp-md-LH);
-        --section-title-MB: var(--typo-display-clamp-md-MB);
+        --_section-title-FS-base: var(--typo-display-clamp-md-FS);
+        --_section-title-LH-base: var(--typo-display-clamp-md-LH);
+        --_section-title-MB-base: var(--typo-display-clamp-md-MB);
         --hero-height: fit-content;
         background-color: var(--background-sub-hero);
         min-height: 220px;
@@ -123,7 +125,7 @@
         }
 
         &.nds-flat {
-            --section-padding-block-end: var(--spacing-xl);
+            --_section-padding-block-end-base: var(--spacing-xl);
             background: var(--background-default) !important;
             box-shadow: unset !important;
 

@@ -98,15 +98,15 @@ main {
 
         .nds-main-content {
             section.nds-noBg {
-                --section-margin-block-start: var(--spacing-5xl);
+                --_section-margin-block-start-base: var(--spacing-5xl);
             }
 
             section.nds-noBg:first-of-type {
-                --section-margin-block-start: 0;
+                --_section-margin-block-start-base: 0;
             }
 
             section.nds-noBg:not(:has(+ .nds-noBg)) {
-                --section-margin-block-end: var(--spacing-5xl);
+                --_section-margin-block-end-base: var(--spacing-5xl);
             }
         }
 
@@ -119,7 +119,7 @@ main {
     /* ── Post layout ── */
 
     &.nds-post .nds-main-content section:first-of-type {
-        --section-padding-block-start: 0;
+        --_section-padding-block-start-base: 0;
     }
 
     /* ── Card view ── */
@@ -138,8 +138,8 @@ main {
 
         .nds-main-content {
             section:not(.nds-hero-section, .nds-ghost) {
-                --section-shadow: var(--shadow-md);
-                --section-border-radius: var(--radius-md);
+                --_section-shadow-base: var(--shadow-md);
+                --_section-border-radius-base: var(--radius-md);
                 max-width: var(--nds-content-MaxWidth);
                 margin-inline: auto;
                 padding-inline: var(--nds-viewport-padding);
@@ -153,9 +153,9 @@ main {
         }
 
         .nds-content-section {
-            --section-title-FS: var(--typo-display-clamp-sm-FS);
-            --section-title-LH: var(--typo-display-clamp-sm-LH);
-            --section-title-MB: var(--typo-display-clamp-sm-MB);
+            --_section-title-FS-base: var(--typo-display-clamp-sm-FS);
+            --_section-title-LH-base: var(--typo-display-clamp-sm-LH);
+            --_section-title-MB-base: var(--typo-display-clamp-sm-MB);
         }
 
         .nds-content-section.nds-ghost {
@@ -184,16 +184,16 @@ main {
     &.nds-wSideMenu {
         .nds-content-section {
             @include desktop(min) {
-                --section-shadow: var(--shadow-md);
+                --_section-shadow-base: var(--shadow-md);
             }
 
             @include tablet(max) {
                 &:first-child {
-                    --section-padding-block-start: var(--spacing-4xl);
+                    --_section-padding-block-start-base: var(--spacing-4xl);
                 }
 
                 &:first-child:is(.nds-hero-section) {
-                    --section-padding-block-start: var(--spacing-6xl);
+                    --_section-padding-block-start-base: var(--spacing-6xl);
                 }
             }
         }
@@ -221,11 +221,11 @@ main {
     // inverse-strip + excluded-from-the-list = always matching the section above.
     @mixin _section-striping($sections, $last-edit) {
         .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(#{$sections}) {
-            --section-bg: var(--background-stripe);
+            --_section-bg-base: var(--background-stripe);
         }
 
         .nds-last-edit:nth-of-type(#{$last-edit}) {
-            --section-bg: var(--background-stripe);
+            --_section-bg-base: var(--background-stripe);
         }
     }
 

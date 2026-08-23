@@ -423,10 +423,10 @@ $breakpoints-range: (
 // ==============================================
 
 @mixin reset-section-style($important: null) {
-  --section-bg: transparent #{$important};
-  --section-shadow: none #{$important};
-  --section-border: none #{$important};
-  --section-border-radius: 0 #{$important};
+  --_section-bg-base: transparent #{$important};
+  --_section-shadow-base: none #{$important};
+  --_section-border-base: none #{$important};
+  --_section-border-radius-base: 0 #{$important};
 }
 
 // ==============================================
