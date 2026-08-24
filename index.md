@@ -189,7 +189,7 @@ bundle_sizes:
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <span class="nds-card-title">{{ ex.title }}</span>
-                                        <p class="nds-card-description">{{ ex.description }}</p>
+                                        <p class="nds-card-description nds-truncate" style="--truncate: 2;">{{ ex.description }}</p>
                                     </div>
                                     <div class="nds-card-tags">
                                         <span class="nds-tag nds-blue nds-sm">

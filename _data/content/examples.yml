@@ -57,7 +57,7 @@
   url: "/examples/program.html"
 
 - title: "Manage Records"
-  description: "Records screen with create, edit and delete, expandable detail rows, and export. Its filtering, sorting, pagination, export, column visibility and per-page are client-side only; only the create, edit, delete and expandable rows touch data."
+  description: "Records screen with create, edit and delete, filters, expandable detail rows and CSV export."
   use_when: "The data-heavy admin screen, and the closest fit for any data grid, data table, CRUD screen, admin list, records management, or back-office table request, including replacements for third-party table plugins. Carries a large table with keyword search, multi-field filters (checkbox, range, date), column sorting, pagination with a per-page picker, a show/hide column picker, row selection with a live count, per-row edit and delete actions, expandable sub-rows for detail, add and edit modals, an empty-state message, and CSV export. Runs fully in the browser, so no server is needed. Runs edge-to-edge beside a side menu through nds-full-width on body, like the Console."
   icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'
   category: "Dashboard"
