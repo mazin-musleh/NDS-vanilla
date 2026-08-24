@@ -177,12 +177,6 @@
       flex-direction: column;
     }
 
-    // The rule above centers each box's children; this box is capped by
-    // --paragraph-max-width, so it needs centering too.
-    .nds-card-text {
-      margin-inline: auto;
-    }
-
   }
 
 
@@ -280,7 +274,6 @@
     width: 100%;
     white-space: wrap;
     flex: 1;
-    max-width: var(--paragraph-max-width);
   }
 
   .nds-card-title {

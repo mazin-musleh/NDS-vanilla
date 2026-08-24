@@ -103,6 +103,12 @@
     letter-spacing: -0.02rem;
     margin-top: 0;
     flex-wrap: wrap;
+    max-width: var(--paragraph-max-width);
+
+    // Same escape the subtitle and description carry.
+    &.nds-full {
+        max-width: none;
+    }
 
     .nds-center &,
     &.nds-center {

@@ -174,7 +174,6 @@
     font-size: var(--_dl-title-FS);
     color: var(--text-primary-paragraph);
     margin: 0;
-    max-width: var(--paragraph-max-width);
 
     :is(.nds-icon, i) {
         color: var(--icon-primary);
@@ -198,7 +197,6 @@
 .nds-definition-list :is(dd, .nds-item-desc) {
     color: var(--text-secondary-paragraph);
     font-size: var(--_dl-desc-FS);
-    max-width: var(--paragraph-max-width);
 }
 
 // Icon indent: always on by default, reset when tableView activates
