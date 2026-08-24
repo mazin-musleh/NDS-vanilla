@@ -17,10 +17,20 @@
 }
 
 .nds-breadcrumb>li {
-    display: flex;
-    align-items: center;
     color: var(--text-secondary-paragraph);
     // current-page crumb keeps this color; disabled-token color fails AA here
+}
+
+// nds-truncate is a :where() utility (zero specificity) — flex here beat its
+// -webkit-box and killed the clamp. Centre the clamped crumb by hand: it loses
+// align-items, and a collapsed trail's 40px ellipsis button sets the row height.
+.nds-breadcrumb>li:not(.nds-truncate) {
+    display: flex;
+    align-items: center;
+}
+
+.nds-breadcrumb>li.nds-truncate {
+    align-self: center;
 }
 
 /* ========================================

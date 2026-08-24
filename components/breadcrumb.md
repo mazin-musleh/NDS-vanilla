@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.9.x"
+last_edit: "24/08/2026 - 04:42 PM"
 ---
 
 <!-- Standard -->
@@ -351,7 +351,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                             <i class="hgi hgi-stroke hgi-more-horizontal"></i>
                             <span class="nds-label">Title Truncation</span>
                         </span>
-                        <p class="nds-item-desc">Add nds-truncate to any item to prevent long titles from wrapping.</p>
+                        <p class="nds-item-desc">Add nds-truncate to the current page item to prevent a long title from wrapping.</p>
                     </div>
                 </div>
             </div>
