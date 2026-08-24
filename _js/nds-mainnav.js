@@ -315,6 +315,10 @@
     // ==============================================
     function removeCollapseHidden() {
         DOM.collapse?.removeAttribute('hidden');
+        // Same for the nav's dropdown menus: markup ships [hidden] to skip
+        // pre-init layout, then CSS owns the closed state from here on.
+        DOM.nav?.querySelectorAll('.nds-dropdown .nds-dropdown-menu[hidden]')
+            .forEach(m => m.removeAttribute('hidden'));
     }
 
     function updateBodyClass() {
@@ -544,7 +548,7 @@
         },
 
         toggle(el, open) {
-            const { animTarget, isInMinimal, menu } = getDropdownAnimTarget(el);
+            const { animTarget, isInMinimal } = getDropdownAnimTarget(el);
             const navLink = el.querySelector('.nds-nav-link');
 
             // Maintain the open set when toggle actually flips state.
@@ -569,26 +573,15 @@
                 blockWhileAnimating: open,
                 onStart: () => {
                     overflow.schedule('high', 10);
-                    if (open) {
-                        // Drop intrinsic [hidden] before the open transition so
-                        // display:none doesn't kill the animation.
-                        menu?.removeAttribute('hidden');
-                        applyFitShift(el);
-                    }
+                    if (open) applyFitShift(el);
                 },
                 onComplete: () => {
                     if (!isInMinimal) updatePositions();
                     overflow.schedule('low', 100);
 
                     if (!open) {
-                        // Restore [hidden] after the close transition ends — but
-                        // only if a queued re-open hasn't already re-opened this
-                        // dropdown. finish() runs processPending() (which can start
-                        // that re-open: dropping [hidden] and re-stamping 'open')
-                        // BEFORE this onComplete, so without the guard a superseded
-                        // close re-hides the freshly-opened menu, leaving the
-                        // trigger 'active' with an invisible menu.
-                        if (!hasState(el, 'open')) menu?.setAttribute('hidden', '');
+                        // No [hidden] re-stamp: the menu stays rendered and CSS
+                        // hides it on the closed state (see _mainnav.scss).
                         if (!collapseHandlesBackdrop &&
                             _openDropdowns.size === 0 &&
                             !hasState(DOM.collapse, 'open') &&

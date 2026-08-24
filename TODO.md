@@ -13,14 +13,6 @@ Cleared at the 1.9.0 release (2026-08-22). That release shipped the Home Page Te
 
   Deleting is the cheaper answer if nothing wants it: 5 lines and a knob, no consumers, no docs, so no migration note.
 
-- **Mainnav mobile menu — INP 632-824ms at 20x CPU, and it is style recalc, not layout.** Measured 2026-08-24 with `.claude/skills/nds-perf/measure-inp.mjs` on the local docs home and on a live consumer site (iu.edu.sa home, `/university/newses`, `/Colleges`). All three live pages land within 16ms of each other, so the cost travels with the nav, not the page. At 6.6x the local toggle is 128ms (fine); at 20x it is 632-712ms.
-
-  The split, per click: script ~170ms, **style recalc ~1,260-1,989ms across 14-18 recalcs**, layout 42-48ms across 2, paint/composite ~1,000ms. Processing is <=5ms in every run — the handler is not the problem, the render is.
-
-  Cause is one click producing 11 DOM writes spread over several frames: the backdrop `<div>` inserted into `<body>`, then its `style`, then its `data-state`; `body.style.top` then `body[data-state]` for the scroll lock (`_sass/components/_backdrop.scss:33`, `_js/nds-core.js:1096`); then `#ndsNavCollapse[data-state]` x3, the toggler, and `aria-expanded`. Each write invalidates style separately.
-
-  **Untested hypothesis:** batching those writes into one frame cuts the recalc count. The paint half (~1,000ms, a full-viewport backdrop) will not move either way. Three things were ruled out by measurement and should not be re-chased: the sliders (zero long animation frames in 10s idle), Microsoft Clarity on the live site (808ms blocked vs 824ms unblocked), and the `max-height`/`grid-template-rows` transitions (`_mainnav.scss:619,666` — 19% under `--reduced`, but layout is only 42ms so the saving is not coming from where it looks).
-
 ## Standing decisions — do not re-propose without the named evidence
 
 A decision lives with the artifact it governs, not here. An eval decision goes in its scenario's `baseline:` in `scenarios.md`; a grading lesson goes in `SKILL.md`; a decision already stated in source or docs is not restated at all. This section holds only what has no such home, so a full clear at release loses nothing.
