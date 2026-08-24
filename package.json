@@ -1,6 +1,6 @@
 {
   "name": "nds-vanilla",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Vanilla HTML/CSS/JS implementation of Saudi Arabia's National Design System. RTL/LTR native, zero runtime dependencies.",
   "scripts": {
     "build": "bundle exec jekyll build",

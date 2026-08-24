@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-08-25
+
+### Added
+- **Status Section** — an outcome message as a whole page or as one section: not found, submitted, failed. `data-status` colours the title and the feedback chip, and `.nds-section-icon` takes a chip or an illustration. Both 404 templates move onto it; `.nds-404` stays as an alias. See the [Status Section](https://mazin-musleh.github.io/NDS-vanilla/layout/status-section.html) page.
+- **The neutral hue takes both `.nds-gray` and `.nds-neutral`** on tags, alerts and featured icons. Featured icons take the colour classes as canon, the way tags already do. See the [Featured Icons](https://mazin-musleh.github.io/NDS-vanilla/components/featured-icons.html) and [Tags](https://mazin-musleh.github.io/NDS-vanilla/components/tags.html) pages.
+
+### Changed
+- **Running text no longer caps at `--paragraph-max-width`** — the cap sized the whole box, not the text, so an image inside a `<p>` stopped sitting centred. `.nds-section-title` takes the cap instead, with the `.nds-full` escape. See the [Prose](https://mazin-musleh.github.io/NDS-vanilla/layout/prose.html) page.
+- **Tags drop their neutral rung** — it restated the base defaults. No colour changes, and an author's own `--tag-bg` now wins on a plain tag. See the [Tags](https://mazin-musleh.github.io/NDS-vanilla/components/tags.html) page.
+
+### Fixed
+- **The mainnav's first menu open no longer stalls** — `display: none` kept the menus out of the render tree, so the first open paid layout and paint inside the interaction window. Closed menus now hide with `visibility`.
+- **Section, card and alert variants no longer clobber their own public knobs** — a variant rule on the component root wrote the documented `--section-*` or `--card-*` knob, so a consumer who set it on that element lost. Variants now retune a private `-base` name.
+- **A plain alert's title takes the text colour, not the status tint** — the reset wrote the public knob, where `initial` falls through to the base. Dark mode too.
+- **Featured icons keep their status colour in dark mode** — the `.nds-dark` rules keyed on `[data-status]` alone, so `.nds-dark.nds-green` fell back to the primary hue. `critical` joins the error row.
+- **A hero slider emits one `<h1>` per page** — every slide emitted one. Slides after the first now emit `<h2>`.
+- **`nds-truncate` clamps the current-page breadcrumb** — the list item's `flex` outranked the zero-specificity `:where(.nds-truncate)`.
+- **A bare image in prose gets the sibling gap** — direct children only, so a `<figure>` keeps its caption.
+
+### Documentation
+- **[Breadcrumb](https://mazin-musleh.github.io/NDS-vanilla/components/breadcrumb.html)** — truncation is for the current-page crumb; on a middle crumb the `::after` arrow pulls into the clamp box.
+- **[Head](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/head.html)** — NDS needs JavaScript, with no `noscript` fallback by design. The stale v1.3.0 note points to its v1.7.0 replacement.
+- **[Prose](https://mazin-musleh.github.io/NDS-vanilla/layout/prose.html)** — `img` joins the structure tree.
+- **v1.4.0's migration heading is now `### Migrating from v1.3.0`** — the only one of 18 that missed the heading NDS IQ searches for, so an upgrade run never saw its steps. Its two missing notes are back.
+
+### Migrating from v1.9.0
+- Replace the runtime: copy `_site/assets/` over your assets folder.
+- **A hero slider's slides after the first take `<h2>`, not `<h1>`.** Change hand-authored slide content. Semantic only, nothing moves.
+
 ## [1.9.0] - 2026-08-22
 
 ### Added

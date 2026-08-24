@@ -34,6 +34,13 @@
         margin-block: var(--spacing-xl);
     }
 
+    // A bare image straight from an editor. Direct children only: <figure>
+    // already carries the gap, and an image inside one must not push its
+    // caption away — same for an <img> an editor wrapped in a <p>.
+    > :where(img, picture) {
+        margin-block: var(--spacing-xl);
+    }
+
     :where(ul, ol) > li {
         padding-block: var(--_list-item-pad);
 

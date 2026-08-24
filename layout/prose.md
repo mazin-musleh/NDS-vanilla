@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.7.0"
-updated: "1.9.x"
-last_edit: "24/08/2026 - 12:48 PM"
+updated: "1.10.0"
+last_edit: "25/08/2026 - 12:00 AM"
 ---
 
 <!-- Prose Structure -->
@@ -36,7 +36,7 @@ last_edit: "24/08/2026 - 12:48 PM"
                                     <code class="lang-html code">
 div.nds-prose   (or article.nds-prose)
 &#9500;&#9472;&#9472; h2, h3, h4...   (classless headings)
-&#9500;&#9472;&#9472; p, ul, ol, blockquote, figure, table, hr
+&#9500;&#9472;&#9472; p, ul, ol, blockquote, figure, table, hr, img
 &#9492;&#9472;&#9472; any NDS component   (keeps its own look untouched)
                                 </code>
                                 </div>

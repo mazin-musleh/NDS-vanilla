@@ -6,8 +6,8 @@ hero_description: A section that reports one outcome — a page that was not fou
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.9.x"
-updated: "1.9.x"
+since: "1.10.0"
+updated: "1.10.0"
 last_edit: "24/08/2026 - 01:00 AM"
 ---
 
