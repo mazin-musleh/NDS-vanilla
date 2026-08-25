@@ -562,6 +562,7 @@ body.nds-minimal .nds-main-nav {
     .nds-collapse {
         position: absolute;
         top: var(--nds-nav-height);
+        transform: translateY(-1px); // close the subpixel gap under the bar
         inset-inline: 0;
         z-index: var(--_nav-z-dropdown);
         display: flex;
@@ -705,8 +706,10 @@ body.nds-minimal .nds-main-nav {
         border-bottom: 1px solid var(--divider-color);
     }
 
-    /* Show More Button */
-    .nds-nav-primary[data-state~="has-more"] {
+    /* Show More Button. Gated on the open drawer: visibility:visible on a
+       descendant escapes the closed collapse's visibility:hidden, so a
+       has-more carried in from desktop would flash the fixed button. */
+    .nds-collapse[data-state~="open"] .nds-nav-primary[data-state~="has-more"] {
         margin-bottom: var(--nds-minimal-nav-item-height);
 
         ~.nds-show-more {
@@ -738,6 +741,13 @@ body.nds-minimal .nds-main-nav {
         display: flex !important;
         opacity: 0;
         visibility: hidden;
+        transition: opacity .1s;
+    }
+
+    // Hold the fade-out (visibility is discrete) only while the drawer is open.
+    // Transitioning it across the desktop->minimal flip keeps the button painted
+    // while the closed drawer transforms to -100%, riding it to the top.
+    .nds-collapse[data-state~="open"] .nds-show-more {
         transition: opacity .1s, visibility .1s;
     }
 
