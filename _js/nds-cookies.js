@@ -10,7 +10,8 @@
  *   NDS.Cookies.getConsent()          'accepted' | 'declined' | null
  *   NDS.Cookies.show()                open the consent popup now
  * Events:
- *   (none)
+ *   nds:cookies:consent   on #ndsCookiesPopup, bubbles — detail.consent is 'accepted' or
+ *                         'declined'. Closing the popup is not a choice and fires nothing
  * Hooks:
  *   ids, not attributes:  #ndsCookiesPopup · #ndsCookiesAcceptBtn · #ndsCookiesDeclineBtn
  *                         · #ndsCookiesCloseBtn
@@ -19,8 +20,12 @@
  *   data-ga-tracking-id                         on any element; adds an id to disable on
  *                                               decline (window.GA_TRACKING_ID works too)
  * Gotchas:
- *   - Consent is applied when the FILE LOADS, before init() — analytics is already off on
- *     a page whose stored choice is 'declined'.
+ *   - Consent is applied when the FILE LOADS, before init() — anything but a stored
+ *     'accepted' denies, so a visitor who has not chosen yet is treated as declined.
+ *   - NDS only SIGNALS. It reaches gtag and the ids it was given; it cannot block a
+ *     tracker, and it runs deferred, after the consumer's head snippet has fired.
+ *   - Closing the popup denies too, and hides it for 30 minutes under
+ *     cookieConsentDismissed. That key is never read as consent.
  *   - Declining sets window['ga-disable-<id>'] for every tracking id it finds and clears
  *     _ga, _gid, _gat, _fbp and _fbc.
  *   - Under file:// there are no cookies: values fall back to NDS.cache (localStorage).
@@ -55,6 +60,11 @@
     const ndsGetCookieConsent = () => ndsGetCookie('cookieConsent');
     const ndsSetCookieConsent = (value) => ndsSetCookie('cookieConsent', value, 365);
 
+    // Dismissing without choosing isn't consent — it only silences the popup for a
+    // while, so non-essential cookies stay off until the user actually accepts.
+    const DISMISS_KEY = 'cookieConsentDismissed';
+    const DISMISS_MINUTES = 30;
+
     function ndsSetCookie(name, value, days) {
         if (isLocalFile) {
             // NDS.cache uses the same nds_ prefix + {value, expires} envelope,
@@ -82,9 +92,19 @@
 
 
 
+    // The consent hook for anything NDS doesn't know about (Clarity, Hotjar, a
+    // vendor pixel): NDS only signals the choice, the listener owns its own SDK.
+    function ndsEmitConsent(consent) {
+        (document.getElementById('ndsCookiesPopup') || document)
+            .dispatchEvent(new CustomEvent('nds:cookies:consent', {
+                detail: { consent }, bubbles: true
+            }));
+    }
+
     function ndsAcceptCookies() {
         ndsSetCookieConsent('accepted');
         ndsEnableAllCookies();
+        ndsEmitConsent('accepted');
         ndsCookiesClosePopup();
 
         // Detect page language
@@ -102,6 +122,7 @@
     function ndsDeclineCookies() {
         ndsSetCookieConsent('declined');
         ndsDisableNonEssentialCookies();
+        ndsEmitConsent('declined');
         ndsCookiesClosePopup();
 
         // Detect page language
@@ -117,6 +138,10 @@
     }
 
     function ndsEnableAllCookies() {
+        // Clear the in-memory kill switch the deny-by-default path sets, or accepting
+        // would not take effect until the next page load.
+        getGATrackingIds().forEach(id => { window['ga-disable-' + id] = false; });
+
         if (typeof gtag !== 'undefined') {
             gtag('consent', 'update', {
                 'analytics_storage': 'granted',
@@ -151,7 +176,9 @@
             }
         });
 
-        cachedTrackingIds = gaTrackingIds;
+        // Deny-by-default calls this on every load, so an empty result must not stick:
+        // an id registered after the bundle would otherwise never be disabled.
+        if (gaTrackingIds.length) cachedTrackingIds = gaTrackingIds;
         return gaTrackingIds;
     }
 
@@ -242,12 +269,17 @@
 
         const closeBtn = document.getElementById('ndsCookiesCloseBtn');
         if (closeBtn) {
-            closeBtn.addEventListener('click', ndsCookiesClosePopup);
+            closeBtn.addEventListener('click', () => {
+                ndsSetCookie(DISMISS_KEY, '1', DISMISS_MINUTES / 1440);
+                // No consent behaves exactly like declined; only the re-ask window differs.
+                ndsDisableNonEssentialCookies();
+                ndsCookiesClosePopup();
+            });
         }
 
         // Show popup after delay if no consent
         const consent = ndsGetCookieConsent();
-        if (!consent) {
+        if (!consent && !ndsGetCookie(DISMISS_KEY)) {
             setTimeout(() => {
                 ndsShowPopup();
             }, 6000);
@@ -258,7 +290,8 @@
     const consent = ndsGetCookieConsent();
     if (consent === 'accepted') {
         ndsEnableAllCookies();
-    } else if (consent === 'declined') {
+    } else {
+        // Denied until accepted — a visitor who has not chosen yet is not consent.
         ndsDisableNonEssentialCookies();
     }
 

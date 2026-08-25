@@ -2,13 +2,13 @@
 layout: page
 title: Cookies
 hero_title: Cookies - National Design System
-hero_description: A privacy-compliant consent banner, built on the Cards component, that captures the user's cookie preferences, gates analytics and marketing cookies on decline, and can be re-opened from any trigger for ongoing settings control.
+hero_description: A privacy-compliant consent banner, built on the Cards component, that captures the user's cookie preferences, signals the visitor's choice to your analytics setup and clears the common tracking cookies on reject, and can be re-opened from any trigger for ongoing settings control.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.10.0"
-last_edit: "07/08/2026 - 07:09 PM"
+updated: "1.10.x"
+last_edit: "26/08/2026 - 01:34 AM"
 ---
 
 <!-- Overview -->
@@ -138,13 +138,13 @@ last_edit: "07/08/2026 - 07:09 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Google Analytics Setup</h2>
-            <p class="nds-section-description">The banner manages consent signals, but you bring your own gtag.js. Default Consent Mode to denied so nothing tracks before the user decides; the banner switches it to granted on Accept and disables it on Reject.</p>
+            <p class="nds-section-description">The banner sends consent signals, but you bring your own gtag.js and you own the blocking. Your Consent Mode default is what keeps the first page view from tracking. The banner then denies on every load with no stored choice, grants on Accept, and denies again on Reject.</p>
         </div>
         <div class="nds-section-body">
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Wire up gtag with consent denied by default</h3>
-                <p>NDS does not load Google Analytics for you, and it sends no consent signal until a choice is stored. Set Consent Mode to <code class="nds-inline-code lang-js">denied</code> before gtag.js loads, then register your property ID so the banner can disable it on reject. Place this in the document <code class="nds-inline-code lang-html">&lt;head&gt;</code>, before the NDS scripts.</p>
+                <p>NDS does not load Google Analytics for you and it cannot block a tracker on its own. It sends a denial signal on every page load until the visitor accepts, but that signal only reaches gtag, and only after <code class="nds-inline-code lang-js">nds-main.min.js</code> has run. That script is deferred, so the snippet in your <code class="nds-inline-code lang-html">&lt;head&gt;</code> fires first. Set Consent Mode to <code class="nds-inline-code lang-js">denied</code> before gtag.js loads. That default is what actually stops the first page view. Then register your property ID so the banner can disable it. Place this in the document <code class="nds-inline-code lang-html">&lt;head&gt;</code>, before the NDS scripts.</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -174,10 +174,11 @@ last_edit: "07/08/2026 - 07:09 PM"
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">What the banner does after</h3>
                 <ul>
-                    <li><strong>On Accept</strong>: emits <code class="nds-inline-code lang-js">gtag('consent', 'update', ...)</code> with <code class="nds-inline-code lang-js">analytics_storage</code> and <code class="nds-inline-code lang-js">ad_storage</code> granted.</li>
+                    <li><strong>On Accept</strong>: clears <code class="nds-inline-code lang-js">window['ga-disable-&lt;id&gt;']</code> for every registered ID and emits <code class="nds-inline-code lang-js">gtag('consent', 'update', ...)</code> with <code class="nds-inline-code lang-js">analytics_storage</code> and <code class="nds-inline-code lang-js">ad_storage</code> granted. Tracking starts at once, without a page reload.</li>
                     <li><strong>On Reject Non-Essential</strong>: sets <code class="nds-inline-code lang-js">window['ga-disable-&lt;id&gt;']</code> for every registered ID, clears the <code class="nds-inline-code lang-js">_ga</code>, <code class="nds-inline-code lang-js">_gid</code>, <code class="nds-inline-code lang-js">_gat</code>, <code class="nds-inline-code lang-js">_fbp</code>, and <code class="nds-inline-code lang-js">_fbc</code> cookies, and emits the same update with values denied.</li>
                     <li><strong>On the next visit</strong>: the saved choice is re-applied on load, so a returning user is not re-prompted and analytics resumes only if they accepted.</li>
-                    <li><strong>Before any choice</strong>: the banner sends no signal, so your <code class="nds-inline-code lang-js">denied</code> default stays in force. That default is what keeps the first page view from tracking.</li>
+                    <li><strong>On Close (&times;)</strong>: sends the same denial as Reject, but stores no consent value. The banner stays hidden for 30 minutes, then asks again.</li>
+                    <li><strong>Before any choice</strong>: the banner repeats the denial on every page load, because a visitor who has not chosen yet is not consent. It runs after your head snippet, so it is a backstop, not the block. Your <code class="nds-inline-code lang-js">denied</code> default is the block.</li>
                 </ul>
             </div>
 
@@ -199,7 +200,7 @@ last_edit: "07/08/2026 - 07:09 PM"
                             <i class="hgi hgi-stroke hgi-plug-socket"></i>
                             <span class="nds-label">Auto-initialization</span>
                         </span>
-                        <p class="nds-item-desc">Opens six seconds after first load when no consent is stored. Re-visits skip the banner until you clear the saved preference.</p>
+                        <p class="nds-item-desc">Opens six seconds after first load when no consent is stored. Re-visits skip the banner until you clear the saved preference. Closing it without choosing hides it for 30 minutes.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -213,14 +214,14 @@ last_edit: "07/08/2026 - 07:09 PM"
                             <i class="hgi hgi-stroke hgi-shield-01"></i>
                             <span class="nds-label">Analytics Gating</span>
                         </span>
-                        <p class="nds-item-desc">On decline, clears _ga, _gid, _gat, _fbp, _fbc cookies and sets the Google Analytics ga-disable flag for every configured tracking ID.</p>
+                        <p class="nds-item-desc">Denies unless a stored choice says accepted. Clears _ga, _gid, _gat, _fbp, _fbc and sets the Google Analytics ga-disable flag for every configured tracking ID. Accepting clears that flag again.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-api"></i>
                             <span class="nds-label">gtag Consent Signals</span>
                         </span>
-                        <p class="nds-item-desc">Emits gtag('consent', 'update', ...) with granted or denied values on every decision, so downstream Google tags react immediately without a page reload.</p>
+                        <p class="nds-item-desc">Emits gtag('consent', 'update', ...) with granted or denied values on every decision, and denied on every load with no stored choice, so downstream Google tags react without a page reload.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -267,7 +268,7 @@ last_edit: "07/08/2026 - 07:09 PM"
                     <li>Always include both <strong>Terms &amp; Conditions</strong> and <strong>Privacy Policy</strong> links. Regulations in most jurisdictions require them to be reachable at the moment of consent, not only after. The bundled include points to <code class="nds-inline-code lang-html">/terms-and-conditions</code> and <code class="nds-inline-code lang-html">/privacy-policy</code>; override <code class="nds-inline-code lang-html">_includes/cookie-popup.html</code> if your site uses different paths</li>
                     <li>Wire <strong>Accept</strong> as the primary button and <strong>Reject Non-Essential</strong> as the secondary. This matches user expectation and keeps keyboard focus order predictable</li>
                     <li>Register your Google Analytics property ID through <code class="nds-inline-code lang-js">window.GA_TRACKING_ID</code> (string or array) or a <code class="nds-inline-code lang-html">data-ga-tracking-id</code> attribute so <strong>Reject Non-Essential</strong> can set the <code class="nds-inline-code lang-js">ga-disable-&lt;ID&gt;</code> flag. Without a registered ID, the reject action still clears the cookies but GA keeps running</li>
-                    <li>Treat the close (<strong>&times;</strong>) button as "decide later", not "decline". It hides the banner for the current page load without writing a consent value, so the popup re-appears on the next visit</li>
+                    <li>Treat the close (<strong>&times;</strong>) button as "decide later". It denies non-essential cookies like Reject does, but writes no consent value, so the banner returns after 30 minutes and the visitor is still asked to choose</li>
                     <li>Do not use this banner as a blocking gate. The page must remain readable and interactive behind it. For mandatory decisions (age gates, payment confirmations) use the <a class="nds-color" href="{{ 'components/modal' | relative_url }}">Modal</a> component with a backdrop instead</li>
                     <li>Do not stack multiple cookie banners on the same page. The component is already included in the site layout, so you do not need to add it to individual pages</li>
                     <li>Custom toast strings are used verbatim when set via the data attributes. Set both Arabic and English variants per page (or leave the attribute off to inherit the language-aware default, which keys on <code class="nds-inline-code lang-js">NDS.isArabic</code>)</li>
@@ -308,14 +309,46 @@ last_edit: "07/08/2026 - 07:09 PM"
                         <tr><td><code class="nds-inline-code lang-html">#ndsCookiesPopup</code></td><td>Root <code class="nds-inline-code lang-html">.nds-cookie-popup</code> container. Target of <code class="nds-inline-code lang-js">NDS.Cookies.show()</code> and the <code class="nds-inline-code lang-html">hidden</code> attribute toggle</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">#ndsCookiesAcceptBtn</code></td><td>Primary Accept button. Also the selector the loader watches to know when to initialize</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code></td><td>Secondary Reject Non-Essential button</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">#ndsCookiesCloseBtn</code></td><td>Close (&times;) button. Dismisses the popup without persisting a consent value</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">#ndsCookiesCloseBtn</code></td><td>Close (&times;) button. Denies non-essential cookies, stores no consent value, and hides the banner for 30 minutes under <code class="nds-inline-code lang-js">cookieConsentDismissed</code></td></tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="nds-block nds-prose">
+                <h3 class="nds-block-title">Events</h3>
+                <p>Use this event to gate a tool NDS does not know about, such as Microsoft Clarity or a vendor pixel. NDS signals the choice. Your listener owns its own SDK and its own cookies.</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Event</th><th>Target</th><th>When</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-js">nds:cookies:consent</code></td><td><code class="nds-inline-code lang-html">#ndsCookiesPopup</code> (bubbles to <code class="nds-inline-code lang-js">document</code>)</td><td>Fires when the visitor clicks Accept or Reject, after the choice is applied. <code class="nds-inline-code lang-js">event.detail.consent</code> is <code class="nds-inline-code lang-js">'accepted'</code> or <code class="nds-inline-code lang-js">'declined'</code>. Closing the banner is not a choice, so it fires no event</td></tr>
+                    </tbody>
+                </table>
+                <div class="nds-code">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <code class="lang-javascript code">
+// Load the tool only after the visitor accepts.
+if (NDS.Cookies.getConsent() === 'accepted') startClarity();
+
+// React to the choice on the same page view.
+document.addEventListener('nds:cookies:consent', (e) =&gt; {
+    if (e.detail.consent === 'accepted') {
+        startClarity();
+    } else {
+        NDS.Cookies.delete('_clck');
+        NDS.Cookies.delete('_clsk');
+    }
+});
+                    </code>
+                </div>
+            </div>
+
+            <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Cookies</strong> namespace exposes both the consent lifecycle and a generic cookie read/write utility. <strong>NDS.Cookies.init()</strong> is called automatically by the loader, so most integrations only need <strong>show</strong>, <strong>getConsent</strong>, and the cookie helpers. Consent is persisted in a cookie named <code class="nds-inline-code lang-js">cookieConsent</code> for 365 days (or in <code class="nds-inline-code lang-js">localStorage</code> under <code class="nds-inline-code lang-js">nds_cookieConsent</code> when the site is served from <code class="nds-inline-code lang-js">file://</code>).</p>
+                <p>The <strong>NDS.Cookies</strong> namespace exposes both the consent lifecycle and a generic cookie read/write utility. <strong>NDS.Cookies.init()</strong> is called automatically by the loader, so most integrations only need <strong>show</strong>, <strong>getConsent</strong>, and the cookie helpers. Consent is persisted in a cookie named <code class="nds-inline-code lang-js">cookieConsent</code> for 365 days (or in <code class="nds-inline-code lang-js">localStorage</code> under <code class="nds-inline-code lang-js">nds_cookieConsent</code> when the site is served from <code class="nds-inline-code lang-js">file://</code>). Closing the banner writes a separate key, <code class="nds-inline-code lang-js">cookieConsentDismissed</code>, for 30 minutes. That key only hides the banner. It is never read as consent.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
