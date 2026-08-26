@@ -286,24 +286,24 @@
                 document.body.appendChild(placeholder);
             }
 
-            // Sync top offset to nav bottom
-            if (position.startsWith('top') && !placeholder._scrollSync) {
-                const nav = document.querySelector('.nds-main-nav');
-                if (nav) {
-                    const update = () => placeholder.style.setProperty('--_toast-top', nav.getBoundingClientRect().bottom + 'px');
-                    update();
-                    const sync = () => {
-                        if (!placeholder.isConnected) {
-                            window.removeEventListener('scroll', throttledSync);
-                            placeholder._scrollSync = null;
-                            return;
-                        }
-                        if (window.scrollY < 200) update();
-                    };
-                    const throttledSync = NDS.rafThrottle(sync);
-                    window.addEventListener('scroll', throttledSync, { passive: true });
-                    placeholder._scrollSync = throttledSync;
-                }
+            // Sync top offset to the sticky chrome's bottom edge. A topbar counts as
+            // much as the nav and either can be absent, so the measurement is core's —
+            // it takes whichever sits lower and clamps a scrolled-away one at 0.
+            if (position.startsWith('top') && !placeholder._scrollSync
+                && document.querySelector('.nds-main-nav, .nds-topbar')) {
+                const update = () => placeholder.style.setProperty('--_toast-top', NDS.stickyHeaderBottom() + 'px');
+                update();
+                const sync = () => {
+                    if (!placeholder.isConnected) {
+                        window.removeEventListener('scroll', throttledSync);
+                        placeholder._scrollSync = null;
+                        return;
+                    }
+                    if (window.scrollY < 200) update();
+                };
+                const throttledSync = NDS.rafThrottle(sync);
+                window.addEventListener('scroll', throttledSync, { passive: true });
+                placeholder._scrollSync = throttledSync;
             }
 
             return placeholder;

@@ -152,7 +152,7 @@
     if (scope !== document && scope !== activeModal && !scope.contains?.(activeModal)) return 0;
 
     document.removeEventListener('keydown', trapFocus);
-    NDS.Backdrop?.hide();
+    NDS.Backdrop.hide();
     activeModal.setAttribute('hidden', '');
     NDS.State.clear(activeModal);
     activeModal = null;

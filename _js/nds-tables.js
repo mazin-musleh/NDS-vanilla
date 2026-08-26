@@ -341,6 +341,9 @@
             this.currentScrollState = null; // Track current state to avoid redundant DOM operations
             this.abortController = new AbortController();
 
+            // Registered here, not in the sweep, so every construction path —
+            // sweep, reinit() and programmatic createResponsive() — is reachable.
+            tableElement.ndsTableResponsive = this;
             this.init();
         }
 
@@ -1073,7 +1076,7 @@
             // one init signal: the pre-init cell skeleton and the global handlers
             // below key on it, so it lands for every table, sortable or not.
             if (!table.ndsTableResponsive) {
-                table.ndsTableResponsive = new NDSResponsiveTable(table);
+                new NDSResponsiveTable(table);   // registers itself on the table
                 table.setAttribute('data-nds-tables-initialized', 'true');
             }
 
@@ -1105,7 +1108,9 @@
     }
 
     function recheckAllWidths() {
-        document.querySelectorAll('.nds-table[data-nds-tables-initialized]').forEach(table => {
+        // Keyed on the instance, not the sweep's stamp, so createResponsive()-built
+        // tables are rechecked too.
+        document.querySelectorAll('.nds-table').forEach(table => {
             table.ndsTableResponsive?.recheckWidth();
         });
     }
@@ -1116,7 +1121,7 @@
         reinit: initializeTables,
         recheckWidths: recheckAllWidths,
         create: (table) => new NDSTables(table),
-        createResponsive: (table) => new NDSResponsiveTable(table),
+        createResponsive: (table) => table.ndsTableResponsive || new NDSResponsiveTable(table),
         createColumnToggle: (root) => new NDSColumnToggle(root),
         row: rowHandle,
         setColumnHidden,

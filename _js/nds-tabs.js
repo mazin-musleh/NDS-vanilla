@@ -65,6 +65,9 @@
             this.abortController = new AbortController();
             this.currentTabIndex = this.findActiveTabIndex();
             this.valid = true;
+            // Registered here, not in the sweep, so every construction path —
+            // sweep, reinit() and programmatic create() — publishes el.ndsTabs.
+            tabsContainer.ndsTabs = this;
             this.init();
         }
 
@@ -336,7 +339,6 @@
             // Stamp only successful constructions — late-filled tab markup stays
             // eligible for the next reinit().
             if (instance.valid) {
-                container.ndsTabs = instance;
                 container.setAttribute('data-nds-tabs-initialized', 'true');
             }
         });
@@ -345,6 +347,6 @@
     NDS.Tabs = {
         init: initializeTabs,
         reinit: initializeTabs,
-        create: (container) => new NDSTabs(container)
+        create: (container) => container.ndsTabs || new NDSTabs(container)
     };
 })();

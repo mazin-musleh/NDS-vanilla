@@ -207,7 +207,7 @@
                 results[chip.getAttribute('data-rule')] = pass;
                 // No paint until the user has typed something — a rule chip
                 // reads as neutral guidance while the field is empty.
-                chip.dataset.status = !value ? 'neutral' : (pass ? 'success' : 'error');
+                NDS.Status.set(chip, !value ? 'neutral' : (pass ? 'success' : 'error'));
                 if (pass) passing += 1;
             });
 
@@ -245,7 +245,7 @@
             // Lift the submit gate and repaint chips — a stale customValidity
             // has no owner left to clear it and would block the form forever.
             this.input.setCustomValidity('');
-            this.ruleChips.forEach(function (chip) { chip.dataset.status = 'neutral'; });
+            this.ruleChips.forEach(function (chip) { NDS.Status.set(chip, 'neutral'); });
             if (this.statusEl) this.statusEl.textContent = '';
             this.container.removeAttribute('data-password-strength');
             this.container.removeAttribute('data-nds-password-initialized');

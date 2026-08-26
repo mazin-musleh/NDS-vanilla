@@ -53,6 +53,9 @@
             }
 
             this.valid = true;
+            // Registered here, not in the sweep, so every construction path —
+            // sweep, reinit() and programmatic create() — is reachable.
+            expandableContainer.ndsExpandable = this;
             this.init();
         }
 
@@ -276,9 +279,11 @@
             // Remove states
             NDS.State.remove(this.expandableContainer, 'expanded', 'expandable');
 
-            // Drop the init sentinel last: leaving it on makes teardown one-way — the
-            // init sweep skips a stamped container, so a view that unmounts and mounts
-            // again gets markup no instance will ever claim.
+            // Drop the instance back-ref and the init sentinel last: leaving either on
+            // makes teardown one-way — the init sweep skips a stamped container and
+            // create() hands back the dead instance, so a view that unmounts and mounts
+            // again gets markup no live instance will ever claim.
+            delete this.expandableContainer.ndsExpandable;
             this.expandableContainer.removeAttribute('data-nds-expandable-initialized');
         }
     }
@@ -298,7 +303,6 @@
                 // Stamp only successful constructions — content that renders late
                 // stays eligible for the next reinit().
                 if (expandableInstance.valid) {
-                    container.ndsExpandable = expandableInstance;
                     container.setAttribute('data-nds-expandable-initialized', 'true');
                 }
             }
@@ -312,7 +316,9 @@
 
     // Recheck height for all initialized expandable elements
     function recheckAllHeights() {
-        const expandableContainers = document.querySelectorAll('.nds-expandable[data-nds-expandable-initialized]');
+        // Keyed on the instance, not the sweep's stamp, so create()-built
+        // containers are rechecked too.
+        const expandableContainers = document.querySelectorAll('.nds-expandable');
         expandableContainers.forEach(container => {
             if (container.ndsExpandable && container.ndsExpandable.recheckHeight) {
                 container.ndsExpandable.recheckHeight();
@@ -325,7 +331,7 @@
         init: initializeExpandableContent,
         reinit: reinitializeExpandableContent,
         recheckHeights: recheckAllHeights,
-        create: (container) => new NDSExpandable(container)
+        create: (container) => container.ndsExpandable || new NDSExpandable(container)
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

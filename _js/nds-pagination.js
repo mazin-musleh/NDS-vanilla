@@ -152,6 +152,9 @@
             if (!list.querySelector('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next)')) return;
 
             this.valid = true;
+            // Registered here, not in the sweep, so every construction path —
+            // sweep, reinit() and programmatic create() — reaches destroy().
+            paginationNav.ndsPagination = this;
             this.init();
         }
 
@@ -399,7 +402,6 @@
                 // Stamp only successful constructions — a bailed (empty) nav stays
                 // eligible for the next reinit() instead of being skipped forever.
                 if (paginationInstance.valid) {
-                    container.ndsPagination = paginationInstance;
                     container.setAttribute('data-nds-pagination-initialized', 'true');
                 }
 
@@ -1577,6 +1579,9 @@
         reinit: () => { initializePagination(); initializeAutoPagination(); },
         initAuto: initializeAutoPagination,
         create: (container) => {
+            // A live nav is returned as-is — re-wiring its click handler would
+            // stack a second listener on the same element.
+            if (container.ndsPagination) return container.ndsPagination;
             const inst = new NDSPagination(container);
             // Match initializePagination: wire the per-nav click handler for
             // manual navs; auto-paginations are wired by _wireAutoNav.
