@@ -227,6 +227,13 @@
                     } else {
                         this.slides.forEach(s => { if (s.hasAttribute('hidden')) s.removeAttribute('hidden'); });
                     }
+
+                    // Revealing slides changes slide spacing but not the wrapper's box,
+                    // so the ResizeObserver never re-fires. Without this, the step cached
+                    // at init off a display:none slide (= wrapper padding, truthy, so the
+                    // offsetWidth fallback never runs) sticks and clamps currentIndex to
+                    // maxIndex on the first scroll.
+                    this._measuredStep = null;
                 });
             }, { threshold: 0.01 });
         }
