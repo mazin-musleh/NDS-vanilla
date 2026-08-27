@@ -201,6 +201,8 @@
         color: var(--text-oncolor-primary);
         --divider-color: var(--colors-alpha-white-10);
 
+        // DUPE-02 intentional: mirrors _buttons.scss's on-color knob set (@at-root,
+        // .nds-oncolor / dark arm) — mutually exclusive: that arm is dark-only.
         .nds-btn.nds-secondary-outline {
             --btn-bg: var(--button-background-transparent-default);
             --btn-bg-hover: var(--button-background-transparent-hovered);
