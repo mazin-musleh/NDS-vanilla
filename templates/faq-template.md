@@ -109,7 +109,7 @@ sidemenu_mode: false
                                 </h3>
                                 <div class="nds-accordion-collapse" id="{{ cid }}">
                                     <div class="nds-accordion-content">
-                                        <div class="nds-accordion-body">
+                                        <div class="nds-accordion-body nds-prose">
                                             <p>{{ item.answer }}</p>
                                             <div class="nds-tags">
                                                 {% for tag in item.tags %}
@@ -142,7 +142,7 @@ sidemenu_mode: false
                                 </h3>
                                 <div class="nds-accordion-collapse" id="{{ cid }}">
                                     <div class="nds-accordion-content">
-                                        <div class="nds-accordion-body">
+                                        <div class="nds-accordion-body nds-prose">
                                             <p>{{ item.answer }}</p>
                                             <div class="nds-tags">
                                                 {% for tag in item.tags %}
