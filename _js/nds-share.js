@@ -34,7 +34,6 @@
  */
 (function () {
     'use strict';
-    if (typeof window === 'undefined') return;
     window.NDS = window.NDS || {};
 
     const POPUP_FEATURES = 'width=600,height=400';

@@ -48,13 +48,27 @@
 (function() {
     'use strict';
 
+    // Own parts only. A .nds-tab-panel holds arbitrary consumer content, so a
+    // nested .nds-tabs is legal — and its tabs/panels match the same selectors.
+    // The two lists would then interleave differently (all outer tabs sit in the
+    // tablist; nested panels sit INSIDE an outer panel), desynchronizing the
+    // tabs[i] ↔ panels[i] pairing every method here depends on.
+    // Anchored on the container only when it IS the root — create() is documented
+    // to take .nds-tabs, but an unfiltered fallback beats returning nothing.
+    const ownParts = (container, selector) => {
+        const all = Array.from(container.querySelectorAll(selector));
+        return container.matches('.nds-tabs')
+            ? all.filter(el => el.closest('.nds-tabs') === container)
+            : all;
+    };
+
     class NDSTabs {
         constructor(tabsContainer) {
             this.tabsContainer = tabsContainer;
             this.scrollMore = tabsContainer.querySelector('.nds-scroll-more');
             this.tabList = tabsContainer.querySelector('.nds-tab-list');
-            this.tabs = Array.from(tabsContainer.querySelectorAll('.nds-tab:not(.nds-show-more)'));
-            this.panels = Array.from(tabsContainer.querySelectorAll('.nds-tab-panel'));
+            this.tabs = ownParts(tabsContainer, '.nds-tab:not(.nds-show-more)');
+            this.panels = ownParts(tabsContainer, '.nds-tab-panel');
             this.dragState = { active: false, startX: 0, scrollLeft: 0, hasDragged: false };
 
             if (!this.tabList || this.tabs.length === 0 || this.panels.length === 0) {

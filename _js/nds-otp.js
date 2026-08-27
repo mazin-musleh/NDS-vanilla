@@ -220,6 +220,8 @@
 
     function handleFocus(e) {
         var input = e.target;
+        // Macrotask yield — must land after the browser's own focus/click selection,
+        // which a microtask would run before.
         setTimeout(function () {
             if (document.activeElement === input) input.select();
         }, 0);

@@ -17,7 +17,6 @@
  */
 (function () {
     'use strict';
-    if (typeof window === 'undefined') return;
     window.NDS = window.NDS || {};
 
     // Image/icon-only links (e.g. `<a><img></a>`, `<a><i class="hgi …"></i></a>`)

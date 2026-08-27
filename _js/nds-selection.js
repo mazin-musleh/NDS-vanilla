@@ -53,7 +53,6 @@
 
 (function () {
     'use strict';
-    if (typeof window === 'undefined') return;
 
     let _controller = null;
     let _offs = [];

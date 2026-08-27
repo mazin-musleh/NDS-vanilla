@@ -479,7 +479,12 @@
         validateMultiselect: function(msElement, options) {
             options = options || { showMessage: true };
             var ms = msElement.closest('.nds-multiselect') || msElement;
-            return this._validateCheckedCount(ms, ms.querySelectorAll('.nds-dropmenu-menu input[type="checkbox"]'), options);
+            // Resolve the menu portal-aware, then scope to it: re-validation fires on
+            // `nds:multiselect:change` — i.e. while the menu is open, and a multiselect
+            // in a modal/drawer/table cell has portaled it to <body> by then. A wrapper-
+            // rooted `.nds-dropmenu-menu ...` walk counts zero there and reports invalid.
+            var menu = NDS.querySelector(ms, '.nds-dropmenu-menu');
+            return this._validateCheckedCount(ms, menu ? menu.querySelectorAll('input[type="checkbox"]') : [], options);
         },
 
         // Taginput: hidden inputs are the carriers (one per committed tag).

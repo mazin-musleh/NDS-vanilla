@@ -70,7 +70,6 @@
  */
 (function () {
     'use strict';
-    if (typeof window === 'undefined') return;
     window.NDS = window.NDS || {};
 
     const DEFAULT_FLASH_MS = 2000;

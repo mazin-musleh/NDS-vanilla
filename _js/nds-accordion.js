@@ -32,11 +32,24 @@
 (function() {
     'use strict';
 
+    // Own parts only. A .nds-accordion-collapse holds arbitrary consumer content,
+    // so a nested .nds-accordion is legal — and its buttons/collapses match the
+    // same selectors. An unguarded walk claims them: the outer controller wires
+    // and index-pairs nodes the nested controller already drives.
+    // Anchored on the container only when it IS the root — create() is documented
+    // to take .nds-accordion, but an unfiltered fallback beats returning nothing.
+    const ownParts = (container, selector) => {
+        const all = Array.from(container.querySelectorAll(selector));
+        return container.matches('.nds-accordion')
+            ? all.filter(el => el.closest('.nds-accordion') === container)
+            : all;
+    };
+
     class NDSAccordion {
         constructor(accordionContainer) {
             this.accordionContainer = accordionContainer;
-            this.buttons = Array.from(accordionContainer.querySelectorAll('.nds-accordion-btn'));
-            this.collapses = Array.from(accordionContainer.querySelectorAll('.nds-accordion-collapse'));
+            this.buttons = ownParts(accordionContainer, '.nds-accordion-btn');
+            this.collapses = ownParts(accordionContainer, '.nds-accordion-collapse');
             this.isAnimating = false; // Simple flag to prevent clicks during animation
             
             if (this.buttons.length === 0) {
@@ -110,8 +123,8 @@
         // unbound buttons are wired and only they are state-synced: re-syncing
         // the whole set would collapse panels the user has already opened.
         refresh() {
-            this.buttons = Array.from(this.accordionContainer.querySelectorAll('.nds-accordion-btn'));
-            this.collapses = Array.from(this.accordionContainer.querySelectorAll('.nds-accordion-collapse'));
+            this.buttons = ownParts(this.accordionContainer, '.nds-accordion-btn');
+            this.collapses = ownParts(this.accordionContainer, '.nds-accordion-collapse');
             this.buttons.forEach((button, index) => {
                 if (button._ndsAcc === this) return;
                 this._syncItem(button, this.collapses[index]);
