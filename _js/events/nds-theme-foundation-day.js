@@ -92,8 +92,7 @@
     function buildSlide() {
         var imgUrl = assetUrl(HERO.image);
         var img = imgUrl
-            ? '<picture><img src="' + esc(imgUrl) + '" class="nds-hero-image" alt="" ' +
-              'style="width:100%;height:100%;object-fit:cover;display:block;" fetchpriority="high"></picture>'
+            ? '<picture><img src="' + esc(imgUrl) + '" class="nds-hero-image" alt="" fetchpriority="high"></picture>'
             : '';
         var desc = t(HERO.description) ? '<p class="nds-section-description">' + esc(t(HERO.description)) + '</p>' : '';
         var iconUrl = HERO.cta ? assetUrl(HERO.cta.icon) : '';
@@ -109,8 +108,8 @@
         var slide = document.createElement('div');
         slide.className = 'nds-swiper-slide nds-content-wrapper ' + SLIDE_CLASS;
         slide.innerHTML =
-            '<div class="nds-hero-image-wrapper nds-full-width" style="--overlay:0;position:absolute;inset:0;">' + img + '</div>' +
-            '<div class="nds-section-body nds-full-width" style="position:relative;z-index:3;">' +
+            '<div class="nds-hero-image-wrapper" style="--overlay:0;">' + img + '</div>' +
+            '<div class="nds-section-body nds-full-width">' +
               '<div class="nds-block nds-content-wrapper"><div>' +
                 '<h1 class="nds-section-title">' + esc(t(HERO.title)) + '</h1>' +
                 desc + cta +

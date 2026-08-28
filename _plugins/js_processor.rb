@@ -52,6 +52,7 @@ class JSProcessor
       'nds-showcase.js' => 'docs-assets/js',
       'nds-theme-foundation-day.js' => 'docs-assets/events/foundation_day',
       'nds-theme-hajj.js' => 'docs-assets/events/Hajj',
+      'nds-theme-national-day-96.js' => 'docs-assets/events/national_day_96',
     }
     @bundles = {
       # Critical bundle — loaded via <script defer>. Carries core, the loader,
@@ -209,11 +210,19 @@ class JSProcessor
     m.nil? || m > File.mtime(out)
   end
 
+  # Basename -> real path. Sources may sit in a subfolder (_js/events/), so a
+  # name is resolved against a recursive scan, never assumed to be _js/<name>.
+  def source_path(basename)
+    @source_index ||= Dir.glob(File.join(@source_dir, '**', '*.js'))
+                         .each_with_object({}) { |p, h| h[File.basename(p)] ||= p }
+    @source_index[basename]
+  end
+
   # A standalone (non-bundled) file is stale on the same rule. Honors the
   # per-file output-dir override so self-contained themes are checked in place.
   def individual_stale?(basename)
-    src = File.join(@source_dir, basename)
-    return false unless File.exist?(src)
+    src = source_path(basename)
+    return false unless src && File.exist?(src)
     out_dir = @output_overrides[basename] || @output_dir
     out = File.join(out_dir, "#{File.basename(basename, '.js')}.min.js")
     return true unless File.exist?(out)
@@ -261,8 +270,8 @@ class JSProcessor
     # Ensure output directory exists
     FileUtils.mkdir_p(@output_dir)
 
-    # Get all JS files from source directory
-    js_files = Dir.glob(File.join(@source_dir, '*.js'))
+    # Get all JS files from source directory (recursive — event packs live in _js/events/)
+    js_files = Dir.glob(File.join(@source_dir, '**', '*.js'))
 
     # Fail fast if location (build) contradicts classification (registry).
     assert_no_critical_in_injected!
