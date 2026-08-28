@@ -6,6 +6,14 @@ hero_description: A ready-made event theme for Saudi Founding Day. One script ta
 breadcrumb: [["Events", "/events"]]
 lang: en
 direction: ltr
+hero_float_actions:
+  class: nds-wrap
+  items:
+    - label: "Download the pack"
+      url: "/docs-assets/events/foundation_day/nds-event-foundation-day.zip"
+      style: "nds-primary"
+      download: true
+    - share
 ---
 
 <!-- Live preview notice -->
@@ -35,7 +43,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
             <p class="nds-section-description">Add one tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets and without <code class="nds-inline-code lang-html">defer</code>. It applies the palette and the hero slide; remove it when the event ends. Every <code class="nds-inline-code lang-html">data-*</code> below is optional (defaults shown); see the table for each one.</p>
-            <p class="nds-section-description">The pack is self-contained: copy <code class="nds-inline-code lang-html">docs-assets/events/foundation_day/</code> out of the template into your own assets folder, then point the tag at wherever you put it. The paths below assume <code class="nds-inline-code lang-html">assets/events/foundation_day/</code>. The script finds its own CSS and images relative to itself, so the folder works at any location as long as its contents stay together.</p>
+            <p class="nds-section-description">The pack is self-contained. Download the zip, then copy its files into your own assets folder. A template copy already ships them at <code class="nds-inline-code lang-html">docs-assets/events/foundation_day/</code>. The paths below assume <code class="nds-inline-code lang-html">assets/events/foundation_day/</code>. The script finds its own CSS and images relative to itself, so the folder works at any location as long as its contents stay together.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -139,13 +147,12 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;div class="nds-swiper-slide nds-content-wrapper nds-foundingDay"&gt;
-  &lt;div class="nds-hero-image-wrapper nds-full-width" style="--overlay:0;position:absolute;inset:0;"&gt;
+  &lt;div class="nds-hero-image-wrapper" style="--overlay:0;"&gt;
     &lt;picture&gt;
-      &lt;img src="/assets/events/foundation_day/Hero_bg.webp" class="nds-hero-image" alt=""
-           style="width:100%;height:100%;object-fit:cover;display:block;" fetchpriority="high"&gt;
+      &lt;img src="/assets/events/foundation_day/Hero_bg.webp" class="nds-hero-image" alt="" fetchpriority="high"&gt;
     &lt;/picture&gt;
   &lt;/div&gt;
-  &lt;div class="nds-section-body nds-full-width" style="position:relative;z-index:3;"&gt;
+  &lt;div class="nds-section-body nds-full-width"&gt;
     &lt;div class="nds-block nds-content-wrapper"&gt;
       &lt;div&gt;
         &lt;h1 class="nds-section-title"&gt;يوم بدينا&lt;/h1&gt;

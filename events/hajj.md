@@ -6,6 +6,14 @@ hero_description: A welcome skin for the Hajj season. One script tag re-skins th
 breadcrumb: [["Events", "/events"]]
 lang: en
 direction: ltr
+hero_float_actions:
+  class: nds-wrap
+  items:
+    - label: "Download the pack"
+      url: "/docs-assets/events/Hajj/nds-event-hajj.zip"
+      style: "nds-primary"
+      download: true
+    - share
 ---
 
 <!-- Live preview notice -->
@@ -35,7 +43,7 @@ direction: ltr
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
             <p class="nds-section-description">Add one tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets and without <code class="nds-inline-code lang-html">defer</code>. It applies the event stylesheet and the hero slide; remove it when the season ends. Every <code class="nds-inline-code lang-html">data-*</code> below is optional (defaults shown); see the table for each one.</p>
-            <p class="nds-section-description">The pack is self-contained: copy <code class="nds-inline-code lang-html">docs-assets/events/Hajj/</code> out of the template into your own assets folder, then point the tag at wherever you put it. The paths below assume <code class="nds-inline-code lang-html">assets/events/Hajj/</code>. The script finds its own CSS and images relative to itself, so the folder works at any location as long as its contents stay together.</p>
+            <p class="nds-section-description">The pack is self-contained. Download the zip, then copy its files into your own assets folder. A template copy already ships them at <code class="nds-inline-code lang-html">docs-assets/events/Hajj/</code>. The paths below assume <code class="nds-inline-code lang-html">assets/events/Hajj/</code>. The script finds its own CSS and images relative to itself, so the folder works at any location as long as its contents stay together.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
