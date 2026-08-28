@@ -42,7 +42,7 @@ hero_float_actions:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
-            <p class="nds-section-description">Add one tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets and without <code class="nds-inline-code lang-html">defer</code>. It applies the palette and the hero slide; remove it when the event ends. Every <code class="nds-inline-code lang-html">data-*</code> below is optional (defaults shown); see the table for each one.</p>
+            <p class="nds-section-description">Add one tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets and without <code class="nds-inline-code lang-html">defer</code>. It applies the palette and the hero slide; remove it when the event ends. That one tag is the whole install — every value has a built-in default. Use the <strong>With overrides</strong> tab to change any of them; see the attribute table below.</p>
             <p class="nds-section-description">The pack is self-contained. Download the zip, then copy its files into your own assets folder. A template copy already ships them at <code class="nds-inline-code lang-html">docs-assets/events/foundation_day/</code>. The paths below assume <code class="nds-inline-code lang-html">assets/events/foundation_day/</code>. The script finds its own CSS and images relative to itself, so the folder works at any location as long as its contents stay together.</p>
         </div>
         <div class="nds-section-body">
@@ -59,13 +59,28 @@ hero_float_actions:
                                         aria-controls="panel-fday-apply-1" id="tab-fday-apply-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                        aria-controls="panel-fday-apply-2" id="tab-fday-apply-2">
+                                        <span class="nds-tab-label">With overrides</span>
+                                    </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-fday-apply-1"
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fday-apply-1"
                                     aria-labelledby="tab-fday-apply-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;script src="/assets/events/foundation_day/nds-theme-foundation-day.min.js"&gt;&lt;/script&gt;
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-fday-apply-2"
+                                    aria-labelledby="tab-fday-apply-2" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
