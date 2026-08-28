@@ -35,6 +35,12 @@
       css: docs-assets/events/Hajj/nds-theme-hajj.min.css
       js: docs-assets/events/Hajj/nds-theme-hajj.min.js
 
+    - value: national-day-96
+      label: National Day 96
+      stylesheet: true
+      css: docs-assets/events/national_day_96/nds-theme-national-day-96.min.css
+      js: docs-assets/events/national_day_96/nds-theme-national-day-96.min.js
+
 - label: Demo
   list:
     - value: crimson

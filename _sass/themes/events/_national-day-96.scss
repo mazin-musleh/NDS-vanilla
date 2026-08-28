@@ -1,0 +1,100 @@
+@use '../../mixins' as *;
+
+// ════════════════════════════════════════════════════════════════════════════
+// NATIONAL DAY 96 — event skin. KEEPS THE DGA PALETTE (no brand seed), and the
+// hero slide keeps the standard slide structure and styling: the pack only swaps
+// in the event background photo, and the event mark rides the footer's existing
+// logo strip. Everything themed here is section chrome — the identity bar under
+// each content section, the corner vector on even sections, and the footer bar.
+//
+// Activate site-wide via `brand: national-day-96` (loads
+// nds-theme-national-day-96.min.css render-blocking, before first paint), or on
+// demand via the theme switcher / the one-tag event pack
+// (nds-theme-national-day-96.js). Build entry:
+// docs-assets/events/national_day_96/nds-theme-national-day-96.min.scss.
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── Hero slide — the photo runs light on its start side and deep on its end
+//    side, and the slide text sits on the reading edge. Mirror it in LTR so the
+//    deep side stays behind the text. A transform, so no logical property covers it. ──
+.nds-swiper-slide.nds-nationalDay .nds-hero-image {
+  @include ltr {
+    transform: scaleX(-1);
+  }
+}
+
+// Sections that paint their own surface (brand, status, gradient) take neither
+// decoration — the bar and the vector are for the plain page ground only.
+$plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit)';
+
+// ── Section bar — a thin identity strip along the bottom of every plain content
+//    section, rotating through the three artworks so a long page doesn't repeat
+//    one. Assets resolve against this stylesheet's folder. ──
+.nds-content-section {
+  position: relative;
+}
+
+.nds-content-section#{$plain}::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 24px;
+
+  background: url("section_bar1.svg") repeat-x bottom center;
+  background-size: auto 24px;   // aspect kept, tiled across — no stretch at any viewport width
+
+  pointer-events: none;
+}
+
+.nds-content-section#{$plain}:nth-of-type(3n + 2)::after {
+  background-image: url("section_bar2.svg");
+}
+
+.nds-content-section#{$plain}:nth-of-type(3n)::after {
+  background-image: url("section_bar3.svg");
+}
+
+// ── Corner vector on even content sections. The artwork fades 0.2 → 0 in its own
+//    gradients, so it needs no CSS opacity on top. It is near-black, hence the
+//    dark-mode invert; no background-color here, so the filter has nothing but
+//    the artwork to act on. ──
+.nds-content-layout:not(.nds-wSideMenu, .nds-cardView) .nds-main-content .nds-content-section#{$plain}:nth-of-type(even) {
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    min-width: 1280px;
+    background: url("section_vector.svg") no-repeat bottom left;
+    background-size: contain;
+    opacity: 0.4;
+
+    pointer-events: none;
+
+    @include dark {
+      filter: invert(1);
+    }
+  }
+
+  // One decoration per section: the vector stands in for the bar here.
+  &::after {
+    content: unset;
+  }
+}
+
+// :root prefix bumps to 0,3,0 — beats _footer.scss's .nds-footer:is(.nds-green,.nds-brand)
+// (0,2,0) which resets background-image to none via the background shorthand
+:root .nds-footer:is(.nds-green, .nds-brand) {
+  background-image: url("footer_bar.svg");
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 60px;   // aspect kept, tiled across — no stretch at any viewport width
+
+  // Clears the 60px bar so footer content never sits on it. Replaces the base
+  // --spacing-4xl on this edge only.
+  padding-block-end: 72px;
+}
