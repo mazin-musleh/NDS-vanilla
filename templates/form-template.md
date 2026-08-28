@@ -356,10 +356,10 @@ sidemenu_mode: false
             </form>
         </div>
 
-        <aside class="nds-sideinfo nds-card nds-stroke nds-shadow nds-sticky nds-sticky-md nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
+        <aside class="nds-sideinfo nds-sticky nds-sticky-md nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
             <!-- Vertical fallback (tablet + desktop) with a radial override on
                  mobile so the 4-step flow stays compact on small screens. -->
-            <div class="nds-stepper nds-radial nds-vertical-lg"
+            <div class="nds-stepper nds-radial nds-vertical-lg nds-card nds-stroke nds-shadow"
                 id="formStepper"
                 data-current="1" data-total="4">
                 <!-- Radial-only progress ring; hidden on non-radial variants by base CSS. -->

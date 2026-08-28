@@ -29,7 +29,6 @@
     }
 
     .nds-sideinfo {
-        --_card-padding-base: var(--spacing-4xl);
         --nds-sideinfo-top-offset: 0px;
         --_sideinfo-sticky-top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--nds-sideinfo-top-offset));
         width: var(--nds-sideinfo-width);
@@ -37,7 +36,19 @@
         top: var(--_sideinfo-sticky-top);
         height: fit-content;
         --card-width: 100%;
-        background-color: var(--background-menu);
+
+        // The aside is a bare track — width, order and sticky, nothing visual.
+        // The surface belongs to whichever element carries .nds-card: the direct
+        // child now, or the aside itself in the older pairing.
+        @mixin _sideinfo-card {
+            &.nds-card,
+            > .nds-card { @content; }
+        }
+
+        @include _sideinfo-card {
+            --_card-padding-base: var(--spacing-4xl);
+            --card-bg: var(--background-menu);
+        }
 
         @include tablet(max) {
             top: unset;
@@ -60,23 +71,26 @@
         @mixin _sideinfo-pin {
             position: sticky;
             top: calc(var(--nds-nav-height));
-            padding-block: var(--spacing-xl);
-            padding-inline: var(--nds-viewport-padding);
             // Cancel the section's padding-block (--spacing-5xl) so the pinned
             // strip sits flush at the section's top edge, not 8px below it.
             margin-block-start: calc(var(--spacing-5xl) * -1);
-            border: 0;
-            // Square the top corners so the full-width strip meets the nav cleanly.
-            border-start-start-radius: 0;
-            border-start-end-radius: 0;
-            --card-width: 100vw;
             width: 100vw !important;
             margin-inline: calc(50% - 50vw);
-            box-shadow: var(--shadow-md);
-            // Clip the top so --shadow-md doesn't bleed above the strip onto the
-            // nav; the bottom drop shadow still shows (sides are off-viewport at 100vw).
-            clip-path: inset(0 0 -16px 0);
             z-index: 999;
+
+            @include _sideinfo-card {
+                --card-width: 100vw;
+                --card-padding-block: var(--spacing-xl);
+                --card-padding-inline: var(--nds-viewport-padding);
+                border: 0;
+                // Square the top corners so the full-width strip meets the nav cleanly.
+                border-start-start-radius: 0;
+                border-start-end-radius: 0;
+                box-shadow: var(--shadow-md);
+                // Clip the top so --shadow-md doesn't bleed above the strip onto the
+                // nav; the bottom drop shadow still shows (sides are off-viewport at 100vw).
+                clip-path: inset(0 0 -16px 0);
+            }
         }
 
         &.nds-sticky.nds-sticky-sm {

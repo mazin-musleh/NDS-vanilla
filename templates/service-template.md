@@ -74,8 +74,8 @@ sidemenu_mode: false
                 </div>
             </div>
         </div>
-        <aside class="nds-sideinfo nds-card nds-stroke nds-shadow" aria-label="Service information">
-                <dl class="nds-definition-list">
+        <aside class="nds-sideinfo" aria-label="Service information">
+                <dl class="nds-definition-list nds-card nds-stroke nds-shadow">
                     <div class="nds-definition-item">
                         <dt>
                             <i class="hgi hgi-stroke hgi-user-multiple-02"></i>

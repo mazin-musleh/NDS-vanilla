@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.10.0"
-last_edit: "15/08/2026 - 10:04 PM"
+updated: "1.10.x"
+last_edit: "28/08/2026 - 06:05 PM"
 ---
 
 <!-- Side Info Structure -->
@@ -16,7 +16,7 @@ last_edit: "15/08/2026 - 10:04 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Structure</h2>
-            <p class="nds-section-description">The side info wraps the page body in a flex row. The main article sits in <code class="nds-inline-code lang-html">.nds-info-content</code> and the companion column in <code class="nds-inline-code lang-html">.nds-sideinfo</code>. On mobile the row collapses to a column.</p>
+            <p class="nds-section-description">The side info wraps the page body in a flex row. The main article sits in <code class="nds-inline-code lang-html">.nds-info-content</code> and the companion column in <code class="nds-inline-code lang-html">.nds-sideinfo</code>. The aside is a track: it sets the width and the sticky behavior. Put the surface classes on the companion content itself, so the card, stroke and shadow belong to the content. On mobile the row collapses to a column.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -38,8 +38,9 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
 &#9492;&#9472;&#9472; div.nds-section-body
     &#9500;&#9472;&#9472; div.nds-info-content
     &#9474;   &#9492;&#9472;&#9472; article (main content)
-    &#9492;&#9472;&#9472; aside.nds-sideinfo.nds-sticky.nds-card
-        &#9492;&#9472;&#9472; (companion content: definition list, TOC, stepper, etc.)
+    &#9492;&#9472;&#9472; aside.nds-sideinfo.nds-sticky
+        &#9492;&#9472;&#9472; dl.nds-definition-list.nds-card.nds-stroke.nds-shadow
+            (or any companion content: TOC, stepper, etc.)
                                 </code>
                                 </div>
                             </div>
@@ -69,11 +70,11 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
                                     <span class="nds-label">Sticky</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-stroke", ".nds-sideinfo", "sideinfoStandardStroke"]'>
+                                    data-toggler='["nds-stroke", ".nds-sideinfo > .nds-card", "sideinfoStandardStroke"]'>
                                     <span class="nds-label">Stroke</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-shadow", ".nds-sideinfo", "sideinfoStandardShadow"]'>
+                                    data-toggler='["nds-shadow", ".nds-sideinfo > .nds-card", "sideinfoStandardShadow"]'>
                                     <span class="nds-label">Shadow</span>
                                 </button>
                             </div>
@@ -87,8 +88,8 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
                                             <p>This is an example of the article column next to a side info card. In production the article fills the remaining width while the sideinfo stays at its configured width.</p>
                                             <p>Reduce the viewport below 960px to see the columns stack.</p>
                                         </div>
-                                        <aside class="nds-sideinfo nds-sticky nds-card nds-stroke nds-shadow" aria-label="Side information">
-                                            <dl class="nds-definition-list">
+                                        <aside class="nds-sideinfo nds-sticky" aria-label="Side information">
+                                            <dl class="nds-definition-list nds-card nds-stroke nds-shadow">
                                                 <div class="nds-definition-item">
                                                     <dt><i class="hgi hgi-stroke hgi-clock-01"></i><span class="nds-label">Duration</span></dt>
                                                     <dd>Immediately</dd>
@@ -136,8 +137,8 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
       &lt;p&gt;This is an example of the article column next to a side info card. In production the article fills the remaining width while the sideinfo stays at its configured width.&lt;/p&gt;
       &lt;p&gt;Reduce the viewport below 960px to see the columns stack.&lt;/p&gt;
     &lt;/div&gt;
-    &lt;aside class="nds-sideinfo nds-sticky nds-card nds-stroke nds-shadow" aria-label="Side information"&gt;
-      &lt;dl class="nds-definition-list"&gt;
+    &lt;aside class="nds-sideinfo nds-sticky" aria-label="Side information"&gt;
+      &lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;
         &lt;div class="nds-definition-item"&gt;
           &lt;dt&gt;&lt;i class="hgi hgi-stroke hgi-clock-01"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;Duration&lt;/span&gt;&lt;/dt&gt;
           &lt;dd&gt;Immediately&lt;/dd&gt;
@@ -213,8 +214,8 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
                                         <div class="nds-info-content">
                                             <p>The sideinfo width updates instantly when you switch the size. The main article fills whatever remains.</p>
                                         </div>
-                                        <aside class="nds-sideinfo nds-lg nds-card nds-stroke nds-shadow" aria-label="Side information">
-                                            <dl class="nds-definition-list">
+                                        <aside class="nds-sideinfo nds-lg" aria-label="Side information">
+                                            <dl class="nds-definition-list nds-card nds-stroke nds-shadow">
                                                 <div class="nds-definition-item">
                                                     <dt><span class="nds-label">Support</span></dt>
                                                     <dd>24/7</dd>
@@ -251,13 +252,13 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
                                         </div>
                                         <code class="lang-html code">
 &lt;!-- Small (200px) --&gt;
-&lt;aside class="nds-sideinfo nds-sm nds-card nds-stroke nds-shadow"&gt;...&lt;/aside&gt;
+&lt;aside class="nds-sideinfo nds-sm"&gt;&lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;...&lt;/dl&gt;&lt;/aside&gt;
 
 &lt;!-- Medium (300px) --&gt;
-&lt;aside class="nds-sideinfo nds-md nds-card nds-stroke nds-shadow"&gt;...&lt;/aside&gt;
+&lt;aside class="nds-sideinfo nds-md"&gt;&lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;...&lt;/dl&gt;&lt;/aside&gt;
 
 &lt;!-- Large (400px, default) --&gt;
-&lt;aside class="nds-sideinfo nds-lg nds-card nds-stroke nds-shadow"&gt;...&lt;/aside&gt;
+&lt;aside class="nds-sideinfo nds-lg"&gt;&lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;...&lt;/dl&gt;&lt;/aside&gt;
                                     </code>
                                     </div>
                                 </div>
@@ -296,8 +297,8 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
                                         <div class="nds-info-content">
                                             <p>With reverse enabled, the sideinfo takes the start side of the row and the article fills the end. Useful when the sideinfo hosts navigation (e.g., a table of contents) that readers expect on the left.</p>
                                         </div>
-                                        <aside class="nds-sideinfo nds-md nds-reverse nds-card nds-stroke nds-shadow" aria-label="Side information">
-                                            <dl class="nds-definition-list">
+                                        <aside class="nds-sideinfo nds-md nds-reverse" aria-label="Side information">
+                                            <dl class="nds-definition-list nds-card nds-stroke nds-shadow">
                                                 <div class="nds-definition-item">
                                                     <dt><span class="nds-label">Position</span></dt>
                                                     <dd>Start side</dd>
@@ -329,8 +330,8 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
                                             </button>
                                         </div>
                                         <code class="lang-html code">
-&lt;aside class="nds-sideinfo nds-md nds-reverse nds-card nds-stroke nds-shadow" aria-label="Side information"&gt;
-  &lt;dl class="nds-definition-list"&gt;
+&lt;aside class="nds-sideinfo nds-md nds-reverse" aria-label="Side information"&gt;
+  &lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;
     &lt;div class="nds-definition-item"&gt;
       &lt;dt&gt;&lt;span class="nds-label"&gt;Position&lt;/span&gt;&lt;/dt&gt;
       &lt;dd&gt;Start side&lt;/dd&gt;
@@ -434,7 +435,9 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
                     <li>Pick <code class="nds-inline-code lang-html">nds-sm</code> or <code class="nds-inline-code lang-html">nds-md</code> when the column hosts a link list (TOC). Reserve <code class="nds-inline-code lang-html">nds-lg</code> (default) for cards with several definition rows or an embedded stepper</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-sticky</code> for long articles where readers benefit from always-available context. Skip it for short pages where the initial view already shows everything</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-top</code> alongside <code class="nds-inline-code lang-html">nds-sticky</code> when the content should move above the article on mobile (progress trackers, step indicators)</li>
-                    <li>Pair the sideinfo with <code class="nds-inline-code lang-html">nds-card</code> plus <code class="nds-inline-code lang-html">nds-stroke</code> or <code class="nds-inline-code lang-html">nds-shadow</code> to separate it visually from the article. Borderless cards work only against contrasting section backgrounds</li>
+                    <li>Put <code class="nds-inline-code lang-html">nds-card</code> plus <code class="nds-inline-code lang-html">nds-stroke</code> or <code class="nds-inline-code lang-html">nds-shadow</code> on the companion content, not on the aside. The aside stays an unstyled track, so the surface belongs to the content it holds. Borderless cards work only against contrasting section backgrounds</li>
+                    <li>Add a wrapper only when the column holds several blocks that share one surface. A single block carries the card classes itself</li>
+                    <li>Older pages that put <code class="nds-inline-code lang-html">nds-card</code> on the aside itself still render the same. Both shapes are supported</li>
                     <li>Keep the column's content scannable. Use a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">definition list</a> for paired labels and values, or a <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">stepper</a> for progress. Avoid long paragraphs inside the column</li>
                 </ul>
             </div>
