@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.9.0"
-last_edit: "22/08/2026 - 04:26 AM"
+updated: "1.10.x"
+last_edit: "28/08/2026 - 07:47 PM"
 ---
 
 <!-- Horizontal Layout -->
@@ -432,17 +432,21 @@ NDS.Stepper.goTo('demo-stepper-horizontal', 3);</code>
                             <div class="demo-action">
                                 <div class="nds-dropmenu demo-toggle-menu">
                                     <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Default</span>
+                                        <span class="nds-label">MD (default)</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", "#demo-stepper-radial", "stepperSize"]'>
-                                                <span class="nds-label">Default</span>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                                data-toggler='["nds-xs", "#demo-stepper-radial", "stepperSize"]'>
+                                                <span class="nds-label">XS</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                                 data-toggler='["nds-sm", "#demo-stepper-radial", "stepperSize"]'>
                                                 <span class="nds-label">SM</span>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                                data-toggler='["nds-md", "#demo-stepper-radial", "stepperSize"]'>
+                                                <span class="nds-label">MD (default)</span>
                                             </button>
                                             <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                                 data-toggler='["nds-lg", "#demo-stepper-radial", "stepperSize"]'>
@@ -1303,9 +1307,11 @@ document.getElementById('myForm').addEventListener('nds:formValid', () =&gt; {
                         <tr><td><code class="nds-inline-code lang-html">nds-vertical</code></td><td>Container</td><td>Switches to top-to-bottom layout with vertical connecting lines</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-radial</code></td><td>Container</td><td>Circular progress indicator showing one step at a time</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-dot</code></td><td>Container</td><td>Replaces numbered circles with 16px dots (horizontal and vertical)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Container</td><td>Smaller radial circle (48px, radial only)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Container</td><td>Larger circle size (40px linear, 96px radial)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Container</td><td>Extra-large circle size (48px linear, 120px radial)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-xs</code></td><td>Container</td><td>40px radial circle, 12px title, 10px description (radial only)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Container</td><td>48px radial circle, 14px title, 12px description (radial only)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Container</td><td>64px radial circle, 16px title, 14px description. This is the radial default, so the class is only needed to override a size set higher up (radial only)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Container</td><td>40px linear circle. Radial: 80px circle, 16px title, 14px description</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Container</td><td>48px linear circle. Radial: 120px circle, 20px title, 14px description</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Container</td><td>Centers step content beneath each circle (horizontal only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Container</td><td>Adapts colors for dark or branded backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-reverse</code></td><td>Container</td><td>Reverses vertical stepper direction so progress flows bottom-to-top (vertical only)</td></tr>
@@ -1356,6 +1362,10 @@ document.getElementById('myForm').addEventListener('nds:formValid', () =&gt; {
                         <tr><td><code class="nds-inline-code lang-html">--stepper-text-padding</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between the step indicator and its text block</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-card-lift</code></td><td><code class="nds-inline-code lang-html">calc(var(--stepper-size) / 4)</code>, or <code class="nds-inline-code lang-html">var(--stepper-size)</code> with <code class="nds-inline-code lang-html">nds-dot</code></td><td>How far <code class="nds-inline-code lang-html">nds-cardView</code> raises each card so its first row meets the circle (vertical only). Scales with the circle, so the size classes carry it. Set it when your content starts with something taller or shorter than a title</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td>var(--spacing-xl)</td><td>Vertical gap between the step's text block and any <code class="nds-inline-code lang-html">.nds-stepper-action</code> buttons. Set on the <code class="nds-inline-code lang-html">.nds-stepper</code> container</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--stepper-title-FS</code></td><td>Set by the size class</td><td>Font size of the step title in a radial stepper. Radial text does not scale with the ring, so set this for a large title beside a small circle</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--stepper-title-LH</code></td><td>Set by the size class</td><td>Line height of the step title in a radial stepper. Set it with <code class="nds-inline-code lang-html">--stepper-title-FS</code>, so the pair stays matched</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--stepper-description-FS</code></td><td>Set by the size class</td><td>Font size of the step description and the next-step line in a radial stepper. Works the same way as <code class="nds-inline-code lang-html">--stepper-title-FS</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--stepper-description-LH</code></td><td>Set by the size class</td><td>Line height of the step description and the next-step line in a radial stepper</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--progress-size</code></td><td>var(--stepper-size)</td><td>Circle diameter for radial steppers. Inherits from <code class="nds-inline-code lang-html">--stepper-size</code>, which radial size classes override</td></tr>
                     </tbody>
                 </table>

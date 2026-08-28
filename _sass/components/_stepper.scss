@@ -241,7 +241,7 @@
     display: flex;
     flex-direction: column;
     line-height: normal;
-    gap: max(var(--spacing-xs), calc(var(--progress-size, var(--stepper-size)) / 16));
+    gap: var(--spacing-xs);
 }
 
 .nds-stepper-title {
@@ -564,8 +564,15 @@
 // Mixin for the same reason as the vertical variant above.
 @mixin stepper-variant-radial {
     --stepper-size: 64px;
+    // Text sizes are fixed per size variant (DGA sheet), not derived from the
+    // ring — a small ring can carry large text. Variants retune the -base names.
+    --_stepper-title-FS-base: var(--typo-text-md-FS);
+    --_stepper-title-LH-base: var(--typo-text-md-LH);
+    --_stepper-desc-FS-base: var(--typo-text-sm-FS);
+    --_stepper-desc-LH-base: var(--typo-text-sm-LH);
+    --_stepper-gap-base: var(--spacing-md);
     --progress-size: var(--stepper-size);
-    --_stepper-gap: var(--stepper-gap, calc(var(--progress-size) / 8));
+    --_stepper-gap: var(--stepper-gap, var(--_stepper-gap-base));
     align-items: center;
 
     .nds-stepper-step {
@@ -583,25 +590,65 @@
         display: none;
     }
 
-    &.nds-sm { --stepper-size: 48px; }
-    &.nds-lg { --stepper-size: 96px; }
-    &.nds-xl { --stepper-size: 120px; }
+    &.nds-xs {
+        --stepper-size: 40px;
+        --_stepper-title-FS-base: var(--typo-text-xs-FS);
+        --_stepper-title-LH-base: var(--typo-text-xs-LH);
+        --_stepper-desc-FS-base: var(--typo-text-2xs-FS);
+        --_stepper-desc-LH-base: var(--typo-text-2xs-LH);
+    }
+
+    &.nds-sm {
+        --stepper-size: 48px;
+        --_stepper-title-FS-base: var(--typo-text-sm-FS);
+        --_stepper-title-LH-base: var(--typo-text-sm-LH);
+        --_stepper-desc-FS-base: var(--typo-text-xs-FS);
+        --_stepper-desc-LH-base: var(--typo-text-xs-LH);
+    }
+
+    &.nds-md { --stepper-size: 64px; }
+
+    &.nds-lg {
+        --stepper-size: 80px;
+        --_stepper-gap-base: var(--spacing-lg);
+        --_stepper-title-FS-base: var(--typo-text-md-FS);
+        --_stepper-title-LH-base: var(--typo-text-md-LH);
+        --_stepper-desc-FS-base: var(--typo-text-sm-FS);
+        --_stepper-desc-LH-base: var(--typo-text-sm-LH);
+    }
+
+    &.nds-xl {
+        --stepper-size: 120px;
+        --_stepper-gap-base: var(--spacing-xl);
+        --_stepper-title-FS-base: var(--typo-text-xl-FS);
+        --_stepper-title-LH-base: var(--typo-text-xl-LH);
+        --_stepper-desc-FS-base: var(--typo-text-sm-FS);
+        --_stepper-desc-LH-base: var(--typo-text-sm-LH);
+    }
 
     .nds-stepper-content {
         --content-gap: 0;
         width: 100%;
 
+        --_stepper-title-FS: var(--stepper-title-FS, var(--_stepper-title-FS-base));
+        --_stepper-title-LH: var(--stepper-title-LH, var(--_stepper-title-LH-base));
+        --_stepper-desc-FS: var(--stepper-description-FS, var(--_stepper-desc-FS-base));
+        --_stepper-desc-LH: var(--stepper-description-LH, var(--_stepper-desc-LH-base));
+
         .nds-stepper-title {
-            font-size: clamp(14px, calc(var(--stepper-size) * 0.1 + 8px), 20px);
+            font-size: var(--_stepper-title-FS);
+            line-height: var(--_stepper-title-LH);
         }
 
         .nds-stepper-description {
-            font-size: clamp(10px, calc(var(--stepper-size) * 0.056 + 7.3px), 14px);
+            font-size: var(--_stepper-desc-FS);
+            line-height: var(--_stepper-desc-LH);
         }
 
         .nds-stepper-next {
             display: block;
-            font-size: clamp(10px, calc(var(--stepper-size) * 0.056 + 7.3px), 14px);
+            font-size: var(--_stepper-desc-FS);
+            line-height: var(--_stepper-desc-LH);
             color: var(--stepper-text-tertiary);
         }
     }
@@ -618,7 +665,7 @@
         --progress-size: var(--stepper-size);
         --progress-track-color: var(--colors-neutral-100);
         --progress-color: var(--background-primary);
-        align-self: flex-start;
+        align-self: center;
 
         @include dark {
             --progress-track-color: var(--colors-alpha-white-10);
@@ -641,7 +688,7 @@
             font-size: calc(var(--progress-size) / 5);
             font-weight: var(--font-weight-bold);
             white-space: nowrap;
-            gap: clamp(2px, calc(var(--progress-size) * 0.05), 4px);
+            gap: var(--spacing-xs);
             line-height: 1;
         }
 
@@ -843,6 +890,12 @@
         &::after {
             visibility: hidden;
         }
+    }
+
+    // The radial look-ahead line sets its colour deeper than the bar's
+    // `> * { color: transparent }`, so it reads through the fill.
+    .nds-stepper-next {
+        color: transparent !important;
     }
 
     // Explicit !important throughout the circle: the per-state rules
