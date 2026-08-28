@@ -111,7 +111,8 @@
                 {%- else %}
                 <a class="nds-btn {{ item.style | default: 'nds-secondary-outline' }}" href="{{ item.url | relative_url }}"
                     aria-label="{{ item.aria_label | default: item.label }}"
-                    {%- if item.target %} target="{{ item.target }}"{%- endif %}>
+                    {%- if item.target %} target="{{ item.target }}"{%- endif %}
+                    {%- if item.download %} download{%- endif %}>
                     {%- if item.icon and item.icon_position != "trailing" %}
                     <i class="nds-icon {{ item.icon }}" aria-hidden="true"></i>
                     {%- endif %}

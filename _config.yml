@@ -170,6 +170,7 @@ exclude:
   - vendor
   - .sass-cache
   - .jekyll-cache
+  - tmp
   - AGENTS.md
   - CLAUDE.md
   - EDITORIAL.md

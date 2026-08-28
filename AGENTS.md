@@ -10,7 +10,13 @@ RTL (Arabic) by default, with LTR (English) support. Font: IBM Plex Sans Arabic.
 ```bash
 bundle exec jekyll serve      # Dev server (port 4002, auto-displays network IP)
 ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js)
+python scripts/optimize-assets.py <path>        # shrink SVG/PNG/JPG — dry-run report; add --apply to write
+node scripts/svg-render-diff.mjs <path>         # REQUIRED after an SVG --apply: proves the render is unchanged
 ```
+
+**Judge an SVG by its GZIP size, not its bytes on disk** — Pages serves SVG compressed, so a 331 KB Figma export is 113 KB on the wire and disk numbers send you optimizing the wrong file. `optimize-assets.py` reports both. It also always encodes raster BOTH lossless and lossy and keeps whichever is smaller: flat-colour artwork (logos, UI graphics, hard edges) goes smaller AND pixel-perfect lossless, while photos and gradients want lossy — a 201 KB PNG here landed at 74 KB lossless vs 102 KB at q95. Never pick from the file extension.
+
+**After optimizing any SVG, run `svg-render-diff.mjs` — byte checks cannot replace it.** It rasterizes the new file against its `tmp/asset-backups/` copy in headless Chrome at 64/256/1024px and erodes the diff mask by 1px: hairline outlines are anti-aliasing and vanish, a colour shift or moved shape survives as `solid`. On 2026-08-28 `dga-logo-icon.svg` passed every static check — viewBox identical, no dangling `url(#…)`, every gradient and mask kept — yet rendered 3.5% of its pixels differently at every size (mean ink `[48,136,179] → [90,156,192]`); it was reverted. SVGO rewrites a file completely, so only a render comparison proves the drawing survived. Whatever tests this, **make the SVG fill its test box (`width:100%`, never `max-width`)** — a file with intrinsic `width`/`height` otherwise paints at native size in every box and the large runs silently test nothing. That flaw gave a false all-clear on the very run that missed the regression above; identical pixel counts across sizes is the tell.
 
 **After editing `_sass/_fold.scss`** — regenerate the inline critical-gate block in `ui-shell/head.md` from the rendered `<style>` in a built page. That block is canonical markup a consumer copies into their own `<head>`, and it is a hand-maintained copy of what `_includes/critical-inline.html` compiles, so it drifts silently: `61763016` added the dark-mode brand rule to the fold and the doc went five weeks without it. `verify()` compares the two and fails the release when they diverge.
 
@@ -22,6 +28,44 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 
 - **NEVER use `sed`** for file edits — it rewrites every file it opens even with no match, polluting git diffs.
 - **For mass/bulk edits** — write a targeted script (Python, Ruby, etc.) that reads each file, checks for a match, and only writes back files that actually changed. Preserve existing line endings (write LF, not CRLF) and check `git diff --numstat` after — the repo is `autocrlf=true` with no `.gitattributes`, so a script that re-encodes line endings pollutes the diff.
+
+## Event Theme Packs
+
+A seasonal skin applied by one `<script>` tag. Source is split three ways: the pack
+JS in `_js/events/`, its SCSS in `_sass/themes/events/`, and the images plus built
+output in `docs-assets/events/<folder>/` (whose `.min.scss` is the Jekyll build
+entry). Registered in `_data/themes.yml` (drives the topbar switcher),
+`_data/content/events.yml` and `_data/sidemenu/sidemenu.yml`.
+
+**Regenerate the download zip after changing a pack's JS, SCSS or images** —
+`python scripts/mkevent.py <event>`, then build again to publish it. Nothing else
+rebuilds it, so it goes stale silently. It verifies what actually breaks a pack:
+every CSS `url()` and JS asset default resolves, and each file's magic bytes match
+its extension (this caught a PNG named `.svg` and another named `.jpg`).
+
+**The pack runs synchronously in `<head>` on purpose.** It injects the hero slide
+during parse, so the slide is in the first paint. Do not defer it into a bundle:
+`nds-main.min.js` gates the reveal and the delegated/extras bundles load *after*
+it, so a late-injected slide swaps in visibly.
+
+## Scratch Files
+
+**Anything temporary goes in the repo's `tmp/`** — backups before an overwrite,
+throwaway test fixtures and harness output, intermediate data, one-off comparison
+builds. Mirror the source tree under it when the file shadows a real one
+(`tmp/asset-backups/docs-assets/events/Hajj/hayyakom.svg`), so same-named files
+from different folders cannot collide.
+
+Not a sibling `.orig/`/`.bak` next to the original: those folders ship, so the
+scratch file reaches `_site`, a pack zip and the release zip. Not the session
+scratchpad: it dies with the session, and a master or baseline needed next week
+goes with it. Reusable harnesses still live in `scripts/` — it is their *output*
+that belongs in `tmp/`.
+
+`tmp/` needs BOTH guards to stay invisible, and it had only one until 2026-08-28:
+`/tmp/` in `.gitignore` AND `tmp` in `_config.yml` `exclude:`. Without the second,
+Jekyll copies it into the build — it looked safe only because the folder was
+empty. Check both when adding any new scratch directory.
 
 ## Code Comments
 
