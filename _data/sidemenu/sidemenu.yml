@@ -86,15 +86,15 @@
 - label: "Events"
   has_sub: true
   children:
+    - label: "National Day 96"
+      url: "/events/national-day-96"
+      href: "/events/national-day-96.html"
     - label: "Foundation Day"
       url: "/events/foundation-day"
       href: "/events/foundation-day.html"
     - label: "Hajj"
       url: "/events/hajj"
       href: "/events/hajj.html"
-    - label: "National Day 96"
-      url: "/events/national-day-96"
-      href: "/events/national-day-96.html"
 
 
 - label: "Components"
