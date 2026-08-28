@@ -23,7 +23,7 @@ direction: ltr
 <main>
 
     <section class="nds-hero-section">
-        <div class="nds-swiper nds-hero nds-middle nds-oncolor nds-full-width" style="--total: 3">
+        <div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: 3">
             <div class="nds-swiper-wrapper">
                 <div class="nds-swiper-slide nds-content-wrapper">
                     <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
