@@ -76,7 +76,9 @@
         white-space: nowrap;
         z-index: var(--_nav-z-brand);
 
-        :is(img, svg) {
+        // The brand logo itself follows the global --brand-logo-height knob
+        // rule (end of file); only other brand imagery keeps attribute sizing.
+        :is(img, svg):not(.nds-brand-logo) {
             height: auto;
             max-width: unset;
         }
@@ -831,4 +833,12 @@ body.nds-minimal .nds-main-nav {
     .nds-main-nav :is(.nds-dropdown-menu, .nds-dropdown-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-actions, .nds-show-more) {
         transition: none !important;
     }
+}
+
+/* Standalone brand logo (auth cards, consumer pages): height-normalized so any
+   logo aspect lands at the same scale. Inside the nav, .nds-brand's own
+   :is(img, svg) height rule outranks this and attribute sizing stays. */
+.nds-brand-logo {
+    height: var(--brand-logo-height, 40px);
+    width: auto;
 }

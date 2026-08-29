@@ -23,10 +23,13 @@ breadcrumb: [["Examples", "/examples"]]
         <!-- Sign in: national SSO first, credentials as the fallback -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-start">
           <div class="nds-card-header nds-rowView">
-            <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
-              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            <!-- The logo is the way home: the minimal layout ships no site chrome -->
+            <a href="{{ '/' | relative_url }}" class="nds-brand">
+              <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+                height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
             <!-- Language switch: point this at the Arabic URL of the same page -->
-            <a href="#" class="nds-btn nds-subtle" hreflang="ar" lang="ar">
+            <a href="#" class="nds-btn nds-subtle nds-icon-only" hreflang="ar" lang="ar">
               <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
               <span class="nds-label">العربية</span>
             </a>
@@ -59,29 +62,16 @@ breadcrumb: [["Examples", "/examples"]]
         <!-- National ID and password: its own card, so it can move to its own page -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-credentials" hidden>
           <div class="nds-card-header">
-            <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
-              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+              <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+                height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
           </div>
           <form id="credentials-form" class="nds-form" data-ajax>
             <div class="nds-card-content">
               <div class="nds-card-text nds-center">
                 <h1 class="nds-card-title">Sign in with National ID</h1>
                 <p class="nds-card-description">Enter your National ID and password.</p>
-              </div>
-
-              <!-- Form-level error: no close button, so the same alert can be shown again -->
-              <div class="nds-alert nds-card nds-color" data-status="error" role="alert" id="credentials-error" hidden>
-                <span class="nds-feedback nds-alert-icon nds-outline">
-                  <span class="nds-feedback-icon">
-                    <i class="nds-icon" aria-hidden="true"></i>
-                  </span>
-                </span>
-                <div class="nds-alert-content">
-                  <div class="nds-alert-text">
-                    <span class="nds-alert-title">Sign-in failed</span>
-                    <p class="nds-alert-description">Check the verification code and try again.</p>
-                  </div>
-                </div>
               </div>
 
               <!-- National ID -->
@@ -185,8 +175,10 @@ breadcrumb: [["Examples", "/examples"]]
         <!-- Delivery method: where the one-time code is sent -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-delivery" hidden>
           <div class="nds-card-header">
-            <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
-              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+              <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+                height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text nds-center">
@@ -195,7 +187,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <!-- The three choices are the page's content, not its actions -->
-            <div class="nds-grid" style="--gap: var(--spacing-md);">
+            <div class="nds-grid" style="--max-col: 1; --gap: var(--spacing-md);">
               <button type="button" class="nds-btn nds-secondary-outline nds-col delivery-btn" data-delivery="your mobile app">
                 <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
                 <span class="nds-label">Mobile app</span>
@@ -221,8 +213,10 @@ breadcrumb: [["Examples", "/examples"]]
         <!-- One-time code -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-otp" hidden>
           <div class="nds-card-header">
-            <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
-              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+              <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+                height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
           </div>
           <form id="otp-form" class="nds-form" data-ajax>
             <div class="nds-card-content">
@@ -298,8 +292,10 @@ breadcrumb: [["Examples", "/examples"]]
         <!-- Signed in: account home for the rest of the family -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-account" hidden>
           <div class="nds-card-header">
-            <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
-              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+              <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+                height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text nds-center">
@@ -333,8 +329,10 @@ breadcrumb: [["Examples", "/examples"]]
         <!-- Change password -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-change-password" hidden>
           <div class="nds-card-header">
-            <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
-              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+              <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+                height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
           </div>
           <form id="password-form" class="nds-form" data-ajax>
             <div class="nds-card-content">
@@ -470,8 +468,10 @@ breadcrumb: [["Examples", "/examples"]]
         <!-- Update mobile number -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-mobile" hidden>
           <div class="nds-card-header">
-            <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
-              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+              <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+                height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
           </div>
           <form id="mobile-form" class="nds-form" data-ajax>
             <div class="nds-card-content">
@@ -523,8 +523,10 @@ breadcrumb: [["Examples", "/examples"]]
         <!-- Signed out -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-out" hidden>
           <div class="nds-card-header">
-            <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
-              height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            <a href="{{ '/' | relative_url }}" class="nds-brand nds-center">
+              <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
+                height="{{ brand_height }}" alt="{{ site_title }} Logo">
+            </a>
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text nds-center">
@@ -554,14 +556,6 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
         </div>
       </div>
-
-      <div class="nds-block nds-center">
-        <!-- The minimal layout ships no site chrome, so the way out is on the page -->
-        <a href="{{ '/' | relative_url }}" class="nds-btn nds-subtle">
-          <i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i>
-          <span class="nds-label">Back to home</span>
-        </a>
-      </div>
     </div>
   </div>
 </section>
@@ -579,7 +573,6 @@ breadcrumb: [["Examples", "/examples"]]
       out: document.getElementById('signin-out')
     };
     var credForm = document.getElementById('credentials-form');
-    var credError = document.getElementById('credentials-error');
     var captchaInput = document.getElementById('captcha-value');
     var captchaText = document.getElementById('captcha-image');
     var otpForm = document.getElementById('otp-form');
@@ -679,9 +672,20 @@ breadcrumb: [["Examples", "/examples"]]
       toast('info', 'Password reset', 'A reset link was sent to your registered email.');
     });
 
+    // A server rejection belongs in the card, not a toast — it must stay until
+    // fixed. Create it on demand from the failure path:
+    //   NDS.Alert.create({ variant: 'error', title: 'Sign-in failed',
+    //     description: reason, target: '#credentials-form .nds-card-content',
+    //     prepend: true, closable: false });
     credForm.addEventListener('nds:formValid', function () {
+      var captchaField = captchaInput.closest('.nds-form-container');
       if (captchaInput.value !== captchaCode) {
-        credError.hidden = false;
+        // A wrong code is a field error: pin it to the input, not a form banner
+        NDS.Forms.setStatus({
+          element: captchaField,
+          status: 'error',
+          message: 'Wrong code. Enter the new code shown below.'
+        });
         captchaInput.value = '';
         // The refresh button owns the regeneration, so drive it rather than calling
         // newCaptcha() here as well — that changed the code twice, once now and once
@@ -693,7 +697,7 @@ breadcrumb: [["Examples", "/examples"]]
         captchaInput.focus();
         return;
       }
-      credError.hidden = true;
+      NDS.Forms.clearStatus(captchaField);
       withLoading(credForm.querySelector('button[type="submit"]'), 1500, function () {
         show('delivery');
       });
