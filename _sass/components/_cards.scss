@@ -127,21 +127,47 @@
     // beside it — squeezing the text and pushing the buttons past the card
     // edge. Wrapping puts them back on their own line under the row.
     flex-wrap: wrap;
+    // The header sizes itself off the card's width, which only the card knows —
+    // a grid cell and the viewport are both the wrong ruler.
+    container-type: inline-size;
 
+    // An avatar or featured icon is its own size, so the header hugs it. An
+    // image is the one child that needs a real width, and asks for it here.
     .nds-card-header {
-      flex: 0 1;
+      flex: 0 1 auto;
+      flex-direction: column;
       flex-wrap: wrap;
       align-content: flex-start;
-      justify-content: center;
+      justify-content: space-between;
+
+      .nds-card-image {
+        width: var(--card-image-width, 160px);
+        min-width: 100px;
+        max-width: 100%;
+      }
     }
 
-    // Half the row as the base size, so the break to a stacked layout happens
-    // at the same width for every card. Sized from content instead, a long tag
-    // stacks one card while the one beside it stays in a row. min-width lets it
-    // shrink past that content, which is what keeps the tag inside the card.
+    // A zero base keeps the break the query's job: the content only fills what
+    // is left, and shrinks past a long tag instead of pushing the row open. Its
+    // floor is the query threshold, not a min-width of its own.
     > .nds-card-content {
-      flex: 1 1 50%;
+      flex: 1 1 0;
       min-width: 0;
+    }
+
+    // Once the two columns no longer fit, the row breaks: the header takes the
+    // whole line and lays its children back out as a row. The threshold is the
+    // image width plus the card gap plus the room the text needs, measured
+    // against the card's content box — its padding is already off.
+    @container (width < 324px) {
+      .nds-card-header {
+        flex-basis: 100%;
+        flex-direction: row;
+
+        .nds-card-image {
+          width: 100%;
+        }
+      }
     }
 
     > .nds-card-actions {
@@ -338,11 +364,12 @@
   // CARD PRICE SECTION
   // ==============================================
 
-  // Price line built on the numbers utility. The wrapper's own type IS the
-  // muted suffix style, so bare text like "/ كجم" needs no class; the
-  // .nds-number-format child is the prominent amount (currency icon tracks
-  // the font via 1em); a <s> child is the crossed-out original (sale pricing).
-  .nds-card-price {
+  // Value line built on the numbers utility — a price, a rate, a size. The
+  // wrapper's own type IS the muted suffix style, so bare text like "/ كجم"
+  // needs no class; the .nds-number-format child is the prominent value
+  // (currency icon tracks the font via 1em); a <s> child is the crossed-out
+  // original. .nds-card-price is the pre-rename alias — see DEPRECATIONS.md.
+  :is(.nds-card-value, .nds-card-price) {
     display: flex;
     align-items: baseline;
     gap: var(--spacing-sm);

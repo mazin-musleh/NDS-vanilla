@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.10.0"
-last_edit: "24/08/2026 - 12:48 PM"
+updated: "1.10.x"
+last_edit: "29/08/2026 - 02:41 PM"
 ---
 
 <!-- Standard Card -->
@@ -447,7 +447,7 @@ last_edit: "24/08/2026 - 12:48 PM"
                                             <span class="nds-card-title">Smart Watch</span>
                                             <p class="nds-card-description">AMOLED display, water resistant to 50 meters.</p>
                                         </div>
-                                        <div class="nds-card-price">
+                                        <div class="nds-card-value">
                                             <span class="nds-number-format" data-currency="SAR">1299</span>
                                             <s class="nds-number-format" data-currency="SAR">1599</s>
                                         </div>
@@ -490,7 +490,7 @@ last_edit: "24/08/2026 - 12:48 PM"
             &lt;span class="nds-card-title"&gt;Smart Watch&lt;/span&gt;
             &lt;p class="nds-card-description"&gt;AMOLED display, water resistant to 50 meters.&lt;/p&gt;
         &lt;/div&gt;
-        &lt;div class="nds-card-price"&gt;
+        &lt;div class="nds-card-value"&gt;
             &lt;span class="nds-number-format" data-currency="SAR"&gt;1299&lt;/span&gt;
             &lt;s class="nds-number-format" data-currency="SAR"&gt;1599&lt;/s&gt;
         &lt;/div&gt;
@@ -522,7 +522,7 @@ last_edit: "24/08/2026 - 12:48 PM"
                                             <span class="nds-card-title">Specialty Coffee</span>
                                             <p class="nds-card-description">Medium-roast single-origin Arabica beans.</p>
                                         </div>
-                                        <div class="nds-card-price">
+                                        <div class="nds-card-value">
                                             <span class="nds-number-format" data-currency="SAR">89</span>
                                             / kg
                                         </div>
@@ -565,7 +565,7 @@ last_edit: "24/08/2026 - 12:48 PM"
             &lt;span class="nds-card-title"&gt;Specialty Coffee&lt;/span&gt;
             &lt;p class="nds-card-description"&gt;Medium-roast single-origin Arabica beans.&lt;/p&gt;
         &lt;/div&gt;
-        &lt;div class="nds-card-price"&gt;
+        &lt;div class="nds-card-value"&gt;
             &lt;span class="nds-number-format" data-currency="SAR"&gt;89&lt;/span&gt;
             / kg
         &lt;/div&gt;
@@ -876,7 +876,7 @@ last_edit: "24/08/2026 - 12:48 PM"
                     <li>Don't nest cards inside cards. If you need internal structure, use <code class="nds-inline-code lang-html">nds-card-meta</code>, <code class="nds-inline-code lang-html">nds-card-tags</code>, or a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">definition list</a> inside the content area</li>
                     <li>Place <code class="nds-inline-code lang-html">nds-card-actions</code> after <code class="nds-inline-code lang-html">nds-card-content</code>, not inside it. Only the content area scrolls inside a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">modal</a>, so buttons placed inside it scroll out of reach on a long form. Actions inside the content still work: a modal pins them to the bottom, and an <code class="nds-inline-code lang-html">nds-rowView</code> card keeps them in the content column</li>
                     <li>Add a featured icon or avatar in the header for quick visual recognition. Size up (<code class="nds-inline-code lang-html">nds-lg</code>, <code class="nds-inline-code lang-html">nds-xl</code>) on statistic cards and grid contexts where the icon carries the meaning</li>
-                    <li>Show prices with <code class="nds-inline-code lang-html">nds-card-price</code>, not tags: the amount is an <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> span (<code class="nds-inline-code lang-html">data-currency</code> renders the riyal icon), a <code class="nds-inline-code lang-html">&lt;s&gt;</code> child is the crossed-out original, and a unit suffix like <code class="nds-inline-code lang-html">/ kg</code> is plain text</li>
+                    <li>Show a price, a rate, or a size with <code class="nds-inline-code lang-html">nds-card-value</code>, not tags: the value is an <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> span (<code class="nds-inline-code lang-html">data-currency</code> renders the riyal icon), a <code class="nds-inline-code lang-html">&lt;s&gt;</code> child is the crossed-out original, and a unit suffix like <code class="nds-inline-code lang-html">/ kg</code> is plain text</li>
                     <li>Keep card descriptions to one or two lines. For longer copy, add <code class="nds-inline-code lang-html">nds-truncate</code> on the title and description, or link out to a detail page from the actions area</li>
                 </ul>
             </div>
@@ -889,7 +889,7 @@ last_edit: "24/08/2026 - 12:48 PM"
                         <tr><td><code class="nds-inline-code lang-html">nds-stroke</code></td><td>card root</td><td>Adds a 1px outline border around the card</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-shadow</code></td><td>card root</td><td>Adds an elevation shadow; deepens on hover when the card is interactive</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-color</code></td><td>card root</td><td>Tinted background fill that matches the active color variant</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>card root</td><td>Switches the card to a horizontal row layout (header sits to the side)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>card root</td><td>Switches the card to a horizontal row layout. The header sits beside the content and keeps its own size, so an avatar or featured icon stays compact. An image header is 160px wide; set <code class="nds-inline-code lang-html">--card-image-width</code> to change it. When the card is too narrow for both columns, the header takes the full width and the content moves under it</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>card root</td><td>Centers header, content, tags, rating, and actions horizontally. It must sit on the root, not on an inner part: the card also reads it to switch the featured icon's alignment, so a misplaced <code class="nds-inline-code lang-html">nds-center</code> centers nothing and leaves the icon on the old rule</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-statistic</code></td><td>card root</td><td>Centered metric layout with a large display number; size with <code class="nds-inline-code lang-html">nds-md</code> or <code class="nds-inline-code lang-html">nds-sm</code> on the number element</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-user</code></td><td>card root</td><td>Compact user-card preset with a 224px default width</td></tr>
@@ -939,6 +939,7 @@ last_edit: "24/08/2026 - 12:48 PM"
                         <tr><td><code class="nds-inline-code lang-html">--card-rating</code></td><td><code class="nds-inline-code lang-html">--text-secondary-paragraph</code></td><td>Rating helper text color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--featuredicon-color</code></td><td><code class="nds-inline-code lang-html">--featuredicons-icon-primary</code></td><td>Featured-icon color (also drives the avatar color)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--featuredicon-bg</code></td><td><code class="nds-inline-code lang-html">--featuredicons-background-primary-light</code></td><td>Featured-icon background color</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--card-image-width</code></td><td><code class="nds-inline-code lang-html">160px</code></td><td>Width of the image column in an <code class="nds-inline-code lang-html">nds-rowView</code> card. It has no effect on a stacked card, where the image fills the card width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--img-ratio</code></td><td><code class="nds-inline-code lang-html">2 / 1</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-card-image</code> to control aspect ratio</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--img-pos-x</code></td><td><code class="nds-inline-code lang-html">50%</code></td><td>Horizontal focal point of the image</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--img-pos-y</code></td><td><code class="nds-inline-code lang-html">50%</code></td><td>Vertical focal point of the image</td></tr>
