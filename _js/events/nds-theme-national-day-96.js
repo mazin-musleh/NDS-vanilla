@@ -121,7 +121,7 @@
         slide.innerHTML =
             img +
             '<div class="nds-section-body">' +
-              '<h1 class="nds-section-title">' + esc(t(HERO.title)) + '</h1>' +
+              '<h2 class="nds-section-title">' + esc(t(HERO.title)) + '</h2>' +
               desc + cta +
             '</div>';
         return slide;

@@ -113,7 +113,7 @@
         slide.innerHTML =
             '<div class="nds-section-body">' +
               logo +
-              '<h1 class="nds-section-title">' + esc(t(HERO.title)) + '</h1>' +
+              '<h2 class="nds-section-title">' + esc(t(HERO.title)) + '</h2>' +
               desc + cta +
             '</div>';
         return slide;

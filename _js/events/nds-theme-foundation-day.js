@@ -111,7 +111,7 @@
             '<div class="nds-hero-image-wrapper" style="--overlay:0;">' + img + '</div>' +
             '<div class="nds-section-body nds-full-width">' +
               '<div class="nds-block nds-content-wrapper"><div>' +
-                '<h1 class="nds-section-title">' + esc(t(HERO.title)) + '</h1>' +
+                '<h2 class="nds-section-title">' + esc(t(HERO.title)) + '</h2>' +
                 desc + cta +
               '</div></div>' +
             '</div>';
