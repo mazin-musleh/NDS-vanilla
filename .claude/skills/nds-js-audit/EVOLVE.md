@@ -22,7 +22,7 @@ Loaded from SKILL.md at the end of a run that logged Gap / SKIP / Persona-drift 
 **Quality bars (filter what becomes a candidate — sub-bar observations stay recorded Gap/Dead-rule notes for a future run):**
 - **ADD rule** — requires a motivating finding with ≥2 sites or meaningful body overlap. A one-off shape stays a Gap observation, not a new rule.
 - **NARROW / SEVERITY** — requires a specific cited reason (e.g. N consecutive skips in a named file).
-- **DELETE rule** — requires the dead-rule evidence bar: zero true-positive matches across the session's emitted/saved runs. Rare by design; when unproven, narrow rather than delete.
+- **DELETE rule** — requires the dead-rule evidence bar: zero true-positive matches across the session's emitted runs. Rare by design; when unproven, narrow rather than delete.
 
 A run with only hand-wavy or single-instance observations surfaces no candidates — it records them in the report's Gaps/Dead-rule sections for a future run to confirm, and omits the `## Catalog evolved — candidates` block.
 
@@ -108,7 +108,7 @@ Revert via git if you change your mind — prefer reverting the specific hunks, 
 
 ### Citation hygiene (full-tree runs)
 
-The full-tree JSD-15 pass observes every entry's cited examples as a byproduct of its checks. Two no-bar candidates follow — **expire resolved motivating findings** and **heal symbol-anchored citations** — using the exact shapes in "Persona bookkeeping edits" above (they apply to catalog-rule citations in `RULES-*.md` the same way). Record both under the `Bookkeeping reconciled` sub-heading; an expired citation in a **carve-out** additionally surfaces a carve-out DELETION candidate (see Guardrails).
+Run `node scripts/check-audit-citations.mjs` first — it mechanically verifies every cited path, symbol anchor, and line hint across both audit skills' files; its failures are ready-made heal candidates. The full-tree JSD-15 pass observes every entry's cited examples as a byproduct of its checks. Two no-bar candidates follow — **expire resolved motivating findings** and **heal symbol-anchored citations** — using the exact shapes in "Persona bookkeeping edits" above (they apply to catalog-rule citations in `RULES-*.md` the same way). Record both under the `Bookkeeping reconciled` sub-heading; an expired citation in a **carve-out** additionally surfaces a carve-out DELETION candidate (see Guardrails).
 
 Single-file runs see one file, not the corpus — they may still produce rule edits (a JSD-15 finding on that file) and may expire a resolved finding *only* when that one file is the sole site the motivating finding named.
 

@@ -50,7 +50,7 @@ Default to advancing, not asking. Run the obvious next step automatically and re
 3. **Before a git commit** — never auto-commit; propose the message and wait.
 4. **Before editing the skill's own files** — Phase 7 EVOLVE surfaces catalog/persona refinement candidates at run end; applying them needs ONE explicit go (`evolve` / `evolve <RULE>`). Audit sessions run concurrently and share `.claude/skills/nds-js-audit/` — an unprompted mid-run write from one session clobbers another session's read of the same catalog.
 
-Read-only / reversible steps (running the audit, emitting the report, `save`-ing it on request) take the recommended action without an extra confirmation round-trip. When nothing is ambiguous, do it and say so — don't stop to ask permission for the step you already recommended.
+Read-only / reversible steps (running the audit, emitting the report) take the recommended action without an extra confirmation round-trip. When nothing is ambiguous, do it and say so — don't stop to ask permission for the step you already recommended.
 
 **Live behavior verification (Puppeteer) is NEVER auto-run.** The static review is the automatic Phase 6 gate; the live browser drive is always the user's choice — the skill offers `verify in browser` (skill drives it) vs a manual review the user performs, states a risk-based recommendation, and drives the browser ONLY on an explicit `verify in browser`. Auto-advance through a clean fix batch still applies (static review + rebundle are the gate); behavior verification rides alongside as an offered option, not a blocker.
 
@@ -332,8 +332,7 @@ Other options:
 2. `promote <api-name>` — apply one JSD-05 promotion: edit `_js/nds-core.js` to add the proposed helper, migrate every call site listed in the report, and follow the file-by-file rhythm (rebundle + agent review + pause between files). Only offered when the report has "Promotion candidates (JSD-05)" entries.
 3. `apply solution` — apply the `Proposed solution:` from a `tradeoff → recommend solving` finding inline (or `save the plan` if it's a larger refactor saved under `~/.claude/plans/`). Only offered when the report has a `tradeoff → recommend solving` finding.
 4. `evolve` — apply the surfaced catalog/persona refinement candidates from the `## Catalog evolved — candidates` block (`evolve <RULE>` for one). Only offered when candidates exist; the skill files are untouched until this explicit go.
-5. `save` — **optional.** Persist this report to `.claude/audit-reports/` for cross-run comparison (the "Diff vs. Run (N−1)" trail). Not needed to apply fixes or to evolve within this session — see "Saving the report" below.
-6. `skip` — end the audit here; nothing is written, nothing is changed.
+5. `skip` — end the audit here; nothing is written, nothing is changed.
 
 (Catalog/persona evolution is suggest-only — Phase 7 turns any concrete Gap / Dead-rule / Persona-drift refinement that clears the quality bars into a fully-drafted candidate and appends a `## Catalog evolved — candidates` block to the report. NOTHING is written to the skill files until the user replies `evolve` — concurrent audit sessions share these files, and a mid-run write from one session conflicts with another's run.)
 
@@ -350,7 +349,7 @@ Follow **Numbered-reply discipline** (see Response style): every available prima
 
 ### Computing the Recommended action
 
-**`save` is never the recommendation.** It is optional and exists for cross-run comparison — not for the work this run enables. Recommend the substantive next step the findings call for; when there is none, recommend `skip` and mention `save` only as the optional way to keep a comparison anchor. Walk top-to-bottom and stop at the first match:
+Recommend the substantive next step the findings call for; when there is none, recommend `skip`. Walk top-to-bottom and stop at the first match:
 
 | Run state | Recommended | One-line reason template |
 |---|---|---|
@@ -362,50 +361,6 @@ Follow **Numbered-reply discipline** (see Response style): every available prima
 | Clean run — zero findings | `skip` | "nothing to fix" |
 
 **When several states match, the substantive action wins** the recommendation (promote > fix > solve > evolve), and the no-action rows only fire when no fix/promote/solve/evolve action exists. Phrase the reason in plain language tied to THIS run's numbers.
-
-**Appending the optional `save` nudge.** After the recommendation reason, add a short `save` mention only when it would actually pay off — keep it a clause, never the headline:
-- If this run surfaced (or, post-`evolve`, applied) Phase 7 refinements: "; `save` to persist the `## Catalog evolved` record."
-- Else if a prior saved run for this scope exists (a same-`{scope}` file in `.claude/audit-reports/`): "; `save` to extend the comparison trail (Diff vs. Run N−1)."
-- Else (no prior saved run): "; `save` if you want a baseline to diff future runs against."
-Never frame `save` as something the user *should* do — it is the user's call, and skipping it costs nothing within this session (fixes and same-session evolve do not depend on it).
-
-### Saving the report (optional, user-approved)
-
-**What save is for.** A saved report is a comparison artifact, not a requirement. Its payoff is *across* runs: the "Diff vs. Run (N−1)" section that makes multi-run refinement legible. Within a single session, neither applying fixes nor Phase 7 evolve depends on a saved file — same-session evolve aggregates the in-conversation reports directly. So never push `save`; offer it, and let the user decide whether the comparison trail is worth keeping.
-
-When the user replies `save` — alone, or combined with another action like `fix HIGH then save` — write the current report verbatim to `.claude/audit-reports/` under one of these patterns:
-
-**Full-tree filename:** `YYYY-MM-DD-nds-js-{category}-audit-run-N.md`
-**Single-file filename:** `YYYY-MM-DD-nds-js-{component}-{category}-audit-run-N.md`
-
-- `YYYY-MM-DD` is today's date (the run date, not the save date — they're the same in 99% of cases, but use the date of the audit if they diverge).
-- `{category}` is the rule-group filter the run used: `performance` / `dry` / `security` / `architecture`. The Phase 1 rule-group filter maps 1:1 to this slug — `performance` → `performance`, `dry` → `dry`, `security` → `security`, `architecture` → `architecture`. Always lowercased.
-- `{component}` (single-file mode only) is the resolved target's stem with the `nds-` prefix stripped: `_js/nds-accessibility.js` → `accessibility`. Lowercased, hyphens preserved (`nds-cooldown-button.js` → `cooldown-button`).
-- `N` is the **per-scope save-order index**:
-  - **Full-tree:** `(count of existing `*-{category}-audit-run-*.md` files at the full-tree pattern in `.claude/audit-reports/`) + 1`.
-  - **Single-file:** `(count of existing `*-{component}-{category}-audit-run-*.md` files in `.claude/audit-reports/`) + 1`. Indexed per-(component, category) so "Run 2 vs Run 1 of accessibility performance" stays diffable independently of any full-tree run that landed between them.
-- Index is per-category (and per-component for single-file), not global — comparing apples to apples is what makes "Diff vs. Run (N−1)" useful. Do NOT count `/nds-js-audit` invocations from the conversation that didn't get saved; the index reflects persisted artifacts only.
-
-**Always include a frontmatter-style header** in the saved file so later audits can be diffed meaningfully:
-
-```markdown
-# Code Audit — {scope-line} — Run N
-
-**Date:** YYYY-MM-DD
-**Rule catalog version:** {single group e.g. "JSA" | combined e.g. "JSP + JSD + JSS + JSA"} (note any post-evolution refinements: "post-evolution: JSD-03 [400,2000] range, JSS-01 allowlist v3, JSA-11 80-line threshold")
-**Invocation:** `/nds-js-audit {args}`
-
-## Summary
-…
-```
-
-`{scope-line}` is `` `_js/` (js mode) `` for full-tree runs, or `` `_js/nds-accessibility.js` (single-file mode) `` (use the actual file path) for single-file runs. Single-file reports MUST also surface the JSD-05 skip banner from Phase 1 verbatim when the run was `dry`.
-
-**Diff-vs-prior section.** If `N ≥ 2`, append a "Diff vs. Run (N−1)" section at the bottom of the file listing what changed between this run and the last saved one: new findings, closed findings, re-classified findings, and any rule evolutions applied between runs. This is what makes multi-run refinement legible across time.
-
-**Never overwrite.** Before writing, `ls .claude/audit-reports/` to confirm the target filename doesn't exist. If it does (e.g., two saves on the same day), bump the `-N` index.
-
-**Writes go only to `.claude/audit-reports/`.** Never save reports inside `_js/`, the project root, or other Jekyll-tracked directories — the `.claude/` tree is outside the site build.
 
 The "Gaps observed" and "Dead-rule candidates" sections are omitted when both logs are empty. Each proposal must be concrete: a specific rule ID to add/narrow/remove, with at least one example finding that motivates it. Hand-wavy proposals ("maybe add a rule for ...") do not belong here.
 
@@ -440,4 +395,4 @@ This skill deliberately does not cover:
 - Profiler-driven *detection*. The JSP/JSA catalogs are static-read heuristics — they surface candidates, not hotspots, and don't replace a DevTools Performance / Lighthouse pass. (The Phase 6 perf *verification* is different: a bounded before/after measurement of one applied fix, not a profiler sweep.)
 - Including `_js/nds-core.js` or `_js/nds-loader.js` in full-tree `js` runs. Single-file audits on either ARE supported — see the "Excluded files" carve-out in Phase 1.
 - Running `bundle exec jekyll build` unless the user explicitly asks. `ruby _plugins/js_processor.rb` runs automatically per-file in Phase 5/6, and the Phase 6 Puppeteer test MAY start/reuse `bundle exec jekyll serve` (port 4002) — see `PUPPETEER.md`.
-- Editing files outside the Phase 5 / Phase 7 / audit-reports paths. Phase 5 edits `_js/nds-*.js`, plus `_js/nds-loader.js` / `_js/nds-core.js` only when a finding's `Fix:` routes there (JSA-05 registry edits; `promote <api-name>` candidates), plus `_sass/**/*.scss` only when a JSA finding's `Fix:` routes there (JSA-15 CSS-subsume migrations — see `FIX.md` → "Out-of-scope modifications" for the bounds). Phase 7 edits this `SKILL.md`, the `RULES-*.md` group files, and `PERSONA.md` only on an explicit `evolve` go. Phase 4 `save` writes (never overwrites) reports in `.claude/audit-reports/`. Nothing else.
+- Editing files outside the Phase 5 / Phase 7 paths. Phase 5 edits `_js/nds-*.js`, plus `_js/nds-loader.js` / `_js/nds-core.js` only when a finding's `Fix:` routes there (JSA-05 registry edits; `promote <api-name>` candidates), plus `_sass/**/*.scss` only when a JSA finding's `Fix:` routes there (JSA-15 CSS-subsume migrations — see `FIX.md` → "Out-of-scope modifications" for the bounds). Phase 7 edits this `SKILL.md`, the `RULES-*.md` group files, and `PERSONA.md` only on an explicit `evolve` go. Nothing else.

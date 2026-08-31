@@ -17,7 +17,7 @@ Each entry has four fields, each doing one job:
 
 If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, which surfaces a revision candidate when the divergent file's cited reasoning clears the evolve quality bar — applied only on the user's explicit `evolve` go and recorded in the `## Catalog evolved (applied)` block. Raw adoption counts or "the corpus changed" never trigger a revision — those are migration targets; the canonical is the deliberate choice, and the corpus catches up. Citation hygiene (expiring a resolved motivating finding, healing a drifted symbol-anchored citation) needs no quality bar — it is reported under `Bookkeeping reconciled` so the change is never silent, and it too lands only on the explicit `evolve` go (concurrent audit sessions share this file).
 
-*(No maturity ladder, no adoption tallies, no counting ledger — divergence detection, not counting, is what the persona is for. Do not add one: cross-run counting depends on a saved-report trail the skill never recommends creating.)*
+*(No maturity ladder, no adoption tallies, no counting ledger — divergence detection, not counting, is what the persona is for. Do not add one: cross-run counting depends on a report trail the skill does not keep — reports live in-conversation only, git is the archive.)*
 
 ---
 
