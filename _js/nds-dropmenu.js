@@ -49,8 +49,9 @@
     // the popup. Snapshotted onto the menu before portaling so the cascade
     // survives the move to <body>. Kept as a module-level const (not a static
     // class field) for older-Safari compatibility.
-    // Only consulted when the dropmenu opts in via `data-portal`; in-place
-    // dropmenus inherit naturally and need no snapshot.
+    // Only consulted when the menu actually portals — forced by `data-portal`
+    // or decided automatically by _decidePortal when an ancestor clips it;
+    // in-place dropmenus inherit naturally and need no snapshot.
     const PORTAL_VARS = [
         '--menu-padding',
         '--dropmenu-width',
@@ -123,9 +124,10 @@
 
         /** Find the first descendant matching `selector` whose nearest
          *  `.nds-dropmenu` ancestor is `root` — i.e. it isn't inside a
-         *  nested sub-dropmenu. Wrapper-boundary form, for the constructor:
-         *  `this.menu` doesn't exist yet there. Everything after init uses
-         *  the menu-boundary readers below. */
+         *  nested sub-dropmenu. Wrapper-boundary form, for parts that live on
+         *  the WRAPPER: the constructor's trigger/menu lookup (`this.menu`
+         *  doesn't exist yet there) and select mode's hidden input. Everything
+         *  scoped to the MENU uses the menu-boundary readers below. */
         _findOwnDescendant(root, selector) {
             const candidates = root.querySelectorAll(selector);
             for (let i = 0; i < candidates.length; i++) {
@@ -413,7 +415,10 @@
             if (!name) return;
             const { signal } = this.abortController;
 
-            let hidden = this.dropmenu.querySelector('input[type="hidden"][data-nds-select-value]');
+            // Wrapper-boundary lookup: a nested select-mode dropmenu keeps its
+            // own hidden input inside our menu, and a bare querySelector would
+            // adopt it (renaming the child's field) on a destroy → re-init.
+            let hidden = this._findOwnDescendant(this.dropmenu, 'input[type="hidden"][data-nds-select-value]');
             if (!hidden) {
                 hidden = document.createElement('input');
                 hidden.type = 'hidden';
@@ -441,7 +446,13 @@
 
             this.menu.addEventListener('click', (e) => {
                 const item = e.target.closest('.nds-dropmenu-item');
-                if (item && item.hasAttribute('data-value')) this.applySelection(item);
+                // Ownership guard, same as the auto-close handler below: a
+                // nested sub-dropmenu's items match this selector and carry
+                // data-value (date-picker's month/year), so without it the
+                // CHILD's value lands in THIS picker's hidden input, trigger
+                // label and nds:dropmenu:selected payload.
+                if (!this._owns(item)) return;
+                if (item.hasAttribute('data-value')) this.applySelection(item);
             }, { signal });
         }
 
@@ -458,9 +469,15 @@
                 ? triggerAttr
                 : (itemLabel ? itemLabel.textContent : item.textContent.trim());
 
-            const triggerLabel = this.trigger.querySelector('.nds-label');
-            if (triggerLabel) triggerLabel.textContent = labelText;
-            else this.trigger.textContent = labelText;
+            // Skip when the trigger fell back to the wrapper (no
+            // .nds-dropmenu-trigger in the markup): the .nds-label lookup would
+            // then hit the first menu ITEM's label, and the textContent branch
+            // would wipe the wrapper, menu included.
+            if (this.trigger !== this.dropmenu) {
+                const triggerLabel = this.trigger.querySelector('.nds-label');
+                if (triggerLabel) triggerLabel.textContent = labelText;
+                else this.trigger.textContent = labelText;
+            }
 
             this._ownItems().forEach((o) => {
                 if (o !== item) NDS.State.clear(o);
@@ -744,6 +761,12 @@
 
 
         open() {
+            // Already open: a second open() would overwrite _offScroll and
+            // _unsubResize, stranding the pooled subscribers the first one
+            // registered (close() only releases the last pair). Reachable via
+            // handleTriggerKeydown, which calls open() unconditionally on
+            // Arrow keys. Reposition with applyPosition(), not a re-open.
+            if (this.isOpen) return;
             // Delayed-first-open mode (opt-in via data-delay="<ms>"). The first
             // open shows a loading state on the trigger, emits nds:dropmenu:prepare
             // so a consumer can populate the menu, then opens after <ms>. One-shot:
@@ -809,10 +832,12 @@
             this.menu.style.top = '0px';
             this.menu.removeAttribute('hidden');
 
-            // Portal (opt-in). When `data-portal` is set, move the menu to
-            // <body> so it escapes any ancestor stacking context. `force: true`
-            // bypasses NDS.portal's needsPortal heuristic — the author asked
-            // explicitly. Mirror the attribute onto the menu so SCSS can
+            // Portal. _decidePortal already ruled above — `data-portal` forces
+            // it, or a clipping ancestor opted the menu in automatically. Move
+            // the menu to <body> so it escapes any ancestor stacking context.
+            // `force: true` bypasses NDS.portal's needsPortal heuristic — the
+            // clip test answers a different question and is the decision here
+            // (see _isClipped). Mirror the attribute onto the menu so SCSS can
             // switch positioning to `fixed` (the menu's CSS targets
             // `.nds-dropmenu-menu[data-portal]`).
             if (this.shouldPortal) {

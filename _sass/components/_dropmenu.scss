@@ -66,8 +66,9 @@
 // ==============================================
 // Default positioning is `absolute` — the menu is anchored to its `.nds-dropmenu`
 // wrapper (which has `position: relative`) and scrolls with the trigger.
-// When the wrapper opts in to portaling (`data-portal`), JS mirrors the
-// attribute onto the menu and moves it to <body>; the `[data-portal]` rule
+// When the menu portals — forced by the wrapper's `data-portal`, or decided
+// automatically when an ancestor clips it — JS mirrors the attribute onto the
+// menu and moves it to <body>; the `[data-portal]` rule
 // below switches to `position: fixed` so JS can write viewport coords.
 // State-driven rules apply via the menu's own data-state — we can't rely
 // on the wrapper as an ancestor selector once the menu is portaled.
@@ -89,7 +90,8 @@
   position: absolute;
   z-index: 1000;
 
-  // Portal opt-in (via wrapper's `data-portal`, mirrored by JS on open).
+  // Portaled menu (forced by the wrapper's `data-portal`, or auto-decided when
+  // an ancestor clips the menu; JS mirrors the attribute here on open).
   // Switches to viewport-anchored placement so JS can write top/left in
   // viewport pixels via NDS.placeFixed.
   &[data-portal] {
