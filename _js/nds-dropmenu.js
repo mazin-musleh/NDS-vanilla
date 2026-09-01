@@ -925,6 +925,9 @@
             // Stored so open() can call this._cancelClose() to abort the
             // in-flight close if the user re-opens before the transition
             // finishes. Cleared at the end of the cleanup body.
+            // Cancel first — close() has no re-entry guard, and re-arming over a
+            // live handle strands it: both fire, so _finishClose() runs twice.
+            this._cancelClose?.();
             this._cancelClose = NDS.onTransitionEnd(this.menu, () => this._finishClose());
         }
 
