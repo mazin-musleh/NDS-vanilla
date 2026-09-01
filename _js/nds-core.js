@@ -22,7 +22,7 @@
  *   DOM, portal-aware
  *     NDS.portal(el) / .unportal(el) / .needsPortal(el)
  *     NDS.closest(el, sel) · NDS.queryAll(root, sel) · NDS.querySelector(root, sel)
- *     NDS.resolveEl(idOrElOrSel) · NDS.summon(id) · NDS.flipPosition(trigger, menu) · NDS.placeFixed(el, t, l)
+ *     NDS.resolveEl(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.placeFixed(el, t, l)
  *     NDS.stickyHeaderBottom() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.gridLastRow(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *   data + text
@@ -827,15 +827,17 @@
         try { return document.querySelector(ref); } catch { return null; }
     };
 
-    // ── Template Summoner ────────────────────────────────────────────
-    // Resolve an id that may still be asleep inside a <template>. A modal or
-    // panel may ship template-wrapped so its nodes stay out of the DOM until
-    // first open; on a live miss this scans the page's templates, stamps the
-    // owning template's content into its place, wakes the arrivals via
-    // NDS.Init.refresh (loader inits are idempotent), and returns the element.
+    // ── Template Resolver ────────────────────────────────────────────
+    // Resolve an id that may still sit inside a <template>. A modal or panel
+    // may ship template-wrapped so its nodes stay out of the DOM until first
+    // open; on a live miss this scans the page's templates, moves the owning
+    // template's content into its place, inits the arrivals via
+    // NDS.Init.refresh (loader inits are idempotent), fires a bubbling
+    // nds:template:ready {id} on the element — page JS binds there, since
+    // nothing it looked up at load existed — and returns the element.
     // MUTATING on a template hit — open/toggle paths only; read-only lookups
-    // (isOpen, close) keep getElementById so they never stamp anything.
-    NDS.summon = (id) => {
+    // (isOpen, close) keep getElementById so they never move anything.
+    NDS.fromTemplate = (id) => {
         if (!id) return null;
         let el = document.getElementById(id);
         if (el) return el;
@@ -844,7 +846,10 @@
             if (!tpls[i].content.getElementById(id)) continue;
             tpls[i].replaceWith(tpls[i].content);
             el = document.getElementById(id);
-            if (el) NDS.Init?.refresh?.(el);
+            if (el) {
+                NDS.Init?.refresh?.(el);
+                el.dispatchEvent(new CustomEvent('nds:template:ready', { bubbles: true, detail: { id } }));
+            }
             return el;
         }
         return null;

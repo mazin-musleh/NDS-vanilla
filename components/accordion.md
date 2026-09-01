@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.10.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "01/09/2026 - 11:30 PM"
 ---
 
 <!-- Standard -->
@@ -461,6 +461,12 @@ last_edit: "28/06/2026 - 01:27 PM"
                         <tr><td><code class="nds-inline-code lang-html">data-nds-accordion-initialized</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Stamped by JS after initialization. Enables collapse transitions and removes the skeleton loading state. Do not set this manually</td></tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="nds-block nds-prose">
+                <h3 class="nds-block-title">Accessibility</h3>
+                <p>The button carries the relationship. JS keeps <code class="nds-inline-code lang-html">aria-expanded</code> in sync, and <code class="nds-inline-code lang-html">aria-controls</code> names the collapse panel by id.</p>
+                <p>The collapse panel is role-less on purpose. Do not add <code class="nds-inline-code lang-html">role="region"</code>, <code class="nds-inline-code lang-html">aria-label</code> or <code class="nds-inline-code lang-html">aria-labelledby</code> to it. The WAI-ARIA Authoring Practices Guide marks the region role optional and advises against it on long accordions, because every panel becomes a landmark. On a plain <code class="nds-inline-code lang-html">div</code>, <code class="nds-inline-code lang-html">aria-label</code> and <code class="nds-inline-code lang-html">aria-labelledby</code> are also prohibited, so an audit fails.</p>
             </div>
 
             <div class="nds-block">

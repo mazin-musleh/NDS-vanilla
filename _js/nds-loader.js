@@ -484,7 +484,7 @@
             name: 'Modal',
             // A modal may ship inert in a <template class="nds-modal-template">
             // — that class keeps this presence gate true, so init binds the
-            // delegated triggers and the first click can NDS.summon it.
+            // delegated triggers and the first click can pull it in via NDS.fromTemplate.
             selector: '.nds-modal, .nds-modal-template',
             init: () => NDS.Modal?.init?.(),
             // Not a per-element teardown: its listeners are delegated on document and
@@ -503,7 +503,7 @@
             // Toggle clicks in the pre-bundle gap no-op and recover on the
             // next click (the Tabs/Tables/Accordion precedent).
             name: 'Panel',
-            // .nds-panel-template — same summon story as Modal above.
+            // .nds-panel-template — same template story as Modal above.
             selector: '.nds-panel, .nds-panel-template',
             init: () => NDS.Panel?.init?.(),
             destroyEach: true,
@@ -1055,7 +1055,7 @@
             if (!ns || ns.__ndsStub) continue;
             try {
                 if (component.refresh) component.refresh(root);
-                // matches() covers a root that IS the component (a summoned panel).
+                // matches() covers a root that IS the component (a panel pulled from a template).
                 else if (component.universal || root === document || root.matches?.(component.selector) || root.querySelector?.(component.selector)) component.init();
             } catch (error) {
                 console.warn(`[NDS:refresh] ${component.name} failed:`, error);

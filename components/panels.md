@@ -6,7 +6,7 @@ hero_description: A content-agnostic surface that slides in from any edge of the
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.10.x"
-last_edit: "01/09/2026 - 09:40 PM"
+last_edit: "01/09/2026 - 11:30 PM"
 lang: en
 direction: ltr
 ---
@@ -373,7 +373,7 @@ direction: ltr
                     <li>Keep the header's title inside <code class="nds-inline-code lang-html">.nds-panel-text</code>, the same title-plus-description pairing <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a> use. Add a <code class="nds-inline-code lang-html">.nds-panel-description</code> beside the title when the panel needs a subtitle, and drop the wrapper only for a bare title: it still fills the row on its own, so a leading icon and the close button stay where they are</li>
                     <li>Set <code class="nds-inline-code lang-html">--panel-content-width: 100%</code> on a sheet whose content should span the full width (a media row, a wide table) instead of capping to the page max-width</li>
                     <li>Ship the panel with the <code class="nds-inline-code lang-html">hidden</code> attribute so it never flashes before the script loads</li>
-                    <li>To keep a panel out of the DOM until first open, wrap the aside in <code class="nds-inline-code lang-html">&lt;template class="nds-panel-template"&gt;</code>. The toggle stays outside the template. The markup joins the page on the first click, and the components inside it wire themselves. One panel per template. The <a class="nds-color" href="{{ 'components/accessibility' | relative_url }}">Accessibility</a> panel ships this way</li>
+                    <li>To keep a panel out of the DOM until first open, wrap the aside in <code class="nds-inline-code lang-html">&lt;template class="nds-panel-template"&gt;</code>. The toggle stays outside the template. The markup joins the page on the first click, and the components inside it wire themselves. One panel per template. The <a class="nds-color" href="{{ 'components/accessibility' | relative_url }}">Accessibility</a> panel ships this way. Page scripts must not look the panel up at load: the element is not in the page yet. Listen on <code class="nds-inline-code lang-js">document</code> for <code class="nds-inline-code lang-js">nds:template:ready</code> instead. NDS fires it on the panel after the markup joins the page and its components are wired</li>
                 </ul>
             </div>
 

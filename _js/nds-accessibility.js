@@ -12,7 +12,7 @@
  *   (none)
  * Hooks:
  *   data-accessibility-panel · data-accessibility-toggle · data-accessibility-action
- *   (the panel ships inert in <template class="nds-panel-template">, summoned on arm
+ *   (the panel ships inert in <template class="nds-panel-template">, pulled out on arm
  *   by the id the FAB's data-panel-toggle names)
  *   data-a11y-mode · data-a11y-visual · data-a11y-setting · data-a11y-value
  *   data-a11y-exclude-token   opt a subtree out of a mode's token overrides
@@ -991,19 +991,19 @@
     }
 
     // The panel may ship inert inside <template class="nds-panel-template">
-    // like any other panel (~185 nodes kept out of every page's DOM). Summon
-    // it by the id the FAB names; a bare <aside> already in the document — the
+    // like any other panel (~185 nodes kept out of every page's DOM). Pull it
+    // out by the id the FAB names; a bare <aside> already in the document — the
     // pre-template markup — is used as-is, so both generations of markup work.
     function resolvePanel() {
         const live = document.querySelector('[data-accessibility-panel]');
         if (live) return live;
         const id = toggleBtn && toggleBtn.dataset.panelToggle;
-        const injected = id ? NDS.summon?.(id) : null;
+        const injected = id ? NDS.fromTemplate?.(id) : null;
         if (injected) wireInjected(injected);
         return injected;
     }
 
-    // summon's NDS.Init.refresh already armed Panel/Theme/Accordion/ScrollMore
+    // fromTemplate's NDS.Init.refresh already armed Panel/Theme/Accordion/ScrollMore
     // (their inits are run-once / per-element guarded). What's left is the mode
     // mirror a Theme init that ran BEFORE the panel existed can't know about.
     function wireInjected(panelEl) {

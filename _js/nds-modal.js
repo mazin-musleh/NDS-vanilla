@@ -48,9 +48,9 @@
    * Open modal by ID or element
    */
   function open(target) {
-    // Get modal element — summon covers an id still asleep in a <template>
+    // Get modal element — fromTemplate covers an id still inside a <template>
     const modal = typeof target === 'string'
-      ? NDS.summon(target)
+      ? NDS.fromTemplate(target)
       : target;
 
     if (!modal || !modal.classList.contains('nds-modal')) return;

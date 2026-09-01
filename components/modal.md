@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.10.x"
-last_edit: "01/09/2026 - 09:40 PM"
+last_edit: "01/09/2026 - 11:30 PM"
 ---
 
 <!-- Modal Dialog -->
@@ -388,7 +388,7 @@ last_edit: "01/09/2026 - 09:40 PM"
                     <li>Don't stack modals. If one modal needs to open another, restructure the flow so a single modal handles the decision</li>
                     <li>Menu-based controls work inside a modal with no extra attribute: a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a>, a <a class="nds-color" href="{{ 'components/forms' | relative_url }}">select</a>, a <a class="nds-color" href="{{ 'components/multiselect' | relative_url }}">Multiselect</a>, an <a class="nds-color" href="{{ 'components/autocomplete' | relative_url }}">Autocomplete</a>, or a <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a>. The modal card scrolls its own content and creates a stacking context, so each menu detects the modal on open and moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> instead of clipping at the card edge. A menu taller than the space on either side of its trigger scrolls inside the viewport. Older markup that carries <code class="nds-inline-code lang-html">data-portal</code> on the <code class="nds-inline-code lang-html">.nds-dropmenu</code> wrapper still works — the attribute forces the same move</li>
                     <li>Choose <code class="nds-inline-code lang-html">nds-sm</code> for simple confirmation prompts with one or two buttons. Use the default size when the modal includes a short form or longer description. Use <code class="nds-inline-code lang-html">nds-lg</code> for content-heavy modals like terms of service or data previews. Use <code class="nds-inline-code lang-html">nds-full</code> for immersive tasks like image editing or document previews</li>
-                    <li>To keep a modal out of the DOM until first open, wrap it in <code class="nds-inline-code lang-html">&lt;template class="nds-modal-template"&gt;</code>. The trigger stays outside the template. The markup joins the page on the first click. One modal per template. Do not wrap a modal that holds content people should find with page search — content inside a template is invisible to search engines and Ctrl+F</li>
+                    <li>To keep a modal out of the DOM until first open, wrap it in <code class="nds-inline-code lang-html">&lt;template class="nds-modal-template"&gt;</code>. The trigger stays outside the template. The markup joins the page on the first click. One modal per template. Do not wrap a modal that holds content people should find with page search — content inside a template is invisible to search engines and Ctrl+F. Page scripts must not look the modal up at load: the element is not in the page yet. Listen on <code class="nds-inline-code lang-js">document</code> for <code class="nds-inline-code lang-js">nds:template:ready</code> instead. NDS fires it on the modal after the markup joins the page and its components are wired</li>
                     <li>Keep titles clear and contextual to the required action</li>
                     <li>Limit content to a single focused message or task</li>
                     <li>Provide explicit primary and secondary actions (Confirm/Cancel)</li>
