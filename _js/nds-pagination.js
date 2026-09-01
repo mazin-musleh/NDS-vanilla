@@ -18,6 +18,7 @@
  *   data-auto-pagination · data-total-pages · data-paged-target · data-per-page-target
  *   data-page-param · data-page-url · data-pagination-no-scroll
  *   data-paged-count · data-paged-from · data-paged-to (record slots the component fills)
+ *   data-paged-split (loader-stamped pre-reveal: items past the inline --per-page are hidden)
  * Gotchas:
  *   - setPage() moves the nav but fires no event — dispatch your own if listeners depend on it.
  *   - scrollToContent() ignores data-pagination-no-scroll: the explicit call is the intent.
@@ -30,8 +31,9 @@
  *
  * Delegated (ships in nds-delegated.min.js, loader-INJECTED after the reveal —
  * NOT critical:true). Pre-init paint is owned by the data-paged-initialized
- * crit-CSS skeleton, which hides items past the default page size (and collapses
- * table rows) until init stamps data-paged-initialized — so init landing
+ * crit-CSS skeleton, which hides items past the default page size — or past the
+ * inline --per-page, where the loader's pre-reveal split stamped data-paged-split —
+ * until init stamps data-paged-initialized, so init landing
  * post-reveal inserts the list without shifting content. The state init sets:
  *   - HTML builders + the manual-collapse path (NDSPagination →
  *     reconcileCollapse): more than 5 pages collapse to
@@ -39,8 +41,8 @@
  *     paint then collapse (horizontal CLS).
  *   - Auto-pagination initial paint (setupAutoContainer → updateAutoPagination):
  *     generates the collapsed list from data-total-pages, hides items past
- *     --per-page via showPage, locks table column widths from the all-rows
- *     skeleton, stamps data-paged-initialized so the skeleton reveals.
+ *     --per-page via showPage, locks table column widths from one all-rows
+ *     layout, stamps data-paged-initialized so the skeleton reveals.
  *   - Initial active-state stamping (setActivePage + updatePrevNextStates +
  *     initializePaginationStates) so the active page is highlighted and the
  *     prev/next disabled states are correct on first frame.
@@ -90,13 +92,13 @@
     // the common case is a consumer setting style="--per-page:N", and an inline
     // read costs nothing. Only media-query-driven values (no inline) fall through
     // to getComputedStyle, which forces a style recalc on the (laid-out) container.
-    // Defaults to 5. The container itself isn't display:none pre-init — the
+    // Defaults to 6. The container itself isn't display:none pre-init — the
     // skeleton hides individual items past --per-page, so the read is not free.
     // Synchronous at init by necessity — the page split must settle before data-paged-initialized reveals, or items flash all → paginated.
     function readPerPage(el) {
         const inline = el.style.getPropertyValue('--per-page');
         const v = parseInt(inline || getComputedStyle(el).getPropertyValue('--per-page'), 10);
-        return v > 0 ? v : 5;
+        return v > 0 ? v : 6;
     }
 
     // THE paged-item set for a container: the .nds-page-item elements it owns,
@@ -563,15 +565,17 @@
         updatePrevNextStates(pagination, currentPageNum, minPage, maxPage);
     }
 
-    // Lock a paged table's column widths before pagination hides its rows.
-    // The skeleton collapses overflow rows with `visibility: collapse` (not
-    // display:none), so they stay in the layout tree and the column widths
-    // already reflect every row's content — this read is free, no un-hide
-    // reflow. Once showPage hides the off-page rows, the explicit widths stop
-    // columns jumping page to page. No-op for non-table (card) paged content.
+    // Lock a paged table's column widths before pagination hides its rows, so
+    // columns don't jump page to page. The pre-init hold display:nones rows
+    // past page one; the caller stamps data-paged-initialized first, so this
+    // read forces ONE full-table layout with every row's content in it — the
+    // only pre-init pass that pays for all rows. No-op for card paged content.
     function lockTableColumns(items) {
         const first = items[0];
         if (!first || first.tagName !== 'TR') return;
+        // The loader's pre-reveal split hid rows past page one; show them so
+        // the read below sees every row's content. showPage re-hides them.
+        for (const row of items) row.hidden = false;
         const table = first.closest('table');
         // Own header row only. A sub-row's nested <table> has its own thead whose
         // cells sit inside a hidden row and measure 0 — and since the outer
@@ -681,55 +685,34 @@
         const items = _pagedItems(contentContainer);
 
         // Build the paginated UI in final state — no all-items → paginated
-        // flash. For a table, lockTableColumns first freezes column widths
-        // from the full-content layout (the collapsed skeleton rows still
-        // size columns) so they don't jump page to page. data-paged-initialized
-        // is released only AFTER paginating, so the collapse — and thus the
-        // all-rows column sizing — survives through the lock.
-        const paginate = () => {
-            const perPage = readPerPage(contentContainer);
-            contentContainer._ndsPerPage = perPage;
-            lockTableColumns(items);
-            updateAutoPagination(paginationNav, items, perPage);
+        // flash. Stamp FIRST: it releases the pre-init hold on rows past page
+        // one, so lockTableColumns measures every row's content. All of this
+        // runs in one task, so nothing paints between the release and showPage.
+        const perPage = readPerPage(contentContainer);
+        contentContainer._ndsPerPage = perPage;
+        contentContainer.setAttribute('data-paged-initialized', '');
+        lockTableColumns(items);
+        updateAutoPagination(paginationNav, items, perPage);
 
-            // Opt-in URL restore: land on ?page=N before the skeleton reveal —
-            // silent (no event, no scroll), clamped to the page count.
-            const urlPage = _readPageParam(paginationNav);
-            if (urlPage && urlPage > 1) {
-                const totalPages = Math.ceil(items.length / perPage);
-                const page = Math.min(urlPage, Math.max(1, totalPages));
-                const list = paginationNav.querySelector('.nds-pagination-list');
-                if (list && page > 1) {
-                    setActivePage(list, page);
-                    updatePrevNextStates(list, page, 1, totalPages);
-                    showPage(items, page, perPage);
-                }
+        // Opt-in URL restore: land on ?page=N before the skeleton reveal —
+        // silent (no event, no scroll), clamped to the page count.
+        const urlPage = _readPageParam(paginationNav);
+        if (urlPage && urlPage > 1) {
+            const totalPages = Math.ceil(items.length / perPage);
+            const page = Math.min(urlPage, Math.max(1, totalPages));
+            const list = paginationNav.querySelector('.nds-pagination-list');
+            if (list && page > 1) {
+                setActivePage(list, page);
+                updatePrevNextStates(list, page, 1, totalPages);
+                showPage(items, page, perPage);
             }
+        }
 
-            contentContainer.setAttribute('data-paged-initialized', '');
-
-            // Wire interaction: clicks + the --per-page ResizeObserver.
-            // _wireAutoNav re-queries items live (per click, per resize), so it
-            // takes only the per-container handles + the perPage baseline
-            // (which the resize observer detects changes against).
-            _wireAutoNav(paginationNav, contentContainer, perPage);
-        };
-
-        // Tables defer one frame: by the next paint the collapsed table is
-        // already laid out, so lockTableColumns' width read is free — no
-        // pre-paint forced reflow. The skeleton shows the first rows in the
-        // meantime, so the one-frame defer is invisible. Grids have no column
-        // lock, so they paginate synchronously.
-        // A hidden document never runs rAF, so a timer races it behind a
-        // one-shot latch: in the foreground rAF wins and keeps the free read
-        // (the timer then no-ops), while a tab opened in the background still
-        // paginates and releases its skeleton instead of waiting for focus.
-        if (items[0] && items[0].tagName === 'TR') {
-            let kicked = false;
-            const kick = () => { if (kicked) return; kicked = true; paginate(); };
-            requestAnimationFrame(kick);
-            setTimeout(kick, 100);
-        } else paginate();
+        // Wire interaction: clicks + the --per-page ResizeObserver.
+        // _wireAutoNav re-queries items live (per click, per resize), so it
+        // takes only the per-container handles + the perPage baseline
+        // (which the resize observer detects changes against).
+        _wireAutoNav(paginationNav, contentContainer, perPage);
 
         // Re-paginate automatically when items are added/removed. Default for all
         // auto-pagination; wired once per page, subsequent calls no-op.

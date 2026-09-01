@@ -31,7 +31,8 @@
  *   window.NDSAssetBase    override the directory the injected bundles load from
  *   window.__NDS_BUNDLES   the build-generated bundle manifest — never hand-write it
  *   written by the loader: data-nds-loaded on <html> — the reveal stamp, set once the
- *                          main CSS has applied
+ *                          main CSS has applied; data-paged-split on each .nds-paged-content
+ *                          with an inline --per-page (items past it get hidden pre-reveal)
  * Gotchas:
  *   - Three bundles. nds-main.min.js is a defer script and GATES the page reveal; the
  *     delegated and extras bundles are injected after the reveal and never gate anything.
@@ -460,13 +461,13 @@
         },
         {
             // Delegated: pre-init paint is covered by CSS — the
-            // data-paged-initialized skeleton (crit) shows the first 5 items —
-            // readPerPage's default, so a container that sets no --per-page has
-            // no boundary shift at all — and collapses table rows, and
+            // data-paged-initialized skeleton (crit) shows the first 6 items,
+            // readPerPage's default, or exactly the first page where the
+            // pre-reveal split (presplitPaged) read an inline --per-page — and
             // _pagination.scss reserves the empty nav's row height, so init
             // landing after the reveal inserts the list without shifting
-            // content. Bounded known shifts: --per-page ≠ 5; manual >5-page
-            // lists collapse to the ellipsis post-reveal. Registered AFTER Filter so
+            // content. Bounded known shifts: a media-query-only --per-page;
+            // manual >5-page lists collapse to the ellipsis post-reveal. Registered AFTER Filter so
             // a URL-active filter has stamped data-filtered before this paint;
             // Filter's refresh call during its init lands before this nav's
             // setup and is skipped (refreshAutoPagination's pre-init guard).
@@ -783,9 +784,29 @@
             // main CSS preload (same filename, earlier in head) would win.
             const main = document.querySelector('link[data-nds-defer="main"]')
                 || document.querySelector('link[href*="nds-main.min.css"]');
+            // Split every not-yet-paginated container at its inline --per-page
+            // before the reveal, so the skeleton shows exactly the first page:
+            // hide the items past it and stamp data-paged-split, which steps the
+            // crit "first 6" rule aside. Pagination (delegated) rewrites hidden
+            // at init. Inline only — a computed read would force a recalc; a
+            // media-query --per-page keeps the crit default.
+            const presplitPaged = () => {
+                document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])').forEach(c => {
+                    const n = parseInt(c.style.getPropertyValue('--per-page'), 10);
+                    if (!(n > 0)) return;
+                    // Same item set as pagination's _pagedItems: a tbody counts
+                    // its own rows only (sub-rows ride their parent).
+                    const items = c.tagName === 'TBODY'
+                        ? Array.from(c.children).filter(el => el.classList.contains('nds-page-item') && !el.classList.contains('nds-sub'))
+                        : c.querySelectorAll('.nds-page-item');
+                    for (let i = n; i < items.length; i++) items[i].hidden = true;
+                    c.setAttribute('data-paged-split', '');
+                });
+            };
             // Idempotent: three listeners race to get here and only one may inject.
             const done = () => {
                 if (root.hasAttribute('data-nds-loaded')) return;
+                presplitPaged();
                 root.setAttribute('data-nds-loaded', '');
                 loadIconSheets(main);
             };

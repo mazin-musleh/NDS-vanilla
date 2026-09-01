@@ -337,7 +337,7 @@
 // keep their size, so column sizing and lockTableColumns are unaffected).
 // Spinner + dim are suppressed in _loading.scss. The same look serves the
 // pre-init hold: not-yet-initialized filter/paged table bodies show
-// shimmer rows (crit exempts tbody from its visibility hold and collapses
+// shimmer rows (crit exempts tbody from its visibility hold and hides
 // rows past the first page). Pulses via the shared `processing`
 // keyframes; the a11y reduce-motion kill leaves the bars static.
 // Skeleton is also the DEFAULT pre-init state: any table bars its cells

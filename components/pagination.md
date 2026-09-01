@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.11.0"
-last_edit: "12/08/2026 - 12:41 AM"
+updated: "1.11.x"
+last_edit: "02/09/2026 - 02:23 AM"
 ---
 
 <!-- Choosing a mode -->
@@ -1311,6 +1311,10 @@ last_edit: "12/08/2026 - 12:41 AM"
                             <td><code class="nds-inline-code lang-html">data-paged-target="id"</code></td>
                             <td>Set on any element to make it a records counter for the paged container with that id. Inside it, pagination stamps the current window and count into <code class="nds-inline-code lang-html">[data-paged-from]</code>, <code class="nds-inline-code lang-html">[data-paged-to]</code>, and <code class="nds-inline-code lang-html">[data-paged-count]</code> slots, with thousand separators. Auto-pagination only; for server pagination stamp the slots via <code class="nds-inline-code lang-js">NDS.Pagination.updateRecords()</code></td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-paged-split</code></td>
+                            <td>Stamped by the loader before the page reveals, on each <code class="nds-inline-code lang-html">nds-paged-content</code> that sets <code class="nds-inline-code lang-html">--per-page</code> inline. Items past that count get <code class="nds-inline-code lang-html">hidden</code>, so the pre-init skeleton shows exactly the first page. You do not write it. Without an inline value the skeleton shows the first 6 items</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1333,8 +1337,8 @@ last_edit: "12/08/2026 - 12:41 AM"
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--per-page</code></td>
-                            <td><code class="nds-inline-code lang-html">5</code></td>
-                            <td>Items per page in auto-pagination. Set on the <code class="nds-inline-code lang-html">nds-paged-content</code> container</td>
+                            <td><code class="nds-inline-code lang-html">6</code></td>
+                            <td>Items per page in auto-pagination. Set it inline on the <code class="nds-inline-code lang-html">nds-paged-content</code> container so the pre-init skeleton shows the same count. A value set only in a media query still paginates, but the skeleton shows 6</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--pagination-scroll-offset</code></td>

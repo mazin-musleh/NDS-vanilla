@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "21/08/2026 - 07:54 PM"
+last_edit: "02/09/2026 - 02:28 AM"
 ---
 
 <!-- Basic Table Section -->
@@ -2038,7 +2038,7 @@ last_edit: "21/08/2026 - 07:54 PM"
                         <tr><td><code class="nds-inline-code lang-html">--mask-fade-distance</code></td><td>48px</td><td>Width of the gradient fade mask on scroll edges</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--table-sub-padding</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Even inset inside a sub-row's cell. Separate from the cell padding knobs: a detail row holds a panel, not a line of text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--table-sub-background</code></td><td><code class="nds-inline-code lang-html">var(--background-surface-sunken)</code></td><td>Background of a sub-row's cell, sunk behind the parent rows. Overriding this takes over both light and dark</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--per-page</code></td><td>10</td><td>Number of rows shown per page when using pagination (set on <code class="nds-inline-code lang-html">nds-paged-content</code>)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--per-page</code></td><td>6</td><td>Number of rows shown per page when using pagination. Set it inline on the <code class="nds-inline-code lang-html">nds-paged-content</code> tbody so the pre-init skeleton shows the same number of rows</td></tr>
                     </tbody>
                 </table>
             </div>
