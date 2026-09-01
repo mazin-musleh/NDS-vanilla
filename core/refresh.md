@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.9.0"
-last_edit: "22/08/2026 - 11:06 PM"
+last_edit: "01/09/2026 - 11:56 PM"
 ---
 
 <!-- Overview -->
@@ -254,6 +254,26 @@ view.remove();
       <div class="nds-block nds-prose">
         <h3 class="nds-block-title">What it does not do</h3>
         <p>It updates components against the DOM as it stands. It does not fetch, build rows, or manage loading state, and it does not undo work you did by hand: a component you configured through its own API keeps that configuration. It also does not destroy anything. Elements you are about to remove need <code class="nds-inline-code lang-js">NDS.Init.destroy()</code> first, described under Teardown above.</p>
+      </div>
+
+      <div class="nds-block nds-prose">
+        <h3 class="nds-block-title">Reaching an Instance</h3>
+        <p>A component stores its instance on the element it claims, as an <code class="nds-inline-code lang-js">nds{Name}</code> property: <code class="nds-inline-code lang-js">el.ndsAccordion</code>, <code class="nds-inline-code lang-js">el.ndsChart</code>, <code class="nds-inline-code lang-js">el.ndsStepper</code>, <code class="nds-inline-code lang-js">el.ndsSort</code>. That property is how you reach an instance from a DOM node, and it is the same property <code class="nds-inline-code lang-js">NDS.Init.destroy()</code> reads to find what to release.</p>
+        <p>Three namespaces also take the element and hand back the instance: <code class="nds-inline-code lang-js">NDS.Filter.getInstance(el)</code>, <code class="nds-inline-code lang-js">NDS.Sort.getInstance(el)</code>, and <code class="nds-inline-code lang-js">NDS.Upload.getInstance(el)</code>. No other namespace has <code class="nds-inline-code lang-js">getInstance</code>, so use the element property for the rest.</p>
+        <div class="nds-code">
+          <div class="nds-code-action">
+            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+              <i class="nds-icon nds-hgi-copy-01"></i>
+            </button>
+          </div>
+          <code class="lang-js">
+// The instance sits on the element
+document.getElementById('salesChart').ndsChart.render();
+
+// Filter, Sort, and Upload also expose a lookup
+const filter = NDS.Filter.getInstance(document.getElementById('resultsFilter'));
+          </code>
+        </div>
       </div>
 
       <div class="nds-block nds-prose">

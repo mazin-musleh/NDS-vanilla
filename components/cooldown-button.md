@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.9.0"
-last_edit: "18/08/2026 - 04:00 PM"
+last_edit: "02/09/2026 - 12:00 AM"
 ---
 
 <!-- Resend with Loading State -->
@@ -36,7 +36,7 @@ last_edit: "18/08/2026 - 04:00 PM"
                                 </button>
                             </div>
                             <script>
-                            document.addEventListener('DOMContentLoaded', function() {
+                            function initPage() {
                                 var btn = document.getElementById('cooldown-demo-resend');
                                 // The button owns the throttle and the countdown. The request, its
                                 // loading state and its confirmation are the page's, all from here.
@@ -60,7 +60,9 @@ last_edit: "18/08/2026 - 04:00 PM"
                                 function sendCode() {
                                     return new Promise(function(resolve) { setTimeout(resolve, 1200); });
                                 }
-                            });
+                            }
+                            // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+                            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
                             </script>
                         </div>
                         <div class="demo-code">

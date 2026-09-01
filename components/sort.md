@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "14/08/2026 - 10:14 PM"
+last_edit: "02/09/2026 - 12:00 AM"
 ---
 
 <!-- Direct Mode -->
@@ -226,7 +226,7 @@ NDS.Sort.create(document.getElementById('sortDirectRoot'), {
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+function initSortDirect() {
     var root = document.getElementById('sortDirectRoot');
     var items = document.getElementById('sortDirectItems');
     if (!root || !items || !window.NDS || !NDS.Sort) return;
@@ -238,7 +238,9 @@ document.addEventListener('DOMContentLoaded', function () {
         a11y: 'pressed',
         types: { price: 'number' }
     });
-});
+}
+// Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSortDirect); else initSortDirect();
 </script>
 
 <!-- Cycle Mode -->
@@ -427,7 +429,7 @@ NDS.Sort.create(root, {
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+function initSortCycle() {
     var root = document.getElementById('sortCycleRoot');
     var items = document.getElementById('sortCycleItems');
     if (!root || !items || !window.NDS || !NDS.Sort) return;
@@ -454,7 +456,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-});
+}
+// Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSortCycle); else initSortCycle();
 </script>
 
 <!-- Table Column Sort -->

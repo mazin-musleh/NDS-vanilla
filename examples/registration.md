@@ -270,7 +270,7 @@ breadcrumb: [["Examples", "/examples"]]
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  function initPage() {
     var cards = {
       step1: document.getElementById('registration-step-1'),
       step2: document.getElementById('registration-step-2'),
@@ -384,5 +384,7 @@ breadcrumb: [["Examples", "/examples"]]
       // long as the call runs, then issues the code. The countdown ticks underneath.
       withLoading(resendBtn, 1200, sendCode);
     });
-  });
+  }
+  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
 </script>

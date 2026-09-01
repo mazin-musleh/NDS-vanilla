@@ -2,11 +2,12 @@
 <html lang="{{ page.lang | default: 'en' }}" dir="{{ page.direction | default: 'ltr' }}">
 {% include head.html %}
 <body{% if page.body_class %} class="{{ page.body_class }}"{% endif %}>
+    <a class="nds-skip-link nds-sr-only" href="#main">{% if page.lang == 'ar' %}تخطي إلى المحتوى الرئيسي{% else %}Skip to main content{% endif %}</a>
     <header>
         {% include topbar.html %}
         {% include mainnav.html %}
     </header>
-    <main>
+    <main id="main">
         {{ content }}
     </main>
     {% include footer.html %}

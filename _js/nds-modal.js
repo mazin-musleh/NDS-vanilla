@@ -16,6 +16,8 @@
  *   data-modal-close    on any control that should close it (.nds-modal-close works too)
  *   data-modal-static   on the .nds-modal — no ESC, no backdrop click. It closes only
  *                       through a [data-modal-close] control or NDS.Modal.close()
+ *   data-state          open | closing — written by JS on the .nds-modal while it is
+ *                       shown and while it animates out. Read-only for consumers
  * Gotchas:
  *   - One modal at a time: open() closes the current one first.
  *   - nds-backdrop.js must be in the bundle. Without it init() and open() log an error

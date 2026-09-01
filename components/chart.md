@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.10.x"
-last_edit: "21/08/2026 - 07:12 PM"
+last_edit: "02/09/2026 - 12:00 AM"
 ---
 
 <!-- Bar Chart -->
@@ -834,6 +834,10 @@ NDS.Chart.create('#my-chart', {
                             <td>Update chart with new options (merges with existing) and re-render</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-js">chart.render()</code></td>
+                            <td>Redraw the chart in place from its current options. Use it when a re-render emptied the element but kept it, so the instance survived. <code class="nds-inline-code lang-js">NDS.Chart.reinit()</code> does this for you on an empty root</td>
+                        </tr>
+                        <tr>
                             <td><code class="nds-inline-code lang-js">chart.destroy()</code></td>
                             <td>Remove chart, clean up listeners and observers</td>
                         </tr>
@@ -1214,7 +1218,7 @@ NDS.Chart.create('#my-chart', {
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+function initPage() {
 
     NDS.Chart.create('#demo-bar', {
         type: 'bar',
@@ -1266,5 +1270,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ],
         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
     });
-});
+}
+// Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
 </script>

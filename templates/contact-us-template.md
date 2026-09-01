@@ -466,7 +466,7 @@ sidemenu_mode: false
 </section>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    function initPage() {
         // Submit feedback — mock a successful submission.
         var form = document.getElementById('contact-form');
         if (form) {
@@ -508,5 +508,7 @@ sidemenu_mode: false
                 });
             });
         }
-    });
+    }
+    // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
 </script>

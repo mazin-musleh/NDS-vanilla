@@ -979,7 +979,7 @@ hideFeedback: true
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  function initPage() {
     var table = document.getElementById('requestsTable');
     var tbody = document.getElementById('requestsTableBody');
     var form = document.getElementById('record-form');
@@ -1254,5 +1254,7 @@ hideFeedback: true
           '</tbody>' +
         '</table>';
     }
-  });
+  }
+  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
 </script>

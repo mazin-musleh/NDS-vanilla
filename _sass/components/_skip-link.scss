@@ -1,0 +1,24 @@
+@use '../mixins' as *;
+
+// Skip link — the first tab stop, before the topbar. Markup carries .nds-sr-only
+// (critical CSS) so it is hidden before this sheet lands; focus undoes that here
+// and pins the link to the top start corner, above the topbar.
+.nds-skip-link:focus-visible {
+    position: fixed;
+    inset-block-start: var(--spacing-md);
+    inset-inline-start: var(--spacing-md);
+    z-index: 10000;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    overflow: visible;
+    clip: auto;
+    white-space: nowrap;
+    border-radius: var(--radius-sm);
+    background: var(--background-primary);
+    color: var(--text-oncolor-primary);
+    text-decoration: none;
+    outline: 2px solid var(--focus-outline);
+    outline-offset: 2px;
+}

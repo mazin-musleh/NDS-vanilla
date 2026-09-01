@@ -5,7 +5,7 @@
 {%- capture body_cls %}{{ page.body_class }}{% if page_bg %} nds-page-bg{% endif %}{%- endcapture -%}
 {%- assign body_cls = body_cls | strip -%}
 <body{% if body_cls != '' %} class="{{ body_cls }}"{% endif %}{% if page_bg %} style="--bg-img: url('{{ page_bg | relative_url }}'); --bg-opacity-top: {{ page.bg_opacity_top | default: '80%' }}; --bg-opacity-bottom: {{ page.bg_opacity_bottom | default: '80%' }};"{% endif %}>
-    <main>
+    <main id="main">
         <div class="nds-content-layout nds-content-wrapper{%- if page.layout_class and page.layout_class != '' %} {{ page.layout_class }}{%- endif %}">
             <div class="nds-main-content">
                 {{ content }}

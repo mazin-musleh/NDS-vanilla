@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "17/08/2026 - 02:14 AM"
+last_edit: "02/09/2026 - 12:00 AM"
 ---
 
 <!-- Autocomplete Input -->
@@ -289,10 +289,12 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  function initPage() {
     var container = document.getElementById('autocomplete-demo');
     if (container && window.NDS && NDS.Forms) {
       NDS.Forms.setStatus({ element: container, status: 'neutral', message: 'Try typing "request"', permanent: true });
     }
-  });
+  }
+  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
 </script>

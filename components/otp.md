@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.8.1"
-last_edit: "17/08/2026 - 02:14 AM"
+last_edit: "02/09/2026 - 12:00 AM"
 ---
 
 <!-- OTP Overview -->
@@ -348,7 +348,7 @@ last_edit: "17/08/2026 - 02:14 AM"
                                     </button>
                                 </div>
                                 <script>
-                                document.addEventListener('DOMContentLoaded', function() {
+                                function initPage() {
                                     var otpGroup = document.getElementById('otp-validate-demo');
                                     document.getElementById('otp-validate-btn').addEventListener('click', function() {
                                         var result = NDS.Forms.validateOtpGroup(otpGroup);
@@ -364,7 +364,9 @@ last_edit: "17/08/2026 - 02:14 AM"
                                         NDS.OTP.clear(otpGroup);
                                         NDS.Forms.clearStatus(otpGroup);
                                     });
-                                });
+                                }
+                                // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+                                if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
                             </script>
                             </div>
                         </div>

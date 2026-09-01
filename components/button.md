@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.9.0"
-last_edit: "21/08/2026 - 07:12 PM"
+last_edit: "02/09/2026 - 12:00 AM"
 ---
 
 <!-- Standard -->
@@ -1302,7 +1302,7 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
                                     <span class="nds-label">Send code</span>
                                 </button>
                                 <script>
-                                document.addEventListener('DOMContentLoaded', function() {
+                                function initPage() {
                                     var btn = document.getElementById('btn-cooldown-demo');
                                     // The button owns the throttle and the countdown; the request
                                     // and its loading state are the page's. See the Cooldown Button
@@ -1314,7 +1314,9 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
                                             NDS.State.remove(btn, 'loading');
                                         }, 1200);
                                     });
-                                });
+                                }
+                                // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+                                if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
                                 </script>
                             </div>
                         </div>

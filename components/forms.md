@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.10.x"
-last_edit: "22/08/2026 - 04:34 AM"
+last_edit: "02/09/2026 - 12:00 AM"
 lang: en
 direction: ltr
 ---
@@ -2531,7 +2531,7 @@ hiddenInput.addEventListener('change', function(e) {
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  function initPage() {
     // Form Status API demo
     var statusContainer = document.getElementById('status-demo-container');
     if (statusContainer) {
@@ -2570,5 +2570,7 @@ hiddenInput.addEventListener('change', function(e) {
       });
     }
 
-  });
+  }
+  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
 </script>

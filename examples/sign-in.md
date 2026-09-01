@@ -561,7 +561,7 @@ breadcrumb: [["Examples", "/examples"]]
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  function initPage() {
     var cards = {
       start: document.getElementById('signin-start'),
       credentials: document.getElementById('signin-credentials'),
@@ -827,5 +827,7 @@ breadcrumb: [["Examples", "/examples"]]
         show('start');
       }, 1000);
     }
-  });
+  }
+  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
 </script>

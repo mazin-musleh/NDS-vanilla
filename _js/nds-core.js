@@ -1460,7 +1460,9 @@
         // bottom borders on last-row items), not critical for first paint.
         // Reading offsetTop/offsetParent on DOMContentLoaded forced a 15ms+
         // layout pass that competed with the critical init batch.
-        document.addEventListener('DOMContentLoaded', () => NDS.onIdle(() => update()));
+        // Guarded: a bundle injected after load (SPA host) never sees DOMContentLoaded.
+        const start = () => NDS.onIdle(() => update());
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 
         return { update };
     })();

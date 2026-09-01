@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.10.x"
-last_edit: "01/09/2026 - 11:30 PM"
+last_edit: "01/09/2026 - 11:56 PM"
 ---
 
 <!-- Modal Dialog -->
@@ -450,6 +450,10 @@ last_edit: "01/09/2026 - 11:30 PM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-modal-static</code></td>
                             <td>Set on the modal. Removes both dismiss paths: no <kbd>Esc</kbd> key, no backdrop click. The modal then closes only through a <code class="nds-inline-code lang-html">data-modal-close</code> control or <code class="nds-inline-code lang-js">NDS.Modal.close()</code>. Use it when the user must pick one of the actions.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-state="open|closing"</code></td>
+                            <td>Set on the modal by JavaScript. <code class="nds-inline-code lang-html">open</code> while the modal is shown, <code class="nds-inline-code lang-html">closing</code> during the close animation, and removed once it is closed. Style off it. Do not set it by hand.</td>
                         </tr>
                     </tbody>
                 </table>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.7.2"
-last_edit: "23/08/2026 - 03:45 PM"
+last_edit: "01/09/2026 - 11:56 PM"
 ---
 
 <!-- Page Setup -->
@@ -321,6 +321,11 @@ Content-Security-Policy:
             </div>
             <div class="nds-block nds-prose">
                 <p>NDS components are not affected. Their JavaScript sets styles through the CSSOM, which no policy blocks. Only knobs you wrote into a <code class="nds-inline-code lang-html">style</code> attribute need this treatment.</p>
+            </div>
+            <div class="nds-block nds-prose">
+                <h3>Frameworks that re-render the head</h3>
+                <p>The head script runs once, at page load. It adds the stylesheet links, and NDS later stamps <code class="nds-inline-code lang-html">data-nds-loaded</code> and <code class="nds-inline-code lang-html">data-nds-fonts-loaded</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. None of that is in the server HTML. A framework that diffs the <code class="nds-inline-code lang-html">&lt;head&gt;</code> against the server HTML on navigation removes all of it, while the inline gate stays. The page then hides itself until a full reload. Turbo, htmx boost and Blazor enhanced navigation all work this way.</p>
+                <p>Keep those nodes out of the diff: mark the injected links and the two <code class="nds-inline-code lang-html">&lt;html&gt;</code> attributes as permanent, in the way your framework offers. If it removes them anyway, run the deferred-styles loop again after each navigation and put the two stamps back. The component side of a route change is covered in <a class="nds-color" href="{{ 'core/refresh' | relative_url }}">Refresh</a>.</p>
             </div>
             <div class="nds-block nds-prose">
                 <h3>Why the stylesheets look the way they do</h3>
