@@ -545,8 +545,8 @@ hideFeedback: true
                     <div class="nds-chips"></div>
                 </div>
             </div>
-            <div id="team_directory_content" class="nds-paged-content nds-cq" style="--per-page:6;">
-                <div class="nds-grid" id="teamDirectoryGrid" data-filter-items="nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
+            <div class="nds-cq">
+                <div class="nds-grid nds-paged-content" id="teamDirectoryGrid" data-filter-items="nds-card" style="--per-page:6;--max-col:3;--mid-col:2;--min-col:1;">
                     {% for user in site.data.content.users %}
                     <div class="nds-card nds-stroke nds-rowView nds-page-item">
                         <div class="nds-card-header">
@@ -593,8 +593,8 @@ hideFeedback: true
                     </div>
                     {% endfor %}
                 </div>
+                <nav class="nds-pagination" data-auto-pagination="teamDirectoryGrid" aria-label="Team directory pagination"></nav>
             </div>
-            <nav class="nds-pagination" data-auto-pagination="team_directory_content" aria-label="Team directory pagination"></nav>
         </div>
     </div>
 </section>
