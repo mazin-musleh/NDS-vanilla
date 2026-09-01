@@ -20,6 +20,8 @@
 //        --no-throttle (unthrottled) · --cpu=N (override CPU multiplier) ·
 //        --baseurl=PREFIX (default /NDS-vanilla) · --chrome=PATH (else auto-detect) ·
 //        --trace (per-run main-thread breakdown + long tasks from a DevTools trace) ·
+//        --selectors (adds per-selector matching cost: style recalc count, elements
+//                     styled, and the 25 selectors that cost the most — implies --trace) ·
 //        --monitor (inject _includes/perf-monitor.html: CLS w/ shift sources,
 //                   LoAF long tasks w/ forced-layout attribution, reflow hotspots)
 import fs from 'fs';
@@ -38,7 +40,8 @@ const RUNS = +flag('runs', 3);
 const THROTTLE = !flag('no-throttle', false);
 const CPU = +flag('cpu', 6.6);
 const BASEURL = flag('baseurl', '/NDS-vanilla');
-const TRACE = !!flag('trace', false);
+const SELECTORS = !!flag('selectors', false);
+const TRACE = !!flag('trace', false) || SELECTORS;
 const MONITOR = !!flag('monitor', false);
 // The monitor is injected by the harness (evaluateOnNewDocument), so pages
 // don't need a perf_monitor:true rebuild and remote URLs work too.
@@ -108,19 +111,25 @@ const TRACE_BUCKETS = {
   UpdateLayerTree: 'paint', CompositeLayers: 'paint', Commit: 'paint',
   MinorGC: 'gc', MajorGC: 'gc', 'V8.GCFinalizeMC': 'gc', 'BlinkGC.AtomicPhase': 'gc',
 };
-function mainThreadBreakdown(trace) {
-  const evs = trace.traceEvents || [];
-  const key = (e) => `${e.pid}:${e.tid}`;
+const key = (e) => `${e.pid}:${e.tid}`;
+// The busiest CrRendererMain is the page's main thread (Chrome's own UI pages
+// trace too).
+function mainThreadKey(evs) {
   const tname = new Map();
   for (const e of evs) if (e.ph === 'M' && e.name === 'thread_name') tname.set(key(e), e.args && e.args.name);
-  const busy = new Map(); // busiest CrRendererMain = the page's main thread
+  const busy = new Map();
   for (const e of evs) if (e.ph === 'X' && e.dur > 0 && tname.get(key(e)) === 'CrRendererMain')
     busy.set(key(e), (busy.get(key(e)) || 0) + e.dur);
   const main = [...busy.entries()].sort((a, b) => b[1] - a[1])[0];
+  return main ? main[0] : null;
+}
+function mainThreadBreakdown(trace) {
+  const evs = trace.traceEvents || [];
+  const main = mainThreadKey(evs);
   if (!main) return null;
-  const mainEvs = evs.filter((e) => e.ph === 'X' && e.dur > 0 && key(e) === main[0])
+  const mainEvs = evs.filter((e) => e.ph === 'X' && e.dur > 0 && key(e) === main)
     .sort((a, b) => a.ts - b.ts || b.dur - a.dur);
-  const nav = evs.find((e) => e.name === 'navigationStart' && key(e) === main[0]);
+  const nav = evs.find((e) => e.name === 'navigationStart' && key(e) === main);
   const t0 = nav ? nav.ts : mainEvs[0].ts;
   // Attribution: EvaluateScript/FunctionCall events carry url/function/line:col.
   // Each event's self-time goes to its own frame ("self") or to the nearest
@@ -176,6 +185,43 @@ function printBreakdown(bd) {
   const blocking = bd.longTasks.reduce((a, t) => a + t.dur - 50000, 0);
   const dom = longest.top ? ` — ${longest.top.name} ${ms(longest.top.dur)}${longest.top.label ? ' ← ' + longest.top.label : ''}` : '';
   console.log(`     long tasks ≥50ms: ${bd.longTasks.length} · longest ${ms(longest.dur)} @${s(longest.at / 1000)}${dom} · est. blocking ${ms(blocking)}`);
+}
+
+// ---- per-selector matching cost (--selectors) ----
+// Chrome emits one SelectorStats event per style recalc when the
+// disabled-by-default-blink.debug category is on (DevTools' "CSS selector
+// stats"). Summed over the run: which selectors the page pays for, and how
+// many recalcs / elements that cost is spread across.
+function selectorStats(trace) {
+  const evs = trace.traceEvents || [];
+  const main = mainThreadKey(evs);
+  const bySel = new Map();
+  let recalcs = 0, recalcUs = 0, elements = 0;
+  for (const e of evs) {
+    if (key(e) !== main) continue;
+    if (e.name === 'UpdateLayoutTree' && e.ph === 'X') {
+      recalcs++; recalcUs += e.dur; elements += (e.args && e.args.elementCount) || 0;
+    }
+    const st = e.name === 'SelectorStats' && e.args && e.args.selector_stats;
+    if (!st) continue;
+    for (const t of st.selector_timings || []) {
+      let r = bySel.get(t.selector);
+      if (!r) bySel.set(t.selector, r = { us: 0, attempts: 0, matches: 0, rejects: 0 });
+      r.us += t['elapsed (us)'] || 0; r.attempts += t.match_attempts; r.matches += t.match_count; r.rejects += t.fast_reject_count;
+    }
+  }
+  const total = [...bySel.values()].reduce((a, r) => a + r.us, 0);
+  return { recalcs, recalcUs, elements, total, selectors: bySel.size,
+    top: [...bySel.entries()].sort((a, b) => b[1].us - a[1].us).slice(0, 25) };
+}
+function printSelectors(st) {
+  if (!st) return;
+  const ms = (us) => (us / 1000).toFixed(1) + 'ms';
+  console.log(`     style recalcs: ${st.recalcs} · ${ms(st.recalcUs)} · ${st.elements} elements styled · selector matching ${ms(st.total)} over ${st.selectors} selectors`);
+  for (const [sel, r] of st.top) {
+    const s = sel.length > 96 ? sel.slice(0, 93) + '…' : sel;
+    console.log(`       ${ms(r.us).padStart(8)} ${String(r.attempts).padStart(7)} tries ${String(r.matches).padStart(5)} hits  ${s}`);
+  }
 }
 
 // ---- on-page monitor report (--monitor) ----
@@ -239,16 +285,24 @@ async function measure(pageUrl) {
     });
 
     if (TRACE) await page.tracing.start({
-      categories: ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'toplevel', 'v8.execute', 'blink.user_timing'],
+      categories: ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'toplevel', 'v8.execute', 'blink.user_timing',
+        ...(SELECTORS ? ['disabled-by-default-blink.debug'] : [])],
     });
     const resp = await page.goto(pageUrl, { waitUntil: 'networkidle2', timeout: 120000 });
     if (resp && resp.status() !== 200) throw new Error(`HTTP ${resp.status()} for ${pageUrl} — check the page path`);
     await new Promise((r) => setTimeout(r, 1800)); // let LCP settle past late images
 
-    let breakdown = null;
+    let breakdown = null, selectors = null;
     if (TRACE) {
       const buf = await page.tracing.stop(); // Uint8Array in puppeteer ≥22
-      if (buf) breakdown = mainThreadBreakdown(JSON.parse(new TextDecoder().decode(buf)));
+      if (buf) {
+        const trace = JSON.parse(new TextDecoder().decode(buf));
+        breakdown = mainThreadBreakdown(trace);
+        if (SELECTORS) {
+          selectors = selectorStats(trace);
+          try { fs.mkdirSync('tmp', { recursive: true }); fs.writeFileSync('tmp/trace-selectors.json', JSON.stringify(trace)); } catch {}
+        }
+      }
     }
     const metrics = await page.evaluate(() => {
       const nav = performance.getEntriesByType('navigation')[0];
@@ -263,7 +317,7 @@ async function measure(pageUrl) {
     const monitor = MONITOR
       ? await page.evaluate(() => (window.__ndsPerf && window.__ndsPerf.data) ? window.__ndsPerf.data() : null)
       : null;
-    return { ...metrics, breakdown, monitor };
+    return { ...metrics, breakdown, selectors, monitor };
   } finally {
     await browser.close();
   }
@@ -285,6 +339,7 @@ try {
       const el = d.tag ? `<${d.tag}>${d.imgUrl ? ' ' + d.imgUrl : d.cls ? ' .' + d.cls.split(' ')[0] : ''}` : '?';
       console.log(`  run ${i + 1}: ttfb ${s(d.ttfb)} | FCP ${s(d.fcp)} | reveal ${s(d.revealed)} | LCP ${s(d.lcp)} ${el}`);
       if (TRACE) printBreakdown(d.breakdown);
+      if (SELECTORS) printSelectors(d.selectors);
       if (MONITOR) printMonitor(d.monitor);
     }
     const ok = lcps.filter(Number.isFinite).sort((a, b) => a - b);
