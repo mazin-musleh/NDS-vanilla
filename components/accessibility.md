@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.10.x"
-last_edit: "01/09/2026 - 08:45 PM"
+last_edit: "01/09/2026 - 09:32 PM"
 ---
 
 <!-- Trigger -->
@@ -79,7 +79,7 @@ last_edit: "01/09/2026 - 08:45 PM"
     &lt;i class="nds-icon nds-hgi-accessibility" aria-hidden="true"&gt;&lt;/i&gt;
 &lt;/button&gt;
 
-&lt;template data-accessibility-panel-template&gt;
+&lt;template class="nds-panel-template"&gt;
 &lt;aside id="ndsAccessibilityPanel"
        class="nds-panel nds-accessibility-panel"
        data-panel-side="end"
@@ -784,6 +784,7 @@ last_edit: "01/09/2026 - 08:45 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-toggle</code></td><td>Panel-specific chrome for the trigger. Pair with <code class="nds-inline-code lang-html">nds-fab</code> so the <a class="nds-color" href="{{ 'components/fab' | relative_url }}">Fab</a> dock owns its edge, inset and size, plus <code class="nds-inline-code lang-html">nds-btn nds-primary nds-circle</code> for the default visual.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel</code></td><td>Panel-specific chrome. Pair with <code class="nds-inline-code lang-html">nds-panel</code> so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component owns position, width, the header offset and the slide.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-panel-template</code></td><td>Set on the <code class="nds-inline-code lang-html">&lt;template&gt;</code> that holds the inert panel — the same lazy-markup convention every <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> supports. The component stamps the content into the page on first use. A bare <code class="nds-inline-code lang-html">&lt;aside&gt;</code> without the wrapper still works, but every page then carries the panel's ~190 DOM nodes.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-quick</code></td><td>Inline-flex row of quick-toggle buttons (theme toggle, language switch) at the top of the scrollable body.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-modes</code></td><td>Sized accordion modifier used by the Modes section. Adjusts switch-row padding to match the tile grids.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-a11y-count</code></td><td>Tag pill next to each accordion title showing how many controls in that section are active. Hides itself when empty.</td></tr>
@@ -798,9 +799,7 @@ last_edit: "01/09/2026 - 08:45 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-toggle</code></td><td>Marks the FAB so the panel can localize it and arm itself on the first click. Opening is <code class="nds-inline-code lang-html">data-panel-toggle</code>'s job; additional triggers call <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-panel-toggle</code></td><td>Set to the panel's id so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component opens it, tracks <code class="nds-inline-code lang-html">aria-expanded</code>, and returns focus on close.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel</code></td><td>Mark the panel root. Required for auto-init.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel-template</code></td><td>Mark the <code class="nds-inline-code lang-html">&lt;template&gt;</code> that holds the inert panel. The component stamps its content into the page on first use. A bare <code class="nds-inline-code lang-html">&lt;aside&gt;</code> without the wrapper still works, but every page then carries the panel's ~190 DOM nodes.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-action="reset"</code></td><td>Mark the reset button. Two-click confirmation with a 5-second arming window is wired automatically.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel</code></td><td>Mark the panel root. Required for auto-init.</td></tr>                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-action="reset"</code></td><td>Mark the reset button. Two-click confirmation with a 5-second arming window is wired automatically.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-fab-pos</code></td><td>Set on the FAB to pick its dock edge. Values: <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>Set on the panel to pick the edge it slides from. Set it to the same side as the FAB.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-mode</code></td><td>Mark a switch or button as a bundle or primitive toggle. Value matches a key from <code class="nds-inline-code lang-js">MODE_BUNDLES</code> or a primitive token name.</td></tr>

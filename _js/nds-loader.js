@@ -482,7 +482,10 @@
         },
         {
             name: 'Modal',
-            selector: '.nds-modal',
+            // A modal may ship inert in a <template class="nds-modal-template">
+            // — that class keeps this presence gate true, so init binds the
+            // delegated triggers and the first click can NDS.summon it.
+            selector: '.nds-modal, .nds-modal-template',
             init: () => NDS.Modal?.init?.(),
             // Not a per-element teardown: its listeners are delegated on document and
             // belong to the page. This releases the OPEN state — backdrop and scroll lock —
@@ -500,7 +503,8 @@
             // Toggle clicks in the pre-bundle gap no-op and recover on the
             // next click (the Tabs/Tables/Accordion precedent).
             name: 'Panel',
-            selector: '.nds-panel',
+            // .nds-panel-template — same summon story as Modal above.
+            selector: '.nds-panel, .nds-panel-template',
             init: () => NDS.Panel?.init?.(),
             destroyEach: true,
         },
@@ -1049,7 +1053,8 @@
             if (!ns || ns.__ndsStub) continue;
             try {
                 if (component.refresh) component.refresh(root);
-                else if (component.universal || root === document || root.querySelector?.(component.selector)) component.init();
+                // matches() covers a root that IS the component (a summoned panel).
+                else if (component.universal || root === document || root.matches?.(component.selector) || root.querySelector?.(component.selector)) component.init();
             } catch (error) {
                 console.warn(`[NDS:refresh] ${component.name} failed:`, error);
             }

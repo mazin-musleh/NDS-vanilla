@@ -154,7 +154,9 @@
     }
 
     function open(ref) {
-        const panel = NDS.resolveEl(ref);
+        let panel = NDS.resolveEl(ref);
+        // A string ref that missed may name a template-wrapped panel.
+        if (!panel && typeof ref === 'string') panel = NDS.summon(ref.replace(/^#/, ''));
         if (!panel) return;
 
         pendingOpen = null;              // supersede any swap already waiting
@@ -224,7 +226,8 @@
     }
 
     function toggle(ref) {
-        const panel = NDS.resolveEl(ref);
+        let panel = NDS.resolveEl(ref);
+        if (!panel && typeof ref === 'string') panel = NDS.summon(ref.replace(/^#/, ''));
         if (!panel) return;
         if (hasState(panel, 'open') && !hasState(panel, 'closing')) close(panel);
         else open(panel);
@@ -321,7 +324,10 @@
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('[data-panel-toggle]');
             if (!btn) return;
-            const panel = document.getElementById(btn.dataset.panelToggle);
+            // summon covers a panel still asleep in a <template>: it stamps the
+            // markup in and NDS.Init.refresh re-enters init(), whose scan runs
+            // createPanel on it before toggle() below needs it.
+            const panel = NDS.summon(btn.dataset.panelToggle);
             if (!panel) return;
             e.preventDefault();
             if (!hasState(panel, 'open')) panel._opener = btn;
