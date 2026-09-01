@@ -6,6 +6,7 @@
  *   NDS.Chart.create(elOrSel, opts)   build one chart — replaces any chart already on the
  *                                     element. Returns the instance
  *   instance.update(newOpts)          MERGE new options in and re-render
+ *   instance.render()                 redraw in place from the current options
  *   instance.destroy()                empty the element and release its observers
  * Events:
  *   (none)
@@ -1054,8 +1055,14 @@
 
     function initCharts() {
         setupDirObserver();
-        document.querySelectorAll('.nds-chart:not([data-nds-chart-initialized])').forEach(el => {
-            if (el.ndsChart) return;
+        // Every root, stamped or not: the instance backref is the truth. A re-render
+        // that keeps the element but wipes its SVG (stamp and instance intact) gets
+        // redrawn here; a cloned root (stamp, no instance) gets claimed.
+        document.querySelectorAll('.nds-chart').forEach(el => {
+            if (el.ndsChart) {
+                if (!el.firstElementChild && !el.ndsChart._deferCount) el.ndsChart.render();
+                return;
+            }
             const d = el.dataset;
             const config = tryParse(d.chartConfig) || {};
             if (d.chartType) config.type = d.chartType;

@@ -218,9 +218,23 @@
     window.addEventListener('pageshow', handlePageShow);
 
     // Global font loading API (called by nds-loader.js unified system)
+    // Start the fetch for every tracked family. The loader calls this when the icon
+    // sheet applies: a face whose glyphs all start hidden (every HGI icon inside a
+    // display:none screen) never fetches on its own, and would otherwise sit
+    // unstamped until the idle-face window above expires.
+    function load() {
+        if (!document.fonts?.load) return;
+        fontStates.forEach((_, fontName) => {
+            const spec = '1em "' + fontName + '"';
+            document.fonts.load(spec).catch(() => {});
+            document.fonts.load('bold ' + spec).catch(() => {});
+        });
+    }
+
     NDS.FontLoading = {
         waitForFontFile,
         init: initializeFontLoading,
+        load,
         getLoadedFonts,
         isFontLoaded
     };

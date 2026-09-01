@@ -2799,6 +2799,15 @@
 
             // Re-resolve target surfaces in case the surrounding UI changed
             this._targetRoots = this.resolveTargetRoots();
+            // Re-stamp: a container or surface rendered (or re-rendered) after
+            // createInstance is otherwise held by the skeleton gate under a live instance.
+            (this._targetRoots || []).forEach(s => s.setAttribute('data-nds-filter-initialized', 'true'));
+            this.targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
+
+            // A replaced search box leaves the cached ref (and its listeners) on a
+            // detached node; drop it so detection rebinds to the live one.
+            if (this.searchInputs.direct && !this.searchInputs.direct.input.isConnected) this.searchInputs.direct = null;
+            this._autoDetectDirectSearch();
 
             // Update items list
             this.items = this.resolveItems();

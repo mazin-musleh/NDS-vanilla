@@ -824,7 +824,9 @@
             // The stamp gates icon opacity (_sass/_icons.scss) — without it they stay invisible.
             if (icons) icons.onload = () =>
                 document.documentElement.setAttribute('data-nds-icons-loaded', '');
-            add(href('hgi-rounded-stroke-min.css'));
+            const hgi = add(href('hgi-rounded-stroke-min.css'));
+            // Glyphs that all start hidden never start the fetch; kick it once the face exists.
+            if (hgi) hgi.onload = () => NDS.FontLoading?.load?.();
         }
 
         // Critical pass (the reveal checklist): time-sliced. Small inits share a

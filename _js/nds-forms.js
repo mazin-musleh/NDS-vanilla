@@ -200,6 +200,16 @@
         return null;
     }
 
+    // Keep the field's aria-describedby pointing at its CURRENT message only: strip
+    // our earlier tokens, keep the consumer's, append `id` when given.
+    function describeBy(input, id) {
+        var ids = (input.getAttribute('aria-describedby') || '').split(/\s+/)
+            .filter(function (t) { return t && t.indexOf('nds-fb-') !== 0; });
+        if (id) ids.push(id);
+        if (ids.length) input.setAttribute('aria-describedby', ids.join(' '));
+        else input.removeAttribute('aria-describedby');
+    }
+
     // ==============================================
     // STATUS MANAGEMENT API
     // ==============================================
@@ -236,6 +246,7 @@
 
             if (status) {
                 NDS.Status.set(container, status);
+                var feedback = null;
                 if (message) {
                     container.setAttribute('data-message', message);
 
@@ -273,13 +284,18 @@
                         status: status
                     });
                     delete feedbackOptions.element;
-                    NDS.Feedback.create(feedbackOptions);
+                    feedback = NDS.Feedback.create(feedbackOptions);
                 }
 
                 // Accessibility
                 var input = ownField(container);
                 if (input) {
                     input.setAttribute('aria-invalid', status === 'error' ? 'true' : 'false');
+                    // Name the reason, not just the state: point the field at its message.
+                    if (feedback) {
+                        if (!feedback.id) feedback.id = NDS.uniqueId('nds-fb-');
+                        describeBy(input, feedback.id);
+                    }
                 }
             } else {
                 this.clear(container);
@@ -312,6 +328,7 @@
             var input = ownField(container);
             if (input) {
                 input.removeAttribute('aria-invalid');
+                describeBy(input, null);
             }
 
             container.dispatchEvent(new CustomEvent('nds:statusChange', {

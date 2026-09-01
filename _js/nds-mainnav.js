@@ -1109,7 +1109,10 @@
     // detached nodes. Neither used to recover, and neither said anything: CSS paints the
     // chrome either way, so it looks correct and no click does anything.
     //
-    // Only a CHANGE OF NODE counts. This is the NDS.Init.refresh hook, so it fires on every
+    // Only a CHANGE OF NODE counts — or, under a kept root, a swapped-out collapse or a
+    // reverted [hidden] on it, which is how a diffing framework re-renders the nav (the
+    // markup ships [hidden]; init strips it and nothing puts it back). This is the
+    // NDS.Init.refresh hook, so it fires on every
     // refresh call a page makes — most about a table or a card grid, nothing to do with the
     // nav — and re-wiring on each one would re-attach every listener and reset an open
     // drawer for nothing. Items added or removed INSIDE a live nav need no call at all: the
@@ -1120,7 +1123,8 @@
     function reinit() {
         const live = document.querySelector('.nds-main-nav');
         if (!live) return;
-        if (_initDone && DOM.nav === live && live.isConnected) return;
+        if (_initDone && DOM.nav === live && live.isConnected
+            && DOM.collapse?.isConnected && !DOM.collapse.hasAttribute('hidden')) return;
         if (!captureDOM()) return;
         _initDone = false;
         init();

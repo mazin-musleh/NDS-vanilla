@@ -62,10 +62,16 @@
       return;
     }
 
-    // Close existing modal if any
-    if (activeModal) {
-      close();
+    // Already the active modal: re-assert the open state and stop (a framework
+    // re-render can put [hidden] back). close()+show here would leave close()'s
+    // deferred teardown to hide it again after the fade and pop the backdrop.
+    if (activeModal === modal) {
+      modal.removeAttribute('hidden');
+      NDS.aria.hidden(modal, false);
+      NDS.State.set(modal, 'open');
+      return;
     }
+    if (activeModal) close();
 
     // Show backdrop. A [data-modal-static] modal drops both dismiss paths, so
     // it closes only through a [data-modal-close] control or NDS.Modal.close()
@@ -124,6 +130,9 @@
     // keeping it out of the click frame is what holds the close INP down.
     setTimeout(() => {
       NDS.Backdrop.hide();
+      // Re-opened during the fade: open() pushed a fresh backdrop owner, so the
+      // pop above stays balanced and the modal must stay up.
+      if (activeModal === modal) return;
       modal.setAttribute('hidden', '');
       NDS.State.clear(modal);
       modal.dispatchEvent(new CustomEvent('nds:modal:closed', { bubbles: true }));
