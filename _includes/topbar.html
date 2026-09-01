@@ -9,33 +9,6 @@
     <div class="nds-topbar-info">
         <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
         <span id="nds-realTimeClock" class="nds-text-icon" data-hidden="sm"></span>
-        <div class="nds-topbar-versions" data-hidden="sm">
-            {%- if site.version and site.latest_release %}
-            {%- if site.version == site.latest_release %}
-            <span class="nds-tag nds-xs nds-topbar-version">
-                <span class="nds-label">v{{ site.version }}</span>
-            </span>
-            {%- else %}
-            {%- comment %} Dev preview: NDS.Tooltip's declarative content-trigger mode
-                (the pill itself is the trigger; balloon is generated and portaled) {%- endcomment %}
-            <span class="nds-tag nds-xs nds-topbar-version nds-tooltip nds-term"
-                data-tooltip-message="Documentation preview: ahead of current release v{{ site.latest_release }}"
-                data-tooltip-hover="500">
-                <span class="nds-label">v{{ site.version }}</span>
-            </span>
-            {%- endif %}
-            {%- endif %}
-            {%- comment %} IQ revision: title/description from the site.nds_iq config group,
-                version parsed from the block's own heading so it can never desync {%- endcomment %}
-            {%- capture _iq_instr %}{% include NDS-IQ.md %}{% endcapture %}
-            {%- assign _iq_parts = _iq_instr | split: 'instructions v' %}
-            {%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
-            <a href="{{ 'guides/integration-quality' | relative_url }}" class="nds-tag nds-green nds-xs nds-topbar-version nds-tooltip nds-term"
-                data-tooltip-message="{{ site.nds_iq.description }}"
-                data-tooltip-hover="500">
-                <span class="nds-label">{{ site.nds_iq.title }} v{{ _iq_v }}</span>
-            </a>
-        </div>
         <!--
         <span id="nds-cityName" class="nds-text-icon" data-hidden="sm md" data-city="{{ site.city_name_ar | default: 'الرياض' }}"
             data-city-en="{{ site.city_name | default: 'Riyadh' }}"></span>

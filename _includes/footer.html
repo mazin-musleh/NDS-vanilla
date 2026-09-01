@@ -76,6 +76,31 @@
                 <div class="nds-footer-copyright">
                     <span>All Rights Reserved {{ site.title }} &copy; {{ site.time | date: '%Y' }}</span>
                 </div>
+                <div class="nds-footer-versions">
+                    {%- if site.version and site.latest_release %}
+                    {%- if site.version == site.latest_release %}
+                    <span class="nds-tag nds-xs nds-oncolor">
+                        <span class="nds-label">v{{ site.version }}</span>
+                    </span>
+                    {%- else %}
+                    {%- comment %} Dev preview: the pill is the tooltip trigger; balloon is generated and portaled {%- endcomment %}
+                    <span class="nds-tag nds-xs nds-oncolor nds-tooltip nds-term"
+                        data-tooltip-message="Documentation preview: ahead of current release v{{ site.latest_release }}"
+                        data-tooltip-hover="500">
+                        <span class="nds-label">v{{ site.version }}</span>
+                    </span>
+                    {%- endif %}
+                    {%- endif %}
+                    {%- comment %} IQ revision: version parsed from the block's own heading so it can never desync {%- endcomment %}
+                    {%- capture _iq_instr %}{% include NDS-IQ.md %}{% endcapture %}
+                    {%- assign _iq_parts = _iq_instr | split: 'instructions v' %}
+                    {%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
+                    <a href="{{ 'guides/integration-quality' | relative_url }}" class="nds-tag nds-xs nds-oncolor nds-tooltip nds-term"
+                        data-tooltip-message="{{ site.nds_iq.description }}"
+                        data-tooltip-hover="500">
+                        <span class="nds-label">{{ site.nds_iq.title }} v{{ _iq_v }}</span>
+                    </a>
+                </div>
                 {%- if footer_data.bottom.policy and footer_data.bottom.policy.size > 0 %}
                 <div class="nds-footer-policy">
                     {%- for link in footer_data.bottom.policy %}

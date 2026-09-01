@@ -136,6 +136,14 @@
     font-weight: var(--font-weight-semibold);
 }
 
+// Version chips (template + NDS IQ), docs-site chrome moved down from the topbar.
+.nds-footer-versions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
 .nds-footer-policy {
     display: flex;
     flex-wrap: wrap;
