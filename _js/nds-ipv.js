@@ -1,7 +1,7 @@
 /* NDS.Ipv — public surface
  * Rides: nds-backdrop (dims the page behind the overlay; soft)
  * Methods:
- *   NDS.Ipv.init() / .reinit()   build the viewer and collect the thumbnails
+ *   NDS.Ipv.init() / .reinit()   wire the thumbnails (the overlay builds on first open)
  *   NDS.Ipv.create()             build it and return the instance (window.ndsIPV)
  *   instance.open(thumb)         open the viewer on a thumbnail element
  *   instance.close()
@@ -14,8 +14,9 @@
  * Gotchas:
  *   - One viewer serves the whole page; the thumbnails form a single gallery you can page
  *     through with the arrow controls.
- *   - The overlay markup ships in the page (#ndsIpvPopupOverlay and its controls) — the
- *     component wires it, it does not build it.
+ *   - The overlay (#ndsIpvPopupOverlay) is built by the component on the FIRST open —
+ *     a page where no thumbnail is clicked carries zero overlay DOM and none of the
+ *     document-level listeners.
  *   - The instance is a page singleton at window.ndsIPV.
  */
 /**
@@ -48,27 +49,10 @@
                 thumbnails: []
             };
 
-            this.el = {
-                overlay: document.getElementById('ndsIpvPopupOverlay'),
-                container: document.querySelector('.nds-ipv-popup-container'),
-                zoomInfo: document.getElementById('ndsIpvZoomInfo'),
-                controls: document.querySelector('.nds-ipv-popup-controls'),
-                instructions: document.querySelector('.nds-ipv-instructions'),
-                navControls: document.querySelector('.nds-ipv-navigation-controls'),
-                imageCounter: document.getElementById('ndsIpvImageCounter'),
-                closeBtn: document.querySelector('.nds-ipv-close-btn'),
-                prevBtn: document.querySelector('.nds-ipv-prev-btn'),
-                nextBtn: document.querySelector('.nds-ipv-next-btn')
-            };
-
-            // UI chrome toggled together by setUIHidden().
-            this.uiEls = [
-                this.el.controls,
-                this.el.instructions,
-                this.el.zoomInfo,
-                this.el.navControls,
-                this.el.imageCounter
-            ];
+            // Overlay elements are cached by ensureOverlay() on the first open —
+            // until then the page carries no overlay DOM at all.
+            this.el = {};
+            this.uiEls = [];
 
             // The live full-size <img>, cached so the transform hot path never
             // re-queries the DOM. Set in loadImage(), cleared in removeImage().
@@ -98,19 +82,48 @@
         }
 
         init() {
-            if (!this.el.overlay) {
-                console.warn('NDS Ipv: Popup overlay not found');
-                return;
-            }
-
             this.attachThumbnailEvents();
+        }
+
+        // Build + wire the overlay on the first open. Deferring the control and
+        // document-level listeners with it means a no-click session pays for
+        // neither the ~50 overlay nodes nor a mousemove handler.
+        ensureOverlay() {
+            if (this.el.overlay) return;
+            createOverlayMarkup();
+
+            this.el = {
+                overlay: document.getElementById('ndsIpvPopupOverlay'),
+                container: document.querySelector('.nds-ipv-popup-container'),
+                zoomInfo: document.getElementById('ndsIpvZoomInfo'),
+                controls: document.querySelector('.nds-ipv-popup-controls'),
+                instructions: document.querySelector('.nds-ipv-instructions'),
+                navControls: document.querySelector('.nds-ipv-navigation-controls'),
+                imageCounter: document.getElementById('ndsIpvImageCounter'),
+                closeBtn: document.querySelector('.nds-ipv-close-btn'),
+                prevBtn: document.querySelector('.nds-ipv-prev-btn'),
+                nextBtn: document.querySelector('.nds-ipv-next-btn')
+            };
+
+            // UI chrome toggled together by setUIHidden().
+            this.uiEls = [
+                this.el.controls,
+                this.el.instructions,
+                this.el.zoomInfo,
+                this.el.navControls,
+                this.el.imageCounter
+            ];
+
+            this.el.overlay.setAttribute('data-nds-ipv-initialized', 'true');
+
             this.attachControlEvents();
             this.attachGlobalEvents();
 
             // Localize the injected overlay. English defaults are baked into the
-            // markup, so this is fire-and-forget (no flash before the fetch resolves).
-            // The dialog's own aria-label can't be reached by apply()'s descendant
-            // walk, so set it from the returned data.
+            // markup, so this is fire-and-forget (the first open may show English
+            // for a beat on a localized page — the same arm-time pattern the
+            // accessibility panel uses). The dialog's own aria-label can't be
+            // reached by apply()'s descendant walk, so set it from the returned data.
             NDS.i18n.load('ipv', this.el.overlay).then((data) => {
                 if (data && data.viewerLabel) {
                     this.el.overlay.setAttribute('aria-label', data.viewerLabel);
@@ -368,6 +381,8 @@
 
         // ── Open / close ─────────────────────────────────────────────────
         open(thumb, skipIndexUpdate = false) {
+            this.ensureOverlay();
+
             // Prefer the lazy-load / full-resolution source, fall back to the src.
             const src = thumb.dataset.ipvFull || thumb.dataset.src || thumb.getAttribute('data-src') || thumb.src;
 
@@ -549,15 +564,10 @@
         document.body.insertAdjacentHTML('beforeend', overlayHTML);
     }
 
-    // Initialization (called by nds-loader.js)
+    // Initialization (called by nds-loader.js). The overlay builds lazily in
+    // the instance's first open, so the singleton guard is the instance itself.
     function initializeIPV() {
-        createOverlayMarkup();
-
-        const overlay = document.getElementById('ndsIpvPopupOverlay');
-        if (overlay && !overlay.hasAttribute('data-nds-ipv-initialized')) {
-            window.ndsIPV = new NDSImagePopupViewer();
-            overlay.setAttribute('data-nds-ipv-initialized', 'true');
-        }
+        if (!window.ndsIPV) window.ndsIPV = new NDSImagePopupViewer();
     }
 
     // Public API for the unified init system

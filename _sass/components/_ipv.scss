@@ -72,7 +72,10 @@
   height: 100vh;
   background: rgba(0, 0, 0, 0.9);
   display: none;
-  z-index: 1000;
+  // The overlay IS the dimming layer, so it shares the backdrop tier (1100),
+  // above the topbar (1001). Modal (1101) and the viewer never open together
+  // by design. 1000 left it under the topbar.
+  z-index: 1100;
   backdrop-filter: blur(5px);
 
   &.nds-ipv-active {
