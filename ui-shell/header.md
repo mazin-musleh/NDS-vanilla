@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.10.x"
-last_edit: "01/09/2026 - 11:58 PM"
+updated: "1.11.0"
+last_edit: "02/09/2026 - 01:16 AM"
 ---
 
 <!-- Header Structure -->
@@ -114,22 +114,6 @@ header
                     <li>Keep one header region per page, holding the three layers in the order the structure tree shows.</li>
                 </ul>
             </div>
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Skip Link</h3>
-                <p>A keyboard user must not tab through the whole header on every page to reach the content. The page shell puts a skip link first in the body, before the header. It is hidden until it gets focus. Give the main landmark the id it points to.</p>
-                <div class="nds-code">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <code class="lang-html">
-&lt;body&gt;
-  &lt;a class="nds-skip-link nds-sr-only" href="#main"&gt;تخطي إلى المحتوى الرئيسي&lt;/a&gt;
-  &lt;header&gt;…&lt;/header&gt;
-  &lt;main id="main"&gt;…&lt;/main&gt;
-                    </code>
-                </div>
             </div>
         </div>
     </div>

@@ -497,7 +497,7 @@
             options = options || { showMessage: true };
             var ms = msElement.closest('.nds-multiselect') || msElement;
             // Resolve the menu portal-aware, then scope to it: re-validation fires on
-            // `nds:multiselect:change` — i.e. while the menu is open, and a multiselect
+            // the multiselect's change event — i.e. while the menu is open, and a multiselect
             // in a modal/drawer/table cell has portaled it to <body> by then. A wrapper-
             // rooted `.nds-dropmenu-menu ...` walk counts zero there and reports invalid.
             var menu = NDS.querySelector(ms, '.nds-dropmenu-menu');

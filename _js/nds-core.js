@@ -35,7 +35,9 @@
  *     NDS.triggerEvents(el)            dispatch input + change so forms and consumers sync
  *     NDS.badge(el, count) · NDS.buildChip(value, opts) · NDS.isRowSelected(row)
  * Events:
- *   (none — core dispatches nothing of its own)
+ *   nds:template:ready    on the stamped root, bubbles — detail.id is the summoned id.
+ *                         Fires after NDS.Init.refresh wires the arrivals, so page JS
+ *                         that needs the markup binds on document and waits for it
  * Hooks:
  *   data-state    the token list NDS.State owns — space separated, matched with ~=
  *   data-status   the single value NDS.Status owns
