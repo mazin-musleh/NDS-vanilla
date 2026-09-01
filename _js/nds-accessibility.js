@@ -12,6 +12,7 @@
  *   (none)
  * Hooks:
  *   data-accessibility-panel · data-accessibility-toggle · data-accessibility-action
+ *   data-accessibility-panel-template   inert <template> holding the panel; stamped in on arm
  *   data-a11y-mode · data-a11y-visual · data-a11y-setting · data-a11y-value
  *   data-a11y-exclude-token   opt a subtree out of a mode's token overrides
  *   data-armed                the panel gate (see below)
@@ -265,8 +266,25 @@
         return false;
     }
 
+    // A state with nothing active has nothing worth keeping — drop the key so the
+    // next visit boots cold and the panel stays inert in its template. Mask
+    // geometry alone doesn't count: it only matters while its mode is on.
+    // String() both sides: cycled settings come back as strings ('0' vs 0).
+    function isDefaultState(s) {
+        if (s.modes.length || s.bundles.length || s.excluded.length) return false;
+        const def = defaultState().settings;
+        for (const k in def) {
+            if (k === 'mask-band' || k === 'mask-y') continue;
+            if (String(s.settings[k]) !== String(def[k])) return false;
+        }
+        return true;
+    }
+
     function save() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+        try {
+            if (isDefaultState(state)) localStorage.removeItem(STORAGE_KEY);
+            else localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch {}
     }
 
     // Persist + push to DOM. Every state mutator ends with commit() so
@@ -971,20 +989,62 @@
         });
     }
 
+    // The panel may ship inert inside <template data-accessibility-panel-template>
+    // (~185 nodes kept out of every page's DOM). Stamp it into the document on
+    // arm; a bare <aside> already in the document — the pre-template markup —
+    // is used as-is, so both generations of markup work.
+    function resolvePanel() {
+        const live = document.querySelector('[data-accessibility-panel]');
+        if (live) return live;
+        const tpl = document.querySelector('template[data-accessibility-panel-template]');
+        if (!tpl) return null;
+        tpl.replaceWith(tpl.content);
+        const injected = document.querySelector('[data-accessibility-panel]');
+        if (injected) wireInjected(injected);
+        return injected;
+    }
+
+    // On a FAB-click arm the loader's page-load scans have already run, so hand
+    // the injected panel to each rider directly — all three are stamp-guarded,
+    // so the load-time arm path (injected BEFORE the scans) double-wires nothing.
+    function wireInjected(panelEl) {
+        // init(), not create(): Panel's document-level toggle listener binds in
+        // init(), and the loader's selector scan skipped Panel/Theme when this
+        // panel — inert in its template — held the page's only match. Both
+        // inits are run-once guarded, so this is free when they already ran.
+        NDS.Panel?.init?.();
+        NDS.Theme?.init?.();
+        panelEl.querySelectorAll('.nds-accordion').forEach(el => NDS.Accordion?.create?.(el));
+        panelEl.querySelectorAll('.nds-scroll-more').forEach(el => NDS.ScrollMore?.create?.(el));
+        // Theme's toggle sync also scanned pre-injection — mirror the mode here.
+        const themeBtn = panelEl.querySelector('[data-theme-toggle]');
+        if (themeBtn) {
+            const isDark = (root.getAttribute('data-theme') || '').split(/\s+/).includes('dark');
+            NDS.aria.pressed(themeBtn, isDark);
+            const icon = themeBtn.querySelector('.nds-icon');
+            if (icon) {
+                icon.classList.toggle('nds-hgi-sun-03', isDark);
+                icon.classList.toggle('nds-hgi-moon-02', !isDark);
+            }
+        }
+    }
+
     function init() {
         if (_initDone) destroy();
         _initDone = true;
 
         toggleBtn = document.querySelector('[data-accessibility-toggle]');
-        panel = document.querySelector('[data-accessibility-panel]');
+        panel = resolvePanel();
         if (!toggleBtn || !panel) return;
 
         // Stamped here, not just in the boot gate, so the marker is true whichever
         // path armed the component.
         panel.setAttribute('data-armed', '');
 
+        // commit, not bare apply: save() drops a default-state key on the spot,
+        // so a stale all-defaults visitor stops arming from the next visit on.
         state = load();
-        apply();
+        commit();
 
         initAbortController = new AbortController();
         const { signal } = initAbortController;
@@ -1047,14 +1107,13 @@
 // pay zero init cost.
 (function bootAccessibility() {
     const STORAGE_KEY = 'nds-a11y';
-    const panel = document.querySelector('[data-accessibility-panel]');
+    const panel = document.querySelector('[data-accessibility-panel], template[data-accessibility-panel-template]');
     const fab = document.querySelector('[data-accessibility-toggle]');
     if (!panel || !fab) return;
 
-    const arm = () => {
-        if (!panel.hasAttribute('data-armed')) panel.setAttribute('data-armed', '');
-        NDS.Accessibility.init();
-    };
+    // init() resolves the real panel (stamping it out of the template when
+    // needed) and stamps data-armed itself.
+    const arm = () => NDS.Accessibility.init();
 
     try { if (localStorage.getItem(STORAGE_KEY)) arm(); } catch (e) {}
 

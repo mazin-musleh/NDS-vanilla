@@ -4,6 +4,12 @@ itself from a capture-phase listener so the tiles are wired before the panel
 is shown. It ships `hidden` — nds-fab.js strips that once the button is
 routed into its dock. data-fab-pos="auto" follows the panel: the FAB names
 it via aria-controls, so only data-panel-side below picks the edge.
+
+The panel ships inert inside <template> — ~185 nodes off every page's DOM.
+nds-accessibility.js stamps it into the document on arm (saved prefs or FAB
+click); a bare <aside> without the wrapper still works as-is. If you change
+data-panel-side, set data-fab-pos on the FAB to match — the FAB docks before
+the panel exists, so `auto` can't read the side from inside the template.
 {%- endcomment -%}
 <button class="nds-btn nds-primary nds-circle nds-fab nds-accessibility-toggle"
         type="button"
@@ -18,6 +24,7 @@ it via aria-controls, so only data-panel-side below picks the edge.
     <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
 </button>
 
+<template data-accessibility-panel-template>
 <aside id="ndsAccessibilityPanel"
        class="nds-panel nds-accessibility-panel"
        data-panel-side="end"
@@ -352,3 +359,4 @@ it via aria-controls, so only data-panel-side below picks the edge.
         </button>
     </div>
 </aside>
+</template>

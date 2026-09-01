@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.5"
-updated: "1.8.1"
-last_edit: "02/08/2026 - 09:52 AM"
+updated: "1.10.x"
+last_edit: "01/09/2026 - 08:45 PM"
 ---
 
 <!-- Trigger -->
@@ -79,6 +79,7 @@ last_edit: "02/08/2026 - 09:52 AM"
     &lt;i class="nds-icon nds-hgi-accessibility" aria-hidden="true"&gt;&lt;/i&gt;
 &lt;/button&gt;
 
+&lt;template data-accessibility-panel-template&gt;
 &lt;aside id="ndsAccessibilityPanel"
        class="nds-panel nds-accessibility-panel"
        data-panel-side="end"
@@ -417,6 +418,7 @@ last_edit: "02/08/2026 - 09:52 AM"
         &lt;/button&gt;
     &lt;/div&gt;
 &lt;/aside&gt;
+&lt;/template&gt;
                                         </code>
                                         </div>
                                     </div>
@@ -693,7 +695,7 @@ last_edit: "02/08/2026 - 09:52 AM"
                             <i class="hgi hgi-stroke hgi-plug-socket"></i>
                             <span class="nds-label">Auto-initialization</span>
                         </span>
-                        <p class="nds-item-desc">Activates as soon as the panel markup is on the page. Drop the FAB plus aside snippet into your base template once and every page picks it up without further wiring.</p>
+                        <p class="nds-item-desc">Activates as soon as the markup is on the page. Drop the FAB plus the template-wrapped aside into your base template once and every page picks it up without further wiring. The panel sleeps inside its <code class="nds-inline-code lang-html">&lt;template&gt;</code> and joins the DOM only when a visitor opens it or arrives with saved settings, so pages that never use it carry none of its nodes.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -797,6 +799,7 @@ last_edit: "02/08/2026 - 09:52 AM"
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-toggle</code></td><td>Marks the FAB so the panel can localize it and arm itself on the first click. Opening is <code class="nds-inline-code lang-html">data-panel-toggle</code>'s job; additional triggers call <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-panel-toggle</code></td><td>Set to the panel's id so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component opens it, tracks <code class="nds-inline-code lang-html">aria-expanded</code>, and returns focus on close.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel</code></td><td>Mark the panel root. Required for auto-init.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel-template</code></td><td>Mark the <code class="nds-inline-code lang-html">&lt;template&gt;</code> that holds the inert panel. The component stamps its content into the page on first use. A bare <code class="nds-inline-code lang-html">&lt;aside&gt;</code> without the wrapper still works, but every page then carries the panel's ~190 DOM nodes.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-action="reset"</code></td><td>Mark the reset button. Two-click confirmation with a 5-second arming window is wired automatically.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-fab-pos</code></td><td>Set on the FAB to pick its dock edge. Values: <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>Set on the panel to pick the edge it slides from. Set it to the same side as the FAB.</td></tr>
