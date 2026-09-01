@@ -23,6 +23,9 @@
  *     the DOM (replacing a table row, closing a view) leaks it and the detached subtree.
  *     Call destroy(el) first. reinit() covers the other side: wrappers you ADD.
  *   - nds:dropmenu:prepare is the lazy-content hook; opened fires after placement.
+ *   - Opt-in lazy menu: an own <template> child holding the menu is stamped +
+ *     constructed on the first trigger click. Self-owned menus only — never one
+ *     that filter/share read at init or multiselect builds into.
  *   - data-position-vertical is written by the component (a CSS hook), never set it yourself.
  *   - A menu that would be clipped portals itself: on every open the component walks the
  *     ancestors and moves the menu to <body> when one of them clips it vertically (a modal
@@ -1311,6 +1314,72 @@
     }
 
     // ==============================================
+    // LAZY AUTHORED MENU (opt-in <template>)
+    // ==============================================
+    // A consumer may ship a big self-owned menu inert:
+    //   <div class="nds-dropmenu">
+    //     <button class="nds-dropmenu-trigger">…</button>
+    //     <template><div class="nds-dropmenu-menu">…</div></template>
+    //   </div>
+    // The wrapper is skipped at scan; the first trigger click stamps the
+    // template, runs the normal constructor on now-real DOM, and opens — so
+    // init (aria, listeners, select mode, search) is never split, just late.
+    // ONLY for menus dropmenu alone drives: a menu another component reads at
+    // ITS init (filter, share) or builds into (multiselect) must stay live,
+    // and menu content is invisible to search engines until stamped.
+
+    // Module-level twin of _findOwnDescendant (needed before an instance exists).
+    function _ownFirstIn(root, selector) {
+        const candidates = root.querySelectorAll(selector);
+        for (let i = 0; i < candidates.length; i++) {
+            if (candidates[i].closest('.nds-dropmenu') === root) return candidates[i];
+        }
+        return null;
+    }
+
+    function _ownMenuTemplate(wrapper) {
+        const tpls = wrapper.querySelectorAll('template');
+        for (let i = 0; i < tpls.length; i++) {
+            if (tpls[i].closest('.nds-dropmenu') === wrapper
+                && tpls[i].content.querySelector('.nds-dropmenu-menu')) return tpls[i];
+        }
+        return null;
+    }
+
+    // Stamp the wrapper's menu template in place and wake what arrived.
+    // NDS.Init.refresh may construct this wrapper too (a nested sub-dropmenu
+    // re-enters the scan), so callers read wrapper.ndsDropmenu afterwards.
+    function _stampMenuTemplate(wrapper) {
+        const tpl = _ownMenuTemplate(wrapper);
+        if (!tpl) return null;
+        tpl.replaceWith(tpl.content);
+        const menu = _ownFirstIn(wrapper, '.nds-dropmenu-menu');
+        if (menu) NDS.Init?.refresh?.(menu);
+        return menu;
+    }
+
+    // One-shot arm on the trigger. Enter/Space on a button trigger synthesize a
+    // click, so keyboard opens work; ArrowDown-to-open no-ops once and recovers
+    // after construction (the established pre-wire-gap pattern).
+    function _armTemplateDropmenu(wrapper) {
+        if (wrapper._ndsDropmenuArmed) return;
+        wrapper._ndsDropmenuArmed = true;
+        const trigger = _ownFirstIn(wrapper, '.nds-dropmenu-trigger') || wrapper;
+        trigger.addEventListener('click', (e) => {
+            _stampMenuTemplate(wrapper);
+            if (!wrapper.ndsDropmenu) new NDSDropmenu(wrapper);
+            const instance = wrapper.ndsDropmenu;
+            if (!instance) return;
+            // Mirror the real trigger handler for this one click.
+            e.preventDefault();
+            e.stopPropagation();
+            instance._lastClickX = (wrapper.hasAttribute('data-anchor-cursor')
+                && typeof e.clientX === 'number' && e.clientX > 0) ? e.clientX : null;
+            instance.toggle();
+        }, { once: true });
+    }
+
+    // ==============================================
     // AUTO-INITIALIZATION
     // ==============================================
 
@@ -1318,6 +1387,13 @@
         document.querySelectorAll('.nds-dropmenu').forEach(el => {
             if (el.closest('code, .code-example')) return;
             if (el.hasAttribute('data-nds-dropmenu-initialized')) return;
+
+            // Menu asleep in an own <template> → arm instead of constructing.
+            // no-click wrappers are the consumer's to create() programmatically.
+            if (!_ownFirstIn(el, '.nds-dropmenu-menu') && _ownMenuTemplate(el)) {
+                if (!el.hasAttribute('data-dropmenu-no-click')) _armTemplateDropmenu(el);
+                return;
+            }
 
             // Expando is self-assigned post-guard in the ctor — never stamp a bailed construction.
             new NDSDropmenu(el);
@@ -1328,7 +1404,14 @@
     NDS.Dropmenu = {
         init: initializeDropmenus,
         reinit: initializeDropmenus,
-        create: (element) => new NDSDropmenu(element),
+        create: (element) => {
+            // A templated menu stamps immediately on programmatic creation —
+            // the consumer is instancing NOW, so there is nothing to defer.
+            if (element && !_ownFirstIn(element, '.nds-dropmenu-menu')) _stampMenuTemplate(element);
+            // Prefer the live instance: refresh inside the stamp (or an earlier
+            // create) may already have constructed this wrapper.
+            return element?.ndsDropmenu || new NDSDropmenu(element);
+        },
         destroy: (element) => element?.ndsDropmenu?.destroy(),
         // Walks up from `el` to find the .nds-dropmenu wrapper. Falls
         // back to the menu's `_ownerDropmenu` backref when the menu has

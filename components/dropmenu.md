@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.10.x"
-last_edit: "22/08/2026 - 01:19 PM"
+last_edit: "01/09/2026 - 10:28 PM"
 ---
 
 <!-- Standard Dropmenu -->
@@ -1141,6 +1141,7 @@ document.getElementById('my-lazy-dropmenu').addEventListener('nds:dropmenu:prepa
                     <li>Group related actions together and use <code class="nds-inline-code lang-html">&lt;hr class="nds-divider"&gt;</code> to separate action groups</li>
                     <li>Keep menus focused with 3-8 items. If you need more, consider restructuring into multiple menus or a different pattern</li>
                     <li>Icons are optional but recommended for faster visual scanning when actions have clear iconic representations</li>
+                    <li>Opt-in lazy menu: to keep a large menu out of the DOM until first open, put the <code class="nds-inline-code lang-html">.nds-dropmenu-menu</code> inside a <code class="nds-inline-code lang-html">&lt;template&gt;</code> child of the wrapper. The first click on the trigger stamps the markup, wires it, and opens it. Only for menus no other NDS component drives — a <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a> or <a class="nds-color" href="{{ 'components/share' | relative_url }}">Share</a> menu is read at page load and a <a class="nds-color" href="{{ 'components/multiselect' | relative_url }}">Multiselect</a> builds into its menu, so those stay live. Content inside a template is invisible to search engines and Ctrl+F</li>
                     <li>Don't use for primary navigation that should always be visible. Use the Header or Side Nav instead</li>
                     <li>Don't use for a single toggle action. A Switch or standalone Button is simpler</li>
                     <li>Don't use for complex multi-step forms. Use a Modal or Drawer for more space</li>
