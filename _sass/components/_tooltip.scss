@@ -47,6 +47,13 @@
     vertical-align: unset;
   }
 
+  // Declarative root ships empty; JS (extras bundle, post-reveal) inserts the
+  // 20px chip. Reserve its box until then so the text after it doesn't shift.
+  &:not([data-nds-tooltip-initialized]):is([data-tooltip-title], [data-tooltip-message]) {
+    min-inline-size: 20px;
+    min-block-size: 20px;
+  }
+
   // Idle help-trigger — a lighter neutral disc so it reads as "there's a
   // tooltip here" rather than an active status chip (open → the default
   // darker neutral). Set via the disc-fill knob (--feedback-icon-color) so
@@ -76,13 +83,6 @@
   --_tooltip-arrow-size: var(--tooltip-arrow-size, 10px);
   --_tooltip-max-width: var(--tooltip-max-width, 240px);
   --_arrow-inline-start: 16px;
-
-  // Auto-swap to inverse tokens when the page is in dark theme.
-  @include dark {
-    --_tooltip-bg: var(--tooltip-background-inverse);
-    --_tooltip-title: var(--tooltip-text-heading-inverse);
-    --_tooltip-body: var(--tooltip-text-paragraph-inverse);
-  }
 
   // Balloon is marked `hidden` in source; the attribute controls visibility.
   display: flex;

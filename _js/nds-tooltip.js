@@ -10,6 +10,8 @@
  *   nds:tooltip:closed   detail {tooltip, trigger, balloon, isOpen}
  * Hooks:
  *   data-tooltip-title · data-tooltip-message   build the balloon from attributes
+ *   title                                       fallback message when data-tooltip-message
+ *                                               is absent; stripped at init
  *   data-tooltip-status                         chip status, default "help"
  *   data-tooltip-hover                          opt in to hover; the value is the open
  *                                               delay in ms (bare attribute = 120)
@@ -85,6 +87,15 @@
          *  inserted. Only an empty root gets the auto-generated chip button.
          */
         autoMarkup() {
+            // `title` opt-in: with no data-tooltip-message the native title is
+            // the message. Stripped so it can't double up with the balloon
+            // (native covers the pre-init gap).
+            const nativeTitle = this.root.getAttribute('title');
+            if (nativeTitle && !this.root.dataset.tooltipMessage) {
+                this.root.dataset.tooltipMessage = nativeTitle;
+                this.root.removeAttribute('title');
+            }
+
             const { tooltipTitle: title, tooltipMessage: message } = this.root.dataset;
             if (!title && !message) return;
 
@@ -161,7 +172,8 @@
             // intent filter only; keyboard focus and touch tap always open
             // immediately. Default stays click-toggle.
             this._hoverMode = this.root.hasAttribute('data-tooltip-hover');
-            this._hoverDelay = parseInt(this.root.dataset.tooltipHover, 10) || 120;
+            const delay = parseInt(this.root.dataset.tooltipHover, 10);
+            this._hoverDelay = Number.isNaN(delay) ? 120 : delay;
             this.balloon.setAttribute('role', 'tooltip');
             const id = this.balloon.id || NDS.uniqueId('nds-tooltip-');
             this.balloon.id = id;
@@ -172,8 +184,14 @@
                     existing ? `${existing} ${id}` : id);
             }
 
-            if (!this.trigger.matches('a, button, input, select, textarea, [tabindex]')) {
+            // A text trigger (span root) has no native activation — Enter/Space
+            // are handled in bindEvents(). Hover mode opens on focus instead.
+            this._isTextTrigger = !this.trigger.matches('a, button, input, select, textarea');
+            if (this._isTextTrigger && !this.trigger.hasAttribute('tabindex')) {
                 this.trigger.setAttribute('tabindex', '0');
+            }
+            if (this._isTextTrigger && !this._hoverMode && !this.trigger.hasAttribute('role')) {
+                this.trigger.setAttribute('role', 'button');
             }
 
             this.bindEvents();
@@ -213,11 +231,16 @@
                 this.balloon.addEventListener('pointerleave', hoverClose, { signal });
 
                 this.trigger.addEventListener('click', (e) => {
-                    // Mouse clicks don't toggle — hover already showed the balloon,
-                    // and the trigger's own action (a toolbar command, a link) must
-                    // proceed undisturbed; just dismiss.
-                    if (e.pointerType === 'mouse') { this.close(); return; }
-                    // Touch (and legacy keyboard-synthesized) clicks keep the toggle.
+                    // Only touch taps toggle. Mouse clicks, keyboard-synthesized
+                    // clicks (pointerType "") and MouseEvent clicks in browsers
+                    // without pointer-typed click (pointerType undefined) never
+                    // toggle: on a link/button the action proceeds and the balloon
+                    // gets out of its way; on a text term the click does nothing,
+                    // so the balloon stays as it is.
+                    if (e.pointerType !== 'touch') {
+                        if (!this._isTextTrigger) this.close();
+                        return;
+                    }
                     e.preventDefault();
                     this.isOpen ? this.close() : this.open();
                 }, { signal });
@@ -240,6 +263,9 @@
                     e.stopPropagation();
                     this.close();
                     this.trigger.focus();
+                } else if (this._isTextTrigger && !this._hoverMode && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    this.isOpen ? this.close() : this.open();
                 }
             }, { signal });
         }

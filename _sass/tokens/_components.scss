@@ -287,9 +287,6 @@
     --tooltip-background-default: var(--colors-base-white);
     --tooltip-text-heading-default: var(--text-display);
     --tooltip-text-paragraph-default: var(--text-primary-paragraph);
-    --tooltip-background-inverse: var(--colors-neutral-800);
-    --tooltip-text-heading-inverse: var(--colors-neutral-50);
-    --tooltip-text-paragraph-inverse: var(--colors-neutral-100);
 
     // ── upload ──
     --upload-background-dropbox-default: var(--colors-neutral-100);
@@ -442,6 +439,11 @@
     --tag-border-info: var(--colors-blue-400);
     --tag-border-warning: var(--colors-yellow-400);
     --tag-border-error: var(--colors-red-400);
+
+    // ── tooltip ──
+    --tooltip-background-default: var(--colors-neutral-800);
+    --tooltip-text-heading-default: var(--colors-neutral-50);
+    --tooltip-text-paragraph-default: var(--colors-neutral-100);
 
     // ── upload (drop zone dip — matches --background-stripe depth) ──
     --upload-background-dropbox-default: var(--colors-neutral-850);

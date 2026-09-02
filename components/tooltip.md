@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "17/07/2026 - 06:24 PM"
+updated: "1.11.x"
+last_edit: "02/09/2026 - 10:36 AM"
 ---
 
 <!-- Help Tooltip -->
@@ -203,6 +203,50 @@ last_edit: "17/07/2026 - 06:24 PM"
                             </div>
                         </div>
                     </div>
+
+                    <!-- title attribute → message -->
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Native title attribute as the message</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
+                                <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip" aria-label="Print" title="Print this page">
+                                    <i class="hgi hgi-stroke hgi-printer" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-tooltip-declarative-3" id="tab-tooltip-declarative-3">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tooltip-declarative-3"
+                                        aria-labelledby="tab-tooltip-declarative-3">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
+&lt;button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip"
+        aria-label="Print" title="Print this page"&gt;
+  &lt;i class="hgi hgi-stroke hgi-printer" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/button&gt;
+                                    </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -330,7 +374,7 @@ last_edit: "17/07/2026 - 06:24 PM"
                             <i class="hgi hgi-stroke hgi-dark-mode"></i>
                             <span class="nds-label">Theme-Aware Colors</span>
                         </span>
-                        <p class="nds-item-desc">Balloon surface, heading, and body text all swap to the inverse token set when the page is in dark theme, with no markup changes required.</p>
+                        <p class="nds-item-desc">Balloon surface, heading, and body text re-bind to dark values when the page is in dark theme, with no markup changes required.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -391,7 +435,7 @@ last_edit: "17/07/2026 - 06:24 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip</code></td><td>Inline root wrapping the trigger and the balloon. JS toggles <code class="nds-inline-code lang-html">data-state="open"</code> on this element while the balloon is visible.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-term</code></td><td>Opt-in modifier on the root for inline text triggers: <code class="nds-inline-code lang-html">cursor:help</code> and a dotted underline mark the annotated term (as in the "National ID" example). Without it the trigger keeps its own affordance — chip, button, or custom.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tooltip-trigger</code></td><td>The clickable element. A <code class="nds-inline-code lang-html">&lt;button&gt;</code> wrapping an <code class="nds-inline-code lang-html">.nds-feedback-icon</code> chip is the canonical pattern. Omit this element when the root's own text content is the trigger (declarative text-trigger mode, as in the "National ID" example).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tooltip-trigger</code></td><td>The clickable element. A <code class="nds-inline-code lang-html">&lt;button&gt;</code> wrapping an <code class="nds-inline-code lang-html">.nds-feedback-icon</code> chip is the canonical pattern. Omit this element when the root's own text content is the trigger (declarative text-trigger mode, as in the "National ID" example); JS then makes the root focusable, and in click mode Enter or Space toggles it.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-balloon</code></td><td>The floating panel. Marked <code class="nds-inline-code lang-html">hidden</code> by default; JS toggles the attribute on open.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-body</code></td><td>Text container inside the balloon. Sits beside the optional leading icon chip.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-title</code></td><td>Optional bold heading placed at the top of the body stack.</td></tr>
@@ -408,7 +452,8 @@ last_edit: "17/07/2026 - 06:24 PM"
                         <tr><td><code class="nds-inline-code lang-html">data-tooltip-title</code></td><td>Declarative shortcut. Set on <code class="nds-inline-code lang-html">.nds-tooltip</code> to have the JS generate the balloon title. Skipped when an explicit <code class="nds-inline-code lang-html">.nds-tooltip-balloon</code> child is present.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-tooltip-message</code></td><td>Declarative shortcut. Set on <code class="nds-inline-code lang-html">.nds-tooltip</code> to have the JS generate the balloon message paragraph. Either title or message (or both) is required for auto-generation to run.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-tooltip-status</code></td><td>Declarative shortcut. Set on <code class="nds-inline-code lang-html">.nds-tooltip</code> to control the generated chips' status (defaults to <code class="nds-inline-code lang-html">help</code>). Values match <code class="nds-inline-code lang-html">data-status</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-tooltip-hover</code></td><td>Opt-in on <code class="nds-inline-code lang-html">.nds-tooltip</code>: the balloon opens on mouse hover and visible keyboard focus instead of click. The optional value is the hover-open delay in milliseconds (e.g. <code class="nds-inline-code lang-html">data-tooltip-hover="500"</code>; bare attribute = <code class="nds-inline-code lang-html">120</code>) — keyboard focus and touch always open immediately. Mouse clicks then just dismiss (the trigger's own action proceeds); touch keeps tap-to-toggle. Without the attribute the tooltip is click-activated.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">title</code></td><td>Fallback message source on <code class="nds-inline-code lang-html">.nds-tooltip</code>. When <code class="nds-inline-code lang-html">data-tooltip-message</code> is absent, the native <code class="nds-inline-code lang-html">title</code> text becomes the balloon message. The attribute is removed at init so the browser tooltip does not double up. Until the script loads, the native tooltip shows.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-tooltip-hover</code></td><td>Opt-in on <code class="nds-inline-code lang-html">.nds-tooltip</code>: the balloon opens on mouse hover and visible keyboard focus instead of click. The optional value is the hover-open delay in milliseconds (e.g. <code class="nds-inline-code lang-html">data-tooltip-hover="500"</code>; bare attribute = <code class="nds-inline-code lang-html">120</code>) — keyboard focus and touch always open immediately. A mouse click on a link or button trigger dismisses the balloon and the trigger's own action proceeds; a click on a text trigger leaves the balloon as it is. Touch keeps tap-to-toggle. Without the attribute the tooltip opens and closes on click.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>Set on the inner <code class="nds-inline-code lang-html">.nds-feedback</code> wrappers (inside the trigger and inside the balloon) to drive icon glyph and color. Values: <code class="nds-inline-code lang-html">help</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">neutral</code>. Do not put <code class="nds-inline-code lang-html">data-status</code> on <code class="nds-inline-code lang-html">.nds-tooltip</code> itself.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Managed by JS on <code class="nds-inline-code lang-html">.nds-tooltip</code>. Set to <code class="nds-inline-code lang-html">open</code> while the balloon is visible; absent when closed. Used internally for CSS styling hooks (e.g. the idle-trigger neutral background).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-tooltip-balloon</code> in source so the balloon starts closed. JS flips the attribute on open and close.</td></tr>
@@ -427,12 +472,9 @@ last_edit: "17/07/2026 - 06:24 PM"
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-padding</code></td><td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td><td>Inner padding around the balloon content.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td><td>Gap between the icon chip and the body, and between title and message.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-arrow-size</code></td><td><code class="nds-inline-code lang-html">10px</code></td><td>Side length of the rotated arrow square.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-background-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-base-white)</code></td><td>Balloon surface color in light theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-background-inverse</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-800)</code></td><td>Balloon surface color in dark theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-heading-default</code></td><td><code class="nds-inline-code lang-html">var(--text-display)</code></td><td>Title color in light theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-paragraph-default</code></td><td><code class="nds-inline-code lang-html">var(--text-primary-paragraph)</code></td><td>Message body color in light theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-heading-inverse</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-50)</code></td><td>Title color in dark theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-paragraph-inverse</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-100)</code></td><td>Message body color in dark theme.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-background-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-base-white)</code></td><td>Balloon surface color. Dark theme re-binds it to <code class="nds-inline-code lang-html">var(--colors-neutral-800)</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-heading-default</code></td><td><code class="nds-inline-code lang-html">var(--text-display)</code></td><td>Title color. Dark theme re-binds it to <code class="nds-inline-code lang-html">var(--colors-neutral-50)</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-paragraph-default</code></td><td><code class="nds-inline-code lang-html">var(--text-primary-paragraph)</code></td><td>Message body color. Dark theme re-binds it to <code class="nds-inline-code lang-html">var(--colors-neutral-100)</code>.</td></tr>
                     </tbody>
                 </table>
             </div>
