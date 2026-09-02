@@ -30,7 +30,8 @@
 // BODY SCROLL LOCK
 // ==============================================
 
-body[data-state="backdrop"][style*="top"] {
+// Own attribute, stamped by NDS.scrollLock: a data-state flip on <body> restyles half the page.
+body[data-nds-scroll-lock] {
   position: fixed;
   width: 100%;
   inset-inline-start: 0;

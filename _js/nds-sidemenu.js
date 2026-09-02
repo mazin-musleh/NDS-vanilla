@@ -36,15 +36,8 @@
     };
 
     // Scroll lock helpers for top mode
-    const lockBodyScroll = () => {
-        NDS.scrollLock.lock();
-        NDS.State.set(document.body, 'backdrop');
-    };
-
-    const unlockBodyScroll = () => {
-        NDS.State.clear(document.body);
-        NDS.scrollLock.unlock();
-    };
+    const lockBodyScroll = () => NDS.scrollLock.lock();
+    const unlockBodyScroll = () => NDS.scrollLock.unlock();
 
     // Scroll past hero then lock — handles user touch interruption
     const scrollPastHeroAndLock = () => {

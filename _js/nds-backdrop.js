@@ -131,7 +131,6 @@
       if (newConfig.preventScroll) {
         NDS.scrollLock.lock();
       }
-      NDS.State.set(document.body, 'backdrop');
     }, speed);
 
     // Call onShow callback
@@ -164,8 +163,7 @@
     // Remove active state — CSS handles opacity/blur removal
     NDS.State.clear(backdropElement);
 
-    // Restore body state and scroll immediately
-    NDS.State.clear(document.body);
+    // Restore scroll immediately
     if (popped?.preventScroll) {
       NDS.scrollLock.unlock();
     }

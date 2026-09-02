@@ -1099,18 +1099,17 @@
 
     // ── Body Scroll Lock ───────────────────────────────────────────────
     // Locks/unlocks document scroll while preserving the visual scroll
-    // position. `lock()` captures the current pageYOffset and pins the
-    // body via `position: top: -<scrollY>px` (callers are expected to
-    // pair this with a CSS rule that sets `body { position: fixed }`
-    // when the appropriate state-token is present, e.g.
-    // `body[data-state~="backdrop"]`). `unlock()` parses the saved
-    // offset back out of the inline style, clears it, and restores
+    // position. `lock()` captures the current pageYOffset, pins the body
+    // via `top: -<scrollY>px` and stamps `data-nds-scroll-lock`, which
+    // _backdrop.scss turns into `position: fixed`. `unlock()` parses the
+    // saved offset back out of the inline style, clears both, and restores
     // scroll. Stateless: the inline style is the source of truth, so
     // calling `unlock()` when not locked is a safe no-op.
     //
-    // Does NOT touch `data-state` — callers manage backdrop / overlay
-    // state tokens themselves so the same helper serves both
-    // backdrop-coupled and standalone scroll-lock use cases.
+    // Own attribute, NOT a data-state token: `data-state` keys hundreds of
+    // rules, so flipping it on <body> restyled ~half the page (1,578
+    // elements on the home page, measured 2026-09-02). A name only one
+    // body rule uses restyles <body> alone.
     //
     // Caller responsibility: do NOT call `lock()` twice without an
     // intervening `unlock()`. The second call would capture the
@@ -1124,11 +1123,13 @@
         lock() {
             const scrollY = window.pageYOffset;
             document.body.style.top = `-${scrollY}px`;
+            document.body.setAttribute('data-nds-scroll-lock', '');
         },
         unlock() {
             if (!document.body.style.top) return;
             const scrollY = parseInt(document.body.style.top, 10) * -1;
             document.body.style.top = '';
+            document.body.removeAttribute('data-nds-scroll-lock');
             window.scrollTo(0, scrollY);
         }
     };
