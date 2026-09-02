@@ -579,8 +579,14 @@ body.nds-minimal .nds-main-nav {
             transition: transform var(--nds-transition);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 
-            &:has(.nds-nav-actions .nds-dropdown[data-state~="open"]) .nds-nav-primary {
-                max-height: 10svh;
+            // The see-through actions row shows these corners; square off so an
+            // open action dropdown sits flush under it.
+            &:has(.nds-nav-actions .nds-dropdown[data-state~="open"]) {
+                border-radius: 0;
+
+                .nds-nav-primary {
+                    max-height: 10svh;
+                }
             }
         }
 
@@ -763,18 +769,12 @@ body.nds-minimal .nds-main-nav {
         width: 100%;
         border-top: 1px solid var(--divider-color);
         justify-content: center;
-        background-color: var(--_nav-bg);
         z-index: var(--_nav-z-secondary);
 
         // Every item relocated out, or none authored: only placeholders remain, so
         // the sticky row paints over nothing. Stamped by checkNavComposition().
         &[data-nav-empty] {
             display: none;
-        }
-
-        &:not(:has([data-state~="open"])) {
-            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-            transition: border-radius var(--nds-transition);
         }
 
         .nds-nav-item {
