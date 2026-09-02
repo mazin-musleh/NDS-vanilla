@@ -292,7 +292,9 @@ async function measure(pageUrl) {
 
     if (TRACE) await page.tracing.start({
       categories: ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'toplevel', 'v8.execute', 'blink.user_timing',
-        ...(SELECTORS ? ['disabled-by-default-blink.debug'] : [])],
+        // .stack puts a JS stack on every UpdateLayoutTree/Layout event so the raw trace names the forcing frame.
+        // .invalidationTracking adds StyleRecalcInvalidationTracking events (reason + node) so a recalc no JS forced can still be explained.
+        ...(SELECTORS ? ['disabled-by-default-blink.debug', 'disabled-by-default-devtools.timeline.stack', 'disabled-by-default-devtools.timeline.invalidationTracking'] : [])],
     });
     const resp = await page.goto(pageUrl, { waitUntil: 'networkidle2', timeout: 120000 });
     if (resp && resp.status() !== 200) throw new Error(`HTTP ${resp.status()} for ${pageUrl} — check the page path`);
