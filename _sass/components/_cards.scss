@@ -735,6 +735,7 @@
   .nds-paged-content:not([data-paged-initialized])) .nds-card,
 .nds-card:is(.nds-loading, [data-state='loading']),
 html:not([data-nds-loaded]) .nds-card {
+  @include skeleton-pulse;
 
   :is(.nds-card-title, .nds-card-subtitle, .nds-card-description,
     .nds-card-number, .nds-card-rating-text) {

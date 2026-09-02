@@ -875,6 +875,7 @@
 // _loading.scss).
 :is(.nds-stepper:not([data-nds-stepper-initialized]),
     .nds-stepper:is(.nds-loading, [data-state='loading'])) {
+    @include skeleton-pulse;
 
     // One rule for the whole step: every direct child of the content becomes a bar —
     // the text block, a label divider, a list, an action row. Barring the containers
@@ -903,7 +904,6 @@
     // including the completed checkmark, a background-painted mask on
     // ::before that transparent text color can't touch.
     .nds-stepper-circle {
-        animation: processing 1.5s ease-in-out infinite;
         border: 0 !important;
         background: var(--nds-skeleton-fill) !important;
         color: transparent !important;
@@ -922,7 +922,6 @@
     // Connector lines go neutral too — their state colors otherwise read
     // as real progress during the skeleton.
     .nds-stepper-step .nds-stepper-base::after {
-        animation: processing 1.5s ease-in-out infinite;
         background: var(--nds-skeleton-fill) !important;
     }
 
@@ -930,7 +929,6 @@
     // text ships empty and its arc math reads JS-written vars, so masking
     // the circle beats faking its parts.
     &.nds-radial .nds-progress-circle {
-        animation: processing 1.5s ease-in-out infinite;
         border-radius: 50%;
         background: var(--nds-skeleton-fill) !important;
 

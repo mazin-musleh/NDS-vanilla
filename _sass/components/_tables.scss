@@ -345,6 +345,14 @@
 // must hold until their own stamps land, even after table init.
 // Editor content (.nds-editor-editable) is exempt: tables pasted into the
 // editor are editor-owned display copies tables JS never wires.
+.nds-table:is([data-state~="loading"], .nds-loading) tbody,
+.nds-table:not([data-nds-tables-initialized], [data-nds-tables-initialized] .nds-table, .nds-editor-editable *) tbody,
+:is(tbody.nds-loading,
+    tbody[data-filter-items]:not([data-nds-filter-initialized]),
+    tbody.nds-paged-content:not([data-paged-initialized])) {
+    @include skeleton-pulse;
+}
+
 .nds-table:is([data-state~="loading"], .nds-loading) tbody tr td,
 .nds-table:not([data-nds-tables-initialized], [data-nds-tables-initialized] .nds-table, .nds-editor-editable *) tbody tr td,
 :is(tbody.nds-loading,
@@ -367,7 +375,6 @@
         height: var(--typo-text-md-LH);
         background: var(--nds-skeleton-fill);
         border-radius: var(--nds-skeleton-radius);
-        animation: processing 1.5s ease-in-out infinite;
     }
 
     >* {

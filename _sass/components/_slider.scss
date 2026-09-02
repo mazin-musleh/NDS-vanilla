@@ -214,6 +214,7 @@
 // the row) and hide the thumb until the init sentinel is stamped. Consumers can
 // also flip a `data-loading` flag during async value updates (e.g. fetching bounds).
 .nds-slider-container:is(:not([data-nds-slider-initialized]), [data-loading]) {
+    @include skeleton-pulse;
     .nds-slider {
         pointer-events: none;
         &::-webkit-slider-thumb { opacity: 0; }

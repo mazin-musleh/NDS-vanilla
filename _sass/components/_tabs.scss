@@ -399,18 +399,22 @@ section>.nds-max-width {
 // Skeleton is also the DEFAULT pre-init state: any tabs root bars its
 // labels until its init stamp lands.
 :is(:is(.nds-tabs, .nds-tab-list):is(.nds-loading, [data-state='loading']),
-    .nds-tabs:not([data-nds-tabs-initialized])) .nds-tab {
+    .nds-tabs:not([data-nds-tabs-initialized])) {
+    @include skeleton-pulse;
 
-    .nds-label {
-        @include skeleton-bar;
-    }
+    .nds-tab {
 
-    :is(.nds-icon, i) {
-        visibility: hidden;
-    }
+        .nds-label {
+            @include skeleton-bar;
+        }
 
-    &::before {
-        background-color: transparent;
+        :is(.nds-icon, i) {
+            visibility: hidden;
+        }
+
+        &::before {
+            background-color: transparent;
+        }
     }
 }
 

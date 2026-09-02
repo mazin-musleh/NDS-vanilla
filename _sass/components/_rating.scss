@@ -186,10 +186,13 @@
 // ==============================================
 
 /* Star shapes pulse as skeleton placeholders while loading; spinner + child dim suppressed in _loading.scss. */
+.nds-rating:is(.nds-loading, [data-state="loading"]) {
+  @include skeleton-pulse;
+}
+
 .nds-rating:is(.nds-loading, [data-state="loading"]) .nds-rating-star {
   &::before {
     background: var(--nds-skeleton-fill);
-    animation: processing 1.5s ease-in-out infinite;
   }
 
   &::after {

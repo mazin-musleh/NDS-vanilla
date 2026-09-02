@@ -189,34 +189,37 @@
 // URL params, even after accordion init.
 :is(.nds-accordion:is(.nds-loading, [data-state='loading']),
     .nds-accordion:not([data-nds-accordion-initialized]),
-    .nds-accordion[data-filter-items]:not([data-nds-filter-initialized])) .nds-accordion-item {
+    .nds-accordion[data-filter-items]:not([data-nds-filter-initialized])) {
+    @include skeleton-pulse;
 
-    .nds-accordion-title {
-        @include skeleton-bar;
-    }
+    .nds-accordion-item {
 
-    // Button icons (leading icon and chevron) skeleton too — mask:none so
-    // masked icons paint their whole box as a block (a masked gradient
-    // would reveal the icon's shape); font glyphs die via the transparent
-    // color from skeleton-fill.
-    .nds-accordion-btn :is(.nds-icon, i) {
-        mask: none;
-        border-radius: var(--nds-skeleton-radius);
-        @include skeleton-fill;
-    }
+        .nds-accordion-title {
+            @include skeleton-bar;
+        }
 
-    // Open items: one bar block over the body, inset to its padding (the
-    // content-box keyword sets origin+clip in one declaration, so the
-    // shorthand can't reset the clip); children hide so tag/button
-    // backgrounds don't paint through.
-    .nds-accordion-body {
-        animation: processing 1.5s ease-in-out infinite;
-        background: var(--nds-skeleton-fill) content-box;
-        border-radius: var(--nds-skeleton-radius);
-        color: transparent !important;
+        // Button icons (leading icon and chevron) skeleton too — mask:none so
+        // masked icons paint their whole box as a block (a masked gradient
+        // would reveal the icon's shape); font glyphs die via the transparent
+        // color from skeleton-fill.
+        .nds-accordion-btn :is(.nds-icon, i) {
+            mask: none;
+            border-radius: var(--nds-skeleton-radius);
+            @include skeleton-fill;
+        }
 
-        >* {
-            visibility: hidden;
+        // Open items: one bar block over the body, inset to its padding (the
+        // content-box keyword sets origin+clip in one declaration, so the
+        // shorthand can't reset the clip); children hide so tag/button
+        // backgrounds don't paint through.
+        .nds-accordion-body {
+            background: var(--nds-skeleton-fill) content-box;
+            border-radius: var(--nds-skeleton-radius);
+            color: transparent !important;
+
+            >* {
+                visibility: hidden;
+            }
         }
     }
 }

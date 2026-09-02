@@ -38,8 +38,12 @@
    safeguard until the reveal, so that arm only shows if a list is revealed
    early). */
 :is(.nds-toc:is(.nds-loading, [data-state='loading']),
-    .nds-toc:not([data-nds-toc-initialized])) .nds-drawer-list .nds-btn .nds-label {
-    @include skeleton-bar;
+    .nds-toc:not([data-nds-toc-initialized])) {
+    @include skeleton-pulse;
+
+    .nds-drawer-list .nds-btn .nds-label {
+        @include skeleton-bar;
+    }
 }
 
 /* An auto-populate list is EMPTY until the JS critical pass fills it, and

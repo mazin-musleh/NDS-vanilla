@@ -145,6 +145,7 @@
   // own textarea shimmers as the writing surface. Interaction holds — a
   // half-alive field must not invite typing.
   &:not([data-nds-editor-initialized]) {
+    @include skeleton-pulse;
     // Box-identical swap: md-button row height + the container gap the real
     // bar gets. ponytail: one row — a wrapped mobile toolbar lands taller;
     // reserve a second row here if CLS ever flags it.

@@ -438,11 +438,17 @@ $breakpoints-range: (
 // keyframes override in _animations.scss flattens it). color:transparent
 // hides the real glyphs the gradient covers; harmless on image surfaces.
 // Tokens live in _skeleton.scss (crit).
+// One pulse per held REGION, never per bar. Blink ticks these on the main
+// thread: per-bar it restyled 258 pseudos a frame and cost ~10% of load
+// blocking (2026-09-02). Include on the hold root; bars stay static.
+@mixin skeleton-pulse {
+  animation: processing 1.5s ease-in-out infinite;
+}
+
 @mixin skeleton-fill {
   background: var(--nds-skeleton-fill);
   color: transparent !important;
   width: var(--nds-skeleton-width, fit-content);
-  animation: processing 1.5s ease-in-out infinite;
 }
 
 // Paint a text element as a skeleton bar — fill + radius, descendants'
