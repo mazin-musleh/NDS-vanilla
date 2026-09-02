@@ -1422,48 +1422,49 @@
     NDS.gridLastRow = (() => {
         const SEL = '.nds-divided.nds-grid';
         const CLS = 'nds-last-row';
-        let listening = false;
+        const watched = new WeakSet();
 
-        function scan(container) {
-            const grids = container && container.matches?.(SEL)
+        function mark(grid) {
+            const items = grid.children;
+            for (let i = 0; i < items.length; i++) items[i].classList.remove(CLS);
+            // Skip hidden/non-laid-out grids (offsetTop is 0 for all items)
+            if (!items.length || !grid.offsetParent) return;
+            const lastTop = items[items.length - 1].offsetTop;
+            for (let i = items.length - 1; i >= 0 && items[i].offsetTop === lastTop; i--) {
+                items[i].classList.add(CLS);
+            }
+        }
+
+        // Each grid marks itself from the ResizeObserver, which delivers after
+        // layout: the offsetTop reads never force one, the first delivery is the
+        // initial scan, and a grid that reflows (items paged out, viewport
+        // resized) re-marks on its own. A scheduled first scan (idle, DCL, after
+        // the reveal paint) always raced the time-sliced inits and forced a
+        // full-page layout (~1–2s on a table page at 6.6×).
+        // ponytail: observed grids are never unobserved; an SPA that discards
+        // grids by the thousand wants an off() on removal.
+        function watch(grid) {
+            if (watched.has(grid)) return;
+            watched.add(grid);
+            NDS.onElementResize(grid, () => mark(grid));
+        }
+
+        function gridsIn(container) {
+            return container && container.matches?.(SEL)
                 ? [container]
                 : (container || document).querySelectorAll(SEL);
-
-            for (let g = 0; g < grids.length; g++) {
-                const grid = grids[g];
-                const items = grid.children;
-                for (let i = 0; i < items.length; i++) items[i].classList.remove(CLS);
-                if (!items.length) continue;
-
-                // Skip hidden/non-laid-out grids (offsetTop is 0 for all items)
-                if (!grid.offsetParent) continue;
-
-                const lastTop = items[items.length - 1].offsetTop;
-                for (let i = items.length - 1; i >= 0; i--) {
-                    if (items[i].offsetTop === lastTop) {
-                        items[i].classList.add(CLS);
-                    } else {
-                        break;
-                    }
-                }
-            }
         }
 
+        // Explicit re-scan (marks now, so the read may force layout) and the
+        // registration path for grids added after load.
         function update(container) {
-            scan(container);
-            // Start resize listener on first call that finds grids
-            if (!listening && document.querySelector(SEL)) {
-                listening = true;
-                NDS.onResize(() => scan());
-            }
+            const grids = gridsIn(container);
+            for (let g = 0; g < grids.length; g++) { watch(grids[g]); mark(grids[g]); }
         }
 
-        // Defer initial scan to idle — the last-row class is cosmetic (removes
-        // bottom borders on last-row items), not critical for first paint.
-        // Reading offsetTop/offsetParent on DOMContentLoaded forced a 15ms+
-        // layout pass that competed with the critical init batch.
-        // Guarded: a bundle injected after load (SPA host) never sees DOMContentLoaded.
-        const start = () => NDS.onIdle(() => update());
+        // Observe only — no reads at load. Guarded for a bundle injected after load
+        // (SPA host), which never sees DOMContentLoaded.
+        const start = () => { const grids = gridsIn(); for (let g = 0; g < grids.length; g++) watch(grids[g]); };
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 
         return { update };
