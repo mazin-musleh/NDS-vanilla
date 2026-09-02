@@ -1,8 +1,8 @@
 /* NDS.Code — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Code.init()                          highlight every `.nds-code code` and size the
- *                                            action-bar buttons
+ *   NDS.Code.init()                          highlight each `.nds-code code` as it nears the
+ *                                            viewport and size the action-bar buttons
  *   NDS.Code.reprocessCodeElement(codeEl)    re-highlight one block after you replaced its
  *                                            text
  *   NDS.Code.detectLanguage(codeEl, source)  the language it would use for that block
@@ -52,8 +52,17 @@
     // ==============================================
 
     // Every .code-example is a tab panel inside .nds-code, so one query covers both.
+    // Each block highlights one viewport before it scrolls in, not in one init
+    // sweep: ten blocks at once was the page's largest style recalc. A block in a
+    // hidden tab panel intersects when its tab opens.
     function initializeCodeProcessing() {
-        document.querySelectorAll('.nds-code code').forEach(processCodeElement);
+        document.querySelectorAll('.nds-code code').forEach(function(codeElement) {
+            const off = NDS.onIntersect(codeElement, function(entry) {
+                if (!entry.isIntersecting) return;
+                off();
+                processCodeElement(codeElement);
+            }, { rootMargin: '100% 0px' });
+        });
         sizeActionButtons();
     }
 
@@ -160,8 +169,8 @@
     // ponytail: this strip (plus the trailing-blank pop in splitTokensIntoLines)
     // makes the highlighted block SHORTER than the pre-highlight paint — ~100px on
     // a long block, since `white-space: pre` renders whitespace we then discard.
-    // Harmless today: init rides extras and lands ~1s post-reveal, by which point
-    // the blocks are off-screen, so measured CLS is 0.0000-0.0055. The real fix is
+    // Harmless today: a block highlights one viewport before it scrolls in, so the
+    // shrink lands off-screen and measured CLS is 0.0000-0.0055. The real fix is
     // normalizing the authored whitespace (388 of 421 blocks open with a newline
     // and/or close on an indented line) so both strips become no-ops.
     function getSourceText(codeElement) {
