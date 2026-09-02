@@ -76,10 +76,15 @@
             currentState.callbacks = [];
         }
 
-        // Resolve via the Font Loading API — event-driven, no polling.
+        // Resolve via the Font Loading API — promise + event, no polling.
         if (document.fonts && document.fonts.load && 'ready' in document.fonts) {
             const spec = '1em "' + fontName + '"';
             let settled = false;
+
+            // WebKit serializes a CSS-declared face's family WITH its quotes
+            // ('"hgi-stroke-rounded"'), so a bare compare never matched on Safari and
+            // the gate expired into fail() — icons blank on every iPhone.
+            const family = (f) => f.family.replace(/^["']|["']$/g, '');
 
             // Stamp ONLY when a real @font-face for this family has actually loaded.
             // We can't gate on document.fonts.check(): when no face matches yet — e.g.
@@ -89,7 +94,7 @@
             // is the unambiguous signal.
             const hasLoadedFace = () => {
                 let ok = false;
-                document.fonts.forEach((f) => { if (f.family === fontName && f.status === 'loaded') ok = true; });
+                document.fonts.forEach((f) => { if (family(f) === fontName && f.status === 'loaded') ok = true; });
                 return ok;
             };
             // A face for this family the browser is actively fetching. The budget
@@ -99,7 +104,7 @@
             // the timeout then kills the listener before the font can land.
             const hasPendingFace = () => {
                 let pending = false;
-                document.fonts.forEach((f) => { if (f.family === fontName && f.status === 'loading') pending = true; });
+                document.fonts.forEach((f) => { if (family(f) === fontName && f.status === 'loading') pending = true; });
                 return pending;
             };
             // A registered face the browser never started fetching. Happens when
@@ -108,7 +113,7 @@
             // ever fires and the window below would expire into a permanent fail.
             const hasIdleFace = () => {
                 let idle = false;
-                document.fonts.forEach((f) => { if (f.family === fontName && f.status === 'unloaded') idle = true; });
+                document.fonts.forEach((f) => { if (family(f) === fontName && f.status === 'unloaded') idle = true; });
                 return idle;
             };
 
@@ -118,12 +123,27 @@
                 document.fonts.removeEventListener('loadingdone', onDone);
                 document.fonts.removeEventListener('loading', onLoading);
             };
-            const onDone = () => {
-                if (settled || !hasLoadedFace()) return;
+            const settle = () => {
+                if (settled) return;
                 settled = true;
                 teardown();
                 markAsLoaded();
             };
+            const onDone = () => {
+                if (hasLoadedFace()) settle();
+            };
+            // Primary signal: load() resolves with the faces it matched once they load
+            // (an empty list while the deferred sheet hasn't applied — never stamp on
+            // that). Safari has no dependable loadingdone, so the event is the backup.
+            // Waits on each face's own promise in case an engine resolves early.
+            const kick = () => {
+                document.fonts.load(spec).then((faces) => {
+                    if (!faces.length) return;
+                    return Promise.all(faces.map((f) => f.loaded)).then(settle);
+                }).catch(() => {});
+                document.fonts.load('bold ' + spec).catch(() => {});
+            };
+            state.kick = kick;
             // Re-arm once our own face is genuinely in flight, so the budget covers
             // the download instead of the wait for the deferred sheet. Bounded by
             // the fetch itself: 'loaded' stamps, 'error' stops re-arming and the
@@ -144,26 +164,26 @@
                     // loaded/error — never 'unloaded' — so this fires at most
                     // once per face.
                     if (hasIdleFace()) {
-                        document.fonts.load(spec).catch(() => {});
-                        document.fonts.load('bold ' + spec).catch(() => {});
+                        kick();
                         arm();
                         return;
                     }
-                    settled = true;
+                    // Not settled: a download that finishes after the window still
+                    // stamps through kick()'s promise — a confirmed load, not a
+                    // reveal-anyway. Safari fires no `loading` event to re-arm on.
                     teardown();
                     fail();
                 }, timeout);
             }
 
             // The icons' own usage starts the download once the (possibly deferred)
-            // face applies; `loadingdone` fires when it completes. load() kicks the
-            // already-present case; the immediate onDone() catches an already-loaded
-            // font (whose loadingdone may have fired before we subscribed).
+            // face applies; kick() settles on the promise, `loadingdone` on the event.
+            // The immediate onDone() catches an already-loaded font (whose loadingdone
+            // may have fired before we subscribed).
             document.fonts.addEventListener('loadingdone', onDone);
             document.fonts.addEventListener('loading', onLoading);
             arm();
-            document.fonts.load(spec).catch(() => {});
-            document.fonts.load('bold ' + spec).catch(() => {});
+            kick();
             onDone();
         } else {
             // No Font Loading API (pre-2016 browser): the CJK-fallback boundary
@@ -223,12 +243,7 @@
     // display:none screen) never fetches on its own, and would otherwise sit
     // unstamped until the idle-face window above expires.
     function load() {
-        if (!document.fonts?.load) return;
-        fontStates.forEach((_, fontName) => {
-            const spec = '1em "' + fontName + '"';
-            document.fonts.load(spec).catch(() => {});
-            document.fonts.load('bold ' + spec).catch(() => {});
-        });
+        fontStates.forEach((state) => state.kick?.());
     }
 
     NDS.FontLoading = {
