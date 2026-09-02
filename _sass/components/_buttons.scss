@@ -541,7 +541,7 @@
     width: var(--btn-size);
     --btn-padding: 0;
 
-    &:not(.nds-loading,[data-state~="loading"])::after {
+    &:not(.nds-loading)::after {
       content: "";
       display: inline-block;
       width: var(--_btn-icon-size);
@@ -556,7 +556,7 @@
   // ICON PSEUDO-ELEMENT BUTTONS (MENU, DIRECTIONAL)
   // ==============================================
 
-  &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down):not(.nds-loading,[data-state~="loading"])::after {
+  &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down):not(.nds-loading)::after {
     content: "";
     display: inline-block;
     position: relative;
@@ -661,7 +661,7 @@
   // LOADING STATES
   // ==============================================
 
-  &:is(.nds-loading, [data-state~="loading"]) {
+  &.nds-loading {
     --loading-color: var(--_btn-loading-color);
     --loading-track: var(--_btn-loading-track);
     color: transparent !important;
@@ -671,14 +671,14 @@
   // contributes to button width. While loading it becomes the absolute
   // centered spinner, so a hidden in-flow ::before reserves the icon's
   // box and the button keeps its width.
-  &:is(.nds-ellipsis, .nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down):is(.nds-loading, [data-state~="loading"])::before {
+  &:is(.nds-ellipsis, .nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down).nds-loading::before {
     content: "";
     width: var(--_btn-icon-size);
     height: var(--_btn-icon-size);
     visibility: hidden;
   }
 
-  &.nds-menu-btn:is(.nds-loading, [data-state~="loading"])::before {
+  &.nds-menu-btn.nds-loading::before {
     width: calc(var(--_btn-icon-size) - 4px);
     height: calc(var(--_btn-icon-size) - 4px);
   }
@@ -748,7 +748,7 @@
   }
 
   // Loading turns the icon into a spinner — the badge would sit on top of it.
-  &:is(.nds-loading, [data-state~="loading"]) .nds-badge {
+  &.nds-loading .nds-badge {
     display: none;
   }
 

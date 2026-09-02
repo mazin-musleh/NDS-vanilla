@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "02/07/2026 - 09:17 PM"
+updated: "1.11.x"
+last_edit: "03/09/2026 - 01:31 AM"
 ---
 
 <!-- Loading Overview -->
@@ -16,7 +16,7 @@ last_edit: "02/07/2026 - 09:17 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading Spinner</h2>
-            <p class="nds-section-description">Add data-state="loading" or .nds-loading to any container to dim its content and show a centered spinner</p>
+            <p class="nds-section-description">Add .nds-loading to any container to dim its content and show a centered spinner. JS-toggled state can set data-state="loading" instead; nds-core mirrors it onto the class</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block nds-prose">
@@ -93,11 +93,6 @@ last_edit: "02/07/2026 - 09:17 PM"
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;div data-state="loading"&gt;
-  &lt;p&gt;Content is dimmed while loading&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;!-- Or use class toggle --&gt;
 &lt;div class="nds-loading"&gt;
   &lt;p&gt;Content is dimmed while loading&lt;/p&gt;
 &lt;/div&gt;
@@ -172,9 +167,9 @@ last_edit: "02/07/2026 - 09:17 PM"
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-                                    &lt;div class="nds-loading nds-oncolor"&gt;
-                                    Content hidden while loading
-                                    &lt;/div&gt;
+&lt;div class="nds-loading nds-oncolor"&gt;
+  &lt;p&gt;Content is dimmed while loading&lt;/p&gt;
+&lt;/div&gt;
                                 </code>
                                 </div>
                             </div>
@@ -327,13 +322,13 @@ last_edit: "02/07/2026 - 09:17 PM"
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-                                    &lt;div class="nds-loading nds-xxs"&gt;...&lt;/div&gt;  &lt;!-- 20px --&gt;
-                                    &lt;div class="nds-loading nds-xs"&gt;...&lt;/div&gt;   &lt;!-- 24px --&gt;
-                                    &lt;div class="nds-loading nds-sm"&gt;...&lt;/div&gt;   &lt;!-- 28px --&gt;
-                                    &lt;div class="nds-loading"&gt;...&lt;/div&gt;         &lt;!-- 32px (default) --&gt;
-                                    &lt;div class="nds-loading nds-lg"&gt;...&lt;/div&gt;   &lt;!-- 36px --&gt;
-                                    &lt;div class="nds-loading nds-xl"&gt;...&lt;/div&gt;   &lt;!-- 40px --&gt;
-                                    &lt;div class="nds-loading nds-2xl"&gt;...&lt;/div&gt;  &lt;!-- 44px --&gt;
+&lt;div class="nds-loading nds-xxs"&gt;...&lt;/div&gt;  &lt;!-- 20px --&gt;
+&lt;div class="nds-loading nds-xs"&gt;...&lt;/div&gt;   &lt;!-- 24px --&gt;
+&lt;div class="nds-loading nds-sm"&gt;...&lt;/div&gt;   &lt;!-- 28px --&gt;
+&lt;div class="nds-loading"&gt;...&lt;/div&gt;         &lt;!-- 32px (default) --&gt;
+&lt;div class="nds-loading nds-lg"&gt;...&lt;/div&gt;   &lt;!-- 36px --&gt;
+&lt;div class="nds-loading nds-xl"&gt;...&lt;/div&gt;   &lt;!-- 40px --&gt;
+&lt;div class="nds-loading nds-2xl"&gt;...&lt;/div&gt;  &lt;!-- 44px --&gt;
                                 </code>
                                 </div>
                             </div>
@@ -360,7 +355,7 @@ last_edit: "02/07/2026 - 09:17 PM"
                             <i class="hgi hgi-stroke hgi-code"></i>
                             <span class="nds-label">CSS Only</span>
                         </span>
-                        <p class="nds-item-desc">No JavaScript required. Add the class or attribute and the spinner renders immediately via CSS <code class="nds-inline-code lang-html">::after</code>.</p>
+                        <p class="nds-item-desc">No JavaScript required. Add the class and the spinner renders immediately via CSS <code class="nds-inline-code lang-html">::after</code>.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -400,10 +395,10 @@ last_edit: "02/07/2026 - 09:17 PM"
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Prefer <code class="nds-inline-code lang-html">data-state="loading"</code> for JS-toggled states; prefer the <code class="nds-inline-code lang-html">nds-loading</code> class when the state is server-rendered or set via a simple class toggle</li>
+                    <li>Use the <code class="nds-inline-code lang-html">nds-loading</code> class in markup and in simple class toggles. For JS-toggled state, call <code class="nds-inline-code lang-js">NDS.State.add(el, 'loading')</code>; nds-core mirrors the token onto the class, and the CSS reads the class only</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-neutral</code> when the spinner appears over a white or light-tinted surface where the default primary-colored spinner would clash</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-oncolor</code> when the container background is always dark (for example, a primary-colored banner); this forces the spinner white regardless of color scheme</li>
-                    <li>Do not add <code class="nds-inline-code lang-html">nds-loading</code> directly to <code class="nds-inline-code lang-html">.nds-btn</code>: buttons handle their own loading state and the child-dim rule is already excluded for them</li>
+                    <li>Buttons carry their own loading look: the spinner replaces the label and the child-dim rule is excluded for them. Set the token from JS with <code class="nds-inline-code lang-js">NDS.State.add(btn, 'loading')</code>, or the class in markup</li>
                     <li>On skeleton-capable elements (<code class="nds-inline-code lang-html">.nds-grid</code>, <code class="nds-inline-code lang-html">.nds-card</code>, <code class="nds-inline-code lang-html">.nds-accordion</code>, <code class="nds-inline-code lang-html">.nds-tabs</code>, <code class="nds-inline-code lang-html">tbody</code>), the skeleton IS the visual feedback; the spinner is automatically suppressed by CSS and you do not need to handle it separately</li>
                     <li>Size the spinner to match the container: use <code class="nds-inline-code lang-html">nds-xxs</code> or <code class="nds-inline-code lang-html">nds-xs</code> inside compact components (table cells, small cards) and <code class="nds-inline-code lang-html">nds-xl</code> or <code class="nds-inline-code lang-html">nds-2xl</code> for full-page overlays</li>
                 </ul>
@@ -432,7 +427,7 @@ last_edit: "02/07/2026 - 09:17 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Alternate trigger for the loading state. Equivalent to the <code class="nds-inline-code lang-html">nds-loading</code> class; useful when a component already manages <code class="nds-inline-code lang-html">data-state</code> for other states</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>The JS token for the loading state. nds-core mirrors it onto the <code class="nds-inline-code lang-html">nds-loading</code> class, and the CSS reads the class only, so this form needs the NDS JS bundle. Useful when a component already manages <code class="nds-inline-code lang-html">data-state</code> for other states</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -453,7 +448,7 @@ last_edit: "02/07/2026 - 09:17 PM"
 
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Skeleton Processing State</h3>
-                <p>When <code class="nds-inline-code lang-html">nds-loading</code> or <code class="nds-inline-code lang-html">data-state="loading"</code> is applied to the following elements, the spinner (<code class="nds-inline-code lang-html">::after</code>) is suppressed and child opacity is restored to 1. The skeleton styling defined in each component provides the visual feedback instead. <code class="nds-inline-code lang-html">pointer-events: none</code> still applies.</p>
+                <p>When <code class="nds-inline-code lang-html">nds-loading</code> is applied to the following elements (or <code class="nds-inline-code lang-html">data-state="loading"</code>, which nds-core mirrors onto it), the spinner (<code class="nds-inline-code lang-html">::after</code>) is suppressed and child opacity is restored to 1. The skeleton styling defined in each component provides the visual feedback instead. <code class="nds-inline-code lang-html">pointer-events: none</code> still applies.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Element</th><th>Notes</th></tr></thead>
                     <tbody>

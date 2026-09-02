@@ -664,6 +664,25 @@
         return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove };
     })();
 
+    // ── Loading mirror ───────────────────────────────────────────────
+    // CSS spells loading ONE way, `.nds-loading`; the data-state token stays the JS
+    // input and is mirrored onto the class here. Keyed on the class because the
+    // loading rules end in `> *`, and a `[data-state]` rule with that subject marks
+    // Chrome's whole data-state invalidation set "all descendants" — every state
+    // write anywhere then restyles its entire subtree (measured 2026-09-03).
+    // The observer catches State writes and bare setAttribute alike, in a microtask —
+    // before the next paint, not inside the write. The scan covers markup that ships
+    // with the token and runs before the reveal (0.2ms at 6.6x).
+    const _mirrored = new WeakSet();
+    const mirrorLoading = (el) => {
+        const on = NDS.State.has(el, 'loading');
+        if (on && !el.classList.contains('nds-loading')) { el.classList.add('nds-loading'); _mirrored.add(el); }
+        else if (!on && _mirrored.has(el)) { el.classList.remove('nds-loading'); _mirrored.delete(el); }
+    };
+    NDS.onAttrChange('*', ['data-state'], (els) => els.forEach(mirrorLoading));
+    const scanLoading = () => document.querySelectorAll('[data-state~="loading"]').forEach(mirrorLoading);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scanLoading, { once: true }); else scanLoading();
+
     // ── Status Management (data-status) ─────────────────────────────
     // Single-value management for data-status attribute
     // Usage: NDS.Status.set(el, 'error')

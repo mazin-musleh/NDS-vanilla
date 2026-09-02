@@ -516,7 +516,7 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 
 // Loading spinner — "still working" indicator (not decoration). Same
 // W3C-exempt class as progress; restores the native 1s infinite rotation.
-:root[data-a11y~="reduce-motion"] :is(.nds-loading, [data-state~="loading"])::after {
+:root[data-a11y~="reduce-motion"] .nds-loading::after {
     animation-duration: 1s !important;
     animation-iteration-count: infinite !important;
 }

@@ -206,14 +206,16 @@
 }
 
 // ==============================================
-// SKELETON — pre-init OR explicit [data-loading]
+// SKELETON — pre-init OR explicit .nds-loading
 // ==============================================
 // Pre-init the ::before bar can't show the right fill yet (--slider-fill-end is
 // unset → defaults full) while the native thumb already sits at value=. Render
 // the track as a skeleton block sized to match the value skeletons (stretch to
-// the row) and hide the thumb until the init sentinel is stamped. Consumers can
-// also flip a `data-loading` flag during async value updates (e.g. fetching bounds).
-.nds-slider-container:is(:not([data-nds-slider-initialized]), [data-loading]) {
+// the row) and hide the thumb until the init sentinel is stamped. Consumers flip
+// `.nds-loading` during async value updates (e.g. fetching bounds); the container is
+// a .nds-form-container, which the spinner overlay exempts, so the class means skeleton here.
+// `[data-loading]` is the slider's original flag — deprecated, see DEPRECATIONS.md.
+.nds-slider-container:is(:not([data-nds-slider-initialized]), .nds-loading, [data-loading]) {
     @include skeleton-pulse;
     .nds-slider {
         pointer-events: none;

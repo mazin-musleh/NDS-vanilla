@@ -870,11 +870,10 @@
 // transparent color). Radial would otherwise paint EMPTY (it hides any
 // step without data-state~="current") — its first step is forced visible
 // as the placeholder row. Released by data-nds-stepper-initialized.
-// The same look serves the explicit loading state (.nds-loading /
-// data-state="loading" on the root — spinner + dim suppressed in
-// _loading.scss).
+// The same look serves the explicit loading state (.nds-loading on the
+// root — spinner + dim suppressed in _loading.scss).
 :is(.nds-stepper:not([data-nds-stepper-initialized]),
-    .nds-stepper:is(.nds-loading, [data-state='loading'])) {
+    .nds-stepper.nds-loading) {
     @include skeleton-pulse;
 
     // One rule for the whole step: every direct child of the content becomes a bar —

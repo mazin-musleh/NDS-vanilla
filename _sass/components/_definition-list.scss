@@ -240,7 +240,7 @@
 // in _loading.scss. No JS owns this component, so its pre-init default
 // keys on the page stamp (html:not([data-nds-loaded])) — the
 // no-JS-component pattern, covering regions visible before the reveal.
-:is(.nds-definition-list:is(.nds-loading, [data-state='loading']),
+:is(.nds-definition-list.nds-loading,
     html:not([data-nds-loaded]) .nds-definition-list) {
     @include skeleton-pulse;
 

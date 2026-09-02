@@ -87,7 +87,7 @@
         box-shadow: var(--shadow-md);
 
         &,
-        ::-webkit-input-placeholder {
+        :is(input, textarea)::-webkit-input-placeholder {
             color: var(--form-field-text-focused);
         }
     }
@@ -103,7 +103,7 @@
         box-shadow: var(--shadow-md);
 
         &,
-        ::-webkit-input-placeholder {
+        :is(input, textarea)::-webkit-input-placeholder {
             color: var(--form-field-text-pressed);
         }
     }
@@ -125,7 +125,7 @@
             background-color: transparent;
             color: var(--form-field-text-readonly);
 
-            ::-webkit-input-placeholder {
+            :is(input, textarea)::-webkit-input-placeholder {
                 color: var(--form-field-text-placeholder);
             }
 
@@ -133,7 +133,7 @@
                 border-color: var(--border-neutral-primary);
                 color: var(--form-field-text-readonly);
 
-                ::-webkit-input-placeholder {
+                :is(input, textarea)::-webkit-input-placeholder {
                     color: var(--form-field-text-placeholder);
                 }
             }
@@ -155,7 +155,7 @@
             color: var(--text-default-disabled);
             border-color: var(--border-disabled);
 
-            ::-webkit-input-placeholder {
+            :is(input, textarea)::-webkit-input-placeholder {
                 color: var(--text-default-disabled);
             }
         }
@@ -301,7 +301,7 @@ fieldset {
 
     }
 
-    ::-webkit-input-placeholder {
+    :is(input, textarea)::-webkit-input-placeholder {
         color: var(--form-field-text-placeholder);
     }
 
@@ -309,7 +309,7 @@ fieldset {
         border-color: var(--form-field-border-hovered);
 
         &,
-        ::-webkit-input-placeholder {
+        :is(input, textarea)::-webkit-input-placeholder {
             color: var(--form-field-text-hovered);
         }
     }
@@ -347,7 +347,7 @@ fieldset {
         box-shadow: var(--shadow-md);
 
         &,
-        ::-webkit-input-placeholder {
+        :is(input, textarea)::-webkit-input-placeholder {
             color: var(--form-field-text-focused);
         }
     }

@@ -122,8 +122,10 @@
 }
 
 .nds-expandable[data-state~="expandable"] {
+  // The wrapper class is stamped by nds-expandable.js: a bare `> *:has()` subject
+  // would mark every data-state write as a whole-subtree restyle.
   &:has(>.nds-expandable-content),
-  &>*:has(>.nds-expandable-content) {
+  &>.nds-expandable-clip {
     overflow: hidden;
   }
   .nds-expandable-content {

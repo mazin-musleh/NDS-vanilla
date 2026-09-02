@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.11.x"
-last_edit: "30/06/2026 - 11:50 PM"
+last_edit: "03/09/2026 - 01:42 AM"
 ---
 
 <!-- Single Slider -->
@@ -67,7 +67,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                                     </div>
                                 </div>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["data-loading=true", ".nds-slider-container", "sliderLoading", "attr"]'>
+                                    data-toggler='["nds-loading", ".nds-slider-container", "sliderLoading"]'>
                                     <span class="nds-label">Loading</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -213,7 +213,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                                     </div>
                                 </div>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["data-loading=true", ".nds-slider-container", "rangeLoading", "attr"]'>
+                                    data-toggler='["nds-loading", ".nds-slider-container", "rangeLoading"]'>
                                     <span class="nds-label">Loading</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
@@ -363,7 +363,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                                     </div>
                                 </div>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["data-loading=true", ".nds-slider-container", "priceLoading", "attr"]'>
+                                    data-toggler='["nds-loading", ".nds-slider-container", "priceLoading"]'>
                                     <span class="nds-label">Loading</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
@@ -499,7 +499,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                             <i class="hgi hgi-stroke hgi-loading-03"></i>
                             <span class="nds-label">Skeleton State</span>
                         </span>
-                        <p class="nds-item-desc">The track paints as a shimmer placeholder until init lands and during any <code class="nds-inline-code lang-html">data-loading</code> period, so a value pulled from an async source does not flash an incorrect fill.</p>
+                        <p class="nds-item-desc">The track paints as a shimmer placeholder until init lands and while the container carries <code class="nds-inline-code lang-html">nds-loading</code>, so a value pulled from an async source does not flash an incorrect fill.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -532,7 +532,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                     <li>Pair the slider with a visible value display so users can confirm the exact number. The <code class="nds-inline-code lang-html">&lt;output&gt;</code> element next to the input updates automatically as the thumb moves</li>
                     <li>Choose <code class="nds-inline-code lang-html">nds-md</code> on touch-first surfaces where a 12 px thumb is hard to grab. The default 12 px reads cleanly on desktop and inside dense forms</li>
                     <li>Set a meaningful <code class="nds-inline-code lang-html">step</code> attribute when the underlying value should snap (whole hours, increments of five). Without it, the input snaps to integer steps</li>
-                    <li>Add the <code class="nds-inline-code lang-html">data-loading</code> attribute on the container while fetching bounds or an initial value from a remote source, so the skeleton holds the space and no incorrect fill flashes when the response lands</li>
+                    <li>Add the <code class="nds-inline-code lang-html">nds-loading</code> class on the container while fetching bounds or an initial value from a remote source, so the skeleton holds the space and no incorrect fill flashes when the response lands. From JS, <code class="nds-inline-code lang-js">NDS.State.add(container, 'loading')</code> does the same</li>
                     <li>Always provide an accessible name. A standard label is enough; for a range slider, add <code class="nds-inline-code lang-html">aria-label</code> to each input ("Minimum" and "Maximum") so screen readers can distinguish them</li>
                 </ul>
             </div>
@@ -554,7 +554,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-loading</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-slider-container</code> to force the skeleton state during an async value update. Remove when the new value is ready</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-slider-container</code> to force the skeleton state during an async value update. Remove when the new value is ready. The old <code class="nds-inline-code lang-html">data-loading</code> attribute still works but is deprecated</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">min</code>, <code class="nds-inline-code lang-html">max</code>, <code class="nds-inline-code lang-html">step</code>, <code class="nds-inline-code lang-html">value</code></td><td>Native <code class="nds-inline-code lang-html">&lt;input type="range"&gt;</code> attributes that control the numeric range, step granularity, and starting value. The component reads <code class="nds-inline-code lang-html">value</code> on init to paint the initial fill</td></tr>
                     </tbody>
                 </table>

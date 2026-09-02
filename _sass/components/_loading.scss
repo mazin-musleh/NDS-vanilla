@@ -1,6 +1,6 @@
 /**
  * NDS Loading Component
- * Add data-state="loading" or .nds-loading to any container to show a loading spinner
+ * Add .nds-loading (or data-state="loading", mirrored to the class by nds-core) to any container to show a loading spinner
  * Children are dimmed via opacity; spinner displays centered via ::after
  *
  * Public API (override from parent or element):
@@ -22,7 +22,7 @@
 // so exempt them from the whole-container overlay to avoid double spinners.
 // :where() keeps the exemption at zero specificity — a plain :not() would
 // lift the whole rule to (0,2,0) and beat consumers' own (0,1,0) rules.
-:is(.nds-loading, [data-state~="loading"]):not(:where(.nds-form-container, .nds-form-group, .nds-form-control)) {
+.nds-loading:not(:where(.nds-form-container, .nds-form-group, .nds-form-control)) {
   // Private tokens — resolve public overrides with semantic fallbacks
   --_loading-size: var(--loading-size, 32px);
   --_loading-border: var(--loading-border, 3px);
@@ -137,7 +137,7 @@
 // / _tabs.scss / _toc.scss) — the skeleton IS the feedback, so the spinner and the
 // child dim are suppressed. pointer-events: none stays from the base
 // rule; every other .nds-loading consumer keeps the spinner.
-:is(.nds-grid, .nds-paged-content, tbody, .nds-table, .nds-accordion, .nds-tabs, .nds-tab-list, .nds-card, .nds-definition-list, .nds-stepper, .nds-rating, .nds-breadcrumb-nav, .nds-toc):is(.nds-loading, [data-state="loading"]) {
+:is(.nds-grid, .nds-paged-content, tbody, .nds-table, .nds-accordion, .nds-tabs, .nds-tab-list, .nds-card, .nds-definition-list, .nds-stepper, .nds-rating, .nds-breadcrumb-nav, .nds-toc).nds-loading {
   &::after {
     content: none;
   }

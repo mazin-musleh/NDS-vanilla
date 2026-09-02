@@ -82,7 +82,7 @@
    contributes the pulse and the post-init loading form. Released by
    data-nds-breadcrumb-initialized. */
 :is(.nds-breadcrumb-nav:not([data-nds-breadcrumb-initialized]),
-    .nds-breadcrumb-nav:is(.nds-loading, [data-state='loading'])) {
+    .nds-breadcrumb-nav.nds-loading) {
     @include skeleton-pulse;
 
     :is(.nds-breadcrumb>li> :is(a, span), .nds-breadcrumb>li[aria-current="page"]) {

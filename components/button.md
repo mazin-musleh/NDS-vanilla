@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.9.0"
-last_edit: "02/09/2026 - 12:00 AM"
+updated: "1.11.x"
+last_edit: "03/09/2026 - 01:35 AM"
 ---
 
 <!-- Standard -->
@@ -379,7 +379,7 @@ last_edit: "02/09/2026 - 12:00 AM"
                                     <span class="nds-label">Stacked</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["data-state=loading", ".nds-demo", "layoutLoading", "attr"]'>
+                                    data-toggler='["nds-loading", ".nds-demo", "layoutLoading"]'>
                                     <span class="nds-label">Loading</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"

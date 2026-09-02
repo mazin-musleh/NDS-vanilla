@@ -33,11 +33,11 @@
 
 /* ── Loading / skeleton state ──
    The tables/tabs/accordion contract: item labels bar out when the consumer
-   marks the TOC loading (.nds-loading / data-state="loading") and as the
+   marks the TOC loading (.nds-loading) and as the
    default pre-init state (authored lists sit behind the critical-component
    safeguard until the reveal, so that arm only shows if a list is revealed
    early). */
-:is(.nds-toc:is(.nds-loading, [data-state='loading']),
+:is(.nds-toc.nds-loading,
     .nds-toc:not([data-nds-toc-initialized])) {
     @include skeleton-pulse;
 

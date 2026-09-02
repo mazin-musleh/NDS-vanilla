@@ -44,6 +44,10 @@
             // Look for .nds-expandable-content as child element first, then check if the container itself has nds-expandable-content class
             this.contentElement = expandableContainer.querySelector('.nds-expandable-content') ||
                                  (expandableContainer.classList.contains('nds-expandable-content') ? expandableContainer : null);
+            // A wrapper between container and content gets named, so _utilities.scss can clip
+            // it without a bare `> *:has()` subject (which taxes every data-state write).
+            const holder = this.contentElement?.parentElement;
+            if (holder && holder !== expandableContainer) holder.classList.add('nds-expandable-clip');
             this.expandButton = null;
             this.isExpanded = false;
 

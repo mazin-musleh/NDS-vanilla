@@ -211,7 +211,7 @@
     display: none;
   }
 
-  &:not(.nds-loading,[data-state~="loading"])::after {
+  &:not(.nds-loading)::after {
     position: absolute;
     transform: translateY(calc((var(--btn-size) / 2) - 2px));
   }

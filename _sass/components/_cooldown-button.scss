@@ -1,7 +1,7 @@
 @use '../mixins' as *;
 
 // Cooldown state toggled on the button by _js/nds-cooldown-button.js.
-// Visuals for [data-state~="loading"] and :disabled already live in
+// Visuals for .nds-loading and :disabled already live in
 // components/_buttons.scss.
 .nds-cooldown .nds-label {
   // The text swaps up to three times per cycle (first label → countdown → resend),

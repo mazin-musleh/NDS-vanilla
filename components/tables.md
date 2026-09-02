@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "02/09/2026 - 02:28 AM"
+last_edit: "03/09/2026 - 01:35 AM"
 ---
 
 <!-- Basic Table Section -->
@@ -1118,7 +1118,7 @@ last_edit: "02/09/2026 - 02:28 AM"
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <table class="nds-table" data-state="loading">
+                            <table class="nds-table nds-loading">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -1171,7 +1171,7 @@ last_edit: "02/09/2026 - 02:28 AM"
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;table class="nds-table" data-state="loading"&gt;
+&lt;table class="nds-table nds-loading"&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th&gt;Name&lt;/th&gt;
@@ -1914,7 +1914,7 @@ last_edit: "02/09/2026 - 02:28 AM"
                             <i class="hgi hgi-stroke hgi-loading-01"></i>
                             <span class="nds-label">Loading State</span>
                         </span>
-                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-state="loading"</code> to show a shimmer animation across all cells while data is being fetched.</p>
+                        <p class="nds-item-desc">Add the <code class="nds-inline-code lang-html">nds-loading</code> class to show a shimmer animation across all cells while data is being fetched. JS-toggled state can call <code class="nds-inline-code lang-js">NDS.State.add(table, 'loading')</code> instead; nds-core mirrors the token onto the class.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -2009,7 +2009,7 @@ last_edit: "02/09/2026 - 02:28 AM"
                         <tr><td><code class="nds-inline-code lang-html">data-state="sorted-asc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark the initial sort column as ascending</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="sorted-desc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark the initial sort column as descending</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="selected"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;tr&gt;</code> to visually highlight a selected row. JS toggles this automatically when checkboxes change</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;table&gt;</code> to show the loading shimmer animation across all cells</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>The JS token for the loading shimmer: set it on <code class="nds-inline-code lang-html">&lt;table&gt;</code> with <code class="nds-inline-code lang-js">NDS.State.add</code>. nds-core mirrors it onto the <code class="nds-inline-code lang-html">nds-loading</code> class, which the CSS reads; use the class in markup</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-align="center|start|end"</code></td><td>Set on a <code class="nds-inline-code lang-html">&lt;th&gt;</code> to align that column: the header and every cell below it, including rows added later by sorting, filtering, or pagination</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-sort-value</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;td&gt;</code> to supply an alternate value used for sorting only, when the displayed text would sort incorrectly (e.g. "Free" in a numeric column, a localized date in a text column). The cell still renders its normal content; only the sort order is affected. Not read by Export: use <code class="nds-inline-code lang-html">data-export-value</code> for that.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-loading</code> (class on <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>)</td><td>Alternate loading trigger: add the <code class="nds-inline-code lang-html">nds-loading</code> class directly to <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> to shimmer only the body rows while keeping the header visible. Used internally by the Filter and Pagination components during data refresh.</td></tr>
