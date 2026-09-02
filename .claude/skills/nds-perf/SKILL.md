@@ -96,7 +96,9 @@ Per click it prints the INP median, one run's **input delay / processing / prese
 
 `--cpu=20` is the low-end-device proxy; the calibrated `6.6` is a mid-range phone. Anchors: **good <=200ms, poor >500ms.**
 
-Flags beyond the shared ones: `--url=` (required), `--click=SEL` (repeatable), `--settle=MS` before the first click (default 4000), `--wait=MS` after each (default 2500), `--reduced` (emulate `prefers-reduced-motion` — isolates transition cost), `--block=PATTERN` (repeatable).
+Flags beyond the shared ones: `--url=` (required), `--click=SEL` (repeatable), `--settle=MS` before the first click (default 4000), `--wait=MS` after each (default 2500), `--reduced` (emulate `prefers-reduced-motion` — isolates transition cost), `--block=PATTERN` (repeatable), `--trace` (first run only: every style recalc the click caused, with its element count, and for the big ones Chrome's own reason — which attribute or class flipped on which node, and the selector when one made the whole subtree invalid).
+
+**Read the element count against the component's size.** A recalc far bigger than the thing you clicked means a write landed on an ancestor: `data-state` on `<body>` restyled 1,578 elements at the end of a 283-element drawer's open (2026-09-02, fixed in `866128e8`). Chrome keys attribute invalidation by attribute NAME, and NDS's `data-state` set is packed with component classes, so any `data-state` write restyles most NDS-classed descendants of that element — keep such writes off big containers. Selector matching was 5–7% of those recalcs and the nav's `:has()` rules measured inside noise; don't chase either without a new A/B.
 
 **Two traps this script exists to avoid.** Anchor clicks are `preventDefault`ed so a navigation can't tear the page down mid-measurement. And it never uses `setRequestInterception` — that silently suppresses every event-timing entry, so `interactionCount` reads 0 and a broken rig looks like a fast page. The script asserts `interactionCount > 0` and shouts if not; do not trust a run that warns.
 

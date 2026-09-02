@@ -15,6 +15,10 @@
 //        --no-throttle · --reduced (emulate prefers-reduced-motion) ·
 //        --block=PATTERN (repeatable, e.g. *clarity* — isolates third-party cost) ·
 //        --headed (real window; headless presentation timing is not always faithful) ·
+//        --trace (first run: every style recalc after each click with its element
+//        count, and for the big ones Chrome's own invalidation reason — which
+//        attribute or class flipped on which node, and whether a selector made the
+//        whole subtree invalid. Perturbs timing; diagnosis only) ·
 //        --chrome=PATH (else auto-detect)
 //
 // TWO GOTCHAS, both of which produced a wrong answer before this script existed:
@@ -48,6 +52,7 @@ const SETTLE = +flag('settle', 4000);
 const WAIT = +flag('wait', 2500);
 const REDUCED = !!flag('reduced', false);
 const HEADED = !!flag('headed', false);
+const TRACE = !!flag('trace', false);
 const BLOCK = flags('block');
 
 if (!URL || !CLICKS.length) {
@@ -113,7 +118,7 @@ const OBS = () => {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function run() {
+async function run(runIndex) {
   // pipe, not a port: Chrome 151 fails the port handshake when an instance is already running (see svg-render-diff.mjs).
   const browser = await puppeteer.launch({ executablePath: CHROME, headless: HEADED ? false : 'new', pipe: true });
   try {
@@ -139,17 +144,26 @@ async function run() {
     await page.goto(URL, { waitUntil: 'networkidle2', timeout: 90000 });
     await sleep(SETTLE); // don't charge leftover load work to the first click
 
+    // Trace only the first run: the invalidation categories perturb timing, and one
+    // run is enough to name what a click invalidates. user_timing carries the click
+    // marks — the trace clock and performance.now() do not line up.
+    const tracing = TRACE && runIndex === 0;
+    if (tracing) await page.tracing.start({ categories: ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink.user_timing',
+      'disabled-by-default-devtools.timeline.stack', 'disabled-by-default-devtools.timeline.invalidationTracking'] });
+
     const steps = [];
-    for (const sel of CLICKS) {
+    for (const [i, sel] of CLICKS.entries()) {
       const el = await page.$(sel);
       if (!el) { steps.push({ sel, missing: true }); continue; }
+      if (tracing) await page.evaluate((n) => performance.mark(n), `nds-click-${i}`);
       const from = await page.evaluate(() => performance.now());
       await el.click();
       await sleep(WAIT);
       steps.push({ sel, from, to: await page.evaluate(() => performance.now()) });
     }
     const { e, loaf, count } = await page.evaluate(() => ({ e: window.__e, loaf: window.__loaf, count: performance.interactionCount }));
-    return { e, loaf, count, steps };
+    const trace = tracing ? JSON.parse(Buffer.from(await page.tracing.stop()).toString('utf8')).traceEvents : null;
+    return { e, loaf, count, steps, trace };
   } finally {
     await browser.close();
   }
@@ -168,9 +182,41 @@ const worst = (e, from, to) => {
 const med = (a) => (a.length ? a.slice().sort((x, y) => x - y)[Math.floor(a.length / 2)] : null);
 const ms = (n) => `${n.toFixed(1)}ms`;
 
+// --trace: the style recalcs one click caused, each with Chrome's reason. A recalc
+// far bigger than the component is the tell — data-state on <body> once restyled
+// 1,578 elements at the end of a 300-element drawer's open (2026-09-02).
+function traceReport(ev, i) {
+  const mark = (n) => ev.find((e) => e.name === `nds-click-${n}`)?.ts;
+  const t0 = mark(i); if (!t0) return;
+  const t1 = mark(i + 1) ?? Infinity;
+  const inWin = (e) => e.ts >= t0 && e.ts < t1;
+  const recalcs = ev.filter((e) => e.ph === 'X' && e.name === 'UpdateLayoutTree' && inWin(e) && ((e.args?.elementCount || 0) >= 10 || e.dur >= 2000)).sort((a, b) => a.ts - b.ts);
+  const inv = ev.filter((e) => e.name?.endsWith('InvalidationTracking') && inWin(e)).sort((a, b) => a.ts - b.ts);
+  let prev = t0;
+  console.log('    trace (first run): style recalcs this click caused');
+  for (const r of recalcs) {
+    const n = r.args?.elementCount || 0;
+    console.log(`      +${String(Math.round((r.ts - t0) / 1000)).padStart(5)}ms  recalc ${ms(r.dur / 1000).padStart(8)}  ${n} elements`);
+    if (n >= 50) {
+      const why = new Map();
+      for (const e of inv.filter((e) => e.ts > prev && e.ts <= r.ts + r.dur)) {
+        const d = e.args?.data || {};
+        const node = (d.nodeName || '').replace(/ class='([^' ]+)[^']*'/, '.$1').slice(0, 48);
+        let key;
+        if (e.name.startsWith('ScheduleStyle')) key = `${d.changedAttribute ? `[${d.changedAttribute}]` : d.changedClass ? `.${d.changedClass}` : d.changedId ? `#${d.changedId}` : 'change'} on ${node}`;
+        else if (e.name.startsWith('StyleInvalidator')) key = `${d.reason} on ${node}${d.invalidationList?.some((x) => x.allDescendantsMightBeInvalid) ? `  ← e.g. ${(d.selectors?.[0]?.selector || '').slice(0, 70)}` : ''}`;
+        else key = `${d.reason}${d.extraData ? ` ${d.extraData}` : ''} on ${node}`;
+        why.set(key, (why.get(key) || 0) + 1);
+      }
+      [...why.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).forEach(([k, v]) => console.log(`               ${String(v).padStart(2)}x ${k}`));
+    }
+    prev = r.ts + r.dur;
+  }
+}
+
 const rows = [];
 for (let i = 0; i < RUNS; i++) {
-  try { rows.push(await run()); } catch (err) { console.log(`run ${i + 1} FAILED: ${err.message}`); }
+  try { rows.push(await run(i)); } catch (err) { console.log(`run ${i + 1} FAILED: ${err.message}`); }
 }
 if (!rows.length) process.exit(1);
 
@@ -206,4 +252,5 @@ CLICKS.forEach((sel, i) => {
     f.scripts.sort((a, b) => b.dur - a.dur).slice(0, 3).forEach((s) =>
       console.log(`         ${String(s.dur).padStart(5)}ms${s.forced ? ` forced ${s.forced}ms` : ''}  ${s.src} · ${s.fn} · ${s.type}${s.invoker ? ` · ${s.invoker}` : ''}`));
   });
+  if (rows[0].trace) traceReport(rows[0].trace, i);
 });
