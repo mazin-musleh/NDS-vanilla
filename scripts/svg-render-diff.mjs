@@ -125,7 +125,9 @@ const args = process.argv.slice(2);
 if (!args.length) { console.error('usage: svg-render-diff.mjs <file|dir>...'); process.exit(1); }
 
 fs.mkdirSync(OUTDIR, { recursive: true });
-const browser = await puppeteer.launch({ executablePath: findChrome(), headless: 'new' });
+// pipe, not a port: with a Chrome instance already running the DevTools port
+// handshake fails and puppeteer misreads the fresh profile as locked.
+const browser = await puppeteer.launch({ executablePath: findChrome(), headless: true, pipe: true });
 const page = await browser.newPage();
 
 console.log(`threshold: per-channel delta > ${THRESH}; "solid" = diff mask eroded 1px\n`);
