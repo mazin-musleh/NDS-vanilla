@@ -244,7 +244,13 @@ function printMonitor(m) {
 
 // ---- one cold measurement ----
 async function measure(pageUrl) {
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+  // pipe, not a port: Chrome 151 fails the port handshake when an instance is already running (see svg-render-diff.mjs).
+  // Retried: the previous run's Chrome may still be tearing down, and puppeteer then reports the fresh profile as locked.
+  let browser;
+  for (let attempt = 1; ; attempt++) {
+    try { browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', pipe: true }); break; }
+    catch (e) { if (attempt >= 3) throw e; await new Promise(r => setTimeout(r, 1500)); }
+  }
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: 412, height: 915, isMobile: true, hasTouch: true, deviceScaleFactor: 2.6 });

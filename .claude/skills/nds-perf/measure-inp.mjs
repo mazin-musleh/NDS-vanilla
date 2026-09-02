@@ -114,7 +114,8 @@ const OBS = () => {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function run() {
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: HEADED ? false : 'new' });
+  // pipe, not a port: Chrome 151 fails the port handshake when an instance is already running (see svg-render-diff.mjs).
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: HEADED ? false : 'new', pipe: true });
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: 412, height: 915, isMobile: true, hasTouch: true, deviceScaleFactor: 2.6 });
