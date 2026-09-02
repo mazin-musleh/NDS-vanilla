@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.11.x"
-last_edit: "02/09/2026 - 09:23 PM"
+last_edit: "02/09/2026 - 10:07 PM"
 ---
 
 <!-- Page Setup -->
@@ -63,7 +63,7 @@ last_edit: "02/09/2026 - 09:23 PM"
   html :where(header){display:contents}
   html :where(.nds-topbar){height:40px}
   html :where(.nds-main-nav){height:var(--nds-nav-height, 72px)}
-  html .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child){display:none}
+  html .nds-swiper.nds-hero:not([data-nds-swiper-initialized],[data-swiper-preset]) .nds-swiper-slide:not(:first-child){display:none}
   :where(.nds-topbar&gt;*,.nds-main-nav&gt;*,.nds-hero-section .nds-section-action,.nds-content-layout,.nds-user-feedback-section,.nds-footer){visibility:hidden}
   html:not([data-nds-loaded]) main{overflow-x:clip}
   :root{--nds-icons-opacity: 0}

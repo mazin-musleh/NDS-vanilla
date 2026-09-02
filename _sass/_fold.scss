@@ -63,9 +63,12 @@ html {
     :where(.nds-main-nav) { height: v('--nds-nav-height', 72px); }
 
     /* Deliberately NOT :where()-wrapped — must beat any main-CSS .nds-swiper-slide
-       rule and outlive data-nds-loaded, releasing only when JS stamps
-       data-nds-swiper-initialized on the hero. */
-    .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
+       rule. Released by the loader's data-swiper-preset (written with --slides
+       just before the reveal stamp, once main CSS has applied, so main's
+       formula sizes every slide at track width and the others sit off-track
+       in the scroll-snap row — no shift, swipeable before swiper JS lands),
+       or by data-nds-swiper-initialized when the loader is absent. */
+    .nds-swiper.nds-hero:not([data-nds-swiper-initialized], [data-swiper-preset]) .nds-swiper-slide:not(:first-child) {
         display: none;
     }
     /* This only collapses the track to slide 1 for the inline-paint phase. The

@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.11.0"
-last_edit: "28/08/2026 - 06:23 PM"
+updated: "1.11.x"
+last_edit: "02/09/2026 - 09:56 PM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -901,6 +901,7 @@ last_edit: "28/08/2026 - 06:23 PM"
                         <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Place on <code class="nds-inline-code lang-html">.nds-swiper-navigation</code> (not the container). JS re-decides visibility on every breakpoint change: removes <code class="nds-inline-code lang-html">hidden</code> when there are multiple pages, restores it when there is only one</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-nds-swiper-initialized</code></td><td>Set by JS after init completes (<code class="nds-inline-code lang-html">true</code>). Used as a CSS hook (the pre-init <code class="nds-inline-code lang-html">::after</code> height reservation is scoped to <code class="nds-inline-code lang-html">:not([data-nds-swiper-initialized])</code>) and as a guard to skip already-initialized swipers during <code class="nds-inline-code lang-js">NDS.Swiper.init()</code>. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-swiper-peek</code></td><td>Toggled on <code class="nds-inline-code lang-html">.nds-swiper</code> by JS when peek is active (peek &gt; 0 and multiple pages exist). Activates the CSS <code class="nds-inline-code lang-html">calc(var(--peek) + var(--swiper-gap))</code> peek-width formula in <code class="nds-inline-code lang-html">_swiper.scss</code>. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-swiper-preset</code></td><td>Set by the loader before the reveal on every card swiper that has not initialized yet, after it writes <code class="nds-inline-code lang-html">--slides</code> and the peek state from <code class="nds-inline-code lang-html">slides-max/mid/min</code> and <code class="nds-inline-code lang-html">peek</code>. The skeleton row then shows the same slides per view that init will use, so init moves nothing. Removed by <code class="nds-inline-code lang-html">destroy()</code>.</td></tr>
                     </tbody>
                 </table>
             </div>

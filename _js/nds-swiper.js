@@ -16,6 +16,8 @@
  *   on a slide's <img>: data-src · data-srcset   lazy sources, written to src/srcset when
  *                                                the slide nears the viewport
  *   written by the component: --slides on the container, data-swiper-peek while peeking
+ *   written by the loader pre-reveal: the same --slides and peek state, plus
+ *                                     data-swiper-preset (skeleton row = final row)
  * Gotchas:
  *   - Positioning is CSS scroll-snap. JS only syncs the navigation, the pagination dots
  *     and lazy loading — a swiper still scrolls with JS disabled.
@@ -625,6 +627,7 @@
             // Reverse the state init/setupPagination wrote, so destroy() restores
             // the pre-init DOM for consumers that tear down without re-creating.
             this.container.removeAttribute('data-swiper-peek');
+            this.container.removeAttribute('data-swiper-preset');
             ['--total', '--slides', '--peek', '--gap'].forEach(p => this.container.style.removeProperty(p));
             if (this.wrapper) this.wrapper.style.removeProperty('overflow');
             if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }

@@ -105,8 +105,8 @@ html {
         min-height: 40px;
     }
 
-    /* Hero swiper + wrapper flex skeleton; collapse to the first slide until
-       JS marks data-nds-swiper-initialized. */
+    /* Hero swiper + wrapper flex skeleton; the first-slide collapse (fold)
+       releases at the loader's data-swiper-preset, else at init. */
     :where(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
         display: flex;
         height: 100%;
@@ -121,8 +121,12 @@ html {
        flex-basis formula collapses to 100% while JS hasn't written
        --slides — one card stretched across the track. The cards inside
        shimmer via their default skeleton; overflow stays clipped so the
-       row can't widen the document. Released by the swiper's own stamp. */
-    .nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized]) {
+       row can't widen the document. Released by the swiper's own stamp, or
+       earlier by the loader's data-swiper-preset: it writes --slides and the
+       peek state pre-reveal (presetSwipers in nds-loader.js), so main's
+       formula sizes the row exactly as init will and init moves nothing.
+       The pin below is the no-JS fallback. */
+    .nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized], [data-swiper-preset]) {
         overflow: hidden;
 
         .nds-swiper-slide {

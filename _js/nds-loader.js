@@ -32,7 +32,9 @@
  *   window.__NDS_BUNDLES   the build-generated bundle manifest — never hand-write it
  *   written by the loader: data-nds-loaded on <html> — the reveal stamp, set once the
  *                          main CSS has applied; data-paged-split on each .nds-paged-content
- *                          with an inline --per-page (items past it get hidden pre-reveal)
+ *                          with an inline --per-page (items past it get hidden pre-reveal);
+ *                          data-swiper-preset on each swiper, with --slides and the
+ *                          peek state its init will pick (skeleton row = final row)
  * Gotchas:
  *   - Three bundles. nds-main.min.js is a defer script and GATES the page reveal; the
  *     delegated and extras bundles are injected after the reveal and never gate anything.
@@ -796,10 +798,30 @@
                     c.setAttribute('data-paged-split', '');
                 });
             };
+            // Size every not-yet-initialized swiper's skeleton row to the
+            // slides-per-view its init will pick — same attributes, same breakpoints
+            // as nds-swiper.js — so init moves nothing. Writes --slides plus the
+            // peek state and stamps data-swiper-preset, which releases crit's
+            // pre-init guards (card-width pin, hero first-slide collapse): main
+            // CSS has applied by now, so its formula sizes the track from here on.
+            const presetSwipers = () => {
+                const tier = matchMedia(NDS.breakpoints.desktop).matches ? 'max'
+                    : matchMedia(NDS.breakpoints.tablet).matches ? 'mid' : 'min';
+                document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])').forEach(s => {
+                    const per = parseInt(s.getAttribute('slides-' + tier)) || 1;
+                    const peek = parseInt(s.getAttribute('peek')) || 0;
+                    const total = s.querySelectorAll('.nds-swiper-slide').length;
+                    s.style.setProperty('--slides', per);
+                    s.style.setProperty('--peek', `${peek}px`);
+                    s.toggleAttribute('data-swiper-peek', peek > 0 && Math.ceil(total / per) > 1);
+                    s.setAttribute('data-swiper-preset', '');
+                });
+            };
             // Idempotent: three listeners race to get here and only one may inject.
             const done = () => {
                 if (root.hasAttribute('data-nds-loaded')) return;
                 presplitPaged();
+                presetSwipers();
                 root.setAttribute('data-nds-loaded', '');
                 if (!main) return;
                 addSheet(main, 'nds-icons.min.css'); // no-op once requested; covers a main CSS error
