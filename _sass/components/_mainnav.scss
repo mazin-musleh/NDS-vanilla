@@ -841,4 +841,5 @@ body.nds-minimal .nds-main-nav {
 .nds-brand-logo {
     height: var(--brand-logo-height, 40px);
     width: auto;
+    max-width: unset; // reset's img max-width:100% would squash a wide logo in a shrinking flex parent
 }
