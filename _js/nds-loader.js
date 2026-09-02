@@ -841,10 +841,9 @@
                 document.head.appendChild(l);
                 return l;
             };
-            const icons = add(href('nds-icons.min.css'));
-            // The stamp gates icon opacity (_sass/_icons.scss) — without it they stay invisible.
-            if (icons) icons.onload = () =>
-                document.documentElement.setAttribute('data-nds-icons-loaded', '');
+            // No onload stamp for the icons sheet: its own :root block flips the icon
+            // gate, so the tokens and the reveal share one style pass (_sass/_icons.scss).
+            add(href('nds-icons.min.css'));
             const hgi = add(href('hgi-rounded-stroke-min.css'));
             // Glyphs that all start hidden never start the fetch; kick it once the face exists.
             if (hgi) hgi.onload = () => NDS.FontLoading?.load?.();

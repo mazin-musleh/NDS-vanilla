@@ -89,6 +89,15 @@
         .getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BP_FALLBACK;
     const _mqMinimal = window.matchMedia(`(max-width: ${_minimalBp}px)`);
 
+    // Body mode at eval, ahead of the loader's reveal stamp, so the class rides the
+    // reveal's own recalc: written from init it lands a frame later (the loader
+    // yields every 5 ms) and restyles the whole tree a second time. init's
+    // updateBodyClass then finds both in sync and takes its no-change PAB path.
+    if (DOM.collapse && document.body) {
+        document.body.classList.toggle('nds-minimal', _mqMinimal.matches);
+        DOM.minimal?.toggleAttribute('hidden', !_mqMinimal.matches);
+    }
+
     // ==============================================
     // STATE MANAGEMENT
     // ==============================================

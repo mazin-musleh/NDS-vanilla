@@ -159,8 +159,8 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
     visibility: hidden;
 }
 
-/* Icon gate (initial 0) lives in fold; the reveal (data-nds-icons-loaded → 1)
-   lives in _sass/_icons.scss so it lands with the nds-icons sheet.
+/* Icon gate (initial 0) lives in fold; the reveal (→ 1) is the :root block of
+   _sass/_icons.scss, so it lands in the nds-icons sheet's own style pass.
    HGI font gate (initial 0) lives in fold; the reveal
    (data-nds-fonts-loaded~="hgi-stroke-rounded" → 1) lives in
    _sass/_hgiRoundedStroke.scss. */

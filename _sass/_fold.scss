@@ -113,8 +113,8 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
 
 /* ── Icon gate (initial) ──
    Masked-icon pseudos write opacity:var(--nds-icons-opacity); ships 0 here.
-   The reveal (data-nds-icons-loaded → 1) lives in _sass/_icons.scss, landing
-   with the nds-icons sheet (deferred onload stamps the attribute). */
+   The reveal (→ 1) is the :root block of _sass/_icons.scss itself, so it
+   lands in the same style pass as the icon tokens. */
 :root { --nds-icons-opacity: 0; }
 
 /* ── HGI font gate (initial) ──

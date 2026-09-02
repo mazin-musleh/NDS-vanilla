@@ -12,8 +12,8 @@
  *     NDS.Init.audit() call (lazy namespace stub) — that first call returns a
  *     promise while the bundle loads. Production pages that never ask for it
  *     download zero bytes of it.
- *   - The icon check reads a ::before computed mask, so run after the icons
- *     CSS stamp (data-nds-icons-loaded) — the loader's schedule waits for it.
+ *   - The icon check reads a ::before computed mask, so it only means something
+ *     once the nds-icons sheet has applied; the post-init sweep runs late enough.
  *   - Icon names inside JS strings are invisible to this DOM sweep; check
  *     those against icons.yml by hand.
  */
