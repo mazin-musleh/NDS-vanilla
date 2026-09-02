@@ -15,7 +15,7 @@ It is used **only in content markup** via `<i class="hgi hgi-stroke hgi-*">` —
 
 | File | Role |
 |------|------|
-| `_sass/_hgiRoundedStroke.scss` | `@font-face` + all `.hgi-stroke.hgi-*` icon rules |
+| `_sass/_hgiRoundedStroke.scss` | gate reveal + `.hgi-stroke` base + all `.hgi-stroke.hgi-*` icon rules (NO `@font-face` — that lives in `_sass/_fonts.scss`, crit) |
 | `assets/css/hgi-rounded-stroke-min.scss` | Jekyll wrapper (unchanged) |
 | `assets/fonts/hgi-stroke-rounded.woff2` | Binary font file |
 
@@ -49,14 +49,11 @@ Parse icon rules from CDN CSS:
 matches = cdn_content.scan(/(\.hgi-stroke\.hgi-[a-z0-9-]+:before)\{content:"([^"]+)"\}/)
 ```
 
-**IMPORTANT**: Keep the local `@font-face` and `.hgi-stroke` base styles — do NOT use the CDN's `@font-face` (it points to CDN URLs). The local header must be:
+**IMPORTANT**: Do NOT write any `@font-face` into this file — not the CDN's (it points to CDN URLs) and not a local one. The face lives in `_sass/_fonts.scss` (crit) on purpose: a `@font-face` landing in this deferred sheet after the reveal rebuilds the font cache and relayouts every text box. Only the woff2 file gets replaced (Step 4). Keep the local gate-reveal comment + rule and the `.hgi-stroke` base styles; the header must be:
 
 ```scss
-@font-face {
-  font-family: "hgi-stroke-rounded";
-  font-display: swap;
-  src: url("../fonts/hgi-stroke-rounded.woff2") format("woff2");
-}
+html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
+
 .hgi-stroke {
   font-family: "hgi-stroke-rounded" !important;
   font-style: normal;

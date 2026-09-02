@@ -1,9 +1,6 @@
-@font-face {
-  font-family: "hgi-stroke-rounded";
-  font-display: swap;
-  src: url("../fonts/hgi-stroke-rounded.woff2") format("woff2");
-}
-/* HGI font gate reveal — paired with the initial 0 in _fold.scss.
+/* No @font-face here: it ships in _fonts.scss (crit). Declared in this deferred
+   sheet it landed after the reveal and relayouted every text box.
+   HGI font gate reveal — paired with the initial 0 in _fold.scss.
    nds-fontLoading.js stamps data-nds-fonts-loaded~="hgi-stroke-rounded"
    on <html> once the face loads. */
 html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }

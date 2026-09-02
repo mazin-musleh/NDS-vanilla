@@ -183,3 +183,12 @@ $readex-size-adjust: 100%;
     url(../fonts/ReadexPro-Latin.woff2) format('woff2');
   unicode-range: $brand-latin-range;
 }
+
+/* HGI icon font. The face lives here, not in the deferred HGI sheet: a @font-face
+   that lands after the reveal rebuilds the font cache and relayouts every text box.
+   Nothing fetches it until that sheet's .hgi-stroke rule applies. */
+@font-face {
+  font-family: "hgi-stroke-rounded";
+  font-display: swap;
+  src: url("../fonts/hgi-stroke-rounded.woff2") format("woff2");
+}

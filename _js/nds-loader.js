@@ -776,14 +776,7 @@
         // for its load. window.load is the backstop so the reveal can't hang.
         function stampWhenStyled() {
             const root = document.documentElement;
-            // Marker first, filename second. The marker sits on the stylesheet link
-            // the head script injected (the script moves it off the preload, which
-            // never gets a `.sheet`). The filename fallback keeps a pre-1.7 head —
-            // and anyone fingerprinting their asset names — working. Two queries,
-            // not a comma list: a comma list resolves by document order, and the
-            // main CSS preload (same filename, earlier in head) would win.
-            const main = document.querySelector('link[data-nds-defer="main"]')
-                || document.querySelector('link[href*="nds-main.min.css"]');
+            const main = mainCssLink();
             // Split every not-yet-paginated container at its inline --per-page
             // before the reveal, so the skeleton shows exactly the first page:
             // hide the items past it and stamp data-paged-split, which steps the
@@ -808,7 +801,9 @@
                 if (root.hasAttribute('data-nds-loaded')) return;
                 presplitPaged();
                 root.setAttribute('data-nds-loaded', '');
-                loadIconSheets(main);
+                if (!main) return;
+                addSheet(main, 'nds-icons.min.css'); // no-op once requested; covers a main CSS error
+                loadHgiSheet(main);
             };
             // Already applied? `.sheet` is set once the CSSOM attaches. Catching this
             // here matters: a load event that already fired before these listeners
@@ -820,32 +815,54 @@
             window.addEventListener('load', done, { once: true });
         }
 
-        // Icon sheets ride behind main CSS so they never compete inside the LCP
-        // window. They load from here rather than an inline head script so a strict
+        // The deferred main CSS link. Marker first, filename second: the marker sits
+        // on the stylesheet link the head script injected (the script moves it off
+        // the preload, which never gets a `.sheet`). The filename fallback keeps a
+        // pre-1.7 head — and anyone fingerprinting their asset names — working. Two
+        // queries, not a comma list: a comma list resolves by document order, and
+        // the main CSS preload (same filename, earlier in head) would win.
+        function mainCssLink() {
+            return document.querySelector('link[data-nds-defer="main"]')
+                || document.querySelector('link[href*="nds-main.min.css"]');
+        }
+
+        // Icon sheets load from here rather than an inline head script so a strict
         // CSP needs no extra grant: this bundle is already an allowed origin, while
         // an inline script needs the consumer's nonce or hash. The href comes off the
         // main CSS link — same folder as the icon sheets in every build — not off the
         // JS directory, which a consumer's bundler may place somewhere else entirely.
-        function loadIconSheets(main) {
+        // Per-sheet dedupe: skip a sheet the head already carries (self-hosting
+        // consumer, or a pre-1.7 inline head that adds its own). Check link
+        // elements, not document.styleSheets — a sheet still downloading has no
+        // entry there yet, and missing it would inject a duplicate.
+        function addSheet(main, name) {
+            const url = main.href.replace('nds-main.min.css', name);
+            if ([...document.querySelectorAll('link[rel="stylesheet"]')].some((l) => l.href === url)) return null;
+            const l = document.createElement('link');
+            l.rel = 'stylesheet';
+            l.href = url;
+            document.head.appendChild(l);
+            return l;
+        }
+
+        // The icon tokens sit on :root, and an inherited var that changes after the
+        // reveal restyles the whole tree. Requested the moment main CSS applies, the
+        // sheet has the critical pass to arrive, so its write rides the reveal's own
+        // pass (or a small pre-reveal one under the content-visibility gate). No
+        // onload stamp: its :root block flips the icon gate itself (_sass/_icons.scss).
+        function loadIconTokens(main) {
             if (!main) return;
-            const href = (name) => main.href.replace('nds-main.min.css', name);
-            // Per-sheet dedupe: skip a sheet the head already carries (self-hosting
-            // consumer, or a pre-1.7 inline head that adds its own). Check link
-            // elements, not document.styleSheets — a sheet still downloading has no
-            // entry there yet, and missing it would inject a duplicate.
-            const add = (url) => {
-                if ([...document.querySelectorAll('link[rel="stylesheet"]')].some((l) => l.href === url)) return null;
-                const l = document.createElement('link');
-                l.rel = 'stylesheet';
-                l.href = url;
-                document.head.appendChild(l);
-                return l;
-            };
-            // No onload stamp for the icons sheet: its own :root block flips the icon
-            // gate, so the tokens and the reveal share one style pass (_sass/_icons.scss).
-            add(href('nds-icons.min.css'));
-            const hgi = add(href('hgi-rounded-stroke-min.css'));
-            // Glyphs that all start hidden never start the fetch; kick it once the face exists.
+            const go = () => addSheet(main, 'nds-icons.min.css');
+            if (main.sheet) go();
+            else main.addEventListener('load', go, { once: true });
+        }
+
+        // HGI rides behind the reveal stamp so its font fetch never competes inside
+        // the LCP window. Its @font-face ships in crit (_fonts.scss), so landing this
+        // sheet rebuilds no font cache. Glyphs that all start hidden never start the
+        // fetch; kick it once the family applies.
+        function loadHgiSheet(main) {
+            const hgi = addSheet(main, 'hgi-rounded-stroke-min.css');
             if (hgi) hgi.onload = () => NDS.FontLoading?.load?.();
         }
 
@@ -942,6 +959,7 @@
         // init in a per-bundle pass once it lands (see initCriticalBatch) — the
         // fetch never gates the reveal.
         for (const name in injectedGroups) loadBundle(name);
+        loadIconTokens(mainCssLink());
 
         if (CONFIG.enableLogging) {
             const names = Object.keys(injectedGroups);
