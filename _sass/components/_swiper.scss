@@ -15,7 +15,7 @@
     --swiper-slides: var(--slides, 1);
     --swiper-gap: var(--gap, var(--spacing-xl));
     --swiper-peek: 0px;
-    --swiper-padding: var(--padding, 0);
+    --swiper-padding: var(--padding, 0px); // a length: it feeds calc() and max() below
 
     display: flex;
     flex-direction: column;
@@ -61,15 +61,27 @@
 
     user-select: none;
 
-    padding-inline: var(--swiper-padding);
+    // The end space is a flex spacer, not padding: in RTL, Safari leaves a scroll
+    // container's inline-end padding out of the scrollable overflow, so the last
+    // slide sat flush against the viewport. A flex item is content in every
+    // engine; its negative margin swallows the gap before it, so its width is
+    // the whole space. Start padding stays padding, and the slide formula
+    // subtracts the end space so a page still ends where the padding began.
+    --_swiper-pad: var(--swiper-padding);
+    padding-inline: var(--_swiper-pad) 0;
     scroll-padding-inline: max(var(--swiper-peek), var(--swiper-padding));
+    &::after {
+        content: "";
+        flex: 0 0 var(--_swiper-pad);
+        margin-inline-start: calc(-1 * var(--swiper-gap));
+    }
 
     .nds-swiper:not(.nds-hero) & {
-        padding-inline: max(2px, var(--swiper-padding)); // 2px floor for shadow clipping
+        --_swiper-pad: max(2px, var(--swiper-padding)); // 2px floor for shadow clipping
     }
     @include desktop(min) {
         .nds-content-layout.nds-cardView & {
-            padding-inline: 0;
+            --_swiper-pad: 0px;
         }
     }
 }
@@ -79,8 +91,10 @@
 // ==============================================
 
 .nds-swiper-slide {
-    // Width = (100% − peek − gap × (slides − 1)) / slides
-    flex: 0 0 calc((100% - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
+    // Width = (100% − end space − peek − gap × (slides − 1)) / slides
+    // 100% is the wrapper's content box, which carries only the start padding;
+    // the end space is the wrapper's ::after spacer, so a page subtracts it here.
+    flex: 0 0 calc((100% - var(--_swiper-pad) - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
     position: relative;
 
     scroll-snap-align: start;

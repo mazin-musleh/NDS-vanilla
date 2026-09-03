@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "03/09/2026 - 04:59 PM"
+last_edit: "03/09/2026 - 11:08 PM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -914,7 +914,7 @@ last_edit: "03/09/2026 - 04:59 PM"
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between slides</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--padding</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Inline padding applied to the scroll wrapper. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> the default shifts to <code class="nds-inline-code lang-html">var(--nds-viewport-padding)</code> so the swiper can bleed to the viewport edge while its content stays aligned</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--padding</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Inline padding applied to the scroll wrapper. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> the default shifts to <code class="nds-inline-code lang-html">var(--nds-viewport-padding)</code> so the swiper can bleed to the viewport edge while its content stays aligned</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-200)</code></td><td>Inactive pagination bullet color (light theme); shifts to neutral-700 in dark mode and to translucent white on hero/on-color backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-default-hovered</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-300)</code></td><td>Inactive bullet hover color (one step from default: neutral-300 light, neutral-600 dark)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-active</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-600)</code></td><td>Active pagination bullet color (light theme); shifts to <code class="nds-inline-code lang-css">--colors-primary-500</code> in dark mode and to base white on hero/on-color backgrounds</td></tr>
