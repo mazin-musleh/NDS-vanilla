@@ -217,7 +217,8 @@
                         return s.node && panel.contains(s.node);
                     })) return;
                     clsTotal += e.value;
-                    if (e.value > 0.05) {
+                    // 0.01: a 0.04 shift is a third of the CLS budget yet hid under the old 0.05 bar.
+                    if (e.value > 0.01) {
                         log('CLS  ' + e.value.toFixed(4) + '  (total: ' + clsTotal.toFixed(4) + ')', 'w');
                         srcs.slice(0, 2).forEach(function (s) {
                             if (s.node) log('  → ' + elKey(s.node), 'd');

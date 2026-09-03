@@ -26,22 +26,29 @@
   // > 0), and a nav init leaves empty falls back to the empty-collapse
   // above. Auto mode holds the same reserve until pagination stamps
   // data-paged-initialized on the adjacent content.
-  // The placeholder is a centered row of five button blocks (prev, three
-  // pages, next): one pseudo, a repeating gradient at button + gap steps.
-  // The nav is empty until init builds the list, so there is nothing to
-  // paint per button; the flat skeleton color keeps the stops crisp.
+  // The placeholder is a centered row of six button blocks: one pseudo, a
+  // repeating gradient at button + gap steps.
+  // The list stays hidden until the stamp, so an authored list (a manual
+  // nav after paged content) or one left by destroy() never stacks under
+  // the placeholder. The flat skeleton color keeps the stops crisp.
+  // display stays block: flipping flex→block at release re-creates the box,
+  // and Chrome logs the reserve as a 0.04 layout shift even below the fold.
   &[data-total-pages]:not([data-nds-pagination-initialized]),
   .nds-paged-content:not([data-paged-initialized])+& {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     min-height: var(--_pagination-reserve);
     @include skeleton-pulse;
+
+    >.nds-pagination-list {
+      display: none;
+    }
 
     &::before {
       --_step: calc(var(--_pagination-reserve) + var(--spacing-md));
       content: '';
-      width: calc(var(--_step) * 5 - var(--spacing-md));
+      display: block;
+      margin-inline: auto;
+      width: calc(var(--_step) * 6 - var(--spacing-md));
       height: var(--_pagination-reserve);
       background: repeating-linear-gradient(90deg,
         var(--nds-skeleton-solid) 0 var(--_pagination-reserve),
