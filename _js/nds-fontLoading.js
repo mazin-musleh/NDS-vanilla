@@ -76,7 +76,7 @@
             currentState.callbacks = [];
         }
 
-        // Resolve via the Font Loading API — promise + event, no polling.
+        // Resolve via the Font Loading API — promise + event, plus a bounded status poll.
         if (document.fonts && document.fonts.load && 'ready' in document.fonts) {
             const spec = '1em "' + fontName + '"';
             let settled = false;
@@ -117,9 +117,10 @@
                 return idle;
             };
 
-            let timer;
+            let timer, poll;
             const teardown = () => {
                 clearTimeout(timer);
+                clearInterval(poll);
                 document.fonts.removeEventListener('loadingdone', onDone);
                 document.fonts.removeEventListener('loading', onLoading);
             };
@@ -156,6 +157,7 @@
                 clearTimeout(timer);
                 timer = setTimeout(() => {
                     if (settled) return;
+                    if (hasLoadedFace()) { settle(); return; }
                     // Idle face at expiry: the deferred sheet applied but no
                     // glyph painted, so the init-time load() ran before the face
                     // existed and nothing since has started the fetch. Force it
@@ -168,9 +170,16 @@
                         arm();
                         return;
                     }
+                    // Still downloading: Safari fires no `loading` event to re-arm
+                    // on, so re-arm here. The fetch bounds it — loaded settles
+                    // (poll below), error falls through to fail() next window.
+                    if (hasPendingFace()) {
+                        arm();
+                        return;
+                    }
                     // Not settled: a download that finishes after the window still
                     // stamps through kick()'s promise — a confirmed load, not a
-                    // reveal-anyway. Safari fires no `loading` event to re-arm on.
+                    // reveal-anyway.
                     teardown();
                     fail();
                 }, timeout);
@@ -180,11 +189,17 @@
             // face applies; kick() settles on the promise, `loadingdone` on the event.
             // The immediate onDone() catches an already-loaded font (whose loadingdone
             // may have fired before we subscribed).
+            // The poll is the Safari path: a face that registers after the init-time
+            // load() (crit CSS applying late) resolves that promise empty, and WebKit
+            // fires neither `loading` nor a dependable `loadingdone` afterwards, so
+            // nothing else would ever see it load. Status is the unambiguous signal;
+            // the interval dies with the window.
             document.fonts.addEventListener('loadingdone', onDone);
             document.fonts.addEventListener('loading', onLoading);
             arm();
             kick();
             onDone();
+            poll = setInterval(onDone, 500);
         } else {
             // No Font Loading API (pre-2016 browser): the CJK-fallback boundary
             // can't be detected, so reveal rather than hide icons indefinitely.
