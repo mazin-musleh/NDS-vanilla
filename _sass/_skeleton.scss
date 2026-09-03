@@ -187,7 +187,7 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
 :where([data-filter-items]:not([data-nds-filter-initialized], .nds-accordion, .nds-grid, tbody),
     .nds-auto-fill[data-filter-target]:not([data-nds-filter-initialized]),
     [data-filter-target]:not([data-nds-filter-initialized]) .nds-auto-fill,
-    .nds-paged-content:not([data-paged-initialized], .nds-grid, tbody)) {
+    .nds-paged-content:not([data-paged-initialized], .nds-accordion, .nds-grid, tbody)) {
     visibility: hidden;
 }
 
@@ -257,6 +257,9 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
         rgba(210, 214, 219, 0.2) 50%,
         rgba(157, 164, 174, 0.2) 100%;
     --nds-skeleton-fill: linear-gradient(var(--nds-skeleton-angle), var(--nds-skeleton-stops));
+    // The middle stop as a flat color, for placeholders drawn as hard gradient
+    // stops (a stop cannot carry a gradient) — pagination's button row.
+    --nds-skeleton-solid: rgba(210, 214, 219, 0.2);
     --nds-skeleton-radius: var(--radius-sm);
 }
 
@@ -268,6 +271,7 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
     --nds-skeleton-stops: rgba(77, 87, 97, 0.2) 0%,
         rgba(108, 114, 126, 0.2) 50%,
         rgba(157, 164, 174, 0.2) 100%;
+    --nds-skeleton-solid: rgba(108, 114, 126, 0.2);
 }
 
 /* ── Breadcrumb pre-collapse shape ──
