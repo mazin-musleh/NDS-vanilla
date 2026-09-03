@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "22/08/2026 - 05:38 PM"
+last_edit: "03/09/2026 - 11:51 PM"
 ---
 
 
@@ -126,7 +126,8 @@ last_edit: "22/08/2026 - 05:38 PM"
 &lt;ul class="nds-nav-actions"&gt;
   &lt;!-- Stays reachable in minimal mode --&gt;
   &lt;li class="nds-nav-item nds-icon-only nds-PAB"&gt;
-    &lt;a href="/notifications" class="nds-nav-link nds-btn nds-subtle nds-indicator" title="Notifications"&gt;
+    &lt;!-- Icon-only: the hover tooltip is built from the title, on a native-title delay --&gt;
+    &lt;a href="/notifications" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications"&gt;
       &lt;i class="nds-icon nds-hgi-notification-02" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;span class="nds-label" data-hidden="sm md sr"&gt;Notifications&lt;/span&gt;
     &lt;/a&gt;

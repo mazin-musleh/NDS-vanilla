@@ -15,7 +15,9 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  vertical-align: text-bottom;
+  // Term and chip roots sit on the text's bottom line. A button root keeps
+  // its own inline alignment — text-bottom dropped a nav action below its row.
+  &:not(.nds-btn) { vertical-align: text-bottom; }
 
   // ==============================================
   // 2. TRIGGER

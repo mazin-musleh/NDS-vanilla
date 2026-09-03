@@ -89,19 +89,21 @@
                             {%- unless item.custom_class contains 'nds-CTA' %} data-hidden="sm md sr"{%- endunless %}>{{ item.label }}</span>
                     {%- endcapture -%}
                     {%- assign action_class = item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' %}
+                    {%- comment %} Icon-only actions name themselves in a hover tooltip built from the title (label-hidden keeps the accessible name). {%- endcomment %}
+                    {%- if item.custom_class contains 'nds-icon-only' %}{%- assign action_class = action_class | append: ' nds-tooltip' %}{%- assign action_tip = ' data-tooltip-hover="500"' %}{%- else %}{%- assign action_tip = '' %}{%- endif %}
                     {%- if item.type == 'modal' %}
                         {%- assign modal_target = item.id | default: item.label | slugify | append: '-modal' %}
                     {%- endif %}
                     <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-dropdown{%- endif %}{%- if item.custom_class %} {{ item.custom_class }}{%- endif %}" {{ item.attr }}>
                         {%- if item.url %}
                         <a href="{%- if item.url contains '#' and item.url | slice: 0 == '#' %}{{ item.url }}{%- else %}{{ item.url | relative_url }}{%- endif %}"
-                            class="{{ action_class }}"
+                            class="{{ action_class }}"{{ action_tip }}
                             {%- if item.type == 'modal' %} data-modal-target="{{ modal_target }}"{%- endif %}
                             title="{{ item.label }}"
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}
                             {%- if item.data_attr %} {{ item.data_attr }}{%- endif %}>{{ action_inner }}</a>
                         {%- else %}
-                        <button class="{{ action_class }}"
+                        <button class="{{ action_class }}"{{ action_tip }}
                             {%- if item.type == 'modal' %} data-modal-target="{{ modal_target }}"{%- endif %}
                             title="{{ item.label }}"
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}

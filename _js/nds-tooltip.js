@@ -14,7 +14,9 @@
  *                                               is absent; stripped at init
  *   data-tooltip-status                         chip status, default "help"
  *   data-tooltip-hover                          opt in to hover; the value is the open
- *                                               delay in ms (bare attribute = 120)
+ *                                               delay in ms (bare attribute = 120). A tap
+ *                                               toggles a text term only; on a link/button
+ *                                               it runs the action and closes the balloon
  *   written by the component: data-position-vertical="top" on the root and the balloon
  *                             when the balloon flips above the trigger
  * Gotchas:
@@ -193,6 +195,9 @@
             if (this._isTextTrigger && !this._hoverMode && !this.trigger.hasAttribute('role')) {
                 this.trigger.setAttribute('role', 'button');
             }
+            // A link/button root owns its data-state (a nav toggle's open look),
+            // so the balloon's open stamp stays off it there.
+            this._rootIsControl = this.trigger === this.root && !this._isTextTrigger;
 
             this.bindEvents();
 
@@ -231,13 +236,14 @@
                 this.balloon.addEventListener('pointerleave', hoverClose, { signal });
 
                 this.trigger.addEventListener('click', (e) => {
-                    // Only touch taps toggle. Mouse clicks, keyboard-synthesized
-                    // clicks (pointerType "") and MouseEvent clicks in browsers
-                    // without pointer-typed click (pointerType undefined) never
-                    // toggle: on a link/button the action proceeds and the balloon
-                    // gets out of its way; on a text term the click does nothing,
-                    // so the balloon stays as it is.
-                    if (e.pointerType !== 'touch') {
+                    // Only touch taps on a text term toggle. Every click on a
+                    // link/button lets the action proceed and gets the balloon out
+                    // of its way — a tap must not hijack a nav action or a link.
+                    // Mouse clicks, keyboard-synthesized clicks (pointerType "") and
+                    // MouseEvent clicks in browsers without pointer-typed click
+                    // (pointerType undefined) on a term do nothing, so the balloon
+                    // stays as it is.
+                    if (e.pointerType !== 'touch' || !this._isTextTrigger) {
                         if (!this._isTextTrigger) this.close();
                         return;
                     }
@@ -282,7 +288,7 @@
             // containing block, free of any container-type/transform ancestor.
             NDS.portal(this.balloon);
 
-            addState(this.root, 'open');
+            if (!this._rootIsControl) addState(this.root, 'open');
             this.balloon.hidden = false;
             this.applyPosition();
 
@@ -309,7 +315,7 @@
             this.isOpen = false;
             if (_openTooltip === this) _openTooltip = null;
 
-            removeState(this.root, 'open');
+            if (!this._rootIsControl) removeState(this.root, 'open');
             this.balloon.hidden = true;
             this.root.removeAttribute('data-position-vertical');
             this.balloon.removeAttribute('data-position-vertical');
