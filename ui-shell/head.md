@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.11.x"
-last_edit: "02/09/2026 - 10:07 PM"
+last_edit: "03/09/2026 - 03:20 AM"
 ---
 
 <!-- Page Setup -->
@@ -60,6 +60,7 @@ last_edit: "02/09/2026 - 10:07 PM"
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
   /* -- Layout reservations and gates (structure) -- */
+  html{overflow-anchor:none}
   html :where(header){display:contents}
   html :where(.nds-topbar){height:40px}
   html :where(.nds-main-nav){height:var(--nds-nav-height, 72px)}

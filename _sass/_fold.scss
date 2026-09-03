@@ -132,6 +132,12 @@ i.hgi-stroke { opacity: 0; }
        file these come from reset.scss + the real topbar/nav/hero components;
        here they paint first byte, then lose to those rules by specificity. */
 
+    /* No scroll anchoring until main turns it back on (_base.scss): a restored
+       reload offset otherwise drifts with the hidden pre-main geometry and lands
+       off once main re-lays the page out. Inline-only because the drift happens
+       during parsing — the deferred crit file lands too late (measured 2026-09-03). */
+    html { overflow-anchor: none; }
+
    /* ── Colors — INLINE-ONLY; the FCP skeleton's fills, grouped for editing (tune the $c-* palette above).
    Crit paints these via reset.scss + the real topbar/nav/hero components, so they live here only —
    the inline gate has neither and carries the literal fallbacks, painting before the token layer loads. ── */

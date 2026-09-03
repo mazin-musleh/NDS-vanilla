@@ -1,5 +1,11 @@
 @use './mixins' as *;
 
+// Crit holds scroll anchoring at none until main lands (_fold.scss); main is
+// where it comes back — the reset sits in crit, so it cannot do this.
+html {
+    overflow-anchor: auto;
+}
+
 /* ========================================
    VIEW TRANSITIONS (theme switch)
    ======================================== */

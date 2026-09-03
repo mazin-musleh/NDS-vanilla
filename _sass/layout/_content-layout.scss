@@ -43,8 +43,11 @@ main {
         gap: var(--_main-gap);
         min-width: 0;
 
+        // Basis auto, not 0: with a 0 basis the pre-stamp layout (cv holds, definite
+        // column) gave every section the same height, so a restored scroll landed
+        // ~300px off until the stamp. Auto keeps "fill leftover space" on short pages.
         .nds-content-section {
-            flex: 1;
+            flex: 1 1 auto;
         }
     }
 
