@@ -34,7 +34,8 @@
  *                          main CSS has applied; data-paged-split on each .nds-paged-content
  *                          at init (items past its --per-page, else 6, get hidden);
  *                          data-swiper-preset on each swiper, with --slides and the
- *                          peek state its init will pick (skeleton row = final row)
+ *                          peek state its init will pick (skeleton row = final row),
+ *                          and data-swiper-single when its slides fit one page
  * Gotchas:
  *   - Three bundles. nds-main.min.js is a defer script and GATES the page reveal; the
  *     delegated and extras bundles are injected after the reveal and never gate anything.
@@ -814,10 +815,12 @@
                 document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])').forEach(s => {
                     const per = parseInt(s.getAttribute('slides-' + tier)) || 1;
                     const peek = parseInt(s.getAttribute('peek')) || 0;
-                    const total = s.querySelectorAll('.nds-swiper-slide').length;
+                    const pages = Math.ceil(s.querySelectorAll('.nds-swiper-slide').length / per);
                     s.style.setProperty('--slides', per);
                     s.style.setProperty('--peek', `${peek}px`);
-                    s.toggleAttribute('data-swiper-peek', peek > 0 && Math.ceil(total / per) > 1);
+                    s.toggleAttribute('data-swiper-peek', peek > 0 && pages > 1);
+                    // One page: init keeps the nav hidden, so its reserve (_swiper.scss) goes now, not then.
+                    s.toggleAttribute('data-swiper-single', pages <= 1);
                     s.setAttribute('data-swiper-preset', '');
                 });
             };

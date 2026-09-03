@@ -350,11 +350,15 @@
 // without this the row pops in below the track when init lands after
 // the reveal. A placeholder pseudo stands in for it (the [hidden]
 // display:none !important stays authoritative); the init stamp releases
-// it, so single-page swipers shed the reservation then (bounded, rare).
+// it. 32px is the canonical nds-md nav button — the buttons' own --btn-size
+// never reaches this pseudo, so the old 40px fallback shrank every
+// multi-page swiper 8px at init. A single-page swiper keeps its nav hidden
+// at init, so the loader's data-swiper-single (same page count, written
+// pre-reveal) drops the reserve ahead of it and nothing shrinks.
 // Hero swipers are excluded — their nav overlays the slides.
-.nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized])::after {
+.nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized], [data-swiper-single])::after {
     content: "";
-    min-height: var(--btn-size, 40px);
+    min-height: var(--btn-size, 32px);
 }
 
 // Nav reveal gate. The bullet row is JS-built and ships [hidden] until init
