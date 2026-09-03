@@ -18,7 +18,7 @@
  *   data-auto-pagination · data-total-pages · data-paged-target · data-per-page-target
  *   data-page-param · data-page-url · data-pagination-no-scroll
  *   data-paged-count · data-paged-from · data-paged-to (record slots the component fills)
- *   data-paged-split (loader-stamped pre-reveal: items past the inline --per-page are hidden)
+ *   data-paged-split (loader-stamped at init: items past the inline --per-page, else 6, are hidden)
  * Gotchas:
  *   - setPage() moves the nav but fires no event — dispatch your own if listeners depend on it.
  *   - scrollToContent() ignores data-pagination-no-scroll: the explicit call is the intent.
@@ -32,7 +32,7 @@
  * Delegated (ships in nds-delegated.min.js, loader-INJECTED after the reveal —
  * NOT critical:true). Pre-init paint is owned by the data-paged-initialized
  * crit-CSS skeleton, which hides items past the default page size — or past the
- * inline --per-page, where the loader's pre-reveal split stamped data-paged-split —
+ * inline --per-page, once the loader's init-time split stamped data-paged-split —
  * until init stamps data-paged-initialized, so init landing
  * post-reveal inserts the list without shifting content. The state init sets:
  *   - HTML builders + the manual-collapse path (NDSPagination →

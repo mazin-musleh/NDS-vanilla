@@ -32,7 +32,7 @@
  *   window.__NDS_BUNDLES   the build-generated bundle manifest — never hand-write it
  *   written by the loader: data-nds-loaded on <html> — the reveal stamp, set once the
  *                          main CSS has applied; data-paged-split on each .nds-paged-content
- *                          with an inline --per-page (items past it get hidden pre-reveal);
+ *                          at init (items past its --per-page, else 6, get hidden);
  *                          data-swiper-preset on each swiper, with --slides and the
  *                          peek state its init will pick (skeleton row = final row)
  * Gotchas:
@@ -465,7 +465,7 @@
             // Delegated: pre-init paint is covered by CSS — the
             // data-paged-initialized skeleton (crit) shows the first 6 items,
             // readPerPage's default, or exactly the first page where the
-            // pre-reveal split (presplitPaged) read an inline --per-page — and
+            // init-time split (presplitPaged) read an inline --per-page — and
             // _pagination.scss reserves the empty nav's row height, so init
             // landing after the reveal inserts the list without shifting
             // content. Bounded known shifts: a media-query-only --per-page;
@@ -738,6 +738,28 @@
         });
     }
 
+    // Split every not-yet-paginated container at its inline --per-page (else
+    // the crit default of 6, matching readPerPage), so the skeleton shows
+    // exactly the first page: hide the items past it and stamp
+    // data-paged-split, which steps the crit "first 6" rule aside and releases
+    // the crit hold on skeleton-drawing containers. Runs first thing at init,
+    // not at the reveal: main CSS can land before this bundle, and a skeleton
+    // painted at the crit count then jumped to --per-page at the reveal.
+    // Pagination (delegated) rewrites hidden at init. Inline only — a computed
+    // read would force a recalc.
+    function presplitPaged() {
+        document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])').forEach(c => {
+            const n = parseInt(c.style.getPropertyValue('--per-page'), 10) || 6;
+            // Same item set as pagination's _pagedItems: a tbody counts
+            // its own rows only (sub-rows ride their parent).
+            const items = c.tagName === 'TBODY'
+                ? Array.from(c.children).filter(el => el.classList.contains('nds-page-item') && !el.classList.contains('nds-sub'))
+                : c.querySelectorAll('.nds-page-item');
+            for (let i = n; i < items.length; i++) items[i].hidden = true;
+            c.setAttribute('data-paged-split', '');
+        });
+    }
+
     function initializeNDS() {
         if (CONFIG.disableAll === true) {
             if (CONFIG.enableLogging) {
@@ -746,6 +768,7 @@
             return;
         }
         const startTime = performance.now();
+        presplitPaged();
 
         // Partition buckets. The init-loop closures capture these bindings; all
         // are assigned (below) before initCriticalBatch runs. Injected-bundle
@@ -779,25 +802,6 @@
         function stampWhenStyled() {
             const root = document.documentElement;
             const main = mainCssLink();
-            // Split every not-yet-paginated container at its inline --per-page
-            // before the reveal, so the skeleton shows exactly the first page:
-            // hide the items past it and stamp data-paged-split, which steps the
-            // crit "first 6" rule aside. Pagination (delegated) rewrites hidden
-            // at init. Inline only — a computed read would force a recalc; a
-            // media-query --per-page keeps the crit default.
-            const presplitPaged = () => {
-                document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])').forEach(c => {
-                    const n = parseInt(c.style.getPropertyValue('--per-page'), 10);
-                    if (!(n > 0)) return;
-                    // Same item set as pagination's _pagedItems: a tbody counts
-                    // its own rows only (sub-rows ride their parent).
-                    const items = c.tagName === 'TBODY'
-                        ? Array.from(c.children).filter(el => el.classList.contains('nds-page-item') && !el.classList.contains('nds-sub'))
-                        : c.querySelectorAll('.nds-page-item');
-                    for (let i = n; i < items.length; i++) items[i].hidden = true;
-                    c.setAttribute('data-paged-split', '');
-                });
-            };
             // Size every not-yet-initialized swiper's skeleton row to the
             // slides-per-view its init will pick — same attributes, same breakpoints
             // as nds-swiper.js — so init moves nothing. Writes --slides plus the
@@ -820,7 +824,6 @@
             // Idempotent: three listeners race to get here and only one may inject.
             const done = () => {
                 if (root.hasAttribute('data-nds-loaded')) return;
-                presplitPaged();
                 presetSwipers();
                 root.setAttribute('data-nds-loaded', '');
                 if (!main) return;

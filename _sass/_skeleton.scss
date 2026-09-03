@@ -187,16 +187,19 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
 :where([data-filter-items]:not([data-nds-filter-initialized], .nds-accordion, .nds-grid, tbody),
     .nds-auto-fill[data-filter-target]:not([data-nds-filter-initialized]),
     [data-filter-target]:not([data-nds-filter-initialized]) .nds-auto-fill,
-    .nds-paged-content:not([data-paged-initialized], .nds-accordion, .nds-grid, tbody)) {
+    .nds-paged-content:not([data-paged-initialized], :is(.nds-accordion, .nds-grid, tbody)[data-paged-split])) {
     visibility: hidden;
 }
 
 /* Held accordions, card grids and table bodies are exempt from the
-   visibility hold above: they paint their skeleton placeholders instead
-   (main — _accordion.scss / _cards.scss / _tables.scss, the same rules as
-   the .nds-loading processing state), so pre-init shows shimmer rather
-   than a blank region. The reveal already waits for main CSS, so the
-   skeleton rules are guaranteed present. Bar text is transparent and
+   visibility hold above once the loader's split has stamped them: they
+   paint their skeleton placeholders instead (main — _accordion.scss /
+   _cards.scss / _tables.scss, the same rules as the .nds-loading
+   processing state), so pre-init shows shimmer rather than a blank
+   region. Not before the split: main CSS can land ahead of the bundle,
+   and the "first 6" fallback below then painted six bars that jumped to
+   --per-page at the reveal. The reveal already waits for main CSS, so
+   the skeleton rules are guaranteed present. Bar text is transparent and
    content is hidden (boxes keep their size, so table column sizing and
    lockTableColumns are unaffected) — URL-filtered loads still can't flash
    unfiltered content. */
@@ -211,9 +214,9 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
    paint first then the content area shrinks when JS hides items past
    --per-page — visible vertical CLS. :nth-child counts among siblings of
    the actual parent (tbody or paged-content), so the index matches what
-   JS hides. The loader's pre-reveal split (presplitPaged in nds-loader.js)
-   hides items past an inline --per-page itself and stamps data-paged-split,
-   so this fixed count is only the fallback: no inline value, or JS off. A
+   JS hides. The loader's split (presplitPaged in nds-loader.js) hides items
+   past the inline --per-page (else 6) itself and stamps data-paged-split,
+   so this fixed count only holds until the bundle runs, or with JS off. A
    media-query-only --per-page sees a small bounded shift at init.
 
    Table rows are display:none like grid items — not visibility:collapse.
