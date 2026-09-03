@@ -577,7 +577,7 @@
     // One master regex, scanned left to right. Alternatives are ordered by
     // priority (a keyword inside a string is swallowed by the string branch since
     // exec jumps past the whole match). Gaps between matches are plain text.
-    const JS_TOKEN_RE = new RegExp(
+    const JS_TOKEN_SRC =
         '(\\/\\/[^\\n]*)' +                                       // 1 line comment
         '|(\\/\\*[\\s\\S]*?\\*\\/)' +                             // 2 block comment
         '|(`(?:\\\\.|[^`\\\\])*`)' +                              // 3 template literal
@@ -587,14 +587,21 @@
         // `.finally`, `x.Promise`) stays plain instead of coloring as the token.
         '|(?<!\\.)\\b(const|let|var|function|if|else|for|while|return|break|continue|switch|case|default|try|catch|finally|throw|class|extends|import|export|await|async|new|typeof|instanceof|in|of|delete|void|this|super)\\b' + // 6 keyword
         '|(?<!\\.)\\b(true|false|null|undefined|NaN|Infinity)\\b' + // 7 literal
-        '|(?<!\\.)\\b(console|window|document|Array|Object|String|Number|Boolean|Math|JSON|Date|Promise|Set|Map)\\b', // 8 builtin
-        'g'
-    );
+        '|(?<!\\.)\\b(console|window|document|Array|Object|String|Number|Boolean|Math|JSON|Date|Promise|Set|Map)\\b'; // 8 builtin
+
+    // Built on first use, not at module eval: Safari < 16.4 rejects lookbehind,
+    // and a throw here would end the bundle's script. There the guards drop and a
+    // `.catch`-style member colors as the token — a blemish, not a crash.
+    let JS_TOKEN_RE;
+    const jsTokenRe = () => JS_TOKEN_RE ||= (() => {
+        try { return new RegExp(JS_TOKEN_SRC, 'g'); }
+        catch { return new RegExp(JS_TOKEN_SRC.replace(/\(\?<!\\\.\)/g, ''), 'g'); }
+    })();
 
     const JS_GROUP_TYPE = [null, 'comment', 'comment', 'template', 'string', 'number', 'keyword', 'literal', 'builtin'];
 
     function lexJs(source) {
-        return lexByRegex(source, JS_TOKEN_RE, JS_GROUP_TYPE);
+        return lexByRegex(source, jsTokenRe(), JS_GROUP_TYPE);
     }
 
     // ==============================================
