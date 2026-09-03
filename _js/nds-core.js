@@ -262,12 +262,22 @@
     // would never take (`retry`, `csrf` fine; `priority`, `keepalive`, `duplex`
     // would have been landmines). `signal` is claimed deliberately: it is
     // composed with the timeout rather than forwarded.
+    // Safari < 17.4 has no AbortSignal.any (and < 16 no .timeout): compose by hand
+    // there, keeping the TimeoutError / AbortError contract below.
+    // timeout:0 opts out. AbortSignal.timeout(0) would abort immediately,
+    // burning the obvious spelling for "no timeout".
+    const composeSignal = (signal, timeout) => {
+        if (AbortSignal.any) return AbortSignal.any([signal, timeout && AbortSignal.timeout(timeout)].filter(Boolean));
+        const ctrl = new AbortController();
+        if (signal?.aborted) ctrl.abort(signal.reason);
+        else signal?.addEventListener('abort', () => ctrl.abort(signal.reason), { once: true });
+        if (timeout) setTimeout(() => ctrl.abort(new DOMException('Request timed out', 'TimeoutError')), timeout);
+        return ctrl.signal;
+    };
     NDS.request = async (url, { signal, timeout = 15000, maxBytes = 1048576, json, ...init } = {}) => {
         const res = await fetch(url, {
             ...init,
-            // timeout:0 opts out. AbortSignal.timeout(0) would abort immediately,
-            // burning the obvious spelling for "no timeout".
-            signal: AbortSignal.any([signal, timeout && AbortSignal.timeout(timeout)].filter(Boolean))
+            signal: composeSignal(signal, timeout)
         });
         if (!res.ok) {
             // Best-effort body slice so the thrown Error tells the operator what
