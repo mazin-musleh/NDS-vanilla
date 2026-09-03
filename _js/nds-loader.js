@@ -35,7 +35,9 @@
  *                          at init (items past its --per-page, else 6, get hidden);
  *                          data-swiper-preset on each swiper, with --slides and the
  *                          peek state its init will pick (skeleton row = final row),
- *                          and data-swiper-single when its slides fit one page
+ *                          and data-swiper-single when its slides fit one page; in RTL
+ *                          each multi-page track is pinned to scrollLeft 0 after the
+ *                          stamp (WebKit lands a newly overflowing RTL track at its end)
  * Gotchas:
  *   - Three bundles. nds-main.min.js is a defer script and GATES the page reveal; the
  *     delegated and extras bundles are injected after the reveal and never gate anything.
@@ -812,6 +814,7 @@
             const presetSwipers = () => {
                 const tier = matchMedia(NDS.breakpoints.desktop).matches ? 'max'
                     : matchMedia(NDS.breakpoints.tablet).matches ? 'mid' : 'min';
+                const tracks = [];
                 document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])').forEach(s => {
                     const per = parseInt(s.getAttribute('slides-' + tier)) || 1;
                     const peek = parseInt(s.getAttribute('peek')) || 0;
@@ -822,13 +825,28 @@
                     // One page: init keeps the nav hidden, so its reserve (_swiper.scss) goes now, not then.
                     s.toggleAttribute('data-swiper-single', pages <= 1);
                     s.setAttribute('data-swiper-preset', '');
+                    if (pages > 1 && NDS.isRTL) tracks.push(s.querySelector('.nds-swiper-wrapper'));
                 });
+                return tracks;
             };
             // Idempotent: three listeners race to get here and only one may inject.
             const done = () => {
                 if (root.hasAttribute('data-nds-loaded')) return;
-                presetSwipers();
+                const tracks = presetSwipers();
                 root.setAttribute('data-nds-loaded', '');
+                // WebKit RTL: a track that first overflows in the reveal layout (crit pinned
+                // its slides narrower) lands scrolled to its END. Pin the start after that
+                // layout — the first write forces the reveal's own recalc early, not a new
+                // one. Same double write as the hero reveal in nds-swiper.js.
+                tracks.forEach(w => {
+                    if (!w) return;
+                    w.style.scrollBehavior = 'auto';
+                    w.scrollLeft = 0;
+                    void w.offsetHeight;
+                    w.scrollLeft = 0;
+                    void w.offsetHeight;
+                    w.style.scrollBehavior = '';
+                });
                 if (!main) return;
                 addSheet(main, 'nds-icons.min.css'); // no-op once requested; covers a main CSS error
                 loadHgiSheet(main);
