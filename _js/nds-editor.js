@@ -1169,10 +1169,12 @@
             const anchor = this.editable.closest('.nds-form-control') || this.editable;
             anchor.insertAdjacentHTML('beforebegin', html);
             const toolbar = anchor.previousElementSibling;
-            // Dropmenu (main) and Tooltip (earlier in this extras bundle) both
-            // finished their sweeps before editor init — wire the generated
-            // elements directly. Soft dependencies: the toolbar's dropmenus and
-            // tooltips stay inert if NDS.Dropmenu / NDS.Tooltip aren't bundled.
+            // Dropmenu (main) finished its sweep before editor init — wire the
+            // generated elements directly. Tooltip rides the delegated bundle;
+            // while that is still in flight NDS.Tooltip is the loader's lazy
+            // stub, so create() lands once it arrives. Soft dependencies: the
+            // toolbar's dropmenus and tooltips stay inert if NDS.Dropmenu /
+            // NDS.Tooltip aren't bundled.
             // Portal opt-in propagates from the editor root: data-dropmenu-portal
             // stamps data-portal on each menu before create() reads shouldPortal.
             const portalMenus = this.root.hasAttribute('data-dropmenu-portal');
