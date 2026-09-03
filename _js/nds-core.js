@@ -1412,8 +1412,10 @@
                 // The sticky nav is a top boundary only for triggers BELOW it. A
                 // trigger ABOVE the nav (e.g. a topbar dropmenu) opens a downward
                 // menu that passes in front of the nav, so the nav must not clamp
-                // it down past itself — leaving a gap below the trigger.
-                if (navRect.bottom > 0 && triggerRect.bottom > navRect.top) {
+                // it down past itself — leaving a gap below the trigger. Same for
+                // a trigger INSIDE the nav (a nav-link tooltip): its popup opens
+                // in front of the nav, and the clamp pushed it navGap below it.
+                if (navRect.bottom > 0 && triggerRect.bottom > navRect.top && !_navEl.contains(trigger)) {
                     topEdge = navRect.bottom + navGap;
                 }
             }
