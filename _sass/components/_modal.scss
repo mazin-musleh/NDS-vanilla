@@ -43,6 +43,9 @@
     .nds-card-content {
       overflow-y: auto;
       min-height: 0;
+      // The card's flex:1 is a zero basis. Safari sizes this fit-content column
+      // from the bases, so the content area collapsed to 0 there.
+      flex-basis: auto;
     }
 
     // Canonical markup keeps .nds-card-actions a SIBLING of .nds-card-content.
