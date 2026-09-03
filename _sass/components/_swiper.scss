@@ -26,6 +26,15 @@
 
     .nds-max-width & {
         --swiper-padding: var(--padding, var(--nds-viewport-padding));
+
+        // A page ends one gap before the next slide, but the scrollport runs one
+        // padding past it, so a gap narrower than the padding shows the next
+        // slide's edge on a wide desktop. Non-peek decks default the gap to the
+        // padding — the value updatePeekStyles writes at one slide per view.
+        // Plain var(), no max(): this reaches the slide's calc() (Safari).
+        &:not(.nds-hero, [data-swiper-peek]) {
+            --swiper-gap: var(--gap, var(--swiper-padding));
+        }
     }
 
     // Peek width = the raw --peek px + one gap. JS sets --peek and toggles
@@ -67,6 +76,10 @@
     // engine; its negative margin swallows the gap before it, so its width is
     // the whole space. Start padding stays padding, and the slide formula
     // subtracts the end space so a page still ends where the padding began.
+    // No max() floor in this value: it reaches the slide's calc(), and Safari
+    // drops a calc() with max() nested in it — the slide then sizes to its
+    // image. The old 2px floor never applied anyway (max(2px, 0) was invalid);
+    // the first/last slide's own 2px padding is the shadow room.
     --_swiper-pad: var(--swiper-padding);
     padding-inline: var(--_swiper-pad) 0;
     scroll-padding-inline: max(var(--swiper-peek), var(--swiper-padding));
@@ -76,9 +89,6 @@
         margin-inline-start: calc(-1 * var(--swiper-gap));
     }
 
-    .nds-swiper:not(.nds-hero) & {
-        --_swiper-pad: max(2px, var(--swiper-padding)); // 2px floor for shadow clipping
-    }
     @include desktop(min) {
         .nds-content-layout.nds-cardView & {
             --_swiper-pad: 0px;
