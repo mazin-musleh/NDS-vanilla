@@ -126,11 +126,13 @@
     // Half the page gutter — tied to it so the inset narrows with the page on
     // mobile on its own, but tighter than page content: a FAB hugs the edge.
     --_fab-dock-offset: var(--fab-dock-offset, calc(var(--nds-viewport-padding) / 2));
+    // Block-axis inset; side docks on touch screens double it (below).
+    --_fab-dock-offset-y: var(--_fab-dock-offset);
     --_fab-dock-gap:    var(--fab-dock-gap, var(--spacing-md));
     --_fab-dock-z:      var(--fab-dock-z, 899);   // above page chrome, below modal/backdrop (1100)
 
     position: fixed;
-    inset-block-end: var(--_fab-dock-offset);
+    inset-block-end: var(--_fab-dock-offset-y);
     z-index: var(--_fab-dock-z);
     // Physical edge dock — force LTR so the flex cross-axis alignment (and
     // the thumb margins) resolve to physical left/right regardless of page dir.
@@ -164,6 +166,15 @@
 // a footer. Each dock slides out past its OWN physical edge (edge-aligned FABs
 // cross the edge together, so no staggered exit). No direction flip — the docks
 // are physical. The flag lives on the root so docks created later respond too.
+// A side dock sits in a screen corner, and on a phone or tablet the rounded
+// corner clips a FAB at half a gutter: lift it to two. A bottom dock is
+// centered, clear of the corners, and a mouse-driven screen has none.
+@media (pointer: coarse) {
+    .nds-fab-dock:not([data-fab-dock-pos="bottom"]) {
+        --_fab-dock-offset-y: calc(var(--_fab-dock-offset) * 2);
+    }
+}
+
 [data-fab-tucked] .nds-fab-dock {
     pointer-events: none;
 
@@ -179,7 +190,7 @@
     transform: translateX(calc(-100% - var(--_fab-dock-offset)));
 }
 [data-fab-tucked] .nds-fab-dock[data-fab-dock-pos="bottom"] {
-    transform: translateY(calc(100% + var(--_fab-dock-offset)));
+    transform: translateY(calc(100% + var(--_fab-dock-offset-y)));
 }
 
 // Zero-height IntersectionObserver target at the end of <body>.
@@ -256,7 +267,7 @@
 }
 
 .nds-fab-dock[data-fab-dock-pos="bottom"] .nds-fab-thumb {
-    margin-bottom: calc(var(--_fab-dock-offset) * -1);
+    margin-bottom: calc(var(--_fab-dock-offset-y) * -1);
 
     &, > .nds-btn {
         border-bottom-left-radius: 0;

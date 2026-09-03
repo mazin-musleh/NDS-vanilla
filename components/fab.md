@@ -5,8 +5,8 @@ hero_title: Floating Action Button - National Design System
 hero_description: Pins to an edge of the viewport for a primary or persistent action, stacking with others on the same edge and, when it opens a panel, following that panel to its edge.
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
-updated: "1.8.0"
-last_edit: "15/08/2026 - 07:52 AM"
+updated: "1.11.x"
+last_edit: "03/09/2026 - 11:34 PM"
 lang: en
 direction: ltr
 ---
@@ -564,7 +564,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'bottom' | 'start' | 'end'
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-offset</code></td><td><code class="nds-inline-code lang-html">calc(--nds-viewport-padding / 2)</code></td><td>Distance from the viewport edges to the dock. Half the page gutter, so it narrows with the page on mobile</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-offset</code></td><td><code class="nds-inline-code lang-html">calc(--nds-viewport-padding / 2)</code></td><td>Distance from the viewport edges to the dock. Half the page gutter, so it narrows with the page on mobile. On a touch screen, a left or right dock sits twice this value off the bottom edge, so the rounded screen corners of a phone or tablet do not clip the FAB</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--fab-dock-gap</code></td><td><code class="nds-inline-code lang-html">--spacing-md</code></td><td>Gap between stacked FABs on an edge</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--fab-dock-z</code></td><td><code class="nds-inline-code lang-html">899</code></td><td>Stacking order of the docks, below modals and backdrops</td></tr>
                     </tbody>
