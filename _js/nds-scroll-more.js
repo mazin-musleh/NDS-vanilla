@@ -58,43 +58,51 @@
         return null;
     }
 
-    function checkOverflow(wrapper) {
-        const content = wrapper._content || wrapper.querySelector(CONFIG.selectors.content);
-        if (!content) return;
+    // Horizontal: scrollLeft can be negative in RTL; normalize.
+    const scrollPos = (content, axis) => axis === 'vertical' ? content.scrollTop : Math.abs(content.scrollLeft);
+    // Read max-scroll fresh each time — cached values go stale when the
+    // content or viewport resizes between ResizeObserver ticks (e.g. sticky
+    // nav collapse as hero leaves the viewport on sidemenu pages).
+    const maxScrollOf = (content, axis) => axis === 'vertical'
+        ? content.scrollHeight - content.clientHeight
+        : content.scrollWidth - content.clientWidth;
 
-        const axis = detectAxis(content);
-
-        if (!axis) {
-            wrapper.removeAttribute('data-axis');
-            removeState(wrapper, CONFIG.overflow.hasMore, CONFIG.overflow.atStart, CONFIG.overflow.atEnd);
-            return;
-        }
-
-        wrapper.setAttribute('data-axis', axis);
-        addState(wrapper, CONFIG.overflow.hasMore);
-        checkScrollPosition(wrapper, content, axis);
-    }
-
-    function checkScrollPosition(wrapper, content, axis) {
-        content = content || wrapper._content || wrapper.querySelector(CONFIG.selectors.content);
-        if (!content) return;
-        axis = axis || wrapper.getAttribute('data-axis');
-        if (!axis) return;
-
-        // Horizontal: scrollLeft can be negative in RTL; normalize.
-        const pos = axis === 'vertical' ? content.scrollTop : Math.abs(content.scrollLeft);
-        // Read max-scroll fresh each time — cached values go stale when the
-        // content or viewport resizes between ResizeObserver ticks (e.g. sticky
-        // nav collapse as hero leaves the viewport on sidemenu pages).
-        const maxScroll = axis === 'vertical'
-            ? content.scrollHeight - content.clientHeight
-            : content.scrollWidth - content.clientWidth;
-
+    function applyEdges(wrapper, pos, maxScroll) {
         const atStart = pos <= CONFIG.scrollThreshold;
         const atEnd = maxScroll - pos <= CONFIG.scrollThreshold;
-
         if (atStart) addState(wrapper, CONFIG.overflow.atStart); else removeState(wrapper, CONFIG.overflow.atStart);
         if (atEnd)   addState(wrapper, CONFIG.overflow.atEnd);   else removeState(wrapper, CONFIG.overflow.atEnd);
+    }
+
+    // Reads only; returns the writes, so the pooled ResizeObserver runs every
+    // wrapper's reads before any write (a write between reads forces a layout
+    // per wrapper — 68ms@6.6x on a page with 34 of them).
+    function measure(wrapper) {
+        const content = wrapper._content || wrapper.querySelector(CONFIG.selectors.content);
+        if (!content) return;
+        const axis = detectAxis(content);
+        if (!axis) return () => {
+            wrapper.removeAttribute('data-axis');
+            removeState(wrapper, CONFIG.overflow.hasMore, CONFIG.overflow.atStart, CONFIG.overflow.atEnd);
+        };
+        const pos = scrollPos(content, axis), maxScroll = maxScrollOf(content, axis);
+        return () => {
+            wrapper.setAttribute('data-axis', axis);
+            addState(wrapper, CONFIG.overflow.hasMore);
+            applyEdges(wrapper, pos, maxScroll);
+        };
+    }
+
+    function checkOverflow(wrapper) {
+        const write = measure(wrapper);
+        if (write) write();
+    }
+
+    function checkScrollPosition(wrapper) {
+        const content = wrapper._content || wrapper.querySelector(CONFIG.selectors.content);
+        const axis = wrapper.getAttribute('data-axis');
+        if (!content || !axis) return;
+        applyEdges(wrapper, scrollPos(content, axis), maxScrollOf(content, axis));
     }
 
     function scrollStep(wrapper) {
@@ -172,7 +180,7 @@
         // Cold init: no synchronous checkOverflow() here — this observer's
         // initial callback runs the first measure, so init stays free of
         // forced layout and hidden (display:none) instances measure on reveal.
-        wrapper._offResizeObs = NDS.onElementResize(content, () => checkOverflow(wrapper));
+        wrapper._offResizeObs = NDS.onElementResize(content, () => measure(wrapper));
         wrapper.setAttribute('data-nds-scroll-more-initialized', 'true');
     }
 

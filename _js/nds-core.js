@@ -408,14 +408,23 @@
     // ── Element Resize Observer ──────────────────────────────────────
     // Single ResizeObserver, multiple elements
     // Usage: const off = NDS.onElementResize(el, handler)
+    //        handler(entry) may RETURN a function: its writes. Every handler in
+    //        the batch reads first, then the writes run together — a write between
+    //        two handlers' reads forces one layout per element (34 scroll-mores
+    //        cost 68ms@6.6x that way).
     NDS.onElementResize = (() => {
         const map = new Map();
         const ro = typeof ResizeObserver !== 'undefined'
             ? new ResizeObserver(entries => {
+                const writes = [];
                 for (let i = 0; i < entries.length; i++) {
                     const fns = map.get(entries[i].target);
-                    if (fns) fns.forEach(fn => fn(entries[i]));
+                    if (fns) fns.forEach(fn => {
+                        const write = fn(entries[i]);
+                        if (typeof write === 'function') writes.push(write);
+                    });
                 }
+                for (let i = 0; i < writes.length; i++) writes[i]();
             })
             : null;
 
@@ -1462,15 +1471,18 @@
         const CLS = 'nds-last-row';
         const watched = new WeakSet();
 
+        // Reads only; returns the class writes so the pooled ResizeObserver can
+        // run every grid's reads before any write.
         function mark(grid) {
             const items = grid.children;
-            for (let i = 0; i < items.length; i++) items[i].classList.remove(CLS);
-            // Skip hidden/non-laid-out grids (offsetTop is 0 for all items)
-            if (!items.length || !grid.offsetParent) return;
-            const lastTop = items[items.length - 1].offsetTop;
-            for (let i = items.length - 1; i >= 0 && items[i].offsetTop === lastTop; i--) {
-                items[i].classList.add(CLS);
+            if (!items.length) return;
+            let first = items.length; // hidden/non-laid-out grid: no last row
+            if (grid.offsetParent) {
+                const lastTop = items[items.length - 1].offsetTop;
+                first = items.length - 1;
+                while (first > 0 && items[first - 1].offsetTop === lastTop) first--;
             }
+            return () => { for (let i = 0; i < items.length; i++) items[i].classList.toggle(CLS, i >= first); };
         }
 
         // Each grid marks itself from the ResizeObserver, which delivers after
@@ -1497,7 +1509,7 @@
         // registration path for grids added after load.
         function update(container) {
             const grids = gridsIn(container);
-            for (let g = 0; g < grids.length; g++) { watch(grids[g]); mark(grids[g]); }
+            for (let g = 0; g < grids.length; g++) { watch(grids[g]); const write = mark(grids[g]); if (write) write(); }
         }
 
         // Observe only — no reads at load. Guarded for a bundle injected after load
