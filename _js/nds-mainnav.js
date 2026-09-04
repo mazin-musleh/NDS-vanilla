@@ -23,12 +23,14 @@
  *     custom property on :root to move it.
  *   - A .nds-PAB item is MOVED into the minimal bar and moved back — do not reparent one
  *     yourself at runtime.
+ *   - Minimal mode is the nds-minimal class on the nav itself; <body> carried it
+ *     until 1.11.0, so consumer CSS keyed on body.nds-minimal must move.
  *   - There is no destroy().
  */
 // NDS Navigation Controller
 //
 // Mainnav inits in the deferred pass and owns first paint of the nav chrome.
-// init-time work (DOM refs, mode/body-class sync, PAB placement, toggler
+// init-time work (DOM refs, mode-class sync, PAB placement, toggler
 // visibility, the overflow/show-more measurement + drawer reveal, event wiring)
 // is cold — no forced layout reads. The dropdown/navbar animation + interaction
 // cluster only runs once the user opens something; its functions are defined
@@ -89,12 +91,13 @@
         .getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BP_FALLBACK;
     const _mqMinimal = window.matchMedia(`(max-width: ${_minimalBp}px)`);
 
-    // Body mode at eval, ahead of the loader's reveal stamp, so the class rides the
+    // Mode class at eval, ahead of the loader's reveal stamp, so it rides the
     // reveal's own recalc: written from init it lands a frame later (the loader
-    // yields every 5 ms) and restyles the whole tree a second time. init's
+    // yields every 5 ms) and restyles again. On the nav, not <body>: only the
+    // nav's rules read it, so a flip restyles the nav alone. init's
     // updateBodyClass then finds both in sync and takes its no-change PAB path.
-    if (DOM.collapse && document.body) {
-        document.body.classList.toggle('nds-minimal', _mqMinimal.matches);
+    if (DOM.nav && DOM.collapse) {
+        DOM.nav.classList.toggle('nds-minimal', _mqMinimal.matches);
         DOM.minimal?.toggleAttribute('hidden', !_mqMinimal.matches);
     }
 
@@ -328,17 +331,17 @@
 
     function updateBodyClass() {
         const should = state.isMinimal;
-        const isBodyMin = document.body.classList.contains('nds-minimal');
+        const isNavMin = DOM.nav.classList.contains('nds-minimal');
         const wantsHidden = !should;
-        // Layouts render <body> without `nds-minimal` (desktop-first default;
+        // Markup ships the nav without `nds-minimal` (desktop-first default;
         // .nds-nav-minimal is gated by [hidden] in markup so no FOUC). On
         // init the body class state can already match `should` while
         // .nds-nav-minimal[hidden] hasn't been toggled yet. Compare both
         // states so the first sync still fires when only the hidden attr
         // is out of step.
         const isHidden = DOM.minimal ? DOM.minimal.hasAttribute('hidden') : wantsHidden;
-        if (should !== isBodyMin || wantsHidden !== isHidden) {
-            document.body.classList.toggle('nds-minimal', should);
+        if (should !== isNavMin || wantsHidden !== isHidden) {
+            DOM.nav.classList.toggle('nds-minimal', should);
             if (DOM.minimal) DOM.minimal.toggleAttribute('hidden', wantsHidden);
             _primaryMaxHeightCached = null;
             managePABPlacement();
@@ -1194,7 +1197,7 @@
 
     // Mode-flip listener: fires only when the viewport crosses
     // `--nds-minimal-nav-bp`. scheduleUpdate's updateBodyClass call then
-    // sees the mismatch between body.nds-minimal and the new state.isMinimal
+    // sees the mismatch between .nds-main-nav.nds-minimal and the new state.isMinimal
     // and runs the mode-transition logic (close dropdowns, drawer cleanup,
     // PAB placement). Replaces the old windowWidth-vs-minimalBp poll.
     _mqMinimal.addEventListener('change', () => {
