@@ -18,9 +18,14 @@
  *                                                same knobs — JS-only, so the row waits for
  *                                                the loader preset (DEPRECATIONS.md)
  *   --gap                                        set it and JS leaves the gap alone
+ *   data-swiper-loop                             endless row: clones at both ends, a silent
+ *                                                jump when the scroll rests on one. Needs
+ *                                                more slides than the largest tier's count,
+ *                                                else ignored. goTo/slideTo indices stay real
  *   on a slide's <img>: data-src · data-srcset   lazy sources, written to src/srcset when
  *                                                the slide nears the viewport
- *   written by the component: --slides on the container, data-swiper-peek while peeking
+ *   written by the component: --slides on the container, data-swiper-peek while peeking,
+ *                             .nds-swiper-clone slides (aria-hidden, inert) when looping
  *   written by the loader pre-reveal: the same --slides and peek state, plus
  *                                     data-swiper-preset (skeleton row = final row) and
  *                                     data-swiper-single when the slides fit one page
@@ -150,6 +155,14 @@
             this._ownsPeek = container.hasAttribute('peek');
             this._authorGap = container.style.getPropertyValue('--gap');
 
+            // Loop needs more slides than the largest page, or a page would show a
+            // slide twice. Decided once, against the largest tier.
+            // ponytail: per-tier loop (on at mobile, off at desktop) when a real deck asks.
+            this._loop = container.hasAttribute('data-swiper-loop') &&
+                this.slides.length > Math.max(this._slidesMax, this._slidesMid, this._slidesMin);
+            this._real = this.slides.length; // real slides; clones extend this.slides at both ends
+            this._head = 0;                  // clones before the first real slide
+
             this.valid = true;
             this.init();
         }
@@ -177,7 +190,7 @@
 
         init() {
             this.abortController = new AbortController();
-            this.container.style.setProperty('--total', this.slides.length);
+            this.container.style.setProperty('--total', this._real);
             if (this._ownsPeek && this._peek) this.container.style.setProperty('--peek', `${this._peek}px`);
             this.updateSlidesPerView();
 
@@ -191,6 +204,9 @@
                 this.container.setAttribute('data-nds-swiper-initialized', 'true');
                 return;
             }
+
+            // Clones first: the lazy-load and hero-reveal gates below walk this.slides.
+            if (this._loop) this.setupLoop();
 
             this.setupNavigation();
             this.setupScrollSync();
@@ -252,6 +268,8 @@
                     // offsetWidth fallback never runs) sticks and clamps currentIndex to
                     // maxIndex on the first scroll.
                     this._measuredStep = null;
+                    // The loop's start position was measured off hidden clones too.
+                    if (this._loop) this._jumpTo(this._head);
                 });
             }, { threshold: 0.01 });
         }
@@ -268,7 +286,7 @@
                 this.container.style.setProperty('--slides', this.slidesPerView);
             }
 
-            const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
+            const pageCount = Math.ceil(this._real / this.slidesPerView);
 
             // Nav visibility rides the served [hidden] FOUC guard, re-decided on
             // every breakpoint pass. Inline display can't do this job — the
@@ -316,6 +334,10 @@
             this._offResize = NDS.onElementResize(this.wrapper, () => {
                 this._cachedGap = null;
                 this._measuredStep = null;
+                // Loop: land on the first real slide here, not at init — this initial
+                // callback runs after layout and before the first paint after init, so
+                // the head clones never show and init stays free of layout reads.
+                if (this._loopPending) { this._loopPending = false; this._jumpTo(this._head); }
                 this.detectCurrentSlide();
                 this.updatePagination();
                 this.updateButtons();
@@ -372,14 +394,29 @@
         }
 
         prev() {
-            this.goTo(Math.floor((this.currentIndex - 1) / this.slidesPerView) * this.slidesPerView);
+            // Page boundaries count from the first real slide, past any head clones.
+            const from = this.currentIndex - this._head;
+            this._goToFull(this._head + Math.floor((from - 1) / this.slidesPerView) * this.slidesPerView);
         }
 
         next() {
-            this.goTo(this.currentIndex + this.slidesPerView);
+            this._goToFull(this.currentIndex + this.slidesPerView);
         }
 
+        // Public: the index counts real slides. Internally the row may carry clones
+        // at both ends, so every scroll target is a full-list index offset by _head.
         goTo(index) {
+            this._goToFull(this._head + index);
+        }
+
+        _goToFull(index) {
+            if (this._loop) {
+                // Keep the animation inside the clone budget: a target past either
+                // end first jumps one real cycle the other way, silently.
+                const n = this._real;
+                if (index < 0) { this._jumpTo(this.currentIndex + n); this.currentIndex += n; index += n; }
+                else if (index > this.maxIndex) { this._jumpTo(this.currentIndex - n); this.currentIndex -= n; index -= n; }
+            }
             const clampedIndex = Math.max(0, Math.min(index, this.maxIndex));
 
             const targetSlide = this.slides[clampedIndex];
@@ -398,6 +435,70 @@
                 left: NDS.isRTL ? -offset : offset,
                 behavior: _reduceMotion() ? 'auto' : 'smooth'
             });
+        }
+
+        // ==============================================
+        // LOOP — clones at both ends, silent jump at rest
+        // ==============================================
+
+        setupLoop() {
+            // Two pages plus one clone on each side: a fling can pass two pages
+            // before it rests, and the rest is where the jump corrects. Fewer clones
+            // than that and a fling hits the row's real edge.
+            // ponytail: a fling of three or more pages still hits the edge; grow the
+            // budget (or reposition mid-scroll) if a real deck shows it.
+            const n = this._real;
+            const count = Math.min(n, 2 * Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + 1);
+            const clone = (i) => {
+                const c = this.slides[i].cloneNode(true);
+                c.classList.add('nds-swiper-clone');
+                c.setAttribute('aria-hidden', 'true');
+                c.inert = true;
+                // A duplicated id would steal anchors and label-for from the real slide.
+                c.removeAttribute('id');
+                c.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+                return c;
+            };
+            const head = [], tail = [];
+            for (let j = 0; j < count; j++) {
+                head.push(clone(n - count + j));
+                tail.push(clone(j));
+            }
+            this.slides[0].before(...head);
+            this.slides[n - 1].after(...tail);
+            this._head = count;
+            this.slides = [...head, ...this.slides, ...tail];
+            this.currentIndex = count;
+            this._loopPending = true; // the ResizeObserver's first callback lands the jump
+
+            // A rest inside a clone zone jumps to the real twin — same content, so
+            // nothing visibly moves. scrollend where it exists; elsewhere a rest is
+            // 150 ms without a scroll event.
+            const { signal } = this.abortController;
+            const settle = () => this._loopSettle();
+            if ('onscrollend' in this.wrapper) this.wrapper.addEventListener('scrollend', settle, { signal });
+            else this.wrapper.addEventListener('scroll', NDS.debounce(settle, 150), { passive: true, signal });
+        }
+
+        _loopSettle() {
+            this.detectCurrentSlide();
+            const n = this._real, c = this._head, i = this.currentIndex;
+            if (i >= c && i < c + n) return;
+            this._jumpTo(c + (((i - c) % n) + n) % n);
+            this.detectCurrentSlide();
+            this.updateState();
+        }
+
+        // Instant reposition to a full-list index. Inline scroll-behavior: auto is
+        // what makes it instant on Safari < 15.4 too (see slideTo).
+        _jumpTo(index) {
+            const target = this.slides[index];
+            if (!target) return;
+            const offset = Math.abs(target.offsetLeft - this.slides[0].offsetLeft);
+            const prev = this.wrapper.style.scrollBehavior;
+            this.wrapper.style.scrollBehavior = 'auto';
+            this.wrapper.scrollLeft = NDS.isRTL ? -offset : offset;
+            this.wrapper.style.scrollBehavior = prev;
         }
 
         // ==============================================
@@ -435,7 +536,7 @@
         setupPagination() {
             if (!this.pagination) return;
 
-            const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
+            const pageCount = Math.ceil(this._real / this.slidesPerView);
 
             const hidden = pageCount <= 1;
             const display = hidden ? 'none' : '';
@@ -476,16 +577,19 @@
             if (!this.pagination) return;
 
             const bullets = this.pagination.querySelectorAll('.nds-bullet');
-            const maxIndex = this.maxIndex;
+            const n = this._real;
+            const maxIndex = Math.max(0, n - this.slidesPerView);
+            // Real index: a rest on a clone maps to its twin.
+            const current = (((this.currentIndex - this._head) % n) + n) % n;
 
-            // Map currentIndex to page based on proximity to page start indices.
+            // Map the real index to page based on proximity to page start indices.
             // For 6 slides, 4 per view: page 0 starts at index 0, page 1 starts at index 2.
             let currentPage = 0;
             let closestDistance = Infinity;
 
             for (let i = 0; i < bullets.length; i++) {
                 const pageStartIndex = Math.min(i * this.slidesPerView, maxIndex);
-                const distance = Math.abs(this.currentIndex - pageStartIndex);
+                const distance = Math.abs(current - pageStartIndex);
 
                 if (distance < closestDistance) {
                     closestDistance = distance;
@@ -540,7 +644,7 @@
                     break;
                 case 'End':
                     e.preventDefault();
-                    this.goTo(this.maxIndex);
+                    this.goTo(this._real - this.slidesPerView);
                     break;
             }
         }
@@ -585,14 +689,15 @@
         }
 
         updateButtons() {
-            if (this.prevBtn) this.prevBtn.disabled = this.currentIndex <= 0;
-            if (this.nextBtn) this.nextBtn.disabled = this.currentIndex >= this.maxIndex;
+            if (this.prevBtn) this.prevBtn.disabled = !this._loop && this.currentIndex <= 0;
+            if (this.nextBtn) this.nextBtn.disabled = !this._loop && this.currentIndex >= this.maxIndex;
         }
 
         updateBoundaryClasses() {
             const tokens = [];
-            if (this.currentIndex <= 0) tokens.push('at-start');
-            if (this.currentIndex >= this.maxIndex) tokens.push('at-end');
+            // A loop has no ends.
+            if (!this._loop && this.currentIndex <= 0) tokens.push('at-start');
+            if (!this._loop && this.currentIndex >= this.maxIndex) tokens.push('at-end');
             NDS.State.set(this.container, ...tokens);
         }
 
@@ -601,7 +706,8 @@
         // ==============================================
 
         slideTo(index, animate = true) {
-            index = Math.max(0, Math.min(index, this.maxIndex));
+            // Real index in, clamped to the last real page, then offset past the clones.
+            index = this._head + Math.max(0, Math.min(index, this._real - this.slidesPerView));
 
             const targetSlide = this.slides[index];
             if (!targetSlide) return;
@@ -637,6 +743,15 @@
         destroy() {
             this.container.removeAttribute('data-nds-swiper-initialized');
             this.container.removeAttribute('tabindex');
+
+            // Drop the clones and land on the real twin of the current slide.
+            if (this._head) {
+                const n = this._real;
+                const real = (((this.currentIndex - this._head) % n) + n) % n;
+                this.slides = this.slides.filter(s => !s.classList.contains('nds-swiper-clone') || (s.remove(), false));
+                this._head = 0;
+                this._jumpTo(real);
+            }
 
             // Reverse the state init/setupPagination wrote, so destroy() restores
             // the pre-init DOM for consumers that tear down without re-creating.
