@@ -129,7 +129,7 @@ Single-file `dry` runs every JSD rule **except JSD-05** — JSD-05 compares help
 
 ### JSA deep-read rules in full-tree mode
 
-Full-tree `architecture` runs only the greppable JSA rules (JSA-01, -02, -04, -05, -06, -13, -18, -19); the deep-read rules (JSA-03, -07 through -12, -14 through -17, -20) are skipped and the report shows the JSA deep-read banner (Phase 4). Single-file `architecture` runs every JSA rule — the per-file deep reads (complexity, in-file duplication, mixed-concern structure, INP cost, CSS-subsumption) are where deep-reads earn their keep, and the single-file budget allows them. Full-tree `architecture` also computes the **deep-read triage** (Phase 3) so the skipped coverage converts into ranked single-file targets instead of a bare disclaimer.
+Full-tree `architecture` runs only the greppable JSA rules (JSA-01, -02, -04, -05, -06, -13, -18, -19, -21); the deep-read rules (JSA-03, -07 through -12, -14 through -17, -20) are skipped and the report shows the JSA deep-read banner (Phase 4). Single-file `architecture` runs every JSA rule — the per-file deep reads (complexity, in-file duplication, mixed-concern structure, INP cost, CSS-subsumption) are where deep-reads earn their keep, and the single-file budget allows them. Full-tree `architecture` also computes the **deep-read triage** (Phase 3) so the skipped coverage converts into ranked single-file targets instead of a bare disclaimer.
 
 ### Excluded files
 
