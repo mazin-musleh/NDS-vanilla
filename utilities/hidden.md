@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.6.0"
-last_edit: "26/07/2026 - 09:02 PM"
+updated: "1.11.x"
+last_edit: "04/09/2026 - 05:30 AM"
 ---
 
 <!-- Native hidden attribute -->
@@ -75,7 +75,7 @@ last_edit: "26/07/2026 - 09:02 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Hiding with data-hidden</h2>
-            <p class="nds-section-description">Stamp <code class="nds-inline-code lang-html">data-hidden</code> on any element to hide it only inside a named viewport range: <code class="nds-inline-code lang-html">sm</code> (600px and below), <code class="nds-inline-code lang-html">md</code> (601 to 960px), <code class="nds-inline-code lang-html">lg</code> (961 to 1280px). Space-separate tokens to span ranges. Resize the window to watch each tag drop out of its own band</p>
+            <p class="nds-section-description">Stamp <code class="nds-inline-code lang-html">data-hidden</code> on any element to hide it only inside a named viewport range: <code class="nds-inline-code lang-html">sm</code> (up to 599px), <code class="nds-inline-code lang-html">md</code> (600 to 959px), <code class="nds-inline-code lang-html">lg</code> (960 to 1279px). Space-separate tokens to span ranges. Resize the window to watch each tag drop out of its own band</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -247,8 +247,8 @@ last_edit: "26/07/2026 - 09:02 PM"
                     <li>Use the <code class="nds-inline-code lang-html">hidden</code> attribute for state your JS toggles (panels, menus, wizard steps). It wins over any display value, so no extra CSS is needed</li>
                     <li>Use <code class="nds-inline-code lang-html">data-hidden</code> for chrome that has no place at some widths (topbar widgets, secondary metadata) instead of writing one-off media queries</li>
                     <li>Think of the split as: <code class="nds-inline-code lang-html">hidden</code> is state ("not right now"), <code class="nds-inline-code lang-html">data-hidden</code> is viewport ("not at this width"). Both can sit on one element, and either condition hides it</li>
-                    <li>Combine tokens to span ranges: <code class="nds-inline-code lang-html">data-hidden="sm md"</code> hides up to 960px, <code class="nds-inline-code lang-html">data-hidden="md lg"</code> keeps an element for the smallest and very wide screens only</li>
-                    <li><code class="nds-inline-code lang-html">data-hidden="lg"</code> covers 961 to 1280px, so the element shows again on wider screens. There is no token for widths above 1280px</li>
+                    <li>Combine tokens to span ranges: <code class="nds-inline-code lang-html">data-hidden="sm md"</code> hides up to 959px, <code class="nds-inline-code lang-html">data-hidden="md lg"</code> keeps an element for the smallest and very wide screens only</li>
+                    <li><code class="nds-inline-code lang-html">data-hidden="lg"</code> covers 960 to 1279px, so the element shows again on wider screens. There is no token for widths above 1279px</li>
                     <li>The <code class="nds-inline-code lang-html">hidden</code> attribute and plain <code class="nds-inline-code lang-html">data-hidden</code> remove content from screen readers too. When assistive technology should still announce it, add the <code class="nds-inline-code lang-html">sr</code> token: <code class="nds-inline-code lang-html">data-hidden="sm sr"</code></li>
                     <li>Hiding a label with <code class="nds-inline-code lang-html">sr</code> does not restyle the control: a button keeps its text padding rather than becoming a square icon button. Sizing stays the component's job</li>
                     <li>Do not hide primary actions on small screens. Collapse them into a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> so the capability stays reachable</li>
@@ -262,7 +262,7 @@ last_edit: "26/07/2026 - 09:02 PM"
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Native attribute, any element. Removes it from rendering and assistive technology, and wins over any display value</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-hidden</code></td><td>Band-exact responsive hiding. Tokens: <code class="nds-inline-code lang-html">sm</code> (600px and below), <code class="nds-inline-code lang-html">md</code> (601 to 960px), <code class="nds-inline-code lang-html">lg</code> (961 to 1280px). Space-separate to combine. Add <code class="nds-inline-code lang-html">sr</code> to hide visually but keep the element readable to screen readers</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-hidden</code></td><td>Band-exact responsive hiding. Tokens: <code class="nds-inline-code lang-html">sm</code> (up to 599px), <code class="nds-inline-code lang-html">md</code> (600 to 959px), <code class="nds-inline-code lang-html">lg</code> (960 to 1279px). Space-separate to combine. Add <code class="nds-inline-code lang-html">sr</code> to hide visually but keep the element readable to screen readers</td></tr>
                     </tbody>
                 </table>
             </div>

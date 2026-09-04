@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "21/08/2026 - 06:58 PM"
+updated: "1.11.x"
+last_edit: "04/09/2026 - 05:30 AM"
 ---
 
 <!-- Topbar -->
@@ -112,7 +112,7 @@ last_edit: "21/08/2026 - 06:58 PM"
                                         </div>
                                         <code class="lang-html code">
 &lt;!-- Hijri or Gregorian date (set via data-calendar);
-     data-hidden picks where the widget hides (here: 960px and below) --&gt;
+     data-hidden picks where the widget hides (here: 959px and below) --&gt;
 &lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"&gt;&lt;/span&gt;
 
 &lt;!-- Real-time clock (updates every second); hidden on mobile --&gt;
@@ -350,7 +350,7 @@ last_edit: "21/08/2026 - 06:58 PM"
                     <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-theme-toggle</code></td><td>top bar button</td><td>Registers the element as a dark/light mode toggle</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-hidden</code></td><td>any widget</td><td>Hides the widget inside the named viewport range: <code class="nds-inline-code lang-html">mobile</code> (600px and below), <code class="nds-inline-code lang-html">tablet</code> (601 to 960px), <code class="nds-inline-code lang-html">desktop</code> (961 to 1280px), space-separated to combine. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility. An unstamped widget stays visible at every width</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-hidden</code></td><td>any widget</td><td>Hides the widget inside the named viewport range: <code class="nds-inline-code lang-html">mobile</code> (up to 599px), <code class="nds-inline-code lang-html">tablet</code> (600 to 959px), <code class="nds-inline-code lang-html">desktop</code> (960 to 1279px), space-separated to combine. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility. An unstamped widget stays visible at every width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-calendar</code></td><td><code class="nds-inline-code lang-html">#nds-date</code></td><td>Set to <code class="nds-inline-code lang-html">hijri</code> or <code class="nds-inline-code lang-html">gregorian</code>. Defaults to Hijri for Arabic pages.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-latitude</code> / <code class="nds-inline-code lang-html">data-longitude</code></td><td><code class="nds-inline-code lang-html">#nds-weatherInfo</code></td><td>GPS coordinates for the weather lookup. Defaults to Riyadh (24.7136, 46.6753).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-city</code> / <code class="nds-inline-code lang-html">data-city-en</code></td><td><code class="nds-inline-code lang-html">#nds-cityName</code></td><td>City name shown in the widget (<code class="nds-inline-code lang-html">data-city-en</code> is the English variant). Recommended — when set, the city renders directly with no network call; otherwise it falls back to a Nominatim reverse-geocode of the coordinates.</td></tr>

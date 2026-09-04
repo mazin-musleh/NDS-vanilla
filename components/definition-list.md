@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "24/08/2026 - 12:48 PM"
+last_edit: "04/09/2026 - 05:30 AM"
 ---
 
 <!-- With Icons -->
@@ -563,9 +563,9 @@ last_edit: "24/08/2026 - 12:48 PM"
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-tableView</code></td><td>Two-column key-value grid layout at all screen sizes</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-sm</code></td><td>Table view on mobile only (max-width: 600px), stacked on larger screens</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-md</code></td><td>Table view from tablet and up (min-width: 601px), stacked on mobile</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-lg</code></td><td>Table view from desktop and up (min-width: 961px), stacked below</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-sm</code></td><td>Table view on mobile only (max-width: 599px), stacked on larger screens</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-md</code></td><td>Table view from tablet and up (min-width: 600px), stacked on mobile</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-lg</code></td><td>Table view from desktop and up (min-width: 960px), stacked below</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>Each item places dt and dd on a single wrappable row. Looser than table view: no shared columns across items</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Adds border separators between items. Adapts styling for table view and stacked layouts</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size: 18px icon (floored, no visual change from lg), medium title font, medium row gap</td></tr>

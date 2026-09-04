@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.9.0"
-last_edit: "10/08/2026 - 12:42 AM"
+updated: "1.11.x"
+last_edit: "04/09/2026 - 05:30 AM"
 ---
 
 <!-- Basic Grid -->
@@ -324,19 +324,19 @@ last_edit: "10/08/2026 - 12:42 AM"
                                 <tbody>
                                     <tr>
                                         <td>--max-col / --max-track</td>
-                                        <td>961px+</td>
+                                        <td>960px+</td>
                                         <td>&gt; 768px</td>
                                         <td>auto-fit</td>
                                     </tr>
                                     <tr>
                                         <td>--mid-col / --mid-track</td>
-                                        <td>601px to 960px</td>
+                                        <td>600px to 959px</td>
                                         <td>&le; 768px</td>
                                         <td>--max-col &rarr; auto-fit</td>
                                     </tr>
                                     <tr>
                                         <td>--min-col / --min-track</td>
-                                        <td>&le; 600px</td>
+                                        <td>&le; 599px</td>
                                         <td>&le; 480px</td>
                                         <td>--mid-col &rarr; --max-col &rarr; auto-fit</td>
                                     </tr>
@@ -530,12 +530,12 @@ last_edit: "10/08/2026 - 12:42 AM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--max-col</code></td><td>auto-fit</td><td>Column count at large viewport (961px+). Base value for the fallback chain</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--mid-col</code></td><td>var(--max-col)</td><td>Column count at medium viewport (601px to 960px)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--min-col</code></td><td>var(--mid-col)</td><td>Column count below 601px</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--max-col</code></td><td>auto-fit</td><td>Column count at large viewport (960px+). Base value for the fallback chain</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--mid-col</code></td><td>var(--max-col)</td><td>Column count at medium viewport (600px to 959px)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--min-col</code></td><td>var(--mid-col)</td><td>Column count below 600px</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--max-track</code></td><td>(unset)</td><td>Explicit <code class="nds-inline-code lang-html">grid-template-columns</code> value at large viewport. Overrides <code class="nds-inline-code lang-html">--max-col</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--mid-track</code></td><td>var(--max-track)</td><td>Track template at medium viewport</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--min-track</code></td><td>var(--mid-track)</td><td>Track template below 601px</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--min-track</code></td><td>var(--mid-track)</td><td>Track template below 600px</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--min-width</code></td><td>0</td><td>Minimum column width inside <code class="nds-inline-code lang-html">minmax()</code> for auto-fit wrapping (e.g. 250px)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td>var(--spacing-2xl)</td><td>Shorthand for both row and column gap. Halved automatically below the large breakpoint</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--row-gap</code></td><td>var(--spacing-2xl)</td><td>Row gap override</td></tr>

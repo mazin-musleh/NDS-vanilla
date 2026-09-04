@@ -93,9 +93,9 @@
     NDS.breakpoints = {
         mobile:          '(max-width: 599px)',
         tablet:          '(min-width: 600px)',
-        'tablet-max':    '(max-width: 960px)',
+        'tablet-max':    '(max-width: 959px)',
         desktop:         '(min-width: 960px)',
-        'desktop-max':   '(max-width: 1280px)',
+        'desktop-max':   '(max-width: 1279px)',
         'large-desktop': '(min-width: 1280px)'
     };
 

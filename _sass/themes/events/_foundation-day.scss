@@ -149,7 +149,7 @@
   opacity: 0.6;
 }
 
-@media (max-width: 960px) {
+@include tablet(max) {
   .nds-content-section::after {
     background-size: auto;
   }
