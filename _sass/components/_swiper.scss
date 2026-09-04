@@ -72,9 +72,6 @@
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    // JS already brackets its instant jumps, but this keeps every scroll surface
-    // uniform under reduced motion instead of relying on that bracket alone.
-    @include reduced-motion { scroll-behavior: auto; }
 
     scrollbar-width: none;
     &::-webkit-scrollbar { display: none; }
@@ -135,6 +132,14 @@
             clip-path: inset(0 var(--_clip-end, var(--_clip-start)) 0 var(--_clip-start));
         }
     }
+}
+
+// JS already brackets its instant jumps, but this keeps every scroll surface
+// uniform under reduced motion instead of relying on that bracket alone.
+// Top level rather than nested in the block above: a mixin's @media counts as a
+// nested rule, and Sass warns (mixed-decls) when plain declarations follow one.
+@include reduced-motion {
+    .nds-swiper-wrapper { scroll-behavior: auto; }
 }
 
 // ==============================================

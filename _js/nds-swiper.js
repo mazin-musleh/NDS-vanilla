@@ -335,20 +335,13 @@
             if (this.pagination) this.setupPagination();
         }
 
+        // Only the no-peek case is ours: _swiper.scss folds a gap term into the peek
+        // reserve, so a deck with a peek owns its own gap and JS must not touch it.
         updatePeekStyles() {
-            if (this.isHero || this._authorGap) return;
+            if (this.isHero || this._authorGap || this._peek > 0) return;
 
-            const hasPeek = this._peek > 0;
-            const hasOneSlidePage = this.slidesPerView === 1;
-
-            if (!hasPeek && !hasOneSlidePage) {
-                this.container.style.removeProperty('--gap');
-                return;
-            }
-
-            if (!hasPeek && hasOneSlidePage) {
-                this.container.style.setProperty('--gap', 'var(--nds-viewport-padding)');
-            }
+            if (this.slidesPerView === 1) this.container.style.setProperty('--gap', 'var(--nds-viewport-padding)');
+            else this.container.style.removeProperty('--gap');
         }
 
         setupResize() {
