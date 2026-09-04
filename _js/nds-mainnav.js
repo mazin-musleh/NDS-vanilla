@@ -52,9 +52,8 @@
     // The two dynamic refs (`minimal`, created on first mobile pass; reset to null
     // when removed) are kept in sync by managePABPlacement().
     const DOM = {
-        nav: null, collapse: null, collapseContent: null, container: null,
-        primary: null, secondary: null, brand: null, toggler: null,
-        minimal: null, showMore: null,
+        nav: null, collapse: null, collapseContent: null,
+        primary: null, secondary: null, toggler: null, minimal: null,
     };
 
     // Re-resolvable rather than captured once: the module runs when the bundle does, and a
@@ -66,13 +65,10 @@
         DOM.nav = nav;
         DOM.collapse = nav?.querySelector('#ndsNavCollapse') || null;
         DOM.collapseContent = nav?.querySelector('.nds-collapse-content') || null;
-        DOM.container = nav?.querySelector('.nds-nav-container') || null;
         DOM.primary = nav?.querySelector('.nds-nav-primary') || null;
         DOM.secondary = nav?.querySelector('.nds-nav-actions') || null;
-        DOM.brand = nav?.querySelector('.nds-brand') || null;
         DOM.toggler = nav?.querySelector('.nds-mainNav-toggler') || null;
         DOM.minimal = nav?.querySelector('.nds-nav-minimal') || null;
-        DOM.showMore = DOM.collapseContent?.querySelector('.nds-show-more') || null;
         return !!DOM.collapse;
     }
     captureDOM();
@@ -391,7 +387,7 @@
     // PAB (Persistent Action Buttons) MANAGEMENT
     // ==============================================
     function managePABPlacement() {
-        const pabs = document.querySelectorAll('.nds-nav-item.nds-PAB');
+        const pabs = DOM.nav ? DOM.nav.querySelectorAll('.nds-nav-item.nds-PAB') : [];
         if (!pabs.length) return;
 
         // PAB moves change the ancestor chain of any dropdown inside a PAB li;
@@ -429,7 +425,7 @@
             pabs.forEach(item => {
                 const pos = item.dataset.origPos;
                 if (pos !== undefined) {
-                    const ph = document.querySelector(`[data-pab-ph="${pos}"]`);
+                    const ph = DOM.nav.querySelector(`[data-pab-ph="${pos}"]`);
                     if (ph) { ph.parentNode.insertBefore(item, ph); ph.remove(); }
                     delete item.dataset.origPos;
                 }
@@ -922,12 +918,14 @@
         }, { signal });
     }
 
+    let _interactionsAbortController = null;
     function setupInteractions() {
         if (!DOM.primary) return;
 
-        // Scope all listeners attached in this function to a single AbortController
-        // so teardown can detach them atomically if setupInteractions is ever re-run.
-        const _interactionsAbortController = new AbortController();
+        // One controller per run, aborted on the next: a reinit on a kept root
+        // would otherwise stack every interaction listener (wheel scroll doubles).
+        if (_interactionsAbortController) _interactionsAbortController.abort();
+        _interactionsAbortController = new AbortController();
         const { signal } = _interactionsAbortController;
 
         _bindShowMore(signal);
