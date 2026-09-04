@@ -139,7 +139,7 @@
                 : Math.max(target, -maxScroll);
         }
 
-        content.scrollTo({ [posKey]: target, behavior: 'smooth' });
+        content.scrollTo({ [posKey]: target, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
     }
 
     function initElement(wrapper) {

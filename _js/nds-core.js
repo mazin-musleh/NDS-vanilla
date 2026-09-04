@@ -131,8 +131,14 @@
     // toggle still want raw `window.matchMedia(...).addEventListener` —
     // this getter only exposes the snapshot read.
     // Usage: if (NDS.prefersReducedMotion) callback(); else animate();
+    // Covers BOTH the OS preference and the a11y panel's reduce-motion mode. CSS
+    // handles the panel for animations, but an explicit scroll behavior:'smooth'
+    // outranks scroll-behavior, so JS-driven motion has to read the mode here.
     Object.defineProperty(NDS, 'prefersReducedMotion', {
-        get() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+        get() {
+            return window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+                document.documentElement.matches('[data-a11y~="reduce-motion"]');
+        }
     });
 
     // ── i18n ─────────────────────────────────────────────────────────

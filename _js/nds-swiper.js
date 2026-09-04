@@ -119,13 +119,6 @@
         _mqTablet.addEventListener('change', trigger);
     }
 
-    // Honour reduce-motion from EITHER the OS preference or the a11y-panel mode
-    // (data-a11y~="reduce-motion"). The mode sets scroll-behavior:auto via CSS, but a
-    // JS behavior:'smooth' overrides that, so JS-driven scrolls must check it directly.
-    const _reduceMotion = () =>
-        NDS.prefersReducedMotion ||
-        document.documentElement.matches('[data-a11y~="reduce-motion"]');
-
     // ==============================================
     // MAIN CLASS
     // ==============================================
@@ -485,7 +478,7 @@
                 : Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
             const left = NDS.isRTL ? -offset : offset;
-            if (_reduceMotion()) this._instant(() => this.wrapper.scrollTo({ left }));
+            if (NDS.prefersReducedMotion) this._instant(() => this.wrapper.scrollTo({ left }));
             else this.wrapper.scrollTo({ left, behavior: 'smooth' });
         }
 
@@ -765,7 +758,7 @@
                 ? slideRect.right - wrapperRect.right
                 : slideRect.left - wrapperRect.left;
 
-            if (animate && !_reduceMotion()) {
+            if (animate && !NDS.prefersReducedMotion) {
                 this.wrapper.scrollBy({ left: scrollDelta, behavior: 'smooth' });
                 return;
             }

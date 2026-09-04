@@ -72,6 +72,9 @@
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    // JS already brackets its instant jumps, but this keeps every scroll surface
+    // uniform under reduced motion instead of relying on that bracket alone.
+    @include reduced-motion { scroll-behavior: auto; }
 
     scrollbar-width: none;
     &::-webkit-scrollbar { display: none; }

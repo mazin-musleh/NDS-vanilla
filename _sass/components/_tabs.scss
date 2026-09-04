@@ -229,6 +229,8 @@
     flex-wrap: nowrap !important;
     max-width: 100%;
     scroll-behavior: smooth;
+    // Without this the JS paths' behavior:'auto' would still animate here.
+    @include reduced-motion { scroll-behavior: auto; }
 
     >* {
       width: fit-content;

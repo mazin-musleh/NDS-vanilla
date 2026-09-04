@@ -51,7 +51,7 @@
             return;
         }
 
-        window.scrollTo({ top: heroBtm + window.scrollY, behavior: 'smooth' });
+        window.scrollTo({ top: heroBtm + window.scrollY, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
 
         let locked = false;
         const doLock = () => {

@@ -124,8 +124,10 @@
 
         scrollToTarget(target) {
             if (!target) return;
+            // 'auto' defers to the list's CSS scroll-behavior, which _tabs.scss drops
+            // to auto under reduced motion — so this is a real instant scroll there.
             target.scrollIntoView({
-                behavior: 'smooth',
+                behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth',
                 inline: 'center',
                 block: 'nearest'
             });
@@ -141,7 +143,7 @@
                 if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
 
                 e.preventDefault();
-                this.tabList.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: 'smooth' });
+                this.tabList.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
             }, { passive: false, signal: this.abortController.signal });
 
             // Drag scroll.
@@ -157,7 +159,8 @@
                 this.dragState.active = false;
                 document.removeEventListener('mousemove', handleMouseMove);
                 document.removeEventListener('mouseup', handleMouseUp);
-                Object.assign(this.tabList.style, { cursor: '', userSelect: '', scrollBehavior: 'smooth' });
+                // Inline, so it outranks _tabs.scss — restore to the mode the user asked for.
+                Object.assign(this.tabList.style, { cursor: '', userSelect: '', scrollBehavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
                 if (this.dragState.hasDragged) {
                     setTimeout(() => { this.dragState.hasDragged = false; }, 100);
                 }

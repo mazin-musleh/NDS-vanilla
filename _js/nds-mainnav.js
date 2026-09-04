@@ -91,6 +91,12 @@
         .getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BP_FALLBACK;
     const _mqMinimal = window.matchMedia(`(max-width: ${_minimalBp}px)`);
 
+    // Scroll behavior for every JS-driven nav scroll. 'auto' defers to the element's
+    // CSS scroll-behavior, which is unset on the nav and on the document — so it is a
+    // real instant scroll here. Check the stylesheet before copying this onto a
+    // surface that sets scroll-behavior: smooth, where 'auto' still animates.
+    const _behavior = () => NDS.prefersReducedMotion ? 'auto' : 'smooth';
+
     // Mode class at eval, ahead of the loader's reveal stamp, so it rides the
     // reveal's own recalc: written from init it lands a frame later (the loader
     // yields every 5 ms) and restyles again. On the nav, not <body>: only the
@@ -825,10 +831,10 @@
                 _openDropdowns.forEach(dd => {
                     if (dd.closest('.nds-nav-actions')) dropdown.toggle(dd, false);
                 });
-                DOM.primary.scrollTo({ top: atEnd ? 0 : DOM.primary.scrollTop + amount, behavior: 'smooth' });
+                DOM.primary.scrollTo({ top: atEnd ? 0 : DOM.primary.scrollTop + amount, behavior: _behavior() });
             } else {
                 const dir = NDS.isRTL ? -1 : 1;
-                DOM.primary.scrollTo({ left: atEnd ? 0 : DOM.primary.scrollLeft + amount * dir, behavior: 'smooth' });
+                DOM.primary.scrollTo({ left: atEnd ? 0 : DOM.primary.scrollLeft + amount * dir, behavior: _behavior() });
             }
             // Fallback for browsers without `scrollend` (the listener below
             // covers modern browsers). The smooth-scroll duration is
@@ -856,7 +862,9 @@
     }
 
     function _bindWheelConversion(signal) {
-        DOM.primary.style.scrollBehavior = 'smooth';
+        // Inline, so it outranks any stylesheet — it must honour reduced motion here
+        // or every scrollTo below silently animates through its 'auto' branch.
+        DOM.primary.style.scrollBehavior = _behavior();
 
         DOM.primary.addEventListener('wheel', (e) => {
             if (state.isMouseOverDropdown || state.isMinimal ||
@@ -865,7 +873,7 @@
 
             e.preventDefault();
             // Native smooth scroll — successive deltas compose; no frame-rate assumptions.
-            DOM.primary.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: 'smooth' });
+            DOM.primary.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: _behavior() });
         }, { passive: false, signal });
     }
 
@@ -876,7 +884,7 @@
             drag.active = false;
             document.removeEventListener('mousemove', dragMove);
             document.removeEventListener('mouseup', dragUp);
-            Object.assign(DOM.primary.style, { cursor: '', userSelect: '', scrollBehavior: 'smooth' });
+            Object.assign(DOM.primary.style, { cursor: '', userSelect: '', scrollBehavior: _behavior() });
         };
 
         const dragMove = (e) => {
@@ -1047,7 +1055,7 @@
             const delay = wasNavOpen || openCount ? NDS.transitionSpeed() + 100 : 0;
 
             setTimeout(() => {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                target.scrollIntoView({ behavior: _behavior(), block: 'start' });
                 history.replaceState(null, '', `#${hash}`);
             }, delay);
         }, { signal });
