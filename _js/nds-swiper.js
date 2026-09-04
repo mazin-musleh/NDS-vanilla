@@ -9,10 +9,15 @@
  *   instance.destroy()
  * Events:
  *   (none)
- * Hooks (bare attributes on the swiper container, not data-*):
- *   slides-max · slides-mid · slides-min   slides per view at desktop / tablet / mobile,
- *                                          default 1 each
- *   peek                                   px of the next slide left showing
+ * Hooks (knobs set inline on the swiper container's style attribute):
+ *   --max-slides · --mid-slides · --min-slides   slides per view at desktop / tablet /
+ *                                                mobile, default 1 each; CSS sizes the row
+ *                                                from them before any JS runs
+ *   --peek                                       length of the next slide left showing
+ *   slides-max · slides-mid · slides-min · peek  deprecated bare-attribute spellings of the
+ *                                                same knobs — JS-only, so the row waits for
+ *                                                the loader preset (DEPRECATIONS.md)
+ *   --gap                                        set it and JS leaves the gap alone
  *   on a slide's <img>: data-src · data-srcset   lazy sources, written to src/srcset when
  *                                                the slide nears the viewport
  *   written by the component: --slides on the container, data-swiper-peek while peeking
@@ -131,11 +136,19 @@
                 return;
             }
 
-            // Static attributes — read once, reused on every breakpoint change.
-            this._slidesMax = parseInt(container.getAttribute('slides-max')) || 1;
-            this._slidesMid = parseInt(container.getAttribute('slides-mid')) || 1;
-            this._slidesMin = parseInt(container.getAttribute('slides-min')) || 1;
-            this._peek = parseInt(container.getAttribute('peek')) || 0;
+            // Static knobs — read once, reused on every breakpoint change. Inline
+            // custom property first (the canonical spelling, which CSS also reads),
+            // the deprecated bare attribute second.
+            const knob = (prop, attr) =>
+                parseInt(container.style.getPropertyValue(prop)) || parseInt(container.getAttribute(attr)) || 0;
+            this._slidesMax = knob('--max-slides', 'slides-max') || 1;
+            this._slidesMid = knob('--mid-slides', 'slides-mid') || 1;
+            this._slidesMin = knob('--min-slides', 'slides-min') || 1;
+            this._peek = knob('--peek', 'peek');
+            // An attribute-authored peek is invisible to CSS, so JS writes --peek for
+            // it and owns it; an author's inline --peek or --gap is never touched.
+            this._ownsPeek = container.hasAttribute('peek');
+            this._authorGap = container.style.getPropertyValue('--gap');
 
             this.valid = true;
             this.init();
@@ -165,11 +178,12 @@
         init() {
             this.abortController = new AbortController();
             this.container.style.setProperty('--total', this.slides.length);
+            if (this._ownsPeek && this._peek) this.container.style.setProperty('--peek', `${this._peek}px`);
             this.updateSlidesPerView();
 
             // Single-slide swipers can never navigate; bail before nav/observer/keyboard
             // setup. They still join the shared breakpoint subscription — --slides
-            // must keep tracking slides-max/mid/min or the lone card holds its
+            // must keep tracking --max/mid/min-slides or the lone card holds its
             // init-time width across resizes.
             if (this.slides.length === 1) {
                 _resizeSwipers.add(this);
@@ -262,17 +276,15 @@
             // left the nav stuck hidden when init landed on a one-page breakpoint.
             if (this.navigation) this.navigation.toggleAttribute('hidden', pageCount <= 1);
 
-            // Peek width = raw --peek + one gap; the addition is done in CSS
-            // (calc on [data-swiper-peek]) so init never reads getComputedStyle.
-            const peekActive = this._peek > 0 && pageCount > 1;
-            this.container.toggleAttribute('data-swiper-peek', peekActive);
-            this.container.style.setProperty('--peek', `${this._peek}px`);
+            // CSS adds the gap to --peek; this flag only says whether there is a
+            // next page to peek at.
+            this.container.toggleAttribute('data-swiper-peek', this._peek > 0 && pageCount > 1);
 
             if (this.pagination) this.setupPagination();
         }
 
         updatePeekStyles() {
-            if (this.isHero) return;
+            if (this.isHero || this._authorGap) return;
 
             const hasPeek = this._peek > 0;
             const hasOneSlidePage = this.slidesPerView === 1;
@@ -631,7 +643,9 @@
             this.container.removeAttribute('data-swiper-peek');
             this.container.removeAttribute('data-swiper-preset');
             this.container.removeAttribute('data-swiper-single');
-            ['--total', '--slides', '--peek', '--gap'].forEach(p => this.container.style.removeProperty(p));
+            ['--total', '--slides'].forEach(p => this.container.style.removeProperty(p));
+            if (this._ownsPeek) this.container.style.removeProperty('--peek');
+            if (!this._authorGap) this.container.style.removeProperty('--gap');
             if (this.wrapper) this.wrapper.style.removeProperty('overflow');
             if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }
             if (this.navigation) this.navigation.toggleAttribute('hidden', this._navHadHidden);

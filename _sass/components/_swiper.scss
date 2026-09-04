@@ -3,7 +3,6 @@
  * Minimal foundation with native scroll behavior
  */
 
-@use 'sass:map';
 @use '../mixins' as *;
 
 // ==============================================
@@ -11,12 +10,18 @@
 // ==============================================
 
 .nds-swiper {
-    // --swiper-slides set by JavaScript in constructor to prevent CLS
+    // The author's knobs sit inline on the element (--max/mid/min-slides, --peek),
+    // so CSS sizes the row the moment main CSS applies — before any JS, in every
+    // browser. --slides (loader preset, then init) wins once written; it is also
+    // how the deprecated bare attributes still work, since only JS can read those.
     --swiper-total: var(--total, 1);
-    --swiper-slides: var(--slides, 1);
+    --swiper-slides: var(--slides, var(--min-slides, 1));
     --swiper-gap: var(--gap, var(--spacing-xl));
-    --swiper-peek: 0px;
     --swiper-padding: var(--padding, 0px); // a length: it feeds calc() and max() below
+    // Peek reserve = --peek + one gap. No --peek makes the calc invalid, so the
+    // reserve falls back to 0px.
+    --_peek-reserve: calc(var(--peek) + var(--swiper-gap));
+    --swiper-peek: var(--_peek-reserve, 0px);
 
     display: flex;
     flex-direction: column;
@@ -25,37 +30,13 @@
     width: 100%;
     height: 100%;
 
-    // Slides per view straight from the tier attributes, so the formula sizes the
-    // row from the moment main CSS applies — not from the loader's preset, which
-    // rides the deferred bundle and, on a long page, landed after the crit
-    // placeholder had painted. --slides (preset, init) still wins once written.
-    // $breakpoints-range, not the tablet/desktop mixins: its bands sit at
-    // 600/960 like NDS.breakpoints, the mixins at 601/961 — off by one, a 960px
-    // viewport would size mid here and jump to max at the preset.
-    // ponytail: counts 1–8 (the home template's logo strip runs 8); a deck asking
-    // for more falls back to 1 until the preset.
-    @each $bp, $attr in (sm: slides-min, md: slides-mid, lg: slides-max, xl: slides-max) {
-        @media #{map.get($breakpoints-range, $bp)} {
-            @for $n from 1 through 8 { &[#{$attr}="#{$n}"] { --swiper-slides: var(--slides, #{$n}); } }
-        }
-    }
+    @include tablet(min) { --swiper-slides: var(--slides, var(--mid-slides, 1)); }
+    @include desktop(min) { --swiper-slides: var(--slides, var(--max-slides, 1)); }
 
-    // The peek too, before the preset: read straight off the attribute as a
-    // length, for a deck holding more slides than one page — the same page
-    // count the preset uses. @supports gates typed attr() (Chrome 133+);
-    // elsewhere the block is skipped and the peek waits for the preset, as
-    // before. Without this a peeking deck's slides each moved by one (peek +
-    // gap) ÷ slides at the stamp, walking further with every position.
-    @supports (width: attr(x px)) {
-        @each $bp, $attr in (sm: slides-min, md: slides-mid, lg: slides-max, xl: slides-max) {
-            @media #{map.get($breakpoints-range, $bp)} {
-                @for $n from 1 through 8 {
-                    &[#{$attr}="#{$n}"][peek]:not([peek="0"], [data-swiper-preset], [data-nds-swiper-initialized]):has(> .nds-swiper-wrapper > .nds-swiper-slide:nth-child(#{$n + 1})) {
-                        --swiper-peek: calc(attr(peek px) + var(--swiper-gap));
-                    }
-                }
-            }
-        }
+    // One page has nothing to peek. JS counts (preset, then init) and leaves
+    // data-swiper-peek off; the reserve goes with it.
+    &:is([data-swiper-preset], [data-nds-swiper-initialized]):not([data-swiper-peek]) {
+        --swiper-peek: 0px;
     }
 
     .nds-max-width & {
@@ -63,22 +44,12 @@
 
         // A page ends one gap before the next slide, but the scrollport runs one
         // padding past it, so a gap narrower than the padding shows the next
-        // slide's edge on a wide desktop. Non-peek decks default the gap to the
-        // padding — the value updatePeekStyles writes at one slide per view.
-        // Keyed on the authored peek attribute, not the stamped data-swiper-peek:
-        // that lands with the preset, and a gap that changes then walks every
-        // slide after the first by one gap per position.
+        // slide's edge on a wide desktop. Default the gap to the padding — the
+        // value updatePeekStyles writes at one slide per view.
         // Plain var(), no max(): this reaches the slide's calc() (Safari).
-        &:not(.nds-hero):is(:not([peek]), [peek="0"]) {
+        &:not(.nds-hero) {
             --swiper-gap: var(--gap, var(--swiper-padding));
         }
-    }
-
-    // Peek width = the raw --peek px + one gap. JS sets --peek and toggles
-    // [data-swiper-peek]; doing the gap addition here keeps swiper init free
-    // of a getComputedStyle('--gap') read (a forced reflow).
-    &[data-swiper-peek] {
-        --swiper-peek: calc(var(--peek, 0px) + var(--swiper-gap));
     }
 
     // Pre-init guard for the hero variant lives in nds.critical.min.scss

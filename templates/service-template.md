@@ -173,7 +173,7 @@ sidemenu_mode: false
     </div>
     <div class="nds-section-body nds-max-width">
         <div class="nds-block">
-            <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
+            <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                 <div class="nds-swiper-wrapper">
                     {% for service in site.data.content.services limit:6 %}
                     <div class="nds-swiper-slide">

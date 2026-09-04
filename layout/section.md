@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.10.0"
-last_edit: "24/08/2026 - 12:48 PM"
+last_edit: "04/09/2026 - 05:10 AM"
 ---
 
 <!-- Section Structure Overview -->
@@ -922,7 +922,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
     </div>
     <div class="nds-section-body nds-max-width">
         <div class="nds-block">
-            <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
+            <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                 <div class="nds-swiper-wrapper">
                     {% for service in site.data.content.services limit:6 %}
                     <div class="nds-swiper-slide">
@@ -999,7 +999,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="nds-section-body nds-max-width"&gt;
-    &lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
+    &lt;div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px"&gt;
         &lt;div class="nds-swiper-wrapper"&gt;
             &lt;div class="nds-swiper-slide"&gt;
                 &lt;div class="nds-card nds-stroke"&gt;

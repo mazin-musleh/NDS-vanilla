@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "04/09/2026 - 02:55 AM"
+last_edit: "04/09/2026 - 05:30 AM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -410,7 +410,7 @@ last_edit: "04/09/2026 - 02:55 AM"
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1" peek="0">
+                            <div class="nds-swiper" style="--max-slides:4; --mid-slides:3; --min-slides:1">
                                 <div class="nds-swiper-wrapper">
                                     <div class="nds-swiper-slide">
                                         <div class="nds-card nds-stroke nds-shadow">
@@ -495,7 +495,7 @@ last_edit: "04/09/2026 - 02:55 AM"
                                 </div>
                                 <div class="nds-expandable-content">
                                 <code class="lang-html code">
-&lt;div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1" peek="0"&gt;
+&lt;div class="nds-swiper" style="--max-slides:4; --mid-slides:3; --min-slides:1"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
@@ -621,7 +621,7 @@ last_edit: "04/09/2026 - 02:55 AM"
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
+                            <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                                 <div class="nds-swiper-wrapper">
                                     <div class="nds-swiper-slide">
                                         <div class="nds-card nds-stroke nds-shadow">
@@ -704,7 +704,7 @@ last_edit: "04/09/2026 - 02:55 AM"
                                 </div>
                                 <div class="nds-expandable-content">
                                 <code class="lang-html code">
-&lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
+&lt;div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
@@ -804,7 +804,7 @@ last_edit: "04/09/2026 - 02:55 AM"
                             <i class="hgi hgi-stroke hgi-layers-01"></i>
                             <span class="nds-label">Responsive Breakpoints</span>
                         </span>
-                        <p class="nds-item-desc">Three-tier slide counts (<code class="nds-inline-code lang-html">slides-max</code>, <code class="nds-inline-code lang-html">slides-mid</code>, <code class="nds-inline-code lang-html">slides-min</code>) adjust the visible slides at 960px and 600px breakpoints.</p>
+                        <p class="nds-item-desc">Three-tier slide counts (<code class="nds-inline-code lang-html">--max-slides</code>, <code class="nds-inline-code lang-html">--mid-slides</code>, <code class="nds-inline-code lang-html">--min-slides</code>) adjust the visible slides at 960px and 600px breakpoints. CSS reads them, so the row is the right size before any JS runs.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -825,7 +825,7 @@ last_edit: "04/09/2026 - 02:55 AM"
                             <i class="hgi hgi-stroke hgi-eye"></i>
                             <span class="nds-label">Peek Preview</span>
                         </span>
-                        <p class="nds-item-desc">Set a <code class="nds-inline-code lang-html">peek</code> value in pixels to reveal partial adjacent slides, signaling that more content is available.</p>
+                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--peek</code> to a length to reveal part of the next slide, which signals that more content is available.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -863,10 +863,10 @@ last_edit: "04/09/2026 - 02:55 AM"
                     <li>Use <code class="nds-inline-code lang-html">data-src</code> and <code class="nds-inline-code lang-html">data-srcset</code> for <strong>lazy loading</strong> images rather than standard <code class="nds-inline-code lang-html">src</code> to reduce initial page weight</li>
                     <li>Do not use swiper for content that should be visible all at once. Use <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">Grid</a> for static card layouts or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switchable content panels</li>
                     <li>Do not place interactive form controls inside slides. Keep slide content to display elements: text, images, cards, and links</li>
-                    <li>Add <code class="nds-inline-code lang-html">peek="40"</code> when the slide count exceeds the visible slots, giving users a visual cue that more content is available</li>
+                    <li>Add <code class="nds-inline-code lang-html">--peek:40px</code> when the slide count exceeds the visible slots. It gives the reader a visual cue that more content is available</li>
                     <li>Always include <code class="nds-inline-code lang-html">hidden</code> on <code class="nds-inline-code lang-html">.nds-swiper-navigation</code>: the navigation row ships hidden and JS reveals it only when there are multiple pages. The swiper container itself does not use <code class="nds-inline-code lang-html">hidden</code>; a CSS <code class="nds-inline-code lang-html">::after</code> placeholder on <code class="nds-inline-code lang-html">.nds-swiper:not([data-nds-swiper-initialized])</code> reserves the navigation row height before init</li>
                     <li>Keep slide heights consistent within a swiper. Mix uneven heights and the tallest slide will define the row height for all others</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-middle</code> for a wide strip the reader scans rather than reads, such as a partner or logo row, where arrows beside the slides suit the shape better than a row underneath. It applies from 601px up, so add <code class="nds-inline-code lang-html">nds-center</code> to the navigation row as well and the mobile fallback keeps the same left-dots-right arrangement</li>
+                    <li>Use <code class="nds-inline-code lang-html">nds-middle</code> for a wide strip the reader scans rather than reads, such as a partner or logo row, where arrows beside the slides suit the shape better than a row underneath. It applies from 600px up, so add <code class="nds-inline-code lang-html">nds-center</code> to the navigation row as well and the mobile fallback keeps the same left-dots-right arrangement</li>
                     <li>The <code class="nds-inline-code lang-html">nds-middle</code> arrows sit over the left and right edges of the slide. Use it for textless slides, or keep the slide text centred so the arrows stay clear of the words. Slide text that runs to the edges will be crossed</li>
                     <li>Always include <code class="nds-inline-code lang-html">aria-label</code> on navigation buttons with clear directional text like "Previous slide" and "Next slide"</li>
                     <li>For <strong>full-width section breakouts</strong>, place the swiper inside a <code class="nds-inline-code lang-html">nds-section-body nds-max-width</code> container so it can span beyond the content padding</li>
@@ -881,7 +881,7 @@ last_edit: "04/09/2026 - 02:55 AM"
                         <tr><td><code class="nds-inline-code lang-html">nds-hero</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Full-width single-slide hero mode with overlay navigation absolutely positioned at the bottom</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Adjusts pagination bullets and navigation contrast for dark or image backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-navigation</code></td><td>Centers the bullets and pushes the prev/next buttons to the outer edges of the navigation row</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-middle</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Moves the prev/next buttons out of the navigation row to flank the slides at their vertical centre, and hides the bullets. The swiper gains an inline gutter one button wide at each end, so the arrows sit beside the slides rather than over them. Tablet and up only (601px): below that every rule drops and the normal navigation row returns, bullets included, so pair it with <code class="nds-inline-code lang-html">nds-center</code> on the row to choose the mobile arrangement. On <code class="nds-inline-code lang-html">nds-hero</code> it adapts: no gutter is reserved, since the hero is full-bleed and insetting the image would be wrong, so the arrows overlay the slide at the viewport padding, and the bullets stay pinned bottom-centre. The arrows then sit over the slide edges, so use this with textless slides, or centre the slide text to keep it clear of them</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-middle</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Moves the prev/next buttons out of the navigation row to flank the slides at their vertical centre, and hides the bullets. The swiper gains an inline gutter one button wide at each end, so the arrows sit beside the slides rather than over them. Tablet and up only (600px): below that every rule drops and the normal navigation row returns, bullets included, so pair it with <code class="nds-inline-code lang-html">nds-center</code> on the row to choose the mobile arrangement. On <code class="nds-inline-code lang-html">nds-hero</code> it adapts: no gutter is reserved, since the hero is full-bleed and insetting the image would be wrong, so the arrows overlay the slide at the viewport padding, and the bullets stay pinned bottom-centre. The arrows then sit over the slide edges, so use this with textless slides, or centre the slide text to keep it clear of them</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Large pagination bullets (16px). Default size when no modifier is applied</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Medium pagination bullets (12px)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Small pagination bullets (8px)</td></tr>
@@ -894,14 +894,10 @@ last_edit: "04/09/2026 - 02:55 AM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">slides-max="3"</code></td><td>Slides visible at large breakpoint (viewport >= 960px). Default: 1. The three counts also size the row from the moment the main CSS applies, before any JS, so the skeleton row never shows a different count than the final one</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">slides-mid="2"</code></td><td>Slides visible at medium breakpoint (600px to 959px). Default: 1</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">slides-min="1"</code></td><td>Slides visible at small breakpoint (viewport < 600px). Default: 1</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">peek="40"</code></td><td>Pixels of adjacent slides to reveal. Only applies when there are multiple pages. Default: 0. The pre-init row uses it too where the browser can read an attribute as a length (typed <code class="nds-inline-code lang-css">attr()</code>, Chrome 133 and newer); elsewhere the peek arrives with the preset</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Place on <code class="nds-inline-code lang-html">.nds-swiper-navigation</code> (not the container). JS re-decides visibility on every breakpoint change: removes <code class="nds-inline-code lang-html">hidden</code> when there are multiple pages, restores it when there is only one</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-nds-swiper-initialized</code></td><td>Set by JS after init completes (<code class="nds-inline-code lang-html">true</code>). Used as a CSS hook (the pre-init <code class="nds-inline-code lang-html">::after</code> height reservation is scoped to <code class="nds-inline-code lang-html">:not([data-nds-swiper-initialized])</code>) and as a guard to skip already-initialized swipers during <code class="nds-inline-code lang-js">NDS.Swiper.init()</code>. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-swiper-peek</code></td><td>Toggled on <code class="nds-inline-code lang-html">.nds-swiper</code> by JS when peek is active (peek &gt; 0 and multiple pages exist). Activates the CSS <code class="nds-inline-code lang-html">calc(var(--peek) + var(--swiper-gap))</code> peek-width formula in <code class="nds-inline-code lang-html">_swiper.scss</code>. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-swiper-preset</code></td><td>Set by the loader before the reveal on every card swiper that has not initialized yet, after it writes <code class="nds-inline-code lang-html">--slides</code> and the peek state from <code class="nds-inline-code lang-html">slides-max/mid/min</code> and <code class="nds-inline-code lang-html">peek</code>. The skeleton row then shows the same slides per view that init will use, so init moves nothing. Removed by <code class="nds-inline-code lang-html">destroy()</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-swiper-peek</code></td><td>Toggled on <code class="nds-inline-code lang-html">.nds-swiper</code> by JS when peek is active (peek &gt; 0 and more than one page). Before JS runs, CSS reserves the peek from <code class="nds-inline-code lang-html">--peek</code> alone. JS then counts the pages, at the loader preset and again at init. A deck left without this attribute gets a zero reserve, so a deck that fits one page shows no dead space at its end. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-swiper-preset</code></td><td>Set by the loader before the reveal on every card swiper that has not initialized yet, after it writes <code class="nds-inline-code lang-html">--slides</code> and the peek state from <code class="nds-inline-code lang-html">--max-slides</code>, <code class="nds-inline-code lang-html">--mid-slides</code>, <code class="nds-inline-code lang-html">--min-slides</code> and <code class="nds-inline-code lang-html">--peek</code>. The skeleton row then shows the same slides per view that init will use, so init moves nothing. Removed by <code class="nds-inline-code lang-html">destroy()</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-swiper-single</code></td><td>Set by the loader with <code class="nds-inline-code lang-html">data-swiper-preset</code> when the slides fit one page at the current breakpoint (the same page count init uses). Drops the pre-init <code class="nds-inline-code lang-html">::after</code> nav reservation before the reveal, because init keeps the nav hidden on a single page and the row would otherwise vanish at init. Removed by <code class="nds-inline-code lang-js">destroy()</code>.</td></tr>
                     </tbody>
                 </table>
@@ -913,7 +909,11 @@ last_edit: "04/09/2026 - 02:55 AM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between slides. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> a non-peek swiper defaults it to the padding instead, so the next page never shows in the padding on a wide desktop. Set it smaller than the padding and that edge shows again</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--max-slides</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Slides per view at the large breakpoint (viewport 960px and wider). Set it inline on <code class="nds-inline-code lang-html">.nds-swiper</code> so JS can read it too. CSS sizes the row from it the moment the main CSS applies, before any JS, in every browser</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--mid-slides</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Slides per view at the medium breakpoint (600px to 959px)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--min-slides</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Slides per view at the small breakpoint (narrower than 600px)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--peek</code></td><td>unset</td><td>Length of the next slide left showing at the end of each page, for example <code class="nds-inline-code lang-html">40px</code>. Leave it unset for no peek. JS drops the reserve when the deck fits one page</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between slides. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> every non-hero swiper defaults it to the padding instead, peek or not, so the next page never shows in the padding on a wide desktop. Set it smaller than the padding and that edge shows again. Set <code class="nds-inline-code lang-html">--gap</code> inline and JS never touches it</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--padding</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Inline padding applied to the scroll wrapper. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> the default shifts to <code class="nds-inline-code lang-html">var(--nds-viewport-padding)</code> so the swiper can bleed to the viewport edge while its content stays aligned</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-200)</code></td><td>Inactive pagination bullet color (light theme); shifts to neutral-700 in dark mode and to translucent white on hero/on-color backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-default-hovered</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-300)</code></td><td>Inactive bullet hover color (one step from default: neutral-300 light, neutral-600 dark)</td></tr>
@@ -922,6 +922,7 @@ last_edit: "04/09/2026 - 02:55 AM"
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-border</code></td><td><code class="nds-inline-code lang-html">transparent</code></td><td>Border color around the pagination bullets</td></tr>
                     </tbody>
                 </table>
+                <p>The bare attributes <code class="nds-inline-code lang-html">slides-max</code>, <code class="nds-inline-code lang-html">slides-mid</code>, <code class="nds-inline-code lang-html">slides-min</code> and <code class="nds-inline-code lang-html">peek</code> still work but are deprecated. Only JS can read them, so a row authored that way keeps its old size until the loader preset runs. Use the inline properties above.</p>
             </div>
 
             <div class="nds-block nds-prose">

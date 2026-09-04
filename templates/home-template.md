@@ -190,7 +190,7 @@ direction: ltr
                 </div>
                 <div class="nds-section-body nds-max-width">
                     <div class="nds-block">
-                        <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
+                        <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke">
@@ -401,7 +401,7 @@ direction: ltr
                 </div>
                 <div class="nds-section-body">
                     <div class="nds-block">
-                        <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="0">
+                        <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1">
                             <div class="nds-swiper-wrapper">
                         <div class="nds-swiper-slide">
                             <div class="nds-card nds-stroke">
@@ -594,7 +594,7 @@ direction: ltr
                 </div>
                 <div class="nds-section-body">
                     <div class="nds-block">
-                        <div class="nds-swiper nds-middle" slides-max="8" slides-mid="4" slides-min="2" peek="0">
+                        <div class="nds-swiper nds-middle" style="--max-slides:8; --mid-slides:4; --min-slides:2">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-center">

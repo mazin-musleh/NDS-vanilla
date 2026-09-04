@@ -816,11 +816,14 @@
                     : matchMedia(NDS.breakpoints.tablet).matches ? 'mid' : 'min';
                 const tracks = [];
                 document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])').forEach(s => {
-                    const per = parseInt(s.getAttribute('slides-' + tier)) || 1;
-                    const peek = parseInt(s.getAttribute('peek')) || 0;
+                    // Inline knob first (CSS already sized the row from it), the
+                    // deprecated bare attribute second — only JS can read that one.
+                    const knob = (prop, attr) => parseInt(s.style.getPropertyValue(prop)) || parseInt(s.getAttribute(attr)) || 0;
+                    const per = knob(`--${tier}-slides`, 'slides-' + tier) || 1;
+                    const peek = knob('--peek', 'peek');
                     const pages = Math.ceil(s.querySelectorAll('.nds-swiper-slide').length / per);
                     s.style.setProperty('--slides', per);
-                    s.style.setProperty('--peek', `${peek}px`);
+                    if (peek && s.hasAttribute('peek')) s.style.setProperty('--peek', `${peek}px`);
                     s.toggleAttribute('data-swiper-peek', peek > 0 && pages > 1);
                     // One page: init keeps the nav hidden, so its reserve (_swiper.scss) goes now, not then.
                     s.toggleAttribute('data-swiper-single', pages <= 1);
