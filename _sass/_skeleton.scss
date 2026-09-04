@@ -125,11 +125,13 @@ html {
        earlier by the loader's data-swiper-preset: it writes --slides and the
        peek state pre-reveal (presetSwipers in nds-loader.js), so main's
        formula sizes the row exactly as init will and init moves nothing.
-       The pin below is the no-JS fallback. */
-    .nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized], [data-swiper-preset]) {
+       The pin below is the no-JS fallback. :where()-wrapped: main reads the
+       slides per view from the tier attributes (_swiper.scss), so its formula
+       must beat this pin the moment main applies — before the preset lands. */
+    :where(.nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized], [data-swiper-preset])) {
         overflow: hidden;
 
-        .nds-swiper-slide {
+        :where(.nds-swiper-slide) {
             // Mirrors the card's own max-width chain (cards size as 100% OF
             // the slide, so they can't size it — circular): consumer card
             // width knobs propagate to the pre-init slide automatically.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "03/09/2026 - 11:08 PM"
+last_edit: "04/09/2026 - 02:55 AM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -894,10 +894,10 @@ last_edit: "03/09/2026 - 11:08 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">slides-max="3"</code></td><td>Slides visible at large breakpoint (viewport >= 960px). Default: 1</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">slides-max="3"</code></td><td>Slides visible at large breakpoint (viewport >= 960px). Default: 1. The three counts also size the row from the moment the main CSS applies, before any JS, so the skeleton row never shows a different count than the final one</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">slides-mid="2"</code></td><td>Slides visible at medium breakpoint (600px to 959px). Default: 1</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">slides-min="1"</code></td><td>Slides visible at small breakpoint (viewport < 600px). Default: 1</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">peek="40"</code></td><td>Pixels of adjacent slides to reveal. Only applies when there are multiple pages. Default: 0</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">peek="40"</code></td><td>Pixels of adjacent slides to reveal. Only applies when there are multiple pages. Default: 0. The pre-init row uses it too where the browser can read an attribute as a length (typed <code class="nds-inline-code lang-css">attr()</code>, Chrome 133 and newer); elsewhere the peek arrives with the preset</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Place on <code class="nds-inline-code lang-html">.nds-swiper-navigation</code> (not the container). JS re-decides visibility on every breakpoint change: removes <code class="nds-inline-code lang-html">hidden</code> when there are multiple pages, restores it when there is only one</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-nds-swiper-initialized</code></td><td>Set by JS after init completes (<code class="nds-inline-code lang-html">true</code>). Used as a CSS hook (the pre-init <code class="nds-inline-code lang-html">::after</code> height reservation is scoped to <code class="nds-inline-code lang-html">:not([data-nds-swiper-initialized])</code>) and as a guard to skip already-initialized swipers during <code class="nds-inline-code lang-js">NDS.Swiper.init()</code>. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-swiper-peek</code></td><td>Toggled on <code class="nds-inline-code lang-html">.nds-swiper</code> by JS when peek is active (peek &gt; 0 and multiple pages exist). Activates the CSS <code class="nds-inline-code lang-html">calc(var(--peek) + var(--swiper-gap))</code> peek-width formula in <code class="nds-inline-code lang-html">_swiper.scss</code>. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
