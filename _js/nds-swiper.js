@@ -40,12 +40,6 @@
  *     on the wrapper. A "first interaction" gate that listens for scroll in capture
  *     mode counts it — listen without capture, or ignore element scrolls.
  */
-/**
- * NDS Swiper Component - CSS Scroll-Snap First
- * Minimal foundation with native scroll behavior
- * Uses CSS scroll-snap for positioning, JS for navigation/pagination sync
- */
-
 (function () {
     'use strict';
 
@@ -85,13 +79,26 @@
         document.addEventListener('keydown', (e) => {
             if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' &&
                 e.key !== 'Home' && e.key !== 'End') return;
-            for (const inst of _activeSwipers) {
-                const isFocused = inst.container.contains(document.activeElement);
-                if (!isFocused && !inst._isHovered) continue;
-                inst._handleKeydown(e);
-                return;
-            }
+            const inst = _ownerOf(document.activeElement);
+            if (inst) inst._handleKeydown(e);
         });
+    }
+
+    // The INNERMOST swiper wins. A container contains a nested swiper's focused
+    // slide, and :hover matches every ancestor too, so taking the first Set hit
+    // (= document order) would always hand the event to the outer deck. Same
+    // ownership question the constructor answers.
+    function _ownerOf(active) {
+        for (let el = active && active.closest('.nds-swiper'); el;
+             el = el.parentElement && el.parentElement.closest('.nds-swiper')) {
+            if (_activeSwipers.has(el._ndsSwiper)) return el._ndsSwiper;
+        }
+        // Nothing focused inside a swiper — fall back to the innermost hovered one.
+        let best = null;
+        for (const s of _activeSwipers) {
+            if (s.container.matches(':hover') && (!best || best.container.contains(s.container))) best = s;
+        }
+        return best;
     }
 
     // slidesPerView only changes when the viewport crosses one of
@@ -127,11 +134,27 @@
         constructor(container) {
             this.container = container;
             this.wrapper = container.querySelector('.nds-swiper-wrapper');
-            this.slides = Array.from(container.querySelectorAll('.nds-swiper-slide'));
-            this.pagination = container.querySelector('.nds-swiper-pagination');
-            this.navigation = container.querySelector('.nds-swiper-navigation');
-            this.prevBtn = container.querySelector('.nds-prev');
-            this.nextBtn = container.querySelector('.nds-next');
+            // A slide holds arbitrary consumer content, so a swiper may nest inside
+            // one — and its parts sit EARLIER in document order than ours, because
+            // nav and pagination follow the wrapper. An unguarded querySelector then
+            // hands us the nested swiper's controls. Slides are direct wrapper
+            // children by contract (flex row; setupLoop inserts clones as siblings),
+            // so :scope > is exact there; the rest are ownership-checked.
+            // Reject only what a swiper BELOW us owns — never test for `=== container`,
+            // which would strand a create() call on an element carrying no .nds-swiper.
+            const nested = (el) => {
+                const owner = el.closest('.nds-swiper');
+                return !!owner && owner !== container && container.contains(owner);
+            };
+            const own = (sel) =>
+                Array.from(container.querySelectorAll(sel)).find(el => !nested(el)) || null;
+            this.slides = this.wrapper
+                ? Array.from(this.wrapper.querySelectorAll(':scope > .nds-swiper-slide'))
+                : [];
+            this.pagination = own('.nds-swiper-pagination');
+            this.navigation = own('.nds-swiper-navigation');
+            this.prevBtn = own('.nds-prev');
+            this.nextBtn = own('.nds-next');
 
             this.isHero = container.classList.contains('nds-hero');
             this._cachedGap = null;
@@ -189,6 +212,21 @@
 
         get maxIndex() {
             return Math.max(0, this.slides.length - this.slidesPerView);
+        }
+
+        // Real-slide index of the current position — a rest on a clone maps to its
+        // twin. One source for the three sites that must agree on it: where the loop
+        // jumps, which bullet reads active, and where destroy() lands the row.
+        get _realIndex() {
+            const n = this._real;
+            return (((this.currentIndex - this._head) % n) + n) % n;
+        }
+
+        // Pages at the current slidesPerView. Decides nav visibility in
+        // updateSlidesPerView and pagination + button visibility in setupPagination —
+        // two halves of the same chrome, so they read one value.
+        get _pageCount() {
+            return Math.ceil(this._real / this.slidesPerView);
         }
 
         init() {
@@ -254,13 +292,13 @@
                     if (NDS.isRTL) {
                         // WebKit RTL: keep scroll-behavior: auto through the entire
                         // update so Safari/WebKit doesn't jump scroll on reflow.
-                        this.wrapper.style.scrollBehavior = 'auto';
-                        this.slides.forEach(s => { if (s.hasAttribute('hidden')) s.removeAttribute('hidden'); });
-                        this.wrapper.scrollLeft = 0;
-                        void this.wrapper.offsetHeight;
-                        this.wrapper.scrollLeft = 0;
-                        void this.wrapper.offsetHeight;
-                        this.wrapper.style.scrollBehavior = '';
+                        this._instant(() => {
+                            this.slides.forEach(s => { if (s.hasAttribute('hidden')) s.removeAttribute('hidden'); });
+                            this.wrapper.scrollLeft = 0;
+                            void this.wrapper.offsetHeight;
+                            this.wrapper.scrollLeft = 0;
+                            void this.wrapper.offsetHeight;
+                        });
                     } else {
                         this.slides.forEach(s => { if (s.hasAttribute('hidden')) s.removeAttribute('hidden'); });
                     }
@@ -289,7 +327,7 @@
                 this.container.style.setProperty('--slides', this.slidesPerView);
             }
 
-            const pageCount = Math.ceil(this._real / this.slidesPerView);
+            const pageCount = this._pageCount;
 
             // Nav visibility rides the served [hidden] FOUC guard, re-decided on
             // every breakpoint pass. Inline display can't do this job — the
@@ -412,6 +450,18 @@
             this._goToFull(this._head + index);
         }
 
+        // scrollTo/scrollBy's 'auto' keyword — and passing no keyword at all — defers
+        // to the element's computed scroll-behavior, which _swiper.scss sets to smooth
+        // on the wrapper. Toggling it inline is the only way to force a real instant
+        // scroll, and that holds on every engine, not just old Safari. Every instant
+        // path here routes through this.
+        _instant(scroll) {
+            const prev = this.wrapper.style.scrollBehavior;
+            this.wrapper.style.scrollBehavior = 'auto';
+            scroll();
+            this.wrapper.style.scrollBehavior = prev;
+        }
+
         _goToFull(index) {
             if (this._loop) {
                 // Keep the animation inside the clone budget: a target past either
@@ -434,10 +484,9 @@
                 ? this.wrapper.scrollWidth - this.wrapper.clientWidth
                 : Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
-            this.wrapper.scrollTo({
-                left: NDS.isRTL ? -offset : offset,
-                behavior: _reduceMotion() ? 'auto' : 'smooth'
-            });
+            const left = NDS.isRTL ? -offset : offset;
+            if (_reduceMotion()) this._instant(() => this.wrapper.scrollTo({ left }));
+            else this.wrapper.scrollTo({ left, behavior: 'smooth' });
         }
 
         // ==============================================
@@ -487,21 +536,17 @@
             this.detectCurrentSlide();
             const n = this._real, c = this._head, i = this.currentIndex;
             if (i >= c && i < c + n) return;
-            this._jumpTo(c + (((i - c) % n) + n) % n);
+            this._jumpTo(c + this._realIndex);
             this.detectCurrentSlide();
             this.updateState();
         }
 
-        // Instant reposition to a full-list index. Inline scroll-behavior: auto is
-        // what makes it instant on Safari < 15.4 too (see slideTo).
+        // Instant reposition to a full-list index.
         _jumpTo(index) {
             const target = this.slides[index];
             if (!target) return;
             const offset = Math.abs(target.offsetLeft - this.slides[0].offsetLeft);
-            const prev = this.wrapper.style.scrollBehavior;
-            this.wrapper.style.scrollBehavior = 'auto';
-            this.wrapper.scrollLeft = NDS.isRTL ? -offset : offset;
-            this.wrapper.style.scrollBehavior = prev;
+            this._instant(() => { this.wrapper.scrollLeft = NDS.isRTL ? -offset : offset; });
         }
 
         // ==============================================
@@ -539,7 +584,7 @@
         setupPagination() {
             if (!this.pagination) return;
 
-            const pageCount = Math.ceil(this._real / this.slidesPerView);
+            const pageCount = this._pageCount;
 
             const hidden = pageCount <= 1;
             const display = hidden ? 'none' : '';
@@ -581,9 +626,9 @@
 
             const bullets = this.pagination.querySelectorAll('.nds-bullet');
             const n = this._real;
-            const maxIndex = Math.max(0, n - this.slidesPerView);
-            // Real index: a rest on a clone maps to its twin.
-            const current = (((this.currentIndex - this._head) % n) + n) % n;
+            // Real-slide space, unlike the full-list `maxIndex` getter.
+            const realMaxIndex = Math.max(0, n - this.slidesPerView);
+            const current = this._realIndex;
 
             // Map the real index to page based on proximity to page start indices.
             // For 6 slides, 4 per view: page 0 starts at index 0, page 1 starts at index 2.
@@ -591,7 +636,7 @@
             let closestDistance = Infinity;
 
             for (let i = 0; i < bullets.length; i++) {
-                const pageStartIndex = Math.min(i * this.slidesPerView, maxIndex);
+                const pageStartIndex = Math.min(i * this.slidesPerView, realMaxIndex);
                 const distance = Math.abs(current - pageStartIndex);
 
                 if (distance < closestDistance) {
@@ -613,34 +658,32 @@
         // ==============================================
 
         setupKeyboard() {
-            if (!this.container.hasAttribute('tabindex')) {
-                this.container.setAttribute('tabindex', '0');
-            }
-
-            const { signal } = this.abortController;
-            this._isHovered = false;
-            this.container.addEventListener('mouseenter', () => this._isHovered = true, { signal });
-            this.container.addEventListener('mouseleave', () => this._isHovered = false, { signal });
+            // Only own the tabindex we add — destroy() must leave an author's alone.
+            this._ownsTabindex = !this.container.hasAttribute('tabindex');
+            if (this._ownsTabindex) this.container.setAttribute('tabindex', '0');
 
             _activeSwipers.add(this);
             ensureSharedKeydown();
         }
 
+        // The nav buttons listen for pointerdown, not click, so an arrow key has to
+        // call the move itself; the button's disabled state stays the boundary guard.
+        _arrowMove(dir) {
+            const btn = dir === 'next' ? this.nextBtn : this.prevBtn;
+            if (btn && !btn.disabled) this[dir]();
+        }
+
         _handleKeydown(e) {
             const rtl = NDS.isRTL;
             switch (e.key) {
-                case 'ArrowLeft': {
+                case 'ArrowLeft':
                     e.preventDefault();
-                    const leftBtn = rtl ? this.nextBtn : this.prevBtn;
-                    if (leftBtn && !leftBtn.disabled) leftBtn.click();
+                    this._arrowMove(rtl ? 'next' : 'prev');
                     break;
-                }
-                case 'ArrowRight': {
+                case 'ArrowRight':
                     e.preventDefault();
-                    const rightBtn = rtl ? this.prevBtn : this.nextBtn;
-                    if (rightBtn && !rightBtn.disabled) rightBtn.click();
+                    this._arrowMove(rtl ? 'prev' : 'next');
                     break;
-                }
                 case 'Home':
                     e.preventDefault();
                     this.goTo(0);
@@ -727,13 +770,7 @@
                 return;
             }
 
-            // Instant jump, cross-engine: the 'instant' behavior keyword degrades to
-            // the wrapper's CSS scroll-behavior (smooth) on Safari <15.4. Toggling
-            // scroll-behavior: auto inline forces a real instant scroll everywhere.
-            const prev = this.wrapper.style.scrollBehavior;
-            this.wrapper.style.scrollBehavior = 'auto';
-            this.wrapper.scrollBy({ left: scrollDelta });
-            this.wrapper.style.scrollBehavior = prev;
+            this._instant(() => this.wrapper.scrollBy({ left: scrollDelta }));
         }
 
         // ==============================================
@@ -745,12 +782,11 @@
         // throw. Re-initialize via `NDS.Swiper.create(el)` (constructs a fresh instance).
         destroy() {
             this.container.removeAttribute('data-nds-swiper-initialized');
-            this.container.removeAttribute('tabindex');
+            if (this._ownsTabindex) this.container.removeAttribute('tabindex');
 
             // Drop the clones and land on the real twin of the current slide.
             if (this._head) {
-                const n = this._real;
-                const real = (((this.currentIndex - this._head) % n) + n) % n;
+                const real = this._realIndex;
                 this.slides = this.slides.filter(s => !s.classList.contains('nds-swiper-clone') || (s.remove(), false));
                 this._head = 0;
                 this._jumpTo(real);
@@ -761,6 +797,7 @@
             this.container.removeAttribute('data-swiper-peek');
             this.container.removeAttribute('data-swiper-preset');
             this.container.removeAttribute('data-swiper-single');
+            NDS.State.clear(this.container); // at-start/at-end are a documented consumer hook
             ['--total', '--slides'].forEach(p => this.container.style.removeProperty(p));
             if (this._ownsPeek) this.container.style.removeProperty('--peek');
             if (!this._authorGap) this.container.style.removeProperty('--gap');
