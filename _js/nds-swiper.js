@@ -36,6 +36,9 @@
  *   - The markup is .nds-swiper-wrapper holding .nds-swiper-slide items, plus optional
  *     .nds-swiper-navigation (with .nds-prev / .nds-next) and .nds-swiper-pagination.
  *   - The instance lives on the element as el._ndsSwiper.
+ *   - A looping deck sets its track's scrollLeft at init, which fires one scroll event
+ *     on the wrapper. A "first interaction" gate that listens for scroll in capture
+ *     mode counts it — listen without capture, or ignore element scrolls.
  */
 /**
  * NDS Swiper Component - CSS Scroll-Snap First
