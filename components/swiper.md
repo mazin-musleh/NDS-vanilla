@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "04/09/2026 - 05:25 AM"
+last_edit: "04/09/2026 - 05:29 AM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -399,10 +399,6 @@ last_edit: "04/09/2026 - 05:25 AM"
                                 <span class="nds-label">Middle</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-oncolor", ".nds-swiper", "swiperOncolor"]'>
-                                <span class="nds-label">On-color</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -608,10 +604,6 @@ last_edit: "04/09/2026 - 05:25 AM"
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-middle", ".nds-swiper", "navMiddle"]'>
                                 <span class="nds-label">Middle</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-oncolor", ".nds-swiper", "swiperOncolor"]'>
-                                <span class="nds-label">On-color</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
