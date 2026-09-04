@@ -231,13 +231,11 @@
         }
     }
 
-    if (typeof window !== 'undefined') {
-        NDS.CityWeather = {
-            init: initializeCityWeather,
-            updateWeather,
-            updateCity
-        };
-    }
+    NDS.CityWeather = {
+        init: initializeCityWeather,
+        updateWeather,
+        updateCity
+    };
 
     // Note: Initialization now handled by nds-loader.js unified system
 

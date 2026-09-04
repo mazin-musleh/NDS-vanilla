@@ -2637,20 +2637,18 @@
         });
     }
 
-    if (typeof window !== 'undefined') {
-        window.NDS = window.NDS || {};
-        NDS.Editor = {
-            init: initializeEditors,
-            reinit: initializeEditors,
-            // Construction fails (missing required elements) → null, never a
-            // dud instance whose every method throws.
-            create: (element) => {
-                if (element.ndsEditor) return element.ndsEditor;
-                const inst = new NDSEditor(element);
-                return inst.valid ? inst : null;
-            },
-            destroy: (element) => element.ndsEditor?.destroy(),
-            _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline, consumed by scripts/editor-fixtures.mjs
-        };
-    }
+    window.NDS = window.NDS || {};
+    NDS.Editor = {
+        init: initializeEditors,
+        reinit: initializeEditors,
+        // Construction fails (missing required elements) → null, never a
+        // dud instance whose every method throws.
+        create: (element) => {
+            if (element.ndsEditor) return element.ndsEditor;
+            const inst = new NDSEditor(element);
+            return inst.valid ? inst : null;
+        },
+        destroy: (element) => element.ndsEditor?.destroy(),
+        _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline, consumed by scripts/editor-fixtures.mjs
+    };
 })();

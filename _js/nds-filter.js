@@ -1869,6 +1869,8 @@
                 fd.minInput.value = lo;
                 fd.maxInput.value = hi;
             }
+            // Soft dependency on NDS.Slider — same cross-bundle contract declared where
+            // the slider is built; without it the thumbs keep their last paint.
             if (NDS.Slider && NDS.Slider.reinit) NDS.Slider.reinit(fd.controlContainer);
             this.updateRangeCriteria(filterName);
         }

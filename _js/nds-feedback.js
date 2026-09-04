@@ -303,7 +303,5 @@
     };
 
     // Export to window
-    if (typeof window !== 'undefined') {
-        NDS.Feedback = NDSFeedback;
-    }
+    NDS.Feedback = NDSFeedback;
 })();

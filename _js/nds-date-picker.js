@@ -2592,16 +2592,14 @@
     // Assigned at module eval so the loader's lazy stub resolves; the loader then
     // calls init() itself. Not the critical tier — this ships in nds-extras.min.js,
     // injected after the reveal.
-    if (typeof window !== 'undefined') {
-        NDS.DatePicker = {
-            DatePickerCalendar,
-            CalendarConfig,
-            createHijriDate,
-            init: initializeCalendar,
-            reinit: initializeCalendar,
-            create: createInstance
-        };
-    }
+    NDS.DatePicker = {
+        DatePickerCalendar,
+        CalendarConfig,
+        createHijriDate,
+        init: initializeCalendar,
+        reinit: initializeCalendar,
+        create: createInstance
+    };
 
     // Note: Initialization now handled by nds-loader.js unified system
 

@@ -282,7 +282,5 @@
         reset
     };
 
-    if (typeof window !== 'undefined') {
-        NDS.CooldownButton = CooldownButton;
-    }
+    NDS.CooldownButton = CooldownButton;
 })();

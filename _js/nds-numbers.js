@@ -224,21 +224,19 @@
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
-    if (typeof window !== 'undefined') {
-        NDS.Numbers = {
-            format,
-            formatNumbers,
-            setupCounterAnimations,
-            init() {
-                formatNumbers();
-                setupCounterAnimations();
-            },
-            reinit() {
-                formatNumbers();
-                setupCounterAnimations();
-            }
-        };
-    }
+    NDS.Numbers = {
+        format,
+        formatNumbers,
+        setupCounterAnimations,
+        init() {
+            formatNumbers();
+            setupCounterAnimations();
+        },
+        reinit() {
+            formatNumbers();
+            setupCounterAnimations();
+        }
+    };
 
     // Note: Initialization now handled by nds-loader.js unified system
 })();

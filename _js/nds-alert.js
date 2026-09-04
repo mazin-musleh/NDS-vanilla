@@ -362,7 +362,5 @@
         },
     };
 
-    if (typeof window !== 'undefined') {
-        NDS.Alert = NDSAlert;
-    }
+    NDS.Alert = NDSAlert;
 })();

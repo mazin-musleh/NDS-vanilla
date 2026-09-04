@@ -245,14 +245,12 @@
         }
     }
 
-    if (typeof window !== 'undefined') {
-        NDS.TimeDate = {
-            init: initializeTimeDate,
-            getHijriDate,
-            updateDate,
-            updateClock
-        };
-    }
+    NDS.TimeDate = {
+        init: initializeTimeDate,
+        getHijriDate,
+        updateDate,
+        updateClock
+    };
 
     // Note: Initialization now handled by nds-loader.js unified system
 

@@ -329,13 +329,11 @@
         });
     }
 
-    if (typeof window !== 'undefined') {
-        window.NDS = window.NDS || {};
-        NDS.VoiceInput = {
-            init: init,
-            reinit: init,
-            isSupported: isSupported
-        };
-    }
+    window.NDS = window.NDS || {};
+    NDS.VoiceInput = {
+        init: init,
+        reinit: init,
+        isSupported: isSupported
+    };
 
 })();
