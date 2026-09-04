@@ -19,8 +19,9 @@
     --swiper-gap: var(--gap, var(--spacing-xl));
     --swiper-padding: var(--padding, 0px); // a length: it feeds calc() and max() below
     // Peek reserve = --peek + one gap. No --peek makes the calc invalid, so the
-    // reserve falls back to 0px.
-    --_peek-reserve: calc(var(--peek) + var(--swiper-gap));
+    // reserve falls back to 0px. --peek: 0px must mean no peek as well: the gap
+    // term is min(peek x 1000, gap), a full gap for any positive peek, 0 for none.
+    --_peek-reserve: calc(var(--peek) + min(var(--peek) * 1000, var(--swiper-gap)));
     --swiper-peek: var(--_peek-reserve, 0px);
 
     display: flex;
@@ -47,9 +48,11 @@
         // slide's edge on a wide desktop. Non-peek decks default the gap to the
         // padding — the value updatePeekStyles writes at one slide per view. A
         // peek deck keeps the token gap, since its next slide is meant to show:
-        // --_peek-gap is a length only while --peek exists, invalid otherwise.
-        // Plain var(), no max(): this reaches the slide's calc() (Safari).
-        --_peek-gap: calc(var(--peek) * 0 + var(--spacing-xl));
+        // --_peek-gap is the token gap for any positive --peek (the same
+        // min(peek x 1000, ...) step as the reserve), the padding for 0px, and
+        // invalid when --peek is unset, so the padding fallback applies.
+        // ponytail: a custom --padding below the token gap lands on the token gap.
+        --_peek-gap: calc(var(--swiper-padding) - min(var(--peek) * 1000, var(--swiper-padding) - var(--spacing-xl)));
         &:not(.nds-hero) {
             --swiper-gap: var(--gap, var(--_peek-gap, var(--swiper-padding)));
         }
