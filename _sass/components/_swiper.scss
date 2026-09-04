@@ -456,7 +456,10 @@
 // at init, so the loader's data-swiper-single (same page count, written
 // pre-reveal) drops the reserve ahead of it and nothing shrinks.
 // Hero swipers are excluded — their nav overlays the slides.
-.nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized], [data-swiper-single])::after {
+// One :not(), not a chain: chaining stacks class-level specificity, which tied
+// this against .nds-middle's content:none below and won on source order. At one
+// level it also yields to .nds-loading's content:none — a skeleton reserves nothing.
+.nds-swiper:not(.nds-hero, [data-nds-swiper-initialized], [data-swiper-single])::after {
     content: "";
     min-height: var(--btn-size, 32px);
 }
