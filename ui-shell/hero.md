@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.10.0"
-last_edit: "22/08/2026 - 05:38 PM"
+updated: "1.11.x"
+last_edit: "04/09/2026 - 05:35 AM"
 ---
 
 <!-- Sub Hero -->
@@ -542,9 +542,9 @@ last_edit: "22/08/2026 - 05:38 PM"
     &lt;/div&gt;
     &lt;div class="nds-swiper-navigation" hidden&gt;
       &lt;div class="nds-swiper-buttons"&gt;
-        &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" type="button"
+        &lt;button class="nds-btn nds-subtle nds-icon-only nds-prev" type="button"
             aria-label="Previous slide"&gt;&lt;/button&gt;
-        &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" type="button"
+        &lt;button class="nds-btn nds-subtle nds-icon-only nds-next" type="button"
             aria-label="Next slide"&gt;&lt;/button&gt;
       &lt;/div&gt;
       &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;

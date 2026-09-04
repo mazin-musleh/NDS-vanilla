@@ -153,9 +153,9 @@
 // ==============================================
 // NAVIGATION BUTTONS
 // Arrow glyph + JS hook both come from .nds-prev / .nds-next.
-// They can sit anywhere inside .nds-swiper. Size, shape, and on-color
-// treatment are the consumer's job — apply standard button modifiers
-// (.nds-icon-only, .nds-md/.nds-sm, .nds-oncolor) directly on the button.
+// They can sit anywhere inside .nds-swiper. Size and shape are the consumer's
+// job — apply standard button modifiers (.nds-icon-only, .nds-md/.nds-sm)
+// directly on the button. On-color comes from .nds-oncolor on the swiper.
 // ==============================================
 
 .nds-swiper :is(.nds-prev, .nds-next) {
@@ -269,6 +269,23 @@
         --swiper-bullet-active: var(--swiper-bullet-background-active-oncolor);
         --swiper-bullet-active-hovered: var(--swiper-bullet-background-active-hovered-oncolor);
     }
+}
+
+// The arrows are buttons, and a button only matches .nds-btn.nds-oncolor on
+// itself, so the root class never reached them. Re-state the shared subtle
+// wash here, the same way content-switcher does for its tabs.
+// ponytail: subtle is the canonical arrow variant; a primary/neutral arrow
+// still adds nds-oncolor on the button itself.
+.nds-swiper.nds-oncolor :is(.nds-prev, .nds-next) {
+    --btn-bg: transparent;
+    --btn-bg-hover: var(--button-background-transparent-hovered);
+    --btn-bg-active: var(--button-background-transparent-pressed);
+    --btn-bg-selected: var(--button-background-transparent-selected);
+    --btn-bg-disabled: transparent;
+    --btn-color: var(--button-label-transparent-default-oncolor);
+    --btn-color-disabled: var(--text-default-oncolor-disabled);
+    --btn-loading-color: var(--text-oncolor-primary);
+    --btn-loading-track: var(--colors-alpha-white-20);
 }
 
 // ==============================================

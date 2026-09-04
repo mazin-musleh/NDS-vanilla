@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "04/09/2026 - 05:29 AM"
+last_edit: "04/09/2026 - 05:35 AM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -116,8 +116,8 @@ last_edit: "04/09/2026 - 05:29 AM"
                                 </div>
                                 <div class="nds-swiper-navigation" hidden>
                                     <div class="nds-swiper-buttons">
-                                        <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"></button>
-                                        <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"></button>
+                                        <button class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"></button>
+                                        <button class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"></button>
                                     </div>
                                     <div class="nds-swiper-pagination nds-lg"></div>
                                 </div>
@@ -187,8 +187,8 @@ last_edit: "04/09/2026 - 05:29 AM"
     &lt;/div&gt;
     &lt;div class="nds-swiper-navigation" hidden&gt;
         &lt;div class="nds-swiper-buttons"&gt;
-            &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
         &lt;/div&gt;
         &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
     &lt;/div&gt;
@@ -283,8 +283,8 @@ last_edit: "04/09/2026 - 05:29 AM"
                                 </div>
                                 <div class="nds-swiper-navigation" hidden>
                                     <div class="nds-swiper-buttons">
-                                        <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"></button>
-                                        <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"></button>
+                                        <button class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"></button>
+                                        <button class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"></button>
                                     </div>
                                     <div class="nds-swiper-pagination nds-lg"></div>
                                 </div>
@@ -338,8 +338,8 @@ last_edit: "04/09/2026 - 05:29 AM"
     &lt;/div&gt;
     &lt;div class="nds-swiper-navigation" hidden&gt;
         &lt;div class="nds-swiper-buttons"&gt;
-            &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
         &lt;/div&gt;
         &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
     &lt;/div&gt;
@@ -871,7 +871,7 @@ last_edit: "04/09/2026 - 05:29 AM"
                     <thead><tr><th>Class</th><th>Applied to</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-hero</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Full-width single-slide hero mode with overlay navigation absolutely positioned at the bottom</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Adjusts pagination bullets and navigation contrast for dark or image backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Adjusts the bullets, the section title and the arrows for dark or image backgrounds. The arrows take the subtle on-color wash. A primary or neutral arrow still adds <code class="nds-inline-code lang-html">nds-oncolor</code> on the button itself</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-navigation</code></td><td>Centers the bullets and pushes the prev/next buttons to the outer edges of the navigation row</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-middle</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Moves the prev/next buttons out of the navigation row to flank the slides at their vertical centre, and hides the bullets. The swiper gains an inline gutter one button wide at each end, so the arrows sit beside the slides rather than over them. Tablet and up only (600px): below that every rule drops and the normal navigation row returns, bullets included, so pair it with <code class="nds-inline-code lang-html">nds-center</code> on the row to choose the mobile arrangement. On <code class="nds-inline-code lang-html">nds-hero</code> it adapts: no gutter is reserved, since the hero is full-bleed and insetting the image would be wrong, so the arrows overlay the slide at the viewport padding, and the bullets stay pinned bottom-centre. The arrows then sit over the slide edges, so use this with textless slides, or centre the slide text to keep it clear of them</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Large pagination bullets (16px). Default size when no modifier is applied</td></tr>
