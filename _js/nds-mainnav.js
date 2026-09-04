@@ -245,7 +245,6 @@
 
         check() {
             if (!DOM.primary) return;
-            fitShiftAll();
 
             if (state.isMinimal && !hasState(DOM.collapse, 'open')) {
                 removeState(DOM.primary, 'has-more', 'at-start', 'at-end');
@@ -325,10 +324,6 @@
     // ==============================================
     function removeCollapseHidden() {
         DOM.collapse?.removeAttribute('hidden');
-        // Same for the nav's dropdown menus: markup ships [hidden] to skip
-        // pre-init layout, then CSS owns the closed state from here on.
-        DOM.nav?.querySelectorAll('.nds-dropdown .nds-dropdown-menu[hidden]')
-            .forEach(m => m.removeAttribute('hidden'));
     }
 
     function updateBodyClass() {
@@ -513,28 +508,6 @@
     // pixels from the inner viewport edge (i.e. the edge of the visible content
     // area, not the scrollbar area).
     const FIT_SHIFT_PAD = 16;
-    // Batched: clear, read every rect, then write — one layout for the whole set.
-    function fitShift(menus) {
-        menus.forEach((m) => m.style.removeProperty('transform'));
-        // Use the inner viewport (excludes the vertical scrollbar) for bounds.
-        // window.innerWidth includes the scrollbar; landing the menu's edge at
-        // `innerWidth - PAD` puts it behind the scrollbar — flush with the
-        // visible edge with no real gap. The scrollbar lives on the right in
-        // LTR, on the left in RTL.
-        const innerW = window.innerWidth;
-        const sb = innerW - document.documentElement.clientWidth;
-        const left = NDS.isRTL ? sb : 0;
-        const right = NDS.isRTL ? innerW : innerW - sb;
-        const rects = menus.map((m) => m.getBoundingClientRect());
-        menus.forEach((m, i) => {
-            const r = rects[i];
-            if (!r.width) return; // not rendered (e.g. the minimal list on desktop)
-            let shift = 0;
-            if (r.left < left + FIT_SHIFT_PAD) shift = (left + FIT_SHIFT_PAD) - r.left;
-            else if (r.right > right - FIT_SHIFT_PAD) shift = (right - FIT_SHIFT_PAD) - r.right;
-            if (shift) m.style.transform = `translateX(calc(-50% + ${shift}px))`;
-        });
-    }
     function applyFitShift(dd) {
         const menu = dd.querySelector('.nds-dropdown-menu.nds-fit');
         if (!menu) return;
@@ -543,19 +516,25 @@
         // prior desktop open would push the fixed full-width menu off-screen.
         menu.style.removeProperty('transform');
         if (state.isMinimal) return;
-        requestAnimationFrame(() => fitShift([menu]));
+        requestAnimationFrame(() => {
+            const r = menu.getBoundingClientRect();
+
+            // Use the inner viewport (excludes the vertical scrollbar) for bounds.
+            // window.innerWidth includes the scrollbar; landing the menu's edge at
+            // `innerWidth - PAD` puts it behind the scrollbar — flush with the
+            // visible edge with no real gap. The scrollbar lives on the right in
+            // LTR, on the left in RTL.
+            const innerW = window.innerWidth;
+            const sb = innerW - document.documentElement.clientWidth;
+            const left = NDS.isRTL ? sb : 0;
+            const right = NDS.isRTL ? innerW : innerW - sb;
+
+            let shift = 0;
+            if (r.left < left + FIT_SHIFT_PAD) shift = (left + FIT_SHIFT_PAD) - r.left;
+            else if (r.right > right - FIT_SHIFT_PAD) shift = (right - FIT_SHIFT_PAD) - r.right;
+            if (shift) menu.style.transform = `translateX(calc(-50% + ${shift}px))`;
+        });
     }
-    // Closed menus stay rendered, so an unshifted fit menu near the edge sits past
-    // the viewport and leaks into the page's scroll width the moment another menu
-    // opens and the nav releases its clip. Shift them all after the reveal and on
-    // resize, so a closed menu is already where it would be open. Minimal mode
-    // clears instead: its menus are fixed full-width, and a desktop shift would
-    // push one off-screen.
-    const fitShiftAll = () => {
-        const menus = [...(DOM.nav?.querySelectorAll('.nds-dropdown-menu.nds-fit') || [])];
-        if (state.isMinimal) { menus.forEach((m) => m.style.removeProperty('transform')); return; }
-        fitShift(menus);
-    };
 
     // ==============================================
     // DROPDOWN MANAGEMENT
@@ -574,7 +553,7 @@
         },
 
         toggle(el, open) {
-            const { animTarget, isInMinimal } = getDropdownAnimTarget(el);
+            const { animTarget, isInMinimal, menu } = getDropdownAnimTarget(el);
             const navLink = el.querySelector('.nds-nav-link');
 
             // Maintain the open set when toggle actually flips state.
@@ -599,15 +578,26 @@
                 blockWhileAnimating: open,
                 onStart: () => {
                     overflow.schedule('high', 10);
-                    if (open) applyFitShift(el);
+                    if (open) {
+                        // Drop intrinsic [hidden] before the open transition so
+                        // display:none doesn't kill the animation.
+                        menu?.removeAttribute('hidden');
+                        applyFitShift(el);
+                    }
                 },
                 onComplete: () => {
                     if (!isInMinimal) updatePositions();
                     overflow.schedule('low', 100);
 
                     if (!open) {
-                        // No [hidden] re-stamp: the menu stays rendered and CSS
-                        // hides it on the closed state (see _mainnav.scss).
+                        // Restore [hidden] after the close transition ends — but
+                        // only if a queued re-open hasn't already re-opened this
+                        // dropdown. finish() runs processPending() (which can start
+                        // that re-open: dropping [hidden] and re-stamping 'open')
+                        // BEFORE this onComplete, so without the guard a superseded
+                        // close re-hides the freshly-opened menu, leaving the
+                        // trigger 'active' with an invisible menu.
+                        if (!hasState(el, 'open')) menu?.setAttribute('hidden', '');
                         if (!collapseHandlesBackdrop &&
                             _openDropdowns.size === 0 &&
                             !hasState(DOM.collapse, 'open') &&

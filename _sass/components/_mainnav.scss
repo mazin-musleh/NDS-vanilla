@@ -250,9 +250,7 @@
     position: relative;
 
     .nds-dropdown-menu {
-        display: flex;
-        flex-direction: column;
-        visibility: hidden;
+        display: none;
         border-radius: 0;
         z-index: var(--_nav-z-dropdown);
         /* Fallback for older browsers */
@@ -270,7 +268,7 @@
             transform: translate(0, -100%);
             transition: transform var(--nds-transition);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-            box-shadow: var(--shadow-md);
+            /* box-shadow: var(--shadow-md); */
 
             >.nds-content-wrapper {
                 padding-top: var(--spacing-2xl);
@@ -291,7 +289,8 @@
     }
 
     &[data-state~="open"] .nds-dropdown-menu {
-        visibility: visible;
+        display: flex;
+        flex-direction: column;
     }
 
     .nds-dropdown-menu .nds-dropdown-content {
@@ -567,8 +566,7 @@ body.nds-minimal .nds-main-nav {
         transform: translateY(-1px); // close the subpixel gap under the bar
         inset-inline: 0;
         z-index: var(--_nav-z-dropdown);
-        display: flex;
-        flex-direction: column;
+        display: none;
         /* Fallback for older browsers */
         overflow: clip;
 
@@ -590,11 +588,10 @@ body.nds-minimal .nds-main-nav {
             }
         }
 
-        &:not([data-state~="open"]) {
-            visibility: hidden;
-        }
-
         &[data-state~="open"] {
+            display: flex;
+            flex-direction: column;
+
             .nds-collapse-content {
                 transform: translateY(0);
             }
@@ -714,10 +711,8 @@ body.nds-minimal .nds-main-nav {
         border-bottom: 1px solid var(--divider-color);
     }
 
-    /* Show More Button. Gated on the open drawer: visibility:visible on a
-       descendant escapes the closed collapse's visibility:hidden, so a
-       has-more carried in from desktop would flash the fixed button. */
-    .nds-collapse[data-state~="open"] .nds-nav-primary[data-state~="has-more"] {
+    /* Show More Button */
+    .nds-nav-primary[data-state~="has-more"] {
         margin-bottom: var(--nds-minimal-nav-item-height);
 
         ~.nds-show-more {
@@ -749,13 +744,6 @@ body.nds-minimal .nds-main-nav {
         display: flex !important;
         opacity: 0;
         visibility: hidden;
-        transition: opacity .1s;
-    }
-
-    // Hold the fade-out (visibility is discrete) only while the drawer is open.
-    // Transitioning it across the desktop->minimal flip keeps the button painted
-    // while the closed drawer transforms to -100%, riding it to the top.
-    .nds-collapse[data-state~="open"] .nds-show-more {
         transition: opacity .1s, visibility .1s;
     }
 
