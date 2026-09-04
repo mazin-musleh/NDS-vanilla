@@ -16,7 +16,7 @@
  *     NDS.onDOMAdd(sel, fn) · NDS.onDOMRemove(sel, fn) · NDS.onChildrenChange(sel, fn)
  *     NDS.onAttrChange(sel, attrs, fn) · NDS.onOutsideScroll(el, fn)
  *   scheduling
- *     NDS.debounce(fn, ms) · NDS.rafThrottle(fn) · NDS.onIdle(fn, timeout)
+ *     NDS.debounce(fn, ms) (.cancel() drops a pending call) · NDS.rafThrottle(fn) · NDS.onIdle(fn, timeout)
  *     NDS.afterPaint(fn) · NDS.onTransitionEnd(el, fn, opts) → cancel()
  *     NDS.transitionSpeed()            the token-sourced duration in ms
  *   DOM, portal-aware
@@ -333,7 +333,9 @@
     // Usage: const fn = NDS.debounce(handler, 150)
     NDS.debounce = (fn, ms) => {
         let t;
-        return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+        const debounced = (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+        debounced.cancel = () => clearTimeout(t); // destroy paths drop the pending call
+        return debounced;
     };
 
     // ── RAF Throttle ─────────────────────────────────────────────────
@@ -1479,7 +1481,6 @@
     NDS.gridLastRow = (() => {
         const SEL = '.nds-divided.nds-grid';
         const CLS = 'nds-last-row';
-        const watched = new WeakSet();
 
         // Reads only; returns the class writes so the pooled ResizeObserver can
         // run every grid's reads before any write.
@@ -1501,12 +1502,17 @@
         // resized) re-marks on its own. A scheduled first scan (idle, DCL, after
         // the reveal paint) always raced the time-sliced inits and forced a
         // full-page layout (~1–2s on a table page at 6.6×).
-        // ponytail: observed grids are never unobserved; an SPA that discards
-        // grids by the thousand wants an off() on removal.
+        // A grid that leaves the DOM releases its observer entry, else an SPA
+        // that remounts grids retains every discarded one. Subscribed on the
+        // first watch so a page without grids never starts the DOM bus for it.
+        const offs = new WeakMap();
+        let releasing = false;
         function watch(grid) {
-            if (watched.has(grid)) return;
-            watched.add(grid);
-            NDS.onElementResize(grid, () => mark(grid));
+            if (offs.has(grid)) return;
+            offs.set(grid, NDS.onElementResize(grid, () => mark(grid)));
+            if (releasing) return;
+            releasing = true;
+            NDS.onDOMRemove(SEL, (grids) => grids.forEach((g) => { offs.get(g)?.(); offs.delete(g); }));
         }
 
         function gridsIn(container) {

@@ -639,6 +639,7 @@
             // Optional-chained: create() can hand back a half-constructed instance.
             this.abortController?.abort();
             this.fetchAbortController?.abort();
+            this._debouncedFetch?.cancel(); // a keystroke inside the 300ms window would still fetch
 
             if (this.dropmenuInstance) {
                 this.dropmenuInstance.destroy();
