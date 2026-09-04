@@ -131,6 +131,18 @@
             --_swiper-pad: 0px;
         }
     }
+
+    // A page's neighbour sits exactly on the window edge (gap = padding), but
+    // scroll offsets snap to device pixels while layout stays fractional: at
+    // 1.25× the last page landed 0.95px short and the previous card's border,
+    // itself snapped to the device grid, painted on the second device pixel
+    // inside the edge. Clip the outer 2px — empty padding — so no sub-pixel
+    // bleed from a neighbour ever paints (1px left that pixel, measured in
+    // headless Chrome). Capped at the padding so a --padding: 0 deck loses
+    // nothing.
+    .nds-max-width .nds-swiper:not(.nds-hero) & {
+        clip-path: inset(0 min(2px, var(--swiper-padding)));
+    }
 }
 
 // ==============================================
