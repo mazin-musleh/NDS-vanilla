@@ -78,9 +78,11 @@ not the obvious thing. Match the density of the file you are in; do not out-comm
 - Component banners are the exception in FORM, not in length: they stay structured
   (Rides/Methods/Events/Hooks/Gotchas) and each Gotcha is still as short as it can be.
 
-## Model Usage (Fable sessions)
+## Model Usage
 
-When the session runs on Fable, delegate mechanical and easy work — bulk edits, file writes, routine lookups, boilerplate — to `opus` or `sonnet` subagents via the Agent tool (`model` override) to save tokens. Keep Fable itself for complex tasks, decision-making, and review of the subagents' output.
+**Delegate to a subagent whenever the work calls for one — on every session, not just Fable — and pick the lowest tier that can do the job.** A subagent's tool output never enters the main context, so both the delegation and the tier choice are real token savings. Route mechanical and easy work — bulk edits, file writes, routine lookups, boilerplate, broad searches — to `haiku` or `sonnet` via the Agent tool's `model` override, and reserve `opus` for subagent work that genuinely needs it. Keep the session's own model for complex tasks, decision-making, and review of the subagents' output.
+
+**A skill that mandates an agent gets one.** Several skills (`nds-js-audit` Phase 3 and Phase 6, among others) require a subagent as a review gate. If a session-level rule blocks the Agent tool, say so and ask — never silently run an inline pass in place of the gate.
 
 ## Using Components (CRITICAL)
 
