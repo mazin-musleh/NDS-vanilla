@@ -664,7 +664,11 @@
             for (let i = 0; i < removed.length; i++) _fire(_onRemove, removed[i], el);
         };
 
-        const has = (el, state) => el ? parse(el).has(state) : false;
+        // No Set for a read: has() runs per row on every selection recount.
+        const has = (el, state) => {
+            const cur = el && el.getAttribute('data-state');
+            return !!cur && !!state && (cur === state || cur.split(/\s+/).includes(state));
+        };
 
         const get = el => el ? (el.getAttribute('data-state') || '') : '';
 
