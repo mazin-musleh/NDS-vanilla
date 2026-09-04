@@ -18,10 +18,13 @@
     --swiper-slides: var(--slides, var(--min-slides, 1));
     --swiper-gap: var(--gap, var(--spacing-xl));
     --swiper-padding: var(--padding, 0px); // a length: it feeds calc() and max() below
-    // Peek reserve = --peek + one gap. No --peek makes the calc invalid, so the
-    // reserve falls back to 0px. --peek: 0px must mean no peek as well: the gap
-    // term is min(peek x 1000, gap), a full gap for any positive peek, 0 for none.
-    --_peek-reserve: calc(var(--peek) + min(var(--peek) * 1000, var(--swiper-gap)));
+    // --_peek is the peek every formula reads: the author's --peek until JS has
+    // counted the pages, 0px once it finds a single page (nothing to peek at).
+    // Unset --peek makes it invalid, so every reader falls back to "no peek".
+    --_peek: var(--peek);
+    // Peek reserve = peek + one gap. --peek: 0px must mean no peek as well: the
+    // gap term is min(peek x 1000, gap), a full gap for any positive peek, 0 for none.
+    --_peek-reserve: calc(var(--_peek) + min(var(--_peek) * 1000, var(--swiper-gap)));
     --swiper-peek: var(--_peek-reserve, 0px);
 
     display: flex;
@@ -35,9 +38,9 @@
     @include desktop(min) { --swiper-slides: var(--slides, var(--max-slides, 1)); }
 
     // One page has nothing to peek. JS counts (preset, then init) and leaves
-    // data-swiper-peek off; the reserve goes with it.
+    // data-swiper-peek off; the reserve, the end space and the clip follow.
     &:is([data-swiper-preset], [data-nds-swiper-initialized]):not([data-swiper-peek]) {
-        --swiper-peek: 0px;
+        --_peek: 0px;
     }
 
     .nds-max-width & {
@@ -91,7 +94,7 @@
     // ends one peek before the scrollport edge, not at the content edge, so the
     // next slide shows exactly --peek. Same min(peek x 1000, ...) step as the
     // reserve; invalid without --peek, so the slide falls back to the full space.
-    --_end-space: calc(var(--_swiper-pad) - min(var(--peek) * 1000, var(--_swiper-pad)));
+    --_end-space: calc(var(--_swiper-pad) - min(var(--_peek) * 1000, var(--_swiper-pad)));
     // Start snap padding = the wrapper's own padding, so every slide rests where
     // slide one does and the peek shows at the end only. With the peek reserve
     // here instead, a later slide snapped one reserve in and the slide before it
@@ -123,7 +126,7 @@
     .nds-max-width .nds-swiper:not(.nds-hero) & {
         --_clip-min: min(2px, var(--swiper-padding));
         --_clip-start: max(var(--_clip-min), var(--swiper-padding) - var(--swiper-gap));
-        --_clip-end: max(var(--_clip-min), var(--swiper-padding) - var(--swiper-gap) - min(var(--peek) * 1000, var(--swiper-padding)));
+        --_clip-end: max(var(--_clip-min), var(--swiper-padding) - var(--swiper-gap) - min(var(--_peek) * 1000, var(--swiper-padding)));
         clip-path: inset(0 var(--_clip-start) 0 var(--_clip-end, var(--_clip-start)));
         @include ltr {
             clip-path: inset(0 var(--_clip-end, var(--_clip-start)) 0 var(--_clip-start));
