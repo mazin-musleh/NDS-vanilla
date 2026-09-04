@@ -575,11 +575,13 @@
     // Usage: const off = NDS.onAttrChange('.nds-progress-circle', ['data-value', 'data-num'], els => { ... })
     //        // later: off();  releases the subscriber
     const attrSubs = [];
+    const attrNames = new Set();
+    let attrMo;
     NDS.onAttrChange = (sel, attrs, fn) => {
         const sub = { sel, attrs: new Set(attrs), fn };
         attrSubs.push(sub);
-        if (attrSubs.length === 1) {
-            new MutationObserver(mutations => {
+        if (!attrMo) {
+            attrMo = new MutationObserver(mutations => {
                 const changed = new Map();
                 for (let i = 0; i < mutations.length; i++) {
                     const el = mutations[i].target;
@@ -597,7 +599,15 @@
                     });
                     if (hits.length) attrSubs[s].fn(hits);
                 }
-            }).observe(document.documentElement, { attributes: true, subtree: true });
+            });
+        }
+        // attributeFilter = the union of every subscriber's names, re-observed as it
+        // grows. Without it the observer records EVERY attribute write on the page
+        // for its lifetime — class, aria, style, init stamps — and runs the callback.
+        const before = attrNames.size;
+        attrs.forEach(a => attrNames.add(a));
+        if (attrNames.size !== before) {
+            attrMo.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: [...attrNames] });
         }
         return () => { const i = attrSubs.indexOf(sub); if (i !== -1) attrSubs.splice(i, 1); };
     };
