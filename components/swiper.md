@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "04/09/2026 - 06:51 AM"
+last_edit: "04/09/2026 - 06:55 AM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -399,6 +399,10 @@ last_edit: "04/09/2026 - 06:51 AM"
                                 <span class="nds-label">Middle</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-swiper", "swiperLoading"]'>
+                                <span class="nds-label">Skeleton</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -606,6 +610,10 @@ last_edit: "04/09/2026 - 06:51 AM"
                                 <span class="nds-label">Middle</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-swiper", "swiperLoading"]'>
+                                <span class="nds-label">Skeleton</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -809,6 +817,10 @@ last_edit: "04/09/2026 - 06:51 AM"
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-middle", ".nds-swiper", "navMiddle"]'>
                                 <span class="nds-label">Middle</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-swiper", "swiperLoading"]'>
+                                <span class="nds-label">Skeleton</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
@@ -1097,6 +1109,7 @@ last_edit: "04/09/2026 - 06:51 AM"
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Large pagination bullets (16px). Default size when no modifier is applied</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Medium pagination bullets (12px)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Small pagination bullets (8px)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Shows every card in the deck as a skeleton, the same bars a loading grid shows. Add it while data loads and remove it when the cards are ready</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -137,7 +137,7 @@
 // / _tabs.scss / _toc.scss) — the skeleton IS the feedback, so the spinner and the
 // child dim are suppressed. pointer-events: none stays from the base
 // rule; every other .nds-loading consumer keeps the spinner.
-:is(.nds-grid, .nds-paged-content, tbody, .nds-table, .nds-accordion, .nds-tabs, .nds-tab-list, .nds-card, .nds-definition-list, .nds-stepper, .nds-rating, .nds-breadcrumb-nav, .nds-toc).nds-loading {
+:is(.nds-grid, .nds-paged-content, .nds-swiper, tbody, .nds-table, .nds-accordion, .nds-tabs, .nds-tab-list, .nds-card, .nds-definition-list, .nds-stepper, .nds-rating, .nds-breadcrumb-nav, .nds-toc).nds-loading {
   &::after {
     content: none;
   }
