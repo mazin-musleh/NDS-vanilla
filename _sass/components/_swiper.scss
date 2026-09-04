@@ -44,11 +44,14 @@
 
         // A page ends one gap before the next slide, but the scrollport runs one
         // padding past it, so a gap narrower than the padding shows the next
-        // slide's edge on a wide desktop. Default the gap to the padding — the
-        // value updatePeekStyles writes at one slide per view.
+        // slide's edge on a wide desktop. Non-peek decks default the gap to the
+        // padding — the value updatePeekStyles writes at one slide per view. A
+        // peek deck keeps the token gap, since its next slide is meant to show:
+        // --_peek-gap is a length only while --peek exists, invalid otherwise.
         // Plain var(), no max(): this reaches the slide's calc() (Safari).
+        --_peek-gap: calc(var(--peek) * 0 + var(--spacing-xl));
         &:not(.nds-hero) {
-            --swiper-gap: var(--gap, var(--swiper-padding));
+            --swiper-gap: var(--gap, var(--_peek-gap, var(--swiper-padding)));
         }
     }
 
