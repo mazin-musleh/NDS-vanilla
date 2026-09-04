@@ -93,7 +93,11 @@
     // the first/last slide's own 2px padding is the shadow room.
     --_swiper-pad: var(--swiper-padding);
     padding-inline: var(--_swiper-pad) 0;
-    scroll-padding-inline: max(var(--swiper-peek), var(--swiper-padding));
+    // Start snap padding = the wrapper's own padding, so every slide rests where
+    // slide one does and the peek shows at the end only. With the peek reserve
+    // here instead, a later slide snapped one reserve in and the slide before it
+    // showed at the start — the loop lands past the head clones, so it always did.
+    scroll-padding-inline: var(--_swiper-pad) max(var(--swiper-peek), var(--swiper-padding));
     &::after {
         content: "";
         flex: 0 0 var(--_swiper-pad);
