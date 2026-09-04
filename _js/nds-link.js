@@ -37,8 +37,8 @@
     // Guards are layout-free (hostname/closest/classList), ordered hostname-first
     // so internal links short-circuit immediately.
     function tagExternal(a) {
-        if (!a.href || a.hostname === '') return;
-        if (a.hostname === location.hostname) return;
+        var host = a.hostname;
+        if (!host || host === location.hostname) return;
         if (a.closest('[data-no-external]')) return;
         if (a.classList.contains('nds-btn') && a.classList.contains('nds-icon-only')) return;
         if (!a.classList.contains('nds-external') && isIconOrImageOnly(a)) return;
@@ -53,8 +53,10 @@
     // ::after badge is present on the first frame with no CLS. Off-screen links
     // tag in the same pass; their badge shifts only below the fold (no visible
     // CLS) and is already in place by the time they scroll into view.
+    // Only an href with an authority (`//`) can leave the site, so relative,
+    // hash, mailto and tel links never reach the hostname parse.
     function init() {
-        const anchors = document.querySelectorAll('a');
+        const anchors = document.querySelectorAll('a[href*="//"]');
         for (let i = 0; i < anchors.length; i++) tagExternal(anchors[i]);
     }
 
