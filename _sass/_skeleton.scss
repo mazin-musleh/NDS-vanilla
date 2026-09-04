@@ -139,7 +139,8 @@ html {
         }
     }
 
-    :where(.nds-link, a):not(.nds-card):where(.nds-icon, .nds-external)::after {
+    :where(.nds-link, a):not(.nds-card, .nds-external-block):where(.nds-icon, .nds-external)::after,
+    :where(.nds-external-badge)::after {
         content: "";
         display: inline-block;
         width: 1em;

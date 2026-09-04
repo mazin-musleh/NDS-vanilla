@@ -69,7 +69,10 @@
          flex: unset !important;
     }
 
-    &::after {
+    // Block content (`a > p`) moves the badge to the deepest last block:
+    // JS stamps .nds-external-block on the link, .nds-external-badge on the host.
+    &:not(.nds-external-block)::after,
+    .nds-external-badge::after {
         content: "";
         display: inline-block;
         width: 1em;

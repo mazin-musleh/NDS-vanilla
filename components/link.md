@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.1.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.11.x"
+last_edit: "04/09/2026 - 10:21 PM"
 ---
 
 <!-- Color Variants -->
@@ -316,6 +316,13 @@ last_edit: "28/06/2026 - 01:27 PM"
                             <span class="nds-label">Safe Navigation</span>
                         </span>
                         <p class="nds-item-desc">External links open in a new tab automatically and receive <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>. The check compares <code class="nds-inline-code lang-html">a.hostname</code> against <code class="nds-inline-code lang-html">location.hostname</code> exactly, so subdomains are treated as external and also receive the rel attribute.</p>
+                    </div>
+                    <div class="nds-definition-item">
+                        <span class="nds-item-title">
+                            <i class="hgi hgi-stroke hgi-paragraph"></i>
+                            <span class="nds-label">Block Content</span>
+                        </span>
+                        <p class="nds-item-desc">A link that wraps block content, such as <code class="nds-inline-code lang-html">&lt;a&gt;&lt;p&gt;…&lt;/p&gt;&lt;/a&gt;</code> from an editor, gets the badge inside its last block so it stays on the text line. The link receives <code class="nds-inline-code lang-html">nds-external-block</code> and that block receives <code class="nds-inline-code lang-html">nds-external-badge</code>.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
