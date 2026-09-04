@@ -28,6 +28,19 @@
     // format()/formatToParts() on an existing instance is cheap. Memoize one
     // formatter per (locale, options) so repeated renders never rebuild it.
     const _fmtCache = new Map();
+    // The topbar hides the date on sm/md and the clock on sm (data-hidden), so a
+    // phone paid the Hijri/ICU formatter for text it never shows. Mirror the
+    // data-hidden bands of _utilities.scss from matchMedia — no layout read, so
+    // the check is free in the init drain and in an idle slot. `sr` keeps the
+    // text for screen readers. A breakpoint crossing re-runs via NDS.onResize.
+    const BAND_ALIAS = { sm: 'mobile', md: 'tablet', lg: 'desktop' };
+    function rendered(el) {
+        const tokens = (el.dataset.hidden || '').split(/\s+/);
+        if (tokens.includes('sr')) return true;
+        const mq = (q) => window.matchMedia(NDS.breakpoints[q]).matches;
+        const band = mq('mobile') ? 'sm' : mq('tablet-max') ? 'md' : mq('desktop-max') ? 'lg' : 'xl';
+        return !tokens.includes(band) && !tokens.includes(BAND_ALIAS[band]);
+    }
     function dtf(locale, opts) {
         const key = locale + '|' + JSON.stringify(opts);
         let f = _fmtCache.get(key);
@@ -94,7 +107,7 @@
     // Date function with caching
     async function updateDate() {
         const el = document.getElementById('nds-date');
-        if (!el) return;
+        if (!el || !rendered(el)) return;
 
         const isArabic = NDS.isArabic;
         const today = getSaudiDate();
@@ -175,6 +188,8 @@
 
     function startClock() {
         if (clockTimer) return;
+        const el = document.getElementById('nds-realTimeClock');
+        if (!el || !rendered(el)) return;
         updateClock();
         scheduleNextMinute();
     }
@@ -193,6 +208,7 @@
     // only one widget can still wire the other if it's injected later.
     let _dateInitDone = false;
     let _clockInitDone = false;
+    let _resizeInitDone = false;
 
     function initializeTimeDate() {
         const dateEl = document.getElementById('nds-date');
@@ -217,6 +233,14 @@
             if (!document.hidden) startClock();
             document.addEventListener('visibilitychange', () => {
                 document.hidden ? stopClock() : startClock();
+            });
+        }
+
+        if ((dateEl || clockEl) && !_resizeInitDone) {
+            _resizeInitDone = true;
+            NDS.onResize(() => {
+                updateDate();
+                if (clockEl && rendered(clockEl) && !document.hidden) startClock(); else stopClock();
             });
         }
     }
