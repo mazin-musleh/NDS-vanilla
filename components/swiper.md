@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "04/09/2026 - 06:05 AM"
+last_edit: "04/09/2026 - 06:24 AM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -1008,7 +1008,7 @@ last_edit: "04/09/2026 - 06:05 AM"
                             <i class="hgi hgi-stroke hgi-image-02"></i>
                             <span class="nds-label">Lazy Loading</span>
                         </span>
-                        <p class="nds-item-desc">Images with <code class="nds-inline-code lang-html">data-src</code> or <code class="nds-inline-code lang-html">data-srcset</code> load automatically as slides approach the viewport, reducing initial page weight.</p>
+                        <p class="nds-item-desc">Images with <code class="nds-inline-code lang-html">data-src</code> or <code class="nds-inline-code lang-html">data-srcset</code> load automatically as slides approach the viewport, reducing initial page weight. The image box shimmers until its source lands, so give the image a size.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -1071,7 +1071,7 @@ last_edit: "04/09/2026 - 06:05 AM"
                 <ul>
                     <li>Use the swiper for <strong>horizontally browsable collections</strong> like featured services, image galleries, or card carousels where showing everything at once would overwhelm the layout</li>
                     <li>Use the <strong>hero variant</strong> (<code class="nds-inline-code lang-html">nds-hero</code>) for full-width banner sliders with background images or gradient slides at the top of a page</li>
-                    <li>Use <code class="nds-inline-code lang-html">data-src</code> and <code class="nds-inline-code lang-html">data-srcset</code> for <strong>lazy loading</strong> images rather than standard <code class="nds-inline-code lang-html">src</code> to reduce initial page weight</li>
+                    <li>Use <code class="nds-inline-code lang-html">data-src</code> and <code class="nds-inline-code lang-html">data-srcset</code> for <strong>lazy loading</strong> images rather than standard <code class="nds-inline-code lang-html">src</code> to reduce initial page weight. Give each lazy image a width and height, or an aspect ratio, so its box can shimmer before the source lands</li>
                     <li>Do not use swiper for content that should be visible all at once. Use <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">Grid</a> for static card layouts or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switchable content panels</li>
                     <li>Do not place interactive form controls inside slides. Keep slide content to display elements: text, images, cards, and links</li>
                     <li>Add <code class="nds-inline-code lang-html">--peek:40px</code> when the slide count exceeds the visible slots. It gives the reader a visual cue that more content is available</li>
