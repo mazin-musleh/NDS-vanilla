@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.11.x"
-last_edit: "04/09/2026 - 05:30 AM"
+updated: "1.12.0"
+last_edit: "05/09/2026 - 09:00 PM"
 ---
 
 <!-- Topbar -->
@@ -60,7 +60,8 @@ last_edit: "04/09/2026 - 05:30 AM"
         data-city="الرياض" data-city-en="Riyadh"&gt;&lt;/span&gt;
     &lt;span id="nds-weatherInfo" class="nds-text-icon" data-hidden="sm"
         data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
-    &lt;button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode"&gt;
+    &lt;!-- Icon-only: the hover tooltip is built from the title, on a native-title delay --&gt;
+    &lt;button class="nds-btn nds-subtle nds-theme-toggle-wrap nds-tooltip" data-tooltip-hover="500" data-theme-toggle title="Toggle dark mode" aria-label="Toggle dark mode"&gt;
       &lt;i class="nds-icon nds-hgi-moon-02" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
   &lt;/div&gt;

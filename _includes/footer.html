@@ -37,14 +37,14 @@
                 <span class="nds-footer-heading" id="nds-footer-iconcol-{{ forloop.index }}">{{ column.heading }}</span>
                 <div class="nds-footer-icon-row" role="group" aria-labelledby="nds-footer-iconcol-{{ forloop.index }}">
                     {%- for social in column.social_icons %}
-                    <a class="nds-btn nds-secondary-outline nds-icon-only" href="{{ social.url }}"
-                        target="_blank" rel="noopener noreferrer" aria-label="{{ social.label }}">
+                    <a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="{{ social.url }}"
+                        target="_blank" rel="noopener noreferrer" title="{{ social.label }}" aria-label="{{ social.label }}">
                         <i class="nds-icon {{ social.icon }}" aria-hidden="true"></i>
                     </a>
                     {%- endfor %}
                     {%- for app in column.mobile_apps.apps %}
-                    <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only"
-                        href="{{ app.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ app.label }}">
+                    <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500"
+                        href="{{ app.url }}" target="_blank" rel="noopener noreferrer" title="{{ app.label }}" aria-label="{{ app.label }}">
                         <i class="nds-icon {{ app.icon }}" aria-hidden="true"></i>
                     </a>
                     {%- endfor %}

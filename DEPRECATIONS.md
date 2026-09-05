@@ -18,9 +18,9 @@ surface the theme controls. Count spellings and you will deprecate half the syst
 
 | Class | Replacement | Deprecated in | Declared at |
 |---|---|---|---|
-| `slides-max`, `slides-mid`, `slides-min`, `peek` **attributes on `.nds-swiper`** | inline `--max-slides`, `--mid-slides`, `--min-slides`, `--peek` (`style="…"` on the same element) | 1.11.x | `_js/nds-swiper.js` (constructor knob read), `_js/nds-loader.js` (presetSwipers) |
+| `slides-max`, `slides-mid`, `slides-min`, `peek` **attributes on `.nds-swiper`** | inline `--max-slides`, `--mid-slides`, `--min-slides`, `--peek` (`style="…"` on the same element) | 1.12.0 | `_js/nds-swiper.js` (constructor knob read), `_js/nds-loader.js` (presetSwipers) |
 | `.nds-card-price` | `.nds-card-value` | 1.11.0 | `_sass/components/_cards.scss` (value line) |
-| `[data-loading]` **on `.nds-slider-container`** | `.nds-loading` (or the `loading` token from JS) | 1.11.x | `_sass/components/_slider.scss` (skeleton rule) |
+| `[data-loading]` **on `.nds-slider-container`** | `.nds-loading` (or the `loading` token from JS) | 1.12.0 | `_sass/components/_slider.scss` (skeleton rule) |
 | `.nds-404` | `.nds-status-section` | 1.10.0 | `_sass/layout/_section-layout.scss` (status section banner) |
 | `.nds-green` **on a section or footer** | `.nds-primary` / `.nds-brand` | before 1.9 | `_sass/layout/_section.scss`, `_sass/components/_footer.scss` |
 | `.nds-gradient-green` | `.nds-gradient-primary` | before 1.9 | `_sass/layout/_section.scss`, `_sass/_variables-a11y.scss` |

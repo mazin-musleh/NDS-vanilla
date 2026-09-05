@@ -49,16 +49,16 @@ columns:
     social_icons:
       - url: "#"
         icon: "nds-hgi-new-twitter"
-        label: "Follow National Design System on Twitter"
+        label: "Follow Us on Twitter"
       - url: "#"
         icon: "nds-hgi-facebook-02"
-        label: "Follow National Design System on Facebook"
+        label: "Follow Us on Facebook"
       - url: "#"
         icon: "nds-hgi-youtube"
-        label: "Follow National Design System on YouTube"
+        label: "Follow Us on YouTube"
       - url: "#"
         icon: "nds-hgi-linkedin-02"
-        label: "Follow National Design System on LinkedIn"
+        label: "Follow Us on LinkedIn"
 
   - heading: "Mobile App"
     mobile_apps:

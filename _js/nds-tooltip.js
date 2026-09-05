@@ -11,12 +11,14 @@
  * Hooks:
  *   data-tooltip-title · data-tooltip-message   build the balloon from attributes
  *   title                                       fallback message when data-tooltip-message
- *                                               is absent; stripped at init
+ *                                               is absent; stripped at init, balloon built
+ *                                               on first open
  *   data-tooltip-status                         chip status, default "help"
  *   data-tooltip-hover                          opt in to hover; the value is the open
  *                                               delay in ms (bare attribute = 120). A tap
  *                                               toggles a text term only; on a link/button
- *                                               it runs the action and closes the balloon
+ *                                               it runs the action and closes the balloon.
+ *                                               A click during the delay cancels the open
  *   written by the component: data-position-vertical="top" on the root and the balloon
  *                             when the balloon flips above the trigger
  * Gotchas:
@@ -27,6 +29,8 @@
  *   - While open the balloon is portaled to <body>, so a closest() walk from inside it
  *     does not reach the tooltip root. It is put back on close.
  *   - The instance lives on the root as el.ndsTooltip.
+ *   - A title-sourced balloon does not exist until the first open — query
+ *     .nds-tooltip-balloon after nds:tooltip:opened, not at init.
  */
 /**
  * NDS Tooltip Component
@@ -51,6 +55,21 @@
     // doesn't need to sweep the DOM by attribute selector.
     let _openTooltip = null;
 
+    // Leading icon chip, shared by the auto trigger and a titled balloon.
+    function buildChip(status) {
+        const wrap = document.createElement('span');
+        wrap.className = 'nds-feedback nds-sm';
+        NDS.Status.set(wrap, status);
+        const icon = document.createElement('span');
+        icon.className = 'nds-feedback-icon';
+        const i = document.createElement('i');
+        i.className = 'nds-icon';
+        NDS.aria.hidden(i, true);
+        icon.appendChild(i);
+        wrap.appendChild(icon);
+        return wrap;
+    }
+
     class NDSTooltip {
         constructor(root) {
             this.root = root;
@@ -61,7 +80,7 @@
             this.trigger = root.querySelector('.nds-tooltip-trigger') || root;
             this.balloon = root.querySelector('.nds-tooltip-balloon');
 
-            if (!this.balloon) {
+            if (!this.balloon && !this._lazyBalloon) {
                 console.warn('NDS Tooltip: no .nds-tooltip-balloon and no data-tooltip-title/message to build one');
                 return;
             }
@@ -87,21 +106,29 @@
          *  When the root has its own content (e.g. `<span class="nds-tooltip">
          *  National ID</span>`), that content IS the trigger — no chip is
          *  inserted. Only an empty root gets the auto-generated chip button.
+         *
+         *  A balloon whose text came from `title` is built on first open: the
+         *  control names itself, so a row of icon buttons would otherwise hold
+         *  a hidden balloon each from init. Authored data-tooltip-* text builds
+         *  now — assistive tech reads the hidden balloon as the trigger's
+         *  description before it ever opens.
          */
         autoMarkup() {
             // `title` opt-in: with no data-tooltip-message the native title is
             // the message. Stripped so it can't double up with the balloon
             // (native covers the pre-init gap).
             const nativeTitle = this.root.getAttribute('title');
-            if (nativeTitle && !this.root.dataset.tooltipMessage) {
+            const fromTitle = !!nativeTitle && !this.root.dataset.tooltipMessage;
+            if (fromTitle) {
                 this.root.dataset.tooltipMessage = nativeTitle;
                 this.root.removeAttribute('title');
+                // The title was the control's only name — keep it as one.
+                if (!this.root.hasAttribute('aria-label') && !this.root.hasAttribute('aria-labelledby')
+                    && !this.root.textContent.trim()) NDS.aria.label(this.root, nativeTitle);
             }
 
             const { tooltipTitle: title, tooltipMessage: message } = this.root.dataset;
             if (!title && !message) return;
-
-            const status = this.root.dataset.tooltipStatus || 'help';
 
             const hasTrigger = this.root.querySelector('.nds-tooltip-trigger');
             const hasBalloon = this.root.querySelector('.nds-tooltip-balloon');
@@ -114,20 +141,6 @@
                 return false;
             });
 
-            const buildChip = () => {
-                const wrap = document.createElement('span');
-                wrap.className = 'nds-feedback nds-sm';
-                NDS.Status.set(wrap, status);
-                const icon = document.createElement('span');
-                icon.className = 'nds-feedback-icon';
-                const i = document.createElement('i');
-                i.className = 'nds-icon';
-                NDS.aria.hidden(i, true);
-                icon.appendChild(i);
-                wrap.appendChild(icon);
-                return wrap;
-            };
-
             // Only generate a chip trigger when root is empty AND has no
             // explicit `.nds-tooltip-trigger` already.
             if (!hasTrigger && !hasOwnContent) {
@@ -135,37 +148,56 @@
                 trigger.type = 'button';
                 trigger.className = 'nds-tooltip-trigger';
                 NDS.aria.label(trigger, title || 'More info');
-                trigger.appendChild(buildChip());
+                trigger.appendChild(buildChip(this.root.dataset.tooltipStatus || 'help'));
                 this.root.prepend(trigger);
             }
 
-            if (!hasBalloon) {
-                const balloon = document.createElement('div');
-                balloon.className = 'nds-tooltip-balloon';
-                balloon.hidden = true;
+            if (hasBalloon) return;
+            if (fromTitle) this._lazyBalloon = true;
+            else this.root.appendChild(this.buildBalloon());
+        }
 
-                // Leading icon chip only when there's also a title — a pure
-                // message-only tooltip stays clean (just the text).
-                if (title) balloon.appendChild(buildChip());
+        buildBalloon() {
+            const { tooltipTitle: title, tooltipMessage: message, tooltipStatus } = this.root.dataset;
+            const balloon = document.createElement('div');
+            balloon.className = 'nds-tooltip-balloon';
+            balloon.hidden = true;
 
-                const body = document.createElement('span');
-                body.className = 'nds-tooltip-body';
-                if (title) {
-                    const t = document.createElement('span');
-                    t.className = 'nds-tooltip-title';
-                    t.textContent = title;
-                    body.appendChild(t);
-                }
-                if (message) {
-                    const p = document.createElement('p');
-                    p.className = 'nds-tooltip-message';
-                    p.textContent = message;
-                    body.appendChild(p);
-                }
-                balloon.appendChild(body);
+            // Leading icon chip only when there's also a title — a pure
+            // message-only tooltip stays clean (just the text).
+            if (title) balloon.appendChild(buildChip(tooltipStatus || 'help'));
 
-                this.root.appendChild(balloon);
+            const body = document.createElement('span');
+            body.className = 'nds-tooltip-body';
+            if (title) {
+                const t = document.createElement('span');
+                t.className = 'nds-tooltip-title';
+                t.textContent = title;
+                body.appendChild(t);
             }
+            if (message) {
+                const p = document.createElement('p');
+                p.className = 'nds-tooltip-message';
+                p.textContent = message;
+                body.appendChild(p);
+            }
+            balloon.appendChild(body);
+            return balloon;
+        }
+
+        // ARIA and, in hover mode, the grace listeners that keep the balloon
+        // open while the pointer crosses into it. Runs at init for an existing
+        // balloon and on first open for a lazy one.
+        adoptBalloon(balloon) {
+            this.balloon = balloon;
+            balloon.setAttribute('role', 'tooltip');
+            balloon.id = this._balloonId;
+            if (!this._hoverMode) return;
+            const { signal } = this.abortController;
+            balloon.addEventListener('pointerenter', (e) => {
+                if (e.pointerType === 'mouse') clearTimeout(this._hoverTimer);
+            }, { signal });
+            balloon.addEventListener('pointerleave', this._hoverClose, { signal });
         }
 
         init() {
@@ -176,9 +208,9 @@
             this._hoverMode = this.root.hasAttribute('data-tooltip-hover');
             const delay = parseInt(this.root.dataset.tooltipHover, 10);
             this._hoverDelay = Number.isNaN(delay) ? 120 : delay;
-            this.balloon.setAttribute('role', 'tooltip');
-            const id = this.balloon.id || NDS.uniqueId('nds-tooltip-');
-            this.balloon.id = id;
+            // Reserved now so aria-describedby holds whether the balloon
+            // exists yet or is built on first open.
+            const id = this._balloonId = (this.balloon && this.balloon.id) || NDS.uniqueId('nds-tooltip-');
 
             const existing = this.trigger.getAttribute('aria-describedby');
             if (!existing || !existing.split(/\s+/).includes(id)) {
@@ -200,6 +232,7 @@
             this._rootIsControl = this.trigger === this.root && !this._isTextTrigger;
 
             this.bindEvents();
+            if (this.balloon) this.adoptBalloon(this.balloon);
 
             this.root.ndsTooltip = this;
             this.root.setAttribute('data-nds-tooltip-initialized', 'true');
@@ -220,7 +253,7 @@
                     if (this._hoverDelay) this._hoverTimer = setTimeout(() => this.open(), this._hoverDelay);
                     else this.open();
                 };
-                const hoverClose = (e) => {
+                this._hoverClose = (e) => {
                     if (e.pointerType !== 'mouse') return;
                     // Always clears first — this also cancels a still-pending
                     // delayed open when the pointer leaves during the wait.
@@ -229,11 +262,7 @@
                     this._hoverTimer = setTimeout(() => this.close(), 120);
                 };
                 this.trigger.addEventListener('pointerenter', hoverOpen, { signal });
-                this.trigger.addEventListener('pointerleave', hoverClose, { signal });
-                this.balloon.addEventListener('pointerenter', (e) => {
-                    if (e.pointerType === 'mouse') clearTimeout(this._hoverTimer);
-                }, { signal });
-                this.balloon.addEventListener('pointerleave', hoverClose, { signal });
+                this.trigger.addEventListener('pointerleave', this._hoverClose, { signal });
 
                 this.trigger.addEventListener('click', (e) => {
                     // Only touch taps on a text term toggle. Every click on a
@@ -242,7 +271,8 @@
                     // Mouse clicks, keyboard-synthesized clicks (pointerType "") and
                     // MouseEvent clicks in browsers without pointer-typed click
                     // (pointerType undefined) on a term do nothing, so the balloon
-                    // stays as it is.
+                    // stays as it is. Any click cancels a delayed open still pending.
+                    clearTimeout(this._hoverTimer);
                     if (e.pointerType !== 'touch' || !this._isTextTrigger) {
                         if (!this._isTextTrigger) this.close();
                         return;
@@ -278,6 +308,7 @@
 
         open() {
             if (this.isOpen) return;
+            if (!this.balloon) this.adoptBalloon(this.root.appendChild(this.buildBalloon()));
             this.isOpen = true;
 
             // Only one tooltip open at a time

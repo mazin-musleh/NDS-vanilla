@@ -21,7 +21,7 @@
              _sass/themes/_register.scss); stylesheet themes carry data-theme-css/js.
              Applied by _js/nds-theme.js. -->
         <div class="nds-dropmenu nds-theme-switcher" data-portal>
-            <button class="nds-btn nds-subtle nds-icon-only nds-dropmenu-trigger" aria-label="Choose a theme">
+            <button class="nds-btn nds-subtle nds-icon-only nds-dropmenu-trigger nds-tooltip" data-tooltip-hover="500" title="Choose a theme" aria-label="Choose a theme">
                 <i class="nds-icon nds-icon-theme" aria-hidden="true"></i>
             </button>
             <div class="nds-dropmenu-menu nds-theme-menu" hidden>
@@ -42,7 +42,7 @@
         </div>
         {% endif %}
         {% if site.theme_switcher %}
-        <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode">
+        <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap nds-tooltip" data-tooltip-hover="500" data-theme-toggle title="Toggle dark mode" aria-label="Toggle dark mode">
             <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
         </button>
         {% endif %}

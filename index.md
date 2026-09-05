@@ -9,8 +9,8 @@ exclude_showcase: true
 # gzip -c assets/js/nds-main.min.js | wc -c (and delegated/extras, _site/.../nds.critical.min.css)
 bundle_sizes:
   critical_css: 10 # nds.critical.min.css
-  core_js: 39 # nds-main.min.js (loads on every page)
-  total_js: 129 # main + delegated + extras (full library, demand-loaded)
+  core_js: 41 # nds-main.min.js (loads on every page)
+  total_js: 133 # main + delegated + extras (full library, demand-loaded)
 ---
 
 <!-- Implementation Solution -->
@@ -119,7 +119,7 @@ bundle_sizes:
             <p class="nds-section-brief">DGA page templates implemented as working code and ready to be adapted for deployment.</p>
             <p class="nds-section-description">Components follow the defined design tokens, typography, spacing, and interaction patterns. The templates below cover common government service screens and can be copied, populated with project content, and adapted for deployment.</p>
         </div>
-        <div class="nds-section-body  nds-max-width">
+        <div class="nds-section-body nds-max-width">
             <div class="nds-block">
                 <div class="nds-swiper" data-swiper-loop style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:0px">
                     <div class="nds-swiper-wrapper">

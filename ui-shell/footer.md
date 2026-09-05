@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "21/08/2026 - 07:12 PM"
+updated: "1.12.0"
+last_edit: "05/09/2026 - 09:01 PM"
 ---
 
 <!-- Footer Structure -->
@@ -44,11 +44,11 @@ footer.nds-footer.nds-content-wrapper.nds-brand
 │       ├── div.nds-footer-icon-group (social)
 │       │   ├── span.nds-footer-heading
 │       │   └── div.nds-footer-icon-row
-│       │       └── a.nds-btn.nds-secondary-outline.nds-icon-only
+│       │       └── a.nds-btn.nds-secondary-outline.nds-icon-only.nds-tooltip
 │       └── div.nds-footer-icon-group (mobile apps)
 │           ├── span.nds-footer-heading
 │           └── div.nds-footer-icon-row
-│               └── a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only
+│               └── a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only.nds-tooltip
 │
 ├── hr.nds-divider.nds-lg
 │
@@ -182,16 +182,16 @@ footer.nds-footer.nds-content-wrapper.nds-brand
   &lt;div class="nds-footer-icon-group"&gt;
     &lt;span class="nds-footer-heading"&gt;Follow Us&lt;/span&gt;
     &lt;div class="nds-footer-icon-row"&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"&gt;
         &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"&gt;
         &lt;i class="nds-icon nds-hgi-facebook-02" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"&gt;
         &lt;i class="nds-icon nds-hgi-youtube" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"&gt;
         &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
     &lt;/div&gt;
@@ -233,10 +233,10 @@ footer.nds-footer.nds-content-wrapper.nds-brand
 &lt;div class="nds-footer-icon-group"&gt;
   &lt;span class="nds-footer-heading"&gt;Mobile App&lt;/span&gt;
   &lt;div class="nds-footer-icon-row"&gt;
-    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="Apple App Store"&gt;
+    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="Apple App Store" aria-label="Apple App Store"&gt;
       &lt;svg&gt;...&lt;/svg&gt;
     &lt;/a&gt;
-    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="Google Play Store"&gt;
+    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="Google Play Store" aria-label="Google Play Store"&gt;
       &lt;svg&gt;...&lt;/svg&gt;
     &lt;/a&gt;
   &lt;/div&gt;
