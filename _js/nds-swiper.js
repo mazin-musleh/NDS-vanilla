@@ -222,6 +222,13 @@
             return Math.ceil(this._real / this.slidesPerView);
         }
 
+        // Where page p starts, in real slides. The last page end-aligns so it stays
+        // inside the deck; a loop has no end, so its pages run on into the clones.
+        _pageStart(p) {
+            const start = p * this.slidesPerView;
+            return this._loop ? start : Math.min(start, this._real - this.slidesPerView);
+        }
+
         init() {
             this.abortController = new AbortController();
             this.container.style.setProperty('--total', this._real);
@@ -420,20 +427,23 @@
             if (this.nextBtn) this._attachActivation(this.nextBtn, () => this.next());
         }
 
-        prev() {
-            // Page boundaries count from the first real slide, past any head clones.
-            const from = this.currentIndex - this._head;
-            this._goToFull(this._head + Math.floor((from - 1) / this.slidesPerView) * this.slidesPerView);
-        }
-
-        next() {
-            this._goToFull(this.currentIndex + this.slidesPerView);
-        }
+        // Always a full view. A loop whose count is not a multiple of the slides
+        // per view drifts off the page grid by the remainder on every wrap; the
+        // bullets absorb that (updatePagination), the movement never does.
+        prev() { this._goToFull(this.currentIndex - this.slidesPerView); }
+        next() { this._goToFull(this.currentIndex + this.slidesPerView); }
 
         // Public: the index counts real slides. Internally the row may carry clones
-        // at both ends, so every scroll target is a full-list index offset by _head.
+        // at both ends, so every scroll target is a full-list index.
         goTo(index) {
-            this._goToFull(this._head + index);
+            this._goToFull(this._full(index));
+        }
+
+        // Full-list index of a real slide, in the cycle the row sits in NOW. Between
+        // a rapid click and the settle jump the row rests on a clone, and _head +
+        // real would then animate a whole cycle the wrong way to reach the twin.
+        _full(real) {
+            return this.currentIndex + (real - this._realIndex);
         }
 
         // scrollTo/scrollBy's 'auto' keyword — and passing no keyword at all — defers
@@ -448,13 +458,15 @@
             this.wrapper.style.scrollBehavior = prev;
         }
 
-        _goToFull(index) {
+        _goToFull(index, instant = NDS.prefersReducedMotion) {
             if (this._loop) {
-                // Keep the animation inside the clone budget: a target past either
-                // end first jumps one real cycle the other way, silently.
+                // Keep the animation inside the clone budget and off the end-aligned
+                // last page (a loop has no end, so that alignment would shift at the
+                // settle jump): a target past the start or on the last page first
+                // jumps one real cycle the other way, silently.
                 const n = this._real;
                 if (index < 0) { this._jumpTo(this.currentIndex + n); this.currentIndex += n; index += n; }
-                else if (index > this.maxIndex) { this._jumpTo(this.currentIndex - n); this.currentIndex -= n; index -= n; }
+                else if (index >= this.maxIndex) { this._jumpTo(this.currentIndex - n); this.currentIndex -= n; index -= n; }
             }
             const clampedIndex = Math.max(0, Math.min(index, this.maxIndex));
 
@@ -471,7 +483,7 @@
                 : Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
             const left = NDS.isRTL ? -offset : offset;
-            if (NDS.prefersReducedMotion) this._instant(() => this.wrapper.scrollTo({ left }));
+            if (instant) this._instant(() => this.wrapper.scrollTo({ left }));
             else this.wrapper.scrollTo({ left, behavior: 'smooth' });
         }
 
@@ -590,7 +602,7 @@
                 this._attachActivation(this.pagination, (e) => {
                     const bullet = e.target.closest('.nds-bullet');
                     if (bullet && this.pagination.contains(bullet)) {
-                        this.goTo(Number(bullet.dataset.page) * this.slidesPerView);
+                        this.goTo(this._pageStart(Number(bullet.dataset.page)));
                     }
                 });
             }
@@ -611,24 +623,14 @@
             if (!this.pagination) return;
 
             const bullets = this.pagination.querySelectorAll('.nds-bullet');
-            const n = this._real;
-            // Real-slide space, unlike the full-list `maxIndex` getter.
-            const realMaxIndex = Math.max(0, n - this.slidesPerView);
             const current = this._realIndex;
 
-            // Map the real index to page based on proximity to page start indices.
-            // For 6 slides, 4 per view: page 0 starts at index 0, page 1 starts at index 2.
+            // The page whose start is at or before the lead slide. A drifted loop
+            // then skips at most the last bullet on a wrap; the nearest start would
+            // also leap two bullets mid-cycle.
             let currentPage = 0;
-            let closestDistance = Infinity;
-
-            for (let i = 0; i < bullets.length; i++) {
-                const pageStartIndex = Math.min(i * this.slidesPerView, realMaxIndex);
-                const distance = Math.abs(current - pageStartIndex);
-
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    currentPage = i;
-                }
+            for (let i = 1; i < bullets.length; i++) {
+                if (this._pageStart(i) <= current) currentPage = i;
             }
 
             bullets.forEach((bullet, i) => {
@@ -676,7 +678,7 @@
                     break;
                 case 'End':
                     e.preventDefault();
-                    this.goTo(this._real - this.slidesPerView);
+                    this.goTo(this._pageStart(this._pageCount - 1));
                     break;
             }
         }
@@ -738,25 +740,9 @@
         // ==============================================
 
         slideTo(index, animate = true) {
-            // Real index in, clamped to the last real page, then offset past the clones.
-            index = this._head + Math.max(0, Math.min(index, this._real - this.slidesPerView));
-
-            const targetSlide = this.slides[index];
-            if (!targetSlide) return;
-
-            const wrapperRect = this.wrapper.getBoundingClientRect();
-            const slideRect = targetSlide.getBoundingClientRect();
-
-            const scrollDelta = NDS.isRTL
-                ? slideRect.right - wrapperRect.right
-                : slideRect.left - wrapperRect.left;
-
-            if (animate && !NDS.prefersReducedMotion) {
-                this.wrapper.scrollBy({ left: scrollDelta, behavior: 'smooth' });
-                return;
-            }
-
-            this._instant(() => this.wrapper.scrollBy({ left: scrollDelta }));
+            // Real index in, clamped to the last real page.
+            index = Math.max(0, Math.min(index, this._real - this.slidesPerView));
+            this._goToFull(this._full(index), !animate || NDS.prefersReducedMotion);
         }
 
         // ==============================================
