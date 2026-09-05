@@ -1,6 +1,6 @@
 ---
 name: nds-css-audit
-description: Audit NDS source SCSS for measurable CSS-output improvements — selector compaction (combine `:hover`/`:focus-visible` blocks with `:is()`, fold chained `:not()` calls), dead declarations (shorthand-after-longhand overrides, duplicate property/custom-property keys, `@include ltr` blocks that re-state RTL defaults), duplicate rule bodies (in-file and cross-file mixin candidates), selector performance/complexity (unanchored `*`, unanchored `[attr]`, ID selectors in components, deep/compound selector chains, a universal or bare tail under a class or attribute JS toggles at runtime — which makes every flip restyle the host's whole subtree), and token-usage consistency (hardcoded numeric values where a token exists, dead component tokens, semantic-token use where a more specific component-level token wraps the same value, asymmetric component-token state coverage). Use for "audit the CSS", "shrink the CSS output", "optimize selectors", "find dead CSS", "combine state blocks with :is()", "find duplicate rule bodies", "find selectors that are too expensive", "check token consistency", "find hardcoded values that should be tokens", "find dead tokens", "find dangling token references" (a `var(--x)` defined nowhere). NOT for JS audits (use `nds-js-audit`), doc-page audits (use `nds-doc`), accessibility/contrast checks, specificity-conflict resolution, unused-selector detection, or anything that requires the rendered DOM.
+description: Audit NDS source SCSS for measurable CSS-output improvements — selector compaction (combine `:hover`/`:focus-visible` blocks with `:is()`, fold chained `:not()` calls), dead declarations (shorthand-after-longhand overrides, duplicate property/custom-property keys, `@include ltr` blocks that re-state RTL defaults), duplicate rule bodies (in-file and cross-file mixin candidates), selector performance/complexity (unanchored `*`, unanchored `[attr]`, ID selectors in components, deep/compound selector chains, a universal or bare tail under a class or attribute JS toggles at runtime — which makes every flip restyle the host's whole subtree — and a named descendant tail after `[data-state]`, which taxes every state write on every container above it), and token-usage consistency (hardcoded numeric values where a token exists, dead component tokens, semantic-token use where a more specific component-level token wraps the same value, asymmetric component-token state coverage). Use for "audit the CSS", "shrink the CSS output", "optimize selectors", "find dead CSS", "combine state blocks with :is()", "find duplicate rule bodies", "find selectors that are too expensive", "check token consistency", "find hardcoded values that should be tokens", "find dead tokens", "find dangling token references" (a `var(--x)` defined nowhere). NOT for JS audits (use `nds-js-audit`), doc-page audits (use `nds-doc`), accessibility/contrast checks, specificity-conflict resolution, unused-selector detection, or anything that requires the rendered DOM.
 argument-hint: "[target] [optional: rule-group]"
 ---
 
@@ -12,7 +12,7 @@ This skill audits NDS SCSS source — files in `_sass/` — for measurable impro
 
 > **Scope this skill narrowly.** Full-tree runs read every file under `_sass/components/` and re-parse the token table from the token-source files (Phase 2 list). Single-file runs are several times cheaper and are the default fit.
 > - `/nds-css-audit _sass/components/_<name>.scss [rule-group]` — single-file audit. Omit the rule-group to run all five groups. The cheap mode; best fit before merging a new or refactored component.
-> - `/nds-css-audit full-tree <rule-group>` — cross-file rules only. Costs several single-file passes. Best fit for cross-file consistency sweeps (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05, TOK-06).
+> - `/nds-css-audit full-tree <rule-group>` — cross-file rules only. Costs several single-file passes. Best fit for cross-file consistency sweeps (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05, TOK-06) and for ranking the whole shared `[data-state]` invalidation set (PERF-06; single-file sees only the target's own tails).
 
 ---
 
@@ -99,6 +99,7 @@ NDS CSS Audit — for best results target a single file or run one group at a ti
   Full-tree (cross-file rules only):
     1  full-tree DUPE     Cross-file duplicate rule bodies (mixin candidates)
     2  full-tree TOK      Token-consistency (hardcoded values, dead tokens, asymmetric states)
+    3  full-tree PERF     The shared [data-state] invalidation set — every descendant tail ranked and paired with container writes (PERF-06)
     0  exit
 
 Reply with a number, or type the scope directly.
@@ -111,7 +112,7 @@ Accept `0` or `exit` as "end here, nothing runs".
 | `$1` | Files in scope | Rule groups run |
 |---|---|---|
 | **filename** (e.g. `_sass/components/_buttons.scss`, `_buttons.scss`, `buttons`) | One file: the resolved target | A rule-group filter (`SEL` / `DEAD` / `DUPE` / `PERF` / `TOK`), or `all`. **When omitted, default to `all`** — single-file `all` is cheap. Full-tree-only rules (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05, TOK-06) are skipped with a one-line banner. |
-| `full-tree` | All `_sass/components/*.scss` (plus `_variables*.scss` and `_mixins.scss` for reference) | Must be paired with a rule-group filter that contains cross-file rules — only `DUPE` and `TOK`. Other groups rejected in full-tree mode. |
+| `full-tree` | All `_sass/components/*.scss` (plus `_variables*.scss` and `_mixins.scss` for reference) | Must be paired with a rule-group filter that contains cross-file rules — `DUPE`, `TOK`, or `PERF` (PERF-06 alone). `SEL` and `DEAD` are rejected in full-tree mode. |
 
 **File resolution.** When `$1` doesn't match `full-tree`, treat as a filename and try in order: (1) literal `$1` if it includes a path separator and exists; (2) `_sass/components/$1` if it ends in `.scss`; (3) `_sass/components/_$1.scss` if it starts with `_`; (4) `_sass/components/_$1.scss` for the bare name. Stop at the first match. If none exist, branch by tier before the generic miss-message: **(a)** if the bare `<X>` matches a **Tier-2** file at `_sass/_<X>.scss` (the Tier-2 list below), reply: *"`<X>` isn't a component, but `_sass/_<X>.scss` is a Tier-2 foundation file, excluded from bare-name scope by design (prevents accidental Tier-2 audits). To audit it directly (reduced catalog — see the Tier-2 advisory), pass the explicit path: `/nds-css-audit _sass/_<X>.scss`."* and stop. **(b)** if `<X>` matches a **Tier-1** file at `_sass/_<X>.scss` (e.g. `showcase`, `hgiRoundedStroke`), give the Tier-1 hard-exclusion reply (above) instead. **(c)** otherwise reply: *"Couldn't resolve `<filename>`. Tried: `_sass/components/_<X>.scss`. Pass the filename as it appears in `_sass/components/`."* — and if the target ends in `.js` or names a component that exists only under `_js/`, add: *"For JS behavior, use `/nds-js-audit nds-<name>.js` — this skill audits SCSS only."* Then stop.
 
@@ -167,7 +168,7 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 | `SEL` | Selector compaction (3 rules) | single-file only |
 | `DEAD` | Dead declarations (7 rules — DEAD-07 browser-confirmed) | single-file only |
 | `DUPE` | Duplicate rule bodies (3 rules — DUPE-02 full-tree) | single-file + DUPE-02 full-tree |
-| `PERF` | Selector performance/complexity (4 rules) | single-file only |
+| `PERF` | Selector performance/complexity (6 rules — PERF-06 also full-tree) | single-file + PERF-06 full-tree |
 | `TOK` | Token consistency (7 rules — TOK-01/02/04/05/06 full-tree, +TOK-07 dangling refs single-file+full-tree) | single-file + TOK-01/02/04/05/06 full-tree |
 | `all` (**single-file only**) | SEL + DEAD + DUPE + PERF + TOK against one file → one consolidated report | single-file only |
 
@@ -175,7 +176,7 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 
 **Ponytail overlay.** The ponytail lens (Phase 3) runs on top of whichever groups run — it is not itself a selectable group and needs no full-tree pairing. Pass a `no-pony` token (e.g. `/nds-css-audit _buttons.scss all no-pony`, or alongside a single group) to suppress it for a pure catalog run.
 
-**Full-tree restriction.** Only DUPE-02 (cross-file duplicate rule bodies), TOK-01 (cross-file hardcoded-value duplication), TOK-02 (dead component tokens), TOK-04 (asymmetric state coverage), TOK-05 (cross-file duplicate keys / upstream-value duplication), and TOK-06 (cross-sibling indirection-token asymmetry) work cross-file. If the user passes `full-tree SEL` / `full-tree DEAD` / `full-tree PERF`, reject: *"`SEL`/`DEAD`/`PERF` rules are per-file — full-tree mode applies only to `DUPE` and `TOK`. Run single-file (`/nds-css-audit _sass/components/_<name>.scss <group>`) instead."*
+**Full-tree restriction.** Only DUPE-02 (cross-file duplicate rule bodies), TOK-01 (cross-file hardcoded-value duplication), TOK-02 (dead component tokens), TOK-04 (asymmetric state coverage), TOK-05 (cross-file duplicate keys / upstream-value duplication), TOK-06 (cross-sibling indirection-token asymmetry) and PERF-06 (the shared `[data-state]` invalidation set — single-file reports the target's own tails and its component's container writes, full-tree ranks every tail in the compiled CSS against every container write in `_js/`) work cross-file. `full-tree PERF` runs PERF-06 alone and says so in the header line. If the user passes `full-tree SEL` / `full-tree DEAD`, reject: *"`SEL`/`DEAD` rules are per-file — full-tree mode applies only to `DUPE`, `TOK` and `PERF` (PERF-06). Run single-file (`/nds-css-audit _sass/components/_<name>.scss <group>`) instead."*
 
 ## Phase 2: READ
 
@@ -304,6 +305,7 @@ The expanded view is what every rule's detection operates on. The source view is
 - **Transitive mixin expansion** — the depth-5 `@include`-chain resolution from "Mixin resolution" above, where a finding may live inside a mixin definition rather than the call site.
 - **PERF-04** — compound-count / descendant-depth / cascade reasoning on deep variant grids.
 - **PERF-05** — the JS cross-read: which class/attribute names `_js/` toggles at runtime and on which host, then every selector in the file that mentions them, tail by tail.
+- **PERF-06** — the same read for the shared `[data-state]` set: every named tail this file puts after a `[data-state…]` compound, ranked tag / shared class / component-internal, plus the component's own container-host `data-state` writes.
 - **Cross-component reach** — the dependency-graph scan (Component relationships, above): list every consumer of a touched token/mixin/class so the recommendation can downgrade to "coordinate first."
 
 **Skip guard.** When the run's only in-scope rules are mechanically-greppable single-rule groups with no whole-file rule (e.g. a lone `SEL` or `PERF` run), skip the agent entirely — there is nothing for it to deep-read.
@@ -383,6 +385,7 @@ For each finding, the report MUST emit both lines:
 | **PERF-02** (anchor attribute) | size ↑ slightly | perf ↑ — attribute search bounded by class. |
 | **PERF-03** (ID → class) | ±0 | perf ↑ — lower specificity, easier overrides. |
 | **PERF-05** (name the tail / move the state down) | ±0 | perf ↑↑ on every runtime flip — a whole-subtree restyle becomes a targeted one (mainnav: ~890 ms → ~80 ms at 20x). Needs the JS cross-read for the toggled names; the flip timing in the fix column is the proof. |
+| **PERF-06** (styling onto the stateful element / own attribute for a container host) | ±0 | perf ↑↑ on every `data-state` write above the tail — the table wrapper went 140 ms → 0 at 1x. Single-file finds the target's own tails; full-tree ranks the whole set. The write timing against a no-rule attribute control is the proof. |
 | **PERF-04** (Solution A / B / accept-and-annotate) | profile authoritative in the PERF-04 fix-column "Size impact:/Perf impact:" blocks in `RULES-PERF.md` — Sol-A size ↑ (DE-RECOMMENDED), Sol-B ±0, annotate ±0 | Sol-A/B perf ↑ (compound/depth drop), annotate ±0 |
 | **TOK-01** (literal → token) | size ↑ — `var(--name)` is wider than typical literals (`var(--spacing-md)` ~ 18B vs `16px` ~ 4B) | ±0 — runtime lookup is cheap. **Hidden size tradeoff** — design-system consistency win, output-bytes loss. |
 | **TOK-02** (delete dead token) | size ↓ | ±0. |
