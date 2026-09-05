@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "05/09/2026 - 01:03 PM"
+last_edit: "05/09/2026 - 06:27 PM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -1139,8 +1139,8 @@ last_edit: "05/09/2026 - 01:03 PM"
                         <tr><td><code class="nds-inline-code lang-html">--mid-slides</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Slides per view at the medium breakpoint (600px to 959px)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--min-slides</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Slides per view at the small breakpoint (narrower than 600px)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--peek</code></td><td>unset</td><td>Length of the next slide left showing at the end of each page, for example <code class="nds-inline-code lang-html">40px</code>. Leave it unset, or set <code class="nds-inline-code lang-html">0px</code>, for no peek. JS drops the reserve when the deck fits one page</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between slides. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> the track clips its gutters down to one gap, so a neighbour never shows in them. Set <code class="nds-inline-code lang-html">--gap</code> inline and JS never touches it</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--padding</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Inline padding applied to the scroll wrapper. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> the default shifts to <code class="nds-inline-code lang-html">var(--nds-viewport-padding)</code> so the swiper can bleed to the viewport edge while its content stays aligned</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between slides. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> the gutter at each end of the track is one gap too, so a neighbour ends at the edge of the track</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--padding</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Gutter at each end of the track. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> the default is one gap, and the track runs to the edge of the breakout. Keep it at or below the gap. A wider gutter shows the neighbour slides in it</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-200)</code></td><td>Inactive pagination bullet color (light theme); shifts to neutral-700 in dark mode and to translucent white on hero/on-color backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-default-hovered</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-300)</code></td><td>Inactive bullet hover color (one step from default: neutral-300 light, neutral-600 dark)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-active</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-600)</code></td><td>Active pagination bullet color (light theme); shifts to <code class="nds-inline-code lang-css">--colors-primary-500</code> in dark mode and to base white on hero/on-color backgrounds</td></tr>

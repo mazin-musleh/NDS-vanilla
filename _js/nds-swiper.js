@@ -17,7 +17,7 @@
  *   slides-max · slides-mid · slides-min · peek  deprecated bare-attribute spellings of the
  *                                                same knobs — JS-only, so the row waits for
  *                                                the loader preset (DEPRECATIONS.md)
- *   --gap                                        set it and JS leaves the gap alone
+ *   --gap                                        gap between slides
  *   data-swiper-loop                             endless row: clones at both ends, a silent
  *                                                jump when the scroll rests on one. Needs
  *                                                more slides than the largest tier's count,
@@ -170,9 +170,8 @@
             this._slidesMin = knob('--min-slides', 'slides-min') || 1;
             this._peek = knob('--peek', 'peek');
             // An attribute-authored peek is invisible to CSS, so JS writes --peek for
-            // it and owns it; an author's inline --peek or --gap is never touched.
+            // it and owns it; an author's inline --peek is never touched.
             this._ownsPeek = container.hasAttribute('peek');
-            this._authorGap = container.style.getPropertyValue('--gap');
 
             // Loop needs more slides than the largest page, or a page would show a
             // slide twice. Decided once, against the largest tier.
@@ -272,8 +271,6 @@
             this.updateBoundaryClasses();
             this.lastIndex = this.currentIndex;
 
-            this.updatePeekStyles();
-
             this.container.setAttribute('data-nds-swiper-initialized', 'true');
         }
 
@@ -342,15 +339,6 @@
             if (this.pagination) this.setupPagination();
         }
 
-        // Only the no-peek case is ours: _swiper.scss folds a gap term into the peek
-        // reserve, so a deck with a peek owns its own gap and JS must not touch it.
-        updatePeekStyles() {
-            if (this.isHero || this._authorGap || this._peek > 0) return;
-
-            if (this.slidesPerView === 1) this.container.style.setProperty('--gap', 'var(--nds-viewport-padding)');
-            else this.container.style.removeProperty('--gap');
-        }
-
         setupResize() {
             // Breakpoint-driven slidesPerView: shared via ensureSharedResize; instance
             // is invoked through _resizeSwipers membership.
@@ -390,8 +378,6 @@
                 this.updateButtons();
                 this.updateBoundaryClasses();
             }
-
-            this.updatePeekStyles();
         }
 
         // ==============================================
@@ -772,7 +758,6 @@
             NDS.State.clear(this.container); // at-start/at-end are a documented consumer hook
             ['--total', '--slides'].forEach(p => this.container.style.removeProperty(p));
             if (this._ownsPeek) this.container.style.removeProperty('--peek');
-            if (!this._authorGap) this.container.style.removeProperty('--gap');
             if (this.wrapper) this.wrapper.style.removeProperty('overflow');
             if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }
             if (this.navigation) this.navigation.toggleAttribute('hidden', this._navHadHidden);

@@ -22,9 +22,10 @@
     // counted the pages, 0px once it finds a single page (nothing to peek at).
     // Unset --peek makes it invalid, so every reader falls back to "no peek".
     --_peek: var(--peek);
-    // Peek reserve = peek + one gap. --peek: 0px must mean no peek as well: the
-    // gap term is min(peek x 1000, gap), a full gap for any positive peek, 0 for none.
-    --_peek-reserve: calc(var(--_peek) + min(var(--_peek) * 1000, var(--swiper-gap)));
+    // Peek reserve = peek + the gap the gutter does not already give (a full gap
+    // with no gutter, none inside .nds-max-width). --peek: 0px must mean no peek
+    // as well: min(peek x 1000, ...) is the whole term for any positive peek, 0 for none.
+    --_peek-reserve: calc(var(--_peek) + min(var(--_peek) * 1000, var(--swiper-gap) - var(--swiper-padding)));
     --swiper-peek: var(--_peek-reserve, 0px);
 
     display: flex;
@@ -38,18 +39,17 @@
     @include desktop(min) { --swiper-slides: var(--slides, var(--max-slides, 1)); }
 
     // One page has nothing to peek. JS counts (preset, then init) and leaves
-    // data-swiper-peek off; the reserve, the end space and the clip follow.
+    // data-swiper-peek off; the reserve follows.
     &:is([data-swiper-preset], [data-nds-swiper-initialized]):not([data-swiper-peek]) {
         --_peek: 0px;
     }
 
+    // Inside .nds-max-width the row runs to the breakout's edge, the viewport on
+    // any screen narrower than the content max width, with a gutter of one gap at
+    // each end. A neighbour then ends exactly at that edge, so nothing needs
+    // clipping. The same geometry at every width: the gutter is one gap.
     .nds-max-width & {
-        --swiper-padding: var(--padding, var(--nds-viewport-padding));
-
-        // The gap stays the token here too. The scrollport runs one padding past
-        // the page on each side, so a gap narrower than the padding would show a
-        // neighbour's edge in it; the wrapper's clip-path hides that instead of a
-        // wider gap, so the cards keep the width.
+        --swiper-padding: var(--padding, var(--swiper-gap));
     }
 
     // Pre-init guard for the hero variant lives in nds.critical.min.scss
@@ -65,7 +65,6 @@
 .nds-swiper-wrapper {
     display: flex;
     height: 100%;
-    width: 100%;
     gap: var(--swiper-gap);
 
     overflow-x: auto;
@@ -84,53 +83,13 @@
     // engine; its negative margin swallows the gap before it, so its width is
     // the whole space. Start padding stays padding, and the slide formula
     // subtracts the end space so a page still ends where the padding began.
-    // No max() floor in this value: it reaches the slide's calc(), and Safari
-    // drops a calc() with max() nested in it — the slide then sizes to its
-    // image. The old 2px floor never applied anyway (max(2px, 0) was invalid);
-    // the first/last slide's own 2px padding is the shadow room.
-    --_swiper-pad: var(--swiper-padding);
-    padding-inline: var(--_swiper-pad) 0;
-    // The end space the slide formula subtracts. A peek deck drops it: its page
-    // ends one peek before the scrollport edge, not at the content edge, so the
-    // next slide shows exactly --peek. Same min(peek x 1000, ...) step as the
-    // reserve; invalid without --peek, so the slide falls back to the full space.
-    --_end-space: calc(var(--_swiper-pad) - min(var(--_peek) * 1000, var(--_swiper-pad)));
-    // Start snap padding = the wrapper's own padding, so every slide rests where
-    // slide one does and the peek shows at the end only. With the peek reserve
-    // here instead, a later slide snapped one reserve in and the slide before it
-    // showed at the start — the loop lands past the head clones, so it always did.
-    scroll-padding-inline: var(--_swiper-pad) max(var(--swiper-peek), var(--swiper-padding));
+    padding-inline: var(--swiper-padding) 0;
+    // Snap padding = the gutter, so every slide rests where slide one does.
+    scroll-padding-inline: var(--swiper-padding);
     &::after {
         content: "";
-        flex: 0 0 var(--_swiper-pad);
+        flex: 0 0 var(--swiper-padding);
         margin-inline-start: calc(-1 * var(--swiper-gap));
-    }
-
-    @include desktop(min) {
-        .nds-content-layout.nds-cardView & {
-            --_swiper-pad: 0px;
-        }
-    }
-
-    // The gap is narrower than the padding, so a neighbour ends inside the
-    // gutter: the next slide at the end, the previous slide at the start on
-    // every page but the first (every page of a loop). Clip each gutter down
-    // to one gap: the neighbour is gone, the gap stays as shadow room. A peek
-    // deck keeps its end open (2px), since its next slide is meant to show;
-    // the min(peek x 1000, ...) step is the same one the reserve uses, and an
-    // unset --peek makes --_clip-end invalid, so it falls back to the start's.
-    // Never below 2px where there is padding: scroll offsets snap to device
-    // pixels while layout stays fractional, and at 1.25x a neighbour's border
-    // painted one device pixel inside the edge (measured in headless Chrome).
-    // clip-path is physical: start is the right edge in RTL, the left in LTR.
-    .nds-max-width .nds-swiper:not(.nds-hero) & {
-        --_clip-min: min(2px, var(--swiper-padding));
-        --_clip-start: max(var(--_clip-min), var(--swiper-padding) - var(--swiper-gap));
-        --_clip-end: max(var(--_clip-min), var(--swiper-padding) - var(--swiper-gap) - min(var(--_peek) * 1000, var(--swiper-padding)));
-        clip-path: inset(0 var(--_clip-start) 0 var(--_clip-end, var(--_clip-start)));
-        @include ltr {
-            clip-path: inset(0 var(--_clip-end, var(--_clip-start)) 0 var(--_clip-start));
-        }
     }
 }
 
@@ -147,11 +106,10 @@
 // ==============================================
 
 .nds-swiper-slide {
-    // Width = (100% − end space − peek − gap × (slides − 1)) / slides
-    // 100% is the wrapper's content box, which carries only the start padding;
-    // the end space is the wrapper's ::after spacer, so a page subtracts it here
-    // (a peek deck subtracts none — see --_end-space on the wrapper).
-    flex: 0 0 calc((100% - var(--_end-space, var(--_swiper-pad)) - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
+    // Width = (100% − end gutter − peek reserve − gap × (slides − 1)) / slides
+    // 100% is the wrapper's content box, which carries only the start gutter;
+    // the end gutter is the wrapper's ::after spacer, so a page subtracts it here.
+    flex: 0 0 calc((100% - var(--swiper-padding) - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
     position: relative;
 
     scroll-snap-align: start;
