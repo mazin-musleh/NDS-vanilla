@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.10.0"
-last_edit: "24/08/2026 - 01:35 AM"
+updated: "1.11.x"
+last_edit: "05/09/2026 - 07:33 PM"
 ---
 
 <!-- Featured Icons -->
@@ -338,6 +338,10 @@ last_edit: "24/08/2026 - 01:35 AM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">--featuredicon-dark-bg</code></td>
                             <td>Fill color for the <code class="nds-inline-code lang-html">nds-dark</code> variant.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--featuredicon-bg-forced</code><br><code class="nds-inline-code lang-html">--featuredicon-color-forced</code><br><code class="nds-inline-code lang-html">--featuredicon-dark-bg-forced</code></td>
+                            <td>The same three colors, set on a parent element instead. Use them when the parent must win over a variant class on the icon. The plain knobs above lose that contest.</td>
                         </tr>
                     </tbody>
                 </table>

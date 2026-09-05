@@ -112,7 +112,7 @@
             });
         }
 
-        if (toggleBtn) addState(toggleBtn, 'open');
+        if (toggleBtn) { addState(toggleBtn, 'open'); NDS.aria.expanded(toggleBtn, true); }
 
         if (isTopMode) {
             addState(accMenu, 'open');
@@ -149,7 +149,7 @@
                 accMenu.classList.add('nds-peek');
                 accMenu.style.removeProperty('padding-top');
             }
-            if (toggleBtn) clearState(toggleBtn);
+            if (toggleBtn) { clearState(toggleBtn); NDS.aria.expanded(toggleBtn, false); }
             if (drawer) drawer.style.removeProperty('--drawer-max-height');
 
             // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
@@ -230,7 +230,7 @@
                 } else {
                     accMenu.style.removeProperty('padding-top');
                 }
-                if (toggleBtn) clearState(toggleBtn);
+                if (toggleBtn) { clearState(toggleBtn); NDS.aria.expanded(toggleBtn, false); }
                 if (drawer) drawer.style.removeProperty('--drawer-max-height');
                 // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
                 if (NDS.Backdrop) NDS.Backdrop.hide();
@@ -265,6 +265,8 @@
 
         // Toggle button
         if (toggleBtn) {
+            // Closed is the start state; open/close only write on a flip.
+            if (!toggleBtn.hasAttribute('aria-expanded')) NDS.aria.expanded(toggleBtn, false);
             const toggleHandler = (e) => {
                 e.stopPropagation();
                 hasState(animTarget, 'open') ? closeMenu(ctx) : openMenu(ctx);

@@ -95,10 +95,13 @@
             white-space: normal;
         }
 
-        &:is(:hover,[data-state~="active"]) .nds-featured-icon {
-            --featuredicon-bg: var(--featuredicons-background-default-light);
-            --featuredicon-color: var(--featuredicons-icon-neutral);
-            --featuredicon-dark-bg: var(--featuredicons-icon-default);
+        // Set on the button, not on the icon: a `.nds-featured-icon` tail here would
+        // sit in the shared data-state set (PERF-06). -forced out-ranks the icon's
+        // own variant class, which a plain inherited knob cannot.
+        &:is(:hover,[data-state~="active"]) {
+            --featuredicon-bg-forced: var(--featuredicons-background-default-light);
+            --featuredicon-color-forced: var(--featuredicons-icon-neutral);
+            --featuredicon-dark-bg-forced: var(--featuredicons-icon-default);
         }
     }
 }

@@ -18,7 +18,7 @@ Reads _site/assets/css/*.css, so build first. Two rules, nothing to maintain:
   2. no tail from SHARED, the classes that appear inside every component.
 A component-owned class tail (.nds-stepper-circle under .nds-stepper-step) is fine:
 it only matches inside its own component. The few selectors in ACCEPTED break rule
-1 or 2 on purpose, each with its reason and its TODO.md follow-up.
+1 or 2 on purpose, each with its reason.
 """
 import glob
 import os
@@ -38,11 +38,8 @@ SHARED = {
     '.nds-progress-circle', '.nds-progress-track', '.nds-neutral', '.nds-center', '.center',
 }
 
-# Selector substring → why it may keep its tail. Each is either a child-component hook
-# still to build (TODO.md) or a value the host cannot supply.
+# Selector substring → why it may keep its tail: a value the host cannot supply.
 ACCEPTED = {
-    '>.nds-btn.nds-menu-btn::after': "arrow follows the PARENT's open state; needs aria-expanded on mainnav/sidemenu toggles first (TODO)",
-    '.nds-drawer-list li>.nds-btn:is(:hover,[data-state~=active]) .nds-featured-icon': 'out-ranks the icon\'s own variant class; needs a forced hook in featured icon (TODO)',
     '.nds-share .nds-dropmenu-menu [data-status=success] i::before': "success glyph; a host cannot supply each item's own glyph as the fallback",
     ':root[data-theme~=dark] .nds-feedback:is([data-status=neutral],[data-status=help])': 'dark neutral/help tweak on the feedback\'s own icon',
     ':root[data-theme~=dark] :is([data-status=neutral],[data-status=help]) .nds-feedback': 'dark neutral/help tweak on the feedback\'s own icon',

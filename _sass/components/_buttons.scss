@@ -562,8 +562,10 @@
   &.nds-menu-btn {
     --_btn-after-size: calc(var(--_btn-icon-size) - 4px);
 
-    &:is([data-state~="opening"], [data-state~="open"], [aria-expanded="true"])::after,
-    :is([data-state~="opening"], [data-state~="open"])>&::after {
+    // Self-only. A parent-state tail would put .nds-btn in the shared data-state
+    // set (PERF-06), so a toggle whose state lives on the parent writes
+    // aria-expanded on the button instead — mainnav dropdowns, sidemenu submenus.
+    &:is([data-state~="opening"], [data-state~="open"], [aria-expanded="true"])::after {
       transform: rotate(180deg);
     }
   }

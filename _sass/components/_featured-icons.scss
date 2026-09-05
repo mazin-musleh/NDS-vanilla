@@ -20,10 +20,16 @@
   //   --featuredicon-color     glyph color
   //   --featuredicon-dark-bg   .nds-dark fill
   //   --featuredicon-radius    corner rounding (.nds-circle forces 50%)
+  // The -forced trio is read AHEAD of the knob, for an ancestor that must win over
+  // the icon's OWN variant class: the variant sets --featuredicon-bg on the icon,
+  // and inheritance resolves by proximity, so an ancestor's knob loses. Nothing on
+  // the icon sets -forced, so the ancestor always wins. It is what lets a host style
+  // a nested icon from its own selector instead of a `[data-state] .nds-featured-icon`
+  // tail, which would sit in the shared data-state set (PERF-06). Drawer uses it.
   --_featuredicon-size: var(--featuredicon-size, 40px);
-  --_featuredicon-bg: var(--featuredicon-bg, var(--featuredicons-background-primary-light));
-  --_featuredicon-color: var(--featuredicon-color, var(--featuredicons-icon-primary));
-  --_featuredicon-dark-bg: var(--featuredicon-dark-bg, var(--background-primary));
+  --_featuredicon-bg: var(--featuredicon-bg-forced, var(--featuredicon-bg, var(--featuredicons-background-primary-light)));
+  --_featuredicon-color: var(--featuredicon-color-forced, var(--featuredicon-color, var(--featuredicons-icon-primary)));
+  --_featuredicon-dark-bg: var(--featuredicon-dark-bg-forced, var(--featuredicon-dark-bg, var(--background-primary)));
   --_featuredicon-radius: var(--featuredicon-radius, calc((var(--_featuredicon-size) / 4) - 2px));
 
   display: inline-flex;

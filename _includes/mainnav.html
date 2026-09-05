@@ -41,7 +41,8 @@
                     <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-dropdown{%- endif %}" {{ item.attr }}>
                         {%- if item.type %}
                         <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"
-                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}>
+                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}
+                            {%- if item.type == 'dropdown' %} aria-expanded="false"{%- endif %}>
                             <span class="nds-label">{{ item.label }}</span>
                         </a>
                         {%- if item.type == 'dropdown' %}

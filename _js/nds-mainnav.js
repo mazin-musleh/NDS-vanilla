@@ -570,6 +570,10 @@
 
             if (open) addState(navLink, 'active');
             else removeState(navLink, 'active');
+            // The link's own open signal — AT reads it, and _buttons.scss rotates the
+            // arrow off it, because a parent-state tail would put .nds-btn in the
+            // shared data-state set (PERF-06).
+            NDS.aria.expanded(navLink, open);
 
             const collapseHandlesBackdrop = !isInMinimal && hasState(DOM.collapse, 'open');
             if (open && !collapseHandlesBackdrop) {
@@ -1174,6 +1178,10 @@
         // its correct breakpoint layout (display:none mobile /
         // display:flex desktop). Hamburger click can now animate freely.
         removeCollapseHidden();
+        // Closed is the start state, and dropdown.toggle only writes on a flip.
+        // Ours ships the attribute; stamp it for consumer markup that doesn't.
+        DOM.nav.querySelectorAll('.nds-dropdown > .nds-nav-link:not([aria-expanded])')
+            .forEach(link => NDS.aria.expanded(link, false));
         setupEventListeners();
         // handleDocumentClick shares the setupEventListeners AbortController so
         // both document-click listeners detach atomically on teardown. It

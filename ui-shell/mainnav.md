@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.x"
-last_edit: "03/09/2026 - 11:51 PM"
+last_edit: "05/09/2026 - 07:38 PM"
 ---
 
 
@@ -188,7 +188,7 @@ last_edit: "03/09/2026 - 11:51 PM"
                                         <div class="nds-expandable-content">
                                             <code class="lang-html code">
 &lt;li class="nds-nav-item nds-dropdown"&gt;
-  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
+  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
     &lt;span class="nds-label"&gt;Services&lt;/span&gt;
   &lt;/a&gt;
   &lt;div class="nds-dropdown-menu" hidden&gt;
@@ -259,7 +259,7 @@ last_edit: "03/09/2026 - 11:51 PM"
                                         </div>
                                         <code class="lang-html code">
 &lt;li class="nds-nav-item nds-dropdown"&gt;
-  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
+  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
     &lt;span class="nds-label"&gt;Tools&lt;/span&gt;
   &lt;/a&gt;
   &lt;div class="nds-dropdown-menu nds-fit" hidden&gt;
@@ -315,7 +315,7 @@ last_edit: "03/09/2026 - 11:51 PM"
                                         <div class="nds-expandable-content">
                                             <code class="lang-html code">
 &lt;li class="nds-nav-item nds-dropdown"&gt;
-  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
+  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
     &lt;span class="nds-label"&gt;All Services&lt;/span&gt;
   &lt;/a&gt;
   &lt;div class="nds-dropdown-menu" hidden&gt;
