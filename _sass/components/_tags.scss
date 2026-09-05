@@ -188,21 +188,22 @@
   // STATUS VARIANT
   // ==============================================
 
+  // The dot is always declared; a status turns it on through --_tag-dot
+  // (PERF-06: no `.nds-label` tail after [data-status]).
+  .nds-label::before {
+    content: var(--_tag-dot, none);
+    display: inline-block;
+    width: var(--_tag-dot-size);
+    height: var(--_tag-dot-size);
+    border-radius: 50%;
+    background-color: var(--_icon);
+    margin-inline-end: var(--spacing-md);
+  }
+
   &[data-status] {
     border-radius: 999px;
     --tag-border: transparent;
-
-    .nds-label {
-      &::before {
-        content: "";
-        display: inline-block;
-        width: var(--_tag-dot-size);
-        height: var(--_tag-dot-size);
-        border-radius: 50%;
-        background-color: var(--_icon);
-        margin-inline-end: var(--spacing-md);
-      }
-    }
+    --_tag-dot: "";
   }
 
   // ==============================================

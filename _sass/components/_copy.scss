@@ -12,13 +12,18 @@
     }
 
     // No color transition — it's non-composited; the icon scale below carries the feedback
+    // The icon reads the --_copy-icon-* hooks (PERF-06: no `.nds-icon` tail after
+    // [data-status]). The transition rides the same hook, so clearing the status
+    // snaps the icon back with no animation, as before.
+    .nds-icon {
+        transition: transform var(--_copy-icon-transition, 0s) ease;
+        transform: scale(var(--_copy-icon-scale, 1));
+    }
+
     &[data-status="success"] {
         color: var(--text-success);
         pointer-events: none;
-
-        .nds-icon {
-            transition: transform 150ms ease;
-            transform: scale(1.1);
-        }
+        --_copy-icon-transition: 150ms;
+        --_copy-icon-scale: 1.1;
     }
 }

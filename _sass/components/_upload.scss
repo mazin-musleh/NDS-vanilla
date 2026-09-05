@@ -154,11 +154,11 @@
         min-height: 36px;
 
         // Status-driven visibility: feedback shown by default, progress hidden
-        .nds-feedback { display: var(--_file-feedback, flex); }
+        .nds-feedback { display: var(--_file-feedback, flex); align-self: var(--_file-feedback-align, auto); }
         // Size default lives here, not on a style attribute — a strict style-src blocks
         // that form. Private name keeps --progress-size free for a consumer override.
         .nds-progress-circle { --_progress-size: var(--progress-size, 24px); display: var(--_file-progress, none); }
-        .nds-file-error { display: none; }
+        .nds-file-error { display: var(--_file-error-display, none); }
 
         // Uploading/processing: show progress, hide feedback
         &[data-state~="uploading"],
@@ -183,10 +183,8 @@
 
             --_file-progress: none;
             --_file-feedback: flex;
-
-            .nds-feedback { align-self: flex-start; }
-
-            .nds-file-error { display: flex; }
+            --_file-feedback-align: flex-start;
+            --_file-error-display: flex;
         }
 
         .nds-file-info {

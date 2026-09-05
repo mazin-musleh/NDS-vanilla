@@ -74,10 +74,9 @@
     --btn-color: var(--button-status-success-text) !important;
     --btn-color-hover: var(--button-status-success-text) !important;
     --_status-border: var(--button-border-success);
-
-    :is(i, .nds-icon) {
-      --nds-icon: var(--nds-icon-checkmark-circle-01);
-    }
+    // Status swaps every mask icon inside through the icon base's --nds-icon-forced
+    // hook (PERF-06: no `.nds-icon` tail after [data-status]).
+    --nds-icon-forced: var(--nds-icon-checkmark-circle-01);
   }
 
   &[data-status="error"] {
@@ -86,10 +85,7 @@
     --btn-color: var(--button-status-error-text) !important;
     --btn-color-hover: var(--button-status-error-text) !important;
     --_status-border: var(--button-border-error);
-
-    :is(i, .nds-icon) {
-      --nds-icon: var(--nds-icon-cancel-circle);
-    }
+    --nds-icon-forced: var(--nds-icon-cancel-circle);
   }
 
   &[data-status="info"] {
@@ -98,10 +94,7 @@
     --btn-color: var(--button-status-info-text) !important;
     --btn-color-hover: var(--button-status-info-text) !important;
     --_status-border: var(--button-border-info);
-
-    :is(i, .nds-icon) {
-      --nds-icon: var(--nds-icon-information-circle);
-    }
+    --nds-icon-forced: var(--nds-icon-information-circle);
   }
 
   &[data-status="warning"] {
@@ -110,10 +103,7 @@
     --btn-color: var(--button-status-warning-text) !important;
     --btn-color-hover: var(--button-status-warning-text) !important;
     --_status-border: var(--button-border-warning);
-
-    :is(i, .nds-icon) {
-      --nds-icon: var(--nds-icon-alert-circle);
-    }
+    --nds-icon-forced: var(--nds-icon-alert-circle);
   }
 
   // Status border paints only on the outline variant; --_status-border is set per status above.

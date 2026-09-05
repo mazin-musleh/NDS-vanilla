@@ -716,7 +716,7 @@
     // The observer catches State writes and bare setAttribute alike, in a microtask —
     // before the next paint, not inside the write. The scan covers markup that ships
     // with a token and runs before the reveal (0.2ms at 6.6x for loading).
-    const MIRRORS = { loading: 'nds-loading', hidden: 'nds-hidden', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
+    const MIRRORS = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
     const _mirrored = new WeakMap();
     const mirrorTokens = (el) => {
         for (const token in MIRRORS) {

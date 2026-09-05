@@ -14,17 +14,19 @@
     align-items: center;
     // Default message colour. A status overrides it below; without one the
     // message reads as body text instead of inheriting whatever surrounds it.
-    color: var(--text-primary-paragraph);
+    color: var(--_feedback-text, var(--text-primary-paragraph));
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
     font-weight: var(--font-weight-medium);
     gap: var(--spacing-sm);
 
-    // Show when status is set (on self or parent) or no status
+    // Both self branches together cover every element; the old `[data-status] &`
+    // branch was the same result at the price of a .nds-feedback tail in the shared
+    // data-status invalidation set (PERF-06). Hosts switch the value via
+    // --_feedback-display (forms uses flex).
     &:not([data-status]),
-    &[data-status],
-    [data-status] & {
-        display: inline-flex;
+    &[data-status] {
+        display: var(--_feedback-display, inline-flex);
     }
 
     // ==============================================
@@ -32,11 +34,13 @@
     // descendant, so it must not be set on the ancestor `[data-status]`)
     // ==============================================
 
-    &[data-status="error"],   [data-status="error"] &    { color: var(--text-error); }
-    &[data-status="critical"],[data-status="critical"] & { color: var(--text-error); }
-    &[data-status="success"], [data-status="success"] &  { color: var(--text-success); }
-    &[data-status="warning"], [data-status="warning"] &  { color: var(--text-warning); }
-    &[data-status="info"],    [data-status="info"] &     { color: var(--text-info); }
+    // Own status: direct. Ancestor status: the host sets --_feedback-text next to its
+    // --feedback-* knobs below and the message reads it (PERF-06).
+    &[data-status="error"]    { color: var(--text-error); }
+    &[data-status="critical"] { color: var(--text-error); }
+    &[data-status="success"]  { color: var(--text-success); }
+    &[data-status="warning"]  { color: var(--text-warning); }
+    &[data-status="info"]     { color: var(--text-info); }
 
     // Neutral/help dark-mode tweaks depend on .nds-outline modifier, so
     // they stay scoped inside .nds-feedback rather than on the generic
@@ -90,6 +94,7 @@
 // ==============================================
 
 [data-status="error"] {
+    --_feedback-text: var(--text-error);
     --feedback-color: var(--icon-error);
     --feedback-ring: var(--icon-error-ring);
     --feedback-icon-color: var(--feedback-icon-fill-error);
@@ -99,6 +104,7 @@
 
 // Critical (severe error, used by alert) — error color + the alert "!" symbol.
 [data-status="critical"] {
+    --_feedback-text: var(--text-error);
     --feedback-color: var(--icon-error);
     --feedback-ring: var(--icon-error-ring);
     --feedback-icon-color: var(--feedback-icon-fill-error);
@@ -107,6 +113,7 @@
 }
 
 [data-status="success"] {
+    --_feedback-text: var(--text-success);
     --feedback-color: var(--icon-success);
     --feedback-ring: var(--icon-success-ring);
     --feedback-icon-color: var(--feedback-icon-fill-success);
@@ -115,6 +122,7 @@
 }
 
 [data-status="warning"] {
+    --_feedback-text: var(--text-warning);
     --feedback-color: var(--icon-warning);
     --feedback-ring: var(--icon-warning-ring);
     --feedback-icon-color: var(--feedback-icon-fill-warning);
@@ -125,6 +133,7 @@
 [data-status="info"] {
     // Outline stroke defaults to information-circle; the "i" symbol must be
     // explicit (the symbol-less ::after default is inert).
+    --_feedback-text: var(--text-info);
     --feedback-color: var(--icon-info);
     --feedback-ring: var(--icon-info-ring);
     --feedback-icon-color: var(--feedback-icon-fill-info);

@@ -47,11 +47,8 @@
     // _forms.scss's `[data-status="error"] > .nds-form-control` never reaches
     // it. Cascade it down, same as the OTP group. Error only, per the
     // binary-outline rule in _forms.scss.
-    &[data-status="error"] .nds-form-control {
-        border-color: var(--form-field-border-error);
-
-        &::before {
-            background-color: var(--form-field-border-error);
-        }
+    &[data-status="error"] {
+        --_control-border-forced: var(--form-field-border-error);
+        --_control-underline-forced: var(--form-field-border-error);
     }
 }

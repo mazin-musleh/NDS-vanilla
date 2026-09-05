@@ -77,6 +77,11 @@
   // Rotation is driven by the card's data-status, set in the block below.
   &.nds-arrow > i.nds-icon {
     --nds-icon: var(--nds-icon-arrow-left-02);
+
+    // The card's data-status sets --_metric-arrow-rotate (PERF-06: no tail).
+    &::before {
+      transform: rotate(var(--_metric-arrow-rotate, 0deg));
+    }
   }
 }
 
@@ -109,10 +114,7 @@
     --featuredicon-bg: var(--featuredicons-background-success-light);
     --featuredicon-color: var(--featuredicons-icon-success);
     --featuredicon-dark-bg: var(--background-success);
-
-    .nds-card-metric-trend.nds-arrow > i.nds-icon::before {
-      transform: rotate(90deg);
-    }
+    --_metric-arrow-rotate: 90deg;
   }
 
   &[data-status="negative"] {
@@ -121,10 +123,7 @@
     --featuredicon-bg: var(--featuredicons-background-error-light);
     --featuredicon-color: var(--featuredicons-icon-error);
     --featuredicon-dark-bg: var(--background-error);
-
-    .nds-card-metric-trend.nds-arrow > i.nds-icon::before {
-      transform: rotate(-90deg);
-    }
+    --_metric-arrow-rotate: -90deg;
   }
 
   > .nds-card-header {

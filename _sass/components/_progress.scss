@@ -88,28 +88,31 @@
   }
 
 
-  // Status feedback icon inside circle
-  :is(.nds-feedback, .nds-feedback-icon) {
-    display: none;
+  // Status swaps the percentage for the feedback icon. Everything reads the
+  // --_progress-status-* hooks the [data-status] rule sets (PERF-06: no tails).
+  // Same specificity as the mixin's :is() rule, later in the cascade.
+  .nds-progress-info .nds-progress-percentage {
+    display: var(--_progress-pct-display, flex);
+  }
+
+  .nds-feedback {
+    display: var(--_progress-feedback-display, none);
     justify-content: center;
   }
 
+  .nds-feedback-icon {
+    display: var(--_progress-icon-display, none);
+    justify-content: center;
+    width: var(--_progress-icon-size, var(--_feedback-size));
+    height: var(--_progress-icon-size, var(--_feedback-size));
+    font-size: var(--_progress-icon-size, var(--_feedback-size));
+  }
 
   &[data-status] {
-    .nds-progress-percentage {
-      display: none;
-    }
-
-    .nds-feedback {
-      display: flex;
-    }
-
-    .nds-feedback-icon {
-      display: inline-flex;
-      width: clamp(16px, calc(var(--_progress-size) * 0.3), 72px);
-      height: clamp(16px, calc(var(--_progress-size) * 0.3), 72px);
-      font-size: clamp(16px, calc(var(--_progress-size) * 0.3), 72px);
-    }
+    --_progress-pct-display: none;
+    --_progress-feedback-display: flex;
+    --_progress-icon-display: inline-flex;
+    --_progress-icon-size: clamp(16px, calc(var(--_progress-size) * 0.3), 72px);
   }
 
 }

@@ -98,12 +98,9 @@
     // boxes stay neutral while the feedback text says the code is wrong.
     // Error only, per the binary-outline rule in _forms.scss.
 
-    &[data-status="error"] .nds-otp-container>.nds-form-control {
-        border-color: var(--form-field-border-error);
-
-        &::before {
-            background-color: var(--form-field-border-error);
-        }
+    &[data-status="error"] {
+        --_control-border-forced: var(--form-field-border-error);
+        --_control-underline-forced: var(--form-field-border-error);
     }
 
 }

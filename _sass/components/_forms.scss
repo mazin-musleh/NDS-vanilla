@@ -62,12 +62,11 @@
     // The field outline is a binary error indicator — normal or red. Success,
     // warning and info speak through the feedback text under the field instead;
     // a coloured outline on every valid field is noise the message already carries.
-    &[data-status="error"] > .nds-form-control {
-        border-color: var(--form-field-border-error);
-
-        &::before {
-            background-color: var(--form-field-border-error);
-        }
+    // Read by the control's border and its ::before underline (PERF-06: no
+    // `.nds-form-control` tail after [data-status]).
+    &[data-status="error"] {
+        --_control-border-forced: var(--form-field-border-error);
+        --_control-underline-forced: var(--form-field-border-error);
     }
 
     // ==============================================
@@ -296,7 +295,7 @@ fieldset {
         height: 2px;
         border-radius: 0 0 3px 3px;
         transform: translateX(-50%);
-        background-color: var(--form-field-border-pressed);
+        background-color: var(--_control-underline-forced, var(--form-field-border-pressed));
         transition: width var(--nds-transition);
         z-index: 2;
     }
@@ -593,14 +592,10 @@ fieldset {
         pointer-events: none; // inherited by every container inside
     }
 
-    &[data-status]>.nds-feedback {
-        display: flex;
-    }
-
-    // Error is the only status a field carries. Anything else is a plain
-    // message in the default colour — see the outline rule above.
-    &[data-status="error"]>.nds-feedback {
-        color: var(--text-error);
+    // The message reads --_feedback-display; its colour comes from the generic
+    // [data-status] host rules in _feedback-icons.scss (PERF-06: no tails).
+    &[data-status] {
+        --_feedback-display: flex;
     }
 
 }
@@ -618,10 +613,7 @@ fieldset {
     --feedback-icon-color: initial;
     --feedback-icon-stroke: initial;
     --feedback-icon-symbol: initial;
-
-    .nds-feedback {
-        color: var(--text-primary-paragraph);
-    }
+    --_feedback-text: initial;
 }
 
 // ==============================================

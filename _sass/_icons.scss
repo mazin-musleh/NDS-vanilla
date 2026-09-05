@@ -116,7 +116,9 @@ i.nds-icon::before {
   position: absolute;
   inset: 0;
   background: currentColor;
-  mask: var(--nds-icon) center / contain no-repeat;
+  // --nds-icon-forced: a host (a status button) swaps every mask icon below it
+  // without a descendant rule in the shared data-status invalidation set (PERF-06).
+  mask: var(--nds-icon-forced, var(--nds-icon)) center / contain no-repeat;
   opacity: var(--nds-icons-opacity, 1);
 }
 

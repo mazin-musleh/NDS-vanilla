@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ratchet on the shared [data-state] invalidation set (nds-css-audit PERF-06).
+"""Ratchet on the shared attribute invalidation sets (nds-css-audit PERF-06).
 
     python scripts/check-data-state-tails.py            # check the built CSS against the baseline
     python scripts/check-data-state-tails.py --report   # every tail, with the selectors that feed it
@@ -9,14 +9,16 @@ Chrome keys attribute invalidation by attribute NAME, never by value. Every sele
 with a compound to the RIGHT of a [data-state~="…"] compound puts that tail (td, i,
 .nds-label) into ONE set called data-state, and any data-state write anywhere then
 restyles every matching descendant of the written element — one scroll-state write
-on a table wrapper restyled 21,008 elements (140 ms at 1x, 2026-09-05). The fix is
-in the CSS, not at the write: state styles its host, and a descendant that must
-change with it reads an inherited custom property the host sets.
+on a table wrapper restyled 21,008 elements (140 ms at 1x, 2026-09-05). data-status
+pools the same way (validation, alerts, file rows). The fix is in the CSS, not at
+the write: state styles its host, and a descendant that must change with it reads an
+inherited custom property the host sets.
 
-Reads _site/assets/css/*.css, so build first. Fails on a universal tail (PERF-05),
-on any tail not in the baseline, and on any tail whose rule count grew. A tail that
-disappears needs no baseline edit; --update records the drop. Adding a tail on
-purpose means editing the baseline in the same commit, where review sees it.
+Reads _site/assets/css/*.css, so build first. Per attribute in ATTRS: fails on a
+universal tail (PERF-05), on any tail not in the baseline, and on any tail whose rule
+count grew. A tail that disappears needs no baseline edit; --update records the drop.
+Adding a tail on purpose means editing the baseline in the same commit, where review
+sees it.
 """
 import glob
 import json
@@ -27,6 +29,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSS_DIR = os.path.join(ROOT, '_site', 'assets', 'css')
 BASELINE = os.path.join(ROOT, 'scripts', 'data-state-tails.json')
+ATTRS = ('data-state', 'data-status')
 NESTING = ('media', 'supports', 'container', 'layer', 'scope')
 
 
@@ -138,26 +141,25 @@ def keys_for(compound):
     return ['universal']
 
 
-def tails():
-    """{key: [selectors]} for every selector with a compound after its last [data-state…]."""
+def tails(attr):
+    """{key: [selectors]} for every selector with a compound after its last [attr…] compound."""
     out = {}
     for path in sorted(glob.glob(os.path.join(CSS_DIR, '*.css'))):
         css = open(path, encoding='utf-8').read()
-        if '[data-state' not in css:
+        if '[' + attr not in css:
             continue
         for prelude in selectors(css):
             for sel in split_top(prelude, ','):
-                if '[data-state' not in sel:
+                if '[' + attr not in sel:
                     continue
-                # Split into compounds first, then find the LAST one that mentions
-                # data-state anywhere — a plain attribute, or inside :not()/:is(),
-                # which feed the same set. Anything after it is a tail.
+                # Split into compounds first, then find the LAST one that mentions the
+                # attribute anywhere — plain, or inside :not()/:is(), which feed the same
+                # set. Anything after it is a tail.
                 compounds = split_top(sel, ' >+~')
-                state_at = max((n for n, c in enumerate(compounds) if '[data-state' in c), default=-1)
+                state_at = max((n for n, c in enumerate(compounds) if '[' + attr in c), default=-1)
                 if state_at < 0 or state_at == len(compounds) - 1:
                     continue  # the state compound is the subject: self-invalidation only
-                tail = compounds[-1]
-                for key in keys_for(tail):
+                for key in keys_for(compounds[-1]):
                     out.setdefault(key, []).append(sel)
     return out
 
@@ -170,46 +172,47 @@ def order(key):
 def main():
     if not glob.glob(os.path.join(CSS_DIR, '*.css')):
         sys.exit('No built CSS in _site/assets/css — build first.')
-    found = tails()
-    counts = {k: len(v) for k, v in found.items()}
+    found = {attr: tails(attr) for attr in ATTRS}
+    counts = {attr: {k: len(v) for k, v in found[attr].items()} for attr in ATTRS}
 
     if '--report' in sys.argv:
-        for key in sorted(found, key=order):
-            print(f'{len(found[key]):4d}x  {key}')
-            for sel in found[key]:
-                print(f'        {sel[:150]}')
-        print(f'\n{sum(counts.values())} rules over {len(counts)} tails')
+        for attr in ATTRS:
+            print(f'== [{attr}]: {sum(counts[attr].values())} rules over {len(counts[attr])} tails')
+            for key in sorted(found[attr], key=order):
+                print(f'{len(found[attr][key]):4d}x  {key}')
+                for sel in found[attr][key]:
+                    print(f'        {sel[:150]}')
         return
 
     if '--update' in sys.argv:
         with open(BASELINE, 'w', encoding='utf-8', newline='\n') as f:
-            json.dump({'_': 'Rule counts per [data-state] descendant tail in the built CSS. '
+            json.dump({'_': 'Rule counts per descendant tail after each attribute in the built CSS. '
                             'Regenerate with: python scripts/check-data-state-tails.py --update',
-                       'tails': {k: counts[k] for k in sorted(counts, key=order)}}, f, indent=1)
+                       'tails': {attr: {k: counts[attr][k] for k in sorted(counts[attr], key=order)} for attr in ATTRS}},
+                      f, indent=1)
             f.write('\n')
-        print(f'baseline written: {sum(counts.values())} rules over {len(counts)} tails')
+        print('baseline written: ' + ' · '.join(f'[{a}] {sum(counts[a].values())} rules over {len(counts[a])} tails' for a in ATTRS))
         return
 
     baseline = json.load(open(BASELINE, encoding='utf-8'))['tails'] if os.path.exists(BASELINE) else {}
     problems = []
-    for key in sorted(counts, key=order):
-        if key == 'universal':
-            problems.append((key, 'universal tail — every data-state write restyles its whole subtree (PERF-05)'))
-        elif key not in baseline:
-            problems.append((key, 'new tail — style the host, or read an inherited custom property on the descendant (PERF-06)'))
-        elif counts[key] > baseline[key]:
-            problems.append((key, f'grew {baseline[key]} → {counts[key]} rules'))
+    for attr in ATTRS:
+        base = baseline.get(attr, {})
+        for key in sorted(counts[attr], key=order):
+            if key == 'universal':
+                problems.append((attr, key, 'universal tail — every write restyles its whole subtree (PERF-05)'))
+            elif key not in base:
+                problems.append((attr, key, 'new tail — style the host, or read an inherited custom property on the descendant (PERF-06)'))
+            elif counts[attr][key] > base[key]:
+                problems.append((attr, key, f'grew {base[key]} → {counts[attr][key]} rules'))
     if problems:
-        for key, why in problems:
-            print(f'{key}: {why}')
-            for sel in found[key]:
+        for attr, key, why in problems:
+            print(f'[{attr}] {key}: {why}')
+            for sel in found[attr][key]:
                 print(f'    {sel[:150]}')
-        sys.exit(f'{len(problems)} [data-state] tail problem(s). If a tail must stay, run --update in the same commit.')
-    kinds = {}
-    for key in counts:
-        kinds[key.split(':')[0]] = kinds.get(key.split(':')[0], 0) + 1
-    print(f'data-state tails: {sum(counts.values())} rules over {len(counts)} tails, within baseline '
-          f'({", ".join(f"{v} {k}" for k, v in sorted(kinds.items()))})')
+        sys.exit(f'{len(problems)} attribute tail problem(s). If a tail must stay, run --update in the same commit.')
+    print('attribute tails within baseline: ' + ' · '.join(
+        f'[{a}] {sum(counts[a].values())} rules over {len(counts[a])} tails' for a in ATTRS))
 
 
 if __name__ == '__main__':

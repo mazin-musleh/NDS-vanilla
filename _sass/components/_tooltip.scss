@@ -69,7 +69,9 @@
     --_tooltip-help-color: var(--colors-neutral-500);
   }
 
-  &-trigger [data-status="help"] .nds-feedback-icon:not(:is(.nds-outline, .nds-feedback.nds-outline > *)) {
+  // On the help wrapper itself, inherited by its icon; an outline icon has no disc
+  // and never reads the fill, so the old outline exclusion is implicit.
+  &-trigger [data-status="help"] {
     --feedback-icon-color: var(--_tooltip-help-color);
   }
 
