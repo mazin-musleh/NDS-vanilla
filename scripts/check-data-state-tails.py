@@ -1,36 +1,52 @@
 #!/usr/bin/env python3
-"""Ratchet on the shared attribute invalidation sets (nds-css-audit PERF-06).
+"""Guard on the shared attribute invalidation sets (nds-css-audit PERF-06).
 
-    python scripts/check-data-state-tails.py            # check the built CSS against the baseline
+    python scripts/check-data-state-tails.py            # check the built CSS
     python scripts/check-data-state-tails.py --report   # every tail, with the selectors that feed it
-    python scripts/check-data-state-tails.py --update   # rewrite the baseline after a migration batch
 
 Chrome keys attribute invalidation by attribute NAME, never by value. Every selector
 with a compound to the RIGHT of a [data-state~="…"] compound puts that tail (td, i,
 .nds-label) into ONE set called data-state, and any data-state write anywhere then
 restyles every matching descendant of the written element — one scroll-state write
 on a table wrapper restyled 21,008 elements (140 ms at 1x, 2026-09-05). data-status
-pools the same way (validation, alerts, file rows). The fix is in the CSS, not at
-the write: state styles its host, and a descendant that must change with it reads an
-inherited custom property the host sets.
+pools the same way. The fix is in the CSS, not at the write: state styles its host,
+a descendant on a SMALL host reads an inherited custom property the host sets, and a
+big or often-flipping host keys its descendant rule on a mirrored class.
 
-Reads _site/assets/css/*.css, so build first. Per attribute in ATTRS: fails on a
-universal tail (PERF-05), on any tail not in the baseline, and on any tail whose rule
-count grew. A tail that disappears needs no baseline edit; --update records the drop.
-Adding a tail on purpose means editing the baseline in the same commit, where review
-sees it.
+Reads _site/assets/css/*.css, so build first. Two rules, nothing to maintain:
+  1. no universal, tag or attribute tail — those match under every host;
+  2. no tail from SHARED, the classes that appear inside every component.
+A component-owned class tail (.nds-stepper-circle under .nds-stepper-step) is fine:
+it only matches inside its own component. The few selectors in ACCEPTED break rule
+1 or 2 on purpose, each with its reason and its TODO.md follow-up.
 """
 import glob
-import json
 import os
 import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSS_DIR = os.path.join(ROOT, '_site', 'assets', 'css')
-BASELINE = os.path.join(ROOT, 'scripts', 'data-state-tails.json')
 ATTRS = ('data-state', 'data-status')
 NESTING = ('media', 'supports', 'container', 'layer', 'scope')
+
+# Classes that live inside every component, so a tail on them matches under any host.
+SHARED = {
+    '.nds-btn', '.nds-menu-btn', '.nds-label', '.nds-icon', '.nds-featured-icon',
+    '.nds-feedback', '.nds-feedback-icon', '.nds-divider', '.nds-toolbar',
+    '.nds-form-container', '.nds-form-control', '.nds-form-header', '.nds-form-action', '.nds-info',
+    '.nds-progress-circle', '.nds-progress-track', '.nds-neutral', '.nds-center', '.center',
+}
+
+# Selector substring → why it may keep its tail. Each is either a child-component hook
+# still to build (TODO.md) or a value the host cannot supply.
+ACCEPTED = {
+    '>.nds-btn.nds-menu-btn::after': "arrow follows the PARENT's open state; needs aria-expanded on mainnav/sidemenu toggles first (TODO)",
+    '.nds-drawer-list li>.nds-btn:is(:hover,[data-state~=active]) .nds-featured-icon': 'out-ranks the icon\'s own variant class; needs a forced hook in featured icon (TODO)',
+    '.nds-share .nds-dropmenu-menu [data-status=success] i::before': "success glyph; a host cannot supply each item's own glyph as the fallback",
+    ':root[data-theme~=dark] .nds-feedback:is([data-status=neutral],[data-status=help])': 'dark neutral/help tweak on the feedback\'s own icon',
+    ':root[data-theme~=dark] :is([data-status=neutral],[data-status=help]) .nds-feedback': 'dark neutral/help tweak on the feedback\'s own icon',
+}
 
 
 def selectors(css):
@@ -169,50 +185,49 @@ def order(key):
     return (rank[key.split(':')[0]], key)
 
 
+def verdict(key, sel):
+    """None when the tail is fine, else the reason it is not."""
+    if any(sub in sel for sub in ACCEPTED):
+        return None
+    kind = key.split(':')[0]
+    if kind == 'universal':
+        return 'universal tail — every write restyles the whole subtree (PERF-05)'
+    if kind in ('tag', 'attr'):
+        return f'{kind} tail {key.split(":", 1)[1]} — matches under every host; style the host, or mirror the token to a class (PERF-06)'
+    if kind == 'class' and key.split(':', 1)[1] in SHARED:
+        return f'shared class tail {key.split(":", 1)[1]} — lives inside every component; style the host, or mirror the token to a class (PERF-06)'
+    return None
+
+
 def main():
     if not glob.glob(os.path.join(CSS_DIR, '*.css')):
         sys.exit('No built CSS in _site/assets/css — build first.')
     found = {attr: tails(attr) for attr in ATTRS}
-    counts = {attr: {k: len(v) for k, v in found[attr].items()} for attr in ATTRS}
 
     if '--report' in sys.argv:
         for attr in ATTRS:
-            print(f'== [{attr}]: {sum(counts[attr].values())} rules over {len(counts[attr])} tails')
+            n = sum(len(v) for v in found[attr].values())
+            print(f'== [{attr}]: {n} rules over {len(found[attr])} tails')
             for key in sorted(found[attr], key=order):
                 print(f'{len(found[attr][key]):4d}x  {key}')
                 for sel in found[attr][key]:
-                    print(f'        {sel[:150]}')
+                    flag = '' if verdict(key, sel) is None else '   <-- NOT ALLOWED' if not any(s in sel for s in ACCEPTED) else ''
+                    print(f'        {sel[:150]}{flag}')
         return
 
-    if '--update' in sys.argv:
-        with open(BASELINE, 'w', encoding='utf-8', newline='\n') as f:
-            json.dump({'_': 'Rule counts per descendant tail after each attribute in the built CSS. '
-                            'Regenerate with: python scripts/check-data-state-tails.py --update',
-                       'tails': {attr: {k: counts[attr][k] for k in sorted(counts[attr], key=order)} for attr in ATTRS}},
-                      f, indent=1)
-            f.write('\n')
-        print('baseline written: ' + ' · '.join(f'[{a}] {sum(counts[a].values())} rules over {len(counts[a])} tails' for a in ATTRS))
-        return
-
-    baseline = json.load(open(BASELINE, encoding='utf-8'))['tails'] if os.path.exists(BASELINE) else {}
     problems = []
     for attr in ATTRS:
-        base = baseline.get(attr, {})
-        for key in sorted(counts[attr], key=order):
-            if key == 'universal':
-                problems.append((attr, key, 'universal tail — every write restyles its whole subtree (PERF-05)'))
-            elif key not in base:
-                problems.append((attr, key, 'new tail — style the host, or read an inherited custom property on the descendant (PERF-06)'))
-            elif counts[attr][key] > base[key]:
-                problems.append((attr, key, f'grew {base[key]} → {counts[attr][key]} rules'))
-    if problems:
-        for attr, key, why in problems:
-            print(f'[{attr}] {key}: {why}')
+        for key in sorted(found[attr], key=order):
             for sel in found[attr][key]:
-                print(f'    {sel[:150]}')
-        sys.exit(f'{len(problems)} attribute tail problem(s). If a tail must stay, run --update in the same commit.')
-    print('attribute tails within baseline: ' + ' · '.join(
-        f'[{a}] {sum(counts[a].values())} rules over {len(counts[a])} tails' for a in ATTRS))
+                why = verdict(key, sel)
+                if why:
+                    problems.append((attr, sel, why))
+    if problems:
+        for attr, sel, why in problems:
+            print(f'[{attr}] {sel[:150]}\n    {why}')
+        sys.exit(f'{len(problems)} attribute tail problem(s).')
+    print('attribute tails: ' + ' · '.join(
+        f'[{a}] {sum(len(v) for v in found[a].values())} rules over {len(found[a])} tails, all component-owned or accepted' for a in ATTRS))
 
 
 if __name__ == '__main__':
