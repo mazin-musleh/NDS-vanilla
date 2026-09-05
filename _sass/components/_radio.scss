@@ -60,7 +60,8 @@
 
     &:checked::after {
         --radio-tile-bg:     var(--radio-primary-checked);
-        --radio-tile-border: var(--radio-tile-bg);
+        // --_radio-ro-tile-border lets a readonly container override from above (PERF-06).
+        --radio-tile-border: var(--_radio-ro-tile-border, var(--radio-tile-bg));
 
         border: 3px solid var(--background-default);
     }
@@ -108,13 +109,9 @@
 // READONLY STATE
 // ==============================================
 
-.nds-radio-container[data-state~="readonly"] .nds-form-control input[type="radio"] {
-    &,
-    &.nds-neutral {
-        &::after,
-        &:hover::after,
-        &:active::after {
-            --radio-tile-border: var(--border-disabled);
-        }
-    }
+// Set on the container and inherited; hover/active never fire under its
+// pointer-events: none. No `input[type]` tail in the shared data-state set.
+.nds-radio-container[data-state~="readonly"] {
+    --radio-tile-border: var(--border-disabled);
+    --_radio-ro-tile-border: var(--border-disabled);
 }

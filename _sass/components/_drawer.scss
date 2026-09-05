@@ -377,7 +377,8 @@
 
 .nds-drawer.nds-divided {
     .nds-drawer-list>li {
-        border-block-end: 1px solid var(--_divider);
+        // always-open moves this border onto the button by setting --_item-border.
+        border-block-end: var(--_item-border, 1px solid var(--_divider));
         padding-bottom: var(--_gap);
 
         &:last-child {
@@ -386,20 +387,19 @@
         }
     }
 
-    // When always open, move border to button instead of li
+    // When always open, move border to button instead of li. The li side rides
+    // --_item-border: a `> li` tail here would join the shared data-state set (PERF-06).
     &[data-state~="always-open"] {
-        .nds-drawer-list>li {
+        --_item-border: none;
+
+        .nds-drawer-list>li>.nds-btn {
+            border-block-end: 1px solid var(--_divider);
+            border-radius: 0;
+        }
+
+        // Remove border only if it's the only child (no siblings)
+        .nds-drawer-list>li:only-child>.nds-btn {
             border-block-end: none;
-
-            >.nds-btn {
-                border-block-end: 1px solid var(--_divider);
-                border-radius: 0;
-            }
-
-            // Remove border only if it's the only child (no siblings)
-            &:only-child>.nds-btn {
-                border-block-end: none;
-            }
         }
     }
 }

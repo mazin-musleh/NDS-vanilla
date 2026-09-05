@@ -164,6 +164,13 @@ def verify(out, version):
     if banners.returncode:
         sys.exit('check-banners.mjs --all failed:\n' + banners.stdout + banners.stderr)
 
+    # The shared [data-state] invalidation set only grows silently: one new
+    # `[data-state] … td` rule taxes every state write on every container.
+    tails = subprocess.run('python scripts/check-data-state-tails.py', cwd=ROOT,
+                           shell=True, capture_output=True, text=True)
+    if tails.returncode:
+        sys.exit('check-data-state-tails.py failed:\n' + tails.stdout + tails.stderr)
+
     # head.md prints the inline critical gate as canonical markup a consumer
     # copies into their own <head>. It is a hand-maintained copy of what
     # _includes/critical-inline.html compiles from _sass/_fold.scss, so it can

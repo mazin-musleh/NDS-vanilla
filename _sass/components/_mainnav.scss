@@ -226,6 +226,10 @@
                 i {
                     width: calc(var(--_btn-icon-size) - 4px);
                     height: calc(var(--_btn-icon-size) - 4px);
+                    // The overflow states set --_more-rotate on .nds-show-more; an
+                    // `~ .nds-show-more i` tail would join the shared data-state set (PERF-06).
+                    transform: rotate(var(--_more-rotate, 0deg));
+                    transition: transform 0.1s ease;
                 }
             }
 
@@ -470,27 +474,21 @@
     .nds-nav-primary[data-state~="has-more"] {
         ~.nds-show-more {
             transform: translateX(0);
-
-            i {
-                transform: rotate(90deg);
-                transition: transform 0.1s ease;
-            }
+            --_more-rotate: 90deg;
         }
 
         // At end: icon rotation
-        &[data-state~="at-end"] {
-            ~.nds-show-more i {
-                transform: rotate(270deg);
-            }
+        &[data-state~="at-end"]~.nds-show-more {
+            --_more-rotate: 270deg;
         }
 
         @include ltr {
-            ~.nds-show-more i {
-                transform: rotate(270deg);
+            ~.nds-show-more {
+                --_more-rotate: 270deg;
             }
 
-            &[data-state~="at-end"]~.nds-show-more i {
-                transform: rotate(90deg);
+            &[data-state~="at-end"]~.nds-show-more {
+                --_more-rotate: 90deg;
             }
         }
     }
@@ -720,19 +718,11 @@
         ~.nds-show-more {
             opacity: 1;
             visibility: visible;
-
-            /* Above nav items */
-
-            i {
-                transition: transform 0.1s ease;
-            }
         }
 
         // At end: icon rotation
-        &[data-state~="at-end"] {
-            ~.nds-show-more i {
-                transform: rotate(180deg);
-            }
+        &[data-state~="at-end"]~.nds-show-more {
+            --_more-rotate: 180deg;
         }
     }
 

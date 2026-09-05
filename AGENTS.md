@@ -12,6 +12,7 @@ bundle exec jekyll serve      # Dev server (port 4002, auto-displays network IP)
 ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minifies → assets/js/*.min.js)
 python scripts/optimize-assets.py <path>        # shrink SVG/PNG/JPG — dry-run report; add --apply to write
 node scripts/svg-render-diff.mjs <path>         # REQUIRED after an SVG --apply: proves the render is unchanged
+python scripts/check-data-state-tails.py        # after any [data-state] rule change — --report lists the tails, --update re-baselines
 ```
 
 **Judge an SVG by its GZIP size, not its bytes on disk** — Pages serves SVG compressed, so a 331 KB Figma export is 113 KB on the wire and disk numbers send you optimizing the wrong file. `optimize-assets.py` reports both. It also always encodes raster BOTH lossless and lossy and keeps whichever is smaller: flat-colour artwork (logos, UI graphics, hard edges) goes smaller AND pixel-perfect lossless, while photos and gradients want lossy — a 201 KB PNG here landed at 74 KB lossless vs 102 KB at q95. Never pick from the file extension.
@@ -107,6 +108,8 @@ not the obvious thing. Match the density of the file you are in; do not out-comm
 - **Default styling: the shared `.nds-dropmenu-menu` covers it** — renders right in every mode, portaled or in-place. Most menus add nothing beyond the identifier.
 - **Custom styling is opt-in and must be justified** — first confirm the shared styling genuinely falls short (don't add custom for its own sake). When warranted, anchor it on the menu (the `.nds-{component}-menu` class, a self-rooted content class like editor's `.nds-editor-link-form`, or a generic modifier like `.nds-center`) — **never on the component root** (`.nds-editor .nds-editor-link-form`), which dies the moment the menu portals.
 - **Knobs stay on the wrapper** (`--dropmenu-min-width`, …) — the portal snapshots them onto the menu.
+
+**`data-state` styles its host — never a generic descendant.** Chrome keys attribute invalidation by attribute NAME, so every `[data-state~="x"] Y` rule in every sheet puts `Y` into ONE shared set, and any `data-state` write anywhere then restyles every matching descendant of the written element (one table-wrapper write restyled 21,008 cells through `tr[data-state~="selected"] td`, 2026-09-05). After a `[data-state…]` compound write nothing, a pseudo-element, or a class the component owns — never a tag, a shared class (`.nds-btn`, `.nds-label`, `.nds-icon`, `.nds-form-control`), `*`, or `:is(tag, …)`. A descendant that must change with the state reads an inherited custom property the host sets: `tr[data-state~="selected"] { --_row-bg: … }` and `td { background: var(--_row-bg, …) }`. A flag on a big container whose content does not change look is an own attribute, `data-{component}-{part}` (`data-nds-scroll-lock`, `data-table-scroll`). `python scripts/check-data-state-tails.py` ratchets the built CSS against `scripts/data-state-tails.json` and runs at release; the CSS audit's PERF-06 is the same check while authoring.
 
 ## Design Tokens (CRITICAL)
 

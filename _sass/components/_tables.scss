@@ -38,17 +38,18 @@
     }
 }
 
-// Scroll mask states (determined by JS) — opt-in via .nds-mask on the table
-.nds-table-wrapper[data-state~="has-more"][data-state~="masked"] {
+// Scroll mask states (written by JS) — opt-in via .nds-mask on the table.
+// Own attribute, not data-state: a data-state write on the wrapper restyles every row (PERF-06).
+.nds-table-wrapper[data-table-scroll~="has-more"][data-table-scroll~="masked"] {
     mask-image:
         linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
         linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
-    &[data-state~="at-start"] {
+    &[data-table-scroll~="at-start"] {
         mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
     }
 
-    &[data-state~="at-end"] {
+    &[data-table-scroll~="at-end"] {
         mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
     }
 
@@ -57,11 +58,11 @@
             linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
             linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
 
-        &[data-state~="at-start"] {
+        &[data-table-scroll~="at-start"] {
             mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
         }
 
-        &[data-state~="at-end"] {
+        &[data-table-scroll~="at-end"] {
             mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
         }
     }
@@ -135,7 +136,9 @@
     td {
         padding: var(--_cell-padding-block) var(--_cell-padding-inline);
         vertical-align: middle;
-        background-color: var(--table-background-cell);
+        // Row states set --_row-bg on the <tr>; cells read it. A `tr[data-state] td`
+        // tail would join the shared data-state invalidation set (PERF-06).
+        background-color: var(--_row-bg, var(--table-background-cell));
         color: var(--table-text-body);
         border-left: 1px solid var(--table-cell-border);
         height: var(--_table-row-height, 64px);
@@ -158,7 +161,7 @@
     // Count VISIBLE parent rows only — a sub or hidden row still holds a DOM slot
     // and flips the phase below it. `of` list mirrors _fold.scss's hide set.
     > tbody > tr:nth-child(even of :not(.nds-sub, .nds-hidden, [hidden], [data-state~="hidden"], [data-filtered])) > td {
-        background-color: var(--table-background-row);
+        background-color: var(--_row-bg, var(--table-background-row));
     }
 
     // One selector, not two: the old :nth-child(even):hover twin existed only to
@@ -166,22 +169,19 @@
     // :not(.nds-sub) keeps the row highlight off a sub — it's a panel, not a row,
     // and this would otherwise out-rank the sub's own background.
     &.nds-interactive {
-        tbody tr:not(.nds-sub):hover td {
-            background-color: var(--table-background-header);
+        tbody tr:not(.nds-sub):hover {
+            --_row-bg: var(--table-background-header);
         }
     }
 
-    // :not(.nds-sub) is here for specificity, not matching — a sub row is never
-    // selected. The `of` argument above lifts striping to (0,3,3), so without it
-    // the stripe would out-rank a selected row sitting on an even index.
-    tbody tr[data-state~="selected"]:not(.nds-sub) {
-        td {
-            background-color: var(--table-background-row-selected);
-        }
+    // Selected out-ranks the stripe by value, not specificity: both cell rules
+    // read --_row-bg first.
+    tbody tr[data-state~="selected"] {
+        --_row-bg: var(--table-background-row-selected);
     }
 
-    &.nds-interactive tbody tr[data-state~="selected"]:hover td {
-        background-color: var(--table-background-hover-selected);
+    &.nds-interactive tbody tr[data-state~="selected"]:hover {
+        --_row-bg: var(--table-background-hover-selected);
     }
 
     // ── Sub-rows ──

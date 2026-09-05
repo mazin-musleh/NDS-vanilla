@@ -85,11 +85,8 @@
         }
 
         box-shadow: var(--shadow-md);
-
-        &,
-        :is(input, textarea)::-webkit-input-placeholder {
-            color: var(--form-field-text-focused);
-        }
+        color: var(--form-field-text-focused);
+        --_placeholder-color: var(--form-field-text-focused);
     }
 
     // Active state (not readonly)
@@ -101,11 +98,8 @@
         border-color: var(--form-field-border-default);
         --_form-control-bg: var(--form-field-background-darker);
         box-shadow: var(--shadow-md);
-
-        &,
-        :is(input, textarea)::-webkit-input-placeholder {
-            color: var(--form-field-text-pressed);
-        }
+        color: var(--form-field-text-pressed);
+        --_placeholder-color: var(--form-field-text-pressed);
     }
 
     // Readonly state — non-interactive across every form type. The label
@@ -115,6 +109,9 @@
     // so restore their pointer events explicitly.
     &[data-state~="readonly"] {
         pointer-events: none;
+        // Placeholder colour rides --_placeholder-color from the container: an
+        // `input` tail here would join the shared data-state invalidation set (PERF-06).
+        --_placeholder-color: var(--form-field-text-placeholder);
 
         .nds-form-action {
             pointer-events: auto;
@@ -125,17 +122,9 @@
             background-color: transparent;
             color: var(--form-field-text-readonly);
 
-            :is(input, textarea)::-webkit-input-placeholder {
-                color: var(--form-field-text-placeholder);
-            }
-
             &:hover {
                 border-color: var(--border-neutral-primary);
                 color: var(--form-field-text-readonly);
-
-                :is(input, textarea)::-webkit-input-placeholder {
-                    color: var(--form-field-text-placeholder);
-                }
             }
         }
     }
@@ -144,6 +133,7 @@
     &[data-state~="disabled"] {
         pointer-events: none;
         user-select: none;
+        --_placeholder-color: var(--text-default-disabled);
 
         .nds-form-header .nds-label,
         .nds-form-header .nds-info {
@@ -154,10 +144,6 @@
             background-color: transparent;
             color: var(--text-default-disabled);
             border-color: var(--border-disabled);
-
-            :is(input, textarea)::-webkit-input-placeholder {
-                color: var(--text-default-disabled);
-            }
         }
     }
 }
@@ -302,15 +288,15 @@ fieldset {
     }
 
     :is(input, textarea)::-webkit-input-placeholder {
-        color: var(--form-field-text-placeholder);
+        color: var(--_placeholder-color, var(--form-field-text-placeholder));
     }
 
     &:hover {
         border-color: var(--form-field-border-hovered);
+        color: var(--form-field-text-hovered);
 
-        &,
         :is(input, textarea)::-webkit-input-placeholder {
-            color: var(--form-field-text-hovered);
+            color: var(--_placeholder-color, var(--form-field-text-hovered));
         }
     }
 
@@ -345,10 +331,10 @@ fieldset {
         }
 
         box-shadow: var(--shadow-md);
+        color: var(--form-field-text-focused);
 
-        &,
         :is(input, textarea)::-webkit-input-placeholder {
-            color: var(--form-field-text-focused);
+            color: var(--_placeholder-color, var(--form-field-text-focused));
         }
     }
 
@@ -554,8 +540,12 @@ fieldset {
     }
 }
 
-.nds-form-container[data-state~="listening"] .nds-voice-input>i {
-    animation: colorCycle 1s linear infinite alternate;
+.nds-form-container[data-state~="listening"] {
+    --_voice-animation: colorCycle 1s linear infinite alternate;
+}
+
+.nds-voice-input>i {
+    animation: var(--_voice-animation, none);
 }
 
 .nds-toggle-password.show i {

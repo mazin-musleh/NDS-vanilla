@@ -384,7 +384,7 @@
                 this.currentScrollState = null; // Force handleScroll to update
                 this.handleScroll();
             } else {
-                NDS.State.clear(this.wrapper);
+                this.wrapper.removeAttribute('data-table-scroll');
                 this.needsScroll = false;
                 this.currentScrollState = null;
             }
@@ -410,7 +410,9 @@
 
             const newState = tokens.join(' ');
             if (this.currentScrollState !== newState) {
-                NDS.State.set(this.wrapper, ...tokens);
+                // Own attribute, not a data-state token: the shared data-state set carries
+                // `td` and `.nds-label` tails, so a write here restyled every row (PERF-06).
+                this.wrapper.setAttribute('data-table-scroll', newState);
                 this.currentScrollState = newState;
             }
         }
@@ -458,7 +460,7 @@
             if (this._offResizeWrapper) { this._offResizeWrapper(); this._offResizeWrapper = null; }
             if (this._offIntersect) { this._offIntersect(); this._offIntersect = null; }
 
-            NDS.State.clear(this.wrapper);
+            this.wrapper.removeAttribute('data-table-scroll');
             this.currentScrollState = null;
             this.needsScroll = false;
             this.table.removeAttribute('data-nds-tables-initialized');

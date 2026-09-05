@@ -65,13 +65,15 @@
     // STATE TINTS
     // ==============================================
 
+    // The --_checkbox-ro-* hooks let a readonly container override these from
+    // above without an `input[type]` tail in the shared data-state set (PERF-06).
     &:is(:checked, :indeterminate) {
         &::before {
-            --checkbox-tile-bg:     var(--checkbox-primary-checked);
-            --checkbox-tile-border: var(--checkbox-tile-bg);
+            --checkbox-tile-bg:     var(--_checkbox-ro-tile-bg, var(--checkbox-primary-checked));
+            --checkbox-tile-border: var(--_checkbox-ro-tile-border, var(--checkbox-tile-bg));
         }
         &::after {
-            --checkbox-glyph-bg: var(--icon-oncolor);
+            --checkbox-glyph-bg: var(--_checkbox-ro-glyph, var(--icon-oncolor));
             mask-image: var(--nds-icon-checkmark);
         }
 
@@ -91,7 +93,8 @@
 
     // Neutral variant
     &.nds-neutral:is(:checked, :indeterminate) {
-        &::before { --checkbox-tile-bg: var(--checkbox-neutral-checked); }
+        &::before { --checkbox-tile-bg: var(--_checkbox-ro-tile-bg, var(--checkbox-neutral-checked)); }
+        &::after  { --checkbox-glyph-bg: var(--_checkbox-ro-glyph-neutral, var(--icon-oncolor)); }
 
         &:not(:disabled) {
             &:hover::before  { --checkbox-tile-bg: var(--checkbox-neutral-hovered); }
@@ -120,34 +123,17 @@
 // READONLY STATE
 // ==============================================
 
-.nds-check-container[data-state~="readonly"] .nds-form-control input[type="checkbox"] {
+// Set on the container and inherited: the unchecked tile reads the public token,
+// the checked rules read the --_checkbox-ro-* hooks above. Hover/active never
+// fire here — the readonly container drops pointer events.
+.nds-check-container[data-state~="readonly"] {
+    --checkbox-tile-border: var(--background-disabled);
+    --_checkbox-ro-tile-border: var(--background-disabled);
+    --_checkbox-ro-tile-bg: var(--background-default);
+    --_checkbox-ro-glyph: var(--checkbox-primary-checked);
+    --_checkbox-ro-glyph-neutral: var(--checkbox-neutral-checked);
 
-    &::before,
-    &:hover::before,
-    &:active::before {
-        --checkbox-tile-border: var(--background-disabled);
-    }
-
-    &,
-    &.nds-neutral {
-        &:is(:checked, :indeterminate) {
-            &::before,
-            &:hover::before,
-            &:active::before {
-                --checkbox-tile-bg: var(--background-default);
-            }
-        }
-    }
-
-    &:is(:checked, :indeterminate)::after {
-        --checkbox-glyph-bg: var(--checkbox-primary-checked);
-    }
-
-    &.nds-neutral:is(:checked, :indeterminate)::after {
-        --checkbox-glyph-bg: var(--checkbox-neutral-checked);
-
-        @include dark {
-            --checkbox-glyph-bg: var(--icon-oncolor);
-        }
+    @include dark {
+        --_checkbox-ro-glyph-neutral: var(--icon-oncolor);
     }
 }
