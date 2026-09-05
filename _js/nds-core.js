@@ -705,24 +705,34 @@
         return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove };
     })();
 
-    // ── Loading mirror ───────────────────────────────────────────────
-    // CSS spells loading ONE way, `.nds-loading`; the data-state token stays the JS
-    // input and is mirrored onto the class here. Keyed on the class because the
-    // loading rules end in `> *`, and a `[data-state]` rule with that subject marks
-    // Chrome's whole data-state invalidation set "all descendants" — every state
-    // write anywhere then restyles its entire subtree (measured 2026-09-03).
+    // ── Token mirrors ────────────────────────────────────────────────
+    // CSS spells these tokens as a class; the data-state token stays the JS/markup
+    // input and is mirrored onto the class here. Chrome keys attribute invalidation
+    // by NAME, so every `[data-state] Y` rule feeds ONE shared set and every state
+    // write anywhere restyles each matching Y under it (PERF-06). Tokens whose CSS
+    // must reach descendants — loading's `> *`, the drawer's and upload's `.nds-btn`
+    // / `.nds-form-control` rules, the table stripe's `of` list — key on their
+    // class, whose set only they touch.
     // The observer catches State writes and bare setAttribute alike, in a microtask —
     // before the next paint, not inside the write. The scan covers markup that ships
-    // with the token and runs before the reveal (0.2ms at 6.6x).
-    const _mirrored = new WeakSet();
-    const mirrorLoading = (el) => {
-        const on = NDS.State.has(el, 'loading');
-        if (on && !el.classList.contains('nds-loading')) { el.classList.add('nds-loading'); _mirrored.add(el); }
-        else if (!on && _mirrored.has(el)) { el.classList.remove('nds-loading'); _mirrored.delete(el); }
+    // with a token and runs before the reveal (0.2ms at 6.6x for loading).
+    const MIRRORS = { loading: 'nds-loading', hidden: 'nds-hidden', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
+    const _mirrored = new WeakMap();
+    const mirrorTokens = (el) => {
+        for (const token in MIRRORS) {
+            const cls = MIRRORS[token], on = NDS.State.has(el, token);
+            let mine = _mirrored.get(el);
+            if (on && !el.classList.contains(cls)) {
+                el.classList.add(cls);
+                if (!mine) _mirrored.set(el, mine = new Set());
+                mine.add(cls);
+            } else if (!on && mine && mine.has(cls)) { el.classList.remove(cls); mine.delete(cls); }
+        }
     };
-    NDS.onAttrChange('*', ['data-state'], (els) => els.forEach(mirrorLoading));
-    const scanLoading = () => document.querySelectorAll('[data-state~="loading"]').forEach(mirrorLoading);
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scanLoading, { once: true }); else scanLoading();
+    NDS.onAttrChange('*', ['data-state'], (els) => els.forEach(mirrorTokens));
+    const MIRROR_SEL = Object.keys(MIRRORS).map(t => `[data-state~="${t}"]`).join(',');
+    const scanTokens = () => document.querySelectorAll(MIRROR_SEL).forEach(mirrorTokens);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scanTokens, { once: true }); else scanTokens();
 
     // ── Status Management (data-status) ─────────────────────────────
     // Single-value management for data-status attribute

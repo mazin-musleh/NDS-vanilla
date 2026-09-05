@@ -146,24 +146,32 @@
             }
 
             &.nds-peek {
+                // Label and icon read the --_peek-* hooks the closed state sets below:
+                // a `.nds-label` or `i` tail after [data-state] would join the shared
+                // invalidation set (PERF-06).
+                .nds-label {
+                    height: var(--_peek-label-height, auto);
+                    width: var(--_peek-label-width, auto);
+                    opacity: var(--_peek-opacity, 1);
+                    display: var(--_peek-label-display, inline);
+                    position: var(--_peek-label-position, static);
+                }
+
+                i {
+                    opacity: var(--_peek-opacity, 1);
+                }
+
                 &:not([data-state="open"]) {
                     --toggle-transform: translate(calc((var(--nds-sidemenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
                     --btn-indicator-size: 5px;
+                    --_peek-label-height: 100%;
+                    --_peek-label-width: 40px;
+                    --_peek-opacity: 0;
+                    --_peek-label-display: block;
+                    --_peek-label-position: absolute;
 
                     @include ltr {
                         --toggle-transform: translate(calc(var(--nds-sidemenu-width) - var(--btn-width)/1.5), var(--_toggle-pos));
-                    }
-
-                    .nds-label {
-                        height: 100%;
-                        width: 40px;
-                        opacity: 0;
-                        display: block;
-                        position: absolute;
-                    }
-
-                    i {
-                        opacity: 0;
                     }
                 }
             }

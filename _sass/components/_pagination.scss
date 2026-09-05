@@ -132,7 +132,7 @@
 // Trigger + menu live inside `.nds-pagination-ellipsis` — the dropmenu
 // defaults to no-portal so descendant selectors are safe in both states.
 .nds-pagination-ellipsis .nds-dropmenu-trigger>.nds-label {
-  display: none;
+  display: var(--_ellipsis-label-display, none);
 }
 
 .nds-pagination-ellipsis .nds-dropmenu-menu {
@@ -220,10 +220,7 @@
   width: auto;
   min-width: var(--btn-size);
   --btn-padding: initial;
-
-  >.nds-label {
-    display: block;
-  }
+  --_ellipsis-label-display: block;
 
   &::before {
     display: none;

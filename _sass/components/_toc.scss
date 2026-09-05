@@ -68,8 +68,12 @@
         --btn-indicator-color: var(--background-primary);
         --btn-indicator-selected: var(--background-primary);
 
-        &[data-state~="active"] .nds-label { font-weight: var(--font-weight-semibold); }
+        // Set on the button, read by the label: no `.nds-label` tail after [data-state] (PERF-06).
+        &[data-state~="active"] { --_toc-label-weight: var(--font-weight-semibold); }
     }
+
+    // (0,3,0): above the button's own medium, below the drawer's menu-btn semibold.
+    :where(.nds-drawer-list .nds-btn) .nds-label { font-weight: var(--_toc-label-weight, var(--font-weight-medium)); }
 
     .nds-drawer-list li > ul {
         display: flex;

@@ -173,12 +173,12 @@
 // Optional .nds-divider child (auto-injected by the JS) — shown only when the
 // wrapper opts in via .nds-divided AND overflow is actually present.
 .nds-scroll-more > .nds-divider {
-    display: none;
+    display: var(--_scroll-divider-display, none);
     border-block-start-color: var(--_scroll-divider);
 }
 
-.nds-scroll-more.nds-divided[data-state~="has-more"] > .nds-divider {
-    display: block;
+.nds-scroll-more.nds-divided[data-state~="has-more"] {
+    --_scroll-divider-display: block;
 }
 
 // Horizontal: flip the divider to a vertical rule via writing-mode.

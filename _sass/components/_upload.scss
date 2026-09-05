@@ -2,7 +2,9 @@
 
 .nds-file-upload {
 
-    &[data-state~="dropbox"] {
+    // dropbox is a markup token; core mirrors it to .nds-dropbox (the loading
+    // pattern) so these descendant rules stay off the shared data-state set (PERF-06).
+    &.nds-dropbox {
         .nds-form-header {
             display: none;
         }
@@ -46,7 +48,7 @@
         }
     }
 
-    &:not([data-state~="dropbox"]) {
+    &:not(.nds-dropbox) {
         .nds-form-control {
             min-width: 40px;
             width: fit-content;
@@ -152,17 +154,17 @@
         min-height: 36px;
 
         // Status-driven visibility: feedback shown by default, progress hidden
-        .nds-feedback { display: flex; }
+        .nds-feedback { display: var(--_file-feedback, flex); }
         // Size default lives here, not on a style attribute — a strict style-src blocks
         // that form. Private name keeps --progress-size free for a consumer override.
-        .nds-progress-circle { --_progress-size: var(--progress-size, 24px); display: none; }
+        .nds-progress-circle { --_progress-size: var(--progress-size, 24px); display: var(--_file-progress, none); }
         .nds-file-error { display: none; }
 
         // Uploading/processing: show progress, hide feedback
         &[data-state~="uploading"],
         &[data-state~="processing"] {
-            .nds-progress-circle { display: flex; }
-            .nds-feedback { display: none; }
+            --_file-progress: flex;
+            --_file-feedback: none;
         }
 
         &[data-state~="processing"] {
@@ -171,20 +173,18 @@
 
         // Success: show feedback icon (auto-shows checkmark via data-status)
         &[data-status="success"] {
-            .nds-progress-circle { display: none; }
-            .nds-feedback { display: flex; }
+            --_file-progress: none;
+            --_file-feedback: flex;
         }
 
         // Error: show feedback (auto-shows X via data-status), show error message
         &[data-status="error"] {
             border-color: var(--border-error);
 
-            .nds-progress-circle { display: none; }
+            --_file-progress: none;
+            --_file-feedback: flex;
 
-            .nds-feedback {
-                display: flex;
-                align-self: flex-start;
-            }
+            .nds-feedback { align-self: flex-start; }
 
             .nds-file-error { display: flex; }
         }

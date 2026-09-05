@@ -149,14 +149,12 @@ def tails():
             for sel in split_top(prelude, ','):
                 if '[data-state' not in sel:
                     continue
-                i = sel.rfind('[data-state')
-                rest = sel[sel.index(']', i) + 1:]
-                compounds = split_top(rest, ' >+~')
-                # A leading combinator (" td", ">.nds-btn", "~.nds-show-more") makes the
-                # first compound a tail; otherwise it continues the state compound
-                # (":hover", ":not(.x)", "::after") and a tail needs a second one.
-                lead = bool(rest) and rest[0] in ' >+~'
-                if not compounds or (not lead and len(compounds) < 2):
+                # Split into compounds first, then find the LAST one that mentions
+                # data-state anywhere — a plain attribute, or inside :not()/:is(),
+                # which feed the same set. Anything after it is a tail.
+                compounds = split_top(sel, ' >+~')
+                state_at = max((n for n, c in enumerate(compounds) if '[data-state' in c), default=-1)
+                if state_at < 0 or state_at == len(compounds) - 1:
                     continue  # the state compound is the subject: self-invalidation only
                 tail = compounds[-1]
                 for key in keys_for(tail):

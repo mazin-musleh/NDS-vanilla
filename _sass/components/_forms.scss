@@ -32,7 +32,7 @@
         }
 
         .nds-label {
-            color: var(--form-field-text-label);
+            color: var(--_header-color-forced, var(--form-field-text-label));
             font-size: var(--typo-text-md-FS);
             line-height: var(--typo-text-md-LH);
             font-weight: var(--font-weight-medium);
@@ -96,7 +96,7 @@
         }
 
         border-color: var(--form-field-border-default);
-        --_form-control-bg: var(--form-field-background-darker);
+        --_form-control-bg: var(--_control-bg-forced, var(--_control-bg-active, var(--form-field-background-darker)));
         box-shadow: var(--shadow-md);
         color: var(--form-field-text-pressed);
         --_placeholder-color: var(--form-field-text-pressed);
@@ -109,24 +109,14 @@
     // so restore their pointer events explicitly.
     &[data-state~="readonly"] {
         pointer-events: none;
-        // Placeholder colour rides --_placeholder-color from the container: an
-        // `input` tail here would join the shared data-state invalidation set (PERF-06).
+        // Everything below rides custom properties from the container: a
+        // `.nds-form-control` or `input` tail here would join the shared
+        // data-state invalidation set (PERF-06).
         --_placeholder-color: var(--form-field-text-placeholder);
-
-        .nds-form-action {
-            pointer-events: auto;
-        }
-
-        .nds-form-control {
-            border-color: var(--border-neutral-primary);
-            background-color: transparent;
-            color: var(--form-field-text-readonly);
-
-            &:hover {
-                border-color: var(--border-neutral-primary);
-                color: var(--form-field-text-readonly);
-            }
-        }
+        --_control-border-forced: var(--border-neutral-primary);
+        --_control-bg-forced: transparent;
+        --_control-color-forced: var(--form-field-text-readonly);
+        --_action-events: auto;
     }
 
     // Disabled state — same non-interactivity rationale as readonly above.
@@ -134,17 +124,10 @@
         pointer-events: none;
         user-select: none;
         --_placeholder-color: var(--text-default-disabled);
-
-        .nds-form-header .nds-label,
-        .nds-form-header .nds-info {
-            color: var(--text-default-disabled);
-        }
-
-        .nds-form-control {
-            background-color: transparent;
-            color: var(--text-default-disabled);
-            border-color: var(--border-disabled);
-        }
+        --_header-color-forced: var(--text-default-disabled);
+        --_control-border-forced: var(--border-disabled);
+        --_control-bg-forced: transparent;
+        --_control-color-forced: var(--text-default-disabled);
     }
 }
 
@@ -197,7 +180,7 @@
 
 :is(.nds-form-container, .nds-form-group) {
     .nds-label+.nds-info {
-        color: var(--text-primary-paragraph);
+        color: var(--_header-color-forced, var(--text-primary-paragraph));
         font-size: var(--typo-text-sm-FS);
         line-height: var(--typo-text-sm-LH);
         min-width: 200px;
@@ -237,7 +220,11 @@ fieldset {
     // (via autofill-reset mixin) so the inset-shadow mask always tracks the
     // wrapper's current state bg (active/lighter/darker) instead of staying
     // pinned to --form-field-background-default.
-    --_form-control-bg: var(--form-field-background-default);
+    // readonly/disabled set the --_control-*-forced hooks on the container and the
+    // control's own declarations read them first — no `.nds-form-control` tail after
+    // [data-state] in the shared invalidation set (PERF-06).
+    --_form-control-bg: var(--_control-bg-forced, var(--form-field-background-default));
+    color: var(--_control-color-forced, inherit);
     display: flex;
     min-height: var(--_input-size);
     height: var(--_input-size);
@@ -246,7 +233,7 @@ fieldset {
     padding: var(--spacing-none) var(--spacing-md);
     border-radius: var(--_input-radius);
     gap: var(--spacing-md);
-    border: 1px solid var(--form-field-border-default);
+    border: 1px solid var(--_control-border-forced, var(--form-field-border-default));
     background-color: var(--_form-control-bg);
     position: relative;
 
@@ -292,8 +279,8 @@ fieldset {
     }
 
     &:hover {
-        border-color: var(--form-field-border-hovered);
-        color: var(--form-field-text-hovered);
+        border-color: var(--_control-border-forced, var(--form-field-border-hovered));
+        color: var(--_control-color-forced, var(--form-field-text-hovered));
 
         :is(input, textarea)::-webkit-input-placeholder {
             color: var(--_placeholder-color, var(--form-field-text-hovered));
@@ -331,7 +318,7 @@ fieldset {
         }
 
         box-shadow: var(--shadow-md);
-        color: var(--form-field-text-focused);
+        color: var(--_control-color-forced, var(--form-field-text-focused));
 
         :is(input, textarea)::-webkit-input-placeholder {
             color: var(--_placeholder-color, var(--form-field-text-focused));
@@ -410,8 +397,10 @@ fieldset {
         }
     }
 
-    .nds-select[data-state~="open"]>&::after {
-        transform: rotate(180deg);
+    // The caret (%select-caret-after) reads --_caret-flip; set on the host, not on
+    // the control's ::after (PERF-06).
+    @at-root .nds-select[data-state~="open"] {
+        --_caret-flip: 180deg;
     }
 
     // Custom dropdown styles for nds-select when using input instead of
@@ -424,6 +413,8 @@ fieldset {
 
     .nds-form-action {
         display: flex;
+        // readonly re-enables the action slot through this hook (PERF-06).
+        pointer-events: var(--_action-events, inherit);
         gap: var(--spacing-sm);
         flex-direction: row;
         margin-inline-end: calc(var(--spacing-md) * -1);
@@ -526,17 +517,17 @@ fieldset {
 
 .nds-form-container:not(.nds-file-upload) {
     &.nds-lighter .nds-form-control {
-        --_form-control-bg: var(--form-field-background-lighter);
+        --_form-control-bg: var(--_control-bg-forced, var(--form-field-background-lighter));
     }
 
     &.nds-darker .nds-form-control {
-        --_form-control-bg: var(--form-field-background-darker);
+        --_form-control-bg: var(--_control-bg-forced, var(--form-field-background-darker));
     }
 
     // Without this, the [data-state~="active"] rule above swaps the bg to
     // --form-field-background-darker the moment the user types into a lighter field.
-    &.nds-lighter[data-state~="active"]:not([data-state~="readonly"]) > .nds-form-control {
-        --_form-control-bg: var(--form-field-background-lighter);
+    &.nds-lighter[data-state~="active"]:not([data-state~="readonly"]) {
+        --_control-bg-active: var(--form-field-background-lighter);
     }
 }
 
@@ -599,11 +590,7 @@ fieldset {
 
     &[data-state~="disabled"] {
         opacity: 0.5;
-        pointer-events: none;
-
-        .nds-form-container {
-            pointer-events: none;
-        }
+        pointer-events: none; // inherited by every container inside
     }
 
     &[data-status]>.nds-feedback {

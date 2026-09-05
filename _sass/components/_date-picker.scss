@@ -28,8 +28,8 @@
             @extend %select-caret-after;
         }
     }
-    &[data-state~="open"] .nds-form-control::after {
-        transform: rotate(180deg);
+    &[data-state~="open"] {
+        --_caret-flip: 180deg;
     }
 
     // Month/year mode (data-format has no D token) — the day grid is replaced

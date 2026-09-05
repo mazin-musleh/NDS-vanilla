@@ -116,7 +116,9 @@
 // ALWAYS OPEN STATE
 // ==============================================
 
-.nds-drawer[data-state~="always-open"] {
+// always-open is mirrored to .nds-always-open by core (the loading pattern): keyed on
+// the attribute, these `.nds-btn` rules would sit in the shared data-state set (PERF-06).
+.nds-drawer.nds-always-open {
 
     // Hide arrow icons in always-open mode
     .nds-drawer-list>li>.nds-btn {
@@ -389,7 +391,7 @@
 
     // When always open, move border to button instead of li. The li side rides
     // --_item-border: a `> li` tail here would join the shared data-state set (PERF-06).
-    &[data-state~="always-open"] {
+    &.nds-always-open {
         --_item-border: none;
 
         .nds-drawer-list>li>.nds-btn {

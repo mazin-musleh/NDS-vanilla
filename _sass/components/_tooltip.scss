@@ -62,8 +62,15 @@
   // it tints the one solid disc instead of adding a second circle behind it.
   // Scoped by the icon's own feedback wrapper having `data-status="help"`,
   // leaving the tooltip's outer data-status free; skipped for `.nds-outline`.
-  &:not([data-state~="open"]) &-trigger [data-status="help"] .nds-feedback-icon:not(:is(.nds-outline, .nds-feedback.nds-outline > *)) {
-    --feedback-icon-color: var(--colors-neutral-500);
+  // The colour rides --_tooltip-help-color from the tooltip. While open it is unset,
+  // the icon's knob goes invalid and its own neutral fill applies — no
+  // `.nds-feedback-icon` tail after [data-state] (PERF-06).
+  &:not([data-state~="open"]) {
+    --_tooltip-help-color: var(--colors-neutral-500);
+  }
+
+  &-trigger [data-status="help"] .nds-feedback-icon:not(:is(.nds-outline, .nds-feedback.nds-outline > *)) {
+    --feedback-icon-color: var(--_tooltip-help-color);
   }
 
 }

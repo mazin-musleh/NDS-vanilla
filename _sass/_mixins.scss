@@ -490,6 +490,7 @@ $breakpoints-range: (
   mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
   opacity: var(--nds-icons-opacity, 1);
   rotate: -90deg;
+  transform: rotate(var(--_caret-flip, 0deg)); // open hosts set --_caret-flip
   top: 50%;
   translate: 0 -50%;
 

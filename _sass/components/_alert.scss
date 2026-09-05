@@ -362,8 +362,12 @@
 
   // JS stamps 'paused' on hover/focus/click — freeze the countdown ring in sync with the timer.
   // .nds-alert-close keeps this above the button's `animation:` shorthand, which resets play-state.
-  &[data-state~="paused"] .nds-alert-close .nds-progress-track {
-    animation-play-state: paused;
+  &[data-state~="paused"] {
+    --_toast-play: paused;
+  }
+
+  .nds-alert-close .nds-progress-track {
+    animation-play-state: var(--_toast-play, running);
   }
 
 }
