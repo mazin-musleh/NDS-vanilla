@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.1.0"
-last_edit: "17/08/2026 - 02:14 AM"
+last_edit: "05/09/2026 - 08:04 PM"
 ---
 
 <!-- Single Checkbox -->
@@ -98,9 +98,11 @@ last_edit: "17/08/2026 - 02:14 AM"
                     <input type="checkbox" id="demo-checkbox-single" name="agreement" value="accepted" class="nds-check">
                   </div>
                 </div>
-                <button class="nds-btn nds-primary nds-sm" type="submit">
-                  <span class="nds-label">Submit</span>
-                </button>
+                <div class="nds-form-actions">
+                  <button class="nds-btn nds-primary nds-sm" type="submit">
+                    <span class="nds-label">Submit</span>
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -248,9 +250,11 @@ last_edit: "17/08/2026 - 02:14 AM"
                   </div>
                 </div>
               </fieldset>
-              <button class="nds-btn nds-primary nds-sm" type="submit">
-                <span class="nds-label">Submit</span>
-              </button>
+              <div class="nds-form-actions">
+                <button class="nds-btn nds-primary nds-sm" type="submit">
+                  <span class="nds-label">Submit</span>
+                </button>
+              </div>
               </form>
             </div>
           </div>

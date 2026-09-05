@@ -6,7 +6,7 @@ hero_description: A form field for picking multiple options from grouped lists, 
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "22/08/2026 - 01:19 PM"
+last_edit: "05/09/2026 - 08:04 PM"
 lang: en
 direction: ltr
 ---
@@ -360,9 +360,11 @@ direction: ltr
                                             <span class="nds-multiselect-placeholder">Select 2&ndash;4 options&hellip;</span>
                                         </div>
                                     </div>
-                                    <button class="nds-btn nds-primary nds-sm" type="submit">
-                                        <span class="nds-label">Submit</span>
-                                    </button>
+                                    <div class="nds-form-actions">
+                                        <button class="nds-btn nds-primary nds-sm" type="submit">
+                                            <span class="nds-label">Submit</span>
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -396,9 +398,11 @@ direction: ltr
     &lt;!-- same markup as Grouped Options above: header label, dropmenu
          trigger + panel with option checkboxes, chip track, placeholder --&gt;
   &lt;/div&gt;
-  &lt;button class="nds-btn nds-primary" type="submit"&gt;
-    &lt;span class="nds-label"&gt;Submit&lt;/span&gt;
-  &lt;/button&gt;
+  &lt;div class="nds-form-actions"&gt;
+    &lt;button class="nds-btn nds-primary" type="submit"&gt;
+      &lt;span class="nds-label"&gt;Submit&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
 &lt;/form&gt;
                                         </code>
                                         </div>
