@@ -361,7 +361,7 @@ last_edit: "06/09/2026 - 11:38 PM"
 <section id="swiperDeck" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Deck <span class="nds-tag" data-status="info"><span class="nds-label">Beta</span></span></h2>
+            <h2 class="nds-section-title">Deck <span class="nds-tag nds-yellow nds-sm"><span class="nds-label">Beta</span></span></h2>
             <p class="nds-section-description">A hero with a deck of cards beside the slides, one card per slide. The active card is at the front, the other cards fan behind it, and the front card slides back into the pile when the next one comes forward. A tap on a card goes to its slide; below the desktop breakpoint a drag across the deck follows the finger and pages on release. Below the desktop breakpoint the deck stacks above the text: the open card is centred, its two neighbours peek at the sides. Use it when every slide has its own artwork and the set is worth showing at once, as in a campaign hero.</p>
         </div>
         <div class="nds-section-body">

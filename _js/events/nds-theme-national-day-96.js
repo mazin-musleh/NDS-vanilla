@@ -38,10 +38,15 @@
     'use strict';
 
     var THEME = 'national-day-96';
+    // A page can load this file twice (an authored tag plus the switcher's own
+    // fetch); the first copy owns the hooks and its data-* config, later copies
+    // step aside so the switcher drives that one.
+    if (window.__NDS_THEME_HOOKS && window.__NDS_THEME_HOOKS[THEME]) return;
     var LINK_ID = 'nds-theme-stylesheet';   // shared slot: nds-theme.js LINK_ID + head.html brand path
     var SWIPER_SEL = '.nds-hero-section .nds-swiper.nds-hero';
     // Both are injection/teardown hooks only — the stylesheet styles neither.
-    var SLIDE_CLASS = 'nds-nationalDay';
+    var SLIDE_CLASS = 'nds-nationalDay';      // the type 1 slide
+    var DECK_SLIDE = 'nds-nd96-slide';         // a type 2 slide
     var LOGO_CLASS = 'nds-nationalDay-logo';
 
     // This script ships beside its assets (…/docs-assets/events/national_day_96/), so
@@ -96,85 +101,85 @@
     var TYPE = pick('type', '2') === '1' ? 1 : 2;
     var LEAD = { ar: 'عِزّنا', en: 'Our pride in our' };
     var SLIDES = [
-    {
-        theme: 'heritage',
-        card: 'card_heritage.webp',
-        word: { ar: 'بأصالتنا', en: 'authenticity' },
-        body: {
-            ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم وتاريخهم، واعتزازهم بموروثهم. فهي تظهر في التمسك بالعادات والتقاليد، واستمرار القيم التي تتوارثها الأجيال.',
-            en: 'Authenticity in Saudi society reflects a deep connection to our roots, history, and heritage. It lives on in the customs and traditions we uphold, and in the values passed down from one generation to the next.'
+        {
+            theme: 'heritage',
+            card: 'card_heritage.webp',
+            word: { ar: 'بأصالتنا', en: 'authenticity' },
+            body: {
+                ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم وتاريخهم، واعتزازهم بموروثهم. فهي تظهر في التمسك بالعادات والتقاليد، واستمرار القيم التي تتوارثها الأجيال.',
+                en: 'Authenticity in Saudi society reflects a deep connection to our roots, history, and heritage. It lives on in the customs and traditions we uphold, and in the values passed down from one generation to the next.'
+            },
+            short: {
+                ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم واعتزازهم بإرثهم.',
+                en: 'Authenticity reflects our deep connection to our roots and pride in our heritage.'
+            }
         },
-        short: {
-            ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم واعتزازهم بإرثهم.',
-            en: 'Authenticity reflects our deep connection to our roots and pride in our heritage.'
-        }
-    },
-    {
-        theme: 'courage',
-        card: 'card_courage.webp',
-        word: { ar: 'بشجاعتنا', en: 'courage' },
-        body: {
-            ar: 'لأن الشجاعة في سلمنا وعرفنا قيمة أصيلة، نزع بلا تردد ونجد من استنجدنا، وهي صفة متجذرة فينا منذ القدم وامتدادًا عبر تاريخ هذه البلاد العظيمة، حيث كان أبناء الوطن دائمًا سندًا وعونًا لكل محتاج.',
-            en: 'Courage is a deeply rooted value in our character and traditions. We answer the call without hesitation and stand by those in need. Passed down through generations, this spirit has endured throughout the history of our nation, whose people have always been known for their strength, support, and readiness to help others.'
+        {
+            theme: 'courage',
+            card: 'card_courage.webp',
+            word: { ar: 'بشجاعتنا', en: 'courage' },
+            body: {
+                ar: 'لأن الشجاعة في سلمنا وعرفنا قيمة أصيلة، نزع بلا تردد ونجد من استنجدنا، وهي صفة متجذرة فينا منذ القدم وامتدادًا عبر تاريخ هذه البلاد العظيمة، حيث كان أبناء الوطن دائمًا سندًا وعونًا لكل محتاج.',
+                en: 'Courage is a deeply rooted value in our character and traditions. We answer the call without hesitation and stand by those in need. Passed down through generations, this spirit has endured throughout the history of our nation, whose people have always been known for their strength, support, and readiness to help others.'
+            },
+            short: {
+                ar: 'الشجاعة في دمنا، نلبي النداء فورًا، ونساند المحتاجين، وهي صفة عريقة في تاريخ وطننا العظيم.',
+                en: 'Courage is in our character: we answer the call and stand by those in need.'
+            }
         },
-        short: {
-            ar: 'الشجاعة في دمنا، نلبي النداء فورًا، ونساند المحتاجين، وهي صفة عريقة في تاريخ وطننا العظيم.',
-            en: 'Courage is in our character: we answer the call and stand by those in need.'
-        }
-    },
-    {
-        theme: 'ambition',
-        card: 'card_ambition.webp',
-        word: { ar: 'بهمّتنا', en: 'drive' },
-        body: {
-            ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز. وقد أصبحت الهمة جزءًا من ثقافتنا الوطنية، نستمدها من إيماننا بقدراتنا وثقتنا بمستقبلنا.',
-            en: 'Drive is one of the defining qualities of the Saudi character. It fuels our ambition and inspires us to achieve more. It is part of our national spirit, strengthened by our belief in our abilities and our confidence in the future.'
+        {
+            theme: 'ambition',
+            card: 'card_ambition.webp',
+            word: { ar: 'بهمّتنا', en: 'drive' },
+            body: {
+                ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز. وقد أصبحت الهمة جزءًا من ثقافتنا الوطنية، نستمدها من إيماننا بقدراتنا وثقتنا بمستقبلنا.',
+                en: 'Drive is one of the defining qualities of the Saudi character. It fuels our ambition and inspires us to achieve more. It is part of our national spirit, strengthened by our belief in our abilities and our confidence in the future.'
+            },
+            short: {
+                ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز.',
+                en: 'Drive defines the Saudi character, fueling our ambition and inspiring achievement.'
+            }
         },
-        short: {
-            ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز.',
-            en: 'Drive defines the Saudi character, fueling our ambition and inspiring achievement.'
-        }
-    },
-    {
-        theme: 'generosity',
-        card: 'card_generosity.webp',
-        word: { ar: 'بجودنا', en: 'generosity' },
-        body: {
-            ar: 'الجود من أسمى الصفات في الهوية السعودية، ورثها السعوديون أبًا عن جد. الجود ليس فقط في المال، بل في الوقت والجهد والمواقف. في الثقافة السعودية، الجود يعني العطاء من القلب، وفتح الدار قبل السؤال، والفرح بالعطاء. هو طبع متأصل يظهر في الدلة التي لا تبرد، والباب المفتوح، والمبخرة التي لا تنطفئ.',
-            en: 'Generosity is one of the most cherished qualities of Saudi identity, passed down through generations. It extends beyond material giving to our time, effort, and support for others. It means giving wholeheartedly, opening our homes before being asked, and finding joy in giving. It is reflected in the coffee pot that stays warm, the open door, and the incense that continues to burn.'
+        {
+            theme: 'generosity',
+            card: 'card_generosity.webp',
+            word: { ar: 'بجودنا', en: 'generosity' },
+            body: {
+                ar: 'الجود من أسمى الصفات في الهوية السعودية، ورثها السعوديون أبًا عن جد. الجود ليس فقط في المال، بل في الوقت والجهد والمواقف. في الثقافة السعودية، الجود يعني العطاء من القلب، وفتح الدار قبل السؤال، والفرح بالعطاء. هو طبع متأصل يظهر في الدلة التي لا تبرد، والباب المفتوح، والمبخرة التي لا تنطفئ.',
+                en: 'Generosity is one of the most cherished qualities of Saudi identity, passed down through generations. It extends beyond material giving to our time, effort, and support for others. It means giving wholeheartedly, opening our homes before being asked, and finding joy in giving. It is reflected in the coffee pot that stays warm, the open door, and the incense that continues to burn.'
+            },
+            short: {
+                ar: 'الجود صفة سامية في الهوية السعودية، ورثها السعوديون. تعني العطاء من القلب وفتح الدار.',
+                en: 'Generosity is a cherished Saudi value: giving wholeheartedly and welcoming others with an open door.'
+            }
         },
-        short: {
-            ar: 'الجود صفة سامية في الهوية السعودية، ورثها السعوديون. تعني العطاء من القلب وفتح الدار.',
-            en: 'Generosity is a cherished Saudi value: giving wholeheartedly and welcoming others with an open door.'
-        }
-    },
-    {
-        theme: 'kindness',
-        card: 'card_kindness.webp',
-        word: { ar: 'بكرمنا', en: 'hospitality' },
-        body: {
-            ar: 'الكرم من القيم الأساسية في ثقافتنا، ويعد من أبرز سمات الهوية السعودية، ويتجاوز مجرد حسن الضيافة، ليشمل حفاوة الاستقبال والمبادرة بالمساعدة. يعد الكرم رمزًا للأصالة والانتماء، ويربى عليه السعوديون منذ الصغر، مما يجعله جزءًا طبيعيًا من الحياة اليومية والعلاقات الاجتماعية.',
-            en: 'Hospitality is a cornerstone of our culture and a defining part of Saudi identity. It goes beyond welcoming guests to include warmth, generosity, and a willingness to help. Saudis grow up with these values, making hospitality a natural part of everyday life and the way we connect with others.'
+        {
+            theme: 'kindness',
+            card: 'card_kindness.webp',
+            word: { ar: 'بكرمنا', en: 'hospitality' },
+            body: {
+                ar: 'الكرم من القيم الأساسية في ثقافتنا، ويعد من أبرز سمات الهوية السعودية، ويتجاوز مجرد حسن الضيافة، ليشمل حفاوة الاستقبال والمبادرة بالمساعدة. يعد الكرم رمزًا للأصالة والانتماء، ويربى عليه السعوديون منذ الصغر، مما يجعله جزءًا طبيعيًا من الحياة اليومية والعلاقات الاجتماعية.',
+                en: 'Hospitality is a cornerstone of our culture and a defining part of Saudi identity. It goes beyond welcoming guests to include warmth, generosity, and a willingness to help. Saudis grow up with these values, making hospitality a natural part of everyday life and the way we connect with others.'
+            },
+            short: {
+                ar: 'الكرم جزء من هويتنا السعودية يظهر في الضيافة والمساعدة.',
+                en: 'Hospitality is part of our Saudi identity, reflected in the warmth of our welcome and our willingness to help.'
+            }
         },
-        short: {
-            ar: 'الكرم جزء من هويتنا السعودية يظهر في الضيافة والمساعدة.',
-            en: 'Hospitality is part of our Saudi identity, reflected in the warmth of our welcome and our willingness to help.'
+        {
+            theme: 'vision',
+            card: 'card_vision.webp',
+            word: { ar: 'برؤيتنا', en: 'vision' },
+            body: {
+                ar: 'رؤية السعودية 2030، التي أطلقها ولي العهد الأمير محمد بن سلمان، تهدف لبناء مستقبل مزدهر ومستدام. تؤمن الرؤية بقدرتنا على التحول والتقدم وصناعة مستقبل أفضل لوطننا مع الحفاظ على هويتنا وقيمنا، مما يعكس وعيًا عميقًا وطموحًا لصناعة الغد.',
+                en: 'Saudi Vision 2030, launched by Crown Prince Mohammed bin Salman, charts a path toward a prosperous and sustainable future. It reflects our ability to transform, progress, and shape a better future for our nation while preserving our identity and values.'
+            },
+            short: {
+                ar: 'رؤية السعودية 2030 التي أطلقها ولي العهد تهدف لبناء مستقبل مزدهر ومستدام يعكس طموحنا وهويتنا.',
+                en: 'Saudi Vision 2030 charts a path toward a prosperous, sustainable future rooted in our ambition and identity.'
+            }
         }
-    },
-    {
-        theme: 'vision',
-        card: 'card_vision.webp',
-        word: { ar: 'برؤيتنا', en: 'vision' },
-        body: {
-            ar: 'رؤية السعودية 2030، التي أطلقها ولي العهد الأمير محمد بن سلمان، تهدف لبناء مستقبل مزدهر ومستدام. تؤمن الرؤية بقدرتنا على التحول والتقدم وصناعة مستقبل أفضل لوطننا مع الحفاظ على هويتنا وقيمنا، مما يعكس وعيًا عميقًا وطموحًا لصناعة الغد.',
-            en: 'Saudi Vision 2030, launched by Crown Prince Mohammed bin Salman, charts a path toward a prosperous and sustainable future. It reflects our ability to transform, progress, and shape a better future for our nation while preserving our identity and values.'
-        },
-        short: {
-            ar: 'رؤية السعودية 2030 التي أطلقها ولي العهد تهدف لبناء مستقبل مزدهر ومستدام يعكس طموحنا وهويتنا.',
-            en: 'Saudi Vision 2030 charts a path toward a prosperous, sustainable future rooted in our ambition and identity.'
-        }
-    }
-];
+    ];
     var TYPE_MS = 120;    // typewriter pace per letter, then
     var HOLD_MS = 5000;   // time to read the body before the next slide
     // ─────────────────────────────────────────────────────────────────────────
@@ -339,7 +344,7 @@
     function buildDeckSlide(s, i) {
         var h = i ? 'h2' : 'h1';   // the pack's first slide stands in for the site's h1
         var slide = document.createElement('div');
-        slide.className = 'nds-swiper-slide nds-content-wrapper ' + SLIDE_CLASS;
+        slide.className = 'nds-swiper-slide nds-content-wrapper ' + DECK_SLIDE;
         if (i) slide.hidden = true;
         slide.innerHTML =
             '<div class="nds-section-body">' +
@@ -370,7 +375,7 @@
     }
 
     function deckSection() { return document.querySelector('.nds-hero-section.' + DECK_CLASS); }
-    function deckSlides(section) { return section.querySelectorAll('.nds-swiper-slide.' + SLIDE_CLASS + ':not(.nds-swiper-clone)'); }
+    function deckSlides(section) { return section.querySelectorAll('.nds-swiper-slide.' + DECK_SLIDE + ':not(.nds-swiper-clone)'); }
 
     // The looping track shows a clone at the wrap for a frame: keep each clone a
     // copy of its twin, with the word whole.
@@ -391,7 +396,7 @@
     function stashSiteSlides(wrapper) {
         // Snapshot: removing from the live collection while walking it skips every other child.
         Array.prototype.slice.call(wrapper.children).forEach(function (el) {
-            if (el.classList.contains(SLIDE_CLASS)) return;
+            if (el.classList.contains(DECK_SLIDE)) return;
             _siteSlides.push(el);
             el.remove();
         });
@@ -415,6 +420,7 @@
         });
         wrapper.parentNode.insertBefore(deck, wrapper.nextSibling);
         swiper.classList.add('nds-deck');
+        swiper.setAttribute('data-swiper-loop', '');   // deck mode loops on its own; older runtimes need the attribute
         swiper.style.setProperty('--total', String(SLIDES.length));
         var nav = swiper.querySelector('.nds-swiper-navigation');
         _navHadCenter = !!(nav && nav.classList.contains('nds-center'));
@@ -430,6 +436,13 @@
         var dirWatch = new MutationObserver(retext);
         dirWatch.observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
         sig.addEventListener('abort', function () { dirWatch.disconnect(); });
+        // Runtimes older than deck mode: adopt the swiper once it initializes
+        // (and again after every reinit — the attribute comes back each time).
+        var initWatch = new MutationObserver(function () {
+            if (swiper.hasAttribute('data-nds-swiper-initialized')) adoptDeck(swiper);
+        });
+        initWatch.observe(swiper, { attributes: true, attributeFilter: ['data-nds-swiper-initialized'] });
+        sig.addEventListener('abort', function () { initWatch.disconnect(); });
         if (document.readyState === 'loading') {
             var sweep = new MutationObserver(function () { stashSiteSlides(wrapper); });
             sweep.observe(wrapper, { childList: true });
@@ -486,6 +499,7 @@
         _wordDone = false;
         if (!slide) return;
         var span = slide.querySelector('.nds-nd96-typed');
+        if (!span) return;
         var word = span.getAttribute('data-word');
         var chars = word.match(/\P{M}\p{M}*/gu) || [];
         var n = 0;
@@ -515,7 +529,7 @@
     function advance() {
         var swiper = document.querySelector(SWIPER_SEL);
         var inst = swiper && swiper._ndsSwiper;
-        if (inst) inst.next();   // the deck track loops, so next() wraps on its own
+        if (inst) inst.goTo((_current + 1) % SLIDES.length);   // by index: wraps with or without loop (the text switch is instant)
     }
 
     function pause() { _paused = true; clearTimeout(_holdTimer); _holdTimer = 0; }
@@ -539,15 +553,123 @@
 
         var deck = swiper.querySelector('.nds-swiper-deck');
         if (deck) deck.remove();
-        Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-slide.' + SLIDE_CLASS), function (s) { s.remove(); });
+        Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-slide.' + DECK_SLIDE), function (s) { s.remove(); });
         _siteSlides.forEach(function (s) { wrapper.appendChild(s); });
         _siteSlides = [];
         swiper.classList.remove('nds-deck');
+        swiper.removeAttribute('data-swiper-loop');
         var nav = swiper.querySelector('.nds-swiper-navigation');
         if (nav && !_navHadCenter) nav.classList.remove('nds-center');
         if (_siteTotal) swiper.style.setProperty('--total', _siteTotal);
         else swiper.style.removeProperty('--total');
         if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
+    }
+
+    // ── Older runtimes (before the swiper's deck mode, 1.13) ────────────────
+    // The pack's stylesheet already carries the deck CSS. This drives what the
+    // runtime lacks: card placement on every index change, the change event the
+    // text follows, clone twins for syncClones (1.12 loops; earlier runtimes do
+    // not, and there the arrows stop at the ends while auto-advance, drag and the
+    // fan still wrap by index), the stacked-layout drag, and an instant text
+    // switch. A runtime with deck mode is left alone.
+    function adoptDeck(swiper) {
+        var inst = swiper._ndsSwiper;
+        if (!inst || inst.updateDeck || inst._nd96Adopted) return;
+        inst._nd96Adopted = true;
+        var cards = Array.prototype.slice.call(swiper.querySelectorAll('.nds-swiper-card'));
+        var n = cards.length;
+        if (!n) return;
+
+        function place(active) {
+            cards.forEach(function (card, k) {
+                var rel = (k - active + n) % n, srel = rel > n / 2 ? rel - n : rel;
+                card.style.setProperty('--rel', rel);
+                card.style.setProperty('--srel', srel);
+                var status = rel === 0 ? 'active' : Math.abs(srel) === 1 ? 'near' : '';
+                if (status) card.setAttribute('data-status', status); else card.removeAttribute('data-status');
+                if (rel === 0) card.setAttribute('aria-current', 'true'); else card.removeAttribute('aria-current');
+            });
+            swiper.dispatchEvent(new CustomEvent('nds:swiper:change', { bubbles: true, detail: { index: active } }));
+        }
+        // 1.12 loops with clones (a full-list index maps to a real one); 1.11 and
+        // earlier have no loop, so the index is the position.
+        function real() { return inst._realIndex !== undefined ? inst._realIndex : inst.currentIndex; }
+        function realOf(full) {
+            var r = inst._real;
+            return r ? (((full - inst._head) % r) + r) % r : Math.max(0, Math.min(full, n - 1));
+        }
+
+        // Every index change the runtime settles on, plus the target the moment a
+        // move starts: _goToFull carries every move in 1.12, goTo before that.
+        var update = inst.updateState;
+        inst.updateState = function () {
+            var before = this.lastIndex;
+            update.call(this);
+            if (this.lastIndex !== before) place(real());
+        };
+        if (inst._goToFull) {
+            var go = inst._goToFull;
+            inst._goToFull = function (index, instant) { place(realOf(index)); return go.call(this, index, instant); };
+        } else {
+            var goTo = inst.goTo;
+            inst.goTo = function (index) { place(((index % n) + n) % n); return goTo.call(this, index); };
+        }
+
+        // Clone twins, so syncClones can copy the right text into each clone.
+        var slides = Array.prototype.slice.call(inst.wrapper.children);
+        var reals = slides.filter(function (s) { return !s.classList.contains('nds-swiper-clone'); });
+        var first = slides.indexOf(reals[0]);
+        slides.forEach(function (s, i) {
+            if (!s.classList.contains('nds-swiper-clone') || s.hasAttribute('data-swiper-clone')) return;
+            s.setAttribute('data-swiper-clone', i < first ? reals.length - (first - i) : i - first - reals.length);
+        });
+
+        // The text switches in place: strip the forced smooth from the runtime's scrolls.
+        var wrapper = inst.wrapper, scrollTo = wrapper.scrollTo;
+        wrapper.scrollTo = function (o) {
+            if (o && typeof o === 'object' && o.behavior === 'smooth') o = { left: o.left, top: o.top };
+            return scrollTo.call(this, o);
+        };
+
+        // Stacked layout: the cards follow the finger, release pages or opens a card.
+        var deck = swiper.querySelector('.nds-swiper-deck');
+        if (deck && !deck._nd96Drag) {
+            deck._nd96Drag = true;
+            var mq = window.matchMedia((window.NDS && NDS.breakpoints && NDS.breakpoints.desktop) || '(min-width: 960px)');
+            var sig = _deckAbort ? _deckAbort.signal : undefined;
+            var x0 = null, dx = 0, pressed = -1;
+            deck.addEventListener('pointerdown', function (e) {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                x0 = e.clientX; dx = 0;
+                pressed = cards.indexOf(e.target.closest('.nds-swiper-card'));
+                try { deck.setPointerCapture(e.pointerId); } catch (err) { /* synthetic pointer */ }
+            }, { signal: sig });
+            deck.addEventListener('pointermove', function (e) {
+                if (x0 === null || mq.matches) return;
+                dx = e.clientX - x0;
+                if (Math.abs(dx) > 4) { deck.classList.add('nds-dragging'); deck.style.setProperty('--drag', dx + 'px'); }
+            }, { signal: sig });
+            var release = function (e) {
+                if (x0 === null) return;
+                x0 = null;
+                deck.classList.remove('nds-dragging');
+                deck.style.removeProperty('--drag');
+                var live = swiper._ndsSwiper;
+                if (!live) return;
+                // By index, so the ends wrap on a runtime without loop too.
+                if (Math.abs(dx) >= 40) { var fwd = (window.NDS && NDS.isRTL) ? dx > 0 : dx < 0; live.goTo((real() + (fwd ? 1 : n - 1)) % n); return; }
+                if (e.type === 'pointerup' && pressed >= 0) live.goTo(pressed);
+            };
+            deck.addEventListener('pointerup', release, { signal: sig });
+            deck.addEventListener('pointercancel', release, { signal: sig });
+            cards.forEach(function (card, i) {
+                card.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); var live = swiper._ndsSwiper; if (live) live.goTo(i); }
+                }, { signal: sig });
+            });
+        }
+
+        place(real());
     }
 
     function injectHero() { if (TYPE === 1) injectSlide(); else injectDeck(); }

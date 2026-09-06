@@ -29,7 +29,7 @@ hero_float_actions:
                 <div class="nds-alert-content">
                     <div class="nds-alert-text">
                         <span class="nds-alert-title">Preview it live</span>
-                        <p class="nds-alert-description">Pick <strong>National Day 96</strong> from the theme switcher in the top bar: the event slide appears and the section decorations apply. Switch back to undo.</p>
+                        <p class="nds-alert-description">Pick <strong>National Day 96</strong> from the theme switcher in the top bar: the six-slide hero appears and the section decorations apply. Switch back to undo.</p>
                     </div>
                 </div>
             </div>
@@ -42,15 +42,13 @@ hero_float_actions:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
-            <p class="nds-section-description">Add one tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets and without <code class="nds-inline-code lang-html">defer</code>. It applies the event stylesheet and the event hero; remove it when the event ends. That one tag is the whole install — every value has a built-in default. Use the <strong>With overrides</strong> tab to change any of them; see the attribute table below.</p>
-            <p class="nds-section-description">The hero comes in two types. <strong>Type 2</strong>, the default, is the official campaign hero: six slides on the swiper's <a class="nds-color" href="{{ 'components/swiper#swiperDeck' | relative_url }}">deck mode</a>, each with its own card, colour and typed word. Your own hero slides step aside while the pack is on and return when it is removed. <strong>Type 1</strong> adds one plain slide with the event photo in front of your own slides; set <code class="nds-inline-code lang-html">data-type="1"</code> for it.</p>
-            <p class="nds-section-description">The pack is self-contained. Download the zip, then copy its files into your own assets folder. A template copy already ships them at <code class="nds-inline-code lang-html">docs-assets/events/national_day_96/</code>. The paths below assume <code class="nds-inline-code lang-html">assets/events/national_day_96/</code>. The script finds its own CSS and images relative to itself, so the folder works at any location as long as its contents stay together.</p>
+            <p class="nds-section-description">One tag in your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets, without <code class="nds-inline-code lang-html">defer</code>. Pick the hero type with <code class="nds-inline-code lang-html">data-type</code>. Delete the tag to end the event.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">One tag applies everything</div>
+                        <div class="demo-label">Type 2 is the default; add data-type="1" for the single slide</div>
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
@@ -58,11 +56,15 @@ hero_float_actions:
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                         aria-controls="panel-nd96-apply-1" id="tab-nd96-apply-1">
-                                        <span class="nds-tab-label">HTML</span>
+                                        <span class="nds-tab-label">Type 2 — six slides</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-nd96-apply-2" id="tab-nd96-apply-2">
-                                        <span class="nds-tab-label">With overrides</span>
+                                        <span class="nds-tab-label">Type 1 — one slide</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                        aria-controls="panel-nd96-apply-3" id="tab-nd96-apply-3">
+                                        <span class="nds-tab-label">Type 1 with overrides</span>
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
@@ -80,8 +82,19 @@ hero_float_actions:
 &lt;script src="/assets/events/national_day_96/nds-theme-national-day-96.min.js"&gt;&lt;/script&gt;
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nd96-apply-2"
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nd96-apply-2"
                                     aria-labelledby="tab-nd96-apply-2" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;script src="/assets/events/national_day_96/nds-theme-national-day-96.min.js" data-type="1"&gt;&lt;/script&gt;
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nd96-apply-3"
+                                    aria-labelledby="tab-nd96-apply-3" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
@@ -105,6 +118,14 @@ hero_float_actions:
                     </div>
                 </div>
             </div>
+            <div class="nds-block nds-prose">
+                <ul>
+                    <li><strong>Type 2</strong> (default): the official campaign hero. Six slides, each with its own card, colour and typed word, moving on by themselves. Your own hero slides step aside while the pack is on and return when it is removed. The content is fixed.</li>
+                    <li><strong>Type 1</strong>: one plain slide with the event photo, added in front of your own slides. The title, description, image and button attributes in the table below apply to it.</li>
+                    <li><strong>Files</strong>: download the zip and copy its files into your own assets folder. The script finds its CSS and images next to itself, so the folder works at any path as long as it stays together. The paths above assume <code class="nds-inline-code lang-html">assets/events/national_day_96/</code>.</li>
+                    <li><strong>Older NDS</strong>: works on releases before deck mode too (tested on 1.9.0; the swiper hooks it uses exist since 1.4.0). Before 1.12.0 the swiper has no loop, so the arrows stop at the ends while the cards, auto-advance and drag still wrap.</li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
@@ -114,7 +135,7 @@ hero_float_actions:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Manual (no JavaScript)</h2>
-            <p class="nds-section-description">No-JS alternative for the type 1 slide: link the stylesheet for the decorations, and paste the slide markup yourself. The six-slide hero needs the script, which types the words and moves the slides. Add the CSS link in <code class="nds-inline-code lang-html">&lt;head&gt;</code>, and place the slide as the first child of <code class="nds-inline-code lang-html">.nds-swiper-wrapper</code> (raise the hero's <code class="nds-inline-code lang-css">--total</code> by one). The slide is the standard hero markup with the event photo, so it needs no extra styling. Add the event mark to the footer's existing <code class="nds-inline-code lang-html">.nds-footer-logos</code> strip.</p>
+            <p class="nds-section-description">Type 1 only, without the script: link the stylesheet and paste the slide markup yourself. Type 2 needs the script. Add the CSS link in <code class="nds-inline-code lang-html">&lt;head&gt;</code>, and place the slide as the first child of <code class="nds-inline-code lang-html">.nds-swiper-wrapper</code> (raise the hero's <code class="nds-inline-code lang-css">--total</code> by one). The slide is the standard hero markup with the event photo, so it needs no extra styling. Add the event mark to the footer's existing <code class="nds-inline-code lang-html">.nds-footer-logos</code> strip.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -205,7 +226,7 @@ hero_float_actions:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Data Attributes</h2>
-            <p class="nds-section-description">All go on the <code class="nds-inline-code lang-html">&lt;script&gt;</code> tag, all optional. Asset values take a bare filename (resolved against the pack folder) or a full <code class="nds-inline-code lang-html">https</code> URL.</p>
+            <p class="nds-section-description">All go on the <code class="nds-inline-code lang-html">&lt;script&gt;</code> tag, all optional. Only <code class="nds-inline-code lang-html">data-type</code> and <code class="nds-inline-code lang-html">data-logo</code> apply to type 2; the rest shape the type 1 slide. Asset values take a bare filename (resolved against the pack folder) or a full <code class="nds-inline-code lang-html">https</code> URL.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
