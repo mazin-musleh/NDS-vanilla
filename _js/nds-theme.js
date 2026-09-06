@@ -18,6 +18,10 @@
  *                       tint, font, weight-regular, weight-medium, weight-semibold,
  *                       weight-bold
  *   data-palette        marks a custom inline-seed theme
+ *   ?theme=<token>      in the page URL — applies that switcher option on init as if
+ *                       clicked (persisted), ?theme= returns to the default; every
+ *                       switcher choice rewrites it (none for the default), so the
+ *                       address bar is always a shareable link to the current look
  * Gotchas:
  *   - Match the mode with [data-theme~="dark"], never [data-theme="dark"] — the attribute
  *     holds several tokens.
@@ -245,7 +249,17 @@
                 setThemeToken('');                          // DGA
             }
             syncSwitcher(value);
+            syncUrl(value);
         }, el);
+    }
+
+    // The address bar mirrors the choice — ?theme=<token>, no param for the
+    // default — so the current look can be copied as a link.
+    function syncUrl(value) {
+        const params = new URLSearchParams(location.search);
+        if (value) params.set('theme', value); else params.delete('theme');
+        const q = params.toString();
+        history.replaceState(history.state, '', location.pathname + (q ? '?' + q : '') + location.hash);
     }
 
     // Reconcile switcher state at init (post-paint): the pre-paint stamp set data-theme,
@@ -310,6 +324,18 @@
 
         updateToggles(getTheme());
         reconcileSwitcher();
+
+        // ?theme=<token> applies that switcher option as if clicked (and persists
+        // it); ?theme= (empty) returns to the default. The URL keeps the param so
+        // the link can be copied; while it is there a reload re-applies it. Lands
+        // after first paint, so the saved theme shows for a frame first.
+        const params = new URLSearchParams(location.search);
+        if (params.has('theme')) {
+            const want = params.get('theme');
+            const option = Array.from(document.querySelectorAll(SWITCH_SEL))
+                .find(el => (el.getAttribute('data-theme-value') || '') === want);
+            if (option && option.getAttribute('aria-current') !== 'true') applySelection(option);
+        }
 
         // Mode toggle — button click delegation
         document.addEventListener('click', e => {

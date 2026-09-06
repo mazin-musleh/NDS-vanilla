@@ -29,8 +29,8 @@
 //    with the typed word in the slide's accent, and an instant text switch. The pack
 //    stamps nds-nd96 + the active slide's nds-nd96-<theme> on the section. ──
 
-// The two gradient stops are registered so the colour swap between slides
-// animates; a plain custom property would snap.
+// Registered so the word colour can transition (the gradient stops are read
+// by the pack for the cross-fade layer, see ::before below).
 @property --_nd96-from { syntax: '<color>'; inherits: true; initial-value: #01572b; }
 @property --_nd96-to   { syntax: '<color>'; inherits: true; initial-value: #5aba1c; }
 @property --_nd96-word { syntax: '<color>'; inherits: true; initial-value: #ebffe6; }
@@ -55,15 +55,28 @@
   // Deep stop behind the text, light stop behind the cards.
   --_nd96-angle: 270deg;
   background-image: linear-gradient(var(--_nd96-angle), var(--_nd96-from), var(--_nd96-to));
-  transition: --_nd96-from var(--nds-transition), --_nd96-to var(--nds-transition), --_nd96-word var(--nds-transition);
+  transition: --_nd96-word var(--nds-transition);
 
   @include ltr {
     --_nd96-angle: 90deg;
   }
 
+  // The colour change is a cross-fade with ONE repaint: the section snaps to
+  // the new gradient, ::before still holds the old one (the pack stamps
+  // --_nd96-prev-* before it swaps the theme) and fades out on the compositor.
+  // Fading the gradient stops themselves repainted the whole hero every frame.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(var(--_nd96-angle), var(--_nd96-prev-from, transparent), var(--_nd96-prev-to, transparent));
+    opacity: 0;
+    pointer-events: none;
+  }
+
   // Campaign pattern tiled over the gradient; the artwork carries its own 0.1
   // alpha, this is the campaign's own 0.4 on top of it.
-  &::before {
+  &::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -79,6 +92,12 @@
   // The text switches in place; only the cards move.
   .nds-swiper-wrapper {
     scroll-behavior: auto;
+  }
+
+  // Arrows and dots as one compact group at the column's start, not spread
+  // across the row (the pack adds nds-center and nds-md to the row).
+  .nds-swiper-navigation {
+    width: fit-content;
   }
 
   // The word wears its slide's campaign accent.
@@ -122,6 +141,12 @@
 
     .nds-nd96-short {
       display: block;
+    }
+
+    // The whole row (arrows and dots) centred under the text.
+    .nds-swiper-navigation {
+      justify-content: center;
+      margin-inline: auto;
     }
   }
 }

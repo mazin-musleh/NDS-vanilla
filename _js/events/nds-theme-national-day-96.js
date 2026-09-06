@@ -182,6 +182,8 @@
     ];
     var TYPE_MS = 120;    // typewriter pace per letter, then
     var HOLD_MS = 5000;   // time to read the body before the next slide
+    var SETTLE_MS = 600;  // the cards' slide (the swiper's deck motion); typing waits for it
+    var WARM_MS = 200;    // compositor pre-warm before an auto move (see prewarm)
     // ─────────────────────────────────────────────────────────────────────────
 
     // Text follows the page direction, not its lang: RTL reads the Arabic set,
@@ -336,8 +338,9 @@
     // (components/swiper: .nds-deck). The section carries nds-nd96 + the active
     // slide's theme class, which is all the stylesheet keys on.
     var DECK_CLASS = 'nds-nd96';
-    var _siteSlides = [], _siteTotal = '', _navHadCenter = false;
+    var _siteSlides = [], _siteTotal = '', _navHadCenter = false, _pageHadMd = false;
     var _deckAbort = null, _typeTimer = 0, _holdTimer = 0, _current = -1, _paused = false, _wordDone = false;
+    var _settled = false;   // false until the first word: the first slide has no motion to wait for
 
     function fullTitle(s) { return t(LEAD) + ' ' + t(s.word); }
 
@@ -422,9 +425,11 @@
         swiper.classList.add('nds-deck');
         swiper.setAttribute('data-swiper-loop', '');   // deck mode loops on its own; older runtimes need the attribute
         swiper.style.setProperty('--total', String(SLIDES.length));
-        var nav = swiper.querySelector('.nds-swiper-navigation');
+        var nav = swiper.querySelector('.nds-swiper-navigation'), page = swiper.querySelector('.nds-swiper-pagination');
         _navHadCenter = !!(nav && nav.classList.contains('nds-center'));
+        _pageHadMd = !!(page && page.classList.contains('nds-md'));
         if (nav) nav.classList.add('nds-center');
+        if (page) page.classList.add('nds-md');
 
         _deckAbort = new AbortController();
         var sig = _deckAbort.signal;
@@ -480,9 +485,20 @@
         if (i === _current) return;
         var section = deckSection();
         if (!section) return;
-        if (_current >= 0) section.classList.remove('nds-nd96-' + SLIDES[_current].theme);
+        var first = _current < 0;
+        if (!first) {
+            // Cross-fade: park the outgoing gradient on ::before, then fade it out
+            // over the new one (compositor opacity, one repaint — see the stylesheet).
+            var cs = getComputedStyle(section);
+            section.style.setProperty('--_nd96-prev-from', cs.getPropertyValue('--_nd96-from'));
+            section.style.setProperty('--_nd96-prev-to', cs.getPropertyValue('--_nd96-to'));
+            section.classList.remove('nds-nd96-' + SLIDES[_current].theme);
+        }
         _current = i;
         section.classList.add('nds-nd96-' + SLIDES[i].theme);
+        if (!first && section.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            try { section.animate([{ opacity: 1 }, { opacity: 0 }], { duration: SETTLE_MS, easing: 'ease', pseudoElement: '::before' }); } catch (e) { /* no pseudo-element animation: the colour just snaps */ }
+        }
         typeWord(deckSlides(section)[i]);
     }
 
@@ -515,15 +531,32 @@
             return;
         }
         span.textContent = '';
-        _typeTimer = setInterval(function () {
-            span.textContent = chars.slice(0, ++n).join('');
-            if (n >= chars.length) { clearInterval(_typeTimer); _typeTimer = 0; done(); }
-        }, TYPE_MS);
+        // The cards are still sliding when a slide changes: let that finish before
+        // the per-letter DOM writes start, so the two never share frames.
+        _typeTimer = setTimeout(function () {
+            _typeTimer = setInterval(function () {
+                span.textContent = chars.slice(0, ++n).join('');
+                if (n >= chars.length) { clearInterval(_typeTimer); _typeTimer = 0; done(); }
+            }, TYPE_MS);
+        }, _settled ? SETTLE_MS : 0);
+        _settled = true;
     }
 
     function scheduleAdvance() {
         clearTimeout(_holdTimer);
-        _holdTimer = _paused ? 0 : setTimeout(advance, HOLD_MS);
+        _holdTimer = _paused ? 0 : setTimeout(prewarm, HOLD_MS - WARM_MS);
+    }
+
+    // A phone idling through the hold has clocked its GPU down, so the first
+    // frames of an auto move stutter (a drag or tap never does: the gesture woke
+    // it). An invisible compositor animation on the deck just before the move
+    // brings the clocks up in time.
+    function prewarm() {
+        var deck = document.querySelector(SWIPER_SEL + ' .nds-swiper-deck');
+        if (deck && deck.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            deck.animate([{ opacity: 1 }, { opacity: 0.999 }, { opacity: 1 }], { duration: WARM_MS + 100 });
+        }
+        _holdTimer = setTimeout(advance, WARM_MS);
     }
 
     function advance() {
@@ -549,7 +582,7 @@
         var wrapper = swiper.querySelector('.nds-swiper-wrapper');
         if (_current >= 0) section.classList.remove('nds-nd96-' + SLIDES[_current].theme);
         section.classList.remove(DECK_CLASS);
-        _current = -1; _paused = false;
+        _current = -1; _paused = false; _settled = false;
 
         var deck = swiper.querySelector('.nds-swiper-deck');
         if (deck) deck.remove();
@@ -558,8 +591,9 @@
         _siteSlides = [];
         swiper.classList.remove('nds-deck');
         swiper.removeAttribute('data-swiper-loop');
-        var nav = swiper.querySelector('.nds-swiper-navigation');
+        var nav = swiper.querySelector('.nds-swiper-navigation'), page = swiper.querySelector('.nds-swiper-pagination');
         if (nav && !_navHadCenter) nav.classList.remove('nds-center');
+        if (page && !_pageHadMd) page.classList.remove('nds-md');
         if (_siteTotal) swiper.style.setProperty('--total', _siteTotal);
         else swiper.style.removeProperty('--total');
         if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
