@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "05/09/2026 - 06:27 PM"
+updated: "1.12.x"
+last_edit: "06/09/2026 - 08:30 PM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -352,6 +352,143 @@ last_edit: "05/09/2026 - 06:27 PM"
                     </div>
                 </div>
             </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Deck Demo -->
+<section id="swiperDeck" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Deck</h2>
+            <p class="nds-section-description">A hero with a deck of cards beside the slides, one card per slide. The active card is at the front, the other cards fan behind it, and the front card slides back into the pile when the next one comes forward. A tap on a card goes to its slide; a drag across the deck follows the finger and pages on release. Below the desktop breakpoint the deck stacks above the text: the open card is centred, its two neighbours peek at the sides. Use it when every slide has its own artwork and the set is worth showing at once, as in a campaign hero.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Hero deck — five cards, --deck-card: 320px</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-swiper nds-hero nds-oncolor nds-deck" style="--deck-card: 320px; min-height: 320px; background: linear-gradient(270deg, #1b2613, #607c4f); border-radius: 8px;">
+                                <div class="nds-swiper-wrapper">
+                                    <div class="nds-swiper-slide">
+                                        <div class="nds-section-body" style="padding-block: var(--spacing-4xl); padding-inline-start: var(--spacing-4xl);">
+                                            <h2 class="nds-section-title">Mountains</h2>
+                                            <p class="nds-section-description">The first card is open; the rest wait as strips.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-swiper-slide" hidden>
+                                        <div class="nds-section-body" style="padding-block: var(--spacing-4xl); padding-inline-start: var(--spacing-4xl);">
+                                            <h2 class="nds-section-title">Lake</h2>
+                                            <p class="nds-section-description">Click a strip, a bullet or an arrow, or drag the deck: it follows.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-swiper-slide" hidden>
+                                        <div class="nds-section-body" style="padding-block: var(--spacing-4xl); padding-inline-start: var(--spacing-4xl);">
+                                            <h2 class="nds-section-title">Forest</h2>
+                                            <p class="nds-section-description">The strips keep their order after the open card and wrap around.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-swiper-slide" hidden>
+                                        <div class="nds-section-body" style="padding-block: var(--spacing-4xl); padding-inline-start: var(--spacing-4xl);">
+                                            <h2 class="nds-section-title">Coast</h2>
+                                            <p class="nds-section-description">Narrow the window: the deck moves above the text.</p>
+                                        </div>
+                                    </div>
+                                    <div class="nds-swiper-slide" hidden>
+                                        <div class="nds-section-body" style="padding-block: var(--spacing-4xl); padding-inline-start: var(--spacing-4xl);">
+                                            <h2 class="nds-section-title">Valley</h2>
+                                            <p class="nds-section-description">Five slides, five cards, same order.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-swiper-deck">
+                                    <button type="button" class="nds-swiper-card" aria-label="Go to slide 1: Mountains" style="--rel: 0; --srel: 0" data-status="active"><img src="https://picsum.photos/id/1015/400/400" alt="" fetchpriority="high"></button>
+                                    <button type="button" class="nds-swiper-card" aria-label="Go to slide 2: Lake" style="--rel: 1; --srel: 1" data-status="near"><img src="https://picsum.photos/id/1018/400/400" alt="" loading="lazy"></button>
+                                    <button type="button" class="nds-swiper-card" aria-label="Go to slide 3: Forest" style="--rel: 2; --srel: 2"><img src="https://picsum.photos/id/1039/400/400" alt="" loading="lazy"></button>
+                                    <button type="button" class="nds-swiper-card" aria-label="Go to slide 4: Coast" style="--rel: 3; --srel: -2"><img src="https://picsum.photos/id/1043/400/400" alt="" loading="lazy"></button>
+                                    <button type="button" class="nds-swiper-card" aria-label="Go to slide 5: Valley" style="--rel: 4; --srel: -1" data-status="near"><img src="https://picsum.photos/id/870/400/400" alt="" loading="lazy"></button>
+                                </div>
+                                <div class="nds-swiper-navigation nds-center" hidden>
+                                    <div class="nds-swiper-buttons">
+                                        <button class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"></button>
+                                        <button class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"></button>
+                                    </div>
+                                    <div class="nds-swiper-pagination nds-md"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                    <div class="nds-tabs nds-code nds-divided">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                    aria-controls="panel-deck-1" id="tab-deck-1">
+                                    <span class="nds-tab-label">HTML</span>
+                                </button>
+                            </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="nds-tab-content">
+                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-deck-1"
+                                aria-labelledby="tab-deck-1">
+                                <div class="nds-code-action">
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-expandable-content">
+                                <code class="lang-html code">
+&lt;div class="nds-swiper nds-hero nds-oncolor nds-deck" style="--total: 5"&gt;
+    &lt;div class="nds-swiper-wrapper"&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-section-body"&gt;
+                &lt;h2 class="nds-section-title"&gt;Mountains&lt;/h2&gt;
+                &lt;p class="nds-section-description"&gt;…&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide" hidden&gt;…&lt;/div&gt;
+        &lt;!-- one slide per card, same order --&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-swiper-deck"&gt;
+        &lt;button type="button" class="nds-swiper-card" aria-label="Go to slide 1: Mountains" style="--rel: 0; --srel: 0" data-status="active"&gt;
+            &lt;img src="card-1.webp" alt="" fetchpriority="high"&gt;
+        &lt;/button&gt;
+        &lt;button type="button" class="nds-swiper-card" aria-label="Go to slide 2: Lake" style="--rel: 1; --srel: 1" data-status="near"&gt;
+            &lt;img src="card-2.webp" alt="" loading="lazy"&gt;
+        &lt;/button&gt;
+        &lt;!-- … --&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-swiper-navigation nds-center" hidden&gt;
+        &lt;div class="nds-swiper-buttons"&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-pagination nds-md"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                            </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-block nds-prose">
+                <ul>
+                    <li>The cards map to the slides by order. Stamp each card's place for the first paint, before the script runs: <code class="nds-inline-code lang-css">--rel</code> (0, 1, 2 … in order), <code class="nds-inline-code lang-css">--srel</code> (the same, but the last cards count back: −2, −1), <code class="nds-inline-code lang-html">data-status="active"</code> on the first card and <code class="nds-inline-code lang-html">data-status="near"</code> on its two neighbours. From init the swiper owns all of it.</li>
+                    <li>Card images are square. Give the first one <code class="nds-inline-code lang-html">fetchpriority="high"</code> and the rest <code class="nds-inline-code lang-html">loading="lazy"</code>.</li>
+                    <li>A deck loops by default, the same way <code class="nds-inline-code lang-html">data-swiper-loop</code> does: the fan wraps, so the track wraps with it. Each loop clone carries <code class="nds-inline-code lang-html">data-swiper-clone</code> with its real slide's index, for content you update at runtime.</li>
+                    <li>Inside a page hero the deck fills the hero's height. Below the desktop breakpoint the deck stacks above the text, so set <code class="nds-inline-code lang-css">--hero-height: auto</code> and <code class="nds-inline-code lang-css">max-height: none</code> on the <code class="nds-inline-code lang-html">.nds-hero-section</code> there.</li>
+                    <li>The swiper fires <code class="nds-inline-code lang-js">nds:swiper:change</code> on every move. Listen to it to change anything outside the swiper with the slide, such as the section background.</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -1106,6 +1243,7 @@ last_edit: "05/09/2026 - 06:27 PM"
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Adjusts the bullets, the section title and the arrows for dark or image backgrounds. The arrows take the subtle on-color wash. A primary or neutral arrow still adds <code class="nds-inline-code lang-html">nds-oncolor</code> on the button itself</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-navigation</code></td><td>Centers the bullets and pushes the prev/next buttons to the outer edges of the navigation row</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-middle</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Moves the prev/next buttons out of the navigation row to flank the slides at their vertical centre, and hides the bullets. The swiper gains an inline gutter one button wide at each end, so the arrows sit beside the slides rather than over them. Tablet and up only (600px): below that every rule drops and the normal navigation row returns, bullets included, so pair it with <code class="nds-inline-code lang-html">nds-center</code> on the row to choose the mobile arrangement. On <code class="nds-inline-code lang-html">nds-hero</code> it adapts: no gutter is reserved, since the hero is full-bleed and insetting the image would be wrong, so the arrows overlay the slide at the viewport padding, and the bullets stay pinned bottom-centre. The arrows then sit over the slide edges, so use this with textless slides, or centre the slide text to keep it clear of them</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-deck</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Deck mode. A <code class="nds-inline-code lang-html">.nds-swiper-deck</code> of <code class="nds-inline-code lang-html">.nds-swiper-card</code> buttons, one per slide in slide order, sits beside the track. The active card is at the front, the rest fan behind it in circular order; a tap goes to a card, a drag pages, and the track loops. In a hero the deck fills the hero's height at the inline-end edge; below the desktop breakpoint it stacks above the text with the two neighbours peeking. See the Deck demo</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Large pagination bullets (16px). Default size when no modifier is applied</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Medium pagination bullets (12px)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Small pagination bullets (8px)</td></tr>
@@ -1146,6 +1284,8 @@ last_edit: "05/09/2026 - 06:27 PM"
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-active</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-600)</code></td><td>Active pagination bullet color (light theme); shifts to <code class="nds-inline-code lang-css">--colors-primary-500</code> in dark mode and to base white on hero/on-color backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-active-hovered</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-700)</code></td><td>Active bullet hover color (one step darker: <code class="nds-inline-code lang-css">--colors-primary-700</code> light, <code class="nds-inline-code lang-css">--colors-primary-600</code> dark)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-border</code></td><td><code class="nds-inline-code lang-html">transparent</code></td><td>Border color around the pagination bullets</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--deck-card</code></td><td><code class="nds-inline-code lang-html">300px</code> (hero: the hero height)</td><td>Deck mode: size of the open card, which is square. Set it inline on <code class="nds-inline-code lang-html">.nds-swiper</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--deck-strip</code></td><td><code class="nds-inline-code lang-html">var(--spacing-5xl)</code></td><td>Deck mode: width of a folded card</td></tr>
                     </tbody>
                 </table>
                 <p>The bare attributes <code class="nds-inline-code lang-html">slides-max</code>, <code class="nds-inline-code lang-html">slides-mid</code>, <code class="nds-inline-code lang-html">slides-min</code> and <code class="nds-inline-code lang-html">peek</code> still work but are deprecated. Only JS can read them, so a row authored that way keeps its old size until the loader preset runs. Use the inline properties above.</p>
@@ -1180,6 +1320,12 @@ swiper.next();           // Go to next page
 //   data-state="at-start at-end"   only one page (no scroll possible)
 //   (a looping swiper sets neither token)
 // Style with: .nds-swiper[data-state~="at-end"] { ... }
+
+// ── Events ──
+// nds:swiper:change bubbles from the container after every move.
+el.addEventListener('nds:swiper:change', (e) => {
+  console.log('slide', e.detail.index);   // real slide index, clones never counted
+});
 
 // ── Cleanup ──
 swiper.destroy();        // Remove listeners, pagination, and reset state

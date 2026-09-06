@@ -2,7 +2,7 @@
 layout: page
 title: National Day 96 Theme
 hero_title: National Day 96 Theme - National Design System
-hero_description: An event skin for Saudi National Day. One script tag adds the event hero slide and the identity decorations, in light and dark mode. Delete the tag to restore the default.
+hero_description: An event skin for Saudi National Day. One script tag adds the official six-slide event hero and the identity decorations, in light and dark mode. Delete the tag to restore the default.
 breadcrumb: [["Events", "/events"]]
 lang: en
 direction: ltr
@@ -42,7 +42,8 @@ hero_float_actions:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
-            <p class="nds-section-description">Add one tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets and without <code class="nds-inline-code lang-html">defer</code>. It applies the event stylesheet and the hero slide; remove it when the event ends. That one tag is the whole install — every value has a built-in default. Use the <strong>With overrides</strong> tab to change any of them; see the attribute table below.</p>
+            <p class="nds-section-description">Add one tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets and without <code class="nds-inline-code lang-html">defer</code>. It applies the event stylesheet and the event hero; remove it when the event ends. That one tag is the whole install — every value has a built-in default. Use the <strong>With overrides</strong> tab to change any of them; see the attribute table below.</p>
+            <p class="nds-section-description">The hero comes in two types. <strong>Type 2</strong>, the default, is the official campaign hero: six slides on the swiper's <a class="nds-color" href="{{ 'components/swiper#swiperDeck' | relative_url }}">deck mode</a>, each with its own card, colour and typed word. Your own hero slides step aside while the pack is on and return when it is removed. <strong>Type 1</strong> adds one plain slide with the event photo in front of your own slides; set <code class="nds-inline-code lang-html">data-type="1"</code> for it.</p>
             <p class="nds-section-description">The pack is self-contained. Download the zip, then copy its files into your own assets folder. A template copy already ships them at <code class="nds-inline-code lang-html">docs-assets/events/national_day_96/</code>. The paths below assume <code class="nds-inline-code lang-html">assets/events/national_day_96/</code>. The script finds its own CSS and images relative to itself, so the folder works at any location as long as its contents stay together.</p>
         </div>
         <div class="nds-section-body">
@@ -89,6 +90,7 @@ hero_float_actions:
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;script src="/assets/events/national_day_96/nds-theme-national-day-96.min.js"
+        data-type="1"
         data-title-ar="اليوم الوطني السعودي 96"
         data-title-en="Saudi National Day 96"
         data-description-ar="نحتفي بمرور 96 عامًا من العز والفخر لوطننا"
@@ -112,7 +114,7 @@ hero_float_actions:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Manual (no JavaScript)</h2>
-            <p class="nds-section-description">No-JS alternative: link the stylesheet for the decorations, and paste the slide markup yourself. Add the CSS link in <code class="nds-inline-code lang-html">&lt;head&gt;</code>, and place the slide as the first child of <code class="nds-inline-code lang-html">.nds-swiper-wrapper</code> (raise the hero's <code class="nds-inline-code lang-css">--total</code> by one). The slide is the standard hero markup with the event photo, so it needs no extra styling. Add the event mark to the footer's existing <code class="nds-inline-code lang-html">.nds-footer-logos</code> strip.</p>
+            <p class="nds-section-description">No-JS alternative for the type 1 slide: link the stylesheet for the decorations, and paste the slide markup yourself. The six-slide hero needs the script, which types the words and moves the slides. Add the CSS link in <code class="nds-inline-code lang-html">&lt;head&gt;</code>, and place the slide as the first child of <code class="nds-inline-code lang-html">.nds-swiper-wrapper</code> (raise the hero's <code class="nds-inline-code lang-css">--total</code> by one). The slide is the standard hero markup with the event photo, so it needs no extra styling. Add the event mark to the footer's existing <code class="nds-inline-code lang-html">.nds-footer-logos</code> strip.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -210,11 +212,12 @@ hero_float_actions:
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-title-ar</code> / <code class="nds-inline-code lang-html">data-title-en</code></td><td>اليوم الوطني السعودي 96 / Saudi National Day 96</td><td>Slide heading per language.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-description-ar</code> / <code class="nds-inline-code lang-html">data-description-en</code></td><td>نحتفي بمرور 96 عامًا … / We celebrate 96 years …</td><td>Slide description. Empty value hides it.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-image</code></td><td><code class="nds-inline-code lang-html">hero_bg.webp</code></td><td>Slide background photo. Empty value drops the photo and keeps the default hero surface.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-type</code></td><td><code class="nds-inline-code lang-html">2</code></td><td>Hero type. <code class="nds-inline-code lang-html">2</code> is the official six-slide hero with its fixed campaign content. <code class="nds-inline-code lang-html">1</code> is one plain slide; the title, description, image and button attributes below apply to it only.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-title-ar</code> / <code class="nds-inline-code lang-html">data-title-en</code></td><td>اليوم الوطني السعودي 96 / Saudi National Day 96</td><td>Type 1 slide heading per language.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-description-ar</code> / <code class="nds-inline-code lang-html">data-description-en</code></td><td>نحتفي بمرور 96 عامًا … / We celebrate 96 years …</td><td>Type 1 slide description. Empty value hides it.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-image</code></td><td><code class="nds-inline-code lang-html">hero_bg.webp</code></td><td>Type 1 slide background photo. Empty value drops the photo and keeps the default hero surface.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-logo</code></td><td><code class="nds-inline-code lang-html">national_day_logo.svg</code></td><td>Event mark, added to the footer logo strip. Empty value omits it.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-cta-url</code></td><td><code class="nds-inline-code lang-html">(none)</code></td><td>Opt-in button link. Empty (default) means no button; non-https is rejected.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-cta-url</code></td><td><code class="nds-inline-code lang-html">(none)</code></td><td>Type 1 opt-in button link. Empty (default) means no button; non-https is rejected.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-cta-label-ar</code> / <code class="nds-inline-code lang-html">data-cta-label-en</code></td><td>اليوم الوطني / National Day</td><td>Button label per language (only when <code class="nds-inline-code lang-html">data-cta-url</code> is set).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-cta-icon</code></td><td><code class="nds-inline-code lang-html">(none)</code></td><td>Button icon. Empty omits it.</td></tr>
                     </tbody>
@@ -249,9 +252,9 @@ hero_float_actions:
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-image-01"></i>
-                        <span class="nds-label">Standard Hero Slide</span>
+                        <span class="nds-label">Official Six-Slide Hero</span>
                     </span>
-                    <p class="nds-item-desc">The slide is the normal hero markup with the event photo as its background, so it carries no slide-specific CSS.</p>
+                    <p class="nds-item-desc">The campaign hero on the swiper's deck mode: six slides, each with its own card, colour and typed word, moving on by themselves. Type 1 keeps one plain slide with the event photo instead.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -272,7 +275,7 @@ hero_float_actions:
                         <i class="hgi hgi-stroke hgi-translate"></i>
                         <span class="nds-label">Bilingual Content</span>
                     </span>
-                    <p class="nds-item-desc">Each string has Arabic and English values; the pack picks one from the page <code class="nds-inline-code lang-html">lang</code>.</p>
+                    <p class="nds-item-desc">Each string has Arabic and English values; the pack picks one from the page direction: <code class="nds-inline-code lang-html">dir="rtl"</code> reads Arabic, anything else English.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">

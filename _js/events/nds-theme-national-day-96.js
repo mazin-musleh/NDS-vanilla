@@ -19,13 +19,19 @@
 // idempotent and self-contained — inject = link + token + slide, teardown removes
 // all three. Token writes are attribute-only; persistence stays the switcher's job.
 //
+// Two hero types (data-type on the script tag):
+//   2 (default) the official six-slide campaign hero on the swiper's deck mode —
+//               the site's own slides step aside while the pack is on
+//   1           one plain slide, the standard hero markup with the event photo
+//
 // Per-deployment content overrides via data-* attributes on the script tag
 // (all optional; bare filenames resolve against this script's own folder):
-//   data-title-ar / data-title-en
-//   data-description-ar / data-description-en
-//   data-image            slide background photo
+//   data-type             2 | 1 (above)
+//   data-title-ar / data-title-en                 type 1 only
+//   data-description-ar / data-description-en     type 1 only
+//   data-image            slide background photo  type 1 only
 //   data-logo             event mark in the footer logo strip ('' = omit it)
-//   data-cta-url          https or path-relative only ('' = no CTA)
+//   data-cta-url          https or path-relative only ('' = no CTA), type 1 only
 //   data-cta-label-ar / data-cta-label-en
 //   data-cta-icon         ('' = omit)
 (function () {
@@ -84,12 +90,57 @@
             icon: pick('ctaIcon', ''),
         } : null,
     };
+
+    // ── Type 2 content — the official campaign set (hrsd.gov.sa, 2026-09-06).
+    //    Fixed by design: the words, bodies, cards and colours are the campaign's. ──
+    var TYPE = pick('type', '2') === '1' ? 1 : 2;
+    var LEAD = { ar: 'عِزّنا', en: 'Our pride in our' };
+    var SLIDES = [
+        { theme: 'heritage', card: 'card_heritage.webp', word: { ar: 'بأصالتنا', en: 'authenticity' }, body: {
+            ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم وتاريخهم، واعتزازهم بموروثهم. فهي تظهر في التمسك بالعادات والتقاليد، واستمرار القيم التي تتوارثها الأجيال.',
+            en: 'Authenticity in Saudi society reflects how deeply people are connected to their roots and their history, and how proud they are of the heritage they carry. It shows in the customs and traditions they hold on to, and in the values passed down from one generation to the next.' }, short: {
+            ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم واعتزازهم بإرثهم.',
+            en: 'Authenticity in Saudi society reflects how connected people are to their roots, and how proud they are of the heritage they carry.' } },
+        { theme: 'courage', card: 'card_courage.webp', word: { ar: 'بشجاعتنا', en: 'courage' }, body: {
+            ar: 'لأن الشجاعة في سلمنا وعرفنا قيمة أصيلة، نزع بلا تردد ونجد من استنجدنا، وهي صفة متجذرة فينا منذ القدم وامتدادًا عبر تاريخ هذه البلاد العظيمة، حيث كان أبناء الوطن دائمًا سندًا وعونًا لكل محتاج.',
+            en: 'Courage, in our peace and in our customs, is a value we were raised on: we answer without hesitation, and we stand by whoever calls on us. It is a trait rooted in us since ancient times and carried on through the history of this great land, where the people of this nation have always been a support and a helping hand to anyone in need.' }, short: {
+            ar: 'الشجاعة في دمنا، نلبي النداء فورًا، ونساند المحتاجين، وهي صفة عريقة في تاريخ وطننا العظيم.',
+            en: 'Courage is in our blood: we answer the call at once and stand by whoever needs us, a trait long rooted in the history of our great nation.' } },
+        { theme: 'ambition', card: 'card_ambition.webp', word: { ar: 'بهمّتنا', en: 'drive' }, body: {
+            ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز. وقد أصبحت الهمة جزءًا من ثقافتنا الوطنية، نستمدها من إيماننا بقدراتنا وثقتنا بمستقبلنا.',
+            en: 'Drive is one of the defining traits of the Saudi character. It is the force that sets ambition in motion and leads the way to achievement. It has become part of our national culture, drawn from our belief in our own abilities and our confidence in our future.' }, short: {
+            ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز.',
+            en: 'Drive is one of the defining traits of the Saudi character: the force that sets ambition in motion and leads the way to achievement.' } },
+        { theme: 'generosity', card: 'card_generosity.webp', word: { ar: 'بجودنا', en: 'generosity' }, body: {
+            ar: 'الجود من أسمى الصفات في الهوية السعودية، ورثها السعوديون أبًا عن جد. الجود ليس فقط في المال، بل في الوقت والجهد والمواقف. في الثقافة السعودية، الجود يعني العطاء من القلب، وفتح الدار قبل السؤال، والفرح بالعطاء. هو طبع متأصل يظهر في الدلة التي لا تبرد، والباب المفتوح، والمبخرة التي لا تنطفئ.',
+            en: 'Generosity is among the highest traits of the Saudi identity, inherited by Saudis from their forefathers. It is not only generosity with money, but with time, effort, and standing by others. In Saudi culture, generosity means giving from the heart, opening your home before anyone has to ask, and taking joy in the giving itself. It is an ingrained nature, seen in the coffee pot that never goes cold, the door that stays open, and the incense burner that is never left unlit.' }, short: {
+            ar: 'الجود صفة سامية في الهوية السعودية، ورثها السعوديون. تعني العطاء من القلب وفتح الدار.',
+            en: 'Generosity is a noble trait of the Saudi identity, inherited by Saudis from their forefathers. It means giving from the heart and opening your home.' } },
+        { theme: 'kindness', card: 'card_kindness.webp', word: { ar: 'بكرمنا', en: 'hospitality' }, body: {
+            ar: 'الكرم من القيم الأساسية في ثقافتنا، ويعد من أبرز سمات الهوية السعودية، ويتجاوز مجرد حسن الضيافة، ليشمل حفاوة الاستقبال والمبادرة بالمساعدة. يعد الكرم رمزًا للأصالة والانتماء، ويربى عليه السعوديون منذ الصغر، مما يجعله جزءًا طبيعيًا من الحياة اليومية والعلاقات الاجتماعية.',
+            en: 'Hospitality is one of the core values of our culture and one of the most distinctive marks of the Saudi identity. It goes beyond simply hosting well, extending to the warmth of the welcome and the readiness to offer help before it is asked for. It is a symbol of authenticity and belonging, and Saudis are raised on it from childhood, which makes it a natural part of daily life and of the relationships between people.' }, short: {
+            ar: 'الكرم جزء من هويتنا السعودية يظهر في الضيافة والمساعدة.',
+            en: 'Hospitality is part of our Saudi identity, and it shows in the welcome we give and the help we offer.' } },
+        { theme: 'vision', card: 'card_vision.webp', word: { ar: 'برؤيتنا', en: 'vision' }, body: {
+            ar: 'رؤية السعودية 2030، التي أطلقها ولي العهد الأمير محمد بن سلمان، تهدف لبناء مستقبل مزدهر ومستدام. تؤمن الرؤية بقدرتنا على التحول والتقدم وصناعة مستقبل أفضل لوطننا مع الحفاظ على هويتنا وقيمنا، مما يعكس وعيًا عميقًا وطموحًا لصناعة الغد.',
+            en: 'Saudi Vision 2030, launched by Crown Prince Mohammed bin Salman, aims to build a prosperous and sustainable future. The Vision is grounded in our ability to transform, to advance, and to shape a better future for our country while preserving our identity and our values, reflecting a deep awareness and a real ambition to build tomorrow.' }, short: {
+            ar: 'رؤية السعودية 2030 التي أطلقها ولي العهد تهدف لبناء مستقبل مزدهر ومستدام يعكس طموحنا وهويتنا.',
+            en: 'Saudi Vision 2030, launched by the Crown Prince, aims to build a prosperous and sustainable future that reflects our ambition and our identity.' } },
+    ];
+    var TYPE_MS = 120;    // typewriter pace per letter, then
+    var HOLD_MS = 5000;   // time to read the body before the next slide
     // ─────────────────────────────────────────────────────────────────────────
 
-    // Page language (ar | en); resolve a string or a { ar, en } field to text.
-    var LANG = (document.documentElement.lang || 'en').slice(0, 2);
+    // Text follows the page direction, not its lang: RTL reads the Arabic set,
+    // LTR the English one. NDS.isRTL when core is already here (switcher path);
+    // its own definition otherwise — this runs in <head>, before the bundles.
+    // Read live: the direction can flip in place (the docs' language toggle).
+    function lang() {
+        var rtl = window.NDS && 'isRTL' in NDS ? NDS.isRTL : document.documentElement.dir === 'rtl';
+        return rtl ? 'ar' : 'en';
+    }
     function t(v) {
-        if (v && typeof v === 'object') return v[LANG] || v.en || v.ar || '';
+        if (v && typeof v === 'object') return v[lang()] || v.en || v.ar || '';
         return v || '';
     }
     // Content is externally configurable (data-*) → escape everything interpolated.
@@ -200,19 +251,19 @@
         if (_observer) { _observer.disconnect(); _observer = null; }
     }
     function scheduleSlide() {
-        if (document.readyState !== 'loading') { injectSlide(); return; }
+        if (document.readyState !== 'loading') { injectHero(); return; }
         if (_observer) return;
         _observer = new MutationObserver(function () {
             if (document.querySelector(SWIPER_SEL + ' .nds-swiper-wrapper')) {
                 cancelPending();
-                injectSlide();
+                injectHero();
             }
         });
         _observer.observe(document.documentElement, { childList: true, subtree: true });
         document.addEventListener('DOMContentLoaded', function () {
             if (!_observer) return;
             cancelPending();
-            injectSlide();
+            injectHero();
         }, { once: true });
     }
 
@@ -226,6 +277,233 @@
         swiper.style.setProperty('--total', String(Math.max(1, total - 1)));
         if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
     }
+
+    // ── Type 2: six slides + the swiper's deck of cards ─────────────────────
+    // Slides are standard hero markup; the cards are the deck mode's own markup
+    // (components/swiper: .nds-deck). The section carries nds-nd96 + the active
+    // slide's theme class, which is all the stylesheet keys on.
+    var DECK_CLASS = 'nds-nd96';
+    var _siteSlides = [], _siteTotal = '', _navHadCenter = false;
+    var _deckAbort = null, _typeTimer = 0, _holdTimer = 0, _current = -1, _paused = false, _wordDone = false;
+
+    function fullTitle(s) { return t(LEAD) + ' ' + t(s.word); }
+
+    function buildDeckSlide(s, i) {
+        var h = i ? 'h2' : 'h1';   // the pack's first slide stands in for the site's h1
+        var slide = document.createElement('div');
+        slide.className = 'nds-swiper-slide nds-content-wrapper ' + SLIDE_CLASS;
+        if (i) slide.hidden = true;
+        slide.innerHTML =
+            '<div class="nds-section-body">' +
+              '<' + h + ' class="nds-section-title" aria-label="' + esc(fullTitle(s)) + '">' +
+                '<span aria-hidden="true">' + esc(t(LEAD)) + '</span> ' +
+                '<span class="nds-nd96-typed" aria-hidden="true" data-word="' + esc(t(s.word)) + '"></span>' +
+              '</' + h + '>' +
+              '<p class="nds-section-description">' + esc(t(s.body)) + '</p>' +
+              '<p class="nds-section-description nds-nd96-short">' + esc(t(s.short)) + '</p>' +
+            '</div>';
+        return slide;
+    }
+
+    function buildCard(s, i) {
+        var card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'nds-swiper-card';
+        card.setAttribute('aria-label', fullTitle(s));
+        // First-paint state (slide 0 open); JS owns it from init.
+        var n = SLIDES.length, srel = i > n / 2 ? i - n : i;
+        card.style.setProperty('--rel', i);
+        card.style.setProperty('--srel', srel);
+        if (!i) card.setAttribute('data-status', 'active');
+        else if (Math.abs(srel) === 1) card.setAttribute('data-status', 'near');
+        card.innerHTML = '<img src="' + esc(assetUrl(s.card)) + '" width="491" height="491" alt=""' +
+            (i ? ' loading="lazy"' : ' fetchpriority="high"') + '>';
+        return card;
+    }
+
+    function deckSection() { return document.querySelector('.nds-hero-section.' + DECK_CLASS); }
+    function deckSlides(section) { return section.querySelectorAll('.nds-swiper-slide.' + SLIDE_CLASS + ':not(.nds-swiper-clone)'); }
+
+    // The looping track shows a clone at the wrap for a frame: keep each clone a
+    // copy of its twin, with the word whole.
+    function syncClones(section) {
+        var slides = deckSlides(section);
+        Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-clone[data-swiper-clone]'), function (c) {
+            var twin = slides[c.getAttribute('data-swiper-clone')];
+            if (!twin) return;
+            c.innerHTML = twin.innerHTML;
+            var span = c.querySelector('.nds-nd96-typed');
+            if (span) span.textContent = span.getAttribute('data-word');
+        });
+    }
+
+    // The site's slides step aside for the event: detached, kept, restored on
+    // teardown. Sync-in-head the parser may still be adding them after we run, so
+    // the wrapper is swept until DOMContentLoaded.
+    function stashSiteSlides(wrapper) {
+        // Snapshot: removing from the live collection while walking it skips every other child.
+        Array.prototype.slice.call(wrapper.children).forEach(function (el) {
+            if (el.classList.contains(SLIDE_CLASS)) return;
+            _siteSlides.push(el);
+            el.remove();
+        });
+    }
+
+    function injectDeck() {
+        var swiper = document.querySelector(SWIPER_SEL);
+        if (!swiper) return;
+        var wrapper = swiper.querySelector('.nds-swiper-wrapper');
+        var section = swiper.closest('.nds-hero-section');
+        if (!wrapper || !section || section.classList.contains(DECK_CLASS)) return;   // idempotent
+        section.classList.add(DECK_CLASS);
+        _siteTotal = swiper.style.getPropertyValue('--total');
+        stashSiteSlides(wrapper);
+
+        var deck = document.createElement('div');
+        deck.className = 'nds-swiper-deck';
+        SLIDES.forEach(function (s, i) {
+            wrapper.appendChild(buildDeckSlide(s, i));
+            deck.appendChild(buildCard(s, i));
+        });
+        wrapper.parentNode.insertBefore(deck, wrapper.nextSibling);
+        swiper.classList.add('nds-deck');
+        swiper.style.setProperty('--total', String(SLIDES.length));
+        var nav = swiper.querySelector('.nds-swiper-navigation');
+        _navHadCenter = !!(nav && nav.classList.contains('nds-center'));
+        if (nav) nav.classList.add('nds-center');
+
+        _deckAbort = new AbortController();
+        var sig = _deckAbort.signal;
+        swiper.addEventListener('nds:swiper:change', function (e) { setActive(e.detail.index); }, { signal: sig });
+        section.addEventListener('pointerenter', pause, { signal: sig });
+        section.addEventListener('pointerleave', resume, { signal: sig });
+        document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); else resume(); }, { signal: sig });
+        // The page direction can flip in place; the text follows it.
+        var dirWatch = new MutationObserver(retext);
+        dirWatch.observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
+        sig.addEventListener('abort', function () { dirWatch.disconnect(); });
+        if (document.readyState === 'loading') {
+            var sweep = new MutationObserver(function () { stashSiteSlides(wrapper); });
+            sweep.observe(wrapper, { childList: true });
+            document.addEventListener('DOMContentLoaded', function () { sweep.disconnect(); }, { once: true, signal: sig });
+            sig.addEventListener('abort', function () { sweep.disconnect(); });
+        }
+
+        setActive(0);
+        if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
+    }
+
+    // Language flipped in place: refill every slide and card, then retype the open word.
+    function retext() {
+        var section = deckSection();
+        if (!section) return;
+        var slides = deckSlides(section), cards = section.querySelectorAll('.nds-swiper-card');
+        SLIDES.forEach(function (s, i) {
+            var slide = slides[i];
+            if (!slide) return;
+            var h = slide.querySelector('.nds-section-title');
+            h.setAttribute('aria-label', fullTitle(s));
+            h.firstElementChild.textContent = t(LEAD);
+            var span = slide.querySelector('.nds-nd96-typed');
+            span.setAttribute('data-word', t(s.word));
+            span.textContent = t(s.word);
+            slide.querySelector('.nds-section-description').textContent = t(s.body);
+            slide.querySelector('.nds-nd96-short').textContent = t(s.short);
+            if (cards[i]) cards[i].setAttribute('aria-label', fullTitle(s));
+        });
+        syncClones(section);
+        if (_current >= 0) typeWord(slides[_current]);
+    }
+
+    function setActive(i) {
+        if (i === _current) return;
+        var section = deckSection();
+        if (!section) return;
+        if (_current >= 0) section.classList.remove('nds-nd96-' + SLIDES[_current].theme);
+        _current = i;
+        section.classList.add('nds-nd96-' + SLIDES[i].theme);
+        typeWord(deckSlides(section)[i]);
+    }
+
+    function stopTimers() {
+        clearInterval(_typeTimer); clearTimeout(_holdTimer);
+        _typeTimer = _holdTimer = 0;
+    }
+
+    // Types the slide's word one letter at a time (a mark rides its base letter),
+    // holds, moves on. Typing always runs; a pause (hover, hidden tab) only holds
+    // the move to the next slide.
+    function typeWord(slide) {
+        stopTimers();
+        _wordDone = false;
+        if (!slide) return;
+        var span = slide.querySelector('.nds-nd96-typed');
+        var word = span.getAttribute('data-word');
+        var chars = word.match(/\P{M}\p{M}*/gu) || [];
+        var n = 0;
+        function done() {
+            _wordDone = true;
+            var section = deckSection();
+            if (section) syncClones(section);
+            scheduleAdvance();
+        }
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            span.textContent = word;
+            _typeTimer = setTimeout(done, chars.length * TYPE_MS);   // same beat, no letters
+            return;
+        }
+        span.textContent = '';
+        _typeTimer = setInterval(function () {
+            span.textContent = chars.slice(0, ++n).join('');
+            if (n >= chars.length) { clearInterval(_typeTimer); _typeTimer = 0; done(); }
+        }, TYPE_MS);
+    }
+
+    function scheduleAdvance() {
+        clearTimeout(_holdTimer);
+        _holdTimer = _paused ? 0 : setTimeout(advance, HOLD_MS);
+    }
+
+    function advance() {
+        var swiper = document.querySelector(SWIPER_SEL);
+        var inst = swiper && swiper._ndsSwiper;
+        if (inst) inst.next();   // the deck track loops, so next() wraps on its own
+    }
+
+    function pause() { _paused = true; clearTimeout(_holdTimer); _holdTimer = 0; }
+    function resume() {
+        if (!_paused) return;
+        _paused = false;
+        // Word already finished while paused: pick the hold back up.
+        if (_wordDone) scheduleAdvance();
+    }
+
+    function removeDeck() {
+        stopTimers();
+        if (_deckAbort) { _deckAbort.abort(); _deckAbort = null; }
+        var section = deckSection();
+        if (!section) return;
+        var swiper = section.querySelector('.nds-swiper.nds-hero');
+        var wrapper = swiper.querySelector('.nds-swiper-wrapper');
+        if (_current >= 0) section.classList.remove('nds-nd96-' + SLIDES[_current].theme);
+        section.classList.remove(DECK_CLASS);
+        _current = -1; _paused = false;
+
+        var deck = swiper.querySelector('.nds-swiper-deck');
+        if (deck) deck.remove();
+        Array.prototype.forEach.call(section.querySelectorAll('.nds-swiper-slide.' + SLIDE_CLASS), function (s) { s.remove(); });
+        _siteSlides.forEach(function (s) { wrapper.appendChild(s); });
+        _siteSlides = [];
+        swiper.classList.remove('nds-deck');
+        var nav = swiper.querySelector('.nds-swiper-navigation');
+        if (nav && !_navHadCenter) nav.classList.remove('nds-center');
+        if (_siteTotal) swiper.style.setProperty('--total', _siteTotal);
+        else swiper.style.removeProperty('--total');
+        if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
+    }
+
+    function injectHero() { if (TYPE === 1) injectSlide(); else injectDeck(); }
+    function removeHero() { if (TYPE === 1) removeSlide(); else removeDeck(); }
 
     // ── Footer mark ─────────────────────────────────────────────────────────
     // Rides .nds-footer-logos, the footer's own strip of partner marks — it already
@@ -284,7 +562,7 @@
     }
     function teardown() {
         cancelPending();
-        removeSlide();
+        removeHero();
         removeLogo();
         removeToken();
         removeLink();

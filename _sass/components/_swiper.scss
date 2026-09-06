@@ -430,3 +430,149 @@
 .nds-swiper[data-nds-swiper-initialized] .nds-swiper-navigation:not([hidden]) {
     visibility: var(--nds-crit-reveal, hidden);
 }
+
+// ==============================================
+// DECK MODE — .nds-deck
+// A .nds-swiper-deck of .nds-swiper-card buttons, one per slide in slide order,
+// beside the track. Every card stays a full square: the open one sits at the
+// front, each next one one strip further back and above it, so only its leading
+// edge shows, and the deck's own edge clips the last. A move is cards sliding,
+// nothing else: the front card slides back into the pile over the others,
+// uncovering the next one. JS writes --rel / --srel and data-status on each card
+// (nds-swiper.js updateDeck); the author stamps the same for first paint. While a
+// finger holds the deck, --drag carries the cards with it.
+// ==============================================
+
+.nds-swiper.nds-deck {
+    --_card: var(--deck-card, 300px);
+    --_strip: var(--deck-strip, var(--spacing-5xl));
+    --_deck-w: calc(var(--_card) + (var(--swiper-total) - 1) * var(--_strip));
+    --_deck-motion: calc(var(--nds-transition-speed) * 3s) var(--nds-transition-effect);
+
+    .nds-swiper-deck {
+        position: relative;
+        width: var(--_deck-w);
+        height: var(--_card);
+        overflow: hidden;
+        // Horizontal drags belong to the deck; vertical ones still scroll the page.
+        touch-action: pan-y;
+        user-select: none;
+    }
+
+    .nds-swiper-card {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: var(--_card);
+        inset-inline-start: calc(var(--_card) + (var(--rel, 1) - 1) * var(--_strip));
+        z-index: calc(1 + var(--rel, 1));
+        translate: var(--drag, 0) 0;
+        padding: 0;
+        border: 0;
+        background: none;
+        cursor: pointer;
+        overflow: hidden;
+        transition: inset-inline-start var(--_deck-motion), translate var(--_deck-motion);
+
+        &[data-status="active"] {
+            inset-inline-start: 0;
+            z-index: 1;
+            cursor: default;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            -webkit-user-drag: none;   // a mouse drag is a swipe, not an image drag
+        }
+    }
+
+    // The cards track the finger instantly; the spring back on release tweens.
+    .nds-swiper-deck.nds-dragging .nds-swiper-card {
+        transition: inset-inline-start var(--_deck-motion);
+    }
+}
+
+// Hero: the deck fills the hero's height at its inline-end edge; the slide and
+// the nav row stop where it starts.
+@include desktop(min) {
+    .nds-swiper.nds-hero.nds-deck {
+        --_card: var(--deck-card, var(--_hero-height, 550px));
+        --_deck-reserve: calc(var(--_deck-w) + var(--spacing-2xl));
+
+        .nds-swiper-deck {
+            position: absolute;
+            inset-block: 0;
+            inset-inline-end: 0;
+            height: auto;
+        }
+
+        // Same gutter formula the slide (.nds-content-wrapper) and the nav row
+        // already use for the content column, with the deck as a third floor.
+        .nds-swiper-slide,
+        .nds-swiper-navigation {
+            padding-inline-end: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2), var(--_deck-reserve));
+        }
+    }
+}
+
+// Below desktop the deck stacks above the track: the open card centred, its two
+// neighbours peeking at the sides, every other card faded out. Signed --srel
+// places the fan; percentages keep it fluid.
+@include tablet(max) {
+    .nds-swiper.nds-deck {
+        .nds-swiper-deck {
+            order: -1;
+            width: 100%;
+            max-width: 651px;
+            height: auto;
+            aspect-ratio: 430 / 324;
+            margin-inline: auto;
+        }
+
+        .nds-swiper-card {
+            top: 13.15%;
+            height: 73.7%;
+            width: 55%;
+            inset-inline-start: calc(22.23% + var(--srel, 1) * 69.17%);
+            z-index: 1;
+            opacity: 0;
+            transition: inset-inline-start var(--_deck-motion), width var(--_deck-motion), top var(--_deck-motion), height var(--_deck-motion), opacity var(--_deck-motion), translate var(--_deck-motion);
+
+            &[data-status] {
+                opacity: 1;
+            }
+
+            &[data-status="active"] {
+                top: 0;
+                height: 100%;
+                width: 75.35%;
+                inset-inline-start: 12.33%;
+                z-index: 2;
+            }
+        }
+
+        .nds-swiper-deck.nds-dragging .nds-swiper-card {
+            transition: inset-inline-start var(--_deck-motion), width var(--_deck-motion), top var(--_deck-motion), height var(--_deck-motion), opacity var(--_deck-motion);
+        }
+    }
+
+    // In a hero the deck is the first thing in the section: keep it off the top
+    // edge. The nav row flows under the text instead of pinning to the bottom.
+    .nds-swiper.nds-hero.nds-deck {
+        .nds-swiper-deck {
+            margin-block-start: var(--spacing-5xl);
+        }
+
+        .nds-swiper-navigation {
+            position: static;
+        }
+    }
+}
+
+@include reduced-motion {
+    .nds-swiper.nds-deck .nds-swiper-card {
+        transition: none;
+    }
+}

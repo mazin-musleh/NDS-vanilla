@@ -8,8 +8,16 @@
  *   instance.goTo(index)            move to a slide index
  *   instance.destroy()
  * Events:
- *   (none)
+ *   nds:swiper:change (bubbles)     detail.index = the real slide now at rest, after every move
  * Hooks (knobs set inline on the swiper container's style attribute):
+ *   .nds-deck                                    deck mode: a .nds-swiper-deck of .nds-swiper-card
+ *                                                buttons (one per slide, same order) beside the
+ *                                                track; the active card is at the front, the rest
+ *                                                fan behind it; a tap on a card goes to its slide,
+ *                                                a drag across the deck follows the finger and
+ *                                                pages on release. Loops by default (same
+ *                                                slide-count rule as the attribute)
+ *   --deck-card · --deck-strip                   open card size · folded strip width
  *   --max-slides · --mid-slides · --min-slides   slides per view at desktop / tablet /
  *                                                mobile, default 1 each; CSS sizes the row
  *                                                from them before any JS runs
@@ -25,20 +33,28 @@
  *   on a slide's <img>: data-src · data-srcset   lazy sources, written to src/srcset when
  *                                                the slide nears the viewport
  *   written by the component: --slides on the container, data-swiper-peek while peeking,
- *                             .nds-swiper-clone slides (aria-hidden, inert) when looping
+ *                             .nds-swiper-clone slides (aria-hidden, inert, data-swiper-clone =
+ *                             the real twin's index) when looping,
+ *                             on each deck card --rel (wrapping distance from the active card),
+ *                             --srel (the same signed the short way), data-status active|near;
+ *                             --drag + .nds-dragging on the deck while a finger holds it
  *   written by the loader pre-reveal: the same --slides and peek state, plus
  *                                     data-swiper-preset (skeleton row = final row) and
  *                                     data-swiper-single when the slides fit one page
  *                                     (drops the nav reserve, which init would keep hidden)
  * Gotchas:
  *   - Positioning is CSS scroll-snap. JS only syncs the navigation, the pagination dots
- *     and lazy loading — a swiper still scrolls with JS disabled.
+ *     and lazy loading — a swiper still scrolls with JS disabled. A move animates per
+ *     the wrapper's scroll-behavior (smooth by default; set auto for an instant switch).
  *   - The markup is .nds-swiper-wrapper holding .nds-swiper-slide items, plus optional
  *     .nds-swiper-navigation (with .nds-prev / .nds-next) and .nds-swiper-pagination.
  *   - The instance lives on the element as el._ndsSwiper.
  *   - A looping deck sets its track's scrollLeft at init, which fires one scroll event
  *     on the wrapper. A "first interaction" gate that listens for scroll in capture
  *     mode counts it — listen without capture, or ignore element scrolls.
+ *   - Deck cards map to slides by DOM order; the author stamps --rel / --srel on every
+ *     card and data-status="active" on the first for first paint. A deck in a hero needs --hero-height: auto on the
+ *     section below desktop, where the deck stacks above the text.
  */
 (function () {
     'use strict';
@@ -148,6 +164,9 @@
             this.navigation = own('.nds-swiper-navigation');
             this.prevBtn = own('.nds-prev');
             this.nextBtn = own('.nds-next');
+            this._isDeck = container.classList.contains('nds-deck');
+            this.deck = this._isDeck ? own('.nds-swiper-deck') : null;
+            this.cards = this.deck ? Array.from(this.deck.querySelectorAll('.nds-swiper-card')) : [];
 
             this.isHero = container.classList.contains('nds-hero');
             this._cachedGap = null;
@@ -176,7 +195,8 @@
             // Loop needs more slides than the largest page, or a page would show a
             // slide twice. Decided once, against the largest tier.
             // ponytail: per-tier loop (on at mobile, off at desktop) when a real deck asks.
-            this._loop = container.hasAttribute('data-swiper-loop') &&
+            // Deck mode loops by default: its fan wraps, so the track should too.
+            this._loop = (container.hasAttribute('data-swiper-loop') || this._isDeck) &&
                 this.slides.length > Math.max(this._slidesMax, this._slidesMid, this._slidesMin);
             this._real = this.slides.length; // real slides; clones extend this.slides at both ends
             this._head = 0;                  // clones before the first real slide
@@ -269,6 +289,7 @@
             // set the active bullet; only buttons + boundary classes remain.
             this.updateButtons();
             this.updateBoundaryClasses();
+            this.updateDeck();
             this.lastIndex = this.currentIndex;
 
             this.container.setAttribute('data-nds-swiper-initialized', 'true');
@@ -411,6 +432,66 @@
         setupNavigation() {
             if (this.prevBtn) this._attachActivation(this.prevBtn, () => this.prev());
             if (this.nextBtn) this._attachActivation(this.nextBtn, () => this.next());
+            this.setupDeck();
+        }
+
+        // Deck: the cards follow the finger (--drag on the deck, a translate in
+        // CSS), then release decides — past the threshold it pages, forward being
+        // towards the inline end so RTL mirrors, else it springs back. A tap on a
+        // card goes to its slide.
+        setupDeck() {
+            if (!this.deck) return;
+            const { signal } = this.abortController;
+            const deck = this.deck;
+            let x0 = null, dx = 0;
+            deck.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                x0 = e.clientX; dx = 0;
+                try { deck.setPointerCapture(e.pointerId); } catch (err) { /* synthetic pointer: no capture */ }
+            }, { signal });
+            deck.addEventListener('pointermove', (e) => {
+                if (x0 === null) return;
+                dx = e.clientX - x0;
+                if (Math.abs(dx) > 4) {
+                    deck.classList.add('nds-dragging');
+                    deck.style.setProperty('--drag', `${dx}px`);
+                }
+            }, { signal });
+            const release = (e) => {
+                if (x0 === null) return;
+                x0 = null;
+                deck.classList.remove('nds-dragging');
+                deck.style.removeProperty('--drag');
+                if (Math.abs(dx) >= 40) { (NDS.isRTL ? dx > 0 : dx < 0) ? this.next() : this.prev(); return; }
+                if (e.type === 'pointerup') {
+                    const i = this.cards.indexOf(e.target.closest('.nds-swiper-card'));
+                    if (i >= 0) this.goTo(i);
+                }
+            };
+            deck.addEventListener('pointerup', release, { signal });
+            deck.addEventListener('pointercancel', release, { signal });
+            this.cards.forEach((card, i) => card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.goTo(i); }
+            }, { signal }));
+        }
+
+        // Each card learns its distance from the open one: --rel counts forward and
+        // wraps (the desktop fan), --srel is the shortest signed way (the mobile peek
+        // picks the two neighbours). Both inline, so CSS positions on them.
+        updateDeck() {
+            const n = this.cards.length;
+            if (!n) return;
+            const active = this._realIndex;
+            this.cards.forEach((card, k) => {
+                const rel = (k - active + n) % n;
+                const srel = rel > n / 2 ? rel - n : rel;
+                card.style.setProperty('--rel', rel);
+                card.style.setProperty('--srel', srel);
+                if (rel === 0) NDS.Status.set(card, 'active');
+                else if (Math.abs(srel) === 1) NDS.Status.set(card, 'near');
+                else NDS.Status.clear(card);
+                NDS.aria.current(card, rel === 0 ? 'true' : null);
+            });
         }
 
         // Always a full view. A loop whose count is not a multiple of the slides
@@ -469,8 +550,10 @@
                 : Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
             const left = NDS.isRTL ? -offset : offset;
+            // No keyword: the wrapper's own scroll-behavior decides (smooth by
+            // default), so a consumer can set it to auto and get an instant switch.
             if (instant) this._instant(() => this.wrapper.scrollTo({ left }));
-            else this.wrapper.scrollTo({ left, behavior: 'smooth' });
+            else this.wrapper.scrollTo({ left });
         }
 
         // ==============================================
@@ -488,6 +571,7 @@
             const clone = (i) => {
                 const c = this.slides[i].cloneNode(true);
                 c.classList.add('nds-swiper-clone');
+                c.setAttribute('data-swiper-clone', i);   // its real twin, for consumers that sync content
                 c.setAttribute('aria-hidden', 'true');
                 c.inert = true;
                 // A duplicated id would steal anchors and label-for from the real slide.
@@ -706,6 +790,10 @@
             this.updatePagination();
             this.updateButtons();
             this.updateBoundaryClasses();
+            this.updateDeck();
+            this.container.dispatchEvent(new CustomEvent('nds:swiper:change', {
+                bubbles: true, detail: { index: this._realIndex }
+            }));
         }
 
         updateButtons() {
@@ -763,6 +851,12 @@
             if (this.navigation) this.navigation.toggleAttribute('hidden', this._navHadHidden);
             if (this.prevBtn) this.prevBtn.style.removeProperty('display');
             if (this.nextBtn) this.nextBtn.style.removeProperty('display');
+            this.cards.forEach(card => {
+                card.style.removeProperty('--rel');
+                card.style.removeProperty('--srel');
+                NDS.Status.clear(card);
+                NDS.aria.current(card, null);
+            });
 
             _activeSwipers.delete(this);
             _resizeSwipers.delete(this);

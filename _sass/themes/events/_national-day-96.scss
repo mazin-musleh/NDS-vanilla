@@ -23,6 +23,116 @@
   }
 }
 
+// ── Type 2 hero — six slides on the swiper's deck mode. The mode owns the
+//    cards, the fan and the mobile stack (components/_swiper.scss); this block
+//    adds only the campaign: its six colours and pattern, the Saudi-font title
+//    with the typed word in the slide's accent, and an instant text switch. The pack
+//    stamps nds-nd96 + the active slide's nds-nd96-<theme> on the section. ──
+
+// The two gradient stops are registered so the colour swap between slides
+// animates; a plain custom property would snap.
+@property --_nd96-from { syntax: '<color>'; inherits: true; initial-value: #01572b; }
+@property --_nd96-to   { syntax: '<color>'; inherits: true; initial-value: #5aba1c; }
+@property --_nd96-word { syntax: '<color>'; inherits: true; initial-value: #ebffe6; }
+
+@keyframes nds-nd96-caret {
+  50% { opacity: 0; }
+}
+
+.nds-hero-section.nds-nd96 {
+  // Campaign colours (hrsd.gov.sa) — palette-direct and mode-invariant by design:
+  // the artwork on the cards is lit for these, so dark mode keeps them.
+  &.nds-nd96-heritage   { --_nd96-from: #01572b; --_nd96-to: #5aba1c; --_nd96-word: #ebffe6; }
+  &.nds-nd96-courage    { --_nd96-from: #1b2613; --_nd96-to: #607c4f; --_nd96-word: #c9e0bb; }
+  &.nds-nd96-ambition   { --_nd96-from: #340117; --_nd96-to: #971a4d; --_nd96-word: #ff85c7; }
+  &.nds-nd96-generosity { --_nd96-from: #312d6e; --_nd96-to: #6565e0; --_nd96-word: #ded8f7; }
+  &.nds-nd96-kindness   { --_nd96-from: #011d3a; --_nd96-to: #0050af; --_nd96-word: #07b9ff; }
+  &.nds-nd96-vision     { --_nd96-from: #211501; --_nd96-to: #7c5d21; --_nd96-word: #d8b67a; }
+
+  // Deep stop behind the text, light stop behind the cards.
+  --_nd96-angle: 270deg;
+  background-image: linear-gradient(var(--_nd96-angle), var(--_nd96-from), var(--_nd96-to));
+  transition: --_nd96-from var(--nds-transition), --_nd96-to var(--nds-transition), --_nd96-word var(--nds-transition);
+
+  @include ltr {
+    --_nd96-angle: 90deg;
+  }
+
+  // Campaign pattern tiled over the gradient; the artwork carries its own 0.1
+  // alpha, this is the campaign's own 0.4 on top of it.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("nd96_pattern.svg") repeat;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .nds-section-title {
+    font-family: 'Saudi', sans-serif;
+  }
+
+  // The text switches in place; only the cards move.
+  .nds-swiper-wrapper {
+    scroll-behavior: auto;
+  }
+
+  // The word wears its slide's campaign accent.
+  .nds-nd96-typed {
+    color: var(--_nd96-word);
+  }
+
+  // Caret after the letters as they land.
+  .nds-nd96-typed::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 0.9em;
+    margin-inline-start: 0.1em;
+    vertical-align: -0.1em;
+    background: currentColor;
+    animation: nds-nd96-caret 1s steps(1) infinite;
+  }
+
+  // Each slide carries a long body and a short one; only one shows.
+  .nds-nd96-short {
+    display: none;
+  }
+
+  // Below desktop the deck stacks above the text: the hero grows to fit and
+  // the column centres, with the gradient running top to bottom and the
+  // short body in place of the long one.
+  @include tablet(max) {
+    --hero-height: auto;
+    --_nd96-angle: 180deg;
+    max-height: none;
+
+    .nds-section-body {
+      align-items: center;
+      text-align: center;
+    }
+
+    .nds-section-description {
+      display: none;
+    }
+
+    .nds-nd96-short {
+      display: block;
+    }
+  }
+}
+
+@include reduced-motion {
+  .nds-hero-section.nds-nd96 {
+    transition: none;
+
+    .nds-nd96-typed::after {
+      animation: none;
+    }
+  }
+}
+
 // Sections that paint their own surface (brand, status, gradient) take neither
 // decoration — the bar and the vector are for the plain page ground only.
 $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit)';
