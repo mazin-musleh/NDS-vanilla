@@ -102,55 +102,16 @@
     var LEAD = { ar: 'عِزّنا', en: 'Our pride in our' };
     var SLIDES = [
         {
-            theme: 'heritage',
-            card: 'card_heritage.webp',
-            word: { ar: 'بأصالتنا', en: 'authenticity' },
+            theme: 'vision',
+            card: 'card_vision.webp',
+            word: { ar: 'برؤيتنا', en: 'vision' },
             body: {
-                ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم وتاريخهم، واعتزازهم بموروثهم. فهي تظهر في التمسك بالعادات والتقاليد، واستمرار القيم التي تتوارثها الأجيال.',
-                en: 'Authenticity in Saudi society reflects a deep connection to our roots, history, and heritage. It lives on in the customs and traditions we uphold, and in the values passed down from one generation to the next.'
+                ar: 'رؤية السعودية 2030، التي أطلقها ولي العهد الأمير محمد بن سلمان، تهدف لبناء مستقبل مزدهر ومستدام. تؤمن الرؤية بقدرتنا على التحول والتقدم وصناعة مستقبل أفضل لوطننا مع الحفاظ على هويتنا وقيمنا، مما يعكس وعيًا عميقًا وطموحًا لصناعة الغد.',
+                en: 'Saudi Vision 2030, launched by Crown Prince Mohammed bin Salman, charts a path toward a prosperous and sustainable future. It reflects our ability to transform, progress, and shape a better future for our nation while preserving our identity and values.'
             },
             short: {
-                ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم واعتزازهم بإرثهم.',
-                en: 'Authenticity reflects our deep connection to our roots and pride in our heritage.'
-            }
-        },
-        {
-            theme: 'courage',
-            card: 'card_courage.webp',
-            word: { ar: 'بشجاعتنا', en: 'courage' },
-            body: {
-                ar: 'لأن الشجاعة في سلمنا وعرفنا قيمة أصيلة، نزع بلا تردد ونجد من استنجدنا، وهي صفة متجذرة فينا منذ القدم وامتدادًا عبر تاريخ هذه البلاد العظيمة، حيث كان أبناء الوطن دائمًا سندًا وعونًا لكل محتاج.',
-                en: 'Courage is a deeply rooted value in our character and traditions. We answer the call without hesitation and stand by those in need. Passed down through generations, this spirit has endured throughout the history of our nation, whose people have always been known for their strength, support, and readiness to help others.'
-            },
-            short: {
-                ar: 'الشجاعة في دمنا، نلبي النداء فورًا، ونساند المحتاجين، وهي صفة عريقة في تاريخ وطننا العظيم.',
-                en: 'Courage is in our character: we answer the call and stand by those in need.'
-            }
-        },
-        {
-            theme: 'ambition',
-            card: 'card_ambition.webp',
-            word: { ar: 'بهمّتنا', en: 'drive' },
-            body: {
-                ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز. وقد أصبحت الهمة جزءًا من ثقافتنا الوطنية، نستمدها من إيماننا بقدراتنا وثقتنا بمستقبلنا.',
-                en: 'Drive is one of the defining qualities of the Saudi character. It fuels our ambition and inspires us to achieve more. It is part of our national spirit, strengthened by our belief in our abilities and our confidence in the future.'
-            },
-            short: {
-                ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز.',
-                en: 'Drive defines the Saudi character, fueling our ambition and inspiring achievement.'
-            }
-        },
-        {
-            theme: 'generosity',
-            card: 'card_generosity.webp',
-            word: { ar: 'بجودنا', en: 'generosity' },
-            body: {
-                ar: 'الجود من أسمى الصفات في الهوية السعودية، ورثها السعوديون أبًا عن جد. الجود ليس فقط في المال، بل في الوقت والجهد والمواقف. في الثقافة السعودية، الجود يعني العطاء من القلب، وفتح الدار قبل السؤال، والفرح بالعطاء. هو طبع متأصل يظهر في الدلة التي لا تبرد، والباب المفتوح، والمبخرة التي لا تنطفئ.',
-                en: 'Generosity is one of the most cherished qualities of Saudi identity, passed down through generations. It extends beyond material giving to our time, effort, and support for others. It means giving wholeheartedly, opening our homes before being asked, and finding joy in giving. It is reflected in the coffee pot that stays warm, the open door, and the incense that continues to burn.'
-            },
-            short: {
-                ar: 'الجود صفة سامية في الهوية السعودية، ورثها السعوديون. تعني العطاء من القلب وفتح الدار.',
-                en: 'Generosity is a cherished Saudi value: giving wholeheartedly and welcoming others with an open door.'
+                ar: 'رؤية السعودية 2030 التي أطلقها ولي العهد تهدف لبناء مستقبل مزدهر ومستدام يعكس طموحنا وهويتنا.',
+                en: 'Saudi Vision 2030 charts a path toward a prosperous, sustainable future rooted in our ambition and identity.'
             }
         },
         {
@@ -167,22 +128,61 @@
             }
         },
         {
-            theme: 'vision',
-            card: 'card_vision.webp',
-            word: { ar: 'برؤيتنا', en: 'vision' },
+            theme: 'generosity',
+            card: 'card_generosity.webp',
+            word: { ar: 'بجودنا', en: 'generosity' },
             body: {
-                ar: 'رؤية السعودية 2030، التي أطلقها ولي العهد الأمير محمد بن سلمان، تهدف لبناء مستقبل مزدهر ومستدام. تؤمن الرؤية بقدرتنا على التحول والتقدم وصناعة مستقبل أفضل لوطننا مع الحفاظ على هويتنا وقيمنا، مما يعكس وعيًا عميقًا وطموحًا لصناعة الغد.',
-                en: 'Saudi Vision 2030, launched by Crown Prince Mohammed bin Salman, charts a path toward a prosperous and sustainable future. It reflects our ability to transform, progress, and shape a better future for our nation while preserving our identity and values.'
+                ar: 'الجود من أسمى الصفات في الهوية السعودية، ورثها السعوديون أبًا عن جد. الجود ليس فقط في المال، بل في الوقت والجهد والمواقف. في الثقافة السعودية، الجود يعني العطاء من القلب، وفتح الدار قبل السؤال، والفرح بالعطاء. هو طبع متأصل يظهر في الدلة التي لا تبرد، والباب المفتوح، والمبخرة التي لا تنطفئ.',
+                en: 'Generosity is one of the most cherished qualities of Saudi identity, passed down through generations. It extends beyond material giving to our time, effort, and support for others. It means giving wholeheartedly, opening our homes before being asked, and finding joy in giving. It is reflected in the coffee pot that stays warm, the open door, and the incense that continues to burn.'
             },
             short: {
-                ar: 'رؤية السعودية 2030 التي أطلقها ولي العهد تهدف لبناء مستقبل مزدهر ومستدام يعكس طموحنا وهويتنا.',
-                en: 'Saudi Vision 2030 charts a path toward a prosperous, sustainable future rooted in our ambition and identity.'
+                ar: 'الجود صفة سامية في الهوية السعودية، ورثها السعوديون. تعني العطاء من القلب وفتح الدار.',
+                en: 'Generosity is a cherished Saudi value: giving wholeheartedly and welcoming others with an open door.'
+            }
+        },
+        {
+            theme: 'ambition',
+            card: 'card_ambition.webp',
+            word: { ar: 'بهمّتنا', en: 'drive' },
+            body: {
+                ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز. وقد أصبحت الهمة جزءًا من ثقافتنا الوطنية، نستمدها من إيماننا بقدراتنا وثقتنا بمستقبلنا.',
+                en: 'Drive is one of the defining qualities of the Saudi character. It fuels our ambition and inspires us to achieve more. It is part of our national spirit, strengthened by our belief in our abilities and our confidence in the future.'
+            },
+            short: {
+                ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز.',
+                en: 'Drive defines the Saudi character, fueling our ambition and inspiring achievement.'
+            }
+        },
+        {
+            theme: 'courage',
+            card: 'card_courage.webp',
+            word: { ar: 'بشجاعتنا', en: 'courage' },
+            body: {
+                ar: 'لأن الشجاعة في سلمنا وعرفنا قيمة أصيلة، نزع بلا تردد ونجد من استنجدنا، وهي صفة متجذرة فينا منذ القدم وامتدادًا عبر تاريخ هذه البلاد العظيمة، حيث كان أبناء الوطن دائمًا سندًا وعونًا لكل محتاج.',
+                en: 'Courage is a deeply rooted value in our character and traditions. We answer the call without hesitation and stand by those in need. Passed down through generations, this spirit has endured throughout the history of our nation, whose people have always been known for their strength, support, and readiness to help others.'
+            },
+            short: {
+                ar: 'الشجاعة في دمنا، نلبي النداء فورًا، ونساند المحتاجين، وهي صفة عريقة في تاريخ وطننا العظيم.',
+                en: 'Courage is in our character: we answer the call and stand by those in need.'
+            }
+        },
+        {
+            theme: 'heritage',
+            card: 'card_heritage.webp',
+            word: { ar: 'بأصالتنا', en: 'authenticity' },
+            body: {
+                ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم وتاريخهم، واعتزازهم بموروثهم. فهي تظهر في التمسك بالعادات والتقاليد، واستمرار القيم التي تتوارثها الأجيال.',
+                en: 'Authenticity in Saudi society reflects a deep connection to our roots, history, and heritage. It lives on in the customs and traditions we uphold, and in the values passed down from one generation to the next.'
+            },
+            short: {
+                ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم واعتزازهم بإرثهم.',
+                en: 'Authenticity reflects our deep connection to our roots and pride in our heritage.'
             }
         }
     ];
     var TYPE_MS = 120;    // typewriter pace per letter, then
     var HOLD_MS = 5000;   // time to read the body before the next slide
-    var SETTLE_MS = 600;  // the cards' slide (the swiper's deck motion); typing waits for it
+    var SETTLE_MS = 600;  // the cards' slide (the swiper's deck motion): the colour cross-fade matches it
     var WARM_MS = 200;    // compositor pre-warm before an auto move (see prewarm)
     // ─────────────────────────────────────────────────────────────────────────
 
@@ -340,7 +340,6 @@
     var DECK_CLASS = 'nds-nd96';
     var _siteSlides = [], _siteTotal = '', _navHadCenter = false, _pageHadMd = false;
     var _deckAbort = null, _typeTimer = 0, _holdTimer = 0, _current = -1, _paused = false, _wordDone = false;
-    var _settled = false;   // false until the first word: the first slide has no motion to wait for
 
     function fullTitle(s) { return t(LEAD) + ' ' + t(s.word); }
 
@@ -531,15 +530,10 @@
             return;
         }
         span.textContent = '';
-        // The cards are still sliding when a slide changes: let that finish before
-        // the per-letter DOM writes start, so the two never share frames.
-        _typeTimer = setTimeout(function () {
-            _typeTimer = setInterval(function () {
-                span.textContent = chars.slice(0, ++n).join('');
-                if (n >= chars.length) { clearInterval(_typeTimer); _typeTimer = 0; done(); }
-            }, TYPE_MS);
-        }, _settled ? SETTLE_MS : 0);
-        _settled = true;
+        _typeTimer = setInterval(function () {
+            span.textContent = chars.slice(0, ++n).join('');
+            if (n >= chars.length) { clearInterval(_typeTimer); _typeTimer = 0; done(); }
+        }, TYPE_MS);
     }
 
     function scheduleAdvance() {
@@ -582,7 +576,7 @@
         var wrapper = swiper.querySelector('.nds-swiper-wrapper');
         if (_current >= 0) section.classList.remove('nds-nd96-' + SLIDES[_current].theme);
         section.classList.remove(DECK_CLASS);
-        _current = -1; _paused = false; _settled = false;
+        _current = -1; _paused = false;
 
         var deck = swiper.querySelector('.nds-swiper-deck');
         if (deck) deck.remove();
