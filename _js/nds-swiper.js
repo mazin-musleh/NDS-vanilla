@@ -14,8 +14,9 @@
  *                                                buttons (one per slide, same order) beside the
  *                                                track; the active card is at the front, the rest
  *                                                fan behind it; a tap on a card goes to its slide,
- *                                                a drag across the deck follows the finger and
- *                                                pages on release. Loops by default (same
+ *                                                and below the desktop breakpoint a drag across
+ *                                                the deck follows the pointer and pages on release
+ *                                                (the desktop layout has the arrows). Loops by default (same
  *                                                slide-count rule as the attribute)
  *   --deck-card · --deck-strip                   open card size · folded strip width
  *   --max-slides · --mid-slides · --min-slides   slides per view at desktop / tablet /
@@ -435,22 +436,25 @@
             this.setupDeck();
         }
 
-        // Deck: the cards follow the finger (--drag on the deck, a translate in
-        // CSS), then release decides — past the threshold it pages, forward being
-        // towards the inline end so RTL mirrors, else it springs back. A tap on a
-        // card goes to its slide.
+        // Deck: below the desktop breakpoint the cards follow the pointer (--drag
+        // on the deck, a translate in CSS), then release decides — past the threshold
+        // it pages, forward being towards the inline end so RTL mirrors, else it
+        // springs back. The desktop layout never drags (it has the arrows). A tap or
+        // click on a card goes to its slide in both.
         setupDeck() {
             if (!this.deck) return;
             const { signal } = this.abortController;
             const deck = this.deck;
-            let x0 = null, dx = 0;
+            let x0 = null, dx = 0, pressed = -1;
             deck.addEventListener('pointerdown', (e) => {
                 if (e.pointerType === 'mouse' && e.button !== 0) return;
                 x0 = e.clientX; dx = 0;
+                // Read the card now: once captured, the release event targets the deck.
+                pressed = this.cards.indexOf(e.target.closest('.nds-swiper-card'));
                 try { deck.setPointerCapture(e.pointerId); } catch (err) { /* synthetic pointer: no capture */ }
             }, { signal });
             deck.addEventListener('pointermove', (e) => {
-                if (x0 === null) return;
+                if (x0 === null || _mqDesktop.matches) return;   // the desktop layout has the arrows; only the stacked layout drags
                 dx = e.clientX - x0;
                 if (Math.abs(dx) > 4) {
                     deck.classList.add('nds-dragging');
@@ -463,10 +467,7 @@
                 deck.classList.remove('nds-dragging');
                 deck.style.removeProperty('--drag');
                 if (Math.abs(dx) >= 40) { (NDS.isRTL ? dx > 0 : dx < 0) ? this.next() : this.prev(); return; }
-                if (e.type === 'pointerup') {
-                    const i = this.cards.indexOf(e.target.closest('.nds-swiper-card'));
-                    if (i >= 0) this.goTo(i);
-                }
+                if (e.type === 'pointerup' && pressed >= 0) this.goTo(pressed);
             };
             deck.addEventListener('pointerup', release, { signal });
             deck.addEventListener('pointercancel', release, { signal });
@@ -478,10 +479,13 @@
         // Each card learns its distance from the open one: --rel counts forward and
         // wraps (the desktop fan), --srel is the shortest signed way (the mobile peek
         // picks the two neighbours). Both inline, so CSS positions on them.
-        updateDeck() {
+        // `real` lets a move update the deck at once, before the track's smooth
+        // scroll reports the new index — otherwise the cards spring back to the
+        // old spot for a beat and then retarget.
+        updateDeck(real) {
             const n = this.cards.length;
             if (!n) return;
-            const active = this._realIndex;
+            const active = real === undefined ? this._realIndex : real;
             this.cards.forEach((card, k) => {
                 const rel = (k - active + n) % n;
                 const srel = rel > n / 2 ? rel - n : rel;
@@ -536,6 +540,8 @@
                 else if (index >= this.maxIndex) { this._jumpTo(this.currentIndex - n); this.currentIndex -= n; index -= n; }
             }
             const clampedIndex = Math.max(0, Math.min(index, this.maxIndex));
+            // The deck aims at the target at once, ahead of the track's scroll.
+            if (this.cards.length) this.updateDeck((((clampedIndex - this._head) % this._real) + this._real) % this._real);
 
             const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;

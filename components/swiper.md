@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/09/2026 - 08:30 PM"
+last_edit: "06/09/2026 - 11:38 PM"
 ---
 
 <!-- Hero Slider Demo -->
@@ -361,8 +361,8 @@ last_edit: "06/09/2026 - 08:30 PM"
 <section id="swiperDeck" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Deck</h2>
-            <p class="nds-section-description">A hero with a deck of cards beside the slides, one card per slide. The active card is at the front, the other cards fan behind it, and the front card slides back into the pile when the next one comes forward. A tap on a card goes to its slide; a drag across the deck follows the finger and pages on release. Below the desktop breakpoint the deck stacks above the text: the open card is centred, its two neighbours peek at the sides. Use it when every slide has its own artwork and the set is worth showing at once, as in a campaign hero.</p>
+            <h2 class="nds-section-title">Deck <span class="nds-tag" data-status="info"><span class="nds-label">Beta</span></span></h2>
+            <p class="nds-section-description">A hero with a deck of cards beside the slides, one card per slide. The active card is at the front, the other cards fan behind it, and the front card slides back into the pile when the next one comes forward. A tap on a card goes to its slide; below the desktop breakpoint a drag across the deck follows the finger and pages on release. Below the desktop breakpoint the deck stacks above the text: the open card is centred, its two neighbours peek at the sides. Use it when every slide has its own artwork and the set is worth showing at once, as in a campaign hero.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -384,7 +384,7 @@ last_edit: "06/09/2026 - 08:30 PM"
                                     <div class="nds-swiper-slide" hidden>
                                         <div class="nds-section-body" style="padding-block: var(--spacing-4xl); padding-inline-start: var(--spacing-4xl);">
                                             <h2 class="nds-section-title">Lake</h2>
-                                            <p class="nds-section-description">Click a strip, a bullet or an arrow, or drag the deck: it follows.</p>
+                                            <p class="nds-section-description">Click a strip, a bullet or an arrow; on a phone, drag the deck.</p>
                                         </div>
                                     </div>
                                     <div class="nds-swiper-slide" hidden>
@@ -480,6 +480,7 @@ last_edit: "06/09/2026 - 08:30 PM"
                     </div>
                     </div>
                 </div>
+            </div>
             </div>
             <div class="nds-block nds-prose">
                 <ul>
@@ -1243,7 +1244,7 @@ last_edit: "06/09/2026 - 08:30 PM"
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Adjusts the bullets, the section title and the arrows for dark or image backgrounds. The arrows take the subtle on-color wash. A primary or neutral arrow still adds <code class="nds-inline-code lang-html">nds-oncolor</code> on the button itself</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-navigation</code></td><td>Centers the bullets and pushes the prev/next buttons to the outer edges of the navigation row</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-middle</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Moves the prev/next buttons out of the navigation row to flank the slides at their vertical centre, and hides the bullets. The swiper gains an inline gutter one button wide at each end, so the arrows sit beside the slides rather than over them. Tablet and up only (600px): below that every rule drops and the normal navigation row returns, bullets included, so pair it with <code class="nds-inline-code lang-html">nds-center</code> on the row to choose the mobile arrangement. On <code class="nds-inline-code lang-html">nds-hero</code> it adapts: no gutter is reserved, since the hero is full-bleed and insetting the image would be wrong, so the arrows overlay the slide at the viewport padding, and the bullets stay pinned bottom-centre. The arrows then sit over the slide edges, so use this with textless slides, or centre the slide text to keep it clear of them</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-deck</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Deck mode. A <code class="nds-inline-code lang-html">.nds-swiper-deck</code> of <code class="nds-inline-code lang-html">.nds-swiper-card</code> buttons, one per slide in slide order, sits beside the track. The active card is at the front, the rest fan behind it in circular order; a tap goes to a card, a drag pages, and the track loops. In a hero the deck fills the hero's height at the inline-end edge; below the desktop breakpoint it stacks above the text with the two neighbours peeking. See the Deck demo</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-deck</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Deck mode. A <code class="nds-inline-code lang-html">.nds-swiper-deck</code> of <code class="nds-inline-code lang-html">.nds-swiper-card</code> buttons, one per slide in slide order, sits beside the track. The active card is at the front, the rest fan behind it in circular order; a tap goes to a card, a drag pages below the desktop breakpoint, and the track loops. In a hero the deck fills the hero's height at the inline-end edge; below the desktop breakpoint it stacks above the text with the two neighbours peeking. See the Deck demo</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Large pagination bullets (16px). Default size when no modifier is applied</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Medium pagination bullets (12px)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Small pagination bullets (8px)</td></tr>

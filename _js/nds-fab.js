@@ -18,7 +18,8 @@
  *   data-fab-order      stacking order inside a dock, default 0
  *   data-fab-dock-pos   on a .nds-fab-dock you author yourself
  *   written by the component: data-fab-riding on a thumb that moved aside for its panel,
- *                             data-fab-tucked on <html> near the page bottom
+ *                             data-fab-tucked on <html> near the page bottom, and while a
+ *                             .nds-hero-section reaches into the viewport's bottom 15%
  * Gotchas:
  *   - Ship a FAB with the `hidden` attribute. The router strips it once the FAB is docked,
  *     so it never flashes at the spot you authored it.
@@ -206,12 +207,25 @@
         NDS.aria.hidden(sentinel, true);
         document.body.appendChild(sentinel);
         runtimeSentinel = sentinel;
+        // Two reasons to tuck, one attribute: the page bottom nearing, or a hero
+        // reaching into the bottom band the docks occupy (a tall stacked hero on
+        // a phone). Either alone keeps the docks out.
+        let bottomNear = false, heroUnder = false;
+        const apply = () => document.documentElement.toggleAttribute('data-fab-tucked', bottomNear || heroUnder);
         runtimeOffs.push(NDS.onIntersect(sentinel, (entry) => {
             // Skip on a short page (sentinel always in view) so the FAB isn't
             // hidden permanently — only tuck when there's room to scroll.
             const scrollable = document.documentElement.scrollHeight - window.innerHeight > 4;
-            document.documentElement.toggleAttribute('data-fab-tucked', entry.isIntersecting && scrollable);
+            bottomNear = entry.isIntersecting && scrollable;
+            apply();
         }, { rootMargin: '0px 0px 120px 0px' }));
+        // Root shrunk to the viewport's bottom 15%: the hero counts only while it
+        // actually sits under the docks, not merely while it is on screen.
+        const hero = document.querySelector('.nds-hero-section');
+        if (hero) runtimeOffs.push(NDS.onIntersect(hero, (entry) => {
+            heroUnder = entry.isIntersecting;
+            apply();
+        }, { rootMargin: '-85% 0px 0px 0px' }));
 
         // One pooled observer for every panel on the page.
         runtimeOffs.push(NDS.onAttrChange('.nds-panel', ['data-state'], (panels) => panels.forEach(ridePanel)));

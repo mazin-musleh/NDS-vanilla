@@ -96,37 +96,85 @@
     var TYPE = pick('type', '2') === '1' ? 1 : 2;
     var LEAD = { ar: 'عِزّنا', en: 'Our pride in our' };
     var SLIDES = [
-        { theme: 'heritage', card: 'card_heritage.webp', word: { ar: 'بأصالتنا', en: 'authenticity' }, body: {
+    {
+        theme: 'heritage',
+        card: 'card_heritage.webp',
+        word: { ar: 'بأصالتنا', en: 'authenticity' },
+        body: {
             ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم وتاريخهم، واعتزازهم بموروثهم. فهي تظهر في التمسك بالعادات والتقاليد، واستمرار القيم التي تتوارثها الأجيال.',
-            en: 'Authenticity in Saudi society reflects how deeply people are connected to their roots and their history, and how proud they are of the heritage they carry. It shows in the customs and traditions they hold on to, and in the values passed down from one generation to the next.' }, short: {
+            en: 'Authenticity in Saudi society reflects a deep connection to our roots, history, and heritage. It lives on in the customs and traditions we uphold, and in the values passed down from one generation to the next.'
+        },
+        short: {
             ar: 'الأصالة في المجتمع السعودي تعكس ارتباط الناس بجذورهم واعتزازهم بإرثهم.',
-            en: 'Authenticity in Saudi society reflects how connected people are to their roots, and how proud they are of the heritage they carry.' } },
-        { theme: 'courage', card: 'card_courage.webp', word: { ar: 'بشجاعتنا', en: 'courage' }, body: {
+            en: 'Authenticity reflects our deep connection to our roots and pride in our heritage.'
+        }
+    },
+    {
+        theme: 'courage',
+        card: 'card_courage.webp',
+        word: { ar: 'بشجاعتنا', en: 'courage' },
+        body: {
             ar: 'لأن الشجاعة في سلمنا وعرفنا قيمة أصيلة، نزع بلا تردد ونجد من استنجدنا، وهي صفة متجذرة فينا منذ القدم وامتدادًا عبر تاريخ هذه البلاد العظيمة، حيث كان أبناء الوطن دائمًا سندًا وعونًا لكل محتاج.',
-            en: 'Courage, in our peace and in our customs, is a value we were raised on: we answer without hesitation, and we stand by whoever calls on us. It is a trait rooted in us since ancient times and carried on through the history of this great land, where the people of this nation have always been a support and a helping hand to anyone in need.' }, short: {
+            en: 'Courage is a deeply rooted value in our character and traditions. We answer the call without hesitation and stand by those in need. Passed down through generations, this spirit has endured throughout the history of our nation, whose people have always been known for their strength, support, and readiness to help others.'
+        },
+        short: {
             ar: 'الشجاعة في دمنا، نلبي النداء فورًا، ونساند المحتاجين، وهي صفة عريقة في تاريخ وطننا العظيم.',
-            en: 'Courage is in our blood: we answer the call at once and stand by whoever needs us, a trait long rooted in the history of our great nation.' } },
-        { theme: 'ambition', card: 'card_ambition.webp', word: { ar: 'بهمّتنا', en: 'drive' }, body: {
+            en: 'Courage is in our character: we answer the call and stand by those in need.'
+        }
+    },
+    {
+        theme: 'ambition',
+        card: 'card_ambition.webp',
+        word: { ar: 'بهمّتنا', en: 'drive' },
+        body: {
             ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز. وقد أصبحت الهمة جزءًا من ثقافتنا الوطنية، نستمدها من إيماننا بقدراتنا وثقتنا بمستقبلنا.',
-            en: 'Drive is one of the defining traits of the Saudi character. It is the force that sets ambition in motion and leads the way to achievement. It has become part of our national culture, drawn from our belief in our own abilities and our confidence in our future.' }, short: {
+            en: 'Drive is one of the defining qualities of the Saudi character. It fuels our ambition and inspires us to achieve more. It is part of our national spirit, strengthened by our belief in our abilities and our confidence in the future.'
+        },
+        short: {
             ar: 'الهمة من أبرز الصفات التي تميز الشخصية السعودية، فهي الدافع الذي يحرك الطموح ويقود نحو الإنجاز.',
-            en: 'Drive is one of the defining traits of the Saudi character: the force that sets ambition in motion and leads the way to achievement.' } },
-        { theme: 'generosity', card: 'card_generosity.webp', word: { ar: 'بجودنا', en: 'generosity' }, body: {
+            en: 'Drive defines the Saudi character, fueling our ambition and inspiring achievement.'
+        }
+    },
+    {
+        theme: 'generosity',
+        card: 'card_generosity.webp',
+        word: { ar: 'بجودنا', en: 'generosity' },
+        body: {
             ar: 'الجود من أسمى الصفات في الهوية السعودية، ورثها السعوديون أبًا عن جد. الجود ليس فقط في المال، بل في الوقت والجهد والمواقف. في الثقافة السعودية، الجود يعني العطاء من القلب، وفتح الدار قبل السؤال، والفرح بالعطاء. هو طبع متأصل يظهر في الدلة التي لا تبرد، والباب المفتوح، والمبخرة التي لا تنطفئ.',
-            en: 'Generosity is among the highest traits of the Saudi identity, inherited by Saudis from their forefathers. It is not only generosity with money, but with time, effort, and standing by others. In Saudi culture, generosity means giving from the heart, opening your home before anyone has to ask, and taking joy in the giving itself. It is an ingrained nature, seen in the coffee pot that never goes cold, the door that stays open, and the incense burner that is never left unlit.' }, short: {
+            en: 'Generosity is one of the most cherished qualities of Saudi identity, passed down through generations. It extends beyond material giving to our time, effort, and support for others. It means giving wholeheartedly, opening our homes before being asked, and finding joy in giving. It is reflected in the coffee pot that stays warm, the open door, and the incense that continues to burn.'
+        },
+        short: {
             ar: 'الجود صفة سامية في الهوية السعودية، ورثها السعوديون. تعني العطاء من القلب وفتح الدار.',
-            en: 'Generosity is a noble trait of the Saudi identity, inherited by Saudis from their forefathers. It means giving from the heart and opening your home.' } },
-        { theme: 'kindness', card: 'card_kindness.webp', word: { ar: 'بكرمنا', en: 'hospitality' }, body: {
+            en: 'Generosity is a cherished Saudi value: giving wholeheartedly and welcoming others with an open door.'
+        }
+    },
+    {
+        theme: 'kindness',
+        card: 'card_kindness.webp',
+        word: { ar: 'بكرمنا', en: 'hospitality' },
+        body: {
             ar: 'الكرم من القيم الأساسية في ثقافتنا، ويعد من أبرز سمات الهوية السعودية، ويتجاوز مجرد حسن الضيافة، ليشمل حفاوة الاستقبال والمبادرة بالمساعدة. يعد الكرم رمزًا للأصالة والانتماء، ويربى عليه السعوديون منذ الصغر، مما يجعله جزءًا طبيعيًا من الحياة اليومية والعلاقات الاجتماعية.',
-            en: 'Hospitality is one of the core values of our culture and one of the most distinctive marks of the Saudi identity. It goes beyond simply hosting well, extending to the warmth of the welcome and the readiness to offer help before it is asked for. It is a symbol of authenticity and belonging, and Saudis are raised on it from childhood, which makes it a natural part of daily life and of the relationships between people.' }, short: {
+            en: 'Hospitality is a cornerstone of our culture and a defining part of Saudi identity. It goes beyond welcoming guests to include warmth, generosity, and a willingness to help. Saudis grow up with these values, making hospitality a natural part of everyday life and the way we connect with others.'
+        },
+        short: {
             ar: 'الكرم جزء من هويتنا السعودية يظهر في الضيافة والمساعدة.',
-            en: 'Hospitality is part of our Saudi identity, and it shows in the welcome we give and the help we offer.' } },
-        { theme: 'vision', card: 'card_vision.webp', word: { ar: 'برؤيتنا', en: 'vision' }, body: {
+            en: 'Hospitality is part of our Saudi identity, reflected in the warmth of our welcome and our willingness to help.'
+        }
+    },
+    {
+        theme: 'vision',
+        card: 'card_vision.webp',
+        word: { ar: 'برؤيتنا', en: 'vision' },
+        body: {
             ar: 'رؤية السعودية 2030، التي أطلقها ولي العهد الأمير محمد بن سلمان، تهدف لبناء مستقبل مزدهر ومستدام. تؤمن الرؤية بقدرتنا على التحول والتقدم وصناعة مستقبل أفضل لوطننا مع الحفاظ على هويتنا وقيمنا، مما يعكس وعيًا عميقًا وطموحًا لصناعة الغد.',
-            en: 'Saudi Vision 2030, launched by Crown Prince Mohammed bin Salman, aims to build a prosperous and sustainable future. The Vision is grounded in our ability to transform, to advance, and to shape a better future for our country while preserving our identity and our values, reflecting a deep awareness and a real ambition to build tomorrow.' }, short: {
+            en: 'Saudi Vision 2030, launched by Crown Prince Mohammed bin Salman, charts a path toward a prosperous and sustainable future. It reflects our ability to transform, progress, and shape a better future for our nation while preserving our identity and values.'
+        },
+        short: {
             ar: 'رؤية السعودية 2030 التي أطلقها ولي العهد تهدف لبناء مستقبل مزدهر ومستدام يعكس طموحنا وهويتنا.',
-            en: 'Saudi Vision 2030, launched by the Crown Prince, aims to build a prosperous and sustainable future that reflects our ambition and our identity.' } },
-    ];
+            en: 'Saudi Vision 2030 charts a path toward a prosperous, sustainable future rooted in our ambition and identity.'
+        }
+    }
+];
     var TYPE_MS = 120;    // typewriter pace per letter, then
     var HOLD_MS = 5000;   // time to read the body before the next slide
     // ─────────────────────────────────────────────────────────────────────────
@@ -317,7 +365,7 @@
         if (!i) card.setAttribute('data-status', 'active');
         else if (Math.abs(srel) === 1) card.setAttribute('data-status', 'near');
         card.innerHTML = '<img src="' + esc(assetUrl(s.card)) + '" width="491" height="491" alt=""' +
-            (i ? ' loading="lazy"' : ' fetchpriority="high"') + '>';
+            (i ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"') + '>';
         return card;
     }
 
