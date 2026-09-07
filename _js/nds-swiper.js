@@ -227,13 +227,17 @@
             return Math.max(0, this.slides.length - this.slidesPerView);
         }
 
-        // Real-slide index of the current position — a rest on a clone maps to its
-        // twin. One source for the three sites that must agree on it: where the loop
-        // jumps, which bullet reads active, and where destroy() lands the row.
-        get _realIndex() {
+        // Real-slide index of a full-list position — a rest on a clone maps to its
+        // twin. One source for every site that must agree on it: where the loop jumps,
+        // which bullet reads active, which deck card opens, where destroy() lands the
+        // row. _goToFull needs it for a target index, not the current one, hence the
+        // parameter.
+        _realOf(index) {
             const n = this._real;
-            return (((this.currentIndex - this._head) % n) + n) % n;
+            return (((index - this._head) % n) + n) % n;
         }
+
+        get _realIndex() { return this._realOf(this.currentIndex); }
 
         // Pages at the current slidesPerView. Decides nav visibility in
         // updateSlidesPerView and pagination + button visibility in setupPagination —
@@ -308,18 +312,21 @@
                 // rAF so the forced reflow below lands on the next paint frame,
                 // not on the IO callback's task.
                 requestAnimationFrame(() => {
+                    // One reveal, two scroll contexts — a later addition to it must
+                    // reach both directions, not just the RTL default.
+                    const reveal = () => this.slides.forEach(s => s.removeAttribute('hidden'));
                     if (NDS.isRTL) {
                         // WebKit RTL: keep scroll-behavior: auto through the entire
                         // update so Safari/WebKit doesn't jump scroll on reflow.
                         this._instant(() => {
-                            this.slides.forEach(s => { if (s.hasAttribute('hidden')) s.removeAttribute('hidden'); });
+                            reveal();
                             this.wrapper.scrollLeft = 0;
                             void this.wrapper.offsetHeight;
                             this.wrapper.scrollLeft = 0;
                             void this.wrapper.offsetHeight;
                         });
                     } else {
-                        this.slides.forEach(s => { if (s.hasAttribute('hidden')) s.removeAttribute('hidden'); });
+                        reveal();
                     }
 
                     // Revealing slides changes slide spacing but not the wrapper's box,
@@ -386,6 +393,7 @@
                 this.updatePagination();
                 this.updateButtons();
                 this.updateBoundaryClasses();
+                this.updateDeck();
                 this.lastIndex = this.currentIndex;
             });
         }
@@ -541,7 +549,7 @@
             }
             const clampedIndex = Math.max(0, Math.min(index, this.maxIndex));
             // The deck aims at the target at once, ahead of the track's scroll.
-            if (this.cards.length) this.updateDeck((((clampedIndex - this._head) % this._real) + this._real) % this._real);
+            if (this.cards.length) this.updateDeck(this._realOf(clampedIndex));
 
             const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;
