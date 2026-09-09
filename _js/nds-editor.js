@@ -1906,7 +1906,11 @@
             this._saveSelection();
             const node = this._componentCaretNode();
             this._removeChain = node ? this._removeLevels(node) : [];
-            const list = this.root.querySelector('[data-editor-remove-levels]');
+            // Fields live in the menu, which portal detaches to <body> while
+            // open — query it via menuOf (nested or portaled), not the wrapper.
+            const dropmenu = this.root.querySelector('[data-editor-remove-dropmenu]');
+            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const list = menu?.querySelector('[data-editor-remove-levels]');
             if (!list) return;
             const chain = this._removeChain;
             list.innerHTML = chain.map((el, i) => ({ el, i })).reverse().map(({ el, i }, depth) =>
@@ -2102,10 +2106,13 @@
             this._saveSelection();
             const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
             if (!dropmenu) return;
-            const textInput = dropmenu.querySelector('[data-editor-link-text]');
-            const urlInput = dropmenu.querySelector('[data-editor-link-url]');
-            const externalInput = dropmenu.querySelector('[data-editor-link-external]');
-            const unlinkBtn = dropmenu.querySelector('[data-editor-link-unlink]');
+            // Fields live in the menu, which portal detaches to <body> while
+            // open — query it via menuOf (nested or portaled), not the wrapper.
+            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const textInput = menu.querySelector('[data-editor-link-text]');
+            const urlInput = menu.querySelector('[data-editor-link-url]');
+            const externalInput = menu.querySelector('[data-editor-link-external]');
+            const unlinkBtn = menu.querySelector('[data-editor-link-unlink]');
             const existing = this._getAncestorTag('A');
             const atom = existing ? null : this._linkableAtom();
             const img = existing || atom ? null : this._selectedImage();
@@ -2131,9 +2138,9 @@
             if (externalInput) externalInput.checked = existing?.getAttribute('target') === '_blank';
             // Badge opt-out reads the target too (an unlinked button keeps the
             // stamp, so re-linking remembers it).
-            const noExternalInput = dropmenu.querySelector('[data-editor-link-noexternal]');
+            const noExternalInput = menu.querySelector('[data-editor-link-noexternal]');
             if (noExternalInput) noExternalInput.checked = !!target?.hasAttribute('data-no-external');
-            const coloredInput = dropmenu.querySelector('[data-editor-link-colored]');
+            const coloredInput = menu.querySelector('[data-editor-link-colored]');
             if (coloredInput) {
                 coloredInput.checked = !asComponent && !asOpaque && !!existing?.classList.contains('nds-primary');
                 // On a component nds-primary is the VARIANT, not link color —
@@ -2144,7 +2151,7 @@
             if (unlinkBtn) unlinkBtn.hidden = !existing;
             // Soft dependency — a stale field error just lingers if NDS.Forms isn't bundled.
             if (urlInput) NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
-            dropmenu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
+            menu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
             // After the dropmenu opens (next frame), select the URL for quick
             // overwrite — only if it's STILL open: a stale timer after a fast
             // unlink/cancel/confirm would steal focus AND the document
@@ -2326,11 +2333,14 @@
         // before the menu opens).
         _syncImageUploadVisibility() {
             const dropmenu = this.root.querySelector('[data-editor-image-dropmenu]');
-            const host = dropmenu?.querySelector('[data-editor-image-upload]');
+            // Fields live in the menu, which portal detaches to <body> while
+            // open — query it via menuOf (nested or portaled), not the wrapper.
+            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const host = menu?.querySelector('[data-editor-image-upload]');
             if (!host) return;
             const show = !!this._imageUploadUrl();
             host.style.display = show ? '' : 'none';
-            const divider = dropmenu.querySelector('[data-editor-image-or]');
+            const divider = menu.querySelector('[data-editor-image-or]');
             if (divider) divider.style.display = show ? '' : 'none';
         }
 
@@ -2400,23 +2410,26 @@
             this._saveSelection();
             const dropmenu = this.root.querySelector('[data-editor-image-dropmenu]');
             if (!dropmenu) return;
-            const urlInput = dropmenu.querySelector('[data-editor-image-url]');
-            const altInput = dropmenu.querySelector('[data-editor-image-alt]');
+            // Fields live in the menu, which portal detaches to <body> while
+            // open — query it via menuOf (nested or portaled), not the wrapper.
+            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const urlInput = menu.querySelector('[data-editor-image-url]');
+            const altInput = menu.querySelector('[data-editor-image-alt]');
             // A clicked (selected) image edits in place — url/alt prefill.
             const existing = this._selectedImage();
             if (urlInput) urlInput.value = existing?.getAttribute('src') || 'https://';
             if (altInput) altInput.value = existing?.getAttribute('alt') || '';
-            const wInput = dropmenu.querySelector('[data-editor-image-width]');
-            const hInput = dropmenu.querySelector('[data-editor-image-height]');
+            const wInput = menu.querySelector('[data-editor-image-width]');
+            const hInput = menu.querySelector('[data-editor-image-height]');
             if (wInput) wInput.value = existing?.getAttribute('width') || '';
             if (hInput) hInput.value = existing?.getAttribute('height') || '';
             // Fresh staging per open — a committed/abandoned chip never
             // lingers, stale field errors clear, and the upload affordance
             // reflects the CURRENT config.
-            dropmenu.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
+            menu.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
             // Soft dependency — a stale field error just lingers if NDS.Forms isn't bundled.
             if (urlInput) NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
-            dropmenu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
+            menu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
             this._syncImageUploadVisibility();
             // Open-guarded like the link popover's — a stale timer would
             // steal focus and the document selection.
@@ -2445,7 +2458,7 @@
             }
             dropmenu?.ndsDropmenu?.close?.();
             // Committed — the staging chip's job is done.
-            dropmenu?.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
+            menu?.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
             this.editable.focus();
             this._restoreSelection();
             const existing = this._selectedImage();

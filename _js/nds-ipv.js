@@ -439,9 +439,14 @@
                 .filter(thumb => !thumb.closest('code, .code-example'));
 
             // Make each thumbnail keyboard-operable without changing authored markup.
-            this.state.thumbnails.forEach(thumb => {
-                if (!thumb.hasAttribute('tabindex')) thumb.tabIndex = 0;
-                if (!thumb.hasAttribute('role')) thumb.setAttribute('role', 'button');
+            // Deferred: thumbnails already paint correctly without JS (this is an
+            // a11y-only enhancement), so a gallery page with many images doesn't
+            // pay this as one blocking task.
+            NDS.onIdle(() => {
+                this.state.thumbnails.forEach(thumb => {
+                    if (!thumb.hasAttribute('tabindex')) thumb.tabIndex = 0;
+                    if (!thumb.hasAttribute('role')) thumb.setAttribute('role', 'button');
+                });
             });
 
             const { signal } = this.abortController;

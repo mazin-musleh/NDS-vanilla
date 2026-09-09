@@ -194,6 +194,9 @@
             const siblings = parent.querySelectorAll('.nds-expandable[data-nds-expandable-initialized]');
             siblings.forEach(sibling => {
                 if (sibling === this.expandableContainer) return;
+                // Nested inside another expandable's content — not a top-level
+                // expand-all member, so it doesn't sync with the group.
+                if (sibling.parentElement.closest('.nds-expandable')) return;
                 if (sibling.ndsExpandable) {
                     if (expand && !sibling.ndsExpandable.isExpanded) {
                         sibling.ndsExpandable.expand(false);
@@ -292,24 +295,29 @@
         }
     }
 
-    // Auto-initialize expandable content on page load
+    // Auto-initialize expandable content on page load. Deferred: content is
+    // already CSS-clamped before JS runs, so the sweep buys nothing by
+    // staying on the critical path — NDS.onIdle keeps a page with many
+    // expandables from paying it as one blocking task.
     function initializeExpandableContent() {
-        const expandableContainers = document.querySelectorAll('.nds-expandable');
+        NDS.onIdle(() => {
+            const expandableContainers = document.querySelectorAll('.nds-expandable');
 
-        expandableContainers.forEach(container => {
-            // Skip elements rendered inside <code> tags (markup text, not live components)
-            if (container.closest('code')) {
-                return;
-            }
-
-            if (!container.hasAttribute('data-nds-expandable-initialized')) {
-                const expandableInstance = new NDSExpandable(container);
-                // Stamp only successful constructions — content that renders late
-                // stays eligible for the next reinit().
-                if (expandableInstance.valid) {
-                    container.setAttribute('data-nds-expandable-initialized', 'true');
+            expandableContainers.forEach(container => {
+                // Skip elements rendered inside <code> tags (markup text, not live components)
+                if (container.closest('code')) {
+                    return;
                 }
-            }
+
+                if (!container.hasAttribute('data-nds-expandable-initialized')) {
+                    const expandableInstance = new NDSExpandable(container);
+                    // Stamp only successful constructions — content that renders late
+                    // stays eligible for the next reinit().
+                    if (expandableInstance.valid) {
+                        container.setAttribute('data-nds-expandable-initialized', 'true');
+                    }
+                }
+            });
         });
     }
 
