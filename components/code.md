@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/08/2026 - 11:35 PM"
+last_edit: "09/09/2026 - 10:06 PM"
 ---
 
 <!-- Code Block Overview -->
@@ -799,7 +799,7 @@ NDS.Alert.create({
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-nds-code-processed</code></td><td><code class="nds-inline-code lang-html">code</code></td><td>Set to <code class="nds-inline-code lang-html">true</code> by JS after highlighting. Guards against double-processing. Set to <code class="nds-inline-code lang-html">false</code> by <code class="nds-inline-code lang-js">reprocessCodeElement</code> before re-highlighting.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-nds-code-initialized</code></td><td><code class="nds-inline-code lang-html">code</code></td><td>Set to <code class="nds-inline-code lang-html">true</code> by JS after highlighting. Guards against double-processing. Set to <code class="nds-inline-code lang-html">false</code> by <code class="nds-inline-code lang-js">reprocessCodeElement</code> before re-highlighting.</td></tr>
                     </tbody>
                 </table>
             </div>

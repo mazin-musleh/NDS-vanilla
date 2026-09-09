@@ -189,14 +189,17 @@
         syncSiblings(expand) {
             const parent = this.expandableContainer.closest('.nds-expand-all');
             if (!parent) return;
+            // Only direct members sync: an expandable nested inside a member's
+            // content neither drives the group nor follows it. Keyed on the
+            // group (not "any expandable ancestor") so a group that itself
+            // sits inside an expandable still works.
+            const isMember = el => el.parentElement.closest('.nds-expandable, .nds-expand-all') === parent;
+            if (!isMember(this.expandableContainer)) return;
 
             // Find all expandable siblings
             const siblings = parent.querySelectorAll('.nds-expandable[data-nds-expandable-initialized]');
             siblings.forEach(sibling => {
-                if (sibling === this.expandableContainer) return;
-                // Nested inside another expandable's content — not a top-level
-                // expand-all member, so it doesn't sync with the group.
-                if (sibling.parentElement.closest('.nds-expandable')) return;
+                if (sibling === this.expandableContainer || !isMember(sibling)) return;
                 if (sibling.ndsExpandable) {
                     if (expand && !sibling.ndsExpandable.isExpanded) {
                         sibling.ndsExpandable.expand(false);

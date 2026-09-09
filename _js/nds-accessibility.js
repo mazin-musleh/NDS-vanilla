@@ -533,7 +533,7 @@
             const offResize = NDS.onResize(() => render());
             signal.addEventListener('abort', offResize);
 
-            requestAnimationFrame(() => { readGeometry(); render(); });
+            requestAnimationFrame(() => { if (signal.aborted) return; readGeometry(); render(); });
 
         } else if (!active && maskAbortController) {
             maskAbortController.abort();
