@@ -1107,7 +1107,7 @@
 
         destroy() {
             if (this._rafId) cancelAnimationFrame(this._rafId);
-            clearTimeout(this._noticeTimer);
+            this._clearNotice?.cancel();
             this._selectedMark?.removeAttribute('data-editor-selected');
             this._selectedMark = null;
             this.abortController.abort();
@@ -2363,8 +2363,8 @@
         _notice(message) {
             if (!NDS.Forms?.setStatus) return;
             NDS.Forms.setStatus({ element: this.root, status: 'warning', message });
-            clearTimeout(this._noticeTimer);
-            this._noticeTimer = setTimeout(() => NDS.Forms.clearStatus(this.root), 5000);
+            this._clearNotice ||= NDS.debounce(() => NDS.Forms.clearStatus(this.root), 5000);
+            this._clearNotice();
         }
 
         // Inline error on a popover field via the same forms mechanism; the

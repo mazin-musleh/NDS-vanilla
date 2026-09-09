@@ -27,27 +27,23 @@
     // so every caller-controlled value flows through `.className` / `setAttribute` /
     // `.textContent` — text-context boundaries the HTML parser never executes.
     function renderWeather(parent, payload) {
-        while (parent.firstChild) parent.removeChild(parent.firstChild);
         const icon = document.createElement('i');
         icon.className = 'nds-icon ' + payload.icon;
         NDS.aria.hidden(icon, true);
         const span = document.createElement('span');
         span.className = 'text';
         span.textContent = payload.desc + ', ' + payload.temp + '°C';
-        parent.appendChild(icon);
-        parent.appendChild(span);
+        parent.replaceChildren(icon, span);
     }
 
     function renderCity(parent, city) {
-        while (parent.firstChild) parent.removeChild(parent.firstChild);
         const icon = document.createElement('i');
         icon.className = 'nds-icon nds-hgi-location-01';
         NDS.aria.hidden(icon, true);
         const span = document.createElement('span');
         span.className = 'text';
         span.textContent = city;
-        parent.appendChild(icon);
-        parent.appendChild(span);
+        parent.replaceChildren(icon, span);
     }
 
     // Weather function with dual-language API caching

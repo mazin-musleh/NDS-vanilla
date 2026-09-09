@@ -163,14 +163,14 @@
         // resize — re-apply the reservation when a container's class changes.
         // onAttrChange hands the callback a nodes array.
         NDS.onAttrChange('.nds-slider-container', ['class'], function (els) { els.forEach(applyReservation); });
+        // onDOMAdd hands the callback a nodes array, not one element.
+        NDS.onDOMAdd('.nds-slider-container', function (nodes) { nodes.forEach(initOne); });
     }
 
     NDS.Slider = {
         init: function () {
             bindOnce();
             document.querySelectorAll('.nds-slider-container').forEach(initOne);
-            // onDOMAdd hands the callback a nodes array, not one element.
-            NDS.onDOMAdd('.nds-slider-container', function (nodes) { nodes.forEach(initOne); });
         },
         reinit: function (el) {
             var list = el ? [el] : document.querySelectorAll('.nds-slider-container');

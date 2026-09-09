@@ -393,8 +393,16 @@
                 currentY = window.innerHeight / 2;
             }
 
-            const headerOffset = parseFloat(getComputedStyle(root).getPropertyValue('--nds-nav-height')) || 72;
-            const toolbarGap = parseFloat(getComputedStyle(root).getPropertyValue('--spacing-md')) || 8;
+            // Deferred one frame past activation: reading-mask can turn on
+            // synchronously from init() on a return visit (saved prefs), and
+            // these two vary by breakpoint/theme so — unlike MASK_TOOLBAR_H —
+            // they can't be hardcoded; rAF keeps the read off the init path.
+            let headerOffset = 72;
+            let toolbarGap = 8;
+            const readGeometry = () => {
+                headerOffset = parseFloat(getComputedStyle(root).getPropertyValue('--nds-nav-height')) || 72;
+                toolbarGap = parseFloat(getComputedStyle(root).getPropertyValue('--spacing-md')) || 8;
+            };
 
             const render = () => {
                 const vh = window.innerHeight;
@@ -525,7 +533,7 @@
             const offResize = NDS.onResize(() => render());
             signal.addEventListener('abort', offResize);
 
-            render();
+            requestAnimationFrame(() => { readGeometry(); render(); });
 
         } else if (!active && maskAbortController) {
             maskAbortController.abort();
