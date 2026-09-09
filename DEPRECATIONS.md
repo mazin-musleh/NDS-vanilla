@@ -25,6 +25,7 @@ surface the theme controls. Count spellings and you will deprecate half the syst
 | `.nds-green` **on a section or footer** | `.nds-primary` / `.nds-brand` | before 1.9 | `_sass/layout/_section.scss`, `_sass/components/_footer.scss` |
 | `.nds-gradient-green` | `.nds-gradient-primary` | before 1.9 | `_sass/layout/_section.scss`, `_sass/_variables-a11y.scss` |
 | `.nds-focus`, `.focus` | none — the field styles its own focus | before 1.9 | `_sass/components/_forms.scss` ("Legacy class support") |
+| `NDS.Filter` instance method `setSelectedTags(tags)` | `setFilterValues('tags', tags)` | before 1.9 | `_js/nds-filter.js` (marked "Legacy API for backward compatibility") |
 
 **`.nds-{color}` is canon, and only the brand surface is not.** Tags take colour names as
 their public API — `.nds-gray`, `.nds-green`, `.nds-blue`, `.nds-yellow`, `.nds-red`, each

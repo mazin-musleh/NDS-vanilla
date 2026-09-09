@@ -1132,7 +1132,7 @@
     // DOM whenever it does land.
     //
     // ponytail: scanners re-scan the whole document, not just the container, because
-    // no initializeX() takes a scope. That is exactly today's reinit() cost, so this
+    // only Filter's initializeX() takes a scope. That is exactly today's reinit() cost, so this
     // is never a regression — give the scan camp a scope argument only if a large
     // page measures slow.
     function refreshContainer(container) {

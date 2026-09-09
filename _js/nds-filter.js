@@ -2787,7 +2787,8 @@
         }
 
         getCriteria() {
-            return { ...this.criteria, filters: { ...this.criteria.filters } };
+            // Deep clone — a caller's snapshot must not alias the live filter arrays.
+            return structuredClone(this.criteria);
         }
 
         /**
@@ -2994,21 +2995,29 @@
         return instance;
     }
 
-    function initializeFilters() {
+    function initializeFilters(scope) {
         // One filter per unique data-filter-target. Group every linked surface
         // (search box, dropmenu, applied-chips, auto-fill, sort toolbar) by target,
         // then build once per target. The representative is the .nds-filter surface
         // when present — keeping events, backref, and the init guard on it preserves
         // backward compatibility — otherwise the first surface (e.g. a lone search
         // box), so a filter needs no .nds-filter element at all.
+        //
+        // scope narrows the scan to a changed container (see refresh() below) — a
+        // new [data-filter-target] can only appear inside it, per that method's
+        // contract, so this skips a whole-document scan on every scoped refresh.
+        const root = scope || document;
         const groups = new Map();
-        document.querySelectorAll('[data-filter-target]').forEach(el => {
+        const addCandidate = el => {
             if (el.closest('code, .code-example')) return;
             const id = el.getAttribute('data-filter-target');
             if (!id || liveInstance(id)) return;
             if (!groups.has(id)) groups.set(id, []);
             groups.get(id).push(el);
-        });
+        };
+        // querySelectorAll never matches the root element itself — check it separately.
+        if (root !== document && root.matches?.('[data-filter-target]')) addCandidate(root);
+        root.querySelectorAll('[data-filter-target]').forEach(addCandidate);
 
         groups.forEach(surfaces => {
             const representative = surfaces.find(el => el.classList.contains('nds-filter')) || surfaces[0];
@@ -3076,7 +3085,9 @@
             // injected [data-filter-target] region is never instanced — and the crit
             // hold keyed on data-nds-filter-initialized would keep it hidden forever.
             // Idempotent: createInstance skips a target already in the registry.
-            initializeFilters();
+            // Scoped to root — a new surface can only appear inside "the container
+            // whose contents changed" (see this method's JSDoc above).
+            initializeFilters(root);
 
             const scope = root && root !== document ? root : null;
             _instancesByTarget.forEach(instance => {
