@@ -6,7 +6,7 @@ A versioned, read-only build of the National Design System (Saudi Arabia). Keep 
 
 ## Layout
 
-- `NDS-IQ.md` — the NDS IQ rules, the offline copy matched to this release. Your agent reads these before any NDS work. The guide's setup prompt installs the latest published copy at your project root; use this one when you want the version that pairs with this template.
+- NDS IQ (the rules your agent reads before any NDS work) is not in this zip — it versions independently. The guide's setup prompt installs the latest published copy at your project root.
 - `_site/` — the built documentation site + all assets. Component docs (`_site/components/`) carry the canonical copy-ready markup; `_site/templates/` and `_site/examples/` are full pages to copy.
 - `_source/` — not in this zip; your agent populates it here on install, from this release tag's "Source code" zip (the NDS IQ rules say how). It holds the readable JS/SCSS behind the minified bundles, the raw doc/template/example page sources, and machine-readable catalogs in `_source/_data/content/`.
 - `CHANGELOG.md` — release history. Read the "Migrating from" sections when upgrading.

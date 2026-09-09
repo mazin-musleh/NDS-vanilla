@@ -61,7 +61,7 @@ Everything is RTL (Arabic) first with LTR (English) support, with live demos and
 | Your goal | What to do |
 |---|---|
 | **Try the demo** | Visit the [live site](https://mazin-musleh.github.io/NDS-vanilla/). No setup needed. |
-| **Build a site using NDS** | Download the [release zip](https://github.com/mazin-musleh/NDS-vanilla/releases/latest) with compiled HTML, CSS, JavaScript, NDS IQ instructions, and readable `_source/`. No Git or build step is required. Follow the [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html). |
+| **Build a site using NDS** | Follow the [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html). |
 | **Extend or customize NDS itself** | Fork the repository, clone your fork, and follow the Quick start below. Pull upstream changes with `git pull upstream main`. |
 | **Report a bug or request a feature** | [Open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose). |
 
@@ -158,7 +158,7 @@ Issues are welcome for bugs, feature requests, and feedback. For small fixes suc
 
 ## Using with AI agents
 
-NDS is designed for consistent AI-assisted development across models. The release includes [NDS IQ](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html), a versioned instruction system that provides the baseline for building with NDS. Save it at your project root and point your `AGENTS.md` or `CLAUDE.md` at it; Claude Code, Cursor, Codex, and other agents then read the same file. The [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html) covers setup, the development workflow, and upgrades.
+NDS is designed for consistent AI-assisted development across models. [NDS IQ](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html) is a versioned instruction system that provides the baseline for building with NDS. It lives in this repository, not in the release zip: the Get Started setup prompt downloads it to your project root and points your `AGENTS.md` or `CLAUDE.md` at it; Claude Code, Cursor, Codex, and other agents then read the same file. The [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html) covers setup, the development workflow, and upgrades.
 
 **Working on NDS itself?** Project conventions live in [AGENTS.md](AGENTS.md), the cross-tool instruction file used by Cursor, Codex, Aider, and other coding agents; [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code users also get project-specific skills under [.claude/skills/](.claude/skills/) for documentation, JS and CSS audits, performance measurement, icon management, font refreshes, and NDS IQ evaluation. No configuration required.
 

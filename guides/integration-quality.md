@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "22/08/2026 - 05:58 AM"
+last_edit: "09/09/2026 - 07:10 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -108,7 +108,7 @@ sidemenu_mode: false
                 <p>The rules work with any template release. If an older release lacks a feature referenced by the current rules, the agent falls back to the relevant documentation and source, reports the gap, and can propose an upgrade.</p>
 
                 <h2 id="the-instructions">The Instructions</h2>
-                <p>The complete rulebook is rendered below from the same source shipped with the template.</p>
+                <p>The complete rulebook is rendered below from its source in the repository.</p>
                 <div class="nds-code nds-expandable">
                     <span class="nds-code-tags lang-markdown">
                         <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>

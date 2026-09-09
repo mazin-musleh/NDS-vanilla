@@ -12,7 +12,6 @@ Output: dist/nds-vanilla-template-v<version>.zip, laid out as
     nds-vanilla-template-v<version>/
         CHANGELOG.md
         LICENSE
-        NDS-IQ.md          — the rules file, offline copy (canonical: raw main)
         README.md          — human signpost: read-only reference, start at the guide
         _site/             — the built HTML template (incl. guides/get-started.html,
                              the adoption guide)
@@ -89,9 +88,7 @@ def stage(version):
     for f in ('CHANGELOG.md', 'LICENSE'):
         shutil.copy2(os.path.join(ROOT, f), pkg)
 
-    # README.md is a human signpost only — the LLM artifact is NDS-IQ.md,
-    # shipped at the zip top level as the offline copy its own Install
-    # section promises (NDS_ROOT/NDS-IQ.md; canonical source is raw main).
+    # README.md is a human signpost only.
     shutil.copy2(os.path.join(ROOT, 'scripts', 'release-template', 'README.md'), pkg)
     # The rules file is deliberately NOT shipped. It versions independently of
     # the template, so a copy frozen at the release cut goes stale the moment the

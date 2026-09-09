@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "18/08/2026 - 02:53 AM"
+last_edit: "09/09/2026 - 07:10 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -93,7 +93,6 @@ sidemenu_mode: false
                     <code class="lang-markdown">
 .nds/
 ├── README.md          - Overview and entry-point documentation
-├── NDS-IQ.md          - NDS IQ instructions
 ├── _site/             - Compiled documentation and runtime assets
 │   ├── components/    - Canonical component markup
 │   └── assets/        - Runtime CSS, JS, fonts, and i18n
@@ -155,7 +154,7 @@ Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. T
 
                 <h3 id="plan-review">Plan Review</h3>
                 <p>After setup, the agent inventories the project and creates <code class="nds-inline-code lang-html">NDS-PLAN.md</code>. It records pages, routes, legacy libraries, NDS targets, and status. The agent stops for your review before implementation.</p>
-                <p>The initial review covers project-wide decisions such as asset paths, porting strategy, existing NDS work, direction, locale, and build pacing.</p>
+                <p>The initial review covers project-wide decisions: the asset URL prefix, porting strategy, prior NDS work, CSP (only when the project has one), and pacing.</p>
 
                 <p>If the plan was not created automatically, run:</p>
                 <div class="nds-code">
@@ -173,7 +172,6 @@ Inventory the project and write NDS-PLAN.md for my review.
 
                 <h3 id="manual-install">Manual Install (optional)</h3>
                 <p>For manual installation, save the complete rulebook as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, then add the anchor to the agent instruction file and fill in <code class="nds-inline-code lang-html">NDS_ASSETS</code>. The anchor's exact text is in the rulebook's own <em>Install and upgrade this file</em> section. Copy the rulebook exactly; do not paraphrase it.</p>
-                <p>The template also contains <code class="nds-inline-code lang-html">NDS_ROOT/NDS-IQ.md</code>, matched to the template release.</p>
 {%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
 {%- assign _iq_parts = _instr | split: 'instructions v' %}
 {%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
@@ -201,7 +199,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                 <p>Choose how much control you want over the workflow:</p>
                 <ul>
                     <li><strong>Gate by gate (default)</strong>: the agent builds assets, chrome, and pages in order. Each page follows: questions → build → browser verification → status update → stop for approval.</li>
-                    <li><strong>One continuous run</strong>: the agent uses NDS IQ defaults, verifies each page, and reports all decisions and incomplete checks at the end.</li>
+                    <li><strong>Whole plan</strong>: the agent uses NDS IQ defaults, verifies each page, and reports all decisions and incomplete checks at the end.</li>
                 </ul>
 
                 <p><strong>Both modes require:</strong></p>
