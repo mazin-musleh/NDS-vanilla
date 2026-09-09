@@ -102,6 +102,7 @@
             this.abortController = new AbortController();
 
             this.valid = true;
+            this.table.ndsTableControls = this;
             this.init();
         }
 
@@ -554,6 +555,7 @@
             }
 
             this.valid = true;
+            this.root.ndsColumnToggle = this;
             this.persist = !!this.table.id;
 
             this.abortController = new AbortController();
@@ -694,6 +696,7 @@
         destroy() {
             this.abortController?.abort();
             this.root.removeAttribute('data-nds-columns-initialized');
+            this.root.ndsColumnToggle = null;
         }
     }
 
@@ -1089,8 +1092,7 @@
             // Sorting / selection is opt-in by markup and guarded by the instance,
             // so a table whose <tbody> arrives later stays eligible for reinit().
             if ((hasSortButtons || hasCheckboxes) && !table.ndsTableControls) {
-                const instance = new NDSTables(table);
-                if (instance.valid) table.ndsTableControls = instance;
+                new NDSTables(table); // constructor self-registers table.ndsTableControls when valid
             }
         });
 
@@ -1099,9 +1101,8 @@
             if (root.closest('code, .code-example')) return;
             if (root.hasAttribute('data-nds-columns-initialized')) return;
 
-            const instance = new NDSColumnToggle(root);
+            const instance = new NDSColumnToggle(root); // constructor self-registers root.ndsColumnToggle when valid
             if (instance.valid) {
-                root.ndsColumnToggle = instance;
                 root.setAttribute('data-nds-columns-initialized', 'true');
             }
         });
@@ -1120,9 +1121,9 @@
         init: initializeTables,
         reinit: initializeTables,
         recheckWidths: recheckAllWidths,
-        create: (table) => new NDSTables(table),
+        create: (table) => table.ndsTableControls || new NDSTables(table),
         createResponsive: (table) => table.ndsTableResponsive || new NDSResponsiveTable(table),
-        createColumnToggle: (root) => new NDSColumnToggle(root),
+        createColumnToggle: (root) => root.ndsColumnToggle || new NDSColumnToggle(root),
         row: rowHandle,
         setColumnHidden,
         getCellText

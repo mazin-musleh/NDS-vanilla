@@ -79,7 +79,7 @@
     }
 
     function processCodeElement(codeElement) {
-        if (codeElement.dataset.ndsCodeProcessed === 'true') return;
+        if (codeElement.dataset.ndsCodeInitialized === 'true') return;
 
         const source = getSourceText(codeElement);
         const lang = detectLanguage(codeElement, source);
@@ -87,7 +87,7 @@
         const lines = splitTokensIntoLines(tokens);
 
         if (lines.length === 0) {
-            codeElement.dataset.ndsCodeProcessed = 'true';
+            codeElement.dataset.ndsCodeInitialized = 'true';
             return;
         }
 
@@ -103,7 +103,7 @@
         }
         codeElement.innerHTML = html.trim();
         labelLanguage(codeElement, lang);
-        codeElement.dataset.ndsCodeProcessed = 'true';
+        codeElement.dataset.ndsCodeInitialized = 'true';
     }
 
     // ==============================================
@@ -154,7 +154,7 @@
     // textContent (bar the leading newline and trailing blanks getSourceText and
     // splitTokensIntoLines already drop), so re-reading it is idempotent.
     function reprocessCodeElement(codeElement) {
-        codeElement.dataset.ndsCodeProcessed = 'false';
+        codeElement.dataset.ndsCodeInitialized = 'false';
         processCodeElement(codeElement);
     }
 

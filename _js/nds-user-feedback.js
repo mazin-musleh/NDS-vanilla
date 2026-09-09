@@ -4,6 +4,7 @@
  * Methods:
  *   NDS.UserFeedback.init() / .reinit()   scan + initialize .nds-user-feedback
  *   NDS.UserFeedback.create(el)           initialize one widget (idempotent)
+ *   NDS.UserFeedback.destroy(el)          release one widget's listeners + init marker
  * Events:
  *   (none)
  * Hooks:
@@ -269,5 +270,14 @@ NDS.UserFeedback = (() => {
         document.querySelectorAll('.nds-user-feedback').forEach(create);
     }
 
-    return { init, reinit: init, create };
+    // Releases the listeners create() wired via _ndsUfAC (a no-op when the
+    // "already submitted" path never created one) and clears the init marker
+    // so a later create() can re-wire the element.
+    function destroy(feedbackComponent) {
+        feedbackComponent._ndsUfAC?.abort();
+        delete feedbackComponent._ndsUfAC;
+        feedbackComponent.removeAttribute('data-nds-user-feedback-initialized');
+    }
+
+    return { init, reinit: init, create, destroy };
 })();

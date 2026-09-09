@@ -31,10 +31,10 @@
         // under content written for the other, with nothing else reporting it.
         // Not auto-corrected: writing dir here flips the whole document a frame
         // after paint, and cannot help the pre-JS paint at all.
-        const htmlDir = document.documentElement.dir;
-        if (NDS.isArabic && htmlDir !== 'rtl') {
+        const htmlDir = document.documentElement.dir; // raw read for the diagnostic text only — comparisons below use NDS.isRTL
+        if (NDS.isArabic && !NDS.isRTL) {
             console.warn(`[NDS.Audit] <html lang="ar"> without dir="rtl"${htmlDir ? ` (dir="${htmlDir}")` : ' (no dir attribute)'} — NDS.isRTL reads false, so components run left-to-right under Arabic content. Set dir="rtl" in the markup.`);
-        } else if (!NDS.isArabic && htmlDir === 'rtl') {
+        } else if (!NDS.isArabic && NDS.isRTL) {
             console.warn(`[NDS.Audit] <html dir="rtl"> with lang="${document.documentElement.lang || 'unset'}" — direction and language disagree. Set dir="ltr", or lang to an Arabic locale.`);
         }
 

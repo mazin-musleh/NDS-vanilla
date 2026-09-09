@@ -111,7 +111,6 @@
         isAnimating: false,
         pendingAction: null,
         pendingOverflowCheck: null,
-        pendingUpdate: null,
         // Flipped true by the navChanged DOM-mutation debounce; consumed in
         // scheduleUpdate to gate the toggler-visibility recompute. Reset there.
         _navChanged: false,
@@ -898,8 +897,8 @@
             drag = { active: true, startX: e.pageX, scrollLeft: DOM.primary.scrollLeft };
             Object.assign(DOM.primary.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
             e.preventDefault();
-            document.addEventListener('mousemove', dragMove);
-            document.addEventListener('mouseup', dragUp);
+            document.addEventListener('mousemove', dragMove, { signal });
+            document.addEventListener('mouseup', dragUp, { signal });
         }, { signal });
     }
 
@@ -942,52 +941,46 @@
     // ==============================================
     // EVENT HANDLERS
     // ==============================================
-    function scheduleUpdate() {
-        if (state.pendingUpdate) return;
+    const scheduleUpdate = NDS.rafThrottle(() => {
+        const modeChanged = updateBodyClass();
 
-        state.pendingUpdate = requestAnimationFrame(() => {
-            state.pendingUpdate = null;
+        // Mode-transition cleanup only matters when something is open (close
+        // dropdowns / collapse the drawer / drop a stale backdrop). When
+        // nothing is open the half isn't needed — route through behavior, whose
+        // guarded-direct stubs no-op until the half is installed. _navBackdropOwner
+        // writes stay here (shell local).
+        if (modeChanged && _anyOpen()) {
+            dropdown.closeAll();
 
-            const modeChanged = updateBodyClass();
-
-            // Mode-transition cleanup only matters when something is open (close
-            // dropdowns / collapse the drawer / drop a stale backdrop). When
-            // nothing is open the half isn't needed — route through behavior, whose
-            // guarded-direct stubs no-op until the half is installed. _navBackdropOwner
-            // writes stay here (shell local).
-            if (modeChanged && _anyOpen()) {
-                dropdown.closeAll();
-
-                if (hasState(DOM.collapse, 'open')) {
-                    _navBackdropOwner = 'navbar';
-                    cancelToggleAction();
-                    toggleNavbar();
-                    return;
-                }
-
-                if (_navBackdropOwner) {
-                    _navBackdropOwner = null;
-                    cancelToggleAction();
-                    // Soft dependency — backdrop cleanup no-ops if NDS.Backdrop isn't
-                    // bundled (matches the guarded showNavBackdrop/hideNavBackdrop handoff).
-                    if (NDS.Backdrop && NDS.Backdrop.isActive()) NDS.Backdrop.hide();
-                }
+            if (hasState(DOM.collapse, 'open')) {
+                _navBackdropOwner = 'navbar';
+                cancelToggleAction();
+                toggleNavbar();
+                return;
             }
 
-            if (hasState(DOM.collapse, 'open') && !hasState(DOM.collapse, 'closing')) {
-                updatePositions();
+            if (_navBackdropOwner) {
+                _navBackdropOwner = null;
+                cancelToggleAction();
+                // Soft dependency — backdrop cleanup no-ops if NDS.Backdrop isn't
+                // bundled (matches the guarded showNavBackdrop/hideNavBackdrop handoff).
+                if (NDS.Backdrop && NDS.Backdrop.isActive()) NDS.Backdrop.hide();
             }
+        }
 
-            // Pure markup check (no layout reads) — re-run on composition changes
-            // (PAB placement / mode flip / DOM mutations), not on every resize.
-            // Order matters: updateBodyClass() above moved the PABs, so the
-            // data-nav-empty stamp reads the settled DOM in the same frame.
-            if (modeChanged || state._navChanged) {
-                state._navChanged = false;
-                checkNavComposition();
-            }
-        });
-    }
+        if (hasState(DOM.collapse, 'open') && !hasState(DOM.collapse, 'closing')) {
+            updatePositions();
+        }
+
+        // Pure markup check (no layout reads) — re-run on composition changes
+        // (PAB placement / mode flip / DOM mutations), not on every resize.
+        // Order matters: updateBodyClass() above moved the PABs, so the
+        // data-nav-empty stamp reads the settled DOM in the same frame.
+        if (modeChanged || state._navChanged) {
+            state._navChanged = false;
+            checkNavComposition();
+        }
+    });
 
     // ==============================================
     // EVENT LISTENERS

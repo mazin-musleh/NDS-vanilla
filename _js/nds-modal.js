@@ -39,6 +39,7 @@
   // State
   let activeModal = null;
   let initAbortController = null;
+  let trapAbortController = null; // scopes the per-open-cycle focus-trap listener; aborted in close() and destroy()
   let _initDone = false;
 
   // Tab focus trap — delegates to the shared NDS.trapFocus factory.
@@ -102,7 +103,8 @@
     });
 
     // Enable focus trap
-    document.addEventListener('keydown', trapFocus);
+    trapAbortController = new AbortController();
+    document.addEventListener('keydown', trapFocus, { signal: trapAbortController.signal });
 
     activeModal = modal;
   }
@@ -116,7 +118,8 @@
     const modal = activeModal;
 
     // Disable focus trap
-    document.removeEventListener('keydown', trapFocus);
+    trapAbortController?.abort();
+    trapAbortController = null;
 
     // Blur any focused element inside the modal to prevent aria-hidden warning
     if (document.activeElement && modal.contains(document.activeElement)) {
@@ -162,7 +165,8 @@
     const scope = root || document;
     if (scope !== document && scope !== activeModal && !scope.contains?.(activeModal)) return 0;
 
-    document.removeEventListener('keydown', trapFocus);
+    trapAbortController?.abort();
+    trapAbortController = null;
     NDS.Backdrop.hide();
     activeModal.setAttribute('hidden', '');
     NDS.State.clear(activeModal);

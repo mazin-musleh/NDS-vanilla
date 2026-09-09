@@ -144,7 +144,6 @@
             this.opts = this._resolveOpts(opts);
             this._tooltip = null;
             this._lastW = 0;
-            this._rafPending = false;
             this._activeHover = null;
             this.abortController = new AbortController();
             this._setupDelegation();
@@ -235,17 +234,12 @@
         // ── ResizeObserver ────────────────────────────────────────
 
         _setupResize() {
+            const renderOnResize = NDS.rafThrottle(() => this.render());
             this._offResize = NDS.onElementResize(this.el, () => {
                 const w = this.el.clientWidth;
                 if (w && w !== this._lastW) {
                     this._lastW = w;
-                    if (!this._rafPending) {
-                        this._rafPending = true;
-                        requestAnimationFrame(() => {
-                            this._rafPending = false;
-                            this.render();
-                        });
-                    }
+                    renderOnResize();
                 }
             });
         }

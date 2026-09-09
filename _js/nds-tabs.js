@@ -175,8 +175,8 @@
                 this.dragState.hasDragged = false;
 
                 Object.assign(this.tabList.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
-                document.addEventListener('mousemove', handleMouseMove);
-                document.addEventListener('mouseup', handleMouseUp);
+                document.addEventListener('mousemove', handleMouseMove, { signal: this.abortController.signal });
+                document.addEventListener('mouseup', handleMouseUp, { signal: this.abortController.signal });
             }, { signal: this.abortController.signal });
         }
 

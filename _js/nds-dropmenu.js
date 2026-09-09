@@ -1354,7 +1354,7 @@
         if (!tpl) return null;
         tpl.replaceWith(tpl.content);
         const menu = _ownFirstIn(wrapper, '.nds-dropmenu-menu');
-        if (menu) NDS.Init?.refresh?.(menu);
+        if (menu) NDS.Init.refresh(menu);
         return menu;
     }
 
