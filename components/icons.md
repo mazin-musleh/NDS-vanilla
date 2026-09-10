@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.11.0"
-last_edit: "08/08/2026 - 06:48 AM"
+last_edit: "11/09/2026 - 02:27 AM"
 ---
 
 <!-- Content icons -->
@@ -16,12 +16,12 @@ last_edit: "08/08/2026 - 06:48 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <div class="nds-section-action nds-wrap">
-                <a class="nds-btn nds-primary nds-md" href="https://hugeicons.com/icons/stroke-rounded" target="_blank" rel="noopener">
+                <a class="nds-btn nds-primary nds-md" href="https://hugeicons.com/icons/stroke-rounded" target="_blank">
                     <span class="nds-label">Browse the full icon library</span>
                 </a>
             </div>
             <h2 class="nds-section-title">Content Icons</h2>
-            <p class="nds-section-description">For icons you write into content. The Stroke Rounded font ships with the system, so any glyph it carries works by class name: <code class="nds-inline-code lang-html">hgi hgi-stroke</code> plus <code class="nds-inline-code lang-html">hgi-{name}</code>, where the name is the icon's name on <a class="nds-color" href="https://hugeicons.com/" target="_blank" rel="noopener">hugeicons.com</a>.</p>
+            <p class="nds-section-description">For icons you write into content. The Stroke Rounded font ships with the system, so any glyph it carries works by class name: <code class="nds-inline-code lang-html">hgi hgi-stroke</code> plus <code class="nds-inline-code lang-html">hgi-{name}</code>, where the name is the icon's name on <a class="nds-color" href="https://hugeicons.com/" target="_blank">hugeicons.com</a>.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -34,7 +34,7 @@ last_edit: "08/08/2026 - 06:48 AM"
                     <div class="nds-alert-content">
                         <div class="nds-alert-text">
                             <span class="nds-alert-title">The font trails the catalog</span>
-                            <p class="nds-alert-description">The font carries 4,126 glyphs while <a class="nds-color" href="https://hugeicons.com/icons/stroke-rounded" target="_blank" rel="noopener">hugeicons.com</a> lists close to 6,000, so not every icon on the site has a class. If <code class="nds-inline-code lang-html">hgi-{name}</code> renders nothing, pick another icon or use its SVG directly.</p>
+                            <p class="nds-alert-description">The font carries 4,126 glyphs while <a class="nds-color" href="https://hugeicons.com/icons/stroke-rounded" target="_blank">hugeicons.com</a> lists close to 6,000, so not every icon on the site has a class. If <code class="nds-inline-code lang-html">hgi-{name}</code> renders nothing, pick another icon or use its SVG directly.</p>
                         </div>
                     </div>
                 </div>
@@ -372,8 +372,8 @@ last_edit: "08/08/2026 - 06:48 AM"
                 <h3 class="nds-block-title">Before You Add an Icon</h3>
                 <ul>
                     <li>Take icons from the <strong>free Stroke Rounded</strong> style only. The paid styles carry a different license</li>
-                    <li>Download from <a class="nds-color" href="https://hugeicons.com/" target="_blank" rel="noopener">hugeicons.com</a>, which holds the full catalog and every canonical name</li>
-                    <li>Pro terms are on the <a class="nds-color" href="https://hugeicons.com/license-agreement" target="_blank" rel="noopener">HugeIcons license agreement</a> page</li>
+                    <li>Download from <a class="nds-color" href="https://hugeicons.com/" target="_blank">hugeicons.com</a>, which holds the full catalog and every canonical name</li>
+                    <li>Pro terms are on the <a class="nds-color" href="https://hugeicons.com/license-agreement" target="_blank">HugeIcons license agreement</a> page</li>
                     <li>The MIT grant covers using the icons in a product, not repackaging the set as an icon library</li>
                 </ul>
             </div>

@@ -226,7 +226,7 @@
             --btn-loading-track: var(--colors-alpha-white-20);
         }
 
-        :is(.nds-footer-bottom, .nds-footer-content) a {
+        :is(.nds-footer-bottom, .nds-footer-content) :is(a, .nds-link) {
             --link-color: var(--link-oncolor);
             --link-hover: var(--link-oncolor-hovered);
             --link-pressed: var(--link-oncolor-pressed);

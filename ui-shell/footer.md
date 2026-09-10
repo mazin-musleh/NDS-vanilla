@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "05/09/2026 - 09:01 PM"
+last_edit: "11/09/2026 - 02:27 AM"
 ---
 
 <!-- Footer Structure -->
@@ -182,16 +182,16 @@ footer.nds-footer.nds-content-wrapper.nds-brand
   &lt;div class="nds-footer-icon-group"&gt;
     &lt;span class="nds-footer-heading"&gt;Follow Us&lt;/span&gt;
     &lt;div class="nds-footer-icon-row"&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Twitter" aria-label="Twitter"&gt;
         &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Facebook" aria-label="Facebook"&gt;
         &lt;i class="nds-icon nds-hgi-facebook-02" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="YouTube" aria-label="YouTube"&gt;
         &lt;i class="nds-icon nds-hgi-youtube" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="LinkedIn" aria-label="LinkedIn"&gt;
         &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
     &lt;/div&gt;
@@ -233,10 +233,10 @@ footer.nds-footer.nds-content-wrapper.nds-brand
 &lt;div class="nds-footer-icon-group"&gt;
   &lt;span class="nds-footer-heading"&gt;Mobile App&lt;/span&gt;
   &lt;div class="nds-footer-icon-row"&gt;
-    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="Apple App Store" aria-label="Apple App Store"&gt;
+    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Apple App Store" aria-label="Apple App Store"&gt;
       &lt;svg&gt;...&lt;/svg&gt;
     &lt;/a&gt;
-    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" rel="noopener noreferrer" title="Google Play Store" aria-label="Google Play Store"&gt;
+    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Google Play Store" aria-label="Google Play Store"&gt;
       &lt;svg&gt;...&lt;/svg&gt;
     &lt;/a&gt;
   &lt;/div&gt;
@@ -311,7 +311,7 @@ footer.nds-footer.nds-content-wrapper.nds-brand
     &lt;a href="#"&gt;
       &lt;img src="assets/img/logo.svg" loading="lazy" width="40" height="40" alt="Authority Logo"&gt;
     &lt;/a&gt;
-    &lt;a href="https://www.vision2030.gov.sa/" target="_blank" rel="noopener noreferrer"&gt;
+    &lt;a href="https://www.vision2030.gov.sa/" target="_blank"&gt;
       &lt;img src="assets/img/vision-2030.svg" loading="lazy" width="60" height="40" alt="Saudi Vision 2030"&gt;
     &lt;/a&gt;
   &lt;/div&gt;

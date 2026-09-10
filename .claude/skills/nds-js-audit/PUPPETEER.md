@@ -50,7 +50,6 @@ Never use `file://` — NDS fetches (i18n JSON, autocomplete) fail under CORS th
   - JSD-01 → trigger each state transition, assert `data-state` token set via `NDS.State.get(el)`.
   - JSP-06 / JSD-09 → exercise one click **and** one keyboard path, then open/close the component ~20× and assert the listener count or detached-node count didn't grow.
   - JSS-01 / JSA-12 → render every variant, snapshot `outerHTML`, paste `<img src=x onerror=...>` as the user value and assert it renders as literal text (no `alert`).
-  - JSS-03 → assert the rendered `<a>` carries `rel` containing `noopener`.
 
 ## Run shape
 

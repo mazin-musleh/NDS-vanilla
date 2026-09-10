@@ -456,7 +456,7 @@ bundle_sizes:
                 <p class="nds-section-description">Built with a performance-first and compatibility approach.</p>
                 <p>
                     <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/v2nxjcxqob?form_factor=mobile"
-                        target="_blank" rel="noopener" class="nds-color">View the PageSpeed Insights report</a>
+                        target="_blank" class="nds-color">View the PageSpeed Insights report</a>
                 </p>
             </div>
         </div>

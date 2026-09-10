@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "04/09/2026 - 10:21 PM"
+last_edit: "11/09/2026 - 01:26 AM"
 ---
 
 <!-- Color Variants -->
@@ -181,7 +181,7 @@ last_edit: "04/09/2026 - 10:21 PM"
                                             </button>
                                         </div>
                                         <code class="lang-html code">
-&lt;!-- JS compares a.hostname against location.hostname (exact match). Any different hostname, including subdomains, gets nds-external + target="_blank" + rel="noopener noreferrer". --&gt;
+&lt;!-- JS compares a.hostname against location.hostname (exact match). Any different hostname, including subdomains, gets nds-external + target="_blank". --&gt;
 &lt;p&gt;Consult the &lt;a href="https://www.data.gov.sa/" class="nds-link"&gt;Saudi Open Data portal&lt;/a&gt; for published datasets.&lt;/p&gt;
 &lt;p&gt;Review the &lt;a href="https://www.itu.int/en/Pages/default.aspx" class="nds-link nds-primary"&gt;ITU accessibility guidelines&lt;/a&gt; before publishing your service.&lt;/p&gt;
                                     </code>
@@ -315,7 +315,7 @@ last_edit: "04/09/2026 - 10:21 PM"
                             <i class="hgi hgi-stroke hgi-security-check"></i>
                             <span class="nds-label">Safe Navigation</span>
                         </span>
-                        <p class="nds-item-desc">External links open in a new tab automatically and receive <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>. The check compares <code class="nds-inline-code lang-html">a.hostname</code> against <code class="nds-inline-code lang-html">location.hostname</code> exactly, so subdomains are treated as external and also receive the rel attribute.</p>
+                        <p class="nds-item-desc">External links open in a new tab automatically. The check compares <code class="nds-inline-code lang-html">a.hostname</code> against <code class="nds-inline-code lang-html">location.hostname</code> exactly, so subdomains are treated as external too. No <code class="nds-inline-code lang-html">rel</code> is added. Browsers already imply <code class="nds-inline-code lang-html">noopener</code> for <code class="nds-inline-code lang-html">target="_blank"</code>. Set <code class="nds-inline-code lang-html">rel</code> yourself when you want <code class="nds-inline-code lang-html">noreferrer</code> or another value.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -362,7 +362,7 @@ last_edit: "04/09/2026 - 10:21 PM"
                     <li>Add <code class="nds-inline-code lang-html">nds-neutral</code> on links inside <code class="nds-inline-code lang-html">.nds-content-section nds-demo-section</code> if you need them to stay neutral. By default, all links in a content section use the primary color</li>
                     <li>Do not use <code class="nds-inline-code lang-html">nds-link</code> on standalone navigation items. Use <a class="nds-color" href="{{ 'components/breadcrumb' | relative_url }}">Breadcrumb</a>, <a class="nds-color" href="{{ 'ui-shell/sidemenu' | relative_url }}">Side Navigation</a>, or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for navigation structure</li>
                     <li>Do not use a link when an action is intended rather than navigation. Use <code class="nds-inline-code lang-html">nds-btn nds-subtle</code> for text-like interactive controls that trigger behavior</li>
-                    <li>External links (different domain) are detected and marked automatically. You do not need to add <code class="nds-inline-code lang-html">target="_blank"</code> or <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code> manually for cross-domain URLs</li>
+                    <li>External links (different domain) are detected and marked automatically. You do not need to add <code class="nds-inline-code lang-html">target="_blank"</code> manually for cross-domain URLs. The component adds no <code class="nds-inline-code lang-html">rel</code>, so set one yourself when a link needs <code class="nds-inline-code lang-html">noreferrer</code></li>
                     <li>Use <code class="nds-inline-code lang-html">data-no-external</code> on a link or a wrapper element when you want to suppress the external icon and new-tab behavior, such as for trusted partner sites or embedded widgets from a known domain</li>
                     <li>Icon-only buttons (<code class="nds-inline-code lang-html">nds-btn nds-icon-only</code>) that happen to be links are automatically excluded from external treatment since they have no visible label to accompany the external icon</li>
                     <li>Links whose only child elements are <code class="nds-inline-code lang-html">&lt;i&gt;</code> or <code class="nds-inline-code lang-html">&lt;img&gt;</code> (no text content) are also skipped by the auto-tagger. To force the external badge on such a link, add <code class="nds-inline-code lang-html">nds-external</code> manually</li>

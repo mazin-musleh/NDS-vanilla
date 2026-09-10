@@ -216,7 +216,7 @@
         var desc = t(HERO.description) ? '<p class="nds-section-description">' + esc(t(HERO.description)) + '</p>' : '';
         var iconUrl = HERO.cta ? assetUrl(HERO.cta.icon) : '';
         var cta = HERO.cta
-            ? '<a class="nds-btn nds-primary nds-oncolor nds-lg" href="' + esc(HERO.cta.url) + '" target="_blank" rel="noopener noreferrer">' +
+            ? '<a class="nds-btn nds-primary nds-oncolor nds-lg" href="' + esc(HERO.cta.url) + '" target="_blank">' +
                 (iconUrl ? '<img src="' + esc(iconUrl) + '" class="nds-icon" width="24" height="24" alt="">' : '') +
                 '<span class="nds-label">' + esc(t(HERO.cta.label)) + '</span>' +
               '</a>'

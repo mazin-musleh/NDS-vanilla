@@ -10,7 +10,8 @@
  *                      on a link it would otherwise skip
  * Gotchas:
  *   - "External" means a different hostname from the page. A tagged link gets the
- *     .nds-external badge class plus target="_blank" and rel="noopener noreferrer".
+ *     .nds-external badge class plus target="_blank". No rel is forced — browsers
+ *     imply noopener for target="_blank"; set rel yourself if you want noreferrer.
  *   - Icon-only and image-only links are skipped, because the trailing badge clashes.
  *     An icon-only .nds-btn is skipped too.
  *   - Block content inside the link (`<a><p>…</p></a>`, editor markup) moves the
@@ -54,7 +55,7 @@
         return host;
     }
 
-    // Tag an external link: add the .nds-external badge class + safe target/rel.
+    // Tag an external link: add the .nds-external badge class + target="_blank".
     // Guards are layout-free (hostname/closest/classList), ordered hostname-first
     // so internal links short-circuit immediately.
     function tagExternal(a) {
@@ -71,7 +72,6 @@
             host.classList.add('nds-external-badge');
         }
         a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener noreferrer');
     }
 
     // Tag every external anchor in one straight pass. No getBoundingClientRect —

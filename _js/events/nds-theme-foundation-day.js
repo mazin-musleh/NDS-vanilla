@@ -98,7 +98,7 @@
         var iconUrl = HERO.cta ? assetUrl(HERO.cta.icon) : '';
         var cta = HERO.cta
             ? '<div class="nds-section-action">' +
-                '<a class="nds-btn nds-primary nds-oncolor" href="' + esc(HERO.cta.url) + '" target="_blank" rel="noopener noreferrer">' +
+                '<a class="nds-btn nds-primary nds-oncolor" href="' + esc(HERO.cta.url) + '" target="_blank">' +
                   (iconUrl ? '<img src="' + esc(iconUrl) + '" class="nds-icon" width="24" height="24" alt="">' : '') +
                   '<span class="nds-label">' + esc(t(HERO.cta.label)) + '</span>' +
                 '</a>' +

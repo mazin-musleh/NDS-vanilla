@@ -174,7 +174,7 @@ hero_float_actions:
         &lt;p class="nds-section-description"&gt;تأسيس نعتز به، ومستقبل نصنعه&lt;/p&gt;
         &lt;div class="nds-section-action"&gt;
           &lt;a class="nds-btn nds-primary nds-oncolor" href="https://www.foundingday.sa/"
-             target="_blank" rel="noopener noreferrer"&gt;
+             target="_blank"&gt;
             &lt;img src="/assets/events/foundation_day/founding-icon.svg" class="nds-icon" width="24" height="24" alt=""&gt;
             &lt;span class="nds-label"&gt;منصة يوم التأسيس&lt;/span&gt;
           &lt;/a&gt;

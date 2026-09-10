@@ -386,7 +386,7 @@ sidemenu_mode: false
                             <span class="nds-label">Location</span>
                         </dt>
                         <dd>
-                            <a href="https://maps.google.com/?q=Riyadh" target="_blank" rel="noopener" class="nds-primary">
+                            <a href="https://maps.google.com/?q=Riyadh" target="_blank" class="nds-primary">
                                 <span class="nds-label">Riyadh</span>
                             </a>
                         </dd>
@@ -397,13 +397,13 @@ sidemenu_mode: false
             <div class="nds-sideinfo-group">
                 <span class="nds-sideinfo-title">Follow us</span>
                 <div class="nds-social-links">
-                    <a href="https://x.com/" target="_blank" rel="noopener" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on X">
+                    <a href="https://x.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on X">
                         <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
                     </a>
-                    <a href="https://linkedin.com/" target="_blank" rel="noopener" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on LinkedIn">
+                    <a href="https://linkedin.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on LinkedIn">
                         <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
                     </a>
-                    <a href="https://instagram.com/" target="_blank" rel="noopener" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on Instagram">
+                    <a href="https://instagram.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on Instagram">
                         <i class="hgi hgi-stroke hgi-instagram"></i>
                     </a>
                 </div>
