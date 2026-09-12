@@ -151,7 +151,11 @@
     pointer-events: none;
     transition: transform var(--nds-transition);
 
-    > * {
+    // :not(.nds-loading) so a docked button showing the loading spinner stays
+    // genuinely unclickable — this rule and .nds-loading's own pointer-events:none
+    // (_loading.scss) are equal specificity, and without the exclusion this one
+    // compiles later and would silently win, undoing the loading block.
+    > *:not(.nds-loading) {
         pointer-events: auto;
     }
 

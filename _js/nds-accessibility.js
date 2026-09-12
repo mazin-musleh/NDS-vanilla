@@ -1,8 +1,11 @@
 /* NDS.Accessibility — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Accessibility.init()                  build and wire the panel
- *   NDS.Accessibility.open() / .close() / .toggle()
+ *   NDS.Accessibility.init(triggerEl?)         build and wire the panel
+ *   NDS.Accessibility.open(triggerEl?) / .close() / .toggle(triggerEl?)
+ *                                              triggerEl: the calling element — used as the
+ *                                              cold-arm loading target and toggleBtn; omit it
+ *                                              to fall back to the page's [data-accessibility-toggle]
  *   NDS.Accessibility.toggleMode(id)          turn one mode on or off
  *   NDS.Accessibility.setVisualFilter(id)     apply a colour-vision filter
  *   NDS.Accessibility.cycleSetting(id)        step a graded setting to its next tier
@@ -12,8 +15,8 @@
  *   (none)
  * Hooks:
  *   data-accessibility-panel · data-accessibility-toggle · data-accessibility-action
- *   (the panel ships inert in <template class="nds-panel-template">, pulled out on arm
- *   by the id the FAB's data-panel-toggle names)
+ *   (the panel markup lives in this file, not the page HTML — built into a
+ *   <template> and pulled out on arm by the id the FAB's data-panel-toggle names)
  *   data-a11y-mode · data-a11y-visual · data-a11y-setting · data-a11y-value
  *   data-a11y-exclude-token   opt a subtree out of a mode's token overrides
  *   data-armed                the panel gate (see below)
@@ -21,24 +24,49 @@
  * Gotchas:
  *   - Every mode is a CSS token override in _variables-a11y.scss. This file only manages
  *     state, persistence, focus and the panel lifecycle — styling is never done here.
- *   - It stays asleep until ARMED: the loader skips it unless the panel carries
- *     data-armed, which lands when saved preferences exist or the user clicks the FAB. A
- *     session with neither pays no init cost.
- *   - Preferences live in localStorage under 'nds-a11y' and are re-applied before first
- *     paint by the guard in head-inline-scripts.html.
+ *   - It stays asleep until ARMED: nds-loader.js does NOT register this component at all
+ *     (it self-boots — see the boot gate at the bottom of this file), and that boot gate
+ *     itself waits for data-nds-loaded before doing anything. Arms on saved preferences
+ *     or the user clicking the FAB; data-armed is stamped by init() itself once a panel
+ *     exists, not written by anything external. A session with neither pays no init cost.
+ *   - Preferences live in localStorage under 'nds-a11y'. There is no pre-paint FOUC guard
+ *     for them (removed 2026-05 in favor of the page's own pre-reveal hidden gate) — the
+ *     saved state is applied by init() itself, after data-nds-loaded.
  *   - Panel text is loaded from assets/i18n/accessibility/{lang}.json, with English
  *     defaults in place until it resolves.
+ *   - The CSS (panel + mode token overrides) is fetched by loadCSS() only on arm, not
+ *     preloaded in <head>. Waiting for data-nds-loaded keeps that fetch from racing the
+ *     page's own critical paint, but a saved-prefs return visit can still show a brief
+ *     unstyled flash of its active modes right after reveal, until the sheet downloads.
+ *     ponytail: accepted for now — re-add a <head> preload gated on a saved 'nds-a11y'
+ *     key if that flash proves to matter.
  */
 // NDS Accessibility — site-wide a11y panel (FAB + slide-in disclosure)
 //
 // Modes are CSS-only token overrides in _variables-a11y.scss; this JS
 // only manages state, persistence, focus, and the open/close lifecycle.
 // Storage: localStorage['nds-a11y'] = { modes, bundles, excluded, settings }.
-// FOUC guard lives in _includes/head-inline-scripts.html.
 // Pattern: W3C APG Disclosure — non-blocking, page stays interactive.
 
 (() => {
     'use strict';
+
+    // The one panel this component ever builds or looks up — a fixed constant,
+    // not read off whichever element triggered the arm. toggleBtn's own
+    // data-panel-toggle is real (nds-fab.js needs it for auto-positioning,
+    // Panel.js needs it to open an already-built panel later) but a custom
+    // trigger passed into open()/toggle() has no obligation to carry it, and
+    // trusting it here silently orphaned the whole component: resolvePanel()
+    // returned null, but _initDone was already set, so nothing — not even the
+    // real FAB — could ever arm it again for the rest of the page.
+    const PANEL_ID = 'ndsAccessibilityPanel';
+
+    // This bundle's own <script src> — derives the sibling CSS URL without
+    // needing site.baseurl at runtime. Valid only during this script's
+    // synchronous top-level run, so it's captured once here, not read lazily
+    // inside a handler.
+    const SCRIPT_SRC = (document.currentScript && document.currentScript.src) || '';
+    const CSS_URL = SCRIPT_SRC.replace('assets/js/nds-accessibility.min.js', 'assets/css/nds-accessibility.min.css');
 
     const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.State;
 
@@ -896,16 +924,21 @@
     // Open / Close — NDS.Panel owns the lifecycle: the slide, the sticky-header
     // offset, scroll re-measurement, Escape, outside-click, and focus-in. What
     // stays here is only what Panel cannot know about:
-    //   • the lazy-arm boot gate — the FAB is deliberately NOT a
-    //     [data-panel-toggle], or Panel's delegated handler would open a panel
-    //     whose tiles init() has not wired yet;
-    //   • the loading affordance covering the first (heavy) layout;
+    //   • the lazy-arm boot gate: the FAB IS a [data-panel-toggle] (data-fab-pos
+    //     "auto" needs it to find the panel's side), so the boot gate's capture
+    //     listener has to pre-empt Panel's own delegated handler on the FAB's
+    //     first click — see bootAccessibility() at the bottom of this file;
+    //   • the cold-arm loading affordance, covering the first (heavy) build —
+    //     shared by every trigger via open()/toggle() below, not just the FAB;
     //   • mirroring open state onto the FAB, since Panel only manages the
     //     toggles it owns.
     // Soft dependency — NDS.Panel ships in the delegated bundle and a consumer
-    // can omit it; the FAB then no-ops instead of throwing.
+    // can omit it; the FAB then no-ops instead of throwing. Checked explicitly
+    // (not just optional-chained) because a still-stubbed NDS.Panel answers
+    // ANY call with a Promise — always truthy — which would read as "open" and
+    // wrongly trigger close() on a panel Panel.js never actually opened.
     // ----------------------------------------------
-    const panelIsOpen = () => !!(panel && NDS.Panel?.isOpen?.(panel));
+    const panelIsOpen = () => !!(panel && NDS.Panel && !NDS.Panel.__ndsStub && NDS.Panel.isOpen(panel));
 
     // The boot gate only arms on a saved-prefs load or a FAB click, so a consumer
     // wiring their own trigger — the documented pattern — would otherwise call into
@@ -916,19 +949,39 @@
         return !!panel;
     }
 
-    function open() {
-        if (!ensureArmed()) return;
-        openerEl = document.activeElement;
-        NDS.Panel?.open?.(panel);
+    // Cold-start gate — shared by EVERY trigger (the FAB, a demo button, a
+    // consumer's own NDS.Accessibility.open() call), not just the FAB's own
+    // click path. First call: spinner on the trigger (or a plain query when
+    // there isn't one) while the panel builds and its CSS requests, THEN
+    // proceed. Already armed: proceed immediately, same tick. ponytail: a
+    // flat 1000ms, not an actual "CSS has loaded" wait.
+    function armedThen(proceed, triggerEl) {
+        if (_initDone) { if (ensureArmed()) proceed(); return; }
+        const fab = triggerEl || document.querySelector('[data-accessibility-toggle]');
+        if (fab) NDS.State.add(fab, 'loading');
+        init(triggerEl);
+        setTimeout(() => {
+            if (fab) NDS.State.remove(fab, 'loading');
+            if (panel) proceed();
+        }, 1000);
+    }
+
+    function open(triggerEl) {
+        armedThen(() => {
+            openerEl = document.activeElement;
+            NDS.Panel?.open?.(panel);
+        }, triggerEl);
     }
 
     function close() {
         if (panel) NDS.Panel?.close?.(panel);
     }
 
-    function toggle() {
-        if (!ensureArmed()) return;
-        NDS.Panel?.toggle?.(panel);
+    function toggle(triggerEl) {
+        armedThen(() => {
+            openerEl = document.activeElement;
+            NDS.Panel?.toggle?.(panel);
+        }, triggerEl);
     }
 
     // ----------------------------------------------
@@ -998,16 +1051,392 @@
         });
     }
 
-    // The panel may ship inert inside <template class="nds-panel-template">
-    // like any other panel (~185 nodes kept out of every page's DOM). Pull it
-    // out by the id the FAB names; a bare <aside> already in the document — the
-    // pre-template markup — is used as-is, so both generations of markup work.
+    // The CSS ships as a preloaded <link> in every page's <head> today;
+    // requesting it only here means a page that never arms accessibility
+    // never fetches it. Mirrors nds-loader.js's addSheet (derive the sibling
+    // URL off this bundle's own <script src>). Dedupe reads the LIVE .href
+    // property (browser-resolved, absolute) rather than the raw attribute, so
+    // a pre-1.13 page that still hand-links this CSS — preloaded or already
+    // swapped to a stylesheet — is recognized even though its attribute string
+    // won't match CSS_URL byte-for-byte.
+    function loadCSS() {
+        if (!CSS_URL || [...document.querySelectorAll('link')].some(l => l.href === CSS_URL)) return;
+        const l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = CSS_URL;
+        document.head.appendChild(l);
+    }
+
+    // Panel markup — moved out of every page's HTML (was a <template> in
+    // _includes/accessibility-panel.html, ~185 inert nodes on every load) and
+    // built here instead, so it exists only once armed. side comes off the
+    // FAB's own data-panel-side (fallback 'end') so the FAB is the one place
+    // to reposition both itself (data-fab-pos) and the panel it builds — no
+    // JS edit needed for the common case.
+    function panelMarkup(side) {
+        return `<aside id="ndsAccessibilityPanel"
+       class="nds-panel nds-accessibility-panel"
+       data-panel-side="${side}"
+       aria-label="Accessibility settings"
+       data-i18n-attr="aria-label:panel_label"
+       data-accessibility-panel
+       hidden>
+
+    <div class="nds-panel-header">
+        <span class="nds-featured-icon nds-circle">
+            <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
+        </span>
+        <div class="nds-panel-text">
+            <h2 class="nds-panel-title" data-i18n="panel_title">Accessibility Tools</h2>
+        </div>
+        <button class="nds-btn nds-subtle nds-icon-only"
+                data-panel-close
+                type="button"
+                aria-label="Close accessibility panel"
+                data-i18n-attr="aria-label:close_panel">
+            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="nds-panel-body">
+        <div class="nds-scroll-more nds-divided">
+            <div class="nds-scroll-more-content">
+
+                <div class="nds-sr-only" data-a11y-status role="status" aria-live="polite" aria-atomic="true"></div>
+
+                <!-- Display — quick toggle -->
+                <div class="nds-accessibility-quick">
+                    <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
+                            data-theme-toggle
+                            type="button"
+                            aria-label="Toggle theme"
+                            data-i18n-attr="aria-label:toggle_theme">
+                        <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+        <!-- Accessibility settings — one accordion, three items:
+             Modes (switches), Readable Experience (tile grid), Visually
+             Pleasing (tile grid). First item open by default; the other
+             two collapsed to keep the panel compact on first open. -->
+        <div class="nds-accordion nds-lg nds-accessibility-modes" id="a11yAccordion">
+
+            <!-- Item 1: Accessibility Modes (bundle switches) -->
+            <div class="nds-accordion-item">
+                <h3 class="nds-accordion-header">
+                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
+                            type="button"
+                            aria-expanded="true"
+                            data-state="open"
+                            aria-controls="a11yModesCollapse">
+                        <span class="nds-accordion-title"><span data-i18n="section_modes">Accessibility Modes</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="modes"></span></span>
+                    </button>
+                </h3>
+                <div class="nds-accordion-collapse" id="a11yModesCollapse" data-state="open">
+                    <div class="nds-accordion-content">
+                        <div class="nds-accordion-body">
+                            <fieldset class="nds-form-group nds-switch-group">
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="epilepsy-safe">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-epilepsy-safe">
+                                            <span class="nds-label" data-i18n-name>Epilepsy Safe Mode</span>
+                                            <span class="nds-info"  data-i18n-desc>Stops motion and dampens color intensity</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="visually-impaired">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-visually-impaired">
+                                            <span class="nds-label" data-i18n-name>Visually Impaired Mode</span>
+                                            <span class="nds-info"  data-i18n-desc>Enlarges text and boosts contrast for clearer reading</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="cognitive-disability">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-cognitive-disability">
+                                            <span class="nds-label" data-i18n-name>Cognitive Disability Mode</span>
+                                            <span class="nds-info"  data-i18n-desc>Highlights titles and stops motion to reduce distraction</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="motor-impaired">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-motor-impaired">
+                                            <span class="nds-label" data-i18n-name>Motor Impaired Mode</span>
+                                            <span class="nds-info"  data-i18n-desc>Enlarges click targets and emphasizes the focus indicator</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="colorblind">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-colorblind">
+                                            <span class="nds-label" data-i18n-name>Colorblind Mode</span>
+                                            <span class="nds-info"  data-i18n-desc>Adjusts colors to distinguish red and green clearly</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="dyslexia-friendly">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-dyslexia-friendly">
+                                            <span class="nds-label" data-i18n-name>Dyslexia Friendly Mode</span>
+                                            <span class="nds-info"  data-i18n-desc>Uses a clearer font and widens line and word spacing</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="adhd-friendly">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-adhd-friendly">
+                                            <span class="nds-label" data-i18n-name>ADHD Friendly Mode</span>
+                                            <span class="nds-info"  data-i18n-desc>Stops motion, highlights titles, and enables the reading mask</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2: Readable Experience (tile grid) -->
+            <div class="nds-accordion-item">
+                <h3 class="nds-accordion-header">
+                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
+                            type="button"
+                            aria-expanded="false"
+                            aria-controls="a11yReadableCollapse">
+                        <span class="nds-accordion-title"><span data-i18n="section_readable">Readable Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="readable"></span></span>
+                    </button>
+                </h3>
+                <div class="nds-accordion-collapse" id="a11yReadableCollapse">
+                    <div class="nds-accordion-content">
+                        <div class="nds-accordion-body">
+                            <div class="nds-grid" role="group" aria-label="Readable experience controls" data-i18n-attr="aria-label:aria_readable">
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="font-step" data-a11y-cycle="0,1,2,3" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-text-smallcaps" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="font_sizing">Font Sizing</span>
+                                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="dyslexia" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-glasses" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="dyslexia">Dyslexia Friendly</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-titles" aria-pressed="false">
+                                    <i class="nds-icon nds-hgi-highlighter" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="highlight_titles">Highlight Titles</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-links" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-link-04" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="highlight_links">Highlight Links</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reading-mask" aria-pressed="false">
+                                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="reading_mask">Reading Mask</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reduce-motion" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-pause" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="pause_motion">Pause Motion</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="text-align" data-a11y-cycle="default,end,start,justify" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="text_align">Text Alignment</span>
+                                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="line-height" data-a11y-cycle="normal,1.6,1.8,2.0" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-paragraph-spacing" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="line_height">Line Height</span>
+                                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="letter-spacing" data-a11y-cycle="0,0.04em,0.08em,0.12em" data-a11y-exclude-token="letter-spacing" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-letter-spacing" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="letter_spacing">Letter Spacing</span>
+                                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="word-spacing" data-a11y-cycle="0,0.16em,0.32em,0.48em" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-text-kerning" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n="word_spacing">Word Spacing</span>
+                                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3: Visually Pleasing Experience (single-pick filters + colorblind primitive) -->
+            <div class="nds-accordion-item">
+                <h3 class="nds-accordion-header">
+                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
+                            type="button"
+                            aria-expanded="false"
+                            aria-controls="a11yVisualCollapse">
+                        <span class="nds-accordion-title"><span data-i18n="section_visual">Visually Pleasing Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="visual"></span></span>
+                    </button>
+                </h3>
+                <div class="nds-accordion-collapse" id="a11yVisualCollapse">
+                    <div class="nds-accordion-content">
+                        <div class="nds-accordion-body">
+                            <div class="nds-grid" role="group" aria-label="Visual adjustments" data-i18n-attr="aria-label:aria_visual">
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="boost-contrast" data-visual-id="boost-contrast" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label>Boost Contrast</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="monochrome" data-visual-id="monochrome" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-color-picker" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label>Monochrome</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="high-contrast" data-visual-id="high-contrast" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-blur" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label>High Contrast</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="high-saturation" data-visual-id="high-saturation" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-sparkles" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label>High Saturation</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="low-saturation" data-visual-id="low-saturation" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-droplet" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label>Low Saturation</span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="cvd-deutan" data-visual-id="cvd-deutan" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label>Deuteranopia</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+            </div>
+            <button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="Scroll panel" data-i18n-attr="aria-label:scroll_panel">
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="nds-panel-footer">
+        <button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset">
+            <span class="nds-label" data-i18n="reset">Reset Settings</span>
+            <div class="nds-progress-circle">
+                <svg width="100%" height="100%" viewBox="0 0 24 24">
+                    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+                </svg>
+            </div>
+        </button>
+    </div>
+</aside>`;
+    }
+
+    // Default: nothing ships in the page's HTML for this — panelMarkup() below
+    // supplies the <template> content instead. Still honors a page-authored
+    // <template class="nds-panel-template"> or a bare <aside> already in the
+    // document (pre-1.13 markup, or a consumer's own customized copy).
     function resolvePanel() {
         const live = document.querySelector('[data-accessibility-panel]');
         if (live) return live;
-        const id = toggleBtn && toggleBtn.dataset.panelToggle;
-        const injected = id ? NDS.fromTemplate?.(id) : null;
+        const id = PANEL_ID;
+        // No page-authored <template> for this id — inject the markup this
+        // bundle carries so fromTemplate can arm it exactly like one, without
+        // it ever sitting in the page's HTML. data-panel-side still comes from
+        // toggleBtn when it has one — a real trigger without it just gets the
+        // 'end' default, same as the built-in FAB markup ships.
+        if (!document.getElementById(id) && ![...document.querySelectorAll('template')].some(t => t.content.getElementById(id))) {
+            const tpl = document.createElement('template');
+            tpl.innerHTML = panelMarkup((toggleBtn && toggleBtn.dataset.panelSide) || 'end');
+            document.body.appendChild(tpl);
+        }
+        const injected = NDS.fromTemplate?.(id);
         if (injected) wireInjected(injected);
+        // Accordion/Panel/Fab live in an injected bundle (delegated, low-priority,
+        // never gated on the reveal) that may still be a lazy stub the instant
+        // fromTemplate's refresh runs — nds-loader.js skips a stub on purpose
+        // rather than force-loading it, and nothing revisits content built AFTER
+        // the page's own one-time detection pass, since that accordion didn't
+        // exist yet to be detected. Bundle names come from the build manifest,
+        // never hardcoded (AGENTS.md); re-running refresh once they're all in is
+        // a no-op for whatever already initialized correctly the first time.
+        if (injected) {
+            const bundles = Object.keys(window.__NDS_BUNDLES || {});
+            if (bundles.length) {
+                Promise.all(bundles.map(b => NDS.loadBundle?.(b))).then(() => NDS.Init?.refresh?.(injected));
+            }
+        }
         return injected;
     }
 
@@ -1027,11 +1456,18 @@
         }
     }
 
-    function init() {
+    // triggerEl: the element that caused this arm (a click on it, if any) —
+    // used as toggleBtn so panelMarkup() reads ITS data-panel-side and i18n
+    // localizes the element the user actually sees, rather than an arbitrary
+    // document-order first-match. Falls back to a plain query when arming
+    // with no trigger (the saved-prefs path).
+    function init(triggerEl) {
         if (_initDone) destroy();
         _initDone = true;
 
-        toggleBtn = document.querySelector('[data-accessibility-toggle]');
+        loadCSS();
+
+        toggleBtn = triggerEl || document.querySelector('[data-accessibility-toggle]');
         panel = resolvePanel();
         if (!toggleBtn || !panel) return;
 
@@ -1103,26 +1539,46 @@
 // to arm: localStorage already has saved prefs (apply on load via loader),
 // or user clicks the FAB (lazy init on demand). No-pref + no-click sessions
 // pay zero init cost.
+//
+// Held behind data-nds-loaded — a11y isn't critical enough to compete with
+// the main reveal, same reasoning as the delegated/extras bundles (just done
+// locally here since this ships as its own <script>, not through the
+// loader). Costs nothing functionally: the FAB is chrome, hidden by the same
+// pre-reveal gate, so it isn't clickable any earlier anyway. Also closes most
+// of the accessibility-CSS race from loadCSS() being requested this late —
+// the saved-prefs path no longer starts that fetch until the page is already
+// past its own critical paint, instead of racing it.
 (function bootAccessibility() {
     const STORAGE_KEY = 'nds-a11y';
-    const panel = document.querySelector('[data-accessibility-panel], template.nds-panel-template');
     const fab = document.querySelector('[data-accessibility-toggle]');
-    if (!panel || !fab) return;
+    if (!fab) return;
 
-    // init() resolves the real panel (stamping it out of the template when
-    // needed) and stamps data-armed itself.
-    const arm = () => NDS.Accessibility.init();
+    const run = () => {
+        // No panel/template existence check: resolvePanel() builds the panel
+        // from panelMarkup() when neither a live one nor a page-authored
+        // <template> exists — it's the default now, not a fallback.
+        // init() resolves the real panel (stamping it out of the template when
+        // needed) and stamps data-armed itself.
+        try { if (localStorage.getItem(STORAGE_KEY)) NDS.Accessibility.init(); } catch (e) {}
 
-    try { if (localStorage.getItem(STORAGE_KEY)) arm(); } catch (e) {}
-
-    // Capture phase: the FAB is a [data-panel-toggle], so Panel opens it from a
-    // bubble-phase handler. Arming ahead of that wires the tiles before the panel
-    // they live in is shown. Removed by hand rather than with `once`, which would
-    // burn on the first click anywhere on the page.
-    const armOnFirstClick = (e) => {
-        if (!e.target.closest('[data-accessibility-toggle]')) return;
-        document.removeEventListener('click', armOnFirstClick, true);
-        arm();
+        // Capture phase, always on (not one-shot): the FAB is also a
+        // [data-panel-toggle], so Panel's own bubble-phase handler would
+        // otherwise fight this — finding nothing yet on a cold session, or
+        // opening instantly and bypassing the cold-arm gate on a warm one.
+        // Every click is redirected through toggle(triggerEl) instead, which
+        // already knows whether this is the first arm or not, and reads the
+        // clicked element's own data-panel-side rather than an arbitrary
+        // document-order first-match.
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-accessibility-toggle]');
+            if (!btn) return;
+            e.stopPropagation();
+            NDS.Accessibility.toggle(btn);
+        }, true);
     };
-    document.addEventListener('click', armOnFirstClick, true);
+
+    if (document.documentElement.hasAttribute('data-nds-loaded')) run();
+    else {
+        const off = NDS.onAttrChange(':root', ['data-nds-loaded'], () => { off(); run(); });
+    }
 })();

@@ -17,7 +17,6 @@ Used by `data-i18n="…"` and `data-i18n-attr="…"` markers in
 | `panel_label` | FAB `aria-label` + panel `aria-label` |
 | `close_panel` | Close-button `aria-label` |
 | `toggle_theme` | Theme toggle `aria-label` |
-| `switch_lang` | Language link `aria-label` |
 | `scroll_panel` | "Scroll more" button `aria-label` |
 | `section_modes` / `section_readable` / `section_visual` | Accordion section headers |
 | `aria_readable` / `aria_visual` | `role="group"` `aria-label`s on tile grids |

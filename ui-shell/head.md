@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.1.0"
-updated: "1.12.0"
-last_edit: "03/09/2026 - 03:20 AM"
+updated: "1.12.x"
+last_edit: "12/09/2026 - 11:48 PM"
 ---
 
 <!-- Page Setup -->
@@ -96,10 +96,6 @@ last_edit: "03/09/2026 - 03:20 AM"
   &lt;!-- Main CSS — deferred; the inline script applies it, the loader adds the icon sheets after it. --&gt;
   &lt;link rel="preload" href="assets/css/nds-main.min.css?ver={{ site.latest_release }}"
     as="style" fetchpriority="low" data-nds-defer="main"&gt;
-
-  &lt;!-- Accessibility add-on — optional. Drop this and its script to skip the panel. --&gt;
-  &lt;link rel="preload" href="assets/css/nds-accessibility.min.css?ver={{ site.latest_release }}"
-    as="style" fetchpriority="low" data-nds-defer&gt;
 
   &lt;!-- Placeholder icon — replace with your own. --&gt;
   &lt;link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg"&gt;
@@ -200,7 +196,7 @@ document.head.appendChild(l);
                         <tr><td><code class="nds-inline-code lang-html">nds-main.min.css</code></td><td>All component and layout styles</td><td>Deferred; gates the page reveal</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-icons.min.css</code></td><td>UI icons (<code class="nds-inline-code lang-html">nds-icon</code>)</td><td>Added by the loader once main CSS applies</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">hgi-rounded-stroke-min.css</code></td><td>Content icon glyph map (<code class="nds-inline-code lang-html">hgi hgi-stroke</code>). Its <code class="nds-inline-code lang-html">@font-face</code> ships in the critical file, so this sheet can land late without a full relayout</td><td>Added by the loader at the reveal, after main CSS and the critical pass</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility.min.css</code></td><td>Accessibility panel and its mode overrides</td><td>Deferred, same as main CSS. Optional</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility.min.css</code></td><td>Accessibility panel and its mode overrides</td><td>Fetched by nds-accessibility.js itself once the panel arms — not linked in &lt;head&gt;. Optional; see <a class="nds-color" href="{{ 'components/accessibility' | relative_url }}">Accessibility</a>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-main.min.js</code></td><td>Loader and all component behavior</td><td><code class="nds-inline-code lang-html">&lt;script defer&gt;</code> before <code class="nds-inline-code lang-html">&lt;/body&gt;</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility.min.js</code></td><td>Accessibility panel behavior</td><td><code class="nds-inline-code lang-html">&lt;script defer&gt;</code> before <code class="nds-inline-code lang-html">&lt;/body&gt;</code>. Optional</td></tr>
                     </tbody>

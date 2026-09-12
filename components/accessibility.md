@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "01/09/2026 - 09:32 PM"
+last_edit: "13/09/2026 - 01:02 AM"
 ---
 
 <!-- Trigger -->
@@ -46,11 +46,19 @@ last_edit: "01/09/2026 - 09:32 PM"
                                     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                         <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                             aria-controls="panel-a11y-trigger-1" id="tab-a11y-trigger-1">
-                                            <span class="nds-tab-label">HTML</span>
+                                            <span class="nds-tab-label">FAB</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-a11y-trigger-fouc" id="tab-a11y-trigger-fouc">
-                                            <span class="nds-tab-label">Head</span>
+                                            aria-controls="panel-a11y-trigger-script" id="tab-a11y-trigger-script">
+                                            <span class="nds-tab-label">Script</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-a11y-trigger-css" id="tab-a11y-trigger-css">
+                                            <span class="nds-tab-label">CSS</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                            aria-controls="panel-a11y-trigger-custom" id="tab-a11y-trigger-custom">
+                                            <span class="nds-tab-label">Panel</span>
                                         </button>
                                     </nav>
                                     <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
@@ -66,7 +74,7 @@ last_edit: "01/09/2026 - 09:32 PM"
                                         </div>
                                         <div class="nds-expandable-content">
                                             <code class="lang-html code">
-&lt;button class="nds-btn nds-primary nds-circle nds-fab nds-accessibility-toggle"
+&lt;button class="nds-btn nds-primary nds-circle nds-icon-only nds-fab nds-accessibility-toggle"
         type="button"
         aria-label="Accessibility settings"
         data-i18n-attr="aria-label:panel_label"
@@ -78,7 +86,48 @@ last_edit: "01/09/2026 - 09:32 PM"
         hidden&gt;
     &lt;i class="nds-icon nds-hgi-accessibility" aria-hidden="true"&gt;&lt;/i&gt;
 &lt;/button&gt;
-
+                                        </code>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-script"
+                                        aria-labelledby="tab-a11y-trigger-script" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
+&lt;!-- Just before &lt;/body&gt;, after nds-main.min.js. Optional — drop this + the FAB markup to skip the panel. --&gt;
+&lt;script defer src="assets/js/nds-accessibility.min.js"&gt;&lt;/script&gt;
+                                        </code>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-css"
+                                        aria-labelledby="tab-a11y-trigger-css" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
+&lt;!-- OPTIONAL — not linked by default; preload eagerly here to avoid a flash for returning visitors with saved settings. --&gt;
+&lt;link rel="preload" href="assets/css/nds-accessibility.min.css"
+    as="style" fetchpriority="low" data-nds-defer&gt;
+                                        </code>
+                                        </div>
+                                    </div>
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-custom"
+                                        aria-labelledby="tab-a11y-trigger-custom" hidden>
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">
+&lt;!-- OPTIONAL — override the built-in panel markup; resolvePanel() uses this template instead if present. --&gt;
 &lt;template class="nds-panel-template"&gt;
 &lt;aside id="ndsAccessibilityPanel"
        class="nds-panel nds-accessibility-panel"
@@ -110,7 +159,7 @@ last_edit: "01/09/2026 - 09:32 PM"
 
                 &lt;div class="nds-sr-only" data-a11y-status role="status" aria-live="polite" aria-atomic="true"&gt;&lt;/div&gt;
 
-                &lt;!-- Display &amp; Language — quick toggles --&gt;
+                &lt;!-- Display — quick toggle --&gt;
                 &lt;div class="nds-accessibility-quick"&gt;
                     &lt;button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
                             data-theme-toggle
@@ -119,13 +168,6 @@ last_edit: "01/09/2026 - 09:32 PM"
                             data-i18n-attr="aria-label:toggle_theme"&gt;
                         &lt;i class="nds-icon nds-hgi-moon-02" aria-hidden="true"&gt;&lt;/i&gt;
                     &lt;/button&gt;
-
-                    &lt;a class="nds-btn nds-subtle nds-icon-only"
-                       href="/ar/"
-                       aria-label="التبديل إلى العربية"
-                       data-i18n-attr="aria-label:switch_lang"&gt;
-                        &lt;i class="nds-icon nds-hgi-translation" aria-hidden="true"&gt;&lt;/i&gt;
-                    &lt;/a&gt;
                 &lt;/div&gt;
 
         &lt;!-- Accessibility settings — one accordion, three items:
@@ -422,46 +464,6 @@ last_edit: "01/09/2026 - 09:32 PM"
                                         </code>
                                         </div>
                                     </div>
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-fouc"
-                                        aria-labelledby="tab-a11y-trigger-fouc" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;!-- Inline and synchronous inside &lt;head&gt; so the cached tokens land on
-     &lt;html&gt; before first paint. Place after &lt;link rel="preload"&gt; tags so
-     stylesheet fetches start first. The bundle table mirrors MODE_BUNDLES
-     in nds-accessibility.js: keep the two in sync. --&gt;
-&lt;script&gt;
-(() =&gt; { try {
-    const s = JSON.parse(localStorage.getItem('nds-a11y') || '{}');
-    const R = {
-        'epilepsy-safe':        ['reduce-motion','low-saturation'],
-        'visually-impaired':    ['high-contrast'],
-        'cognitive-disability': ['highlight-titles','reduce-motion'],
-        'motor-impaired':       [],
-        'colorblind':           ['cvd-deutan'],
-        'dyslexia-friendly':    ['dyslexia','highlight-links'],
-        'adhd-friendly':        ['reduce-motion','highlight-titles','reading-mask'],
-    };
-    const t = new Set([
-        ...(s.modes || []),
-        ...(s.bundles || []).flatMap(b =&gt; b in R ? (R[b].length ? R[b] : [b]) : []),
-    ]);
-    (s.excluded || []).forEach(e =&gt; t.delete(e));
-    const c = s.settings || {};
-    const step = parseInt(c['font-step'], 10) || 0;
-    if (step &gt; 0 &amp;&amp; step &lt; 4) t.add('font-step-' + step);
-    if (c['text-align'] &amp;&amp; c['text-align'] !== 'default') t.add('text-align-' + c['text-align']);
-    if (t.size) document.documentElement.setAttribute('data-a11y', [...t].join(' '));
-} catch {} })();
-&lt;/script&gt;
-                                        </code>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -477,7 +479,7 @@ last_edit: "01/09/2026 - 09:32 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Custom Trigger</h2>
-            <p class="nds-section-description">Wire a footer link, header menu item, or in-page CTA to open the same panel by calling <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code> from your own click handler. The <code class="nds-inline-code lang-html">data-accessibility-toggle</code> attribute is only honored on the first match in the DOM, so use the JS API for every additional trigger.</p>
+            <p class="nds-section-description">Wire a footer link, header menu item, or in-page CTA to open the same panel by calling <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code> from your own click handler, passing the clicked element so the loading state (on first arm) shows on it instead of the FAB. <code class="nds-inline-code lang-html">data-accessibility-toggle</code> works on any element, but only the one that actually arms the panel gets localized — use the JS API for every additional trigger.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -529,7 +531,7 @@ last_edit: "01/09/2026 - 09:32 PM"
                                         <code class="lang-javascript code">document.getElementById('open-a11y').addEventListener('click', (e) =&gt; {
     e.preventDefault();
     e.stopPropagation();   // Panel's outside-click-close listener also lives on document.
-    NDS.Accessibility.open();
+    NDS.Accessibility.open(e.currentTarget);   // passes the trigger through to the cold-arm gate
 });</code>
                                     </div>
                                 </div>
@@ -547,15 +549,15 @@ last_edit: "01/09/2026 - 09:32 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">FAB Position</h2>
-            <p class="nds-section-description">Anchor the FAB and the panel to whichever edge suits the layout, so neither collides with chat widgets, cookie banners, or content already pinned to a corner. The two attributes are set separately and should name the same side.</p>
+            <p class="nds-section-description">Anchor the FAB and the panel to whichever edge suits the layout, so neither collides with chat widgets, cookie banners, or content already pinned to a corner. Both attributes are set on the FAB — the panel no longer ships in HTML to carry its own — and should name the same side.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Set on</th><th>Behavior</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-fab-pos="auto"</code></td><td>FAB</td><td>What the panel ships. Follows the panel it names in <code class="nds-inline-code lang-html">aria-controls</code>, so changing the side below moves both. Pin an edge instead with <code class="nds-inline-code lang-html">end</code> or <code class="nds-inline-code lang-html">start</code> (logical), or physical <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-panel-side="end"</code></td><td>Panel</td><td>Which edge the panel slides from. Same logical and physical vocabulary as the FAB, plus <code class="nds-inline-code lang-html">top</code>. Set it to match the FAB so the pair reads as one control.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-fab-pos="auto"</code></td><td>FAB</td><td>The FAB's own dock edge. <code class="nds-inline-code lang-html">auto</code> tries to read it off the live panel, but the panel doesn't exist yet at dock time — pin an edge explicitly instead: <code class="nds-inline-code lang-html">end</code> or <code class="nds-inline-code lang-html">start</code> (logical), or physical <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>FAB</td><td>Which edge the panel slides from — read off the FAB and threaded into the panel when it's built (default <code class="nds-inline-code lang-html">end</code>). Same logical and physical vocabulary as <code class="nds-inline-code lang-html">data-fab-pos</code>, plus <code class="nds-inline-code lang-html">top</code>. Set it to match so the pair reads as one control.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -784,8 +786,8 @@ last_edit: "01/09/2026 - 09:32 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-toggle</code></td><td>Panel-specific chrome for the trigger. Pair with <code class="nds-inline-code lang-html">nds-fab</code> so the <a class="nds-color" href="{{ 'components/fab' | relative_url }}">Fab</a> dock owns its edge, inset and size, plus <code class="nds-inline-code lang-html">nds-btn nds-primary nds-circle</code> for the default visual.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel</code></td><td>Panel-specific chrome. Pair with <code class="nds-inline-code lang-html">nds-panel</code> so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component owns position, width, the header offset and the slide.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-panel-template</code></td><td>Set on the <code class="nds-inline-code lang-html">&lt;template&gt;</code> that holds the inert panel — the same lazy-markup convention every <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> supports. The component stamps the content into the page on first use. A bare <code class="nds-inline-code lang-html">&lt;aside&gt;</code> without the wrapper still works, but every page then carries the panel's ~190 DOM nodes.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-quick</code></td><td>Inline-flex row of quick-toggle buttons (theme toggle, language switch) at the top of the scrollable body.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-panel-template</code></td><td>Set on a <code class="nds-inline-code lang-html">&lt;template&gt;</code> you author yourself to override the panel's built-in markup — the same lazy-markup convention every <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> supports. By default nothing ships in the page's HTML: <code class="nds-inline-code lang-js">nds-accessibility.js</code> carries the markup and builds this <code class="nds-inline-code lang-html">&lt;template&gt;</code> itself on first arm.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-quick</code></td><td>Inline-flex row of quick-toggle buttons (theme toggle) at the top of the scrollable body.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-modes</code></td><td>Sized accordion modifier used by the Modes section. Adjusts switch-row padding to match the tile grids.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-a11y-count</code></td><td>Tag pill next to each accordion title showing how many controls in that section are active. Hides itself when empty.</td></tr>
                     </tbody>
@@ -797,11 +799,11 @@ last_edit: "01/09/2026 - 09:32 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-toggle</code></td><td>Marks the FAB so the panel can localize it and arm itself on the first click. Opening is <code class="nds-inline-code lang-html">data-panel-toggle</code>'s job; additional triggers call <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-toggle</code></td><td>Marks an element so accessibility's own click handling — not the generic <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> mechanism — builds/arms the panel on first use and applies the loading gate. Works on any element; only the one that arms the panel gets localized, so additional triggers should just call <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code>/<code class="nds-inline-code lang-js">.toggle()</code> instead.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-panel-toggle</code></td><td>Set to the panel's id so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component opens it, tracks <code class="nds-inline-code lang-html">aria-expanded</code>, and returns focus on close.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel</code></td><td>Mark the panel root. Required for auto-init.</td></tr>                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-action="reset"</code></td><td>Mark the reset button. Two-click confirmation with a 5-second arming window is wired automatically.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-fab-pos</code></td><td>Set on the FAB to pick its dock edge. Values: <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>Set on the panel to pick the edge it slides from. Set it to the same side as the FAB.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>Set on the FAB (not the panel — it isn't in the HTML to carry it) to pick the edge the panel slides from. Read by <code class="nds-inline-code lang-js">resolvePanel()</code> and threaded into the built panel. Set it to the same side as <code class="nds-inline-code lang-html">data-fab-pos</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-mode</code></td><td>Mark a switch or button as a bundle or primitive toggle. Value matches a key from <code class="nds-inline-code lang-js">MODE_BUNDLES</code> or a primitive token name.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-visual</code></td><td>Mark a button as a visual-filter selector. Joining the mutex group: clicking it mutes every other filter automatically.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-setting</code></td><td>Mark a button as a cycling setting. Pair with <code class="nds-inline-code lang-html">data-a11y-cycle</code> to declare the value sequence.</td></tr>

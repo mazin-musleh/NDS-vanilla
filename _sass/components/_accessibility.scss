@@ -13,7 +13,7 @@
 // --nds-font-family at :root, so the panel re-pins it to break that chain
 // while still following the active brand font.
 // ----------------------------------------------
-:is(.nds-accessibility-panel, .nds-accessibility-toggle) {
+.nds-accessibility-panel {
     --a11y-text-FS: 14px;
     --a11y-text-LH: 20px;
     --a11y-section-FS: 16px;
@@ -37,7 +37,7 @@
 // `:root` prefix bumps specificity past the default .nds-btn rule whose
 // --_btn-FS calc reads --user-font-scale. Pinning literal px bypasses
 // the calc so panel buttons stay readable regardless of global scaling.
-:root :is(.nds-accessibility-panel .nds-btn, .nds-accessibility-toggle.nds-btn) {
+:root .nds-accessibility-panel .nds-btn {
     --btn-size: var(--a11y-btn-size);
     --_btn-FS: var(--a11y-text-FS);
     --_btn-LH: var(--a11y-text-LH);
@@ -67,22 +67,6 @@
 // Tag pills use --tag-fs as the public override channel.
 .nds-accessibility-panel .nds-tag {
     --tag-fs: var(--a11y-text-FS);
-}
-
-// ----------------------------------------------
-// Floating action button — an .nds-fab, so the dock owns edge, inset, z-index,
-// lift and size. Only the icon pin and zero padding are this button's own.
-// ----------------------------------------------
-.nds-accessibility-toggle {
-    padding: 0;
-
-    // Pinned like the panel's buttons: literal px bypasses the --user-font-scale
-    // calc, so the icon stays put when the user scales page text.
-    i.hgi,
-    i.nds-icon {
-        font-size: var(--a11y-icon-FS);
-        line-height: 1;
-    }
 }
 
 // ----------------------------------------------
