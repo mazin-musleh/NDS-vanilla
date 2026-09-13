@@ -97,6 +97,19 @@ class JSProcessor
       # resolves on error.
       'nds-accessibility.min.js' => ['nds-accessibility.js']
     }
+    # Sheets a bundle owns. nds-loader.js requests these in parallel with the
+    # bundle's JS, so a lazily-loaded component's styles are not a second round
+    # trip behind its code. Keyed by bundle output name; a bundle with no sheet
+    # of its own is simply absent. A LIST, so a bundle that grows a second sheet
+    # needs no change to the manifest shape or the loader — list order is append
+    # order, which is cascade order.
+    #
+    # Declared, never inferred from the filename: nds-main.min.js would then pair
+    # with nds-main.min.css, which is head-linked and gates the reveal — the
+    # loader must never fetch that one.
+    @bundle_css = {
+      'nds-accessibility.min.js' => ['nds-accessibility.min.css'],
+    }
 
     # Load config from _config.yml
     @config = load_config
@@ -157,7 +170,10 @@ class JSProcessor
   #   { 'delegated' => { 'file' => 'nds-delegated.min.js', 'ns' => [...] }, 'extras' => {...} }
   def bundle_manifest
     injected_bundles.each_with_object({}) do |(bundle_name, files), m|
-      m[bundle_key(bundle_name)] = { 'file' => bundle_name, 'ns' => scan_namespaces(files) }
+      entry = { 'file' => bundle_name, 'ns' => scan_namespaces(files) }
+      css = @bundle_css[bundle_name]
+      entry['css'] = Array(css) if css && !Array(css).empty?
+      m[bundle_key(bundle_name)] = entry
     end
   end
 

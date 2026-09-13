@@ -38,11 +38,12 @@
  *     saved state is applied by init() itself.
  *   - Panel text is loaded from assets/i18n/accessibility/{lang}.json, with English
  *     defaults in place until it resolves.
- *   - The CSS (panel + mode token overrides) is fetched by loadCSS() only on arm, not
- *     preloaded in <head>, so a page that never arms never fetches it either. A
- *     saved-prefs return visit can show a brief unstyled flash of its active modes
- *     until the sheet downloads. ponytail: accepted — re-add a <head> preload gated
- *     on a saved 'nds-a11y' key if that flash proves to matter.
+ *   - The CSS (panel + mode token overrides) is this bundle's PAIRED SHEET: the
+ *     build names it in the manifest and nds-loader.js requests it alongside this
+ *     file, so the two download in parallel and a page that never arms fetches
+ *     neither. Nothing here loads it. A saved-prefs return visit can still show a
+ *     brief unstyled flash of its active modes until the sheet lands; a consumer
+ *     who cares links it blocking in <head> (see components/accessibility.md).
  */
 // NDS Accessibility — site-wide a11y panel (FAB + slide-in disclosure)
 //
@@ -63,19 +64,6 @@
     // returned null, but _initDone was already set, so nothing — not even the
     // real FAB — could ever arm it again for the rest of the page.
     const PANEL_ID = 'ndsAccessibilityPanel';
-
-    // This bundle's own <script src> — derives the sibling CSS URL without
-    // needing site.baseurl at runtime. Valid only during this script's
-    // synchronous top-level run, so it's captured once here, not read lazily
-    // inside a handler.
-    const SCRIPT_SRC = (document.currentScript && document.currentScript.src) || '';
-    const JS_NAME = 'assets/js/nds-accessibility.min.js';
-    // Empty when the path doesn't match (renamed bundle, concatenated, a CDN
-    // layout): an unguarded replace() no-ops and would hand loadCSS() the .js
-    // URL to link as a stylesheet. No sheet beats a broken one.
-    const CSS_URL = SCRIPT_SRC.includes(JS_NAME)
-        ? SCRIPT_SRC.replace(JS_NAME, 'assets/css/nds-accessibility.min.css')
-        : '';
 
     const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.State;
 
@@ -1072,24 +1060,6 @@
         });
     }
 
-    // The CSS ships as a preloaded <link> in every page's <head> today;
-    // requesting it only here means a page that never arms accessibility
-    // never fetches it. Mirrors nds-loader.js's addSheet (derive the sibling
-    // URL off this bundle's own <script src>). Dedupe reads the LIVE .href
-    // property (browser-resolved, absolute) rather than the raw attribute, so
-    // a pre-1.13 page that still hand-links this CSS — preloaded or already
-    // swapped to a stylesheet — is recognized. Compared by PATHNAME, since
-    // that page's ?ver won't match this bundle's byte-for-byte.
-    function loadCSS() {
-        if (!CSS_URL) return;
-        const path = new URL(CSS_URL).pathname;
-        if ([...document.querySelectorAll('link')].some(l => l.href && new URL(l.href).pathname === path)) return;
-        const l = document.createElement('link');
-        l.rel = 'stylesheet';
-        l.href = CSS_URL;
-        document.head.appendChild(l);
-    }
-
     // Panel markup — moved out of every page's HTML (was a <template> in
     // _includes/accessibility-panel.html, ~185 inert nodes on every load) and
     // built here instead, so it exists only once armed. side comes off the
@@ -1487,8 +1457,6 @@
     function init(triggerEl) {
         if (_initDone) destroy();
         _initDone = true;
-
-        loadCSS();
 
         toggleBtn = triggerEl || document.querySelector('[data-accessibility-toggle]');
         panel = resolvePanel();

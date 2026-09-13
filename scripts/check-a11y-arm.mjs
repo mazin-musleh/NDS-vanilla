@@ -5,7 +5,9 @@
 //   2. the FAB's capture listener must swallow the click ONLY while cold —
 //      swallowing a warm click also kills the document-bubble outside-click
 //      close in nds-panels.js, so other open panels stayed open
-//   3. a visitor who never arms the panel must never fetch its sheet OR its JS
+//   3. a visitor who never arms the panel must never fetch its sheet OR its JS,
+//      and when they do press, the paired sheet starts WITH the bundle rather
+//      than a round trip behind it
 //   4. a visitor WITH saved prefs must get the bundle without pressing anything,
 //      or their saved modes silently stop applying
 //   node scripts/check-a11y-arm.mjs [_site]
@@ -67,10 +69,11 @@ const settle = async (page) => {
 {
     const page = await freshPage();
     const css = [], js = [];
+    let tCss = 0, tJs = 0;
     page.on('request', (req) => {
         const u = req.url();
-        if (u.includes('nds-accessibility.min.css')) css.push(u);
-        if (u.includes('nds-accessibility.min.js')) js.push(u);
+        if (u.includes('nds-accessibility.min.css')) { css.push(u); tCss ||= Date.now(); }
+        if (u.includes('nds-accessibility.min.js')) { js.push(u); tJs ||= Date.now(); }
     });
     await page.goto(URL, { waitUntil: 'networkidle0' });
     await settle(page);
@@ -79,9 +82,16 @@ const settle = async (page) => {
 
     // ...and a press pulls it. Without this the check above passes on a page
     // where accessibility is simply broken.
+    const t0 = Date.now();
     await page.evaluate(() => document.querySelector('[data-accessibility-toggle]').click());
     await new Promise((r) => setTimeout(r, 2000));
     note(js.length === 1, 'a press fetches the bundle', `${js.length} request(s)`);
+    // The sheet is the bundle's `css` pair in the build manifest, so the loader
+    // requests it with the script. If it ever regresses to being requested by
+    // the component after the script runs, this gap blows out.
+    const gap = tCss && tJs ? tCss - tJs : null;
+    note(gap !== null && gap < 50, 'the paired sheet starts with the bundle, not after it',
+         gap === null ? 'one of them never fetched' : `+${gap}ms after the js, press+${tJs - t0}ms`);
     await page.close();
 }
 

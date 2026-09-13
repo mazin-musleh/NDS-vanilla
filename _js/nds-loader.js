@@ -603,7 +603,7 @@
             // during the fetch are dropped by the component's own _arming
             // guard. The `loading` stamp covers the download, which the
             // component cannot see; armedThen() clears it.
-            lazy: () => {
+            lazy: (bundle) => {
                 document.addEventListener('click', (e) => {
                     const btn = e.target.closest('[data-accessibility-toggle]');
                     if (!btn) return;
@@ -611,6 +611,11 @@
                     if (ns && !ns.__ndsStub && ns.ready) return;
                     e.stopPropagation();
                     NDS.State?.add?.(btn, 'loading');
+                    // Explicit, though toggle() would pull it too: this starts the
+                    // paired stylesheet with the script rather than after it, and
+                    // it is the only request a consumer who inlined this bundle
+                    // gets — for them toggle() calls straight into real code.
+                    NDS.loadBundle(bundle);
                     NDS.Accessibility.toggle(btn);
                 }, true);
             },
@@ -694,6 +699,55 @@
         } catch (e) { /* policy name not allowed — fall back to plain string */ }
     }
 
+    // The deferred main CSS link, whose folder holds every other NDS sheet in every
+    // build — not the JS directory, which a consumer's bundler may put somewhere
+    // else entirely. Marker first, filename second: the marker sits on the
+    // stylesheet link the head script injected (it moves the marker off the
+    // preload, which never gets a `.sheet`). The filename fallback keeps a pre-1.7
+    // head — and anyone fingerprinting their asset names — working. Two queries,
+    // not a comma list: a comma list
+    // resolves by document order, and the main CSS preload (same filename,
+    // earlier in head) would win.
+    function mainCssLink() {
+        return document.querySelector('link[data-nds-defer="main"]')
+            || document.querySelector('link[href*="nds-main.min.css"]');
+    }
+
+    // Add one of our sheets next to the main one. Used for the icon sheets and
+    // for a bundle's paired stylesheet (the `css` field in the build manifest),
+    // which loadBundle requests alongside the script so the two download in
+    // parallel instead of the sheet waiting for the script to run.
+    //
+    // Sheets load from here rather than an inline head script so a strict CSP
+    // needs no extra grant: this bundle is already an allowed origin, while an
+    // inline script needs the consumer's nonce or hash.
+    //
+    // Dedupe by PATHNAME over link elements: a self-hosting consumer, or a page
+    // that hand-links the sheet, will not match our ?ver byte for byte, and
+    // document.styleSheets has no entry for a sheet still downloading — missing
+    // it either way injects a duplicate.
+    //
+    // Falls back to the JS directory when main's sheet is absent (a consumer who
+    // inlined it), which is the best guess available and still same-origin.
+    function addSheet(name) {
+        const main = mainCssLink();
+        const url = main
+            ? main.href.replace('nds-main.min.css', name)
+            : ASSET.dir.replace(/\/js\/?$/, '/css/') + name + ASSET.ver;
+        let path;
+        try { path = new URL(url, location.href).pathname; } catch (e) { return null; }
+        // Stylesheet links only. A preload does not APPLY anything, so matching one
+        // would skip the link that actually styles the page.
+        const dup = [...document.querySelectorAll('link[rel="stylesheet"]')]
+            .some((l) => { try { return new URL(l.href, location.href).pathname === path; } catch (e) { return false; } });
+        if (dup) return null;
+        const l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = url;
+        document.head.appendChild(l);
+        return l;
+    }
+
     // Loads an injected bundle once and resolves when it's ready. Idempotent —
     // returns the in-flight/settled promise on repeat calls, so the auto-load
     // (when a present component needs it, see below) and the public
@@ -708,6 +762,12 @@
     function loadBundle(name) {
         if (_bundlePromises[name]) return _bundlePromises[name];
         const file = MAP[name] && MAP[name].file;
+        // The bundle's own sheets, requested BEFORE any early return below so a
+        // self-hosted or inlined consumer — whose script fetch short-circuits —
+        // still gets its styles. Ahead of the script for the same reason: the two
+        // download in parallel instead of the sheet waiting on the script to run.
+        // Manifest order is append order, which is cascade order.
+        if (MAP[name]) for (const sheet of MAP[name].css || []) addSheet(sheet);
         if (!file || !ASSET.dir) return (_bundlePromises[name] = Promise.resolve());
         if ([...document.scripts].some((s) => s.src && s.src.includes(file))) {
             return (_bundlePromises[name] = Promise.resolve());
@@ -893,8 +953,8 @@
                     w.style.scrollBehavior = '';
                 });
                 if (!main) return;
-                addSheet(main, 'nds-icons.min.css'); // no-op once requested; covers a main CSS error
-                loadHgiSheet(main);
+                addSheet('nds-icons.min.css'); // no-op once requested; covers a main CSS error
+                loadHgiSheet();
             };
             // Already applied? `.sheet` is set once the CSSOM attaches. Catching this
             // here matters: a load event that already fired before these listeners
@@ -906,36 +966,6 @@
             window.addEventListener('load', done, { once: true });
         }
 
-        // The deferred main CSS link. Marker first, filename second: the marker sits
-        // on the stylesheet link the head script injected (the script moves it off
-        // the preload, which never gets a `.sheet`). The filename fallback keeps a
-        // pre-1.7 head — and anyone fingerprinting their asset names — working. Two
-        // queries, not a comma list: a comma list resolves by document order, and
-        // the main CSS preload (same filename, earlier in head) would win.
-        function mainCssLink() {
-            return document.querySelector('link[data-nds-defer="main"]')
-                || document.querySelector('link[href*="nds-main.min.css"]');
-        }
-
-        // Icon sheets load from here rather than an inline head script so a strict
-        // CSP needs no extra grant: this bundle is already an allowed origin, while
-        // an inline script needs the consumer's nonce or hash. The href comes off the
-        // main CSS link — same folder as the icon sheets in every build — not off the
-        // JS directory, which a consumer's bundler may place somewhere else entirely.
-        // Per-sheet dedupe: skip a sheet the head already carries (self-hosting
-        // consumer, or a pre-1.7 inline head that adds its own). Check link
-        // elements, not document.styleSheets — a sheet still downloading has no
-        // entry there yet, and missing it would inject a duplicate.
-        function addSheet(main, name) {
-            const url = main.href.replace('nds-main.min.css', name);
-            if ([...document.querySelectorAll('link[rel="stylesheet"]')].some((l) => l.href === url)) return null;
-            const l = document.createElement('link');
-            l.rel = 'stylesheet';
-            l.href = url;
-            document.head.appendChild(l);
-            return l;
-        }
-
         // The icon tokens sit on :root, and an inherited var that changes after the
         // reveal restyles the whole tree. Requested the moment main CSS applies, the
         // sheet has the critical pass to arrive, so its write rides the reveal's own
@@ -943,7 +973,7 @@
         // onload stamp: its :root block flips the icon gate itself (_sass/_icons.scss).
         function loadIconTokens(main) {
             if (!main) return;
-            const go = () => addSheet(main, 'nds-icons.min.css');
+            const go = () => addSheet('nds-icons.min.css');
             if (main.sheet) go();
             else main.addEventListener('load', go, { once: true });
         }
@@ -952,8 +982,8 @@
         // the LCP window. Its @font-face ships in crit (_fonts.scss), so landing this
         // sheet rebuilds no font cache. Glyphs that all start hidden never start the
         // fetch; kick it once the family applies.
-        function loadHgiSheet(main) {
-            const hgi = addSheet(main, 'hgi-rounded-stroke-min.css');
+        function loadHgiSheet() {
+            const hgi = addSheet('hgi-rounded-stroke-min.css');
             if (hgi) hgi.onload = () => NDS.FontLoading?.load?.();
         }
 
@@ -1045,7 +1075,7 @@
             // until the component's own trigger fires. Armed even when eager —
             // that bundle is still in flight for a moment, and a press in the
             // gap must not reach a half-wired page.
-            if (c.lazy) c.lazy();
+            if (c.lazy) c.lazy(bundle);
             if (bundle && c.lazy && !c.eager?.()) continue;      // armed only — nothing loads yet
             if (bundle) (injectedGroups[bundle] ||= []).push(c); // deferred → injected bundle
             else deferredComponents.push(c);                     // deferred → already in main
