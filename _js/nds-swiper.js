@@ -47,6 +47,8 @@
  *   - Positioning is CSS scroll-snap. JS only syncs the navigation, the pagination dots
  *     and lazy loading — a swiper still scrolls with JS disabled. A move animates per
  *     the wrapper's scroll-behavior (smooth by default; set auto for an instant switch).
+ *     Deck mode sets it to auto itself: there the cards are the move, and a track still
+ *     crossing slides re-fans the deck at each one.
  *   - The markup is .nds-swiper-wrapper holding .nds-swiper-slide items, plus optional
  *     .nds-swiper-navigation (with .nds-prev / .nds-next) and .nds-swiper-pagination.
  *   - The instance lives on the element as el._ndsSwiper.

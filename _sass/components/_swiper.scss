@@ -449,6 +449,15 @@
     --_deck-dur: calc(var(--nds-transition-speed) * 3s);
     --_deck-motion: var(--_deck-dur) var(--nds-transition-effect);
 
+    // The cards ARE the move; the track only has to arrive. Left smooth, it crosses
+    // every slide in between, and updateState re-fans the deck at each crossing —
+    // so a jump of more than one slide shuffles the cards through the wrong order
+    // and back (measured: 5 deck updates for one bullet press, cards travelling 220px
+    // to end up 40px along). Arriving at once leaves exactly one fan.
+    .nds-swiper-wrapper {
+        scroll-behavior: auto;
+    }
+
     .nds-swiper-deck {
         position: relative;
         width: var(--_deck-w);
