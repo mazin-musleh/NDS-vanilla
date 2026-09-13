@@ -66,7 +66,13 @@
     // synchronous top-level run, so it's captured once here, not read lazily
     // inside a handler.
     const SCRIPT_SRC = (document.currentScript && document.currentScript.src) || '';
-    const CSS_URL = SCRIPT_SRC.replace('assets/js/nds-accessibility.min.js', 'assets/css/nds-accessibility.min.css');
+    const JS_NAME = 'assets/js/nds-accessibility.min.js';
+    // Empty when the path doesn't match (renamed bundle, concatenated, a CDN
+    // layout): an unguarded replace() no-ops and would hand loadCSS() the .js
+    // URL to link as a stylesheet. No sheet beats a broken one.
+    const CSS_URL = SCRIPT_SRC.includes(JS_NAME)
+        ? SCRIPT_SRC.replace(JS_NAME, 'assets/css/nds-accessibility.min.css')
+        : '';
 
     const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.State;
 
@@ -196,6 +202,7 @@
     let resetDoneTimer = null;      // post-reset visible-flash
     let resetCountdownTimer = null; // mid-arming SR announcement
     let _initDone = false;
+    let _arming = false;       // cold build in flight — see armedThen()
 
     function defaultState() {
         return {
@@ -955,12 +962,23 @@
     // there isn't one) while the panel builds and its CSS requests, THEN
     // proceed. Already armed: proceed immediately, same tick. ponytail: a
     // flat 1000ms, not an actual "CSS has loaded" wait.
+    //
+    // The _arming check comes FIRST and swallows the call: init() sets
+    // _initDone synchronously, so a second activation inside the build window
+    // would otherwise take the warm branch, open at once, and then get closed
+    // again when this build's own proceed() fires. Repeat activations during a
+    // cold build are noise, not a queue — the trigger is already spinning.
+    // (The FAB's pointer-events go dead under .nds-loading, but keyboard
+    // activation and a consumer's own open()/toggle() call do not.)
     function armedThen(proceed, triggerEl) {
+        if (_arming) return;
         if (_initDone) { if (ensureArmed()) proceed(); return; }
+        _arming = true;
         const fab = triggerEl || document.querySelector('[data-accessibility-toggle]');
         if (fab) NDS.State.add(fab, 'loading');
         init(triggerEl);
         setTimeout(() => {
+            _arming = false;
             if (fab) NDS.State.remove(fab, 'loading');
             if (panel) proceed();
         }, 1000);
@@ -1057,10 +1075,12 @@
     // URL off this bundle's own <script src>). Dedupe reads the LIVE .href
     // property (browser-resolved, absolute) rather than the raw attribute, so
     // a pre-1.13 page that still hand-links this CSS — preloaded or already
-    // swapped to a stylesheet — is recognized even though its attribute string
-    // won't match CSS_URL byte-for-byte.
+    // swapped to a stylesheet — is recognized. Compared by PATHNAME, since
+    // that page's ?ver won't match this bundle's byte-for-byte.
     function loadCSS() {
-        if (!CSS_URL || [...document.querySelectorAll('link')].some(l => l.href === CSS_URL)) return;
+        if (!CSS_URL) return;
+        const path = new URL(CSS_URL).pathname;
+        if ([...document.querySelectorAll('link')].some(l => l.href && new URL(l.href).pathname === path)) return;
         const l = document.createElement('link');
         l.rel = 'stylesheet';
         l.href = CSS_URL;
@@ -1529,6 +1549,11 @@
         open, close, toggle,
         toggleMode, setVisualFilter, cycleSetting,
         reset,
+        // Panel built AND wired. Not the same as [data-armed], which init()
+        // stamps partway through the cold build — the boot gate has to tell
+        // "still building" (swallow the click) from "done" (let Panel's own
+        // delegated toggle have it) and the attribute answers yes to both.
+        get ready() { return _initDone && !_arming && !!panel; },
         get state() { return structuredClone(state); },
     };
 })();
@@ -1572,6 +1597,14 @@
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('[data-accessibility-toggle]');
             if (!btn) return;
+            // Cold only. Once ready the FAB is a real [data-panel-toggle] and
+            // Panel's own delegated handler opens it — swallowing the click
+            // here on every press also killed the document-BUBBLE outside-click
+            // close in nds-panels.js, so any other open panel stayed open.
+            // While still building this stays false, so a repeat press is
+            // swallowed here and toggle() drops it, instead of reaching Panel
+            // and opening a panel the pending build then toggles shut.
+            if (NDS.Accessibility.ready) return;
             e.stopPropagation();
             NDS.Accessibility.toggle(btn);
         }, true);
