@@ -531,10 +531,17 @@
         // scroll, and that holds on every engine, not just old Safari. Every instant
         // path here routes through this.
         _instant(scroll) {
-            const prev = this.wrapper.style.scrollBehavior;
+            const prevBehavior = this.wrapper.style.scrollBehavior;
+            const prevSnap = this.wrapper.style.scrollSnapType;
             this.wrapper.style.scrollBehavior = 'auto';
+            // Mandatory snap re-snaps the row after ANY programmatic write, so a cycle
+            // shift issued mid-animation loses its fraction and lands on a slot instead
+            // (measured 3.57 → 2.00) — the visible cut on rapid arrow clicks. Every
+            // caller here targets a position it computed itself; none wants re-snapping.
+            this.wrapper.style.scrollSnapType = 'none';
             scroll();
-            this.wrapper.style.scrollBehavior = prev;
+            this.wrapper.style.scrollSnapType = prevSnap;
+            this.wrapper.style.scrollBehavior = prevBehavior;
         }
 
         _goToFull(index, instant = NDS.prefersReducedMotion) {
@@ -542,10 +549,10 @@
                 // Keep the animation inside the clone budget and off the end-aligned
                 // last page (a loop has no end, so that alignment would shift at the
                 // settle jump): a target past the start or on the last page first
-                // jumps one real cycle the other way, silently.
+                // shifts one real cycle the other way, silently.
                 const n = this._real;
-                if (index < 0) { this._jumpTo(this.currentIndex + n); this.currentIndex += n; index += n; }
-                else if (index >= this.maxIndex) { this._jumpTo(this.currentIndex - n); this.currentIndex -= n; index -= n; }
+                if (index < 0) { if (this._shiftCycle(1)) { this.currentIndex += n; index += n; } }
+                else if (index >= this.maxIndex) { if (this._shiftCycle(-1)) { this.currentIndex -= n; index -= n; } }
             }
             const clampedIndex = Math.max(0, Math.min(index, this.maxIndex));
             // The deck aims at the target at once, ahead of the track's scroll.
@@ -621,6 +628,24 @@
             this._jumpTo(c + this._realIndex);
             this.detectCurrentSlide();
             this.updateState();
+        }
+
+        // Shift the row by whole real cycles from where it ACTUALLY is. _jumpTo
+        // assumes the row rests on currentIndex's slot; a rapid arrow click lands
+        // mid-animation, where currentIndex is a rounded read of a moving position,
+        // and the snap-to-slot is the visible cut. One cycle either way is identical
+        // content, so a relative shift is invisible at rest and mid-flight alike.
+        // Refused when the row has no room for it: the browser clamps at the edge, and a
+        // clamped shift is a short one, which does show. Skipping costs nothing — the
+        // settle re-anchors at the next rest.
+        _shiftCycle(dir) {
+            const n = this._real;
+            const step = this._measuredStep || (this.slides[0].offsetWidth + this.getGap()) || 1;
+            const landing = Math.abs(this.wrapper.scrollLeft) / step + dir * n;
+            if (landing < 0 || landing > this.maxIndex) return false;
+            const cycle = Math.abs(this.slides[this._head + n].offsetLeft - this.slides[this._head].offsetLeft);
+            this._instant(() => { this.wrapper.scrollLeft += NDS.isRTL ? -dir * cycle : dir * cycle; });
+            return true;
         }
 
         // Instant reposition to a full-list index.

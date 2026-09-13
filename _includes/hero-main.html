@@ -12,7 +12,7 @@ Determine hero sliders source:
 {%- assign hero_sliders = site.data.hero[hero_file_name] %}
 {%- endif %}
 <section class="nds-hero-section">
-    <div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: {{ hero_sliders | size }}">
+    <div class="nds-swiper nds-hero nds-oncolor nds-full-width" data-swiper-loop style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">
             {%- for slide in hero_sliders %}
             <div class="nds-swiper-slide nds-content-wrapper{%- if slide.class %} {{ slide.class }}{%- endif %}"{%- unless forloop.first %} hidden{%- endunless %}>
