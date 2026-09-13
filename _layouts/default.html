@@ -16,9 +16,6 @@
     {%- endunless %}
     <!-- Scripts -->
     <script defer src="{{ 'assets/js/nds-main.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
-    {%- unless site.accessibility == false %}
-    <script defer src="{{ 'assets/js/nds-accessibility.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
-    {%- endunless %}
     {%- unless page.exclude_showcase == true %}
     <script defer src="{{ 'docs-assets/js/nds-showcase.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
     {%- endunless %}

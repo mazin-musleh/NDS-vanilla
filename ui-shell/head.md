@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "12/09/2026 - 11:48 PM"
+last_edit: "13/09/2026 - 08:56 AM"
 ---
 
 <!-- Page Setup -->
@@ -106,7 +106,7 @@ last_edit: "12/09/2026 - 11:48 PM"
 
 &lt;!-- ...page content... then just before &lt;/body&gt;: --&gt;
 &lt;script defer src="assets/js/nds-main.min.js?ver={{ site.latest_release }}"&gt;&lt;/script&gt;
-&lt;script defer src="assets/js/nds-accessibility.min.js?ver={{ site.latest_release }}"&gt;&lt;/script&gt;
+&lt;!-- No tag for the accessibility panel. nds-main.min.js fetches it on demand. --&gt;
                         </code>
                         </div>
                     </div>
@@ -198,7 +198,7 @@ document.head.appendChild(l);
                         <tr><td><code class="nds-inline-code lang-html">hgi-rounded-stroke-min.css</code></td><td>Content icon glyph map (<code class="nds-inline-code lang-html">hgi hgi-stroke</code>). Its <code class="nds-inline-code lang-html">@font-face</code> ships in the critical file, so this sheet can land late without a full relayout</td><td>Added by the loader at the reveal, after main CSS and the critical pass</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility.min.css</code></td><td>Accessibility panel and its mode overrides</td><td>Fetched by nds-accessibility.js itself once the panel arms — not linked in &lt;head&gt;. Optional; see <a class="nds-color" href="{{ 'components/accessibility' | relative_url }}">Accessibility</a>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-main.min.js</code></td><td>Loader and all component behavior</td><td><code class="nds-inline-code lang-html">&lt;script defer&gt;</code> before <code class="nds-inline-code lang-html">&lt;/body&gt;</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility.min.js</code></td><td>Accessibility panel behavior</td><td><code class="nds-inline-code lang-html">&lt;script defer&gt;</code> before <code class="nds-inline-code lang-html">&lt;/body&gt;</code>. Optional</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility.min.js</code></td><td>Accessibility panel behavior</td><td>Fetched by nds-main.min.js on the first press of the accessibility button, or at load for a visitor with saved settings. No tag of its own. Optional</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -5,7 +5,9 @@
 //   2. the FAB's capture listener must swallow the click ONLY while cold —
 //      swallowing a warm click also kills the document-bubble outside-click
 //      close in nds-panels.js, so other open panels stayed open
-//   3. a visitor who never arms the panel must never fetch its sheet
+//   3. a visitor who never arms the panel must never fetch its sheet OR its JS
+//   4. a visitor WITH saved prefs must get the bundle without pressing anything,
+//      or their saved modes silently stop applying
 //   node scripts/check-a11y-arm.mjs [_site]
 import puppeteer from 'puppeteer-core';
 import { spawn } from 'node:child_process';
@@ -38,6 +40,11 @@ const browser = await puppeteer.launch({
     userDataDir: PROFILE,
     timeout: 90000,
 });
+// Each check runs in its own browser context: localStorage is shared across
+// pages of one context, so the saved-prefs check would otherwise leave every
+// later "cold" page warm — and silently pass for the wrong reason.
+const freshPage = async () => (await browser.createBrowserContext()).newPage();
+
 const fails = [];
 const note = (ok, name, detail) => {
     if (!ok) fails.push(`${name} — ${detail}`);
@@ -45,25 +52,72 @@ const note = (ok, name, detail) => {
 };
 
 // Bundles carry nds-fab.js (unhides the FAB) and nds-panels.js (open/close).
+// Everything EXCEPT accessibility — that one is the subject: pulling it here
+// would pre-warm the very thing each check is measuring.
 const settle = async (page) => {
-    await page.evaluate(() => Promise.all(Object.keys(window.__NDS_BUNDLES || {}).map((b) => window.NDS.loadBundle(b))));
+    await page.evaluate(() => Promise.all(
+        Object.keys(window.__NDS_BUNDLES || {})
+            .filter((b) => b !== 'accessibility')
+            .map((b) => window.NDS.loadBundle(b))
+    ));
     await new Promise((r) => setTimeout(r, 600));
 };
 
-// ---- no prefs: the sheet must stay unfetched (the point of the lazy load) ----
+// ---- no prefs: neither the sheet nor the bundle may be fetched ----
 {
-    const page = await browser.newPage();
-    const asked = [];
-    page.on('request', (req) => { if (req.url().includes('nds-accessibility.min.css')) asked.push(req.url()); });
+    const page = await freshPage();
+    const css = [], js = [];
+    page.on('request', (req) => {
+        const u = req.url();
+        if (u.includes('nds-accessibility.min.css')) css.push(u);
+        if (u.includes('nds-accessibility.min.js')) js.push(u);
+    });
     await page.goto(URL, { waitUntil: 'networkidle0' });
     await settle(page);
-    note(asked.length === 0, 'a no-prefs visitor never fetches the a11y sheet', asked.join(' '));
+    note(css.length === 0, 'a no-prefs visitor never fetches the a11y sheet', css.join(' '));
+    note(js.length === 0, 'a no-prefs visitor never fetches the a11y bundle', js.join(' '));
+
+    // ...and a press pulls it. Without this the check above passes on a page
+    // where accessibility is simply broken.
+    await page.evaluate(() => document.querySelector('[data-accessibility-toggle]').click());
+    await new Promise((r) => setTimeout(r, 2000));
+    note(js.length === 1, 'a press fetches the bundle', `${js.length} request(s)`);
     await page.close();
+}
+
+// ---- saved prefs: the bundle loads with no press, and the modes apply ----
+{
+    // One context for both pages here — the returning visitor has to SEE the
+    // prefs the seed wrote, which is the whole point of this check.
+    const ctx = await browser.createBrowserContext();
+    const seed = await ctx.newPage();
+    await seed.goto(URL, { waitUntil: 'networkidle0' });
+    await settle(seed);
+    // Drive the real UI rather than guess the payload shape — load() discards a wrong one.
+    const prefs = await seed.evaluate(async () => {
+        window.NDS.Accessibility.open();
+        await new Promise((r) => setTimeout(r, 2500));
+        document.querySelector('[data-accessibility-panel] [data-a11y-mode]').click();
+        await new Promise((r) => setTimeout(r, 300));
+        return localStorage.getItem('nds-a11y');
+    });
+    note(!!prefs, 'toggling a mode writes saved prefs', prefs ? '' : 'nothing stored — the next check is meaningless');
+    await seed.close();
+
+    const back = await ctx.newPage();
+    const js = [];
+    back.on('request', (req) => { if (req.url().includes('nds-accessibility.min.js')) js.push(req.url()); });
+    await back.goto(URL, { waitUntil: 'networkidle0' });
+    await new Promise((r) => setTimeout(r, 2000));
+    const stamped = await back.evaluate(() => document.documentElement.hasAttribute('data-a11y'));
+    note(js.length > 0, 'a returning visitor fetches the bundle with no press');
+    note(stamped, 'a returning visitor gets data-a11y applied');
+    await back.close();
 }
 
 // ---- cold: double activation, and the click is swallowed ----
 {
-    const page = await browser.newPage();
+    const page = await freshPage();
     await page.goto(URL, { waitUntil: 'networkidle0' });
     await settle(page);
 
@@ -96,7 +150,7 @@ const settle = async (page) => {
 
 // ---- warm: the click must reach the document bubble phase ----
 {
-    const page = await browser.newPage();
+    const page = await freshPage();
     await page.goto(URL, { waitUntil: 'networkidle0' });
     await settle(page);
 

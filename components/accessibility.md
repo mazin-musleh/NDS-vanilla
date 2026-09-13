@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "13/09/2026 - 01:02 AM"
+last_edit: "13/09/2026 - 08:56 AM"
 ---
 
 <!-- Trigger -->
@@ -49,10 +49,6 @@ last_edit: "13/09/2026 - 01:02 AM"
                                             <span class="nds-tab-label">FAB</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-a11y-trigger-script" id="tab-a11y-trigger-script">
-                                            <span class="nds-tab-label">Script</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                             aria-controls="panel-a11y-trigger-css" id="tab-a11y-trigger-css">
                                             <span class="nds-tab-label">CSS</span>
                                         </button>
@@ -89,20 +85,6 @@ last_edit: "13/09/2026 - 01:02 AM"
                                         </code>
                                         </div>
                                     </div>
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-script"
-                                        aria-labelledby="tab-a11y-trigger-script" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;!-- Just before &lt;/body&gt;, after nds-main.min.js. Optional — drop this + the FAB markup to skip the panel. --&gt;
-&lt;script defer src="assets/js/nds-accessibility.min.js"&gt;&lt;/script&gt;
-                                        </code>
-                                        </div>
-                                    </div>
                                     <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-css"
                                         aria-labelledby="tab-a11y-trigger-css" hidden>
                                         <div class="nds-code-action">
@@ -112,9 +94,17 @@ last_edit: "13/09/2026 - 01:02 AM"
                                         </div>
                                         <div class="nds-expandable-content">
                                             <code class="lang-html code">
-&lt;!-- OPTIONAL — not linked by default; preload eagerly here to avoid a flash for returning visitors with saved settings. --&gt;
-&lt;link rel="preload" href="assets/css/nds-accessibility.min.css"
-    as="style" fetchpriority="low" data-nds-defer&gt;
+&lt;!-- OPTIONAL. The panel requests this sheet itself when it opens, so most
+     sites add nothing here.
+
+     Add it only to stop a returning visitor's saved modes appearing after the
+     page has already painted. It must be a normal stylesheet link, as below:
+     a preload with data-nds-defer does NOT help, because deferring is the
+     opposite of what stops the flash. This link blocks the first paint for
+     every visitor, which is the cost you are choosing to pay.
+
+     Keep it after the main stylesheet so the mode overrides win. --&gt;
+&lt;link rel="stylesheet" href="assets/css/nds-accessibility.min.css"&gt;
                                         </code>
                                         </div>
                                     </div>

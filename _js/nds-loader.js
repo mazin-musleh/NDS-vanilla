@@ -3,7 +3,13 @@
  * Methods:
  *   NDS.Init.initialize()      run the full init pass (called automatically on DOM ready)
  *   NDS.Init.components        the component registry: {name, selector, init, critical}
- *                              (+ optional refresh — the NDS.Init.refresh hook for a
+ *                              (+ optional lazy() — arm this component's trigger
+ *                              instead of fetching its bundle; the lazy stub
+ *                              fetches it when the trigger calls the namespace.
+ *                              Needs its OWN bundle, or a sibling pulls it anyway.
+ *                              + optional eager() to opt an instance back in, e.g.
+ *                              a visitor whose persisted state must apply at load;
+ *                              + optional refresh — the NDS.Init.refresh hook for a
  *                              component that drives a container from outside it;
  *                              + optional destroyEach/destroySelector — the
  *                              NDS.Init.destroy hook for a component that keeps no
@@ -577,11 +583,39 @@
             selector: '#nds-date, #nds-realTimeClock',
             init: () => NDS.TimeDate?.init?.(),
         },
-        // Note: accessibility is intentionally NOT registered here. The
-        // optional assets/js/nds-accessibility.min.js bundle self-boots via
-        // its own IIFE — arms on localStorage-saved prefs (apply on load) or
-        // on FAB click (lazy init). Loader has zero references; the bundle
-        // can be omitted entirely without touching core.
+        {
+            // The FAB is on every page but most visitors never open the panel,
+            // so this one is `lazy`: present, armed, but not fetched until a
+            // press. eager() opts a returning visitor back in — their saved
+            // modes have to apply at load, not after they press something.
+            // Dropping the bundle file is still a clean opt-out: loadBundle
+            // resolves on error and every call here is optional-chained.
+            name: 'Accessibility',
+            selector: '[data-accessibility-toggle]',
+            init: () => NDS.Accessibility?.init?.(),
+            // Arms its own trigger; the lazy stub fetches the bundle on the
+            // first press and replays the call. Capture, because the FAB is
+            // also a [data-panel-toggle] and Panel must not act on a press
+            // whose bundle has not arrived — it would find no panel at all.
+            // The ready check reads __ndsStub FIRST: every property read on a
+            // stub returns a truthy function, so a bare .ready would hand the
+            // very first press to a bundle that is not there. Repeat presses
+            // during the fetch are dropped by the component's own _arming
+            // guard. The `loading` stamp covers the download, which the
+            // component cannot see; armedThen() clears it.
+            lazy: () => {
+                document.addEventListener('click', (e) => {
+                    const btn = e.target.closest('[data-accessibility-toggle]');
+                    if (!btn) return;
+                    const ns = NDS.Accessibility;
+                    if (ns && !ns.__ndsStub && ns.ready) return;
+                    e.stopPropagation();
+                    NDS.State?.add?.(btn, 'loading');
+                    NDS.Accessibility.toggle(btn);
+                }, true);
+            },
+            eager: () => { try { return !!localStorage.getItem('nds-a11y'); } catch (e) { return false; } },
+        },
     ];
 
     // Cross-batch yielding. Prefers scheduler.yield() (Chrome 129+) so the
@@ -676,6 +710,14 @@
         const file = MAP[name] && MAP[name].file;
         if (!file || !ASSET.dir) return (_bundlePromises[name] = Promise.resolve());
         if ([...document.scripts].some((s) => s.src && s.src.includes(file))) {
+            return (_bundlePromises[name] = Promise.resolve());
+        }
+        // Already ran, with no <script src> to prove it: a consumer may inline a
+        // bundle or concatenate it into their own build, where the src check
+        // above finds nothing and we would fetch a second copy and execute it
+        // over the first. Every namespace being real (not a stub) is the tell.
+        const bundleNs = MAP[name].ns || [];
+        if (bundleNs.length && bundleNs.every((n) => NDS[n] && !NDS[n].__ndsStub)) {
             return (_bundlePromises[name] = Promise.resolve());
         }
         _bundlePromises[name] = new Promise((resolve) => {
@@ -999,6 +1041,12 @@
                 continue;
             }
             const bundle = nsToBundle[c.name];                   // location from the build manifest
+            // Interaction-gated: on the page, but its bundle is not fetched
+            // until the component's own trigger fires. Armed even when eager —
+            // that bundle is still in flight for a moment, and a press in the
+            // gap must not reach a half-wired page.
+            if (c.lazy) c.lazy();
+            if (bundle && c.lazy && !c.eager?.()) continue;      // armed only — nothing loads yet
             if (bundle) (injectedGroups[bundle] ||= []).push(c); // deferred → injected bundle
             else deferredComponents.push(c);                     // deferred → already in main
         }

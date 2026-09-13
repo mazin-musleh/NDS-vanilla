@@ -88,10 +88,14 @@ class JSProcessor
       # bytes of it. NEVER auto-injected (no component registry entry): the
       # loader pulls it via the NDS.Audit lazy stub when enableLogging schedules
       # the post-init sweep, or on the first NDS.Init.audit() call.
-      'nds-audit.min.js' => ['nds-audit.js']
-      # NOTE: nds-accessibility.js is intentionally NOT bundled here — it
-      # builds to its own assets/js/nds-accessibility.min.js (optional add-on,
-      # loaded by a separate <script> gated on site.accessibility).
+      'nds-audit.min.js' => ['nds-audit.js'],
+      # Accessibility — the optional panel, its own bundle so a visitor who
+      # never opens it never downloads it. Auto-injected ONLY for a returning
+      # visitor with saved prefs (the registry entry's eager()); otherwise the
+      # loader arms the FAB and the lazy stub pulls this on the first press.
+      # No <script> tag: dropping this file is the opt-out, and loadBundle
+      # resolves on error.
+      'nds-accessibility.min.js' => ['nds-accessibility.js']
     }
 
     # Load config from _config.yml

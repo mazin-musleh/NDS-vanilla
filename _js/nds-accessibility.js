@@ -11,6 +11,8 @@
  *   NDS.Accessibility.cycleSetting(id)        step a graded setting to its next tier
  *   NDS.Accessibility.reset()                 back to defaults (asks for confirmation)
  *   NDS.Accessibility.state                   a deep CLONE of the saved state — read-only
+ *   NDS.Accessibility.ready                   true once the panel is built AND wired; false
+ *                                             while the bundle loads or the panel builds
  * Events:
  *   (none)
  * Hooks:
@@ -24,22 +26,23 @@
  * Gotchas:
  *   - Every mode is a CSS token override in _variables-a11y.scss. This file only manages
  *     state, persistence, focus and the panel lifecycle — styling is never done here.
- *   - It stays asleep until ARMED: nds-loader.js does NOT register this component at all
- *     (it self-boots — see the boot gate at the bottom of this file), and that boot gate
- *     itself waits for data-nds-loaded before doing anything. Arms on saved preferences
- *     or the user clicking the FAB; data-armed is stamped by init() itself once a panel
- *     exists, not written by anything external. A session with neither pays no init cost.
+ *   - This file is a BUNDLE, not a <script> tag: nds-loader.js registers it `lazy`, so
+ *     nothing here is downloaded until the FAB is pressed — or, for a visitor whose
+ *     saved prefs must apply at load, at init time via the entry's eager(). The loader
+ *     stamps `loading` on the pressed trigger to cover that fetch and armedThen() below
+ *     clears it, so the two read as one spinner. data-armed is stamped by init() itself
+ *     once a panel exists, not written by anything external. A visitor who never presses
+ *     the FAB downloads none of this.
  *   - Preferences live in localStorage under 'nds-a11y'. There is no pre-paint FOUC guard
  *     for them (removed 2026-05 in favor of the page's own pre-reveal hidden gate) — the
- *     saved state is applied by init() itself, after data-nds-loaded.
+ *     saved state is applied by init() itself.
  *   - Panel text is loaded from assets/i18n/accessibility/{lang}.json, with English
  *     defaults in place until it resolves.
  *   - The CSS (panel + mode token overrides) is fetched by loadCSS() only on arm, not
- *     preloaded in <head>. Waiting for data-nds-loaded keeps that fetch from racing the
- *     page's own critical paint, but a saved-prefs return visit can still show a brief
- *     unstyled flash of its active modes right after reveal, until the sheet downloads.
- *     ponytail: accepted for now — re-add a <head> preload gated on a saved 'nds-a11y'
- *     key if that flash proves to matter.
+ *     preloaded in <head>, so a page that never arms never fetches it either. A
+ *     saved-prefs return visit can show a brief unstyled flash of its active modes
+ *     until the sheet downloads. ponytail: accepted — re-add a <head> preload gated
+ *     on a saved 'nds-a11y' key if that flash proves to matter.
  */
 // NDS Accessibility — site-wide a11y panel (FAB + slide-in disclosure)
 //
@@ -1558,60 +1561,3 @@
     };
 })();
 
-// ── Boot gate ──
-// Runs outside the main IIFE — only uses the public NDS.Accessibility API.
-// Loader skips accessibility unless the panel carries [data-armed]. Two ways
-// to arm: localStorage already has saved prefs (apply on load via loader),
-// or user clicks the FAB (lazy init on demand). No-pref + no-click sessions
-// pay zero init cost.
-//
-// Held behind data-nds-loaded — a11y isn't critical enough to compete with
-// the main reveal, same reasoning as the delegated/extras bundles (just done
-// locally here since this ships as its own <script>, not through the
-// loader). Costs nothing functionally: the FAB is chrome, hidden by the same
-// pre-reveal gate, so it isn't clickable any earlier anyway. Also closes most
-// of the accessibility-CSS race from loadCSS() being requested this late —
-// the saved-prefs path no longer starts that fetch until the page is already
-// past its own critical paint, instead of racing it.
-(function bootAccessibility() {
-    const STORAGE_KEY = 'nds-a11y';
-    const fab = document.querySelector('[data-accessibility-toggle]');
-    if (!fab) return;
-
-    const run = () => {
-        // No panel/template existence check: resolvePanel() builds the panel
-        // from panelMarkup() when neither a live one nor a page-authored
-        // <template> exists — it's the default now, not a fallback.
-        // init() resolves the real panel (stamping it out of the template when
-        // needed) and stamps data-armed itself.
-        try { if (localStorage.getItem(STORAGE_KEY)) NDS.Accessibility.init(); } catch (e) {}
-
-        // Capture phase, always on (not one-shot): the FAB is also a
-        // [data-panel-toggle], so Panel's own bubble-phase handler would
-        // otherwise fight this — finding nothing yet on a cold session, or
-        // opening instantly and bypassing the cold-arm gate on a warm one.
-        // Every click is redirected through toggle(triggerEl) instead, which
-        // already knows whether this is the first arm or not, and reads the
-        // clicked element's own data-panel-side rather than an arbitrary
-        // document-order first-match.
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('[data-accessibility-toggle]');
-            if (!btn) return;
-            // Cold only. Once ready the FAB is a real [data-panel-toggle] and
-            // Panel's own delegated handler opens it — swallowing the click
-            // here on every press also killed the document-BUBBLE outside-click
-            // close in nds-panels.js, so any other open panel stayed open.
-            // While still building this stays false, so a repeat press is
-            // swallowed here and toggle() drops it, instead of reaching Panel
-            // and opening a panel the pending build then toggles shut.
-            if (NDS.Accessibility.ready) return;
-            e.stopPropagation();
-            NDS.Accessibility.toggle(btn);
-        }, true);
-    };
-
-    if (document.documentElement.hasAttribute('data-nds-loaded')) run();
-    else {
-        const off = NDS.onAttrChange(':root', ['data-nds-loaded'], () => { off(); run(); });
-    }
-})();

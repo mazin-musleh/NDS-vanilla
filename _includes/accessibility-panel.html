@@ -1,12 +1,14 @@
 {%- comment -%}
-Panel opens this FAB: it is one of its toggles, and nds-accessibility.js arms
-itself from a capture-phase listener so the tiles are wired before the panel
-is shown. It ships `hidden` — nds-fab.js strips that once the button is
-routed into its dock.
+Panel opens this FAB: it is one of its toggles. The button is also the only
+accessibility markup a page carries — there is no <script> tag. nds-loader.js
+arms this selector from a capture-phase listener and fetches
+nds-accessibility.min.js on the first press, so the tiles are wired before the
+panel is shown. It ships `hidden` — nds-fab.js strips that once the button is
+routed into its dock. Drop this include and nothing is ever fetched.
 
 The panel itself ships nowhere in this page's HTML — nds-accessibility.js
 carries its markup (panelMarkup() in _js/nds-accessibility.js) and builds it
-into a <template> on arm (saved prefs or FAB click), same as a page-authored
+into a <template> on arm (saved prefs or FAB press), same as a page-authored
 <template> would be. See components/accessibility.md for the markup reference.
 
 To reposition: set data-panel-side HERE, on this button (not 'end'|'start'|

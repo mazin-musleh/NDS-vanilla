@@ -42,10 +42,13 @@ theme_switcher: true
 brand_switcher: true
 
 # Accessibility add-on (FAB + panel + a11y mode overrides). When true, the page
-# loads assets/css/nds-accessibility.min.css + assets/js/nds-accessibility.min.js,
-# renders the accessibility-panel include, and runs the a11y FOUC guard. Set to
-# false if you ship your own accessibility solution — the a11y baked into the
-# core components (focus rings, ARIA, contrast, reduce-motion) is unaffected.
+# renders the accessibility-panel include — the FAB, which is the only
+# accessibility markup a page carries. Neither the bundle nor its CSS is linked:
+# nds-main.min.js arms that FAB and fetches assets/js/nds-accessibility.min.js on
+# the first press (or at load for a visitor with saved prefs), and that bundle
+# requests its own CSS. Set to false if you ship your own accessibility solution
+# — the a11y baked into the core components (focus rings, ARIA, contrast,
+# reduce-motion) is unaffected, and with no FAB nothing is ever fetched.
 accessibility: true
 
 # Critical-CSS load mode. Default (false): the critical file loads render-blocking
