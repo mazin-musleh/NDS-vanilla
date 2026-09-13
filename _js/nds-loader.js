@@ -855,8 +855,10 @@
     function presplitPaged() {
         document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])').forEach(c => {
             const n = parseInt(c.style.getPropertyValue('--per-page'), 10) || 6;
-            // Same item set as pagination's _pagedItems: a tbody counts
-            // its own rows only (sub-rows ride their parent).
+            // Pagination's _pagedItems minus its [data-filtered] skip: a tbody
+            // counts its own rows only (sub-rows ride their parent). Nothing
+            // carries data-filtered here — only nds-filter.js writes it, and it
+            // ships delegated, long after this runs.
             const items = c.tagName === 'TBODY'
                 ? Array.from(c.children).filter(el => el.classList.contains('nds-page-item') && !el.classList.contains('nds-sub'))
                 : c.querySelectorAll('.nds-page-item');
