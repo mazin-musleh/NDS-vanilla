@@ -88,15 +88,19 @@
                      || '';
 
     // ── Breakpoints (matches _mixins.scss) ─────────────────────────
-    // Usage: NDS.breakpoints.desktop → '(min-width: 960px)'
+    // Usage: NDS.breakpoints.desktop → '(width >= 960px)'
     //        window.matchMedia(NDS.breakpoints.mobile).matches
+    // Range syntax, not max-width: N - 1. A tier ending at 959px stops matching at
+    // 959.01 while the next has not started, so a viewport of 959.2 — ordinary under
+    // browser zoom — matched neither tier. `<` and `>=` on the same number are exact
+    // complements, so every width lands in exactly one tier, here and in the CSS.
     NDS.breakpoints = {
-        mobile:          '(max-width: 599px)',
-        tablet:          '(min-width: 600px)',
-        'tablet-max':    '(max-width: 959px)',
-        desktop:         '(min-width: 960px)',
-        'desktop-max':   '(max-width: 1279px)',
-        'large-desktop': '(min-width: 1280px)'
+        mobile:          '(width < 600px)',
+        tablet:          '(width >= 600px)',
+        'tablet-max':    '(width < 960px)',
+        desktop:         '(width >= 960px)',
+        'desktop-max':   '(width < 1280px)',
+        'large-desktop': '(width >= 1280px)'
     };
 
     // ── Language & Direction (live) ──────────────────────────────────

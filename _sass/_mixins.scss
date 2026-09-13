@@ -11,18 +11,24 @@
 // ==============================================
 
 // One truth for the tiers, the same numbers as NDS.breakpoints in nds-core.js:
-// mobile ≤ 599, tablet 600–959, desktop 960–1279, wide ≥ 1280. The map and the
+// mobile < 600, tablet 600–959, desktop 960–1279, wide >= 1280. The map and the
 // mixins below both derive from these three, so CSS and JS agree at every edge.
+//
+// Every edge is written as `< N` against the next tier's `>= N`, never `max-width:
+// N - 1`. A tier that ends at 959px stops matching at 959.01, and the next does not
+// start until 960 — so a viewport of 959.2 (ordinary under browser zoom or Windows
+// DPI scaling) matched NEITHER tier and fell through to the base rules. `<` and
+// `>=` on the same number are exact complements: no gap, and no overlap either.
 $bp-tablet: 600px;
 $bp-desktop: 960px;
 $bp-wide: 1280px;
 
 // Viewport breakpoints — range-based (exclusive ranges for alignment utilities)
 $breakpoints-range: (
-  sm: '(max-width: #{$bp-tablet - 1})',
-  md: '(min-width: #{$bp-tablet}) and (max-width: #{$bp-desktop - 1})',
-  lg: '(min-width: #{$bp-desktop}) and (max-width: #{$bp-wide - 1})',
-  xl: '(min-width: #{$bp-wide})'
+  sm: '(width < #{$bp-tablet})',
+  md: '(#{$bp-tablet} <= width < #{$bp-desktop})',
+  lg: '(#{$bp-desktop} <= width < #{$bp-wide})',
+  xl: '(width >= #{$bp-wide})'
 );
 
 // ==============================================
@@ -37,13 +43,13 @@ $breakpoints-range: (
 
 @mixin tablet($break: null) {
   @if $break =='min' {
-    @media (min-width: $bp-tablet) {
+    @media (width >= $bp-tablet) {
       @content;
     }
   }
 
   @else if $break =='max' {
-    @media (max-width: $bp-desktop - 1) {
+    @media (width < $bp-desktop) {
       @content;
     }
   }
@@ -57,13 +63,13 @@ $breakpoints-range: (
 
 @mixin desktop($break: null) {
   @if $break =='min' {
-    @media (min-width: $bp-desktop) {
+    @media (width >= $bp-desktop) {
       @content;
     }
   }
 
   @else if $break =='max' {
-    @media (max-width: $bp-wide - 1) {
+    @media (width < $bp-wide) {
       @content;
     }
   }
