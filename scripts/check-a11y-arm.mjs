@@ -8,6 +8,9 @@
 //   3. a visitor who never arms the panel must never fetch its sheet OR its JS,
 //      and when they do press, the paired sheet starts WITH the bundle rather
 //      than a round trip behind it
+//   5. arming must pull ONLY what the panel needs — it used to ask for every
+//      bundle in the manifest, dragging in extras and audit (which must never be
+//      auto-injected at all), while still wiring the panel's own accordion
 //   4. a visitor WITH saved prefs must get the bundle without pressing anything,
 //      or their saved modes silently stop applying
 //   node scripts/check-a11y-arm.mjs [_site]
@@ -70,10 +73,14 @@ const settle = async (page) => {
     const page = await freshPage();
     const css = [], js = [];
     let tCss = 0, tJs = 0;
+    let pressed = false;
+    const afterPress = [];
     page.on('request', (req) => {
         const u = req.url();
         if (u.includes('nds-accessibility.min.css')) { css.push(u); tCss ||= Date.now(); }
         if (u.includes('nds-accessibility.min.js')) { js.push(u); tJs ||= Date.now(); }
+        const other = u.match(/nds-(delegated|extras|audit)\.min\.js/);
+        if (pressed && other) afterPress.push(other[1]);
     });
     await page.goto(URL, { waitUntil: 'networkidle0' });
     await settle(page);
@@ -83,6 +90,7 @@ const settle = async (page) => {
     // ...and a press pulls it. Without this the check above passes on a page
     // where accessibility is simply broken.
     const t0 = Date.now();
+    pressed = true;
     await page.evaluate(() => document.querySelector('[data-accessibility-toggle]').click());
     await new Promise((r) => setTimeout(r, 2000));
     note(js.length === 1, 'a press fetches the bundle', `${js.length} request(s)`);
@@ -92,6 +100,18 @@ const settle = async (page) => {
     const gap = tCss && tJs ? tCss - tJs : null;
     note(gap !== null && gap < 50, 'the paired sheet starts with the bundle, not after it',
          gap === null ? 'one of them never fetched' : `+${gap}ms after the js, press+${tJs - t0}ms`);
+
+    // audit is never auto-injected, by contract; extras is page-gated. Arming the
+    // panel is not a reason to fetch either.
+    const strays = [...new Set(afterPress)].filter((b) => b !== 'delegated');
+    note(strays.length === 0, 'the press pulls no bundle the panel does not need', strays.join(', '));
+    // ...and the bundles it DOES need still land: the panel's own accordion is
+    // the thing that breaks if arming stops resolving them.
+    const wired = await page.evaluate(() => {
+        const acc = document.querySelector('[data-accessibility-panel] .nds-accordion');
+        return !!acc && acc.hasAttribute('data-nds-accordion-initialized');
+    });
+    note(wired, "the panel's own accordion is initialized");
     await page.close();
 }
 

@@ -24,6 +24,11 @@
  *                              the one call after you add/remove/replace rows or cards.
  *                              Pass the container whose CHILDREN changed; omit it for
  *                              the whole document
+ *   NDS.Init.mount(el)         el's markup is NEW to the page (built or fetched after
+ *                              the detection pass): load the bundles its own content
+ *                              needs, then init them against it → Promise. refresh()
+ *                              skips a namespace whose bundle never arrived; mount()
+ *                              fetches it
  *   NDS.Init.destroy(el)       tear down every component instance inside el before the
  *                              container itself goes away — the one call on unmount.
  *                              Returns how many instances it destroyed
@@ -1323,6 +1328,29 @@
     }
 
     // Expose global API immediately
+    // A container whose markup is NEW to the page — built or fetched after the
+    // one-time detection pass, so nothing ever scanned it. Loads only the bundles
+    // its OWN content needs, then inits them against it.
+    //
+    // refresh() alone is not enough here: it skips a stubbed namespace on purpose,
+    // which is right for content that was present during detection (that bundle
+    // will scan it on arrival) and wrong for content built afterwards, which
+    // nothing revisits. Asking for every bundle in the manifest is not the answer
+    // either — that drags in extras, and audit, which must never be auto-injected.
+    // The registry knows which components the markup actually contains and the
+    // build manifest knows where each one lives; nothing is hardcoded.
+    function mountContainer(container) {
+        const root = container || document;
+        const needed = new Set();
+        for (const c of COMPONENTS) {
+            if (!c.selector) continue;
+            const here = root.matches?.(c.selector) || root.querySelector?.(c.selector);
+            const bundle = here && nsToBundle[c.name];
+            if (bundle) needed.add(bundle);
+        }
+        return Promise.all([...needed].map(loadBundle)).then(() => refreshContainer(root));
+    }
+
     NDS.Init = {
         initialize: initializeNDS,
         components: COMPONENTS,
@@ -1334,6 +1362,7 @@
         // later calls run synchronously.
         audit: () => NDS.Audit.run(),
         refresh: refreshContainer,
+        mount: mountContainer,
         destroy: destroyContainer,
     };
 

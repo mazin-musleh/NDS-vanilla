@@ -1418,18 +1418,13 @@
         if (injected) wireInjected(injected);
         // Accordion/Panel/Fab live in an injected bundle (delegated, low-priority,
         // never gated on the reveal) that may still be a lazy stub the instant
-        // fromTemplate's refresh runs — nds-loader.js skips a stub on purpose
-        // rather than force-loading it, and nothing revisits content built AFTER
-        // the page's own one-time detection pass, since that accordion didn't
-        // exist yet to be detected. Bundle names come from the build manifest,
-        // never hardcoded (AGENTS.md); re-running refresh once they're all in is
-        // a no-op for whatever already initialized correctly the first time.
-        if (injected) {
-            const bundles = Object.keys(window.__NDS_BUNDLES || {});
-            if (bundles.length) {
-                Promise.all(bundles.map(b => NDS.loadBundle?.(b))).then(() => NDS.Init?.refresh?.(injected));
-            }
-        }
+        // fromTemplate's refresh runs — nds-loader.js skips a stub on purpose,
+        // and nothing revisits content built AFTER the page's own one-time
+        // detection pass, since that accordion didn't exist yet to be detected.
+        // mount() loads the bundles this panel's own markup needs and nothing
+        // else; it used to ask for every bundle in the manifest, which dragged
+        // in extras and audit on a page that wanted neither.
+        if (injected) NDS.Init?.mount?.(injected);
         return injected;
     }
 
