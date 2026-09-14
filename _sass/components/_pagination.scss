@@ -119,13 +119,14 @@
 // ELLIPSIS WITH DROPDOWN
 // ==============================================
 
-// Trigger + menu live inside `.nds-pagination-ellipsis` — the dropmenu
-// defaults to no-portal so descendant selectors are safe in both states.
+// The trigger never leaves `.nds-pagination-ellipsis`, so it stays descendant-scoped.
 .nds-pagination-ellipsis .nds-dropmenu-trigger>.nds-label {
   display: var(--_ellipsis-label-display, none);
 }
 
-.nds-pagination-ellipsis .nds-dropmenu-menu {
+// The menu portals to <body> when the pagination sits in a modal or a scrolling
+// wrapper, so it is styled by its own class — a descendant selector dies there.
+.nds-pagination-menu {
   min-width: 60px;
 
   .nds-dropmenu-item {
