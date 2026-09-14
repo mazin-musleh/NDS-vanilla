@@ -68,7 +68,9 @@ mark {
         gap: var(--spacing-md);
         color: var(--text-secondary-paragraph);
         font-size: var(--typo-text-sm-FS);
-        line-height: var(--typo-text-sm-LH);
+        // Label, not prose — the paired LH pads the line box and throws the
+        // label off the flanking lines. 1 keeps the box on the text.
+        line-height: 1;
         border-block-start: 0;
 
         &::before,
