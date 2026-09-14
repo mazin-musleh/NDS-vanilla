@@ -2,6 +2,8 @@
 
 // Centering: flex-center the placeholder inside generic containers (ul/ol/div).
 // Tables use native table layout + vertical-align:middle on the cell instead.
+// A .nds-grid container keeps its own display:grid !important — the placeholder
+// spans it via grid-column below instead of fighting for the display value.
 .nds-empty:has(> [data-nds-empty-placeholder]):not(table):not(tbody) {
   display: flex;
   align-items: center;
@@ -19,6 +21,7 @@
   gap: var(--spacing-md);
   padding: var(--spacing-4xl) var(--spacing-xl);
   text-align: center;
+  grid-column: 1 / -1; // span every column when the container is a grid
 }
 
 li.nds-empty-placeholder {
