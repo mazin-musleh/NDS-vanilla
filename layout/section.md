@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.10.0"
-last_edit: "04/09/2026 - 05:10 AM"
+updated: "1.12.x"
+last_edit: "15/09/2026 - 12:22 PM"
 ---
 
 <!-- Section Structure Overview -->
@@ -42,6 +42,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
 │   │   ├── div.nds-section-action   (optional float, must be first child)
 │   │   │                            Modifiers: .nds-minimal (icon-only on mobile) | .nds-wrap (allow wrap)
 │   │   ├── h2.nds-section-title
+│   │   │   └── span.nds-featured-icon.nds-section-icon (optional mark, sized to the title)
 │   │   ├── div.nds-section-meta
 │   │   └── p.nds-section-description
 │   ├── div.nds-section-action       (optional, auto width. Add .nds-nowrap to keep inline on mobile)
@@ -1275,6 +1276,94 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
     </div>
 </section>
 
+<!-- Title Icon -->
+<section id="titleIcon" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Title Icon</h2>
+            <p class="nds-section-description">A mark that sits beside the heading, for sections that carry an emblem or a category symbol. Put <code class="nds-inline-code lang-html">nds-section-icon</code> inside the title and it takes the heading height, so it rescales with the title on every breakpoint. The title holds the mark on one row, so a long heading wraps its text and leaves the mark in place. Add <code class="nds-inline-code lang-html">nds-center</code> to the section to center the head and stack the mark above the text.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block nds-prose">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-action">
+                                <button class="nds-btn nds-subtle demo-toggle-btn"
+                                    data-toggler='["nds-center", ".nds-content-section", "iconAlign"]'>
+                                    <span class="nds-label">Center</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <section class="nds-content-section">
+                                    <div class="nds-section-wrapper">
+                                        <div class="nds-section-head">
+                                            <h2 class="nds-section-title">
+                                                <span class="nds-featured-icon nds-section-icon">
+                                                    <i class="hgi hgi-stroke hgi-stars"></i>
+                                                </span>
+                                                Digital services
+                                            </h2>
+                                            <p class="nds-section-description">Services you can complete online, without a visit to a branch.</p>
+                                        </div>
+                                        <div class="nds-section-body">
+                                            <p>Section content area.</p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-section-icon-1" id="tab-section-icon-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-section-icon-1"
+                                        aria-labelledby="tab-section-icon-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
+&lt;section class="nds-content-section"&gt;
+    &lt;div class="nds-section-wrapper"&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;h2 class="nds-section-title"&gt;
+                &lt;span class="nds-featured-icon nds-section-icon"&gt;
+                    &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
+                &lt;/span&gt;
+                Digital services
+            &lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;Services you can complete online, without a visit to a branch.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-body"&gt;
+            &lt;p&gt;Section content area.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="sectionFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -1398,7 +1487,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         <tr><td><code class="nds-inline-code lang-html">nds-block</code></td><td>Spacing only: full width plus a bottom margin, dropped on the last one. It is not a container and it groups nothing, so put it straight on a block-level component such as a stepper, tab set, or table. Wrap elements in one only when they really are a single group; two groups need two blocks, or the gap between them never appears</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-max-width</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: breaks out of content padding to span the full available width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-full-width</code></td><td>On a section child: spans the full viewport width, regardless of the container. <code class="nds-inline-code lang-html">nds-max-width</code> only cancels the wrapper padding, so it stops at its container edge. The two differ when the container is narrower than the screen, such as beside a side menu</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-full</code></td><td>On <code class="nds-inline-code lang-html">nds-section-subtitle</code> or <code class="nds-inline-code lang-html">nds-section-description</code>: removes the 720px paragraph width cap so the text spans the section width</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-full</code></td><td>On <code class="nds-inline-code lang-html">nds-section-title</code>, <code class="nds-inline-code lang-html">nds-section-subtitle</code> or <code class="nds-inline-code lang-html">nds-section-description</code>: removes the 720px paragraph width cap so the text spans the section width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-minimal</code></td><td>On float action: hides button labels on mobile (icon-only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>On float action: allows action to wrap below the title on mobile instead of floating</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-nowrap</code></td><td>On standard action: keeps action inline at all breakpoints instead of wrapping to full row</td></tr>
@@ -1443,7 +1532,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         <tr><td><code class="nds-inline-code lang-html">--section-description-FS</code></td><td>var(--typo-text-clamp-lg-FS)</td><td>Description font size</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--section-description-LH</code></td><td>var(--typo-text-clamp-lg-LH)</td><td>Description line height</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--section-description-MB</code></td><td>var(--spacing-2xl)</td><td>Description bottom margin</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-shape-size</code></td><td>var(--section-title-FS)</td><td>Size of decorative shape in the title</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--section-icon-size</code></td><td>var(--section-title-FS), 48px when centered</td><td>Height of <code class="nds-inline-code lang-html">.nds-section-icon</code> when it sits inside the title. A centered title stacks the mark above the text, so it stops tracking the title size. Setting this knob overrides both</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--section-image-MB</code></td><td>var(--spacing-2xl)</td><td>Image bottom margin (outside wrapper)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--block-title-FS</code></td><td>var(--typo-text-xl-FS)</td><td>Content block title font size</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--block-title-LH</code></td><td>var(--typo-text-xl-LH)</td><td>Content block title line height</td></tr>

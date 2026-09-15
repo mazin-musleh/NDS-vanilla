@@ -26,7 +26,7 @@
     --_section-title-LH: var(--section-title-LH, var(--_section-title-LH-base));
     --_section-title-MB-base: var(--typo-display-clamp-md-MB);
     --_section-title-MB: var(--section-title-MB, var(--_section-title-MB-base));
-    --_section-shape-size: var(--section-shape-size, var(--_section-title-FS));
+    --_section-icon-size: var(--section-icon-size, var(--_section-title-FS));
     --_section-subtitle-FS: var(--section-subtitle-FS, var(--typo-text-clamp-lg-FS));
     --_section-subtitle-LH: var(--section-subtitle-LH, var(--typo-text-clamp-lg-LH));
     --_section-subtitle-MB: var(--section-subtitle-MB, var(--_section-title-MB));
@@ -102,7 +102,9 @@
     font-weight: var(--font-weight-bold);
     letter-spacing: -0.02rem;
     margin-top: 0;
-    flex-wrap: wrap;
+    // No wrap: the text is one flex item, so wrapping drops an icon beside it
+    // onto a line of its own. Nowrap lets the text shrink and wrap inside
+    // itself while the icon stays put. .nds-center stacks via column instead.
     max-width: var(--paragraph-max-width);
 
     // Same escape the subtitle and description carry.
@@ -114,15 +116,34 @@
     &.nds-center {
         flex-direction: column;
         gap: var(--spacing-xl);
+        // Stacked above the text it reads as an emblem, not a mark beside a
+        // word, so it stops tracking the title size. Re-declared rather than
+        // given a -base: the section root already resolved the knob above.
+        --_section-icon-size: var(--section-icon-size, 48px);
     }
 
     &:not(:last-child) {
         margin-bottom: var(--_section-title-MB);
     }
 
-    .nds-section-shape {
-        height: var(--_section-shape-size);
-        width: auto;
+    // Inside the title it is a mark beside the text, not the centering box it
+    // is as a sibling of the head.
+    .nds-section-icon {
+        // A featured icon sizes through its own knob, so glyph, padding and
+        // radius scale together. A size class (.nds-sm) ties on specificity and
+        // ships in the later bundle, so it still wins: asking for one is asking
+        // to opt out of title sizing.
+        --featuredicon-size: var(--_section-icon-size);
+        // normal, not unset: font-weight inherits, so unset would keep the
+        // title's bold and synthesize a heavier glyph.
+        font-weight: normal;
+
+        // A bare svg/img has no knob to read. Excluding the featured icon keeps
+        // its box and glyph on one size instead of half-overriding it.
+        &:not(.nds-featured-icon) {
+            height: var(--_section-icon-size);
+            width: auto;
+        }
     }
 }
 
