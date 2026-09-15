@@ -488,6 +488,10 @@
         // box. The front card is on top, the last at the bottom. Box and image
         // both move by transform: no layout.
         z-index: calc(20 - var(--rel, 1));
+        // The image shift rides a property the card sets, not a rule keyed on the
+        // card's status — a tag tail after [data-status] pulls every <img> on the
+        // page into one invalidation set (PERF-06).
+        --_img-x: translateX(calc(var(--_dir) * (var(--_card) - var(--_strip))));
         transform: translateX(calc(var(--drag, 0px) + var(--_dir) * var(--rel, 1) * var(--_strip)));
         will-change: transform;
         padding: 0;
@@ -503,19 +507,16 @@
             transform: translateX(var(--drag, 0px));
             transition: transform var(--_deck-motion), z-index 0s var(--_deck-dur);
             cursor: default;
+            --_img-x: none;
         }
 
         img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: translateX(calc(var(--_dir) * (var(--_card) - var(--_strip))));
+            transform: var(--_img-x);
             transition: transform var(--_deck-motion);
             -webkit-user-drag: none;   // a mouse drag is a swipe, not an image drag
-        }
-
-        &[data-status="active"] img {
-            transform: none;
         }
     }
 
