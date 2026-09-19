@@ -168,6 +168,14 @@ def verify(out, version):
     if tails.returncode:
         sys.exit('check-data-state-tails.py failed:\n' + tails.stdout + tails.stderr)
 
+    # The ND96 pack carries its own copy of the swiper's DECK MODE block, for
+    # runtimes older than the mode. Its sheet is unscoped, so a copy that falls
+    # behind does not sit quietly — it overrides the newer core.
+    deck = subprocess.run('python scripts/check-deck-copy.py', cwd=ROOT,
+                          shell=True, capture_output=True, text=True)
+    if deck.returncode:
+        sys.exit('check-deck-copy.py failed:\n' + deck.stdout + deck.stderr)
+
     # head.md prints the inline critical gate as canonical markup a consumer
     # copies into their own <head>. It is a hand-maintained copy of what
     # _includes/critical-inline.html compiles from _sass/_fold.scss, so it can
