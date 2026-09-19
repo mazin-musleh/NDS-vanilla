@@ -49,8 +49,9 @@
   &.nds-nd96-kindness   { --_nd96-from: #011d3a; --_nd96-to: #0050af; --_nd96-word: #07b9ff; }
   &.nds-nd96-vision     { --_nd96-from: #211501; --_nd96-to: #7c5d21; --_nd96-word: #d8b67a; }
 
-  // Shorter than the default hero: the cards follow (a square of the hero height).
-  --hero-height: 490px;
+  // The cards follow this — each is a square of the hero's height — so the deck
+  // is only as tall as the hero lets it be.
+  --hero-height: 550px;
 
   // Deep stop behind the text, light stop behind the cards.
   --_nd96-angle: 270deg;
@@ -257,6 +258,10 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
 .nds-swiper.nds-deck {
     --_card: var(--deck-card, 300px);
     --_strip: var(--deck-strip, var(--spacing-5xl));
+    // The card's shape, as width ÷ height: 1 is the square the deck was drawn
+    // for, above 1 is landscape, below 1 is portrait. --_card is always the
+    // WIDTH, so the height follows from this in both layouts.
+    --_ratio: var(--deck-ratio, 1);
     --_deck-w: calc(var(--_card) + (var(--swiper-total) - 1) * var(--_strip));
     --_deck-dur: calc(var(--nds-transition-speed) * 3s);
     --_deck-motion: var(--_deck-dur) var(--nds-transition-effect);
@@ -273,7 +278,7 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
     .nds-swiper-deck {
         position: relative;
         width: var(--_deck-w);
-        height: var(--_card);
+        height: calc(var(--_card) / var(--_ratio));
         overflow: hidden;
         // Horizontal drags belong to the deck; vertical ones still scroll the page.
         touch-action: pan-y;
@@ -299,7 +304,14 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
         // is the image's leading edge and the rest of the image lies outside the
         // box. The front card is on top, the last at the bottom. Box and image
         // both move by transform: no layout.
-        z-index: calc(20 - var(--rel, 1));
+        // Offset by the count, not a literal, so the back card never reaches 0:
+        // a flat `20 - rel` sinks card 21 behind the section background. 20 keeps
+        // the whole pile above the nav row's z-index: 5.
+        z-index: calc(20 + var(--swiper-total) - var(--rel, 1));
+        // The image shift rides a property the card sets, not a rule keyed on the
+        // card's status — a tag tail after [data-status] pulls every <img> on the
+        // page into one invalidation set (PERF-06).
+        --_img-x: translateX(calc(var(--_dir) * (var(--_card) - var(--_strip))));
         transform: translateX(calc(var(--drag, 0px) + var(--_dir) * var(--rel, 1) * var(--_strip)));
         will-change: transform;
         padding: 0;
@@ -315,19 +327,16 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
             transform: translateX(var(--drag, 0px));
             transition: transform var(--_deck-motion), z-index 0s var(--_deck-dur);
             cursor: default;
+            --_img-x: none;
         }
 
         img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: translateX(calc(var(--_dir) * (var(--_card) - var(--_strip))));
+            transform: var(--_img-x);
             transition: transform var(--_deck-motion);
             -webkit-user-drag: none;   // a mouse drag is a swipe, not an image drag
-        }
-
-        &[data-status="active"] img {
-            transform: none;
         }
     }
 
@@ -339,8 +348,11 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
 
 // Hero: the deck fills the hero's height at its inline-end edge; the slide and
 // the nav row stop where it starts.
+// .nds-stacked is excluded here, not just overridden: the reserve below sits on
+// the slide and the nav, which no stacked rule touches, so it would hold a
+// gutter open for a deck that has moved above them.
 @include desktop(min) {
-    .nds-swiper.nds-hero.nds-deck {
+    .nds-swiper.nds-hero.nds-deck:not(.nds-stacked) {
         --_card: var(--deck-card, var(--_hero-height, 550px));
         --_deck-reserve: calc(var(--_deck-w) + var(--spacing-2xl));
 
@@ -360,64 +372,122 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
     }
 }
 
-// Below desktop the deck stacks above the track: the open card centred, its two
+// The card's share of the deck's width in the stacked layout (hrsd's 324/430).
+// The stacked layout: the deck above the track, the open card centred, its two
 // neighbours peeking at the sides, every other card faded out. Signed --srel
-// places the fan; percentages keep it fluid.
-@include tablet(max) {
-    .nds-swiper.nds-deck {
-        .nds-swiper-deck {
-            order: -1;
-            width: 100%;
-            max-width: 651px;
-            height: auto;
-            aspect-ratio: 430 / 324;
-            margin-inline: auto;
-        }
+// places the fan; percentages keep it fluid. It is the layout below desktop, and
+// .nds-stacked asks for it at every width — a mixin because a media query cannot
+// be folded into a plain selector, so the block is emitted twice.
+@mixin deck-stacked {
+    // --deck-card sizes the open card here too, not just in the fan.
+    --_card: var(--deck-card, 490px);
+    // The peek's two dials: --_step is how far a neighbour sits, as a share of
+    // the card's width; --_scale is how much it shrinks.
+    --_step: var(--deck-step, 0.918);
+    --_scale: var(--deck-scale, 0.73);
 
-        // One box, the open card's (75.35% wide, centred). A neighbour is the same
-        // box scaled to 55% and shifted one card-step (69.17% of the deck = 91.8%
-        // of the box) to its side; both centres sit on the deck's midline, so no
-        // vertical move. Faded out beyond the neighbours.
-        .nds-swiper-card {
-            top: 0;
-            height: 100%;
-            width: 75.35%;
-            inset-inline-start: 12.33%;
-            z-index: 1;
-            opacity: 0;
-            transform: translateX(calc(var(--drag, 0px) + var(--_dir) * var(--srel, 1) * 91.8%)) scale(0.73);
-            transition: transform var(--_deck-motion), opacity var(--_deck-motion);
+    .nds-swiper-deck {
+        order: -1;
+        // Stated, not inherited from the base rule: the hero's fan pins the deck
+        // with position:absolute, and anything else that does the same would
+        // leave the stacked deck pinned too.
+        position: relative;
+        // Full width, so every neighbour the room allows is shown and reachable
+        // — the deck clips, and a box narrower than its container would cut the
+        // peek down to a sliver.
+        width: 100%;
+        margin-inline: auto;
+        // The deck is as tall as the open card, and the card shrinks when the
+        // room runs out. A spacer carries that: the card is absolutely
+        // positioned so it cannot size the deck, and a height calc cannot read
+        // the deck's own width, which is what min() has to measure against.
+        height: auto;
 
-            img {
-                transform: none;   // the whole card shows here, scaled
-            }
-
-            &[data-status] {
-                opacity: 1;
-            }
-
-            &[data-status="active"] {
-                transform: translateX(var(--drag, 0px));
-                z-index: 2;
-            }
+        &::before {
+            content: "";
+            display: block;
+            width: min(var(--_card), 100%);
+            aspect-ratio: var(--_ratio);
         }
     }
 
-    // In a hero the deck is the first thing in the section: keep it off the top
-    // edge. The nav row flows under the text instead of pinning to the bottom.
-    .nds-swiper.nds-hero.nds-deck {
-        .nds-swiper-deck {
-            margin-block-start: var(--spacing-5xl);
+    // The open card keeps the base rule's box (--_card wide, the deck's height)
+    // and is centred by auto margins. A neighbour is that same box scaled down
+    // and shifted one step to its side; both centres sit on the deck's midline,
+    // so no vertical move. Faded out beyond the neighbours.
+    .nds-swiper-card {
+        top: 0;
+        height: 100%;
+        // Never wider than the deck: the fan's fixed --_card would overflow a
+        // phone, and the deck's spacer above shrinks by the same rule.
+        width: min(var(--_card), 100%);
+        inset-inline: 0;
+        margin-inline: auto;
+        z-index: 1;
+        opacity: 0;
+        // A faded card is a <button>: opacity alone leaves it clickable and in
+        // the tab order. visibility takes it out of both, and transitioned it
+        // holds until the fade finishes.
+        visibility: hidden;
+        transform: translateX(calc(var(--drag, 0px) + var(--_dir) * var(--srel, 1) * var(--_step) * 100%)) scale(var(--_scale));
+        transition: transform var(--_deck-motion), opacity var(--_deck-motion), visibility var(--_deck-motion);
+
+        img {
+            transform: none;   // the whole card shows here, scaled
         }
 
-        .nds-swiper-navigation {
-            position: static;
+        &[data-status] {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        &[data-status="active"] {
+            transform: translateX(var(--drag, 0px));
+            z-index: 2;
         }
     }
 }
 
+// In a hero the deck is the first thing in the section: keep it off the top
+// edge. The nav row flows under the text instead of pinning to the bottom.
+@mixin deck-stacked-hero {
+    .nds-swiper-deck {
+        margin-block-start: var(--spacing-5xl);
+    }
+
+    .nds-swiper-navigation {
+        position: static;
+    }
+
+    // In flow, so its height is the page's. The base reserve above skips
+    // .nds-hero because a fan hero's nav overlays the slides — here nothing
+    // holds the row's space, and the swiper rides the delegated bundle, so it
+    // lands after the reveal and pushes the whole page down. Same pseudo and
+    // release conditions; the height is the hero nav's own box, an arrow plus
+    // the padding-block the hero rule gives the row. The base reserve's 32px
+    // is the non-hero nds-md button and falls 40px short of this one.
+    &:not([data-nds-swiper-initialized], [data-swiper-single])::after {
+        content: "";
+        min-height: calc(var(--btn-size, 40px) + var(--spacing-xl) * 2);
+    }
+}
+
+@include tablet(max) {
+    .nds-swiper.nds-deck { @include deck-stacked; }
+    .nds-swiper.nds-hero.nds-deck { @include deck-stacked-hero; }
+}
+
+// Opt-in: the stacked layout at every width. One class more than the fan rules
+// above, so it wins outside the media query too. JS reads .nds-stacked as well —
+// the drag is gated on the layout, not on the breakpoint.
+.nds-swiper.nds-deck.nds-stacked { @include deck-stacked; }
+.nds-swiper.nds-hero.nds-deck.nds-stacked { @include deck-stacked-hero; }
+
+// One duration feeds every deck transition, so zeroing it here beats each of
+// them whatever their selector — including .nds-stacked's extra class, and the
+// image's own transition, which a rule on the card alone never reached.
 @include reduced-motion {
-    .nds-swiper.nds-deck .nds-swiper-card {
-        transition: none;
+    .nds-swiper.nds-deck {
+        --_deck-dur: 0s;
     }
 }

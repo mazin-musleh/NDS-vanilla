@@ -16,8 +16,12 @@
  *                                                fan behind it; a tap on a card goes to its slide,
  *                                                and below the desktop breakpoint a drag across
  *                                                the deck follows the pointer and pages on release
- *                                                (the desktop layout has the arrows). Loops by default (same
+ *                                                (the fan layout has the arrows). Loops by default (same
  *                                                slide-count rule as the attribute)
+ *   .nds-stacked                                 deck mode: the stacked layout at every width, not
+ *                                                only below desktop — the deck above the track, the
+ *                                                open card centred, its two neighbours peeking, and
+ *                                                the drag armed on desktop too
  *   --deck-card · --deck-strip                   open card size · folded strip width
  *   --max-slides · --mid-slides · --min-slides   slides per view at desktop / tablet /
  *                                                mobile, default 1 each; CSS sizes the row
@@ -57,7 +61,7 @@
  *     mode counts it — listen without capture, or ignore element scrolls.
  *   - Deck cards map to slides by DOM order; the author stamps --rel / --srel on every
  *     card and data-status="active" on the first for first paint. A deck in a hero needs --hero-height: auto on the
- *     section below desktop, where the deck stacks above the text.
+ *     section wherever the deck stacks above the text — below desktop, or at every width with .nds-stacked.
  */
 (function () {
     'use strict';
@@ -338,7 +342,15 @@
                     // maxIndex on the first scroll.
                     this._measuredStep = null;
                     // The loop's start position was measured off hidden clones too.
-                    if (this._loop) this._jumpTo(this._head);
+                    // This IS the landing when the reveal beats the resize callback to
+                    // it, so clear the flag here as well — left set, it suppresses every
+                    // scroll-driven deck update for the life of the swiper.
+                    if (this._loop) {
+                        this._loopPending = false;
+                        this._jumpTo(this._head);
+                        this.detectCurrentSlide();
+                        this.updateDeck();
+                    }
                 });
             }, { threshold: 0.01 });
         }
@@ -390,8 +402,18 @@
                 // Loop: land on the first real slide here, not at init — this initial
                 // callback runs after layout and before the first paint after init, so
                 // the head clones never show and init stays free of layout reads.
-                if (this._loopPending) { this._loopPending = false; this._jumpTo(this._head); }
+                // detectCurrentSlide first, because it is what measures the step, and
+                // the landing needs that measurement: _jumpTo takes its offset from
+                // offsetLeft, so a callback that fires before the slides have width
+                // computes a zero offset, scrolls nowhere, and still spends the
+                // landing. The deck then fans off the unlanded scroll position and
+                // visibly re-fans when a later pass corrects it. Wait for a real step.
                 this.detectCurrentSlide();
+                if (this._loopPending && this._measuredStep) {
+                    this._loopPending = false;
+                    this._jumpTo(this._head);
+                    this.detectCurrentSlide();
+                }
                 this.updatePagination();
                 this.updateButtons();
                 this.updateBoundaryClasses();
@@ -464,7 +486,9 @@
                 try { deck.setPointerCapture(e.pointerId); } catch (err) { /* synthetic pointer: no capture */ }
             }, { signal });
             deck.addEventListener('pointermove', (e) => {
-                if (x0 === null || _mqDesktop.matches) return;   // the desktop layout has the arrows; only the stacked layout drags
+                // The fan layout has the arrows; only the stacked layout drags. Read
+                // live, not at init, so toggling .nds-stacked needs no reinit.
+                if (x0 === null || (_mqDesktop.matches && !this.container.classList.contains('nds-stacked'))) return;
                 dx = e.clientX - x0;
                 if (Math.abs(dx) > 4) {
                     deck.classList.add('nds-dragging');
@@ -495,6 +519,12 @@
         updateDeck(real) {
             const n = this.cards.length;
             if (!n) return;
+            // A looping deck has not landed on its first real slide yet, so the track
+            // still sits where the clones start. Fanning off that puts a different
+            // card at the front, and the cards visibly slide when the landing
+            // corrects it. The author's stamped --rel/--srel hold until then. An
+            // explicit `real` is a caller that knows the index, so it still passes.
+            if (this._loopPending && real === undefined) return;
             const active = real === undefined ? this._realIndex : real;
             this.cards.forEach((card, k) => {
                 const rel = (k - active + n) % n;
