@@ -157,7 +157,20 @@
         for (const k in SEED_PROPS) root.style.removeProperty(SEED_PROPS[k]);
         root.removeAttribute('data-palette');
     }
-    function ensureStylesheet(href) {
+    // An event pack loaded by its own <script> tag inlines its CSS as a
+    // [data-nds-event-style] block instead of taking the LINK_ID slot, so it has
+    // no href for us to swap. Drop the ones we are switching AWAY from, or their
+    // theme survives the switch; `keep` is the theme being applied, if any.
+    function dropInlineEventStyles(keep) {
+        document.querySelectorAll('[data-nds-event-style]').forEach(s => {
+            if (s.getAttribute('data-nds-event-style') !== keep) s.remove();
+        });
+    }
+    function ensureStylesheet(href, theme) {
+        dropInlineEventStyles(theme);
+        // That theme's pack already inlined these exact bytes during parse.
+        // Fetching them again is the blocking round trip the inlining removes.
+        if (theme && document.querySelector('[data-nds-event-style="' + theme + '"]')) return;
         let l = document.getElementById(LINK_ID);
         if (l) { if (l.getAttribute('href') !== href) l.setAttribute('href', href); return; }
         l = document.createElement('link');
@@ -165,6 +178,7 @@
         document.head.appendChild(l);
     }
     function removeStylesheet() {
+        dropInlineEventStyles();
         const l = document.getElementById(LINK_ID);
         if (l) l.remove();
     }
@@ -227,7 +241,7 @@
                 clearInline(); savePalette(null);
                 setThemeToken(value);                       // marker token (records + persists the active sheet; the pack's addToken no-ops after this)
                 window.__NDS_THEME_ACTIVE = value;
-                ensureStylesheet(css);
+                ensureStylesheet(css, value);
                 ensureThemeJS(value, el.getAttribute('data-theme-js'));
                 runHook(value, 'inject');                   // re-activation; first activation self-injects on load
                 _sheet = value;
@@ -289,7 +303,7 @@
         const el = item(active);
         if (el && el.getAttribute('data-theme-css')) {       // active token is a stylesheet theme → inject
             _sheet = active; window.__NDS_THEME_ACTIVE = active;
-            ensureStylesheet(el.getAttribute('data-theme-css'));
+            ensureStylesheet(el.getAttribute('data-theme-css'), active);
             ensureThemeJS(active, el.getAttribute('data-theme-js'));
             runHook(active, 'inject');
         }

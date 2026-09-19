@@ -13,8 +13,8 @@
 //      via the hooks below; its own link/token writes overlap ours idempotently.
 //
 // Hooks contract: window.__NDS_THEME_HOOKS[THEME] = { inject, teardown }, both
-// idempotent and self-contained — inject = link + token + slide, teardown removes
-// all three. Token writes are attribute-only; persistence stays the switcher's job.
+// idempotent and self-contained — inject = styles + token + slide, teardown
+// removes all three. Token writes are attribute-only; persistence stays the switcher's job.
 //
 // Per-deployment content overrides via data-* attributes on the script tag
 // (all optional; bare filenames resolve against this script's own folder):
@@ -39,6 +39,20 @@
         document.querySelector('script[src*="nds-theme-foundation-day"]');
     var BASE = SCRIPT && SCRIPT.src ? SCRIPT.src.slice(0, SCRIPT.src.lastIndexOf('/') + 1) : '';
     var CSS_HREF = BASE + 'nds-theme-' + THEME + '.min.css';
+    // The pack's own CSS, injected inline. scripts/mkevent.py prepends the
+    // assignment to the minified file; read off a global rather than declared as
+    // a constant here because a minifier folds a constant '' and takes the whole
+    // inline branch with it as dead code. Unset (repo, or a JS rebuild after
+    // mkevent) the link fallback runs -- slower, never broken.
+    var CSS_TEXT = window.__NDS_EVENT_CSS || '';
+    try { delete window.__NDS_EVENT_CSS; } catch (e) { window.__NDS_EVENT_CSS = void 0; }
+    // mkevent.py rewrote every relative url() to this token, because an inlined
+    // <style> resolves them against the document instead of the stylesheet. BASE
+    // is this script's own folder, so the assets resolve wherever the pack sits.
+    if (CSS_TEXT) CSS_TEXT = CSS_TEXT.split('__NDS_EVENT_BASE__').join(BASE);
+    // Copied onto the injected <style> so a nonce-based CSP accepts it. Read off
+    // SCRIPT, captured above -- currentScript is null inside any later callback.
+    var NONCE = (SCRIPT && SCRIPT.nonce) || '';
     var DATA = SCRIPT ? SCRIPT.dataset : {};
 
     function pick(key, fallback) {
@@ -121,8 +135,22 @@
     // ── Stylesheet link (shared #nds-theme-stylesheet slot) ─────────────────
     // Create only if absent: in the switcher/brand paths the link already exists
     // (ensureStylesheet / head.html) — leave its href (incl. ?ver=) alone.
-    function ensureLink() {
+    // The stylesheet reaches the page inline when the build filled CSS_TEXT, and
+    // as a fetched link otherwise. Inline is ~400ms of first paint on slow 4G:
+    // the link costs a SECOND blocking round trip, discovered only once this
+    // script has run. Either way it is skipped when LINK_ID already exists --
+    // the brand: path in head.html and the topbar switcher both own that slot.
+    function ensureStyles() {
         if (document.getElementById(LINK_ID)) return;
+        if (document.querySelector('[data-nds-event-style]')) return;
+        if (CSS_TEXT) {
+            var s = document.createElement('style');
+            s.setAttribute('data-nds-event-style', THEME);
+            if (NONCE) s.setAttribute('nonce', NONCE);
+            s.textContent = CSS_TEXT;
+            document.head.appendChild(s);
+            return;
+        }
         if (document.readyState === 'loading') {
             // Parser-inserted = render-blocking in every browser; script-created
             // links are NOT, so appendChild alone flashes the default theme.
@@ -134,9 +162,11 @@
         l.blocking = 'render';
         document.head.appendChild(l);
     }
-    function removeLink() {
+    function removeStyles() {
         var l = document.getElementById(LINK_ID);
         if (l) l.remove();
+        var s = document.querySelector('[data-nds-event-style="' + THEME + '"]');
+        if (s) s.remove();
     }
 
     // ── Marker token on <html data-theme> (attribute-only, no storage) ──────
@@ -220,7 +250,7 @@
 
     // ── Hooks (v2: own link + token + slide) + self-activation ──────────────
     function inject() {
-        ensureLink();
+        ensureStyles();
         addToken();
         scheduleSlide();
     }
@@ -228,7 +258,7 @@
         cancelPending();
         removeSlide();
         removeToken();
-        removeLink();
+        removeStyles();
     }
 
     window.__NDS_THEME_HOOKS = window.__NDS_THEME_HOOKS || {};

@@ -8,16 +8,16 @@
 // Two ways to activate, one code path:
 //   1. Downstream one-tag: a site drops a single <script src=".../nds-theme-
 //      national-day-96.min.js"> tag. Placed synchronously in <head>, the
-//      stylesheet it injects is render-blocking → themed first paint, zero FOUC
+//      styles it injects apply during parse → themed first paint, zero FOUC
 //      (with `defer` it still works, with a brief default-theme flash). The pack
-//      injects its own <link>, stamps the marker token on <html data-theme>, and
+//      injects its own styles, stamps the marker token on <html data-theme>, and
 //      injects the event hero slide. Deleting the tag ends the event cleanly.
 //   2. Showcase switcher: _js/nds-theme.js loads this file on demand and drives
 //      it via the hooks below; its own link/token writes overlap ours idempotently.
 //
 // Hooks contract: window.__NDS_THEME_HOOKS[THEME] = { inject, teardown }, both
-// idempotent and self-contained — inject = link + token + slide, teardown removes
-// all three. Token writes are attribute-only; persistence stays the switcher's job.
+// idempotent and self-contained — inject = styles + token + slide, teardown
+// removes all three. Token writes are attribute-only; persistence stays the switcher's job.
 //
 // Two hero types (data-type on the script tag):
 //   2 (default) the official six-slide campaign hero on the swiper's deck mode —
@@ -56,6 +56,20 @@
         document.querySelector('script[src*="nds-theme-national-day-96"]');
     var BASE = SCRIPT && SCRIPT.src ? SCRIPT.src.slice(0, SCRIPT.src.lastIndexOf('/') + 1) : '';
     var CSS_HREF = BASE + 'nds-theme-' + THEME + '.min.css';
+    // The pack's own CSS, injected inline. scripts/mkevent.py prepends the
+    // assignment to the minified file; read off a global rather than declared as
+    // a constant here because a minifier folds a constant '' and takes the whole
+    // inline branch with it as dead code. Unset (repo, or a JS rebuild after
+    // mkevent) the link fallback runs -- slower, never broken.
+    var CSS_TEXT = window.__NDS_EVENT_CSS || '';
+    try { delete window.__NDS_EVENT_CSS; } catch (e) { window.__NDS_EVENT_CSS = void 0; }
+    // mkevent.py rewrote every relative url() to this token, because an inlined
+    // <style> resolves them against the document instead of the stylesheet. BASE
+    // is this script's own folder, so the assets resolve wherever the pack sits.
+    if (CSS_TEXT) CSS_TEXT = CSS_TEXT.split('__NDS_EVENT_BASE__').join(BASE);
+    // Copied onto the injected <style> so a nonce-based CSP accepts it. Read off
+    // SCRIPT, captured above -- currentScript is null inside any later callback.
+    var NONCE = (SCRIPT && SCRIPT.nonce) || '';
     var DATA = SCRIPT ? SCRIPT.dataset : {};
 
     function pick(key, fallback) {
@@ -236,8 +250,22 @@
     // ── Stylesheet link (shared #nds-theme-stylesheet slot) ─────────────────
     // Create only if absent: in the switcher/brand paths the link already exists
     // (ensureStylesheet / head.html) — leave its href (incl. ?ver=) alone.
-    function ensureLink() {
+    // The stylesheet reaches the page inline when the build filled CSS_TEXT, and
+    // as a fetched link otherwise. Inline is ~400ms of first paint on slow 4G:
+    // the link costs a SECOND blocking round trip, discovered only once this
+    // script has run. Either way it is skipped when LINK_ID already exists --
+    // the brand: path in head.html and the topbar switcher both own that slot.
+    function ensureStyles() {
         if (document.getElementById(LINK_ID)) return;
+        if (document.querySelector('[data-nds-event-style]')) return;
+        if (CSS_TEXT) {
+            var s = document.createElement('style');
+            s.setAttribute('data-nds-event-style', THEME);
+            if (NONCE) s.setAttribute('nonce', NONCE);
+            s.textContent = CSS_TEXT;
+            document.head.appendChild(s);
+            return;
+        }
         if (document.readyState === 'loading') {
             // Parser-inserted = render-blocking in every browser; script-created
             // links are NOT, so appendChild alone flashes the default theme.
@@ -249,9 +277,11 @@
         l.blocking = 'render';
         document.head.appendChild(l);
     }
-    function removeLink() {
+    function removeStyles() {
         var l = document.getElementById(LINK_ID);
         if (l) l.remove();
+        var s = document.querySelector('[data-nds-event-style="' + THEME + '"]');
+        if (s) s.remove();
     }
 
     // ── Marker token on <html data-theme> (attribute-only, no storage) ──────
@@ -673,7 +703,10 @@
                 try { deck.setPointerCapture(e.pointerId); } catch (err) { /* synthetic pointer */ }
             }, { signal: sig });
             deck.addEventListener('pointermove', function (e) {
-                if (x0 === null || mq.matches) return;
+                // The fan layout has the arrows; only the stacked layout drags, and
+                // .nds-stacked asks for that layout above the breakpoint too. Read
+                // live so toggling the class needs no reinit.
+                if (x0 === null || (mq.matches && !swiper.classList.contains('nds-stacked'))) return;
                 dx = e.clientX - x0;
                 if (Math.abs(dx) > 4) { deck.classList.add('nds-dragging'); deck.style.setProperty('--drag', dx + 'px'); }
             }, { signal: sig });
@@ -753,7 +786,7 @@
 
     // ── Hooks (own link + token + slide + footer mark) + self-activation ─────
     function inject() {
-        ensureLink();
+        ensureStyles();
         addToken();
         scheduleSlide();
         scheduleLogo();
@@ -763,7 +796,7 @@
         removeHero();
         removeLogo();
         removeToken();
-        removeLink();
+        removeStyles();
     }
 
     window.__NDS_THEME_HOOKS = window.__NDS_THEME_HOOKS || {};

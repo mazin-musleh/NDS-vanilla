@@ -149,6 +149,61 @@ Full documentation: https://mazin-musleh.github.io/NDS-vanilla/events/{theme}.ht
 """
 
 
+# The pack's inline CSS. js_processor.rb writes the minified JS; Jekyll compiles
+# the SCSS; this is the first point that holds both. Inline beats the fetched
+# <link> by ~400ms of first paint on slow 4G, because the link is a SECOND
+# blocking round trip, discovered only once the pack's script has run.
+#
+# Prepended as a global assignment rather than substituted into a variable: the
+# pack reads `window.__NDS_EVENT_CSS || ''`, and a minifier folds a constant ''
+# and drops the whole inline branch with it. A global is unknowable at compile
+# time, so the branch always survives. The pack deletes it on read. Re-runs strip
+# the previous assignment first, so this is idempotent.
+ASSIGN = re.compile(r'^window\.__NDS_EVENT_CSS=.*?;(?=!function|\(function)', re.S | re.M)
+HEADER = re.compile(r'\A(/\*!.*?\*/\n)', re.S)
+
+
+# A relative url() in a LINKED stylesheet resolves against the stylesheet; in an
+# inlined <style> it resolves against the DOCUMENT, so the pack's bare asset names
+# would 404. Swap them for a token the pack replaces with its own folder at inject
+# time — that keeps the pack working from any path, which a build-time absolute
+# path would not. The .css file in the zip is untouched.
+BASE_TOKEN = '__NDS_EVENT_BASE__'
+URL = re.compile(r"""url\(\s*(['"]?)([^'")]+)\1\s*\)""")
+
+
+def rebase_urls(css):
+    def sub(m):
+        quote, ref = m.group(1), m.group(2).strip()
+        if ref.startswith(('data:', 'http://', 'https://', '/', '#', BASE_TOKEN)):
+            return m.group(0)
+        return 'url(' + quote + BASE_TOKEN + ref + quote + ')'
+    return URL.sub(sub, css)
+
+
+def js_string(text):
+    """CSS as a single-quoted JS string literal. `</` is split so the result stays
+    safe if a page ever inlines the pack's JS into the document itself."""
+    out = (text.replace('\\', '\\\\').replace("'", "\\'")
+               .replace('\r', '').replace('\n', '\\n')
+               .replace('</', "<' + '/"))
+    return "'" + out + "'"
+
+
+def inline_css(ev, js_path, js_text, css_text):
+    body = ASSIGN.sub('', js_text, count=1)          # drop a previous run's copy
+    m = HEADER.match(body)
+    if not m:
+        fail(f"{ev['theme']}: {ev['js']} has no /*! banner — run `ruby _plugins/js_processor.rb` first")
+    head, rest = m.group(1), body[m.end():]
+    if not rest.startswith(('!function', '(function')):
+        fail(f"{ev['theme']}: {ev['js']} does not open with its IIFE — cannot place the CSS safely")
+    filled = head + 'window.__NDS_EVENT_CSS=' + js_string(rebase_urls(css_text)) + ';' + rest
+    with open(js_path, 'w', encoding='utf8', newline='') as f:
+        f.write(filled)
+    return filled
+
+
 def build(ev, site):
     folder = os.path.join(ROOT, ev['folder'])
     if not os.path.isdir(folder):
@@ -157,6 +212,19 @@ def build(ev, site):
     built_css = os.path.join(site, ev['folder'], ev['css'])
     if not os.path.isfile(built_css):
         fail(f"{ev['theme']}: {ev['css']} not in _site — run the Jekyll build first")
+
+    # The compiled CSS is also what gets inlined into the pack's JS, so building
+    # from a stale _site ships a stale stylesheet — and the inline <style> wins
+    # over the file, so the page renders old CSS with nothing to show for it.
+    # Both the theme partial and this pack's Jekyll entry feed that compile.
+    sources = [os.path.join(ROOT, '_sass', 'themes', 'events', f"_{ev['theme']}.scss"),
+               os.path.join(folder, os.path.splitext(ev['css'])[0] + '.scss')]
+    built_at = os.path.getmtime(built_css)
+    stale = [s for s in sources if os.path.isfile(s) and os.path.getmtime(s) > built_at]
+    if stale:
+        names = ', '.join(os.path.relpath(s, ROOT) for s in stale)
+        fail(f"{ev['theme']}: {names} is newer than the compiled {ev['css']} in _site — "
+             f"run the Jekyll build first, or the pack inlines the previous stylesheet")
 
     files = [os.path.join(folder, n) for n in sorted(os.listdir(folder))
              if not n.endswith(SKIP) and os.path.isfile(os.path.join(folder, n))]
@@ -169,6 +237,9 @@ def build(ev, site):
     problems = check_assets(ev, files + [built_css], css_text, js_text)
     if problems:
         fail(f"{ev['theme']}:\n  - " + '\n  - '.join(problems))
+
+    if js_text:
+        js_text = inline_css(ev, js_path, js_text, css_text)
 
     # Readable source, so a consumer can retheme without cloning the repo.
     name = ev['theme']
