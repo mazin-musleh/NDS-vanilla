@@ -698,9 +698,10 @@
                         }
                     });
 
-                    // Special handling for nds-color class on alerts: update JS code example
-                    if (classArray.includes('nds-color') && targetElement.classList.contains('nds-alert')) {
-                        updateAlertColorInJsCode(targetElement, demoCard);
+                    // Mirror the alert's appearance classes into the JS code example
+                    if (targetElement.classList.contains('nds-alert') &&
+                        classArray.some(c => ALERT_FLAG_OPTIONS[c])) {
+                        updateAlertFlagsInJsCode(targetElement, demoCard);
                     }
 
                     // Handle code updates for specific class changes
@@ -822,7 +823,7 @@
         const title = (titles && titles[variant]) || capitalizedVariant;
 
         // Update JS code example
-        withCodeExample(demoCard, '.lang-javascript, .code-example code[class*="javascript"]', function(code) {
+        withCodeExample(demoCard, JS_CODE_SELECTOR, function(code) {
             // Update variant
             code = code.replace(/variant:\s*['"][^'"]+['"]/, `variant: '${variant}'`);
             // Update title
@@ -842,7 +843,7 @@
         });
 
         // Update HTML code example
-        withCodeExample(demoCard, '.lang-html, .code-example code[class*="html"]', function(code) {
+        withCodeExample(demoCard, HTML_CODE_SELECTOR, function(code) {
             // Update data-status
             code = code.replace(/data-status="[^"]*"/, `data-status="${variant}"`);
 
@@ -1135,7 +1136,7 @@
         const message = hasMessage ? (FEEDBACK_MESSAGES[status] || msgEl.textContent) : null;
 
         // Update JS code example
-        withCodeExample(demoCard, '.lang-javascript, .code-example code[class*="javascript"]', function(code) {
+        withCodeExample(demoCard, JS_CODE_SELECTOR, function(code) {
             code = code.replace(/status:\s*['"][^'"]+['"]/, `status: '${status}'`);
             code = code.replace(/size:\s*['"][^'"]+['"]/, `size: '${size}'`);
             if (hasMessage && message) {
@@ -1149,7 +1150,7 @@
         });
 
         // Update HTML code example
-        withCodeExample(demoCard, '.lang-html, .code-example code[class*="html"]', function(code) {
+        withCodeExample(demoCard, HTML_CODE_SELECTOR, function(code) {
             // Update data-status
             code = code.replace(/data-status="[^"]*"/, `data-status="${status}"`);
 
@@ -1243,7 +1244,13 @@
 
     // Update a code example by selector: get hidden copy, apply replaceFn, write back
     function withCodeExample(demoCard, langSelector, replaceFn) {
-        var el = demoCard.querySelector('.code-example code' + langSelector);
+        // Anchor EVERY alternative: prefixing a bare list leaves the tail loose,
+        // and `[class*="javascript"]` then matches the .nds-code-lang chip —
+        // which precedes the <code> in the panel, so querySelector returns it.
+        var sel = langSelector.split(',').map(function (s) {
+            return '.code-example code' + s.trim();
+        }).join(',');
+        var el = demoCard.querySelector(sel);
         if (!el) return;
         var copy = getHiddenCodeCopy(el);
         if (!copy) return;
@@ -1251,6 +1258,7 @@
     }
 
     var JS_CODE_SELECTOR = '.lang-javascript, [class*="javascript"]';
+    var HTML_CODE_SELECTOR = '.lang-html, [class*="html"]';
 
     function updateAlertPositionInJsCode(alertElement, demoCard) {
         var position = alertElement.getAttribute('data-position') || 'top';
@@ -1259,10 +1267,20 @@
         });
     }
 
-    function updateAlertColorInJsCode(alertElement, demoCard) {
-        var hasColor = alertElement.classList.contains('nds-color');
+    // Boolean appearance class → its NDS.Alert.create() option. An example that
+    // omits the key just doesn't match, so both can be synced unconditionally.
+    var ALERT_FLAG_OPTIONS = { 'nds-color': 'color', 'nds-shadow': 'shadow' };
+
+    function updateAlertFlagsInJsCode(alertElement, demoCard) {
         withCodeExample(demoCard, JS_CODE_SELECTOR, function(code) {
-            return code.replace(/color:\s*(true|false)/, 'color: ' + hasColor);
+            Object.keys(ALERT_FLAG_OPTIONS).forEach(function(cls) {
+                var opt = ALERT_FLAG_OPTIONS[cls];
+                code = code.replace(
+                    new RegExp(opt + ':\\s*(?:true|false)'),
+                    opt + ': ' + alertElement.classList.contains(cls)
+                );
+            });
+            return code;
         });
     }
 

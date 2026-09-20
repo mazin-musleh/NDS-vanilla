@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "24/08/2026 - 12:48 PM"
+last_edit: "20/09/2026 - 08:14 PM"
 ---
 
 <!-- Variants -->
@@ -430,6 +430,8 @@ last_edit: "24/08/2026 - 12:48 PM"
     title: 'Update Available',
     description: 'A new version is available. Would you like to update now?',
     target: '#alert-container',
+    shadow: false,
+    color: false,
     actions: [
         { label: 'Update Now', class: 'nds-btn nds-primary nds-sm', onClick: () =&gt; handleUpdate() },
         { label: 'Later', class: 'nds-btn nds-subtle nds-sm', dismiss: true }
@@ -834,7 +836,8 @@ NDS.Alert.create({
     description: 'Changes saved successfully!',
     display: 'toast',
     position: 'top',
-    duration: 4000
+    duration: 4000,
+    color: false
 });</code>
                                     </div>
                                 </div>
