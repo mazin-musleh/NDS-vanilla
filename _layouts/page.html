@@ -12,5 +12,10 @@ layout: default
     </div>
 </div>
 {%- if page.hideFeedback != true %}
+{%- comment %} Which strip closes the page: the Yes/No survey, or the star rating. Opt in per page with `feedback_type: rating`. Unrelated to `rating:`, which is the hero's dropmenu. {%- endcomment %}
+{%- if page.feedback_type == 'rating' %}
+{% include user-feedback-rating.html %}
+{%- else %}
 {% include user-feedback.html %}
+{%- endif %}
 {%- endif %}

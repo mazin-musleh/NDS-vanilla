@@ -5,8 +5,8 @@ hero_title: Text Fields - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "02/09/2026 - 12:00 AM"
+updated: "1.12.x"
+last_edit: "20/09/2026 - 11:12 PM"
 lang: en
 direction: ltr
 ---
@@ -2383,6 +2383,7 @@ NDS.Forms.clearStatus(container);</code>
             <tr><td><code class="nds-inline-code lang-html">data-trigger-label</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu-item</code> to override the trigger label text when that item is chosen. Useful when the dropdown row is descriptive (<em>Saudi Arabia (+966)</em>) but the trigger slot needs something compact (<em>+966</em>).</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-min-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid unless at least this many checkboxes are checked. Also adds the required asterisk to the group label.</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-max-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid when more than this many checkboxes are checked. Defaults to the total checkbox count when absent.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-required</code> (on a rating group)</td><td>Set on an <code class="nds-inline-code lang-html">nds-form-group</code> that holds a <a class="nds-color" href="{{ 'components/rating' | relative_url }}">Rating</a>. The group is invalid while <code class="nds-inline-code lang-html">data-rating</code> is <code class="nds-inline-code lang-html">0</code>, and the first star takes focus. Picking a star clears the message, the way typing in an input does; submit re-checks the rule. The stars are buttons, not inputs, so add a hidden input if the score must post with the form.</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-ajax</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form</code>. When present, the form's submit event is intercepted and <code class="nds-inline-code lang-html">preventDefault()</code> is called after validation passes, allowing you to handle submission via fetch or XHR without a page reload.</td></tr>
           </tbody>
         </table>

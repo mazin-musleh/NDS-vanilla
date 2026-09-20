@@ -1,13 +1,13 @@
 <section id="user-feedback" class="nds-user-feedback-section nds-content-section">
     <div class="nds-section-body">
         <form class="nds-form" action="/submit" method="POST">
-            <div class="nds-user-feedback" >
+            <div class="nds-user-feedback">
                 <div class="nds-user-feedback-overview">
                     <span class="nds-user-feedback-question">Was this page useful?</span>
                     <span class="nds-user-feedback-status" hidden>
                         <!-- Feedback message will be dynamically created by NDS.Feedback API -->
                     </span>
-                    <div class="nds-user-feedback-answer-btn ">
+                    <div class="nds-user-feedback-answer-btn">
                         <button type="button" class="nds-btn nds-primary nds-md" data-answer="Yes" aria-label="Yes">
                             <span class="nds-label">Yes</span>
                         </button>
@@ -23,11 +23,11 @@
                 </div>
                 <div class="nds-user-feedback-details" hidden>
                     <div class="nds-user-feedback-options">
-                        <fieldset class="nds-form-group nds-check-group nds-why-yes" data-min-checked="2">
+                        <fieldset class="nds-form-group nds-check-group nds-why-yes" data-min-checked="2" aria-describedby="feedback-yes-hint">
                             <legend>
                                 <span class="nds-label">Please tell us why</span>
-                                <span class="nds-note">(you can select multiple options)</span>
                             </legend>
+                            <span class="nds-note" id="feedback-yes-hint">(you can select multiple options)</span>
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-yes-relevant">
@@ -71,11 +71,11 @@
                             </div>
                             <div class="nds-form-footer" data-feedback-target hidden></div>
                         </fieldset>
-                        <fieldset class="nds-form-group nds-check-group nds-why-no" data-required>
+                        <fieldset class="nds-form-group nds-check-group nds-why-no" data-required aria-describedby="feedback-no-hint">
                             <legend>
                                 <span class="nds-label">Please tell us why</span>
-                                <span class="nds-note">(you can select multiple options)</span>
                             </legend>
+                            <span class="nds-note" id="feedback-no-hint">(you can select multiple options)</span>
                             <div class="nds-form-container nds-check-container">
                                 <div class="nds-form-header">
                                     <label for="feedback-no-irrelevant">

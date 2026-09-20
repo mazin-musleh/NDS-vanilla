@@ -182,6 +182,24 @@ NDS.UserFeedback = (() => {
             }
         }
 
+        // Rating variant: carry the picked score to the form field and the recap.
+        // The stars are not a form control, so the hidden input is what posts.
+        function mirrorRating() {
+            const picked = feedbackComponent.querySelector('.nds-user-feedback-details .nds-rating');
+            if (!picked) return;
+
+            const value = picked.ndsRating ? picked.ndsRating.getRating() : Number(picked.dataset.rating) || 0;
+
+            const field = feedbackComponent.querySelector('[data-rating-value]');
+            if (field) field.value = value;
+
+            const score = feedbackComponent.querySelector('[data-rating-score]');
+            if (score) score.textContent = '(' + value.toFixed(1) + ')';
+
+            const recap = feedbackComponent.querySelector('.nds-user-feedback-recap .nds-rating');
+            if (recap && recap.ndsRating) recap.ndsRating.setValue(value);
+        }
+
         // Reset to initial state (overview)
         function resetFeedback() {
             // Remove data attributes
@@ -215,6 +233,16 @@ NDS.UserFeedback = (() => {
             // Clear textarea
             const textarea = feedbackComponent.querySelector('textarea');
             if (textarea) textarea.value = '';
+
+            // Rating variant: send the picked stars back to zero along with the rest.
+            // Scoped away from .nds-user-feedback-score, which holds the average.
+            feedbackComponent
+                .querySelectorAll('.nds-user-feedback-details .nds-rating, .nds-user-feedback-recap .nds-rating')
+                .forEach(el => {
+                    if (el.ndsRating) el.ndsRating.setValue(0);
+                });
+            const ratingField = feedbackComponent.querySelector('[data-rating-value]');
+            if (ratingField) ratingField.value = '0';
         }
 
         // Scope all listeners to an AbortController so a future destroy/reinit can detach atomically
@@ -251,6 +279,7 @@ NDS.UserFeedback = (() => {
                     }
                 }
 
+                mirrorRating();
                 showStatus('success');
 
                 // Sticky-nav-aware scroll — no-op when the target is already

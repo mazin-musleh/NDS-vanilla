@@ -1,0 +1,96 @@
+<section id="service-rating" class="nds-user-feedback-section nds-content-section">
+    <div class="nds-section-body">
+        <form class="nds-form" action="/submit" method="POST">
+            <div class="nds-user-feedback nds-user-feedback-rating">
+                <div class="nds-user-feedback-overview">
+                    <span class="nds-user-feedback-question">This service is rated with an average of <strong>3.9</strong></span>
+                    <div class="nds-user-feedback-score">
+                        <div class="nds-rating nds-md nds-brand" data-rating="3.9">
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                        </div>
+                        <span class="nds-user-feedback-statistic">1544 reviews</span>
+                    </div>
+
+                    <!-- Shown by CSS while data-state="details" -->
+                    <div class="nds-user-feedback-prompt">
+                        <span class="nds-user-feedback-title">Tell us what you think of this service</span>
+                        <p>Please don't include personal or financial information. Your review will be submitted and recorded to improve services.</p>
+                    </div>
+
+                    <!-- Shown by CSS while data-state="status"; the score is filled in on submit -->
+                    <div class="nds-user-feedback-recap">
+                        <span>You rated this service as <strong data-rating-score>(0.0)</strong></span>
+                        <div class="nds-rating nds-md nds-brand" data-rating="0">
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                        </div>
+                    </div>
+
+                    <span class="nds-user-feedback-status" hidden>
+                        <!-- Feedback message will be dynamically created by NDS.Feedback API -->
+                    </span>
+                    <div class="nds-user-feedback-answer-btn">
+                        <button type="button" class="nds-btn nds-primary nds-md" data-answer="rate" aria-label="Rate this service">
+                            <span class="nds-label">Rate this service</span>
+                        </button>
+                    </div>
+                    <button type="button" class="nds-user-feedback-close nds-btn nds-secondary-outline nds-md" aria-label="Close feedback" hidden>
+                        <span class="nds-label">Close</span>
+                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="nds-user-feedback-details" hidden>
+                    <div class="nds-user-feedback-options">
+                        <fieldset class="nds-form-group" data-required aria-describedby="service-rating-hint">
+                            <legend>
+                                <span class="nds-label">How would you rate this service?</span>
+                            </legend>
+                            <!-- Outside the legend so the group's name stays short; described
+                                 by id so a reader still hears the scale at the stars. -->
+                            <span class="nds-note" id="service-rating-hint">Rate your experience from (1) poor to (5) excellent</span>
+                            <div class="nds-rating nds-md nds-brand" data-rating="0">
+                                <button class="nds-rating-star" type="button" aria-label="1 star"></button>
+                                <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
+                                <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
+                                <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
+                                <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
+                            </div>
+                            <!-- Carries the score in a normal form post; written on submit. -->
+                            <input type="hidden" name="rating" value="0" data-rating-value>
+                            <div class="nds-form-footer" data-feedback-target hidden></div>
+                        </fieldset>
+                    </div>
+                    <div class="nds-user-feedback-comment">
+                        <div class="nds-form-container nds-textarea">
+                            <div class="nds-form-header">
+                                <label for="service-rating-comment">
+                                    <span class="nds-label">Feedback</span>
+                                </label>
+                            </div>
+                            <div class="nds-form-control">
+                                <textarea id="service-rating-comment" name="comment" class="nds-textarea" placeholder="Enter your message..." rows="4"></textarea>
+                            </div>
+                            <div class="nds-form-footer" data-feedback-target hidden></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-user-feedback-submit" hidden>
+                    <span class="nds-user-feedback-agreement">For more information you may review <a href="#">e-participation statement</a> and <a href="#">rules of
+                            engagement.</a></span>
+                    <button class="nds-user-feedback-submit-btn nds-btn nds-primary" data-answer="submit" aria-label="Submit">
+                        <span class="nds-label">Submit</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

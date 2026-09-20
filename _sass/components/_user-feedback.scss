@@ -17,6 +17,13 @@
         }
     }
 
+    // The note sits outside the legend so the group's accessible name stays
+    // short, and is wired back with aria-describedby. A flex row-gap cannot
+    // differ from its siblings, so the note pulls itself back under the legend.
+    legend + .nds-note {
+        margin-block-start: calc(var(--spacing-md) - var(--spacing-xl));
+    }
+
     // STATE: Details
     &[data-state="details"] {
         :is(.nds-user-feedback-statistic, .nds-why-yes, .nds-why-no) {
@@ -44,7 +51,9 @@
             flex-direction: column;
             align-items: start;
         }
-
+        .nds-user-feedback-question {
+            gap: var(--spacing-md);
+        }
         .nds-user-feedback-answer-btn {
             gap: var(--spacing-lg);
             flex-wrap: nowrap;
@@ -53,6 +62,7 @@
 
         .nds-user-feedback-status {
             flex: 1;
+            white-space: nowrap;
         }
 
         .nds-user-feedback-statistic {
@@ -62,6 +72,7 @@
 
     &-details {
         gap: var(--spacing-4xl);
+        flex-wrap: wrap;
 
         @include mobile {
             flex-direction: column;
@@ -69,7 +80,7 @@
         }
 
         .nds-user-feedback-options {
-            flex: 1 0 60%;
+            flex: 1 0 auto;
             display: flex;
             gap: var(--spacing-4xl);
             flex-direction: column;
@@ -108,4 +119,101 @@
 .nds-user-feedback-section {
     border-top: 2px solid var(--border-primary) !important;
     background: var(--background-default);
+}
+
+// ==============================================
+// RATING VARIANT
+// ==============================================
+
+// Same three steps as the survey — the answer is a star score instead of Yes/No,
+// so the strip carries an average, a prompt header and a submitted recap. Each
+// one is keyed on the data-state the component already stamps; only the recap's
+// VALUE needs JS.
+.nds-user-feedback-rating {
+    // Stars set their own box height; the inherited page line-height would pad the
+    // text beside them and break the row's vertical centering.
+    line-height: normal;
+
+    // Both star rows keep the same inner rhythm: the running average, and the
+    // score just submitted.
+    :is(.nds-user-feedback-score, .nds-user-feedback-recap) {
+        align-items: center;
+        gap: var(--spacing-lg);
+    }
+
+    // Stars and their review count move to a new line as one piece.
+    .nds-user-feedback-score {
+        display: flex;
+    }
+
+    // Each waits for the state that calls it in.
+    :is(.nds-user-feedback-prompt, .nds-user-feedback-recap) {
+        display: none;
+    }
+
+    .nds-user-feedback-overview {
+        row-gap: var(--spacing-2xl);
+        flex-wrap: wrap;
+
+        // The survey's message grows to fill the row; here the recap owns that
+        // space, so the message sizes to its own text. Scoped inside -overview to
+        // out-specify the base rule rather than rely on source order.
+        .nds-user-feedback-status {
+            flex: 0 0 auto;
+        }
+
+        // The survey grows its Yes/No pair mid-row; the single action here belongs
+        // at the end. Below tablet the base stacks the row, so it starts with the
+        // rest — and the close button keeps the base's mobile placement untouched.
+        .nds-user-feedback-answer-btn {
+            flex: 0 0 auto;
+
+            @include tablet(min) {
+                margin-inline-start: auto;
+            }
+        }
+
+        // The open state's prompt is two lines tall, so the close button pins to
+        // its top instead of centering. Mobile keeps the base's top-right rule.
+        .nds-user-feedback-close {
+            @include tablet(min) {
+                align-self: flex-start;
+            }
+        }
+    }
+
+    // STATE: Details — the average gives way to the prompt header.
+    &[data-state="details"] {
+        :is(.nds-user-feedback-question, .nds-user-feedback-score, .nds-user-feedback-answer-btn) {
+            display: none;
+        }
+
+        .nds-user-feedback-prompt {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            flex: 1;
+        }
+    }
+
+    // STATE: Status — the recap replaces the average, beside the message.
+    &[data-state="status"] {
+        .nds-user-feedback-score {
+            display: none;
+        }
+
+        .nds-user-feedback-recap {
+            display: flex;
+            flex: 1 1 auto;
+        }
+    }
+
+    .nds-user-feedback-title {
+        display: block;
+        font-weight: var(--font-weight-bold);
+    }
+
+    .nds-user-feedback-details {
+        align-items: start;
+    }
 }

@@ -16,6 +16,7 @@ breadcrumb:
 lang: en
 direction: ltr
 rating: true
+feedback_type: rating
 hero_tags:
   - label: "ERP"
     style: "nds-blue"

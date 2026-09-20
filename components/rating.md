@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "21/08/2026 - 07:12 PM"
+last_edit: "20/09/2026 - 11:12 PM"
 ---
 
 <!-- Display Rating -->
@@ -428,6 +428,7 @@ last_edit: "21/08/2026 - 07:12 PM"
                     <li>Keep star counts consistent across your application. Five stars is the standard and matches user expectations</li>
                     <li>Set <code class="nds-inline-code lang-html">data-rating</code> to the initial value for display ratings. For interactive ratings collecting a fresh score, set it to <code class="nds-inline-code lang-html">0</code></li>
                     <li>Always include <code class="nds-inline-code lang-html">aria-label</code> on each star button with the numeric value (e.g., "3 stars") so screen readers announce the rating position</li>
+                    <li>To require a score before a form submits, put the rating in a <code class="nds-inline-code lang-html">.nds-form-group</code> and add <code class="nds-inline-code lang-html">data-required</code> to that group. <a class="nds-color" href="{{ 'components/forms' | relative_url }}">Forms</a> validation treats a <code class="nds-inline-code lang-html">data-rating</code> of <code class="nds-inline-code lang-html">0</code> as empty and focuses the first star. The stars are buttons, not inputs, so add a hidden input if the score must post with the form</li>
                 </ul>
             </div>
 

@@ -490,6 +490,29 @@
             return this._finishGroupValidation(group, options, isValid, message, { selected: isSelected });
         },
 
+        // Rating: the stars are buttons, not form controls, so the score lives on
+        // the .nds-rating root. Zero means nothing was picked.
+        validateRatingGroup: function(groupElement, options) {
+            options = options || { showMessage: true };
+
+            var group = groupElement.closest('.nds-form-group') || groupElement;
+            var rating = group.querySelector('.nds-rating');
+            var value = 0;
+            if (rating) {
+                value = rating.ndsRating ? rating.ndsRating.getRating() : Number(rating.dataset.rating) || 0;
+            }
+
+            var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
+            var isValid = !isRequired || value > 0;
+            var message = '';
+
+            if (!isValid) {
+                message = NDS.isArabic ? 'يرجى اختيار تقييم' : 'Please choose a rating';
+            }
+
+            return this._finishGroupValidation(group, options, isValid, message, { rating: value });
+        },
+
         // Multiselect: option checkboxes are the source of truth (no hidden
         // carrier); scoped to the nested dropmenu so nothing else in the
         // wrapper is counted.
@@ -634,6 +657,10 @@
                 } else if (hasRadios) {
                     result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
                     anchor = hasRadios;
+                } else if (group.querySelector('.nds-rating')) {
+                    result = Validator.validateRatingGroup(group, { showMessage: options.showMessages });
+                    // Anchor on the first star: the stars are buttons, so focusFirst lands on one.
+                    anchor = group.querySelector('.nds-rating-star');
                 }
 
                 if (result && !result.valid) {
@@ -1031,6 +1058,14 @@
             if (input.type === 'checkbox' && !input.indeterminate) {
                 FieldSync.setIndeterminate(input, false);
             }
+        });
+
+        // A rating group has no input to fire `input`, so its own event stands in
+        // for the auto-clear above. Submit re-runs the rule, so clearing here is
+        // only about dropping a stale message.
+        doc.addEventListener('nds:rating:change', function(e) {
+            var group = e.target.closest && e.target.closest('.nds-form-group');
+            if (group && NDS.Status.get(group) !== '') StatusManager.clear(group);
         });
     }
 

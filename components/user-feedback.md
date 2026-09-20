@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "20/09/2026 - 10:12 PM"
 hideFeedback: true
 ---
 
@@ -91,11 +91,11 @@ hideFeedback: true
           &lt;div class="nds-user-feedback-options"&gt;
 
             &lt;!-- Shown when data-answer="yes" --&gt;
-            &lt;fieldset class="nds-form-group nds-check-group nds-why-yes" data-min-checked="2"&gt;
+            &lt;fieldset class="nds-form-group nds-check-group nds-why-yes" data-min-checked="2" aria-describedby="feedback-yes-hint"&gt;
               &lt;legend&gt;
                 &lt;span class="nds-label"&gt;Please tell us why&lt;/span&gt;
-                &lt;span class="nds-note"&gt;(you can select multiple options)&lt;/span&gt;
               &lt;/legend&gt;
+              &lt;span class="nds-note" id="feedback-yes-hint"&gt;(you can select multiple options)&lt;/span&gt;
               &lt;div class="nds-form-container nds-check-container"&gt;
                 &lt;div class="nds-form-header"&gt;
                   &lt;label for="feedback-yes-relevant"&gt;&lt;span class="nds-label"&gt;Content is relevant&lt;/span&gt;&lt;/label&gt;
@@ -132,11 +132,11 @@ hideFeedback: true
             &lt;/fieldset&gt;
 
             &lt;!-- Shown when data-answer="no" --&gt;
-            &lt;fieldset class="nds-form-group nds-check-group nds-why-no" data-required&gt;
+            &lt;fieldset class="nds-form-group nds-check-group nds-why-no" data-required aria-describedby="feedback-no-hint"&gt;
               &lt;legend&gt;
                 &lt;span class="nds-label"&gt;Please tell us why&lt;/span&gt;
-                &lt;span class="nds-note"&gt;(you can select multiple options)&lt;/span&gt;
               &lt;/legend&gt;
+              &lt;span class="nds-note" id="feedback-no-hint"&gt;(you can select multiple options)&lt;/span&gt;
               &lt;div class="nds-form-container nds-check-container"&gt;
                 &lt;div class="nds-form-header"&gt;
                   &lt;label for="feedback-no-irrelevant"&gt;&lt;span class="nds-label"&gt;Content is not relevant&lt;/span&gt;&lt;/label&gt;
@@ -239,6 +239,68 @@ hideFeedback: true
     </div>
 </section>
 
+{%- capture _srMarkup %}{% include user-feedback-rating.html %}{% endcapture %}
+<!-- Service Rating -->
+<section id="serviceRating" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Service Rating</h2>
+            <p class="nds-section-description">The same three steps with a star score in place of the Yes or No answer. The strip shows the running average, the button opens a rating form with a comment box, and the confirmation repeats the score the user gave.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Service Rating Strip</div>
+                        </div>
+                        <div class="demo-container" style="padding: 0;">
+                            <div class="state-demo" id="sr-demo">
+                                {% include user-feedback-rating.html %}
+                            </div>
+                            <script>
+                            // Demo only: opt this instance out of cookie persistence so the
+                            // form returns on reload instead of the saved confirmation. Runs
+                            // at parse time, before the loader initializes the component.
+                            document.getElementById('sr-demo')
+                                ?.querySelector('.nds-user-feedback')
+                                ?.setAttribute('data-no-persist', '');
+                        </script>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-sr-overview-1" id="tab-sr-overview-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sr-overview-1"
+                                        aria-labelledby="tab-sr-overview-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <div class="nds-expandable-content">
+                                            <code class="lang-html code">{{ _srMarkup | strip | escape }}</code>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="userFeedbackFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -315,6 +377,8 @@ hideFeedback: true
                     <li>Connect your data collection endpoint via the form's <code class="nds-inline-code lang-html">action</code> attribute or by intercepting the submit event before the component's handler runs, since the component itself does not make a network request</li>
                     <li>Use <code class="nds-inline-code lang-html">data-success-message</code> and <code class="nds-inline-code lang-html">data-error-message</code> on the <code class="nds-inline-code lang-html">.nds-user-feedback</code> element only when the built-in bilingual defaults do not match your page's tone</li>
                     <li>The <code class="nds-inline-code lang-html">.nds-user-feedback-statistic</code> span is optional. Remove it if you do not have real satisfaction data to display</li>
+                    <li>Pick the strip per page in the front matter. <code class="nds-inline-code lang-html">feedback_type: rating</code> renders the service rating strip; leave it out for the Yes or No survey. <code class="nds-inline-code lang-html">hideFeedback: true</code> renders neither. This is separate from <code class="nds-inline-code lang-html">rating: true</code>, which is the hero's rating dropmenu</li>
+                    <li>Ask for a star score on a service page, where the visitor judges the service itself. Keep the Yes or No survey on content pages, where the question is about the page</li>
                 </ul>
             </div>
 
