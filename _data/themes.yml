@@ -10,9 +10,11 @@
 # Each entry is one of:
 #   seed theme        — value + label. Seeds live in the SCSS $themes map (toggle a token).
 #   stylesheet: true  — a standalone full-stylesheet theme (its own nds-theme-<value>.min.css,
-#                       e.g. _sass/themes/_<value>.scss); the switcher loads/unloads the
-#                       stylesheet (+ optional js) instead of toggling a token. Use this tier
-#                       for a single-theme site or a bespoke event skin.
+#                       e.g. _sass/themes/_<value>.scss) instead of a token to toggle. The
+#                       switcher loads what the entry declares: `js`, `css`, or both. Our
+#                       event packs hold their CSS, so the switcher gets `js` alone and
+#                       `css` serves the site-wide `brand:` path in head.html. Use this
+#                       tier for a single-theme site or a bespoke event skin.
 #
 # css/js are site-root-relative paths (head.html + topbar.html pass them through
 # `relative_url` unchanged), so a theme declares wherever it actually lives.

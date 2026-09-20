@@ -43,7 +43,7 @@ hero_float_actions:
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
             <p class="nds-section-description">Add one tag to your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets and without <code class="nds-inline-code lang-html">defer</code>. It applies the palette and the hero slide; remove it when the event ends. That one tag is the whole install — every value has a built-in default. Use the <strong>With overrides</strong> tab to change any of them; see the attribute table below.</p>
-            <p class="nds-section-description">The pack is self-contained. Download the zip, then copy its files into your own assets folder. A template copy already ships them at <code class="nds-inline-code lang-html">docs-assets/events/foundation_day/</code>. The paths below assume <code class="nds-inline-code lang-html">assets/events/foundation_day/</code>. The script finds its own CSS and images relative to itself, so the folder works at any location as long as its contents stay together.</p>
+            <p class="nds-section-description">The pack is self-contained. Download the zip, then copy its files into your own assets folder. A template copy already ships them at <code class="nds-inline-code lang-html">docs-assets/events/foundation_day/</code>. The paths below assume <code class="nds-inline-code lang-html">assets/events/foundation_day/</code>. The script carries its own CSS and finds its images next to itself, so the folder works at any location as long as its contents stay together. You need the <code class="nds-inline-code lang-html">.min.css</code> file only for the no-script setup below, or when you want to override a rule.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -233,14 +233,14 @@ hero_float_actions:
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">One-Tag Activation</span>
                     </span>
-                    <p class="nds-item-desc">One script tag applies the palette, root marker, and hero slide. No build, no markup edits.</p>
+                    <p class="nds-item-desc">One script tag applies the palette, root marker, and hero slide. It carries its own CSS, so nothing else is linked. No build, no markup edits.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-paint-bucket"></i>
                         <span class="nds-label">Zero-Flash First Paint</span>
                     </span>
-                    <p class="nds-item-desc">Placed in the head, the stylesheet resolves before first paint, so the default colours never flash.</p>
+                    <p class="nds-item-desc">The script writes its CSS while the page parses, with no second request, so the default colours never flash.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">

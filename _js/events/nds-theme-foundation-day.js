@@ -133,13 +133,14 @@
     }
 
     // ── Stylesheet link (shared #nds-theme-stylesheet slot) ─────────────────
-    // Create only if absent: in the switcher/brand paths the link already exists
-    // (ensureStylesheet / head.html) — leave its href (incl. ?ver=) alone.
+    // Create only if absent: the brand: path in head.html fills that slot itself —
+    // leave its href (incl. ?ver=) alone. The switcher never fills it: it loads this
+    // pack and nothing else, because the CSS below is already inside this file.
     // The stylesheet reaches the page inline when the build filled CSS_TEXT, and
     // as a fetched link otherwise. Inline is ~400ms of first paint on slow 4G:
     // the link costs a SECOND blocking round trip, discovered only once this
     // script has run. Either way it is skipped when LINK_ID already exists --
-    // the brand: path in head.html and the topbar switcher both own that slot.
+    // the brand: path in head.html owns that slot.
     function ensureStyles() {
         if (document.getElementById(LINK_ID)) return;
         if (document.querySelector('[data-nds-event-style]')) return;

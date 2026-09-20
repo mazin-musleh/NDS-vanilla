@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.1.0"
-updated: "1.3.0"
-last_edit: "03/07/2026 - 05:43 PM"
+updated: "1.12.x"
+last_edit: "20/09/2026 - 01:00 PM"
 ---
 
 <!-- Experimental notice (dark mode) -->
@@ -626,8 +626,8 @@ root.setAttribute('data-palette', '');
                         <tr><td><code class="nds-inline-code lang-html">data-theme-value</code></td><td>Set on a switcher item. On click the matching theme token is written into <code class="nds-inline-code lang-html">data-theme</code> (preserving the dark token), the choice is saved, and <code class="nds-inline-code lang-html">aria-current</code> syncs. An empty string restores the DGA default.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-palette</code> + <code class="nds-inline-code lang-html">--brand-*</code></td><td>Set on the root element to activate the runtime OKLCH ramp from your inline seed variables (<code class="nds-inline-code lang-css">--brand-primary</code> required; <code class="nds-inline-code lang-css">-secondary</code>, <code class="nds-inline-code lang-css">-tertiary</code>, <code class="nds-inline-code lang-css">--neutral-tint</code>, <code class="nds-inline-code lang-css">--nds-font-brand</code>, <code class="nds-inline-code lang-css">--font-weight-{regular,medium,semibold,bold}</code> optional). With no flag the page is pure DGA.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-seed-*</code></td><td>Place on a switcher item (alongside <code class="nds-inline-code lang-html">data-theme-value</code>) to apply a custom palette on click: <code class="nds-inline-code lang-html">data-seed-primary</code> (required), plus optional <code class="nds-inline-code lang-html">data-seed-secondary</code>, <code class="nds-inline-code lang-html">data-seed-tertiary</code>, <code class="nds-inline-code lang-html">data-seed-tint</code>, <code class="nds-inline-code lang-html">data-seed-font</code>, <code class="nds-inline-code lang-html">data-seed-weight-{regular,medium,semibold,bold}</code> (for a brand font that reads lighter or heavier than IBM Plex at the same nominal weight). The switcher sets the matching <code class="nds-inline-code lang-css">--brand-*</code> seeds plus <code class="nds-inline-code lang-html">data-palette</code>, then persists the palette so it restores on the next visit.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme-css</code></td><td>On a switcher item, the URL of a stylesheet theme's CSS, so a live multi-theme picker can load it on demand and unload it on switch-away. A single-theme production site links the stylesheet server-side instead.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme-js</code></td><td>On a switcher item (alongside <code class="nds-inline-code lang-html">data-theme-css</code>), the URL of a JS event-pack for a stylesheet theme. Loaded once on first activation and re-executed on each switch-in so the theme can wire its own behaviour. Read by <code class="nds-inline-code lang-js">nds-theme.js</code> at both click-time and reconciliation.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-theme-css</code></td><td>On a switcher item, the URL of a stylesheet to load on the click and unload on switch-away. Optional.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-theme-js</code></td><td>On a switcher item, the URL of a script to load once on first activation and re-run on each switch-in. Optional. Each attribute is loaded on its own, so an item can carry either, both or neither — follow the theme's own install guide. Read by <code class="nds-inline-code lang-js">nds-theme.js</code> at both click-time and reconciliation.</td></tr>
                     </tbody>
                 </table>
             </div>

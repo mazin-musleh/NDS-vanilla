@@ -281,7 +281,6 @@ bundle_sizes:
                                     {%- assign _t = _tflat | where: 'value', ev.theme | first -%}
                                     {%- if _t %}
                                     <button type="button" class="nds-btn nds-primary" data-theme-value="{{ _t.value }}"
-                                        data-theme-css="{{ _t.css | relative_url }}?ver={{ site.asset_ver }}"
                                         {%- if _t.js %}
                                         data-theme-js="{{ _t.js | relative_url }}?ver={{ site.asset_ver }}"
                                         {% endif %}>
