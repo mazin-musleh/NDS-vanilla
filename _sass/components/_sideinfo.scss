@@ -35,7 +35,6 @@
         position: static;
         top: var(--_sideinfo-sticky-top);
         height: fit-content;
-        --card-width: 100%;
 
         // The aside is a bare track — width, order and sticky, nothing visual.
         // The surface belongs to whichever element carries .nds-card: the direct
@@ -48,6 +47,7 @@
         @include _sideinfo-card {
             --_card-padding-base: var(--spacing-4xl);
             --card-bg: var(--background-menu);
+            --card-width: 100%;
         }
 
         @include tablet(max) {
