@@ -438,8 +438,9 @@
 // front on top, each next one one strip further back and under it; the image
 // inside is shifted so the visible strip is its leading edge. A move is boxes
 // and images sliding, nothing else. JS writes --rel / --srel and data-status on each card
-// (nds-swiper.js updateDeck); the author stamps the same for first paint. While a
-// finger holds the deck, --drag carries the cards with it.
+// (nds-swiper.js updateDeck); until it runs, the cards read their own DOM order
+// (see the pre-init block below), so the markup is cards in order and nothing
+// else. While a finger holds the deck, --drag carries the cards with it.
 // ==============================================
 
 .nds-swiper.nds-deck {
@@ -508,15 +509,6 @@
         overflow: hidden;
         transition: transform var(--_deck-motion);
 
-        // Rising to the front waits for the slide to end (the card comes from
-        // behind); leaving the front sinks at once (the base rule has no delay).
-        &[data-status="active"] {
-            transform: translateX(var(--drag, 0px));
-            transition: transform var(--_deck-motion), z-index 0s var(--_deck-dur);
-            cursor: default;
-            --_img-x: none;
-        }
-
         img {
             width: 100%;
             height: 100%;
@@ -525,6 +517,36 @@
             transition: transform var(--_deck-motion);
             -webkit-user-drag: none;   // a mouse drag is a swipe, not an image drag
         }
+    }
+
+    // The open card. Rising to the front waits for the slide to end (the card
+    // comes from behind); leaving the front sinks at once (the base rule has no
+    // delay).
+    .nds-swiper-card[data-status="active"],
+    &:not([data-nds-swiper-initialized]) .nds-swiper-card:first-child {
+        transform: translateX(var(--drag, 0px));
+        transition: transform var(--_deck-motion), z-index 0s var(--_deck-dur);
+        cursor: default;
+        --_img-x: none;
+    }
+
+    // First paint, before the script runs: the deck reads its own order instead
+    // of asking the author to stamp --rel / --srel on every card and work out
+    // where the fan wraps. JS writes both inline at init — inline wins, and the
+    // init stamp drops these rules at the same moment.
+    // ponytail: twelve cards; past that a card holds the last rung's place until init.
+    &:not([data-nds-swiper-initialized]) .nds-swiper-card {
+        @for $i from 1 through 12 {
+            &:nth-child(#{$i}) {
+                --rel: #{$i - 1};
+                --srel: #{$i - 1};
+            }
+        }
+
+        // The two cards at the end of the deck count back instead, the way JS
+        // wraps them — but only in a deck long enough to have a far side.
+        &:nth-last-child(2):nth-child(n + 4) { --srel: -2; }
+        &:nth-last-child(1):nth-child(n + 3) { --srel: -1; }
     }
 
     // The cards track the finger instantly; the spring back on release tweens.
@@ -540,14 +562,19 @@
 // gutter open for a deck that has moved above them.
 @include desktop(min) {
     .nds-swiper.nds-hero.nds-deck:not(.nds-stacked) {
-        --_card: var(--deck-card, var(--_hero-height, 550px));
+        // --deck-card is the card's width here too; unset, the card fills the
+        // hero's height, so the default width is that height in the card's own
+        // shape. One knob sizes the card in every layout.
+        --_card: var(--deck-card, calc(var(--_hero-height, 450px) * var(--_ratio)));
         --_deck-reserve: calc(var(--_deck-w) + var(--spacing-2xl));
 
         .nds-swiper-deck {
             position: absolute;
             inset-block: 0;
             inset-inline-end: 0;
-            height: auto;
+            // The deck keeps the base height (the card's). A card shorter than
+            // the hero sits on its midline rather than stretching out of shape.
+            margin-block: auto;
         }
 
         // Same gutter formula the slide (.nds-content-wrapper) and the nav row
@@ -559,15 +586,12 @@
     }
 }
 
-// The card's share of the deck's width in the stacked layout (hrsd's 324/430).
 // The stacked layout: the deck above the track, the open card centred, its two
 // neighbours peeking at the sides, every other card faded out. Signed --srel
 // places the fan; percentages keep it fluid. It is the layout below desktop, and
 // .nds-stacked asks for it at every width — a mixin because a media query cannot
 // be folded into a plain selector, so the block is emitted twice.
 @mixin deck-stacked {
-    // --deck-card sizes the open card here too, not just in the fan.
-    --_card: var(--deck-card, 490px);
     // The peek's two dials: --_step is how far a neighbour sits, as a share of
     // the card's width; --_scale is how much it shrinks.
     --_step: var(--deck-step, 0.918);
@@ -622,16 +646,21 @@
         img {
             transform: none;   // the whole card shows here, scaled
         }
+    }
 
-        &[data-status] {
-            opacity: 1;
-            visibility: visible;
-        }
+    // Shown: the open card and its two neighbours. Before the script runs that
+    // is DOM order — the first two cards and the last — and data-status from
+    // init on, the same handover as --rel / --srel above.
+    .nds-swiper-card[data-status],
+    &:not([data-nds-swiper-initialized]) .nds-swiper-card:is(:nth-child(-n + 2), :nth-last-child(1):nth-child(n + 3)) {
+        opacity: 1;
+        visibility: visible;
+    }
 
-        &[data-status="active"] {
-            transform: translateX(var(--drag, 0px));
-            z-index: 2;
-        }
+    .nds-swiper-card[data-status="active"],
+    &:not([data-nds-swiper-initialized]) .nds-swiper-card:first-child {
+        transform: translateX(var(--drag, 0px));
+        z-index: 2;
     }
 }
 
@@ -662,6 +691,14 @@
 @include tablet(max) {
     .nds-swiper.nds-deck { @include deck-stacked; }
     .nds-swiper.nds-hero.nds-deck { @include deck-stacked-hero; }
+
+    // A stacked deck sits above the text, so the hero is as tall as its content.
+    // Two properties on the section, not the swiper — the deck asks for them
+    // itself wherever it stacks, instead of every author remembering both.
+    .nds-hero-section:has(.nds-swiper.nds-deck) {
+        --hero-height: auto;
+        max-height: none;
+    }
 }
 
 // Opt-in: the stacked layout at every width. One class more than the fan rules
@@ -669,6 +706,11 @@
 // the drag is gated on the layout, not on the breakpoint.
 .nds-swiper.nds-deck.nds-stacked { @include deck-stacked; }
 .nds-swiper.nds-hero.nds-deck.nds-stacked { @include deck-stacked-hero; }
+
+.nds-hero-section:has(.nds-swiper.nds-deck.nds-stacked) {
+    --hero-height: auto;
+    max-height: none;
+}
 
 // One duration feeds every deck transition, so zeroing it here beats each of
 // them whatever their selector — including .nds-stacked's extra class, and the

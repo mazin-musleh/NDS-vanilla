@@ -22,7 +22,8 @@
  *                                                only below desktop — the deck above the track, the
  *                                                open card centred, its two neighbours peeking, and
  *                                                the drag armed on desktop too
- *   --deck-card · --deck-strip                   open card size · folded strip width
+ *   --deck-card · --deck-ratio · --deck-strip    open card width · its width ÷ height ·
+ *                                                folded strip width (the fan layout)
  *   --max-slides · --mid-slides · --min-slides   slides per view at desktop / tablet /
  *                                                mobile, default 1 each; CSS sizes the row
  *                                                from them before any JS runs
@@ -59,9 +60,8 @@
  *   - A looping deck sets its track's scrollLeft at init, which fires one scroll event
  *     on the wrapper. A "first interaction" gate that listens for scroll in capture
  *     mode counts it — listen without capture, or ignore element scrolls.
- *   - Deck cards map to slides by DOM order; the author stamps --rel / --srel on every
- *     card and data-status="active" on the first for first paint. A deck in a hero needs --hero-height: auto on the
- *     section wherever the deck stacks above the text — below desktop, or at every width with .nds-stacked.
+ *   - Deck cards map to slides by DOM order, and CSS places them from that order until
+ *     init stamps --rel / --srel / data-status: the markup is cards in order, nothing else.
  */
 (function () {
     'use strict';
@@ -300,7 +300,10 @@
             // set the active bullet; only buttons + boundary classes remain.
             this.updateButtons();
             this.updateBoundaryClasses();
-            this.updateDeck();
+            // Real slide 0, stated: a looping deck has not landed yet, so the bare
+            // call would bail (updateDeck) and leave the cards unstamped the moment
+            // the init attribute drops the CSS fallback that had been placing them.
+            this.updateDeck(0);
             this.lastIndex = this.currentIndex;
 
             this.container.setAttribute('data-nds-swiper-initialized', 'true');
@@ -522,8 +525,8 @@
             // A looping deck has not landed on its first real slide yet, so the track
             // still sits where the clones start. Fanning off that puts a different
             // card at the front, and the cards visibly slide when the landing
-            // corrects it. The author's stamped --rel/--srel hold until then. An
-            // explicit `real` is a caller that knows the index, so it still passes.
+            // corrects it. Init's own stamps hold until then. An explicit `real`
+            // is a caller that knows the index, so it still passes.
             if (this._loopPending && real === undefined) return;
             const active = real === undefined ? this._realIndex : real;
             this.cards.forEach((card, k) => {
