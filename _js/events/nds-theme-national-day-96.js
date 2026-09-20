@@ -395,12 +395,8 @@
         card.type = 'button';
         card.className = 'nds-swiper-card';
         card.setAttribute('aria-label', fullTitle(s));
-        // First-paint state (slide 0 open); JS owns it from init.
-        var n = SLIDES.length, srel = i > n / 2 ? i - n : i;
-        card.style.setProperty('--rel', i);
-        card.style.setProperty('--srel', srel);
-        if (!i) card.setAttribute('data-status', 'active');
-        else if (Math.abs(srel) === 1) card.setAttribute('data-status', 'near');
+        // No first-paint stamps: the mode's CSS places the cards by DOM order
+        // until the swiper inits, and the pack ships that CSS too.
         card.innerHTML = '<img src="' + esc(assetUrl(s.card)) + '" width="491" height="491" alt=""' +
             (i ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"') + '>';
         return card;

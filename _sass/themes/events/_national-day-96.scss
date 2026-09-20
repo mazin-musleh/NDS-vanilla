@@ -51,7 +51,7 @@
 
   // The cards follow this — each is a square of the hero's height — so the deck
   // is only as tall as the hero lets it be.
-  --hero-height: 550px;
+  --hero-height: 450px;
 
   // Deep stop behind the text, light stop behind the cards.
   --_nd96-angle: 270deg;
@@ -106,8 +106,10 @@
     color: var(--_nd96-word);
   }
 
-  // Caret after the letters as they land.
-  .nds-nd96-typed::after {
+  // Caret after the letters as they land. Only while the pack types: the word
+  // carries data-word then, and a hand-written type 2 slide (no pack, static
+  // text) would otherwise blink a caret at a word that never types.
+  .nds-nd96-typed[data-word]::after {
     content: "";
     display: inline-block;
     width: 2px;
@@ -127,9 +129,9 @@
   // the column centres, with the gradient running top to bottom and the
   // short body in place of the long one.
   @include tablet(max) {
-    --hero-height: auto;
+    // The stacked deck sizes itself, card included — the campaign only turns
+    // the gradient (see the deck mode's --deck-card if it ever needs its own).
     --_nd96-angle: 180deg;
-    max-height: none;
 
     .nds-section-body {
       align-items: center;
@@ -156,7 +158,7 @@
   .nds-hero-section.nds-nd96 {
     transition: none;
 
-    .nds-nd96-typed::after {
+    .nds-nd96-typed[data-word]::after {
       animation: none;
     }
   }

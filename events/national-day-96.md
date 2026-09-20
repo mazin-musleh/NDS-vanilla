@@ -42,7 +42,7 @@ hero_float_actions:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic</h2>
-            <p class="nds-section-description">One tag in your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets, without <code class="nds-inline-code lang-html">defer</code>. Pick the hero type with <code class="nds-inline-code lang-html">data-type</code>. Delete the tag to end the event.</p>
+            <p class="nds-section-description">One tag in your shared <code class="nds-inline-code lang-html">&lt;head&gt;</code>, after the NDS stylesheets, without <code class="nds-inline-code lang-html">defer</code>. Pick the hero type with <code class="nds-inline-code lang-html">data-type</code>. Delete the tag to end the event. The script carries the pack's CSS, so the tag is the only asset you add to the page. You need the <code class="nds-inline-code lang-html">.min.css</code> file only for the no-script setup below, or when you want to override a rule.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -135,7 +135,10 @@ hero_float_actions:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Manual (no JavaScript)</h2>
-            <p class="nds-section-description">Type 1 only, without the script: link the stylesheet and paste the slide markup yourself. Type 2 needs the script. Add the CSS link in <code class="nds-inline-code lang-html">&lt;head&gt;</code>, and place the slide as the first child of <code class="nds-inline-code lang-html">.nds-swiper-wrapper</code> (raise the hero's <code class="nds-inline-code lang-css">--total</code> by one). The slide is the standard hero markup with the event photo, so it needs no extra styling. Add the event mark to the footer's existing <code class="nds-inline-code lang-html">.nds-footer-logos</code> strip.</p>
+            <p class="nds-section-description">Both hero types work without the script: link the stylesheet and paste the markup yourself. Add the CSS link in <code class="nds-inline-code lang-html">&lt;head&gt;</code>. Add the event mark to the footer's existing <code class="nds-inline-code lang-html">.nds-footer-logos</code> strip.</p>
+            <p class="nds-section-description"><strong>Type 1</strong> adds one slide to your existing hero. Place it as the first child of <code class="nds-inline-code lang-html">.nds-swiper-wrapper</code> and raise the hero's <code class="nds-inline-code lang-css">--total</code> by one. It is the standard hero markup with the event photo, so it needs no extra styling.</p>
+            <p class="nds-section-description"><strong>Type 2</strong> replaces the hero with the card deck. Write the cards in slide order and the <a class="nds-color" href="{{ 'components/swiper' | relative_url }}#swiperDeck">deck mode</a> places them — no per-card attributes. Pick the campaign colour with one <code class="nds-inline-code lang-html">nds-nd96-&lt;name&gt;</code> class on the section: heritage, courage, ambition, generosity, kindness or vision.</p>
+            <p class="nds-section-description">The script is what adds the typed word, the colour change on every slide, and the automatic advance. Without it the hero keeps one colour and the word is plain text.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -153,7 +156,11 @@ hero_float_actions:
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-nd96-manual-2" id="tab-nd96-manual-2">
-                                        <span class="nds-tab-label">Hero markup</span>
+                                        <span class="nds-tab-label">Type 1 slide</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                        aria-controls="panel-nd96-manual-4" id="tab-nd96-manual-4">
+                                        <span class="nds-tab-label">Type 2 hero</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-nd96-manual-3" id="tab-nd96-manual-3">
@@ -196,6 +203,44 @@ hero_float_actions:
     &lt;p class="nds-section-description"&gt;نحتفي بمرور 96 عامًا من العز والفخر لوطننا&lt;/p&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+                                        </code>
+                                    </div>
+                                </div>
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nd96-manual-4"
+                                    aria-labelledby="tab-nd96-manual-4" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
+&lt;section class="nds-hero-section nds-nd96 nds-nd96-heritage"&gt;
+  &lt;div class="nds-swiper nds-hero nds-oncolor nds-deck" style="--total: 6"&gt;
+    &lt;div class="nds-swiper-wrapper"&gt;
+      &lt;div class="nds-swiper-slide nds-content-wrapper nds-nd96-slide"&gt;
+        &lt;div class="nds-section-body"&gt;
+          &lt;h1 class="nds-section-title"&gt;عِزّنا &lt;span class="nds-nd96-typed"&gt;إرثنا&lt;/span&gt;&lt;/h1&gt;
+          &lt;p class="nds-section-description"&gt;…&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;!-- one slide per card, same order, each later one hidden --&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-swiper-deck"&gt;
+      &lt;button type="button" class="nds-swiper-card" aria-label="عِزّنا إرثنا"&gt;
+        &lt;img src="/assets/events/national_day_96/card_heritage.webp" alt="" fetchpriority="high"&gt;
+      &lt;/button&gt;
+      &lt;!-- card_courage · card_ambition · card_generosity · card_kindness · card_vision --&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-swiper-navigation nds-center" hidden&gt;
+      &lt;div class="nds-swiper-buttons"&gt;
+        &lt;button class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
+        &lt;button class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-swiper-pagination nds-md"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -261,7 +306,7 @@ hero_float_actions:
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">One-Tag Activation</span>
                     </span>
-                    <p class="nds-item-desc">One script tag applies the stylesheet, root marker, and hero slide. No build, no markup edits.</p>
+                    <p class="nds-item-desc">One script tag applies the stylesheet it carries, the root marker, and the hero slide. No build, no markup edits.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
