@@ -16,7 +16,7 @@
  * Hooks:
  *   on the .nds-form-container:  data-format (HH H hh h mm ss A a — sets the display AND
  *                                which unit pickers the panel holds) · data-step (minute
- *                                step) · data-required
+ *                                step)
  *   on the .nds-time-input:      data-min-time · data-max-time (24h HH:mm[:ss], always)
  * Gotchas:
  *   - The visible input is DISPLAY ("02:30 م") and is typeable; the hidden .nds-time-value
@@ -370,7 +370,7 @@
                 // init(), which the loader skips when the page's only
                 // .nds-select-inputs are the ones we just generated (it gates on a
                 // live querySelector). Idempotent — it guards on its own _initDone.
-                NDS.CustomSelect?.init?.();
+                NDS.CustomSelect.init();
                 NDS.CustomSelect.create(el);
                 // nds:customselect:change fires on the form-control and does NOT
                 // bubble, so it binds per unit, never on the panel.
