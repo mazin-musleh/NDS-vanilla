@@ -195,9 +195,6 @@ NDS.UserFeedback = (() => {
 
             const score = feedbackComponent.querySelector('[data-rating-score]');
             if (score) score.textContent = '(' + value.toFixed(1) + ')';
-
-            const recap = feedbackComponent.querySelector('.nds-user-feedback-recap .nds-rating');
-            if (recap && recap.ndsRating) recap.ndsRating.setValue(value);
         }
 
         // Reset to initial state (overview)
@@ -236,13 +233,12 @@ NDS.UserFeedback = (() => {
 
             // Rating variant: send the picked stars back to zero along with the rest.
             // Scoped away from .nds-user-feedback-score, which holds the average.
-            feedbackComponent
-                .querySelectorAll('.nds-user-feedback-details .nds-rating, .nds-user-feedback-recap .nds-rating')
-                .forEach(el => {
-                    if (el.ndsRating) el.ndsRating.setValue(0);
-                });
+            const picked = feedbackComponent.querySelector('.nds-user-feedback-details .nds-rating');
+            if (picked && picked.ndsRating) picked.ndsRating.setValue(0);
             const ratingField = feedbackComponent.querySelector('[data-rating-value]');
             if (ratingField) ratingField.value = '0';
+            const recapScore = feedbackComponent.querySelector('[data-rating-score]');
+            if (recapScore) recapScore.textContent = '(0.0)';
         }
 
         // Scope all listeners to an AbortController so a future destroy/reinit can detach atomically

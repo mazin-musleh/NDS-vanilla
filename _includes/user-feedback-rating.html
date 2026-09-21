@@ -4,6 +4,10 @@
             <div class="nds-user-feedback nds-user-feedback-rating">
                 <div class="nds-user-feedback-overview">
                     <span class="nds-user-feedback-question">This service is rated with an average of <strong>3.9</strong></span>
+
+                    <!-- Takes the question's place while data-state="status"; the score is filled in on submit -->
+                    <span class="nds-user-feedback-recap">You rated this service as <strong data-rating-score>(0.0)</strong></span>
+
                     <div class="nds-user-feedback-score">
                         <div class="nds-rating nds-md nds-brand" data-rating="3.9">
                             <span class="nds-rating-star" aria-hidden="true"></span>
@@ -19,18 +23,6 @@
                     <div class="nds-user-feedback-prompt">
                         <span class="nds-user-feedback-title">Tell us what you think of this service</span>
                         <p>Please don't include personal or financial information. Your review will be submitted and recorded to improve services.</p>
-                    </div>
-
-                    <!-- Shown by CSS while data-state="status"; the score is filled in on submit -->
-                    <div class="nds-user-feedback-recap">
-                        <span>You rated this service as <strong data-rating-score>(0.0)</strong></span>
-                        <div class="nds-rating nds-md nds-brand" data-rating="0">
-                            <span class="nds-rating-star" aria-hidden="true"></span>
-                            <span class="nds-rating-star" aria-hidden="true"></span>
-                            <span class="nds-rating-star" aria-hidden="true"></span>
-                            <span class="nds-rating-star" aria-hidden="true"></span>
-                            <span class="nds-rating-star" aria-hidden="true"></span>
-                        </div>
                     </div>
 
                     <span class="nds-user-feedback-status" hidden>

@@ -134,16 +134,16 @@
     // text beside them and break the row's vertical centering.
     line-height: normal;
 
-    // Both star rows keep the same inner rhythm: the running average, and the
-    // score just submitted.
-    :is(.nds-user-feedback-score, .nds-user-feedback-recap) {
+    // Stars and their review count move to a new line as one piece.
+    .nds-user-feedback-score {
+        display: flex;
         align-items: center;
         gap: var(--spacing-lg);
     }
 
-    // Stars and their review count move to a new line as one piece.
-    .nds-user-feedback-score {
-        display: flex;
+    // The recap swaps into the question's slot, so it takes the question's rhythm.
+    .nds-user-feedback-recap {
+        gap: var(--spacing-md);
     }
 
     // Each waits for the state that calls it in.
@@ -196,15 +196,18 @@
         }
     }
 
-    // STATE: Status — the recap replaces the average, beside the message.
+    // STATE: Status — only the label changes. The recap replaces the question text;
+    // the stars and review count stay on the average, which a submit does not move.
     &[data-state="status"] {
-        .nds-user-feedback-score {
-            display: none;
-        }
-
         .nds-user-feedback-recap {
             display: flex;
-            flex: 1 1 auto;
+        }
+
+        // Nothing grows in this row, so the message needs the push to the end.
+        .nds-user-feedback-status {
+            @include tablet(min) {
+                margin-inline-start: auto;
+            }
         }
     }
 
