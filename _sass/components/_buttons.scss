@@ -9,6 +9,12 @@
 
 @use '../mixins' as *;
 
+// What "disabled" means for a button, in one place. Loading is carved out of it:
+// a button locked for its own request keeps its colours behind the spinner, and
+// keeps its group seam. The seam rules outrank the base disabled rule, so all of
+// them must exclude exactly the same set — hence one string, not five copies.
+$btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"]):not(.nds-loading)';
+
 // ==============================================
 // BASE BUTTON STYLES
 // ==============================================
@@ -51,7 +57,9 @@
     border-color: var(--_btn-border-active);
   }
 
-  &:is(:disabled, [data-state~="disabled"], [aria-disabled="true"]) {
+  // The lock is not lost while loading: .nds-loading carries pointer-events: none,
+  // and a real button stays natively disabled.
+  &#{$btn-disabled} {
     background-color: var(--_btn-bg-disabled);
     color: var(--_btn-color-disabled);
     border-color: var(--_btn-border-disabled);
@@ -258,11 +266,11 @@
   // would colour the group's outer side edge and leave the real seam plain.
   // Disabled is excluded on every seam rule: they all outrank the base disabled
   // rule, so without it a disabled button keeps an enabled-coloured inner edge.
-  .nds-btn-group:not(.nds-vertical) &:not(:first-child, :disabled, [data-state~="disabled"], [aria-disabled="true"]) {
+  .nds-btn-group:not(.nds-vertical) &:not(:first-child, #{$btn-disabled}) {
     border-inline-start-color: var(--_btn-bg-hover);
   }
 
-  .nds-btn-group.nds-vertical &:not(:first-child, :disabled, [data-state~="disabled"], [aria-disabled="true"]) {
+  .nds-btn-group.nds-vertical &:not(:first-child, #{$btn-disabled}) {
     border-block-start-color: var(--_btn-bg-hover);
   }
 
@@ -813,11 +821,11 @@
 // in either mode), falling back to the shared divider tint for solid secondary —
 // a 10% wash reads as an internal seam rather than an outer edge, and it stays
 // legible over the alpha fill secondary takes on a dark surface.
-.nds-btn-group:not(.nds-vertical) .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child, :disabled, [data-state~="disabled"], [aria-disabled="true"]) {
+.nds-btn-group:not(.nds-vertical) .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child, #{$btn-disabled}) {
   border-inline-start-color: var(--btn-border, var(--divider-color));
 }
 
-.nds-btn-group.nds-vertical .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child, :disabled, [data-state~="disabled"], [aria-disabled="true"]) {
+.nds-btn-group.nds-vertical .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child, #{$btn-disabled}) {
   border-block-start-color: var(--btn-border, var(--divider-color));
 }
 
