@@ -83,7 +83,7 @@ class JSProcessor
       # nds-code.js is documentation-only — no consumer site renders code blocks,
       # so it has no business in the reveal-gating bundle. Delegate-safe: _code.scss
       # reserves the line-number gutter and colours inline code with no JS.
-      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-export.js', 'nds-upload.js', 'nds-editor.js', 'nds-code.js'],
+      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-time-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-export.js', 'nds-upload.js', 'nds-editor.js', 'nds-code.js'],
       # Audit — debug diagnostics, its own bundle so production pages ship zero
       # bytes of it. NEVER auto-injected (no component registry entry): the
       # loader pulls it via the NDS.Audit lazy stub when enableLogging schedules

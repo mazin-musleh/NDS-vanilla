@@ -78,6 +78,7 @@ const SCOPE = [
     ['nds-tabs.js', 'Tabs'],
     ['nds-taginput.js', 'TagInput'],
     ['nds-theme.js', 'Theme'],
+    ['nds-time-picker.js', 'TimePicker'],
     ['nds-timeDate.js', 'TimeDate'],
     ['nds-toc.js', 'Toc'],
     ['nds-tooltip.js', 'Tooltip'],

@@ -869,6 +869,16 @@
   url: "/components/themes.html"
   js: _js/nds-theme.js
 
+- title: "Time Picker"
+  description: "Time field with hour, minute and second pickers in a dropdown panel"
+  use_when: "Any time-of-day field: appointment time, opening hours, shift start, cut-off time. Type it or pick it, 12 or 24-hour, optional seconds, minute steps, and min/max bounds. Submits a stable 24-hour value whatever the display language. For a date use Date Picker."
+  icon: '<i class="hgi hgi-stroke hgi-clock-01"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/time-picker.html"
+  js: _js/nds-time-picker.js
+  scss: _sass/components/_time-picker.scss
+
 - title: "TOC"
   description: "Auto-populated in-page table of contents with active-section tracking"
   use_when: "An auto-built on-this-page table of contents that tracks the active section while the user scrolls. Use on long articles, policies, and guides."

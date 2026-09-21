@@ -132,6 +132,15 @@
             init: () => NDS.CustomSelect?.init?.(),
         },
         {
+            // Extras, beside date-picker: the field itself is authored markup and
+            // paints complete with no JS — only the panel is generated, and it is
+            // built on first open. A click in the pre-bundle gap no-ops and works
+            // on the next one.
+            name: 'TimePicker',
+            selector: '.nds-time-input',
+            init: () => NDS.TimePicker?.init?.(),
+        },
+        {
             // Deferred: input wiring fires on user typing — no first-paint
             // visual. The input[autofocus] restore is opt-in; pages that
             // ship autofocus on an OTP input will see the restore delayed
