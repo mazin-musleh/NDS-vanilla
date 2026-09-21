@@ -39,8 +39,9 @@
  *   on a slide's <img>: data-src · data-srcset   lazy sources, written to src/srcset when
  *                                                the slide nears the viewport
  *   written by the component: --slides on the container, data-swiper-peek while peeking,
- *                             .nds-swiper-clone slides (aria-hidden, inert, data-swiper-clone =
- *                             the real twin's index) when looping,
+ *                             .nds-swiper-clone slides (aria-hidden, focusables dropped from
+ *                             the tab order, data-swiper-clone = the real twin's index) when
+ *                             looping,
  *                             on each deck card --rel (wrapping distance from the active card),
  *                             --srel (the same signed the short way), data-status active|near;
  *                             --drag + .nds-dragging on the deck while a finger holds it
@@ -629,7 +630,11 @@
                 c.classList.add('nds-swiper-clone');
                 c.setAttribute('data-swiper-clone', i);   // its real twin, for consumers that sync content
                 c.setAttribute('aria-hidden', 'true');
-                c.inert = true;
+                // aria-hidden keeps the duplicate out of the a11y tree, but inert also
+                // killed clicks — and a row showing more than one slide rests with
+                // clones on screen, so those were dead. Drop them from the tab order
+                // instead: pointer works, Tab still lands on the real twin only.
+                c.querySelectorAll(NDS.focusableSel).forEach(el => el.setAttribute('tabindex', '-1'));
                 // A duplicated id would steal anchors and label-for from the real slide.
                 c.removeAttribute('id');
                 c.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
