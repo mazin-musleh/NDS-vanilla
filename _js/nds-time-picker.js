@@ -179,9 +179,11 @@
     // sit on the panel's own surface, so a bordered field on it reads as a box in
     // a box — the filled style separates them without extra CSS.
     // The id is not decoration: a form field with neither id nor name trips HTML
-    // linters, and the canonical custom-select markup carries one. NAME stays off
-    // on purpose so only .nds-time-value submits.
-    function unitMarkup(unit, label, optionsHTML, id) {
+    // linters, and the canonical custom-select markup carries one. It is set as a
+    // property by the caller, never interpolated here — it derives from the
+    // consumer's input id, which is the one value on this panel we don't author.
+    // NAME stays off on purpose so only .nds-time-value submits.
+    function unitMarkup(unit, label, optionsHTML) {
         // The placeholder is the VISIBLE hint and has to fit a compact box, while
         // the aria-label carries the real name. "AM/PM" measured 53px inside a
         // 54px box — one font change from clipping — so the meridiem shows a
@@ -189,7 +191,7 @@
         const placeholder = unit === 'meridiem' ? '--' : label;
         return '<div class="nds-form-container nds-select nds-darker" data-time-picker-unit="' + unit + '">'
             +    '<div class="nds-form-control">'
-            +      '<input type="text" id="' + id + '" class="nds-input nds-select-input" readonly'
+            +      '<input type="text" class="nds-input nds-select-input" readonly'
             +        ' placeholder="' + placeholder + '" aria-label="' + label + '">'
             +      '<div class="nds-select-dropdown" hidden>'
             +        '<div class="nds-select-options">' + optionsHTML + '</div>'
@@ -311,7 +313,9 @@
 
             // Guard `e.target !== formControl`: these bubble, so the unit selects'
             // own open/close events would otherwise re-run this on every pick.
-            const signal = this.instanceAbortController.signal;
+            // Panel-scoped, not instance-scoped: setupDropmenu re-runs on every
+            // language rebuild, so instance scope would stack another pair each time.
+            const signal = this.panelAbortController.signal;
             formControl.addEventListener('nds:dropmenu:opened', (e) => {
                 if (e.target !== formControl) return;
                 NDS.State.add(this.elements.container, 'open');
@@ -348,7 +352,7 @@
             const panel = document.createElement('div');
             panel.className = 'nds-time-picker-panel';
             panel.innerHTML = '<div class="nds-time-picker-units">'
-                + this.units.map((u) => unitMarkup(u, L[u], this.optionsFor(u), this.uid + '-' + u)).join('')
+                + this.units.map((u) => unitMarkup(u, L[u], this.optionsFor(u))).join('')
                 + '</div>';
 
             // After the input, inside the same form-control — date-picker's shape.
@@ -360,6 +364,8 @@
             this.units.forEach((u) => {
                 const el = panel.querySelector('[data-time-picker-unit="' + u + '"]');
                 this.unitEls[u] = el;
+                // Before create(): custom-select reads the input while building.
+                el.querySelector('.nds-select-input').id = this.uid + '-' + u;
                 // Custom-select's delegated option-click listener installs in ITS
                 // init(), which the loader skips when the page's only
                 // .nds-select-inputs are the ones we just generated (it gates on a
@@ -399,21 +405,29 @@
             return (fc._customSelectDropdown || fc).querySelectorAll('.nds-select-option');
         }
 
+        // Suppress the re-entrant commit path for the length of one write. Saves
+        // and RESTORES rather than clearing: these nest (_adopt → syncUnits), and
+        // a clear would drop an outer caller's guard mid-write — updateInput's own
+        // change event would then re-parse the display it just wrote, which under a
+        // lossy format (hh:mm, no meridiem token) writes back the wrong carrier.
+        _quiet(fn) {
+            const was = this._committing;
+            this._committing = true;
+            try { return fn(); } finally { this._committing = was; }
+        }
+
         // Paint the current picks onto the unit selects. Guarded so the resulting
         // change events don't each run a partial commit.
         syncUnits() {
             if (!this.isPanelCreated) return;
-            this._committing = true;
-            try {
+            this._quiet(() => {
                 this.units.forEach((u) => {
                     const value = this.picks[u];
                     if (value === null) { NDS.CustomSelect.clear(this.unitEls[u]); return; }
                     this._ensureOption(u, value);
                     NDS.CustomSelect.setValue(this.unitEls[u], value);
                 });
-            } finally {
-                this._committing = false;
-            }
+            });
             this.applyBounds();
         }
 
@@ -436,28 +450,29 @@
             return h * 3600 + (+this.picks.minute) * 60 + (this.hasSeconds ? +this.picks.second : 0);
         }
 
-        // Split the picks out of a 24h value. Used by setValue and by a typed edit.
+        // Split the picks out of a 24h value. Used by the constructor's seed, by
+        // setValue and by a typed edit — self-guarding, since every one of them
+        // must suppress the change-event round trip its updateInput would fire.
         _adopt(secs) {
-            const p = parts(secs);
-            this.picks.hour = String(this.hour12 ? ((p.h24 + 11) % 12) + 1 : p.h24);
-            this.picks.minute = String(p.m);
-            this.picks.second = String(p.s);
-            this.picks.meridiem = p.h24 >= 12 ? 'pm' : 'am';
-            this.syncUnits();
-            this.updateInput();
+            this._quiet(() => {
+                const p = parts(secs);
+                this.picks.hour = String(this.hour12 ? ((p.h24 + 11) % 12) + 1 : p.h24);
+                this.picks.minute = String(p.m);
+                this.picks.second = String(p.s);
+                this.picks.meridiem = p.h24 >= 12 ? 'pm' : 'am';
+                this.syncUnits();
+                this.updateInput();
+            });
         }
 
         // The one write path — a unit pick, a typed edit, setValue and clear all
         // funnel through it, so the panel, the input and the carrier cannot drift.
         commit() {
             if (this._committing) return;
-            this._committing = true;
-            try {
+            this._quiet(() => {
                 this.applyBounds();
                 this.updateInput();
-            } finally {
-                this._committing = false;
-            }
+            });
         }
 
         updateInput() {
@@ -484,8 +499,7 @@
             if (!raw) { this.clear(); return; }
             const secs = parseTyped(raw, this.format);
             if (secs === null || !this._inBounds(secs, secs)) { this._validateInput(); return; }
-            this._committing = true;
-            try { this._adopt(secs); } finally { this._committing = false; }
+            this._adopt(secs);
             this._validateInput();
         }
 
@@ -497,23 +511,17 @@
         setValue(value) {
             const secs = parse24(value);
             if (secs === null || !this._inBounds(secs, secs)) return false;
-            this._committing = true;
-            try { this._adopt(secs); } finally { this._committing = false; }
+            this._adopt(secs);
             this._validateInput();
             return true;
         }
 
         clear() {
-            this._committing = true;
-            try {
-                this.units.forEach((u) => { this.picks[u] = null; });
-                this.picks.second = null;
-                this.picks.meridiem = null;
+            this._quiet(() => {
+                this.picks = { hour: null, minute: null, second: null, meridiem: null };
                 this.syncUnits();
                 this.updateInput();
-            } finally {
-                this._committing = false;
-            }
+            });
             this._validateInput();
             return true;
         }
@@ -601,14 +609,10 @@
 
                 const near = nearestEnabled(options, current);
                 this.picks[u] = near ? near.dataset.value : null;
-                const was = this._committing;
-                this._committing = true;
-                try {
+                this._quiet(() => {
                     if (near) NDS.CustomSelect.setValue(this.unitEls[u], near.dataset.value);
                     else NDS.CustomSelect.clear(this.unitEls[u]);
-                } finally {
-                    this._committing = was;
-                }
+                });
             });
         }
 
@@ -651,17 +655,15 @@
             if (this._offLangChange) this._offLangChange();
             this._offLangChange = NDS.onAttrChange('html', ['lang'], () => {
                 // The panel carries localized labels throughout; rebuilding it is
-                // cheaper to reason about than patching six places, and it is
-                // discarded on close anyway.
+                // cheaper to reason about than patching six places.
                 if (this.isPanelCreated) {
                     const open = NDS.State.has(this.elements.container, 'open');
                     this.cleanup();
                     this.createPanelDOM();
                     this.setupDropmenu();
-                    this.isPanelCreated = true;
                     if (open) this.dropmenuInstance.open();
                 }
-                this.updateInput();
+                this._quiet(() => this.updateInput());
             });
         }
 
