@@ -551,6 +551,9 @@
         // Public: the index counts real slides. Internally the row may carry clones
         // at both ends, so every scroll target is a full-list index.
         goTo(index) {
+            // Clamp in real slides: a loop's full-list clamp spans the clones, so an
+            // out-of-range index would wrap onto an arbitrary slide.
+            index = Math.max(0, Math.min(index, this._real - 1));
             this._goToFull(this._full(index));
         }
 
@@ -1003,7 +1006,8 @@
 
         const swipers = document.querySelectorAll('.nds-swiper');
         swipers.forEach(swiper => {
-            if (swiper.closest('code, .code-example')) return;
+            // A loop clone's nested swiper is a dead copy — reinit must not wire it.
+            if (swiper.closest('code, .code-example, .nds-swiper-clone')) return;
             if (swiper.hasAttribute('data-nds-swiper-initialized')) return;
             const instance = new NDSSwiper(swiper);
             // Expando only on successful construction — retries must not inherit
