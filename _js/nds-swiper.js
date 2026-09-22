@@ -972,6 +972,11 @@
                 NDS.Status.clear(card);
                 NDS.aria.current(card, null);
             });
+            // A destroy mid-drag aborts the release listener that would clear these.
+            if (this.deck) {
+                this.deck.classList.remove('nds-dragging');
+                this.deck.style.removeProperty('--drag');
+            }
 
             _activeSwipers.delete(this);
             _resizeSwipers.delete(this);
