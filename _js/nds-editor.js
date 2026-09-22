@@ -84,6 +84,8 @@
     // logical start/end are also accepted so already-saved content and
     // bidi-aware pastes round-trip unchanged.
     const ALIGN_VALUES = new Set(['left', 'right', 'center', 'justify', 'start', 'end']);
+    // Table columns align per the table canon: data-align on the <th>.
+    const COLUMN_ALIGN = new Set(['center', 'start', 'end']);
     const CMD_BLOCK_MAP = { h1: 'H1', h2: 'H2', h3: 'H3', h4: 'H4' };
     // Structural/formatting commands never touch an atom's content — it's a
     // label (+ icon), never a heading, a list, or formatted text. Native
@@ -448,7 +450,8 @@
             // closest() honors it on containers, not just anchors.
             if (/^aria-/i.test(n) || n === 'role' || n === 'data-status' || n === 'data-state' || n === 'data-no-external'
                 || (tag === 'IMG' && (n === 'alt' || ((n === 'width' || n === 'height') && /^\d+$/.test(attr.value))))
-                || ((tag === 'TD' || tag === 'TH') && (n === 'colspan' || n === 'rowspan' || n === 'scope'))) {
+                || ((tag === 'TD' || tag === 'TH') && (n === 'colspan' || n === 'rowspan' || n === 'scope'))
+                || (tag === 'TH' && n === 'data-align' && COLUMN_ALIGN.has(attr.value))) {
                 kept.push([n, attr.value]);
             }
             el.removeAttribute(n);
@@ -589,6 +592,20 @@
             if (k-- === 0) return c;
         }
         return null;
+    }
+
+    // A cell's column header: the last thead row carries the column's
+    // data-align. Positional, like nds-tables.js — a colspan shifts it.
+    function columnHead(cell) {
+        const rows = cell.closest('table')?.tHead?.rows;
+        return rows?.length ? rows[rows.length - 1].cells[cell.cellIndex] || null : null;
+    }
+    // A header's logical data-align as the toolbar's physical value.
+    function physicalAlign(th) {
+        const a = th.getAttribute('data-align');
+        if (a === 'center') return 'center';
+        if (a !== 'start' && a !== 'end') return '';
+        return (a === 'start') !== (getComputedStyle(th).direction === 'rtl') ? 'left' : 'right';
     }
 
     const VOID_TAGS = new Set(['BR', 'HR', 'IMG', 'WBR']);
@@ -880,6 +897,7 @@
             this.editable.innerHTML = sanitizeHtml(this.source.value) || '<p><br></p>';
             this._normalizeLooseBlocks();
             this._refreshLinks();
+            this._syncColumnAlign();
             this._syncSource();
             // Seed the history base — the initial value stays reachable even
             // when hydration didn't change the value (sync early-returned).
@@ -1307,6 +1325,7 @@
                 this.editable.innerHTML = sanitizeHtml(this.source.value) || '<p><br></p>';
                 this._normalizeLooseBlocks();
                 this._refreshLinks();
+                this._syncColumnAlign();
                 this.root.classList.remove('is-source');
                 this.source.setAttribute('tabindex', '-1');
                 btn?.setAttribute('aria-pressed', 'false');
@@ -1548,12 +1567,14 @@
                 sel.removeAllRanges();
                 sel.addRange(r);
                 this._refreshLinks();
+                this._syncColumnAlign();
                 this._syncSource();
                 this._updateToolbarState();
                 return;
             }
             if (!this._insertPasted(insert)) return;
             this._refreshLinks();
+            this._syncColumnAlign();
             this._syncSource();
             this._updateToolbarState();
         }
@@ -1896,6 +1917,7 @@
             this.editable.innerHTML = snap.v ? sanitizeHtml(snap.v) : '<p><br></p>';
             this._normalizeLooseBlocks();
             this._refreshLinks();
+            this._syncColumnAlign();
             this._syncSource();
             this._histSuspend = false;
             const sel = window.getSelection();
@@ -2157,12 +2179,57 @@
         // avoided (they write physical left/right unpredictably); this is a
         // direct DOM write.
         _applyAlignment(value) {
-            const blocks = this._blocksInSelection();
+            const cells = [...this.editable.querySelectorAll('td, th')].filter(c => this._rangeTouches(c));
+            if (cells.length) this._alignColumns(cells, value);
+            const blocks = this._blocksInSelection().filter(b => !b.closest('td, th'));
             const clear = blocks.length && blocks.every(b => b.style.textAlign === value);
             for (const b of blocks) {
                 if (clear) b.style.removeProperty('text-align');
                 else b.style.textAlign = value;
                 if (!b.getAttribute('style')) b.removeAttribute('style');
+            }
+        }
+
+        _rangeTouches(el) {
+            const sel = window.getSelection();
+            return !!sel.rangeCount && sel.getRangeAt(0).intersectsNode(el);
+        }
+
+        // A cell aligns its whole column the table way (tables.md): data-align
+        // on the header — inline style would not survive sanitize in a region.
+        // The toolbar is physical, the canon logical; the header's direction
+        // maps one to the other. ponytail: justify has no column form — no-op.
+        _alignColumns(cells, value) {
+            if (value === 'justify') return;
+            const heads = [...new Set(cells.map(c => columnHead(c)).filter(Boolean))];
+            if (!heads.length) return;
+            const logical = (th) => value === 'center' ? 'center'
+                : (value === 'left') !== (getComputedStyle(th).direction === 'rtl') ? 'start' : 'end';
+            const clear = heads.every(th => th.getAttribute('data-align') === logical(th));
+            for (const th of heads) {
+                if (clear) th.removeAttribute('data-align');
+                else th.setAttribute('data-align', logical(th));
+            }
+            this._syncColumnAlign();
+        }
+
+        // Live preview of body-cell alignment. On the published page
+        // nds-tables.js does this from the same data-align; here the inline
+        // style is editing-only — sanitize strips it from the value.
+        _syncColumnAlign() {
+            for (const table of this.editable.querySelectorAll('table')) {
+                const rows = table.tHead?.rows;
+                const heads = rows?.length ? rows[rows.length - 1].cells : null;
+                for (const body of table.tBodies) {
+                    for (const tr of body.rows) {
+                        for (const td of tr.cells) {
+                            const a = heads?.[td.cellIndex]?.getAttribute('data-align');
+                            if (COLUMN_ALIGN.has(a)) td.style.textAlign = a;
+                            else td.style.removeProperty('text-align');
+                            if (!td.getAttribute('style')) td.removeAttribute('style');
+                        }
+                    }
+                }
             }
         }
 
@@ -2663,6 +2730,8 @@
             const block = this._getBlockContext();
             const blockTag = block ? block.tagName : null;
             const inList = (block && block.tagName === 'LI') ? block.closest('ul,ol')?.tagName : null;
+            const cell = this._selAncestor(n => n.tagName === 'TD' || n.tagName === 'TH');
+            const cellHead = cell && columnHead(cell);
             // Heading/list/formatting buttons grey out inside an atom — same
             // reason _applyCommand refuses them there. A separate pass since
             // it covers 'clear' too, which (like undo/redo) carries no
@@ -2688,7 +2757,10 @@
                 else if (CMD_BLOCK_MAP[cmd]) pressed = blockTag === CMD_BLOCK_MAP[cmd];
                 else if (cmd === 'ul')        pressed = inList === 'UL';
                 else if (cmd === 'ol')        pressed = inList === 'OL';
-                else if (cmd.startsWith('align-')) pressed = block?.style.textAlign === cmd.slice(6);
+                else if (cmd.startsWith('align-')) {
+                    pressed = cell ? !!cellHead && physicalAlign(cellHead) === cmd.slice(6)
+                        : block?.style.textAlign === cmd.slice(6);
+                }
                 else if (cmd.startsWith('dir-')) pressed = block?.getAttribute('dir') === cmd.slice(4);
                 btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
             }

@@ -1783,6 +1783,61 @@ try {
         console.log('PASS undo-caret-list-e2e');
     }
 
+    // E2E: alignment in a table cell aligns the COLUMN the table way —
+    // data-align on its <th> (logical, from the physical button), body cells
+    // preview it live, and only the data-align reaches the value.
+    const columnAlignOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const source = root.querySelector('.nds-editor-source');
+        const sel = getSelection();
+        const clickCmd = (cmd) => {
+            const btn = root.querySelector(`[data-cmd="${cmd}"]`);
+            btn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+            btn.click();
+        };
+        const caretIn = (cell) => {
+            const r = document.createRange();
+            r.setStart(cell.firstChild, 1);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+            document.dispatchEvent(new Event('selectionchange'));
+        };
+        editable.innerHTML = '<table class="nds-table"><thead><tr><th>الاسم</th><th>المبلغ</th></tr></thead>'
+            + '<tbody><tr><td>أ</td><td>١٠</td></tr><tr><td>ب</td><td>٢٠</td></tr></tbody></table><p><br></p>';
+        const th = editable.querySelectorAll('th')[1];
+        const rtl = getComputedStyle(th).direction === 'rtl';
+        caretIn(editable.querySelectorAll('tbody td')[1]);
+        clickCmd('align-center');
+        await raf(); await raf();
+        const cells = [...editable.querySelectorAll('tbody tr > td:nth-child(2)')];
+        const centered = th.getAttribute('data-align') === 'center'
+            && cells.every(td => td.style.textAlign === 'center')
+            && editable.querySelector('tbody td').style.textAlign === '';
+        const valueCanon = source.value.includes('data-align="center"') && !source.value.includes('text-align');
+        caretIn(editable.querySelectorAll('tbody td')[1]);
+        await raf(); await raf();
+        const pressedShows = root.querySelector('[data-cmd="align-center"]').getAttribute('aria-pressed') === 'true';
+        clickCmd('align-center');
+        await raf();
+        const toggledOff = !th.hasAttribute('data-align') && cells.every(td => !td.hasAttribute('style'));
+        caretIn(editable.querySelectorAll('tbody td')[1]);
+        clickCmd('align-right');
+        await raf();
+        const physicalToLogical = th.getAttribute('data-align') === (rtl ? 'start' : 'end');
+        return { centered, valueCanon, pressedShows, toggledOff, physicalToLogical };
+    });
+    const columnAlignProblems = Object.entries(columnAlignOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (columnAlignProblems.length) {
+        failures++;
+        console.log('FAIL table-column-align-e2e');
+        columnAlignProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS table-column-align-e2e');
+    }
+
     // E2E: a click-selected bare image carries the focus-ring marker (the
     // selection wash is gone), and the marker never reaches the value.
     const imageRingOut = await page.evaluate(async () => {
