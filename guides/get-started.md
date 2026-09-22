@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "09/09/2026 - 07:10 PM"
+last_edit: "22/09/2026 - 01:21 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -17,7 +17,7 @@ sidemenu_mode: false
 <section id="getStartedGuide" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
-            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 17"
+            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 14"
                 data-toc-source="#getStartedGuide article" data-toc-levels="h2, h3">
                 <div class="nds-toc-head">
                     <span class="nds-label">On this page</span>
@@ -74,36 +74,8 @@ sidemenu_mode: false
                     </div>
                 </div>
 
-                <h2 id="template">1. Template</h2>
-                <p>The NDS template is the read-only source for components, markup, design tokens, documentation, and runtime assets. Inspect and copy from it; do not modify it. Replace the folder contents when upgrading.</p>
-
-                <h3 id="download">Download and Extract</h3>
-                <ol>
-                    <li><strong>Download</strong> <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from the <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a> page.</li>
-                    <li><strong>Extract</strong> its contents into a gitignored <code class="nds-inline-code lang-html">.nds/</code> folder at the project root. The final path must be <code class="nds-inline-code lang-html">.nds/</code>, with <code class="nds-inline-code lang-html">_site/</code> directly inside it and no versioned folder in between.</li>
-                </ol>
-
-                <h3 id="structure">Template Structure</h3>
-                <div class="nds-code">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <code class="lang-markdown">
-.nds/
-├── README.md          - Overview and entry-point documentation
-├── _site/             - Compiled documentation and runtime assets
-│   ├── components/    - Canonical component markup
-│   └── assets/        - Runtime CSS, JS, fonts, and i18n
-├── _source/           - Source files and catalogs (added on install)
-├── CHANGELOG.md       - Release history and migration notes
-└── LICENSE            - License terms
-                    </code>
-                </div>
-
-                <h2 id="setup">2. Setup</h2>
-                <p>Run the setup prompt once. It installs NDS IQ, configures the project paths, and creates the initial plan for review.</p>
+                <h2 id="setup">1. Setup</h2>
+                <p>Run the setup prompt once. It installs NDS IQ, downloads the NDS template, configures the project paths, and creates the initial plan for review.</p>
 
                 <h3 id="instructions-block">Setup Prompt</h3>
                 <p>Use this as the first turn of a fresh agent session:</p>
@@ -139,6 +111,7 @@ Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. T
                 <ol>
                     <li><code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root as the full rulebook.</li>
                     <li>An <strong>anchor</strong> in the agent instruction file containing the project paths and instructing the agent to read the rulebook before NDS work.</li>
+                    <li>The <strong>NDS template</strong> in <code class="nds-inline-code lang-html">.nds/</code>, at the release your project already runs, or the latest release on a first install.</li>
                 </ol>
                 <p>Use <code class="nds-inline-code lang-html">CLAUDE.md</code> for Claude Code and <code class="nds-inline-code lang-html">AGENTS.md</code> for Cursor and Codex.</p>
 
@@ -171,7 +144,29 @@ Inventory the project and write NDS-PLAN.md for my review.
                 <p><code class="nds-inline-code lang-html">NDS-PLAN.md</code> is optional for a single-page trial. Use it when work spans multiple pages or sessions.</p>
 
                 <h3 id="manual-install">Manual Install (optional)</h3>
-                <p>For manual installation, save the complete rulebook as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, then add the anchor to the agent instruction file and fill in <code class="nds-inline-code lang-html">NDS_ASSETS</code>. The anchor's exact text is in the rulebook's own <em>Install and upgrade this file</em> section. Copy the rulebook exactly; do not paraphrase it.</p>
+                <p>Setup performs both steps below. Do them by hand only when the agent cannot download files.</p>
+
+                <p><strong>Step 1. Install the template.</strong> Download <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from the <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a> page. Extract its contents into a gitignored <code class="nds-inline-code lang-html">.nds/</code> folder at the project root. The final path must be <code class="nds-inline-code lang-html">.nds/</code>, with <code class="nds-inline-code lang-html">_site/</code> directly inside it and no versioned folder in between.</p>
+                <p>The template is the read-only source for components, markup, design tokens, documentation, and runtime assets. Inspect and copy from it; do not modify it. Replace the folder contents when you upgrade.</p>
+                <div class="nds-code">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <code class="lang-markdown">
+.nds/
+├── README.md          - Overview and entry-point documentation
+├── _site/             - Compiled documentation and runtime assets
+│   ├── components/    - Canonical component markup
+│   └── assets/        - Runtime CSS, JS, fonts, and i18n
+├── _source/           - Source files and catalogs (added on install)
+├── CHANGELOG.md       - Release history and migration notes
+└── LICENSE            - License terms
+                    </code>
+                </div>
+
+                <p><strong>Step 2. Install the rulebook.</strong> Save the complete rulebook as <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root, then add the anchor to the agent instruction file and fill in <code class="nds-inline-code lang-html">NDS_ASSETS</code>. The anchor's exact text is in the rulebook's own <em>Install and upgrade this file</em> section. Copy the rulebook exactly; do not paraphrase it.</p>
 {%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
 {%- assign _iq_parts = _instr | split: 'instructions v' %}
 {%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
@@ -192,7 +187,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                     </div>
                 </div>
 
-                <h2 id="sessions">3. Build</h2>
+                <h2 id="sessions">2. Build</h2>
                 <p>After you approve the plan, NDS IQ controls the implementation workflow. Your request only needs to provide the desired outcome, content, data, and project constraints.</p>
 
                 <h3 id="agent-drives">Pacing</h3>
@@ -254,7 +249,7 @@ Continue: read NDS-PLAN.md and propose the next step.
                 <p>Record reproducible NDS gaps in <code class="nds-inline-code lang-html">NDS-REPORT.md</code>. Include the NDS version, instructions version, component, and a minimal generic reproduction.</p>
                 <p>Review the report and send verified findings to <a class="nds-color" href="https://github.com/mazin-musleh/NDS-vanilla/issues">GitHub Issues</a> or the maintainer.</p>
 
-                <h2 id="upgrade">4. Upgrade</h2>
+                <h2 id="upgrade">3. Upgrade</h2>
                 <p>When a new NDS version is published, run:</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
