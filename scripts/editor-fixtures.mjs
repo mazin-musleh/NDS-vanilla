@@ -1783,6 +1783,40 @@ try {
         console.log('PASS undo-caret-list-e2e');
     }
 
+    // E2E: a click-selected bare image carries the focus-ring marker (the
+    // selection wash is gone), and the marker never reaches the value.
+    const imageRingOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const inst = root.ndsEditor;
+        const editable = root.querySelector('.nds-editor-editable');
+        const source = root.querySelector('.nds-editor-source');
+        editable.innerHTML = '<p>نص <img src="https://example.com/a.png" alt="a"> نص</p>';
+        const img = editable.querySelector('img');
+        const sel = getSelection();
+        const r = document.createRange();
+        r.selectNode(img);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        inst._syncSource(false);
+        const cs = getComputedStyle(img);
+        return {
+            marked: img.hasAttribute('data-editor-selected'),
+            outlined: cs.outlineStyle === 'solid' && parseFloat(cs.outlineWidth) >= 2,
+            notInValue: !source.value.includes('data-editor-selected'),
+        };
+    });
+    const imageRingProblems = Object.entries(imageRingOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (imageRingProblems.length) {
+        failures++;
+        console.log('FAIL image-select-ring-e2e');
+        imageRingProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS image-select-ring-e2e');
+    }
+
     // E2E: a toolbar sync on a readonly surface must not re-enable the
     // atom-locked commands, and they come back once editable again.
     const readonlyToolbarOut = await page.evaluate(async () => {

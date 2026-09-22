@@ -2648,6 +2648,9 @@
             else {
                 const node = this._componentCaretNode();
                 next = node ? (this._removeLevels(node)[0] || null) : null;
+                // A bare content image rings like a component — the selection
+                // wash alone can vanish against the image.
+                if (!next && picked?.tagName === 'IMG') next = picked;
             }
             if (next === this._selectedMark) return;
             this._selectedMark?.removeAttribute('data-editor-selected');
