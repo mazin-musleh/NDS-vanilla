@@ -1487,6 +1487,42 @@ try {
         console.log('PASS atom-caret-guard-e2e');
     }
 
+    // E2E: reported bug — selecting a button's whole label text (double-click
+    // word-select) and pressing Enter must escape like a collapsed caret
+    // does, not fall into the multi-part insertLineBreak path: that corrupted
+    // the label into duplicated <br> content instead of leaving it intact.
+    const btnLabelSelectOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+        editable.innerHTML = '<p>قبل <button class="nds-btn nds-primary" type="button"><span class="nds-label">زر</span></button> بعد</p>';
+        const label = editable.querySelector('.nds-label');
+        const r = document.createRange();
+        r.selectNodeContents(label); // whole-text select, like a double-click word-select
+        sel.removeAllRanges();
+        sel.addRange(r);
+        await raf();
+        const before = editable.innerHTML;
+        const prevented = !editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+        await raf();
+        const afterEnter = editable.innerHTML;
+        return {
+            enterPrevented: prevented,
+            labelUnchanged: afterEnter === before,
+            noBr: !afterEnter.includes('<br>'),
+            oneLabel: editable.querySelectorAll('.nds-label').length === 1,
+        };
+    });
+    const btnLabelSelectProblems = Object.entries(btnLabelSelectOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (btnLabelSelectProblems.length) {
+        failures++;
+        console.log('FAIL button-label-select-enter-e2e');
+        btnLabelSelectProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS button-label-select-enter-e2e');
+    }
+
     // E2E: toolbar direction command — dir-rtl/dir-ltr write the native dir on
     // the caret's block, re-click clears it, the buttons reflect pressed
     // state, and the direction round-trips into the form value.

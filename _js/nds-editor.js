@@ -1968,11 +1968,17 @@
                 e.preventDefault();
                 return true;
             }
-            // A caret inside an INLINE atom (chip, tag, featured icon,
-            // button) never takes a line break — even a <br> breaks its
-            // one-line shape. Enter ESCAPES to after the atom instead; a
-            // second Enter then behaves normally from outside it.
-            const atom = range.collapsed ? this._linkableAtom() : null;
+            // A caret — or a same-atom selection (e.g. double-click word-select
+            // of a button's label) — inside an INLINE atom (chip, tag,
+            // featured icon, button) never takes a line break — even a <br>
+            // breaks its one-line shape, and insertLineBreak over a selection
+            // whose bounds coincide with the atom's own (nothing else inside)
+            // corrupts it instead of replacing the text. Enter ESCAPES to
+            // after the atom instead; a second Enter then behaves normally
+            // from outside it. Not collapse-gated: a non-collapsed selection
+            // already cleared _selectionClipsShell above, so if it resolves to
+            // an atom here, the whole selection sits inside it.
+            const atom = this._linkableAtom();
             if (atom) {
                 e.preventDefault();
                 const r = document.createRange();
