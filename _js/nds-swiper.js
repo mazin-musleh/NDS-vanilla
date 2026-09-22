@@ -618,13 +618,14 @@
         // ==============================================
 
         setupLoop() {
-            // Two pages plus one clone on each side: a fling can pass two pages
-            // before it rests, and the rest is where the jump corrects. Fewer clones
-            // than that and a fling hits the row's real edge.
-            // ponytail: a fling of three or more pages still hits the edge; grow the
-            // budget (or reposition mid-scroll) if a real deck shows it.
+            // Two pages plus one clone on each side, and never fewer than six SLIDES.
+            // The floor is absolute because the relative formula strands a short row: a
+            // two-slide loop caps its budget at two, so the edge stays two swipes away
+            // and _recenter has no room to work in — it only shifts once the row is a
+            // whole cycle out. A row shorter than the budget repeats its own cycle to
+            // reach it; the wrap math is cycle-relative, so the clone index just wraps.
             const n = this._real;
-            const count = Math.min(n, 2 * Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + 1);
+            const count = Math.max(2 * Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + 1, 6);
             const clone = (i) => {
                 const c = this.slides[i].cloneNode(true);
                 c.classList.add('nds-swiper-clone');
@@ -642,8 +643,8 @@
             };
             const head = [], tail = [];
             for (let j = 0; j < count; j++) {
-                head.push(clone(n - count + j));
-                tail.push(clone(j));
+                head.push(clone((((j - count) % n) + n) % n));
+                tail.push(clone(j % n));
             }
             this.slides[0].before(...head);
             this.slides[n - 1].after(...tail);
@@ -659,6 +660,38 @@
             const settle = () => this._loopSettle();
             if ('onscrollend' in this.wrapper) this.wrapper.addEventListener('scrollend', settle, { signal });
             else this.wrapper.addEventListener('scroll', NDS.debounce(settle, 150), { passive: true, signal });
+
+            // A rest needs a real pause and a run of swipes never gives one: measured
+            // SEVEN flicks passing before one scrollend landed, each spending a clone,
+            // so the row runs out of them and stops dead on its real edge. Take the
+            // other quiet moment instead — the touch that starts the next swipe.
+            this.wrapper.addEventListener('pointerdown', (e) => this._recenter(e), { passive: true, signal });
+        }
+
+        // Shift whole cycles from where the row ACTUALLY is — mid-flight currentIndex is
+        // a rounded read of a moving position.
+        _recenter(e) {
+            // Touch only: a mouse pointerdown is the start of a click, and moving the
+            // row under it hands pointerup to the twin, which loses the click.
+            if (e.pointerType === 'mouse') return;
+            const step = this._measuredStep;
+            if (this._loopPending || !step) return;
+            const pos = Math.abs(this.wrapper.scrollLeft) / step;
+            const dir = pos < this._head ? 1 : pos >= this._head + this._real ? -1 : 0;
+            if (!dir) return;
+
+            // The row is nearly always mid-snap here (measured ~0.1 of a slide short),
+            // and mandatory snap re-snaps after ANY programmatic write — that cut to the
+            // nearest slot is the flicker. So hold snap off until the finger leaves:
+            // during a drag it does nothing anyway, and the touch has already cancelled
+            // the animation the cut would have landed on.
+            const w = this.wrapper, snap = w.style.scrollSnapType;
+            w.style.scrollSnapType = 'none';
+            const restore = () => { w.style.scrollSnapType = snap; };
+            if (!this._shiftCycle(dir)) return restore();
+            const { signal } = this.abortController;
+            w.addEventListener('pointerup', restore, { once: true, signal });
+            w.addEventListener('pointercancel', restore, { once: true, signal });
         }
 
         _loopSettle() {
