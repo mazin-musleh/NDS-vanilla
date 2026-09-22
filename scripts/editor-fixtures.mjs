@@ -1648,6 +1648,41 @@ try {
         console.log('PASS link-confirm-double-click-e2e');
     }
 
+    // E2E: reported bug — clicking empty space below the content, meant to
+    // start a new line after a trailing button/link, used to collapse the
+    // caret to the document end and split it there via native
+    // execCommand('insertParagraph') — corrupting the atom the same way
+    // unguarded Enter would. It must add a clean empty <p> instead, leaving
+    // the atom untouched.
+    const clickBelowOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        editable.innerHTML = '<p>قبل <a class="nds-btn nds-primary nds-external" href="https://wwww" target="_blank" rel="noopener noreferrer"><span class="nds-label">Button fgd</span></a></p>';
+        editable.dispatchEvent(new Event('input', { bubbles: true }));
+        await raf();
+        const rect = editable.lastElementChild.getBoundingClientRect();
+        editable.dispatchEvent(new MouseEvent('click', {
+            bubbles: true, cancelable: true, view: window,
+            clientX: rect.left, clientY: rect.bottom + 20,
+        }));
+        await raf();
+        return {
+            atomIntact: !!editable.querySelector('a.nds-btn'),
+            oneAnchor: editable.querySelectorAll('a').length === 1,
+            oneLabel: editable.querySelectorAll('.nds-label').length === 1,
+            freshEmptyLine: editable.lastElementChild.tagName === 'P' && !editable.lastElementChild.textContent.trim(),
+        };
+    });
+    const clickBelowProblems = Object.entries(clickBelowOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (clickBelowProblems.length) {
+        failures++;
+        console.log('FAIL click-below-trailing-atom-e2e');
+        clickBelowProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS click-below-trailing-atom-e2e');
+    }
+
     // E2E: toolbar direction command — dir-rtl/dir-ltr write the native dir on
     // the caret's block, re-click clears it, the buttons reflect pressed
     // state, and the direction round-trips into the form value.

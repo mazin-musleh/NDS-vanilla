@@ -2167,15 +2167,6 @@
 
         _confirmLink() {
             const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
-            // A stray re-entrant call (a fast double-click on Insert, or
-            // Enter-in-field racing a click — data-no-auto-close keeps the
-            // button live through an error) lands here after the first call
-            // already closed the popover and consumed the saved selection:
-            // _restoreSelection() would then silently no-op, so the atom/
-            // existing-anchor lookups below go stale and fall through to
-            // insertHTML, duplicating the link at whatever the DOM's leftover
-            // caret happens to be. The popover being open IS the request.
-            if (!dropmenu?.ndsDropmenu?.isOpen) return;
             // Fields live in the menu, which portal detaches to <body> while
             // open — query it via menuOf (nested or portaled), not the wrapper.
             // Optional-chained per the soft dependency on NDS.Dropmenu declared
@@ -2193,7 +2184,19 @@
             dropmenu?.ndsDropmenu?.close?.();
 
             this.editable.focus();
-            this._restoreSelection();
+            // A stray re-entrant call (a fast double-click on Insert, or
+            // Enter-in-field racing a click — data-no-auto-close keeps the
+            // button live through an error) lands here after the first call
+            // already consumed the saved selection: _restoreSelection()
+            // returns null on that second call, and without this bail the
+            // atom/existing-anchor lookups below go stale, falling through to
+            // insertHTML and duplicating the link at whatever the DOM's
+            // leftover caret happens to be. A saved selection to restore IS
+            // the request — checked here, not via the dropmenu's isOpen,
+            // since a delayed auto-close from an EARLIER, unrelated
+            // dropmenu-item click (see nds-dropmenu.js's 100ms setTimeout)
+            // can flip isOpen on this reused popover between two genuine uses.
+            if (!this._restoreSelection()) return;
             const sel = window.getSelection();
             const existing = this._getAncestorTag('A');
             const atom = existing ? null : this._linkableAtom();
@@ -2284,12 +2287,10 @@
         }
 
         _unlink() {
-            const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
-            // Re-entrant guard — see _confirmLink.
-            if (!dropmenu?.ndsDropmenu?.isOpen) return;
-            dropmenu.ndsDropmenu.close();
+            this.root.querySelector('[data-editor-link-dropmenu]')?.ndsDropmenu?.close?.();
             this.editable.focus();
-            this._restoreSelection();
+            // Re-entrant guard — see _confirmLink.
+            if (!this._restoreSelection()) return;
             const existing = this._getAncestorTag('A');
             // A component anchor reverts whole — execCommand('unlink') would
             // unwrap it and strand its children. nds-btn goes back to
@@ -2474,13 +2475,12 @@
                 this._fieldError(menu?.querySelector('[data-editor-image-url]'), uiLabel(TOOLBAR_STRINGS.invalidImageUrl));
                 return;
             }
-            // Re-entrant guard — see _confirmLink.
-            if (!dropmenu?.ndsDropmenu?.isOpen) return;
-            dropmenu.ndsDropmenu.close();
+            dropmenu?.ndsDropmenu?.close?.();
             // Committed — the staging chip's job is done.
             menu?.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
             this.editable.focus();
-            this._restoreSelection();
+            // Re-entrant guard — see _confirmLink.
+            if (!this._restoreSelection()) return;
             const existing = this._selectedImage();
             if (existing) {
                 existing.setAttribute('src', url);
@@ -2526,11 +2526,20 @@
                 sel.addRange(r);
                 return;
             }
-            r.selectNodeContents(this.editable);
+            // Build the fresh line structurally instead of collapsing to the
+            // document end and calling execCommand('insertParagraph') — when
+            // the trailing content is an inline atom (button, tag…), native
+            // splitting there corrupts it the same way Enter would (guarded
+            // for Enter by _guardRegionEnter; this click path has no caret to
+            // guard, so it never even reaches the atom check).
+            const p = document.createElement('p');
+            p.innerHTML = '<br>';
+            this.editable.appendChild(p);
+            r.selectNodeContents(p);
             r.collapse(false);
             sel.removeAllRanges();
             sel.addRange(r);
-            document.execCommand('insertParagraph');
+            this._syncSource();
         }
 
         // ---------- Toolbar state ----------
