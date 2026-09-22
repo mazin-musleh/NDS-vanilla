@@ -2167,6 +2167,15 @@
 
         _confirmLink() {
             const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
+            // A stray re-entrant call (a fast double-click on Insert, or
+            // Enter-in-field racing a click — data-no-auto-close keeps the
+            // button live through an error) lands here after the first call
+            // already closed the popover and consumed the saved selection:
+            // _restoreSelection() would then silently no-op, so the atom/
+            // existing-anchor lookups below go stale and fall through to
+            // insertHTML, duplicating the link at whatever the DOM's leftover
+            // caret happens to be. The popover being open IS the request.
+            if (!dropmenu?.ndsDropmenu?.isOpen) return;
             // Fields live in the menu, which portal detaches to <body> while
             // open — query it via menuOf (nested or portaled), not the wrapper.
             // Optional-chained per the soft dependency on NDS.Dropmenu declared
@@ -2275,7 +2284,10 @@
         }
 
         _unlink() {
-            this.root.querySelector('[data-editor-link-dropmenu]')?.ndsDropmenu?.close?.();
+            const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
+            // Re-entrant guard — see _confirmLink.
+            if (!dropmenu?.ndsDropmenu?.isOpen) return;
+            dropmenu.ndsDropmenu.close();
             this.editable.focus();
             this._restoreSelection();
             const existing = this._getAncestorTag('A');
@@ -2462,7 +2474,9 @@
                 this._fieldError(menu?.querySelector('[data-editor-image-url]'), uiLabel(TOOLBAR_STRINGS.invalidImageUrl));
                 return;
             }
-            dropmenu?.ndsDropmenu?.close?.();
+            // Re-entrant guard — see _confirmLink.
+            if (!dropmenu?.ndsDropmenu?.isOpen) return;
+            dropmenu.ndsDropmenu.close();
             // Committed — the staging chip's job is done.
             menu?.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
             this.editable.focus();

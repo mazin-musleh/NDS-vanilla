@@ -1523,6 +1523,131 @@ try {
         console.log('PASS button-label-select-enter-e2e');
     }
 
+    // E2E: linking a button whose label text is fully SELECTED (double-click,
+    // the flow right before renaming it) converts whole, same as a collapsed
+    // caret does — one <a>, label nested inside it, never duplicated.
+    const btnLinkSelectOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+        editable.innerHTML = '<p>قبل <button class="nds-btn nds-primary" type="button"><span class="nds-label">Button fgd</span></button> بعد</p>';
+        const label = editable.querySelector('.nds-label');
+        const r = document.createRange();
+        r.selectNodeContents(label);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        const linkBtn = root.querySelector('[data-cmd="link"]');
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        const menu = root.querySelector('[data-editor-link-dropmenu] .nds-dropmenu-menu');
+        menu.querySelector('[data-editor-link-url]').value = 'https://wwww';
+        menu.querySelector('[data-editor-link-external]').checked = true;
+        menu.querySelector('[data-editor-link-confirm]').click();
+        await raf();
+        const a = editable.querySelector('a.nds-btn');
+        return {
+            oneAnchor: editable.querySelectorAll('a').length === 1,
+            oneLabel: editable.querySelectorAll('.nds-label').length === 1,
+            noStrayButton: !editable.querySelector('button'),
+            labelInsideAnchor: !!a?.querySelector('.nds-label'),
+            labelTextKept: a?.querySelector('.nds-label')?.textContent === 'Button fgd',
+        };
+    });
+    const btnLinkSelectProblems = Object.entries(btnLinkSelectOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (btnLinkSelectProblems.length) {
+        failures++;
+        console.log('FAIL button-link-select-e2e');
+        btnLinkSelectProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS button-link-select-e2e');
+    }
+
+    // E2E: a button-link built via the full-label-select flow round-trips
+    // through the HTML source toggle unchanged — the toggle re-hydrates from
+    // sanitizeHtml(source.value), which must be idempotent on canon markup.
+    const sourceToggleOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+        editable.innerHTML = '<p>قبل <button class="nds-btn nds-primary" type="button"><span class="nds-label">Button fgd</span></button> بعد</p>';
+        const label = editable.querySelector('.nds-label');
+        const r = document.createRange();
+        r.selectNodeContents(label);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        const linkBtn = root.querySelector('[data-cmd="link"]');
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        const menu = root.querySelector('[data-editor-link-dropmenu] .nds-dropmenu-menu');
+        menu.querySelector('[data-editor-link-url]').value = 'https://wwww';
+        menu.querySelector('[data-editor-link-external]').checked = true;
+        menu.querySelector('[data-editor-link-confirm]').click();
+        await raf();
+        const before = editable.innerHTML;
+        const toggle = root.querySelector('[data-source-toggle]');
+        toggle.click(); // enter source
+        await raf();
+        toggle.click(); // exit source, re-hydrate editable
+        await raf();
+        const after = editable.innerHTML;
+        return { roundTrips: after === before };
+    });
+    const sourceToggleProblems = Object.entries(sourceToggleOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (sourceToggleProblems.length) {
+        failures++;
+        console.log('FAIL button-link-source-toggle-e2e');
+        sourceToggleProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS button-link-source-toggle-e2e');
+    }
+
+    // E2E: reported bug — a fast double-click on the link popover's Insert
+    // button (data-no-auto-close keeps it live through a validation error, so
+    // it's still clickable for a beat after a valid submit too) re-entered
+    // _confirmLink. _restoreSelection() consumes its saved range once, so the
+    // second call restored nothing, its atom/existing-anchor lookups came up
+    // empty, and it fell through to the plain-text insertHTML branch — a
+    // stray second <a> duplicating the button's text alongside the real one.
+    const doubleConfirmOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+        editable.innerHTML = '<p>قبل <button class="nds-btn nds-primary" type="button"><span class="nds-label">Button fgd</span></button> بعد</p>';
+        const label = editable.querySelector('.nds-label');
+        const r = document.createRange();
+        r.selectNodeContents(label);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        const linkBtn = root.querySelector('[data-cmd="link"]');
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        const menu = root.querySelector('[data-editor-link-dropmenu] .nds-dropmenu-menu');
+        menu.querySelector('[data-editor-link-url]').value = 'https://wwww';
+        menu.querySelector('[data-editor-link-external]').checked = true;
+        const confirmBtn = menu.querySelector('[data-editor-link-confirm]');
+        confirmBtn.click();
+        confirmBtn.click(); // rapid second click, no raf between
+        await raf();
+        return {
+            oneAnchor: editable.querySelectorAll('a').length === 1,
+            oneLabel: editable.querySelectorAll('.nds-label').length === 1,
+        };
+    });
+    const doubleConfirmProblems = Object.entries(doubleConfirmOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (doubleConfirmProblems.length) {
+        failures++;
+        console.log('FAIL link-confirm-double-click-e2e');
+        doubleConfirmProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS link-confirm-double-click-e2e');
+    }
+
     // E2E: toolbar direction command — dir-rtl/dir-ltr write the native dir on
     // the caret's block, re-click clears it, the buttons reflect pressed
     // state, and the direction round-trips into the form value.
