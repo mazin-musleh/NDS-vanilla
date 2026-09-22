@@ -575,6 +575,22 @@
         return false;
     }
 
+    // formatNode's indentation: whitespace-only text carrying a newline.
+    const isIndentNode = (n) => n.nodeType === Node.TEXT_NODE && n.textContent.includes('\n') && !n.textContent.trim();
+    // Child index counted without indentation nodes, and its inverse.
+    function realIndexOf(parent, idx) {
+        let k = 0;
+        for (let i = 0; i < idx && i < parent.childNodes.length; i++) if (!isIndentNode(parent.childNodes[i])) k++;
+        return k;
+    }
+    function realChildAt(parent, k) {
+        for (const c of parent.childNodes) {
+            if (isIndentNode(c)) continue;
+            if (k-- === 0) return c;
+        }
+        return null;
+    }
+
     const VOID_TAGS = new Set(['BR', 'HR', 'IMG', 'WBR']);
     // Elements typing can continue in — anything else as a trailing node
     // traps the caret (component regions, tables, block wrappers).
@@ -1486,7 +1502,7 @@
                 // Same size/type/MIME gates as the popover upload — full
                 // parity via NDS.Upload's live validateFile(), so pasted files
                 // honor allowedTypes/allowedMimeTypes too, not just size.
-                const host = this.root.querySelector('[data-editor-image-upload]');
+                const host = this._imageUploadHost();
                 let firstError = '';
                 const valid = files.filter(f => {
                     const errors = host?.ndsUpload?.validateFile?.(f) || [];
@@ -1716,7 +1732,7 @@
             // ancestor, so the document's length stops driving the cost.
             // The editable is the ceiling: a drag can escape the editing host,
             // and rooting above it would let outside text answer as an
-            // endpoint (the old root filtered those out by construction).
+            // endpoint.
             const cac = range.commonAncestorContainer;
             const inner = (cac.nodeType === Node.ELEMENT_NODE ? cac : cac.parentElement) || this.editable;
             const scope = this.editable.contains(inner) ? inner : this.editable;
@@ -1830,21 +1846,23 @@
 
         _resolvePath(path) {
             let n = this.editable;
-            for (const i of path) n = n.childNodes[i] || n;
+            for (const i of path) n = realChildAt(n, i) || n;
             return n;
         }
 
-        // Caret as a child-index path — value snapshots restore via a
-        // deterministic re-parse, so paths resolve across restores.
+        // Caret as a child-index path. Indices skip the pretty-printer's
+        // indentation nodes: the restore re-parses the formatted value, which
+        // has them, while the live DOM that recorded the path does not.
         _caretSnapshot() {
             const sel = window.getSelection();
             if (!sel.rangeCount || !this.editable.contains(sel.anchorNode)) return null;
             const { startContainer, startOffset } = sel.getRangeAt(0);
             const path = [];
             for (let n = startContainer; n && n !== this.editable; n = n.parentNode) {
-                path.unshift(Array.prototype.indexOf.call(n.parentNode.childNodes, n));
+                path.unshift(realIndexOf(n.parentNode, Array.prototype.indexOf.call(n.parentNode.childNodes, n)));
             }
-            return { path, offset: startOffset };
+            const offset = startContainer.nodeType === Node.TEXT_NODE ? startOffset : realIndexOf(startContainer, startOffset);
+            return { path, offset };
         }
 
         // Value-snapshot history entry. Typing coalesces (sub-800ms bursts
@@ -1884,8 +1902,12 @@
             const r = document.createRange();
             try {
                 const node = this._resolvePath(snap.caret?.path || []);
-                const max = node.nodeType === Node.TEXT_NODE ? node.textContent.length : node.childNodes.length;
-                r.setStart(node, Math.min(snap.caret?.offset || 0, max));
+                const off = snap.caret?.offset || 0;
+                if (node.nodeType === Node.TEXT_NODE) r.setStart(node, Math.min(off, node.textContent.length));
+                else {
+                    const child = realChildAt(node, off);
+                    r.setStart(node, child ? Array.prototype.indexOf.call(node.childNodes, child) : node.childNodes.length);
+                }
             } catch {
                 r.selectNodeContents(this.editable);
                 r.collapse(false);
@@ -1930,10 +1952,8 @@
             this._saveSelection();
             const node = this._componentCaretNode();
             this._removeChain = node ? this._removeLevels(node) : [];
-            // Fields live in the menu, which portal detaches to <body> while
-            // open — query it via menuOf (nested or portaled), not the wrapper.
             const dropmenu = this.root.querySelector('[data-editor-remove-dropmenu]');
-            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const menu = this._menuOf(dropmenu);
             const list = menu?.querySelector('[data-editor-remove-levels]');
             if (!list) return;
             const chain = this._removeChain;
@@ -2133,8 +2153,7 @@
 
         // Physical text-align (left/right/center/justify) inline on every block
         // the selection touches. Re-clicking the active value clears it back to
-        // natural (direction-following) — mirrors the dir toggle, and replaces
-        // the old logical "start" reset button. Native justify* commands are
+        // natural (direction-following) — mirrors the dir toggle. Native justify* commands are
         // avoided (they write physical left/right unpredictably); this is a
         // direct DOM write.
         _applyAlignment(value) {
@@ -2162,30 +2181,49 @@
             }
         }
 
+        // Popover fields live in the menu, which portal detaches to <body>
+        // while open — reach it via menuOf (nested or portaled), not the
+        // wrapper. Optional-chained: NDS.Dropmenu is a soft dependency.
+        _menuOf(dropmenu) {
+            return (dropmenu && NDS.Dropmenu?.menuOf?.(dropmenu)) || dropmenu;
+        }
+
+        _imageUploadHost() {
+            return (this._menuOf(this.root.querySelector('[data-editor-image-dropmenu]')) || this.root)
+                .querySelector('[data-editor-image-upload]');
+        }
+
         // ---------- Link popover ----------
+
+        // What the link applies to. One derivation for prep (what the popover
+        // shows) and confirm (what it applies) — they must never disagree.
+        _linkTarget() {
+            const existing = this._getAncestorTag('A');
+            const atom = existing ? null : this._linkableAtom();
+            const img = existing || atom ? null : this._selectedImage();
+            const target = existing || atom;
+            return {
+                existing, atom, img, target,
+                asComponent: !!atom || !!(existing && isComponentAnchor(existing)),
+                // Opaque targets — an image, an icon-only atom — have nothing
+                // to rename, so the text field doesn't apply.
+                asOpaque: !!img || !!(target && !target.querySelector('.nds-label') && !target.textContent.trim())
+            };
+        }
 
         _prepLinkMenu() {
             this._saveSelection();
             const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
             if (!dropmenu) return;
-            // Fields live in the menu, which portal detaches to <body> while
-            // open — query it via menuOf (nested or portaled), not the wrapper.
-            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const menu = this._menuOf(dropmenu);
             const textInput = menu.querySelector('[data-editor-link-text]');
             const urlInput = menu.querySelector('[data-editor-link-url]');
             const externalInput = menu.querySelector('[data-editor-link-external]');
             const unlinkBtn = menu.querySelector('[data-editor-link-unlink]');
-            const existing = this._getAncestorTag('A');
-            const atom = existing ? null : this._linkableAtom();
-            const img = existing || atom ? null : this._selectedImage();
-            const asComponent = !!atom || !!(existing && isComponentAnchor(existing));
+            const { existing, target, asComponent, asOpaque } = this._linkTarget();
             const sel = window.getSelection();
             const selected = (sel.rangeCount && !sel.isCollapsed && this.editable.contains(sel.anchorNode))
                 ? sel.toString().replace(/\s+/g, ' ').trim() : '';
-            const target = existing || atom;
-            // Opaque targets — an image, an icon-only atom — have nothing to
-            // rename, so the text field doesn't apply.
-            const asOpaque = !!img || !!(target && !target.querySelector('.nds-label') && !target.textContent.trim());
             // Text shows the existing link's label, else the selection —
             // editable either way (typing it replaces the linked text). A
             // component reads its .nds-label (raw textContent carries the
@@ -2223,11 +2261,7 @@
 
         _confirmLink() {
             const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
-            // Fields live in the menu, which portal detaches to <body> while
-            // open — query it via menuOf (nested or portaled), not the wrapper.
-            // Optional-chained per the soft dependency on NDS.Dropmenu declared
-            // where the toolbar menus are created.
-            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const menu = this._menuOf(dropmenu);
             const url = cleanUrl((menu?.querySelector('[data-editor-link-url]')?.value || '').trim());
             const text = (menu?.querySelector('[data-editor-link-text]')?.value || '').trim();
             const external = !!menu?.querySelector('[data-editor-link-external]')?.checked;
@@ -2254,12 +2288,7 @@
             // can flip isOpen on this reused popover between two genuine uses.
             if (!this._restoreSelection()) return;
             const sel = window.getSelection();
-            const existing = this._getAncestorTag('A');
-            const atom = existing ? null : this._linkableAtom();
-            const img = existing || atom ? null : this._selectedImage();
-            const asComponent = !!atom || !!(existing && isComponentAnchor(existing));
-            const target = existing || atom;
-            const asOpaque = !!img || !!(target && !target.querySelector('.nds-label') && !target.textContent.trim());
+            const { existing, atom, img, asComponent, asOpaque } = this._linkTarget();
             // Canon stamp: nds-link + nds-primary per the colored checkbox —
             // but never on a component (its classes ARE its identity) or an
             // image wrapper (text styling has nothing to color). target/rel
@@ -2393,12 +2422,7 @@
         _imageEmbedAllowed() { return this._imageUploadUrl() === 'embed'; }
 
         _imageUploadUrl() {
-            // Consulted during _confirmImage (menu open) — the upload host is
-            // inside the menu, which portal detaches to <body>, so reach it via
-            // menuOf rather than this.root's subtree. Optional-chained per the soft
-            // dependency on NDS.Dropmenu declared where the toolbar menus are created.
-            const menu = NDS.Dropmenu?.menuOf?.(this.root.querySelector('[data-editor-image-dropmenu]'));
-            const host = (menu || this.root).querySelector('[data-editor-image-upload]');
+            const host = this._imageUploadHost(); // read while the menu is open
             return host?.ndsUpload?.getConfig?.().uploadUrl || host?.dataset.uploadUrl || '';
         }
 
@@ -2408,9 +2432,7 @@
         // before the menu opens).
         _syncImageUploadVisibility() {
             const dropmenu = this.root.querySelector('[data-editor-image-dropmenu]');
-            // Fields live in the menu, which portal detaches to <body> while
-            // open — query it via menuOf (nested or portaled), not the wrapper.
-            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const menu = this._menuOf(dropmenu);
             const host = menu?.querySelector('[data-editor-image-upload]');
             if (!host) return;
             const show = !!this._imageUploadUrl();
@@ -2427,7 +2449,7 @@
         // URLs instead of POSTing. autoUpload is forced off in that mode so
         // NDS.Upload never sends an XHR to "/embed".
         setImageUpload(config = {}) {
-            const host = this.root.querySelector('[data-editor-image-upload]');
+            const host = this._imageUploadHost();
             if (host) {
                 for (const [k, v] of Object.entries(config)) {
                     if (v == null || v === false) delete host.dataset[k];
@@ -2485,9 +2507,7 @@
             this._saveSelection();
             const dropmenu = this.root.querySelector('[data-editor-image-dropmenu]');
             if (!dropmenu) return;
-            // Fields live in the menu, which portal detaches to <body> while
-            // open — query it via menuOf (nested or portaled), not the wrapper.
-            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const menu = this._menuOf(dropmenu);
             const urlInput = menu.querySelector('[data-editor-image-url]');
             const altInput = menu.querySelector('[data-editor-image-alt]');
             // A clicked (selected) image edits in place — url/alt prefill.
@@ -2513,11 +2533,7 @@
 
         _confirmImage() {
             const dropmenu = this.root.querySelector('[data-editor-image-dropmenu]');
-            // Fields live in the menu, which portal detaches to <body> while
-            // open — query it via menuOf (nested or portaled), not the wrapper.
-            // Optional-chained per the soft dependency on NDS.Dropmenu declared
-            // where the toolbar menus are created.
-            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const menu = this._menuOf(dropmenu);
             const url = cleanUrl((menu?.querySelector('[data-editor-image-url]')?.value || '').trim());
             const alt = (menu?.querySelector('[data-editor-image-alt]')?.value || '').trim();
             // Dims are the numeric width/height ATTRIBUTES (aspect + CLS);
@@ -2648,9 +2664,10 @@
             // reason _applyCommand refuses them there. A separate pass since
             // it covers 'clear' too, which (like undo/redo) carries no
             // aria-pressed and skips the loop below.
-            const inAtom = !!this._linkableAtom();
+            // Must not re-enable a disabled/readonly surface's buttons.
+            const locked = !!this._linkableAtom() || this.editable.getAttribute('contenteditable') !== 'true';
             for (const btn of this.buttons) {
-                if (ATOM_LOCKED_CMDS.has(btn.dataset.cmd)) btn.disabled = inAtom;
+                if (ATOM_LOCKED_CMDS.has(btn.dataset.cmd)) btn.disabled = locked;
             }
 
             for (const btn of this.buttons) {

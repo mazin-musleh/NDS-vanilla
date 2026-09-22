@@ -1743,6 +1743,84 @@ try {
         console.log('PASS atom-toolbar-lock-e2e');
     }
 
+    // E2E: undo restores via a re-parse of the pretty-printed value, which
+    // carries indent text nodes inside lists that the live DOM lacked when
+    // the caret was recorded. The caret must land back in "b", not "a".
+    const undoCaretOut = await page.evaluate(async () => {
+        const root = document.getElementById('story').closest('.nds-editor');
+        const inst = root.ndsEditor;
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+        const put = (node, off) => {
+            const r = document.createRange();
+            r.setStart(node, off);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+        };
+        editable.innerHTML = '<ul><li>a</li><li>b</li></ul><p><br></p>';
+        editable.focus();
+        put(editable.querySelectorAll('li')[1].firstChild, 1);
+        inst._syncSource(false);
+        const textB = editable.querySelectorAll('li')[1].firstChild;
+        textB.textContent = 'bc';
+        put(textB, 2);
+        inst._syncSource(false);
+        editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true, cancelable: true }));
+        const li = (sel.anchorNode?.nodeType === 3 ? sel.anchorNode.parentNode : sel.anchorNode)?.closest('li');
+        return {
+            valueRestored: editable.querySelectorAll('li')[1]?.textContent === 'b',
+            indentNodesPresent: [...editable.querySelector('ul').childNodes].some(n => n.nodeType === 3 && !n.textContent.trim()),
+            caretInB: !!li && li.textContent === 'b' && sel.anchorOffset === 1,
+        };
+    });
+    const undoCaretProblems = Object.entries(undoCaretOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (undoCaretProblems.length) {
+        failures++;
+        console.log('FAIL undo-caret-list-e2e');
+        undoCaretProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS undo-caret-list-e2e');
+    }
+
+    // E2E: a toolbar sync on a readonly surface must not re-enable the
+    // atom-locked commands, and they come back once editable again.
+    const readonlyToolbarOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const bold = root.querySelector('[data-cmd="bold"]');
+        const sel = getSelection();
+        const caretInText = () => {
+            const r = document.createRange();
+            r.setStart(editable.querySelector('p').firstChild, 2);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+        };
+        editable.innerHTML = '<p>مرحبا</p>';
+        NDS.State.add(root, 'readonly');
+        await raf();
+        caretInText();
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        const boldDisabledReadonly = bold.disabled;
+        NDS.State.remove(root, 'readonly');
+        await raf();
+        caretInText();
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        return { boldDisabledReadonly, boldEnabledAfter: !bold.disabled };
+    });
+    const readonlyToolbarProblems = Object.entries(readonlyToolbarOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (readonlyToolbarProblems.length) {
+        failures++;
+        console.log('FAIL readonly-toolbar-lock-e2e');
+        readonlyToolbarProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS readonly-toolbar-lock-e2e');
+    }
+
     // E2E: reported bug — a SECOND Enter, right where the first escape left
     // the caret (beside the button, still in its paragraph), used to hit a
     // native Chrome quirk splitting a block that touches an interactive
