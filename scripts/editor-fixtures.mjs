@@ -2119,6 +2119,7 @@ try {
 
         // 5 — embed mode still enforces the size cap on screenshot paste
         // (container's live-read NDS.Upload config; generated default 2MB).
+        NDS.Forms?.clearStatus?.(root);
         editable.innerHTML = '<p><br></p>';
         editable.focus();
         const bigDt = new DataTransfer();
@@ -2126,7 +2127,7 @@ try {
         editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: bigDt, bubbles: true, cancelable: true }));
         await new Promise(r => setTimeout(r, 400));
         const oversizePasteBlocked = !editable.querySelector('img')
-            && root.getAttribute('data-status') === 'warning';
+            && root.getAttribute('data-status') === 'neutral';
 
         // 6 — multi-image paste embeds every file in clipboard order (reads
         // chain sequentially; parallel readers would finish size-ordered, so
@@ -2158,7 +2159,7 @@ try {
         editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: bmpDt, bubbles: true, cancelable: true }));
         await new Promise(r => setTimeout(r, 400));
         const typePasteBlocked = !editable.querySelector('img')
-            && root.getAttribute('data-status') === 'warning';
+            && root.getAttribute('data-status') === 'neutral';
 
         // 8 — the 'embed' sentinel keeps autoUpload off across LATER calls,
         // not just the call that set it — no re-armed POST to "/embed".
@@ -2283,13 +2284,14 @@ try {
             && !urlInput.closest('.nds-form-container').hasAttribute('data-status');
         menu.querySelector('[data-editor-image-cancel]').click();
         await new Promise(r => setTimeout(r, 250));
+        NDS.Forms?.clearStatus?.(root);
         const dt = new DataTransfer();
         dt.items.add(new File([new Uint8Array([137, 80, 78, 71])], 's.png', { type: 'image/png' }));
         editable.focus();
         editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
         await new Promise(r => setTimeout(r, 400));
         const pasteBlocked = !editable.querySelector('img')
-            && root.getAttribute('data-status') === 'warning'
+            && root.getAttribute('data-status') === 'neutral'
             && !!root.querySelector('.nds-form-footer .nds-feedback');
         inst.setImageUpload({ uploadUrl: '/api/images' });
         const apiShows = up.style.display !== 'none';

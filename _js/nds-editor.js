@@ -2469,7 +2469,7 @@
         // the notice is silently dropped if NDS.Forms isn't bundled.
         _notice(message) {
             if (!NDS.Forms?.setStatus) return;
-            NDS.Forms.setStatus({ element: this.root, status: 'warning', message });
+            NDS.Forms.setStatus({ element: this.root, status: 'neutral', message });
             this._clearNotice ||= NDS.debounce(() => NDS.Forms.clearStatus(this.root), 5000);
             this._clearNotice();
         }
