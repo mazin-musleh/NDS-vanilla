@@ -6,6 +6,8 @@
  *   NDS.Swiper.destroy(el)          tear one down — the NDS.Init.destroy entry point
  *   instance.next() / .prev()       move by one page
  *   instance.goTo(index)            move to a slide index
+ *   instance.slideTo(index, animate = true)  move to a slide index, clamped to the
+ *                                   last page; false = instant
  *   instance.destroy()
  * Events:
  *   nds:swiper:change (bubbles)     detail.index = the real slide now at rest, after every move
@@ -610,6 +612,8 @@
                 : Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
             const left = NDS.isRTL ? -offset : offset;
+            // Where a smooth move rests; the loop's settle waits for it (setupLoop).
+            this._aim = instant ? null : offset;
             // No keyword: the wrapper's own scroll-behavior decides (smooth by
             // default), so a consumer can set it to auto and get an instant switch.
             if (instant) this._instant(() => this.wrapper.scrollTo({ left }));
@@ -660,9 +664,21 @@
             // nothing visibly moves. scrollend where it exists; elsewhere a rest is
             // 150 ms without a scroll event.
             const { signal } = this.abortController;
-            const settle = () => this._loopSettle();
+            // The instant cycle shift mid-move fires its own scrollend while the smooth
+            // move still runs — and a real window can hold that move still for two frames
+            // before it starts, so "stopped moving" is no test. Settle only once the row
+            // reaches the move's own target; the move's end fires another scrollend.
+            const settle = () => {
+                if (this._aim != null) {
+                    if (Math.abs(Math.abs(this.wrapper.scrollLeft) - this._aim) > 2) return;
+                    this._aim = null;
+                }
+                this._loopSettle();
+            };
             if ('onscrollend' in this.wrapper) this.wrapper.addEventListener('scrollend', settle, { signal });
             else this.wrapper.addEventListener('scroll', NDS.debounce(settle, 150), { passive: true, signal });
+            // A wheel or a touch cancels the move, so its target no longer holds the settle.
+            this.wrapper.addEventListener('wheel', () => { this._aim = null; }, { passive: true, signal });
 
             // A rest needs a real pause and a run of swipes never gives one: measured
             // SEVEN flicks passing before one scrollend landed, each spending a clone,
@@ -677,6 +693,7 @@
             // Touch only: a mouse pointerdown is the start of a click, and moving the
             // row under it hands pointerup to the twin, which loses the click.
             if (e.pointerType === 'mouse') return;
+            this._aim = null;
             const step = this._measuredStep;
             if (this._loopPending || !step) return;
             const pos = Math.abs(this.wrapper.scrollLeft) / step;
