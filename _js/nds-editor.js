@@ -85,6 +85,14 @@
     // bidi-aware pastes round-trip unchanged.
     const ALIGN_VALUES = new Set(['left', 'right', 'center', 'justify', 'start', 'end']);
     const CMD_BLOCK_MAP = { h1: 'H1', h2: 'H2', h3: 'H3', h4: 'H4' };
+    // Structural/formatting commands never touch an atom's content — it's a
+    // label (+ icon), never a heading, a list, or formatted text. Native
+    // execCommand doesn't understand the atom boundary any better here than
+    // it does for Enter (_guardRegionEnter) or a document-end split
+    // (_placeCaretAtEnd) — block at the source instead of cleaning up after.
+    // Alignment/direction are exempt: they write to the CONTAINING block via
+    // direct DOM properties, never into the atom itself.
+    const ATOM_LOCKED_CMDS = new Set(['bold', 'italic', 'underline', 'strike', 'clear', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4']);
     // One trust decision for every URL the editor keeps: scheme-less URLs
     // (relative — path/to/img.jpg, page.html, #anchor — doc-example canon)
     // pass; an explicit scheme must be allowlisted, so javascript:,
@@ -133,6 +141,17 @@
         for (const c of el.classList) if (NDS_CLASS.test(c)) return true;
         return false;
     }
+
+    // Atoms are one line: a BUTTON, or an nds-classed SPAN/A/I (tag, chip,
+    // featured icon, a converted button/avatar link…) — never a structural
+    // shell (card, alert, table), which has block PARTS. Shared by the
+    // sanitizer (atoms may carry only their label/icon, never block
+    // structure) and the editor's _linkableAtom (Enter/Link key on the same
+    // boundary) — one definition, not two that can drift apart.
+    const isAtomTag = (el) => el.tagName === 'BUTTON' || (INLINE_REGION_TAGS.has(el.tagName) && hasNdsClass(el));
+    // No BR either — atoms never take a line break (see _guardRegionEnter);
+    // a stray one smuggled in via paste/source unwraps like anything else.
+    const ATOM_TAGS = new Set(['SPAN', 'I', 'IMG']);
 
     // The editor's own link stamps aren't component identity — an anchor
     // carrying any OTHER nds class is a component wearing link duty (a
@@ -480,7 +499,8 @@
             if (!el.isConnected) continue; // removed inside an earlier region
             if (lastRegion && lastRegion.contains(el)) continue; // top-most roots only
             if (!NDS_TAGS.has(el.tagName) || !hasNdsClass(el)) continue;
-            if (sanitizeRegion(el, converted.has(el) ? CONVERTED_TAGS : NDS_TAGS)) { trusted.add(el); lastRegion = el; }
+            const allowed = converted.has(el) ? CONVERTED_TAGS : isAtomTag(el) ? ATOM_TAGS : NDS_TAGS;
+            if (sanitizeRegion(el, allowed)) { trusted.add(el); lastRegion = el; }
         }
 
         // Pass B — generic whitelist outside trusted subtrees.
@@ -926,7 +946,7 @@
                 if (!target) {
                     let atom = null;
                     for (let el = e.target; el && el !== this.editable; el = el.parentElement) {
-                        if (el.tagName === 'BUTTON' || (INLINE_REGION_TAGS.has(el.tagName) && hasNdsClass(el))) atom = el;
+                        if (isAtomTag(el)) atom = el;
                     }
                     if (atom && !atom.textContent.trim()) target = atom;
                 }
@@ -1205,6 +1225,11 @@
         }
 
         _applyCommand(cmd) {
+            // Atoms are one line, label/icon only — a heading, a list or
+            // inline formatting never lands inside one. Checked here, the one
+            // choke point both the toolbar click and the Ctrl+B/I/U keyboard
+            // shortcuts route through.
+            if (ATOM_LOCKED_CMDS.has(cmd) && this._linkableAtom()) return;
             // ponytail: execCommand for writes — deprecated but universally
             // supported, with browser-handled RTL/bidi. Replace per-command only if a UA misbehaves.
             switch (cmd) {
@@ -1643,12 +1668,11 @@
         // converts the atom whole to <a … href> — an anchor nested inside an
         // atom is meaningless. Unlink converts back.
         _linkableAtom() {
-            const isAtom = (n) => n.tagName === 'BUTTON' || (INLINE_REGION_TAGS.has(n.tagName) && hasNdsClass(n));
             const picked = this._selectedNode();
-            if (picked && isAtom(picked)) return picked;
+            if (picked && isAtomTag(picked)) return picked;
             let atom = null;
             this._selAncestor(n => {
-                if (isAtom(n)) atom = n;
+                if (isAtomTag(n)) atom = n;
                 return false; // keep climbing — outermost match wins
             });
             return atom;
@@ -1974,10 +1998,9 @@
             // breaks its one-line shape, and insertLineBreak over a selection
             // whose bounds coincide with the atom's own (nothing else inside)
             // corrupts it instead of replacing the text. Enter ESCAPES to
-            // after the atom instead; a second Enter then behaves normally
-            // from outside it. Not collapse-gated: a non-collapsed selection
-            // already cleared _selectionClipsShell above, so if it resolves to
-            // an atom here, the whole selection sits inside it.
+            // after the atom instead. Not collapse-gated: a non-collapsed
+            // selection already cleared _selectionClipsShell above, so if it
+            // resolves to an atom here, the whole selection sits inside it.
             const atom = this._linkableAtom();
             if (atom) {
                 e.preventDefault();
@@ -1987,6 +2010,39 @@
                 sel.removeAllRanges();
                 sel.addRange(r);
                 return true;
+            }
+            // A SECOND Enter, right where the escape above left the caret (or
+            // any Enter in a block that merely CONTAINS an atom elsewhere),
+            // still isn't safe to hand to native splitting: Chrome's own
+            // paragraph-split doesn't handle a block boundary that touches an
+            // interactive element correctly — it can nest a stray <p> INSIDE
+            // the original instead of after it, corrupting the atom's parent
+            // the same way an unguarded Enter used to corrupt the atom
+            // itself. Split the block ourselves via Range.extractContents
+            // (which already handles partial text-node boundaries) whenever
+            // an atom sits anywhere in the block, regardless of exact caret
+            // proximity to it.
+            if (range.collapsed) {
+                const block = this._getBlockContext();
+                if (block && [...block.querySelectorAll('button, [class*="nds-"]')].some(isAtomTag)) {
+                    e.preventDefault();
+                    const newBlock = document.createElement(block.tagName);
+                    const tail = document.createRange();
+                    tail.setStart(range.startContainer, range.startOffset);
+                    tail.setEndAfter(block.lastChild);
+                    newBlock.appendChild(tail.extractContents());
+                    if (!newBlock.hasChildNodes()) newBlock.innerHTML = '<br>';
+                    if (!block.hasChildNodes()) block.innerHTML = '<br>';
+                    block.parentNode.insertBefore(newBlock, block.nextSibling);
+                    const r = document.createRange();
+                    r.selectNodeContents(newBlock);
+                    r.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(r);
+                    this._syncSource();
+                    this._updateToolbarState();
+                    return true;
+                }
             }
             if (!this._regionRootOf(range.startContainer)) return false;
             e.preventDefault();
@@ -2588,6 +2644,14 @@
             const block = this._getBlockContext();
             const blockTag = block ? block.tagName : null;
             const inList = (block && block.tagName === 'LI') ? block.closest('ul,ol')?.tagName : null;
+            // Heading/list/formatting buttons grey out inside an atom — same
+            // reason _applyCommand refuses them there. A separate pass since
+            // it covers 'clear' too, which (like undo/redo) carries no
+            // aria-pressed and skips the loop below.
+            const inAtom = !!this._linkableAtom();
+            for (const btn of this.buttons) {
+                if (ATOM_LOCKED_CMDS.has(btn.dataset.cmd)) btn.disabled = inAtom;
+            }
 
             for (const btn of this.buttons) {
                 // Only toggle commands carry aria-pressed in markup; action

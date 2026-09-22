@@ -77,6 +77,19 @@ const FIXTURES = [
         ],
     },
     {
+        // Atoms are one line: block structure smuggled into a button/tag's
+        // label (a <p>, a <ul>) unwraps to plain text, never survives as
+        // structure — only the label/icon vocabulary (SPAN, I, IMG) is kept.
+        name: 'atom-content-restricted-to-phrasing',
+        html: '<p><button class="nds-btn nds-primary" type="button"><span class="nds-label"><p>فقرة</p><ul><li>أول</li><li>ثانٍ</li></ul></span></button></p>',
+        expect: [
+            ['contains', '<span class="nds-label">فقرةأولثانٍ</span>'],
+            ['not', '<p>فقرة'],
+            ['not', '<ul>'],
+            ['not', '<li>'],
+        ],
+    },
+    {
         name: 'evil-payloads-neutralized',
         html: '<img src="x" onerror="alert(1)"><a href="javascript:alert(1)">اضغط</a><script>alert(2)</script><p style="position:absolute;inset:0">نص</p><svg onload="alert(3)"></svg>',
         expect: [
@@ -1646,6 +1659,128 @@ try {
         doubleConfirmProblems.forEach(pr => console.log(`  ${pr}`));
     } else {
         console.log('PASS link-confirm-double-click-e2e');
+    }
+
+    // E2E: reported bug — toolbar heading/list/formatting commands, and their
+    // Ctrl+B/I/U keyboard shortcuts, could still restructure a button's label
+    // (wrap it in a heading, a list, bold/italic/underline/strike) even
+    // though paste/source already refuse that content. Both paths route
+    // through _applyCommand, so both must refuse while the caret is in an
+    // atom; a command outside one still works normally.
+    const atomToolbarLockOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+        const putCaretInLabel = () => {
+            const label = editable.querySelector('.nds-label');
+            const r = document.createRange();
+            r.setStart(label.firstChild, 1);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+        };
+        // mousedown's preventDefault (in _bindToolbar) is what keeps the
+        // editable's selection alive through a button click — a plain
+        // .click() alone lets the browser shift focus/selection first.
+        const clickCmd = (cmd) => {
+            const btn = root.querySelector(`[data-cmd="${cmd}"]`);
+            btn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+            btn.click();
+        };
+
+        // Toolbar click path.
+        editable.innerHTML = '<p>قبل <button class="nds-btn nds-primary" type="button"><span class="nds-label">زر</span></button> بعد</p>';
+        putCaretInLabel();
+        clickCmd('h2'); // h1 is deliberately excluded from the default toolbar
+        putCaretInLabel();
+        clickCmd('ul');
+        putCaretInLabel();
+        clickCmd('bold');
+        await raf();
+        const toolbarBlocked = editable.innerHTML
+            === '<p>قبل <button class="nds-btn nds-primary" type="button"><span class="nds-label">زر</span></button> بعد</p>';
+
+        // Ctrl+B keyboard shortcut path — same choke point (_applyCommand),
+        // reached differently (_onKeydown, not the toolbar button).
+        putCaretInLabel();
+        editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'b', ctrlKey: true, bubbles: true, cancelable: true }));
+        await raf();
+        const shortcutBlocked = !editable.querySelector('.nds-label strong');
+
+        // Buttons visibly grey out while the caret sits in the atom...
+        putCaretInLabel();
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        const boldDisabledInAtom = root.querySelector('[data-cmd="bold"]').disabled;
+
+        // ...and a command elsewhere in the document still works normally
+        // (a real, non-collapsed selection — execCommand('bold') on a
+        // collapsed caret only sets typing state, wraps nothing).
+        const plainText = editable.querySelector('p').firstChild;
+        const r2 = document.createRange();
+        r2.setStart(plainText, 0);
+        r2.setEnd(plainText, 3);
+        sel.removeAllRanges();
+        sel.addRange(r2);
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        const boldEnabledOutsideAtom = !root.querySelector('[data-cmd="bold"]').disabled;
+        clickCmd('bold');
+        await raf();
+        // execCommand('bold') writes <b> in the live DOM — sanitize
+        // normalizes that to <strong> only on sync/save.
+        const boldWorksOutsideAtom = !!editable.querySelector('p > b, p > strong');
+
+        return { toolbarBlocked, shortcutBlocked, boldDisabledInAtom, boldEnabledOutsideAtom, boldWorksOutsideAtom };
+    });
+    const atomToolbarLockProblems = Object.entries(atomToolbarLockOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (atomToolbarLockProblems.length) {
+        failures++;
+        console.log('FAIL atom-toolbar-lock-e2e');
+        atomToolbarLockProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS atom-toolbar-lock-e2e');
+    }
+
+    // E2E: reported bug — a SECOND Enter, right where the first escape left
+    // the caret (beside the button, still in its paragraph), used to hit a
+    // native Chrome quirk splitting a block that touches an interactive
+    // element: it nested a stray <p> INSIDE the original instead of after
+    // it. Must split into two clean sibling paragraphs, button untouched.
+    const doubleEnterOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+        editable.innerHTML = '<p>قبل <button class="nds-btn nds-primary" type="button"><span class="nds-label">زر</span></button> بعد</p>';
+        const label = editable.querySelector('.nds-label');
+        const r = document.createRange();
+        r.setStart(label.firstChild, 1);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+        await raf();
+        editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+        await raf();
+        const ps = editable.querySelectorAll(':scope > p');
+        return {
+            twoTopLevelParagraphs: ps.length === 2,
+            noNestedP: !editable.querySelector('p p'),
+            buttonIntact: !!editable.querySelector('button.nds-btn .nds-label')
+                && editable.querySelector('.nds-label').textContent === 'زر',
+            oneLabel: editable.querySelectorAll('.nds-label').length === 1,
+            tailMoved: ps[1]?.textContent.trim() === 'بعد',
+        };
+    });
+    const doubleEnterProblems = Object.entries(doubleEnterOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (doubleEnterProblems.length) {
+        failures++;
+        console.log('FAIL double-enter-beside-atom-e2e');
+        doubleEnterProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS double-enter-beside-atom-e2e');
     }
 
     // E2E: reported bug — clicking empty space below the content, meant to
