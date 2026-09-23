@@ -94,10 +94,8 @@
   }
 
   // ==============================================
-  // COLOR VARIANTS — status defaults set the light fill; .nds-inverted
-  // and .nds-outline overlay only what differs (bg + border style).
-  // Variant chrome is gated to status selectors so a bare .nds-inverted /
-  // .nds-outline (no color) stays inert.
+  // COLOR VARIANTS — color and status set the light fill. .nds-outline (normal
+  // tags) and .nds-inverted (status tags) overlay only what differs.
   // ==============================================
 
   // No neutral rung: the base defaults above already resolve to the neutral tokens, so
@@ -132,32 +130,28 @@
     --tag-icon: var(--tag-icon-error);
   }
 
-  // Variant chrome — only applies when the tag also has a status.
-  &:is(.nds-gray, .nds-neutral, .nds-green, .nds-blue, .nds-yellow, .nds-red, [data-status]) {
-    &.nds-inverted {
-      --tag-text: var(--text-oncolor-primary);
-      --tag-border: transparent;
-      --tag-icon: var(--tag-dot);
-    }
-    &.nds-outline { --tag-bg: transparent; }
+  // Outline — normal tags only; neutral border, per-color below.
+  &.nds-outline:not([data-status]) {
+    --tag-bg: transparent;
+    --tag-border: var(--tag-border-neutral);
+
+    &.nds-green { --tag-border: var(--tag-border-success); }
+    &.nds-blue { --tag-border: var(--tag-border-info); }
+    &.nds-yellow { --tag-border: var(--tag-border-warning); }
+    &.nds-red { --tag-border: var(--tag-border-error); }
   }
 
-  // Inverted — per-status solid bg (only value that differs).
-  &.nds-inverted {
-    &:is(:is(.nds-gray, .nds-neutral):where(:not([data-status])), [data-status="neutral"]) { --tag-bg: var(--tag-background-neutral); }
-    &:is(.nds-green:where(:not([data-status])), [data-status="success"]) { --tag-bg: var(--tag-background-success); }
-    &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) { --tag-bg: var(--tag-background-info); }
-    &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) { --tag-bg: var(--tag-background-warning); }
-    &:is(.nds-red:where(:not([data-status])), [data-status="error"], [data-status="critical"]) { --tag-bg: var(--tag-background-error); }
-  }
+  // Inverted — status tags only; neutral solid bg, per-status below.
+  &[data-status].nds-inverted {
+    --tag-bg: var(--tag-background-neutral);
+    --tag-text: var(--text-oncolor-primary);
+    --tag-border: transparent;
+    --tag-icon: var(--tag-dot);
 
-  // Outline — per-status full-strength border (only value that differs).
-  &.nds-outline {
-    &:is(:is(.nds-gray, .nds-neutral):where(:not([data-status])), [data-status="neutral"]) { --tag-border: var(--tag-border-neutral); }
-    &:is(.nds-green:where(:not([data-status])), [data-status="success"]) { --tag-border: var(--tag-border-success); }
-    &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) { --tag-border: var(--tag-border-info); }
-    &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) { --tag-border: var(--tag-border-warning); }
-    &:is(.nds-red:where(:not([data-status])), [data-status="error"], [data-status="critical"]) { --tag-border: var(--tag-border-error); }
+    &[data-status="success"] { --tag-bg: var(--tag-background-success); }
+    &[data-status="info"] { --tag-bg: var(--tag-background-info); }
+    &[data-status="warning"] { --tag-bg: var(--tag-background-warning); }
+    &:is([data-status="error"], [data-status="critical"]) { --tag-bg: var(--tag-background-error); }
   }
 
   &.nds-oncolor {
@@ -166,7 +160,7 @@
     --tag-border: transparent;
     --tag-icon: var(--text-oncolor-primary);
 
-    &.nds-outline {
+    &.nds-outline:not([data-status]) {
       --tag-bg: transparent;
       --tag-border: var(--tag-border-oncolor);
       --tag-text: var(--text-oncolor-primary);
@@ -175,10 +169,10 @@
 
 
   // ==============================================
-  // GHOST VARIANT
+  // GHOST VARIANT — status tags only
   // ==============================================
 
-  &.nds-ghost {
+  &[data-status].nds-ghost {
     --tag-bg: transparent;
     --tag-border: transparent;
     --tag-text: var(--tag-text-neutral);

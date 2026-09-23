@@ -2,13 +2,13 @@
 layout: page
 title: Tags
 hero_title: Tags - National Design System
-hero_description: Compact labels for categorization, status indicators, and metadata display
+hero_description: Small read-only labels for categories, status, and metadata.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.10.0"
-last_edit: "24/08/2026 - 01:50 AM"
+updated: "1.12.x"
+last_edit: "23/09/2026 - 06:58 PM"
 ---
 
 <!-- Variants -->
@@ -16,7 +16,7 @@ last_edit: "24/08/2026 - 01:50 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Variants</h2>
-            <p class="nds-section-description">Five color variants with outline, rounded, and icon modifiers</p>
+            <p class="nds-section-description">The standard tag for categories and metadata. Pick a color by meaning, then a style: light or outline.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -76,16 +76,8 @@ last_edit: "24/08/2026 - 01:50 AM"
                                     </div>
                                 </div>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-inverted", ".nds-tag", "tagStyle"]'>
-                                    <span class="nds-label">Inverted</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
                                     data-toggler='["nds-outline", ".nds-tag", "tagStyle"]'>
                                     <span class="nds-label">Outline</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-ghost", ".nds-tag", "tagStyle"]'>
-                                    <span class="nds-label">Ghost</span>
                                 </button>
                                 <button class="nds-btn nds-subtle demo-toggle-btn"
                                     data-toggler='["nds-rounded", ".nds-tag", "tagShape"]'>
@@ -149,7 +141,7 @@ last_edit: "24/08/2026 - 01:50 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Status</h2>
-            <p class="nds-section-description">Pill-shaped tags with a dot indicator for state representation</p>
+            <p class="nds-section-description">For the state of an item, such as an order or a request. The dot shows the state without relying on color alone. Status tags take the inverted and ghost styles; normal tags take outline.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -273,7 +265,7 @@ last_edit: "24/08/2026 - 01:50 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">On Color</h2>
-            <p class="nds-section-description">Tags designed for use on colored or dark backgrounds</p>
+            <p class="nds-section-description">For tags on a colored or dark background.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -368,7 +360,7 @@ last_edit: "24/08/2026 - 01:50 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Icon Only</h2>
-            <p class="nds-section-description">Square tags that display only an icon, hiding the label</p>
+            <p class="nds-section-description">A square tag with an icon and no label, for tight spaces.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -489,12 +481,15 @@ last_edit: "24/08/2026 - 01:50 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tag Group</h2>
-            <p class="nds-section-description">Wrap multiple tags in .nds-tags for automatic flex-wrap layout with consistent gap</p>
+            <p class="nds-section-description">Wrap several tags in <code class="nds-inline-code lang-html">.nds-tags</code>. They wrap onto new lines with even spacing.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
                 <div class="nds-showcase">
                     <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">Project categories</div>
+                        </div>
                         <div class="demo-container">
                             <div class="state-demo">
                                 <div class="nds-tags">
@@ -560,28 +555,28 @@ last_edit: "24/08/2026 - 01:50 AM"
                             <i class="hgi hgi-stroke hgi-tag-01"></i>
                             <span class="nds-label">Pure CSS</span>
                         </span>
-                        <p class="nds-item-desc">No JavaScript required. Tags render immediately from HTML markup.</p>
+                        <p class="nds-item-desc">Tags need no JavaScript. They render straight from the HTML.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-text-wrap"></i>
-                            <span class="nds-label">Auto-truncation</span>
+                            <span class="nds-label">Label Truncation</span>
                         </span>
-                        <p class="nds-item-desc">Labels are forced to a single line via <code class="nds-inline-code lang-html">white-space: nowrap</code>. The tag itself uses <code class="nds-inline-code lang-html">min-width: fit-content</code> so it grows to fit its content.</p>
+                        <p class="nds-item-desc">A long label stays on one line and ends with an ellipsis, at 160px or at the width of its container.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-colors"></i>
-                            <span class="nds-label">Flexible Color API</span>
+                            <span class="nds-label">Color by Class or Status</span>
                         </span>
-                        <p class="nds-item-desc">Set color via class (nds-green) for normal tags, or data-status attribute for status indicators.</p>
+                        <p class="nds-item-desc">Set the color with a class such as <code class="nds-inline-code lang-html">nds-green</code>, or with <code class="nds-inline-code lang-html">data-status</code> for a status tag.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-puzzle"></i>
-                            <span class="nds-label">Works Anywhere</span>
+                            <i class="hgi hgi-stroke hgi-record"></i>
+                            <span class="nds-label">Status Dot</span>
                         </span>
-                        <p class="nds-item-desc">Drop into any component. Works as labels, badges, status indicators, or metadata display.</p>
+                        <p class="nds-item-desc">A status tag shows a dot in its status color, so the state reads without color alone.</p>
                     </div>
                 </div>
             </div>
@@ -598,11 +593,14 @@ last_edit: "24/08/2026 - 01:50 AM"
         <div class="nds-section-body">
 
             <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">When to Use</h3>
+                <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Use tags for categorization, labels, and metadata that users need to scan quickly</li>
-                    <li>Use status tags when the state needs a visual indicator beyond just color (the dot reinforces meaning for colorblind users)</li>
-                    <li>Choose color by meaning: <strong>neutral</strong> for general labels, <strong>success/error/warning/info</strong> for semantic status (<code class="nds-inline-code lang-html">data-status="critical"</code> is an alias for <code class="nds-inline-code lang-html">error</code>, reserved for system-level alerts)</li>
+                    <li>Use tags for categories and metadata that people scan, such as a topic, a type, or a region.</li>
+                    <li>Use a status tag for the state of an item. The dot keeps the state readable for colorblind users.</li>
+                    <li>For a label people remove or click, use <a class="nds-color" href="{{ 'components/chips' | relative_url }}">Chips</a>. Tags are read-only.</li>
+                    <li>Pick the color by meaning: neutral for general labels, and success, info, warning, or error for status. <code class="nds-inline-code lang-html">data-status="critical"</code> looks like <code class="nds-inline-code lang-html">error</code>; keep it for system-level alerts.</li>
+                    <li>Pick the style by weight. A normal tag is light, or outline to stay quiet. A status tag is light, inverted to stand out, or ghost to stay quiet.</li>
+                    <li>Keep labels to one to three words, and wrap a set of tags in <code class="nds-inline-code lang-html">.nds-tags</code>.</li>
                 </ul>
             </div>
 
@@ -611,12 +609,15 @@ last_edit: "24/08/2026 - 01:50 AM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th><th>Combinable with</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-inverted</code></td><td>Solid filled background using the full-strength color token. Requires a color class or <code class="nds-inline-code lang-html">data-status</code></td><td>Color class, <code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-outline</code></td><td>Transparent background with full-strength border. Requires a color class or <code class="nds-inline-code lang-html">data-status</code></td><td>Color class, <code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code>, <code class="nds-inline-code lang-html">nds-oncolor</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Transparent background and border with neutral text. Usable without a color class or status</td><td>Color class, <code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-rounded</code></td><td>Pill shape via <code class="nds-inline-code lang-html">border-radius: 999px</code></td><td>All variants</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-icon-only</code></td><td>Square aspect ratio, hides the label, sized to tag height</td><td>All variants</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>White-on-color styling for use on colored or dark backgrounds</td><td><code class="nds-inline-code lang-html">nds-outline</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-inverted</code></td><td>Status tags only: a solid background in the status color.</td><td><code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-outline</code></td><td>Normal tags only: no background, and a border in the full color.</td><td>Color class, <code class="nds-inline-code lang-html">nds-rounded</code>, <code class="nds-inline-code lang-html">nds-oncolor</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Status tags only: no background, no border, and neutral text beside the status dot.</td><td><code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-rounded</code></td><td>Pill shape.</td><td>All variants</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-icon-only</code></td><td>A square tag at the tag height, with the label hidden.</td><td>All variants</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Light text for a colored or dark background.</td><td><code class="nds-inline-code lang-html">nds-outline</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Small size: 24px high.</td><td>All variants</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-xs</code></td><td>Extra small size: 20px high.</td><td>All variants</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>On <code class="nds-inline-code lang-html">.nds-tags</code>: centers the group.</td><td><code class="nds-inline-code lang-html">.nds-tags</code></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -630,11 +631,11 @@ last_edit: "24/08/2026 - 01:50 AM"
                         <tr><td><code class="nds-inline-code lang-html">--tag-text</code></td><td><code class="nds-inline-code lang-html">--tag-text-neutral</code></td><td>Label text color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-border</code></td><td><code class="nds-inline-code lang-html">--tag-border-neutral-light</code></td><td>Border color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-icon</code></td><td><code class="nds-inline-code lang-html">--tag-icon-neutral</code></td><td>Icon and status dot color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tag-height</code></td><td><code class="nds-inline-code lang-html">32px</code></td><td>Tag height (also drives icon-only width via aspect-ratio)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-height</code></td><td><code class="nds-inline-code lang-html">32px</code></td><td>Tag height. An icon-only tag uses it as its width too.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-fs</code></td><td><code class="nds-inline-code lang-html">--typo-text-md-FS</code></td><td>Font size</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-padding-inline</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Horizontal padding</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tag-dot-size</code></td><td><code class="nds-inline-code lang-html">10px</code></td><td>Diameter of the status dot indicator</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tag-label-max</code></td><td><code class="nds-inline-code lang-html">160px</code></td><td>Widest the label gets before it truncates with an ellipsis. A tag also caps at the width of the box that holds it, so a long label truncates instead of escaping a card or a table cell. Truncation is always one line: a tag has a fixed height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-dot-size</code></td><td><code class="nds-inline-code lang-html">10px</code></td><td>Size of the status dot.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-label-max</code></td><td><code class="nds-inline-code lang-html">160px</code></td><td>Widest the label gets before it ends with an ellipsis. A tag never grows wider than its container.</td></tr>
                     </tbody>
                 </table>
             </div>

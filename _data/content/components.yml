@@ -832,7 +832,7 @@
   scss: _sass/components/_taginput.scss
 
 - title: "Tags"
-  description: "Small labels for categorization and metadata"
+  description: "Small read-only labels for categories, status, and metadata"
   use_when: "Small read-only labels: status badges, category labels, metadata pills. For labels the user can remove or click use Chips."
   icon: '<i class="hgi hgi-stroke hgi-tags"></i>'
   category: "UI"
