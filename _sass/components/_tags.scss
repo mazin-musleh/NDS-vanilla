@@ -88,8 +88,9 @@
     padding: var(--spacing-none) var(--spacing-xxs);
     justify-content: center;
 
+    // Visually hidden, not display:none: the label stays the tag's text for screen readers.
     .nds-label {
-      display: none !important;
+      @include label-hidden;
     }
   }
 

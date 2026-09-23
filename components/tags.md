@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/09/2026 - 06:58 PM"
+last_edit: "23/09/2026 - 07:13 PM"
 ---
 
 <!-- Variants -->
@@ -360,7 +360,7 @@ last_edit: "23/09/2026 - 06:58 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Icon Only</h2>
-            <p class="nds-section-description">A square tag with an icon and no label, for tight spaces.</p>
+            <p class="nds-section-description">A square tag that shows only its icon, for tight spaces. Keep the label in the markup: screen readers read it.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -436,7 +436,8 @@ last_edit: "23/09/2026 - 06:58 PM"
                         <div class="demo-container">
                             <div class="state-demo">
                                 <span class="nds-tag nds-icon-only">
-                                    <i class="hgi hgi-stroke hgi-tag-01"></i>
+                                    <i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Category</span>
                                 </span>
                             </div>
                         </div>
@@ -462,7 +463,8 @@ last_edit: "23/09/2026 - 06:58 PM"
                                         </div>
                                         <code class="lang-html code">
 &lt;span class="nds-tag nds-icon-only"&gt;
-  &lt;i class="hgi hgi-stroke hgi-tag-01"&gt;&lt;/i&gt;
+  &lt;i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;span class="nds-label"&gt;Category&lt;/span&gt;
 &lt;/span&gt;
                                     </code>
                                     </div>
@@ -613,7 +615,7 @@ last_edit: "23/09/2026 - 06:58 PM"
                         <tr><td><code class="nds-inline-code lang-html">nds-outline</code></td><td>Normal tags only: no background, and a border in the full color.</td><td>Color class, <code class="nds-inline-code lang-html">nds-rounded</code>, <code class="nds-inline-code lang-html">nds-oncolor</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Status tags only: no background, no border, and neutral text beside the status dot.</td><td><code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-rounded</code></td><td>Pill shape.</td><td>All variants</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-icon-only</code></td><td>A square tag at the tag height, with the label hidden.</td><td>All variants</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-icon-only</code></td><td>A square tag at the tag height. The label is hidden from view, and screen readers still read it.</td><td>All variants</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Light text for a colored or dark background.</td><td><code class="nds-inline-code lang-html">nds-outline</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Small size: 24px high.</td><td>All variants</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-xs</code></td><td>Extra small size: 20px high.</td><td>All variants</td></tr>
