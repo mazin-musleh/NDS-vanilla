@@ -6,18 +6,18 @@
 [![Issues](https://img.shields.io/github/issues/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/issues)
 [![Release](https://img.shields.io/github/v/release/mazin-musleh/NDS-vanilla?display_name=tag&sort=semver)](https://github.com/mazin-musleh/NDS-vanilla/releases/latest)
 
-NDS-vanilla is an independent implementation of the Saudi [Digital Government Authority (DGA)](https://dga.gov.sa/) design specifications, translated into plain HTML, CSS, and JavaScript. The DGA published those specifications as clear and comprehensive [Figma files](https://www.figma.com/@sdga), but its own implementation is a React and Storybook component library, which leaves most teams to translate the specs into working code themselves.
+The Saudi [Digital Government Authority (DGA)](https://dga.gov.sa/) publishes its design specifications as [Figma files](https://www.figma.com/@sdga). Its own code is a React and Storybook component library.
 
-The project provides the complete working system around those specifications: components, layout primitives, page templates, documentation, and a development environment. **No framework is required**, so the compiled output can be used with any application stack — or none at all.
+NDS-vanilla is an independent build of the same design system in plain HTML, CSS, and JavaScript. Plain web code works in any stack: static sites, server-rendered pages, or apps built with React or another framework. It brings no framework or dependencies of its own.
 
 **Highlights:**
-- **Framework-free.** Plain HTML, CSS, and JavaScript with zero runtime dependencies. Use it with any stack, or none at all.
-- **More than components.** A complete layout system, ready-to-use page templates, live documentation, and a 4-tier design-token system covering palette, primitives, semantic, and component tokens.
-- **Compliance-ready templates.** DGA-based page templates are provided as working code, with components aligned to the documented tokens, typography, spacing, and interaction patterns.
-- **Performance-first.** A 100% PageSpeed score with Core Web Vitals (LCP, CLS, INP) passing. The smart loader includes only the JavaScript a page needs, with a ~41 KB gzipped core from a ~133 KB full library, supported by ~10 KB of critical CSS.
-- **Bilingual and themeable.** RTL (Arabic) by default with full LTR (English) support, light/dark mode, and re-branding through an OKLCH seed, predefined themes, or a stylesheet theme — all controlled from a single HTML attribute without a rebuild.
+- **Framework-free.** Plain HTML, CSS, and JavaScript, with zero runtime dependencies.
+- **More than components.** A layout system, page templates, live documentation, and a 4-tier design-token system (palette, primitives, semantic, component).
+- **DGA page templates.** Common government service pages as working code, built on the DGA tokens, typography, spacing, and interaction patterns.
+- **Fast.** A PageSpeed score of 100, with LCP, CLS, and INP passing. A ~41 KB gzipped core loads on every page; the rest of the ~139 KB library loads only where a page needs it. Critical CSS is ~10 KB.
+- **Bilingual and themeable.** Arabic (RTL) first, with full English (LTR) support. Light and dark mode, and re-branding from one OKLCH seed color, a predefined theme, or a stylesheet theme. One HTML attribute switches the theme, with no rebuild.
 
-> **Accessibility:** Components are manually tested against WCAG 2.1 AA. A formal automated audit using axe-core and screen readers is planned for a future release. Known gaps are tracked through issues labeled `accessibility`.
+> **Accessibility:** Components are tested by hand against WCAG 2.1 AA. An automated audit with axe-core and screen readers is planned. Known gaps are tracked in issues labeled `accessibility`.
 
 ### → [**Live demo & full documentation**](https://mazin-musleh.github.io/NDS-vanilla/)
 
@@ -37,43 +37,50 @@ Quick links:
 
 | Area | What you get |
 |---|---|
-| **Components** | 90+ UI components — buttons, forms, modals, charts, date pickers (Gregorian + Hijri), panels, navigation, and more. |
-| **Layout** | A section model and responsive grid for composing pages. |
-| **UI shell** | Header, footer, hero, side menu, top bar, and side-info — the page chrome. |
-| **Utilities** | Drop-in helpers: copy, share, number formatting, text truncation, dividers, and more. |
-| **Page templates** | A dozen DGA-compliant page templates (service, FAQ, contact, search, KPIs, and others). |
-| **Examples** | Full real-world page demos (admin console, registration, services list, and more). |
-| **Theming** | Light + dark mode, OKLCH-seed palettes, predefined and stylesheet themes, plus seasonal event packs (Foundation Day, Hajj, National Day) — all from one HTML attribute. |
+| **Components** | 90+ UI components: buttons, forms, modals, charts, date pickers (Gregorian and Hijri), panels, navigation, and more. |
+| **Layout** | A section model and a responsive grid to compose pages. |
+| **UI shell** | The page chrome: top bar, header, main navigation, hero, side menu, side info, and footer. |
+| **Utilities** | Small helpers: copy, share, number formats, text truncation, dividers, and more. |
+| **Page templates** | 16 DGA page templates, such as service, FAQ, contact, search, and KPIs. |
+| **Examples** | 12 full pages, such as an admin console, a registration flow, and a services list. |
+| **Theming** | Light and dark mode, OKLCH-seed palettes, and predefined or stylesheet themes. |
+| **Event themes** | Seasonal skins for Foundation Day, Hajj, and National Day. One script tag applies each one. |
 
-Everything is RTL (Arabic) first with LTR (English) support, with live demos and copy-ready markup throughout the documentation.
+Every page is Arabic (RTL) first, with English (LTR) support. The docs show a live demo and copy-ready markup for each part.
 
 ## Who is this for?
 
-- **Government teams and delivery partners** building DGA-aligned digital services on their existing stack.
-- **Freelancers** building client sites with a ready-made component library and page templates.
-- **Students and fresh graduates** learning HTML, CSS, and vanilla JavaScript from a readable, production-oriented codebase.
-- **Teachers and trainers** using working components, templates, and patterns as practical examples for courses and workshops.
+- **Government teams and delivery partners** who build DGA-aligned services on their existing stack.
+- **Freelancers** who build client sites with a ready component library and page templates.
+- **Students and fresh graduates** who learn HTML, CSS, and plain JavaScript from a readable, production-grade codebase.
+- **Teachers and trainers** who use real components, templates, and patterns in courses and workshops.
 
-> **Important:** The default visual identity (design tokens, colors, logos, and the digital-stamp component) is **exclusive to Saudi Arabia government entities**. Any non-government use must replace these with the adopting organization's own identity before deploying — see [Disclaimer](#disclaimer).
+> **Important:** The default visual identity (design tokens, colors, logos, and the digital-stamp component) is **for Saudi Arabia government entities only**. Any other project must replace it with its own identity before it goes live. See the [Disclaimer](#disclaimer).
 
 ## How should I use this?
 
 | Your goal | What to do |
 |---|---|
-| **Try the demo** | Visit the [live site](https://mazin-musleh.github.io/NDS-vanilla/). No setup needed. |
-| **Build a site using NDS** | Follow the [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html). |
-| **Extend or customize NDS itself** | Fork the repository, clone your fork, and follow the Quick start below. Pull upstream changes with `git pull upstream main`. |
-| **Report a bug or request a feature** | [Open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose). |
+| **Try the demo** | Open the [live site](https://mazin-musleh.github.io/NDS-vanilla/). No setup needed. |
+| **Build a site with NDS** | Follow the [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html). |
+| **Change or extend NDS itself** | Fork the repository, clone your fork, and follow the Quick start below. Pull upstream changes with `git pull upstream main`. |
+| **Report a bug or ask for a feature** | [Open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose). |
+
+## Using with AI agents
+
+[NDS IQ](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html) is a versioned instruction system that gives AI coding agents a consistent way to build with NDS. It lives in this repository, not in the release zip. The Get Started setup prompt downloads it to your project root and points your `AGENTS.md` or `CLAUDE.md` at it. Claude Code, Cursor, Codex, and other agents then read the same file. The [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html) covers setup, the workflow, and upgrades.
+
+**Working on NDS itself?** The project rules live in [AGENTS.md](AGENTS.md), which Cursor, Codex, Aider, and other agents read. [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code also gets project skills in [.claude/skills/](.claude/skills/): docs, JS and CSS audits, performance measurement, icons, font updates, and NDS IQ evaluation. No setup is needed.
 
 ## Quick start (local development)
 
-> **For contributors only.** If you just want to use NDS in your project, see *Build a site using NDS* above — no build tools required.
+> **For contributors only.** To use NDS in your own project, see *Build a site with NDS* above. You need no build tools for that.
 
-**Requirements:** Ruby 3.x + Bundler to run Jekyll. Node.js 18+ only if you edit `_js/` source (it bundles and minifies with Terser).
+**Requirements:** Ruby 3.x and Bundler to run Jekyll. Node.js 18+ only if you edit `_js/` source (Terser bundles and minifies it).
 
-### 1. Install Ruby + Bundler
+### 1. Install Ruby and Bundler
 
-**Windows** — install [RubyInstaller with Devkit](https://rubyinstaller.org/downloads/) (3.x + Devkit), then:
+**Windows:** install [RubyInstaller with Devkit](https://rubyinstaller.org/downloads/) (3.x + Devkit), then run:
 
 ```powershell
 gem install bundler
@@ -108,11 +115,11 @@ gem install bundler
 git clone https://github.com/mazin-musleh/NDS-vanilla.git
 cd NDS-vanilla
 bundle install
-npm install                       # installs Terser — only needed if editing _js/
+npm install                       # installs Terser, only needed if you edit _js/
 bundle exec jekyll serve          # http://localhost:4002/NDS-vanilla/
 ```
 
-The server also binds `0.0.0.0` and prints a LAN URL alongside the localhost URL, allowing you to open the site on another device on the same network. This is useful for checking RTL layouts and touch targets on real hardware.
+The server also prints a LAN URL. Open it on a phone on the same network to check RTL layouts and touch targets on real hardware.
 
 ### Other commands
 
@@ -123,16 +130,16 @@ ruby _plugins/js_processor.rb     # rebuild assets/js/*.min.js after any _js/ ch
 
 ### Troubleshooting
 
-- **`cannot load such file -- webrick`**: Ruby 3.x removed it from stdlib. Run `bundle install`, then use `bundle exec jekyll serve` (not plain `jekyll serve`).
-- **Port 4002 in use**: `bundle exec jekyll serve --port 4050`.
-- **Terser errors**: run `npm install` first so `node_modules/terser` exists.
+- **`cannot load such file -- webrick`**: Ruby 3.x removed it from the standard library. Run `bundle install`, then use `bundle exec jekyll serve`, not plain `jekyll serve`.
+- **Port 4002 in use**: run `bundle exec jekyll serve --port 4050`.
+- **Terser errors**: run `npm install` first, so `node_modules/terser` exists.
 
-### Customizing `_config.yml` without merge conflicts
+### Re-brand a fork without merge conflicts
 
-If you fork NDS to re-brand it, keep `_config.yml` unchanged and put your overrides in a second file. Jekyll merges configuration files from left to right, so values in the later file take precedence:
+Keep `_config.yml` unchanged. Put your overrides in a second file. Jekyll merges config files from left to right, so the later file wins:
 
 ```yaml
-# _config.local.yml — your fork's brand overrides
+# _config.local.yml: your fork's brand overrides
 title: "Ministry of X Portal"
 brandName: "MOX"
 brandLogo: assets/img/mox-logo.svg
@@ -143,28 +150,22 @@ brand: mox
 og_image: assets/img/mox-cover.webp
 ```
 
-Build with both:
+Build with both files:
 
 ```bash
 bundle exec jekyll serve --config _config.yml,_config.local.yml
 bundle exec jekyll build --config _config.yml,_config.local.yml
 ```
 
-**Commit `_config.local.yml` to your fork.** Despite the name, it is shared brand configuration, not a per-machine file, so every development clone and CI job uses the same values. Because upstream NDS does not ship this file, `git pull upstream main` does not conflict with it. Keeping `_config.yml` unchanged also allows upstream changes to `version`, toggles, and defaults to merge cleanly.
+**Commit `_config.local.yml` to your fork.** Despite its name, it holds shared brand settings, so every clone and CI job must use it. Upstream NDS does not ship this file, so `git pull upstream main` never conflicts with it. Upstream changes to `_config.yml` (version, toggles, defaults) also merge cleanly.
 
 ## Contributing
 
-Issues are welcome for bugs, feature requests, and feedback. For small fixes such as typos, broken links, and obvious bugs, a PR is fine. For features or larger changes, please [open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose) first to discuss the approach. See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidance.
-
-## Using with AI agents
-
-NDS is designed for consistent AI-assisted development across models. [NDS IQ](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html) is a versioned instruction system that provides the baseline for building with NDS. It lives in this repository, not in the release zip: the Get Started setup prompt downloads it to your project root and points your `AGENTS.md` or `CLAUDE.md` at it; Claude Code, Cursor, Codex, and other agents then read the same file. The [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html) covers setup, the development workflow, and upgrades.
-
-**Working on NDS itself?** Project conventions live in [AGENTS.md](AGENTS.md), the cross-tool instruction file used by Cursor, Codex, Aider, and other coding agents; [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code users also get project-specific skills under [.claude/skills/](.claude/skills/) for documentation, JS and CSS audits, performance measurement, icon management, font refreshes, and NDS IQ evaluation. No configuration required.
+Issues are welcome for bugs, feature requests, and feedback. A PR is fine for small fixes such as typos, broken links, and obvious bugs. For a feature or a larger change, [open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose) first so we can agree on the approach. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Security
 
-Report vulnerabilities privately through the [Security tab](https://github.com/mazin-musleh/NDS-vanilla/security). See [SECURITY.md](SECURITY.md) for the reporting process.
+Report vulnerabilities privately through the [Security tab](https://github.com/mazin-musleh/NDS-vanilla/security). See [SECURITY.md](SECURITY.md) for the process.
 
 ## License
 
@@ -172,16 +173,16 @@ Report vulnerabilities privately through the [Security tab](https://github.com/m
 
 ## Disclaimer
 
-Based on the public Saudi DGA design specifications published on Figma, this is an independent implementation. **It is not affiliated with, endorsed by, or maintained by the Digital Government Authority (DGA) or the Government of Saudi Arabia.**
+This is an independent implementation, based on the public DGA design specifications on Figma. **It is not affiliated with, endorsed by, or maintained by the Digital Government Authority (DGA) or the Government of Saudi Arabia.**
 
-**The default visual identity is reserved for Saudi Arabia government entities.** If you are not a Saudi government organization, you must replace the following before deploying:
+**The default visual identity is for Saudi Arabia government entities only.** If you are not a Saudi government organization, replace all of the following before you go live:
 
 - **Logos and marks**: [`assets/img/dga-logo-icon.svg`](assets/img/dga-logo-icon.svg), [`2030-vision.svg`](assets/img/2030-vision.svg), and [`palm_swords.svg`](assets/img/palm_swords.svg) are official government trademarks.
-- **Design tokens**: the DGA brand identity in [`_sass/themes/_dga.scss`](_sass/themes/_dga.scss) and the foundation typography and spacing primitives in [`_sass/tokens/_primitives.scss`](_sass/tokens/_primitives.scss) are the DGA-defined identity. Re-theme them to your own brand via the 4-tier token system (see [AGENTS.md](AGENTS.md#design-tokens-critical)).
-- **Digital-stamp component**: the DGA digital-stamp in the top bar ([`_includes/topbar.html`](_includes/topbar.html), styled in [`_sass/components/_DGAdigitalStamp.scss`](_sass/components/_DGAdigitalStamp.scss)) is a Saudi government compliance feature. Remove it or replace it with your own equivalent.
-- **Copy**: `.gov.sa` email domains, "Digital Government Authority" labels, and Saudi-specific demo content throughout `_data/` and demo pages.
+- **Design tokens**: the DGA brand in [`_sass/themes/_dga.scss`](_sass/themes/_dga.scss) and the typography and spacing primitives in [`_sass/tokens/_primitives.scss`](_sass/tokens/_primitives.scss) are the DGA identity. Re-theme them to your brand through the 4-tier token system (see [AGENTS.md](AGENTS.md#design-tokens-critical)).
+- **Digital-stamp component**: the DGA digital stamp in the top bar ([`_includes/topbar.html`](_includes/topbar.html), styled in [`_sass/components/_DGAdigitalStamp.scss`](_sass/components/_DGAdigitalStamp.scss)) is a Saudi government compliance feature. Remove it, or replace it with your own.
+- **Copy**: `.gov.sa` email domains, "Digital Government Authority" labels, and Saudi-specific demo content in `_data/` and the demo pages.
 
-Keeping these defaults on a non-government site can misrepresent the project as an official Saudi government service and is not permitted.
+A non-government site that keeps these defaults can look like an official Saudi government service. That is not permitted.
 
 ## Author
 

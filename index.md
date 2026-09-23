@@ -10,7 +10,7 @@ exclude_showcase: true
 bundle_sizes:
   critical_css: 10 # nds.critical.min.css
   core_js: 41 # nds-main.min.js (loads on every page)
-  total_js: 133 # main + delegated + extras (full library, demand-loaded)
+  total_js: 139 # main + delegated + extras (full library, demand-loaded)
 ---
 
 <!-- Implementation Solution -->
@@ -22,9 +22,10 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block nds-prose">
-                <p>The Digital Government Authority (DGA) established a unified design language for Saudi Arabia's government websites and services. The specifications published on <a href="https://www.figma.com/@sdga" target="_blank">Figma</a> provide a clear reference; the challenge is turning that specification into maintainable, production-ready code.</p>
-                <p>The DGA's official implementation is a React and Storybook component library covering the core UI components. This project provides the design system in plain HTML, CSS, and JavaScript, together with the component library, layout system, page templates, documentation, and development environment. No frontend framework is required.</p>
-                <p>The system is also built for AI-assisted development. Every release ships <a href="{{ '/guides/integration-quality.html' | relative_url }}">NDS IQ</a>, a versioned instruction system that gives AI coding agents a consistent way to build with NDS.</p>
+                <p>The Digital Government Authority (DGA) sets one design language for Saudi Arabia's government websites and services. It publishes the specifications on <a href="https://www.figma.com/@sdga" target="_blank">Figma</a>, and its official code is a React and Storybook library of the core UI components.</p>
+                <p>This project builds the same design system in plain HTML, CSS, and JavaScript. Plain web code works in any stack: static sites, server-rendered pages, or apps built with React or another framework. It brings no framework or dependencies of its own.</p>
+                <p>It goes beyond the components, with a layout system, DGA page templates, documentation, and a development environment. A team can build complete pages, not just single parts.</p>
+                <p>It is also built for AI-assisted development. <a href="{{ '/guides/integration-quality.html' | relative_url }}">NDS IQ</a>, a versioned instruction system, gives AI coding agents a consistent way to build with NDS.</p>
             </div>
             <div class="nds-block">
                 <div class="nds-alert nds-card nds-inline" data-status="neutral" role="alert">
@@ -52,7 +53,7 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Who It's For</h2>
-            <p class="nds-section-description">Built for teams and individuals delivering, adapting, or learning government-grade web development.</p>
+            <p class="nds-section-description">For teams and people who build, adapt, or learn government web development.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -63,21 +64,21 @@ bundle_sizes:
                             <i class="hgi hgi-stroke hgi-building-06"></i>
                             <span class="nds-label">Government teams &amp; agencies</span>
                         </span>
-                        <p class="nds-item-desc">Delivering DGA-aligned digital services on their existing technology stack.</p>
+                        <p class="nds-item-desc">Deliver DGA-aligned digital services on the stack you already run.</p>
                     </div>
                     <div class="nds-definition-item nds-card nds-shadow">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-briefcase-01"></i>
                             <span class="nds-label">Freelancers</span>
                         </span>
-                        <p class="nds-item-desc">Building client sites with a reusable component library and ready-to-use page templates.</p>
+                        <p class="nds-item-desc">Build client sites with a reusable component library and ready page templates.</p>
                     </div>
                     <div class="nds-definition-item nds-card nds-shadow">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-mortarboard-02"></i>
                             <span class="nds-label">Students &amp; fresh graduates</span>
                         </span>
-                        <p class="nds-item-desc">Learning core HTML, CSS, and vanilla JavaScript
+                        <p class="nds-item-desc">Learn core HTML, CSS, and plain JavaScript
                             from a readable, production-grade codebase.</p>
                     </div>
                     <div class="nds-definition-item nds-card nds-shadow">
@@ -85,7 +86,7 @@ bundle_sizes:
                             <i class="hgi hgi-stroke hgi-teaching"></i>
                             <span class="nds-label">Teachers &amp; trainers</span>
                         </span>
-                        <p class="nds-item-desc">Using real components, page templates, and patterns as practical material for web-development courses, bootcamps, or workshops.</p>
+                        <p class="nds-item-desc">Teach with real components, page templates, and patterns in web development courses, bootcamps, and workshops.</p>
                     </div>
                 </div>
             </div>
@@ -99,7 +100,7 @@ bundle_sizes:
                     <div class="nds-alert-content">
                         <div class="nds-alert-text">
                             <span class="nds-alert-title">Important</span>
-                            <p class="nds-alert-description">The default visual identity is exclusive to Saudi Arabia government entities. It covers design tokens, colors, logos, and the digital-stamp component. Non-government projects must replace these with the adopting organization's own identity before deployment.</p>
+                            <p class="nds-alert-description">The default visual identity is exclusive to Saudi Arabia government entities. It covers design tokens, colors, logos, and the digital-stamp component. Non-government projects must replace these with their own identity before they go live.</p>
                         </div>
                         <div class="nds-alert-actions">
                             <a href="{{ '/components/themes.html' | relative_url }}" class="nds-link">Theming guide</a>
@@ -111,13 +112,13 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Compliance Ready -->
+<!-- DGA Page Templates -->
 <section id="compliance" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Compliance Ready</h2>
-            <p class="nds-section-brief">DGA page templates implemented as working code and ready to be adapted for deployment.</p>
-            <p class="nds-section-description">Components follow the defined design tokens, typography, spacing, and interaction patterns. The templates below cover common government service screens and can be copied, populated with project content, and adapted for deployment.</p>
+            <h2 class="nds-section-title">DGA Page Templates</h2>
+            <p class="nds-section-brief">DGA page templates as working code.</p>
+            <p class="nds-section-description">Components follow the DGA design tokens, typography, spacing, and interaction patterns. The templates below cover common government service screens. Copy one, add your content, and adapt it to your project.</p>
         </div>
         <div class="nds-section-body nds-max-width">
             <div class="nds-block">
@@ -170,7 +171,7 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Real-World Examples</h2>
-            <p class="nds-section-description">{{ site.data.content.examples | size }} composed pages demonstrating NDS components working together in government service contexts.</p>
+            <p class="nds-section-description">{{ site.data.content.examples | size }} full pages that show NDS components working together in government services.</p>
         </div>
         <div class="nds-section-body  nds-max-width">
             <div class="nds-block">
@@ -233,7 +234,7 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Event Themes</h2>
-            <p class="nds-section-description">Theme packs for national occasions. Each theme can be applied site-wide through a single attribute and removed to restore the default theme.</p>
+            <p class="nds-section-description">Theme packs for national occasions. One script tag applies a theme to the whole site. Remove the tag to restore the default.</p>
         </div>
         <div class="nds-section-body  nds-max-width">
             <div class="nds-block">
@@ -319,7 +320,7 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Components ({{ site.data.content.components | size }})</h2>
-            <p class="nds-section-description">Each with its markup, styling, and JavaScript behavior. All built from scratch.</p>
+            <p class="nds-section-description">Each has its markup, styles, and JavaScript. All are built from scratch.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">
@@ -452,7 +453,7 @@ bundle_sizes:
             </div>
             <div>
                 <h2 class="nds-section-title">Architecture & Performance</h2>
-                <p class="nds-section-description">Built with a performance-first and compatibility approach.</p>
+                <p class="nds-section-description">Built for speed and wide browser support.</p>
                 <p>
                     <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/v2nxjcxqob?form_factor=mobile"
                         target="_blank" class="nds-color">View the PageSpeed Insights report</a>
@@ -468,14 +469,14 @@ bundle_sizes:
                             <i class="hgi hgi-stroke hgi-plug-socket"></i>
                             <span class="nds-label">Zero Dependencies</span>
                         </span>
-                        <p class="nds-item-desc">No Bootstrap, Tailwind, jQuery, or framework runtime. The output is plain HTML, CSS, and JavaScript and can be integrated into existing stacks without introducing a framework dependency.</p>
+                        <p class="nds-item-desc">No Bootstrap, Tailwind, jQuery, or framework runtime. The output is plain HTML, CSS, and JavaScript, so it fits into an existing stack without a framework.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-cpu-charge"></i>
                             <span class="nds-label">Smart Component Loader</span>
                         </span>
-                        <p class="nds-item-desc">A single DOM sweep detects the components present on a page and initializes them in priority tiers: critical components first, followed by the rest during idle time. Deferred and page-specific bundles are loaded only when their components are present, limiting each page to the JavaScript it actually uses.</p>
+                        <p class="nds-item-desc">The loader scans the page once and starts the components it finds: critical ones first, the rest when the browser is idle. Extra bundles load only when their components are on the page, so each page runs only the JavaScript it uses.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -489,7 +490,7 @@ bundle_sizes:
                             <i class="hgi hgi-stroke hgi-paint-brush-01"></i>
                             <span class="nds-label">4-Tier Design Tokens</span>
                         </span>
-                        <p class="nds-item-desc">Palette, primitive, semantic, and component tokens are defined as CSS custom properties. Components expose public properties for customization while keeping internal implementation details private.</p>
+                        <p class="nds-item-desc">Palette, primitive, semantic, and component tokens are defined as CSS custom properties. Components expose public properties you can set, and keep their internals private.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
@@ -503,35 +504,35 @@ bundle_sizes:
                             <i class="hgi hgi-stroke hgi-zap"></i>
                             <span class="nds-label">~{{ page.bundle_sizes.critical_css }} KB Critical CSS (gzipped)</span>
                         </span>
-                        <p class="nds-item-desc">Critical styles load immediately, while non-critical styles are deferred and loaded asynchronously without blocking rendering. The build separates critical and non-critical CSS.</p>
+                        <p class="nds-item-desc">The build splits the CSS in two. Critical styles load first; the rest load later without blocking the page.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-layers-01"></i>
                             <span class="nds-label">5-Stage Reveal</span>
                         </span>
-                        <p class="nds-item-desc">First paint is divided into five render-safe stages: inline critical skeleton → critical stylesheet → main stylesheet → main JavaScript → icons and font. Each stage either renders correctly or remains hidden, preventing unstyled flashes; icons load last to stay outside the LCP window.</p>
+                        <p class="nds-item-desc">The first paint arrives in five stages: inline critical skeleton → critical stylesheet → main stylesheet → main JavaScript → icons and font. Each stage shows only when it renders correctly, so there is no unstyled flash. Icons load last, so they do not delay the largest paint (LCP).</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-code-circle"></i>
                             <span class="nds-label">~{{ page.bundle_sizes.core_js }} KB Core JS (gzipped)</span>
                         </span>
-                        <p class="nds-item-desc">The full library is ~{{ page.bundle_sizes.total_js }} KB gzipped, but it is not loaded as a single bundle. A lean ~{{ page.bundle_sizes.core_js }} KB core loads on every page, while late-safe and page-specific components are loaded only when their markup is present. A typical page therefore executes only a fraction of the library.</p>
+                        <p class="nds-item-desc">The full library is ~{{ page.bundle_sizes.total_js }} KB gzipped, but it is not loaded as a single bundle. A lean ~{{ page.bundle_sizes.core_js }} KB core loads on every page. Components that can wait, or that only some pages use, load only when their markup is present. A typical page runs a fraction of the library.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
                             <span class="nds-label">Web Vitals Compliant</span>
                         </span>
-                        <p class="nds-item-desc">100% Google PageSpeed score, with LCP, CLS, and INP passing in the measured test. Performance is tested across desktop and mobile conditions, including fast and limited connections.</p>
+                        <p class="nds-item-desc">A Google PageSpeed score of 100, with LCP, CLS, and INP passing in the measured test. Performance is tested on desktop and mobile, over fast and slow connections.</p>
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
                             <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
-                            <span class="nds-label">Sleek Animations</span>
+                            <span class="nds-label">Animations</span>
                         </span>
-                        <p class="nds-item-desc">GPU-accelerated animations and scheduled rendering keep transitions responsive, including on lower-end devices. Off-screen elements are deferred until needed.</p>
+                        <p class="nds-item-desc">GPU-accelerated animations and scheduled rendering keep transitions smooth, even on low-end devices. Off-screen elements wait until they are needed.</p>
                     </div>
                 </div>
             </div>
@@ -609,7 +610,7 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Get Started</h2>
-            <p class="nds-section-description">Everything needed to adopt NDS: download the template, install the agent instructions, build the UI page by page, and stay current with upgrades.</p>
+            <p class="nds-section-description">Everything you need to adopt NDS: download the template, install the agent instructions, build the UI page by page, and upgrade to new releases.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
