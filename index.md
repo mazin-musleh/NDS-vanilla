@@ -455,7 +455,7 @@ bundle_sizes:
                 <h2 class="nds-section-title">Architecture & Performance</h2>
                 <p class="nds-section-description">Built for speed and wide browser support.</p>
                 <p>
-                    <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/v2nxjcxqob?form_factor=mobile"
+                    <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/dcadcl0kfx?form_factor=mobile"
                         target="_blank" class="nds-color">View the PageSpeed Insights report</a>
                 </p>
             </div>
