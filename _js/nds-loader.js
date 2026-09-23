@@ -351,12 +351,6 @@
             init: () => NDS.DatePicker?.init?.(),
         },
         {
-            name: 'FontLoading',
-            selector: null,
-            init: () => NDS.FontLoading?.init?.(),
-            universal: true,
-        },
-        {
             // Critical: NDS.Link.init() tags external links with no layout reads
             // (guards are hostname/classList only), so it forces no reflow and is
             // safe before first paint — above-the-fold external badges are present
@@ -1001,14 +995,18 @@
         }
 
         // HGI rides behind the reveal stamp so its font fetch never competes inside
-        // the LCP window. Its @font-face ships in crit (_fonts.scss), so landing this
-        // sheet rebuilds no font cache. Glyphs that all start hidden never start the
-        // fetch; kick it once the family applies.
+        // the LCP window. Both faces land before the reveal (crit and main CSS), so landing this
+        // sheet rebuilds no font cache.
         function loadHgiSheet() {
-            // The face is in crit, so the woff2 can start now, beside the sheet, not after it.
-            NDS.FontLoading?.load?.();
-            const hgi = addSheet('hgi-rounded-stroke-min.css');
-            if (hgi) hgi.onload = () => NDS.FontLoading?.load?.();
+            if (document.fonts) {
+                // Safari never loads a fallback face on its own while the primary is still
+                // loading, so hgi-blank is loaded by hand, before any icon renders.
+                document.fonts.load('1em "hgi-blank"', '\u{F0000}').catch(() => {});
+                // Start the woff2 now, beside the sheet: icons that all start hidden
+                // (a closed tab panel) would otherwise never start the fetch.
+                document.fonts.load('1em "hgi-stroke-rounded"', '\u{F0000}').catch(() => {});
+            }
+            addSheet('hgi-rounded-stroke-min.css');
         }
 
         // Critical pass (the reveal checklist): time-sliced. Small inits share a
@@ -1200,7 +1198,7 @@
     //   - scanners (everything else) own elements INSIDE it — a selector hit means
     //     re-running the registry's own init(), which is idempotent via each
     //     component's init sentinel, so re-scanning costs a query and nothing else.
-    //     `universal` components (selector: null — Link, FontLoading) always qualify:
+    //     `universal` components (selector: null — Link) always qualify:
     //     they have no selector to test, and the init partition treats them the same way.
     //
     // The opt-in is a REGISTRY field, deliberately not a plain `NDS.X.refresh` probe.

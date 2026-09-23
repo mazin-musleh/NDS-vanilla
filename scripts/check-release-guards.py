@@ -46,7 +46,7 @@ def collect_refs(block):
 # The doc copy groups its rules under comment headings and the served gate is
 # minified, so the guard has to strip comments before comparing. Keep one here
 # or that stripping goes unexercised.
-GATE_CSS = '/* colors */ html{background-color:#fff}i.hgi-stroke{opacity:0}'
+GATE_CSS = '/* colors */ html{background-color:#fff}html :where(.nds-topbar){height:40px}'
 
 
 def build_stub_zip(version, refs_from, iq_bytes=None, gate_doc=None):
@@ -166,9 +166,9 @@ def main():
     # while its selector stayed put. The second is the one a selector-only
     # comparison waved through, so it gets its own case.
     for label, drifted in (
-        ('a rule goes missing', GATE_CSS.replace('i.hgi-stroke', 'i.hgi-gone')),
+        ('a rule goes missing', GATE_CSS.replace('.nds-topbar', '.nds-gone')),
         ('a rule keeps its selector but changes value',
-         GATE_CSS.replace('opacity:0', 'opacity:1')),
+         GATE_CSS.replace('height:40px', 'height:41px')),
     ):
         zip_path = build_stub_zip(VERSION, refs_from=source, gate_doc=drifted)
         try:

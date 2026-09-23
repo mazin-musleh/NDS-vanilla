@@ -288,13 +288,13 @@ async function measure(pageUrl) {
           window.__revealed = performance.now(); o.disconnect();
         }
       }).observe(document, { attributes: true, attributeFilter: ['data-nds-loaded'], subtree: true });
-      // Content icons reveal when the loader stamps the HGI face as loaded.
+      // Content icons show when the HGI face loads (until then they render the invisible hgi-blank box).
       window.__icons = null;
-      new MutationObserver((m, o) => {
-        if (/(^| )hgi-stroke-rounded( |$)/.test(document.documentElement.getAttribute('data-nds-fonts-loaded') || '')) {
-          window.__icons = performance.now(); o.disconnect();
+      document.fonts.addEventListener('loadingdone', (e) => {
+        if (window.__icons === null && e.fontfaces.some((f) => f.family.replace(/"/g, '') === 'hgi-stroke-rounded')) {
+          window.__icons = performance.now();
         }
-      }).observe(document, { attributes: true, attributeFilter: ['data-nds-fonts-loaded'], subtree: true });
+      });
     });
 
     if (TRACE) await page.tracing.start({

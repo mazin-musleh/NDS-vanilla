@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "13/09/2026 - 08:56 AM"
+last_edit: "23/09/2026 - 08:55 PM"
 ---
 
 <!-- Page Setup -->
@@ -68,7 +68,6 @@ last_edit: "13/09/2026 - 08:56 AM"
   :where(.nds-topbar&gt;*,.nds-main-nav&gt;*,.nds-hero-section .nds-section-action,.nds-content-layout,.nds-user-feedback-section,.nds-footer){visibility:hidden}
   html:not([data-nds-loaded]) main{overflow-x:clip}
   :root{--nds-icons-opacity: 0}
-  i.hgi-stroke{opacity:0}
   :is(.nds-hidden,[hidden],[data-state~=hidden],[data-filtered]){display:none !important}
   :where(.nds-hero-section){position:relative;height:550px}
   :where(.nds-hero-section.nds-sub){height:auto;min-height:220px}

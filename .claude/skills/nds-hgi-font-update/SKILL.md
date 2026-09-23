@@ -16,7 +16,7 @@ The HGI icon font is served locally (not from the CDN) to avoid CORS issues. It 
 
 | File | Role |
 |------|------|
-| `_sass/_hgiRoundedStroke.scss` | gate reveal + `.hgi-stroke` base + every `.hgi-stroke.hgi-*` rule + the deprecated-name alias block. NO `@font-face`: that lives in `_sass/_fonts.scss` (crit) |
+| `_sass/_hgiRoundedStroke.scss` | `.hgi-stroke` base (family list ends in the `hgi-blank` placeholder) + every `.hgi-stroke.hgi-*` rule + the deprecated-name alias block. NO `@font-face`: that lives in `_sass/_fonts.scss` (crit) |
 | `assets/fonts/hgi-stroke-rounded.woff2` | the font file |
 | `scripts/hgi-font-update.py` | does the work; holds the `ALIASES` map |
 | `_data/hgi.yml` | the version the docs state (CDN build date, icon count). The font itself only says "Version 1.0"; the build stamp is the real version |
@@ -43,7 +43,7 @@ A name removed upstream breaks existing markup. For each one the script flags `N
 python scripts/hgi-font-update.py --apply
 ```
 
-It rewrites the SCSS (keeping our header and family name `hgi-stroke-rounded`, since the loader and `_fonts.scss` key on it) and replaces the woff2. It refuses while any removed name lacks an alias.
+It rewrites the SCSS (keeping our header and family names `hgi-stroke-rounded` and `hgi-blank`, since the loader and the font faces key on them) and replaces the woff2. The `hgi-blank` face in `_sass/_fonts-hgi-blank.scss` is an invisible 1em placeholder over U+F0000–FFFFD with the icon font's metrics: rebuild it with `python scripts/hgi-blank-font.py` only if an update moves the icons off that plane or changes the metrics. It refuses while any removed name lacks an alias.
 
 ## Step 4: Verify
 

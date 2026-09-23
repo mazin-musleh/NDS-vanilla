@@ -155,7 +155,7 @@ report.push(...await recordsPage.evaluate(async () => {
     ok('no gaps — every component with an element inside the container was reached',
         gaps.length === 0, gaps.length ? `missed: ${gaps.join(', ')}` : `reached: ${shouldScan.join(', ')}`);
 
-    // `universal` components (selector: null — Link, FontLoading) have no selector to
+    // `universal` components (selector: null — Link) have no selector to
     // test and are meant to run on every pass, exactly as the init partition treats
     // them. They are not strays.
     const outside = live.filter((c) => !c.refresh && !c.universal && !tbody.querySelector(c.selector)).map((c) => c.name);

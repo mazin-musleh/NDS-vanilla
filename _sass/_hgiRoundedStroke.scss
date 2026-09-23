@@ -1,13 +1,9 @@
 // HugeIcons Stroke Rounded build 2026-09-08, 6,228 icons (use.hugeicons.com). Written by scripts/hgi-font-update.py.
-/* No @font-face here: it ships in _fonts.scss (crit). Declared in this deferred
-   sheet it landed after the reveal and relayouted every text box.
-   HGI font gate reveal — paired with the initial 0 in _fold.scss.
-   nds-fontLoading.js stamps data-nds-fonts-loaded~="hgi-stroke-rounded"
-   on <html> once the face loads. */
-html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
-
+/* No @font-face here: the icon face is in _fonts.scss (crit), hgi-blank in _fonts-hgi-blank.scss
+   (main). Declared in this deferred sheet they would land after the reveal and relayout every text box.
+   hgi-blank holds each icon's box, invisible, until the icon font lands: no gate needed. */
 .hgi-stroke {
-  font-family: "hgi-stroke-rounded" !important;
+  font-family: "hgi-stroke-rounded", "hgi-blank" !important;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

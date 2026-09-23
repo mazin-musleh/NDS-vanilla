@@ -120,12 +120,6 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
    lands in the same style pass as the icon tokens. */
 :root { --nds-icons-opacity: 0; }
 
-/* ── HGI font gate (initial) ──
-   Content icons render fallback glyphs until the icon font lands; hidden
-   here. The reveal (data-nds-fonts-loaded~="hgi-stroke-rounded" → 1) lives
-   in _sass/_hgiRoundedStroke.scss; the @font-face itself is in _fonts.scss. */
-i.hgi-stroke { opacity: 0; }
-
 @if $inline {
     /* ════ Inline-only (no critical-file counterpart) ════
        Pre-crit bootstraps + the chrome/hero FCP skeleton. In the critical

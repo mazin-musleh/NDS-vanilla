@@ -1,0 +1,14 @@
+/* hgi-blank: the font .hgi-stroke falls back to while the icon font loads.
+   One empty 1em glyph over the icons' private-use plane, with the icon font's metrics:
+   until the woff2 lands, an icon is an invisible box of its final size, so nothing
+   flashes and nothing shifts. U+20 makes it the first available font, so
+   line-height: normal matches too. 320 bytes; built by scripts/hgi-blank-font.py.
+   In main, not crit: icons render only once their post-reveal sheet lands, and main
+   lands before the reveal, so the face costs first paint nothing and adds no
+   font-cache rebuild after the reveal. */
+@font-face {
+  font-family: "hgi-blank";
+  font-display: block;
+  unicode-range: U+20, U+F0000-FFFFD;
+  src: url("data:font/woff2;base64,d09GMk9UVE8AAAFAAAkAAAAAAogAAAD8AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUYGYABQATYCJAMGBAYFZgcgG+EBAC4L4rHTqCrdyCqIuuROOJD3svnaq4vnecd+9237mEc8ZA4JD4lMJJEaNYmeTiSKhYgPanMHtmwrhmaQVxwLg5WpcH8tQtbLiOv+kugrDr6nx1ECiWQcYVvLEi850o2O98v1Jz359YbtoTxLzCW3cbRIMnai8TtQzsc/ldPeu6MkQ9OqjxXIaWQb/j6VXqnVj2SgMdjlLq32Xj+IR+2Ac6ugqIIF1Rg2NKtommC1d37XHwVMgkVATGO6jwjCWTG99UitH/D2kC8CqgJC/QCEoIh6+RAFzaaAGEVAMWxUlTYq5szUrZiyvml7I7VBk+GOHelaocjvdTwGAAA=") format("woff2");
+}

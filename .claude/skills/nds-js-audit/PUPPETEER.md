@@ -34,7 +34,7 @@ Pick the first reachable surface; the served URL mirrors the source path:
 1. `components/{name}.md` → `http://localhost:4002/components/{name}.html` — the live demo + every variant. Preferred: it exercises real markup.
 2. `examples/*.md` that embed the component → the example's served URL.
 3. `playground.html` → drop the canonical markup (from the component doc's `<code class="lang-html code">` block) onto the playground and drive that.
-4. **No headless-reachable surface** (UI-shell pieces — `header`, `footer`, `mainnav`, `theme`, `fontLoading` — or an interaction that can't be reproduced without a real user gesture the browser blocks): do **not** fake a pass. Report `behavior: "not-headless-testable"`, name why, and fall back to emitting the per-rule user checklist for that rule only.
+4. **No headless-reachable surface** (UI-shell pieces — `header`, `footer`, `mainnav`, `theme` — or an interaction that can't be reproduced without a real user gesture the browser blocks): do **not** fake a pass. Report `behavior: "not-headless-testable"`, name why, and fall back to emitting the per-rule user checklist for that rule only.
 
 Never use `file://` — NDS fetches (i18n JSON, autocomplete) fail under CORS there (see project memory). Always go through `http://localhost:4002`.
 

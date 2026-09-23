@@ -6,9 +6,11 @@
 Source: https://use.hugeicons.com/font/icons.css (the icon font hugeicons.com documents).
 The old cdn.hugeicons.com/font/hgi-stroke-rounded.css froze on 2024-07-24; do not go back to it.
 
-Keeps our own header (gate reveal, .hgi-stroke base, family name "hgi-stroke-rounded" —
+Keeps our own header (.hgi-stroke base, family list "hgi-stroke-rounded", "hgi-blank" —
 the CDN calls it "hugeicons-stroke-rounded"; the loader and _fonts.scss key on ours).
-Never writes @font-face here: the face lives in _sass/_fonts.scss (crit).
+Never writes @font-face here: the icon face lives in _sass/_fonts.scss (crit) and hgi-blank,
+the 1em invisible placeholder, in _sass/_fonts-hgi-blank.scss (main); it only changes if the icon
+font's metrics or code-point plane do.
 
 A name that disappears upstream would break existing markup. --apply refuses until every such
 name has an entry in ALIASES (old name -> new name); the alias block keeps it rendering, and

@@ -42,6 +42,9 @@
 // Import base styles (dividers, links, interactive elements)
 @use 'base';
 
+// Invisible placeholder face for content icons (hgi-blank); main lands before the reveal
+@use 'fonts-hgi-blank';
+
 // Import animations
 @use 'animations';
 

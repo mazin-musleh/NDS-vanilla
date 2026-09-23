@@ -88,9 +88,8 @@ const SCOPE = [
 ];
 
 // Deliberately bannerless: two seasonal themes and a showcase file (docs-site only, no
-// public surface), and fontLoading (internal to the reveal gate, nothing wires to it).
+// public surface).
 const EXCLUDED = new Set([
-    'nds-fontLoading.js',
     'nds-showcase.js',
     'nds-theme-foundation-day.js',
     'nds-theme-hajj.js',
