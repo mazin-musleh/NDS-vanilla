@@ -258,6 +258,8 @@
     // display:none screen) never fetches on its own, and would otherwise sit
     // unstamped until the idle-face window above expires.
     function load() {
+        // The loader calls this at the reveal, before the idle init has run.
+        if (!fontStates.size) initializeFontLoading();
         fontStates.forEach((state) => state.kick?.());
     }
 

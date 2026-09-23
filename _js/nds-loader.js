@@ -1001,6 +1001,8 @@
         // sheet rebuilds no font cache. Glyphs that all start hidden never start the
         // fetch; kick it once the family applies.
         function loadHgiSheet() {
+            // The face is in crit, so the woff2 can start now, beside the sheet, not after it.
+            NDS.FontLoading?.load?.();
             const hgi = addSheet('hgi-rounded-stroke-min.css');
             if (hgi) hgi.onload = () => NDS.FontLoading?.load?.();
         }
