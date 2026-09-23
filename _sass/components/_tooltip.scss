@@ -103,6 +103,8 @@
   z-index: 1000;
   width: max-content;
   max-width: var(--_tooltip-max-width);
+  // Built inside its trigger, so a nowrap host (.nds-tag) would otherwise leak in.
+  white-space: normal;
   padding: var(--_tooltip-padding);
   background-color: var(--_tooltip-bg);
   color: var(--_tooltip-body);
