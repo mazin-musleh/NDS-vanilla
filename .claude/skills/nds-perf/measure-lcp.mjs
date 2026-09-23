@@ -288,6 +288,13 @@ async function measure(pageUrl) {
           window.__revealed = performance.now(); o.disconnect();
         }
       }).observe(document, { attributes: true, attributeFilter: ['data-nds-loaded'], subtree: true });
+      // Content icons reveal when the loader stamps the HGI face as loaded.
+      window.__icons = null;
+      new MutationObserver((m, o) => {
+        if (/(^| )hgi-stroke-rounded( |$)/.test(document.documentElement.getAttribute('data-nds-fonts-loaded') || '')) {
+          window.__icons = performance.now(); o.disconnect();
+        }
+      }).observe(document, { attributes: true, attributeFilter: ['data-nds-fonts-loaded'], subtree: true });
     });
 
     if (TRACE) await page.tracing.start({
@@ -299,6 +306,8 @@ async function measure(pageUrl) {
     const resp = await page.goto(pageUrl, { waitUntil: 'networkidle2', timeout: 120000 });
     if (resp && resp.status() !== 200) throw new Error(`HTTP ${resp.status()} for ${pageUrl} — check the page path`);
     await new Promise((r) => setTimeout(r, 1800)); // let LCP settle past late images
+    // networkidle2 tolerates one open request, so a slow icon font can still be downloading: wait for it.
+    await page.waitForFunction(() => window.__icons !== null || !document.querySelector('.hgi-stroke'), { timeout: 30000 }).catch(() => {});
 
     let breakdown = null, selectors = null;
     if (TRACE) {
@@ -319,7 +328,7 @@ async function measure(pageUrl) {
         fcp: window.__fcp, lcp: last ? last.t : null,
         tag: last && last.tag ? last.tag.toLowerCase() : null,
         cls: last ? last.cls : null, imgUrl: last ? last.url : null,
-        revealed: window.__revealed, ttfb: nav ? nav.responseStart : null,
+        revealed: window.__revealed, icons: window.__icons, ttfb: nav ? nav.responseStart : null,
       };
     });
     const monitor = MONITOR
@@ -340,18 +349,20 @@ try {
   for (const pg of PAGES) {
     const target = pg.remote || base + pg.local;
     console.log(`=== ${target}`);
-    const lcps = [];
+    const lcps = [], icons = [];
     for (let i = 0; i < RUNS; i++) {
       const d = await measure(target);
       lcps.push(d.lcp);
       const el = d.tag ? `<${d.tag}>${d.imgUrl ? ' ' + d.imgUrl : d.cls ? ' .' + d.cls.split(' ')[0] : ''}` : '?';
-      console.log(`  run ${i + 1}: ttfb ${s(d.ttfb)} | FCP ${s(d.fcp)} | reveal ${s(d.revealed)} | LCP ${s(d.lcp)} ${el}`);
+      icons.push(d.icons);
+      console.log(`  run ${i + 1}: ttfb ${s(d.ttfb)} | FCP ${s(d.fcp)} | reveal ${s(d.revealed)} | icons ${s(d.icons)} | LCP ${s(d.lcp)} ${el}`);
       if (TRACE) printBreakdown(d.breakdown);
       if (SELECTORS) printSelectors(d.selectors);
       if (MONITOR) printMonitor(d.monitor);
     }
     const ok = lcps.filter(Number.isFinite).sort((a, b) => a - b);
-    console.log(`  median LCP: ${s(ok[Math.floor(ok.length / 2)])}\n`);
+    const ic = icons.filter(Number.isFinite).sort((a, b) => a - b);
+    console.log(`  median LCP: ${s(ok[Math.floor(ok.length / 2)])} | median icons: ${s(ic[Math.floor(ic.length / 2)])}\n`);
   }
 } finally {
   if (srv) srv.server.close();
