@@ -62,7 +62,7 @@ html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
   position: relative;
   display: inline-block;
   font-variant: normal;
-  line-height: 1;
+  line-height: normal;
   text-rendering: auto;
 }
 ```
