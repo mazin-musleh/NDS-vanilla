@@ -359,13 +359,12 @@
         }
     }
 
-    // Find all matching target elements within a demo card's .demo-container and .code-example
+    // Find matching targets in a demo card's .demo-container. Never .code-example:
+    // its markup is text, so the only elements there are chrome (.nds-tag lang chip,
+    // .nds-btn copy button) that a `.nds-tag` / `.nds-btn` toggle would restyle.
     function findToggleTargets(demoCard, targetSelector) {
         var targets = [];
-        var searchContainers = [
-            ...demoCard.querySelectorAll('.demo-container'),
-            ...demoCard.querySelectorAll('.code-example')
-        ];
+        var searchContainers = [...demoCard.querySelectorAll('.demo-container')];
 
         if (targetSelector.startsWith('#')) {
             var idSelector = targetSelector.substring(1);
@@ -721,7 +720,7 @@
 
         // Apply/remove inline styles from data-toggle-style when button is selected/deselected
         // Format: data-toggle-style=".target { --prop:val; width:fit-content; }"
-        // When selected: sets each property on matching targets in .demo-container and .code-example
+        // When selected: sets each property on matching targets in .demo-container
         // When deselected (mutual exclusion): removes those properties
         applyToggleStyles(button, demoCard);
 
