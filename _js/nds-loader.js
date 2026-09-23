@@ -661,14 +661,16 @@
     // the post-load window (the 5ms slot still caps each task). The {timeout}
     // arg is ignored (didTimeout stays false): setTimeout always fires, so no
     // timeout-forced run is needed.
+    // The slot starts when the callback FIRES: timed from scheduling, a nested
+    // setTimeout's 4ms clamp left ≤1ms, drain ran nothing and re-queued forever.
     const scheduleIdle = window.requestIdleCallback ||
-        ((cb) => {
+        ((cb) => setTimeout(() => {
             const start = performance.now();
-            setTimeout(() => cb({
+            cb({
                 didTimeout: false,
                 timeRemaining: () => Math.max(0, 5 - (performance.now() - start))
-            }), 1);
-        });
+            });
+        }, 1));
 
     // Asset base + version derived from the loader's own <script>. nds-loader.js
     // is bundled last into nds-main.min.js, so during this IIFE's synchronous
