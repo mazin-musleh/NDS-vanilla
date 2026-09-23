@@ -1,4 +1,4 @@
-# NDS IQ — building UI with the National Design System (instructions v3.0)
+# NDS IQ — building UI with the National Design System (instructions v3.1)
 
 ## How to use this file
 
@@ -188,7 +188,7 @@ When the table requires a plan, create root `NDS-PLAN.md`. Start it with `Manage
 2. **Master layout** — copy the complete `<body>` from a built `_site/` page matching the required shape and swap the content; never recreate it from prose. Use `_source/layout/page-shell.md` for shapes/modifiers. Older templates: choose the matching built page by inspection and report the missing reference.
    - Layout-affecting modifiers (`nds-full-width`, `nds-wSideMenu`, and all `page-shell.md` modifiers) must exist in initial HTML. Route-dependent modifiers are set synchronously before framework mount, never in a mount effect.
    - Client-rendered apps mount the copied shell inside `#root`/equivalent with `display: contents` in project CSS.
-   - Put copied runtime `<script defer>` tags at the end of `<body>`: `nds-main.min.js`, plus `nds-accessibility.min.js` when its panel remains.
+   - Keep the runtime `<script defer>` tags the built page carries at the end of `<body>`.
    - Set both `<html lang>` and `dir`: Arabic → `ar`/`rtl`; others → `ltr`. With no locale mechanism, ship Arabic-first bilingual with the existing switcher.
 3. **Brand** — put the project logo on `.nds-brand-logo`; remove its text span unless the logo is a bare mark. Then build inner components.
 
