@@ -9,11 +9,12 @@
 
 @use '../mixins' as *;
 
-// What "disabled" means for a button, in one place. Loading is carved out of it:
-// a button locked for its own request keeps its colours behind the spinner, and
-// keeps its group seam. The seam rules outrank the base disabled rule, so all of
-// them must exclude exactly the same set — hence one string, not five copies.
-$btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"]):not(.nds-loading)';
+// What "disabled" means for a button, in one place. Loading and status are carved
+// out of it: a button locked for its own request, or during NDS.Copy's success
+// flash, keeps its colours and its group seam. The seam rules outrank the base
+// disabled rule, so all of them must exclude exactly the same set — hence one
+// string, not five copies.
+$btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"]):not(.nds-loading, [data-status])';
 
 // ==============================================
 // BASE BUTTON STYLES
