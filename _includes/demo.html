@@ -1,0 +1,83 @@
+{%- comment %}
+Doc demo: renders a live preview and its code tab from ONE copy of the markup.
+The page source keeps the canonical markup readable; the code tab is its escaped copy,
+so the two cannot drift. Emits the .nds-demo-card structure nds-showcase.js expects.
+
+Params:
+  id       required. Tab and panel ids: tab-{id}, panel-{id} (and -js).
+  html     required. The canonical markup (a capture, written at column 0).
+  actions  optional. Toggle controls; without them, label shows instead.
+  label    optional. Short title for a demo with no toggles.
+  js       optional. JS API code for a second tab.
+  long     optional. true adds the expandable wrapper for long code.
+  bg       optional. Extra class on .demo-container (e.g. dark-bg).
+{% endcomment %}
+{%- assign _demo_id = include.id %}
+<div class="nds-showcase">
+    <div class="nds-demo-card">
+        <div class="demo-header">
+            {%- if include.actions %}
+            <div class="demo-action">
+{{ include.actions }}
+            </div>
+            {%- elsif include.label %}
+            <div class="demo-label">{{ include.label }}</div>
+            {%- endif %}
+        </div>
+        <div class="demo-container{% if include.bg %} {{ include.bg }}{% endif %}">
+            <div class="state-demo">
+{{ include.html }}
+            </div>
+        </div>
+        <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tab-list-container nds-scroll-more">
+                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                            aria-controls="panel-{{ _demo_id }}" id="tab-{{ _demo_id }}">
+                            <span class="nds-tab-label">HTML</span>
+                        </button>
+                        {%- if include.js %}
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                            aria-controls="panel-{{ _demo_id }}-js" id="tab-{{ _demo_id }}-js">
+                            <span class="nds-tab-label">JS API</span>
+                        </button>
+                        {%- endif %}
+                    </nav>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="nds-tab-content">
+                    <div class="nds-tab-panel code-example{% if include.long %} nds-expandable{% endif %}" role="tabpanel" id="panel-{{ _demo_id }}"
+                        aria-labelledby="tab-{{ _demo_id }}">
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        {%- if include.long %}
+                        <div class="nds-expandable-content">
+                        {%- endif %}
+                        <code class="lang-html code">
+{{ include.html | strip | escape }}
+                        </code>
+                        {%- if include.long %}
+                        </div>
+                        {%- endif %}
+                    </div>
+                    {%- if include.js %}
+                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-{{ _demo_id }}-js"
+                        aria-labelledby="tab-{{ _demo_id }}-js" hidden>
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code class="lang-javascript code">{{ include.js | strip | escape }}</code>
+                    </div>
+                    {%- endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
