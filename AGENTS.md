@@ -40,9 +40,11 @@ output in `docs-assets/events/<folder>/` (whose `.min.scss` is the Jekyll build
 entry). Registered in `_data/themes.yml` (drives the topbar switcher),
 `_data/content/events.yml` and `_data/sidemenu/sidemenu.yml`.
 
-**Regenerate the download zip after changing a pack's JS, SCSS or images** —
-`python scripts/mkevent.py <event>`, then build again to publish it. Nothing else
-rebuilds it, so it goes stale silently. It verifies what actually breaks a pack:
+**Rebuild the pack after changing its JS, SCSS or images** — `bundle exec jekyll build`,
+then `python scripts/mkevent.py <event>`, then build again to publish. `mkevent.py` owns the
+pack end to end: it minifies the JS, inlines the compiled CSS, and writes the zip.
+`js_processor.rb` skips `_js/events/` on purpose (building packs there blanked their inlined
+CSS). Nothing else rebuilds a pack, so it goes stale silently. It verifies what actually breaks a pack:
 every CSS `url()` and JS asset default resolves, and each file's magic bytes match
 its extension (this caught a PNG named `.svg` and another named `.jpg`).
 

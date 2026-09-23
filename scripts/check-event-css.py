@@ -9,17 +9,15 @@ scripts/mkevent.py prepends to the minified JS. That removes a second blocking
 round trip before first paint. It also means the CSS exists twice: as the .min.css
 file, and inside the .min.js.
 
-The two drift whenever the chain runs out of order — js_processor.rb rewrites the
-JS with an empty slot, and mkevent.py must run AFTER Jekyll has recompiled the
-SCSS or it inlines the previous build. Neither mistake raises anything: the stale
-inline <style> simply wins over the fresh file, and the page renders old CSS.
-The order that works:
+mkevent.py builds a pack end to end (minify, inline, zip); js_processor.rb skips
+_js/events/. The two copies still drift if mkevent.py runs BEFORE Jekyll has
+recompiled the SCSS: it inlines the previous build, and the stale inline <style>
+simply wins over the fresh file, so the page renders old CSS. The order that works:
 
-    ruby _plugins/js_processor.rb   &&  bundle exec jekyll build  &&  python scripts/mkevent.py
+    bundle exec jekyll build  &&  python scripts/mkevent.py  &&  bundle exec jekyll build
 
 An empty slot fails too. The pack still renders — it falls back to fetching the
-file — but the slot is empty only because js_processor.rb ran last, and a silent
-fallback to the slower path is the thing this check exists to notice.
+file — but a silent fallback to the slower path is the thing this check exists to notice.
 """
 import os
 import re
@@ -53,13 +51,12 @@ def main():
         js = open(js_path, encoding='utf8').read()
         m = ASSIGN.search(js)
         if not m:
-            # The pack still works — it falls back to fetching the file — but the
-            # slot is empty only because js_processor.rb ran after mkevent.py, and
+            # The pack still works — it falls back to fetching the file — but
             # nothing else would ever say so.
             bad += 1
             print(f"FAIL  {ev['theme']}: the CSS slot is empty, so the pack will fetch its "
                   f"stylesheet instead of inlining it (a second blocking round trip).")
-            print(f"      rebuild:  js_processor.rb, then jekyll build, then mkevent.py")
+            print(f"      rebuild:  jekyll build, then mkevent.py {ev['theme']}, then jekyll build")
             continue
 
         with open(css_path, encoding='utf8') as f:
@@ -70,7 +67,7 @@ def main():
 
         bad += 1
         print(f"FAIL  {ev['theme']}: inlined CSS is stale or hand-edited.")
-        print(f"      rebuild:  js_processor.rb, then jekyll build, then mkevent.py")
+        print(f"      rebuild:  jekyll build, then mkevent.py {ev['theme']}, then jekyll build")
         if '--diff' in sys.argv:
             got, want = m.group(1), expected
             i = next((k for k in range(min(len(got), len(want))) if got[k] != want[k]),

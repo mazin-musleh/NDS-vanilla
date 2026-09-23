@@ -39,21 +39,19 @@ class JSProcessor
     @output_dir = 'assets/js'
     # Per-file output dir overrides (keyed by source basename). docs-assets/ holds
     # everything only the documentation site loads, so a consumer copying assets/
-    # into their project never hosts it — the showcase demo layer and the event
-    # brands (each in its own self-contained folder).
+    # into their project never hosts it — here, the showcase demo layer.
     #
     # Only self-booting files may be overridden. nds-loader.js derives the asset
     # dir from nds-main.min.js's own src and fetches every injected bundle as a
     # SIBLING, so anything in @bundles must stay in @output_dir or it 404s at
-    # runtime. Safe here: showcase and the event packs are plain <script> tags
-    # (showcase from the layouts, event packs injected by nds-theme.js from the
-    # full path in _data/themes.yml), none of them loader-managed.
+    # runtime. Safe here: showcase is a plain <script> tag from the layouts,
+    # not loader-managed.
     @output_overrides = {
       'nds-showcase.js' => 'docs-assets/js',
-      'nds-theme-foundation-day.js' => 'docs-assets/events/foundation_day',
-      'nds-theme-hajj.js' => 'docs-assets/events/Hajj',
-      'nds-theme-national-day-96.js' => 'docs-assets/events/national_day_96',
     }
+    # Event packs (_js/events/) are NOT built here: scripts/mkevent.py owns a pack end to end
+    # (minify, inline its CSS, zip). Building them here too blanked the inlined CSS on every run.
+    @skip_dirs = [File.join(@source_dir, 'events')]
     @bundles = {
       # Critical bundle — loaded via <script defer>. Carries core, the loader,
       # shared utils (backdrop/feedback — mainnav reads NDS.Backdrop.isActive()
@@ -230,10 +228,10 @@ class JSProcessor
     m.nil? || m > File.mtime(out)
   end
 
-  # Basename -> real path. Sources may sit in a subfolder (_js/events/), so a
-  # name is resolved against a recursive scan, never assumed to be _js/<name>.
+  # Basename -> real path. Sources may sit in a subfolder, so a name is resolved
+  # against a recursive scan, never assumed to be _js/<name>.
   def source_path(basename)
-    @source_index ||= Dir.glob(File.join(@source_dir, '**', '*.js'))
+    @source_index ||= source_files_on_disk
                          .each_with_object({}) { |p, h| h[File.basename(p)] ||= p }
     @source_index[basename]
   end
@@ -252,6 +250,12 @@ class JSProcessor
   # Compress JavaScript with Terser. When site.debug is on the bundle is left
   # unminified so DevTools profiles and stack traces map to real per-statement
   # lines and every function keeps its name — accurate attribution over size.
+  # Every source this processor builds: _js/ recursively, minus @skip_dirs.
+  def source_files_on_disk
+    Dir.glob(File.join(@source_dir, '**', '*.js'))
+       .reject { |p| @skip_dirs.any? { |d| p.start_with?(d + '/') } }
+  end
+
   def compress_with_terser(js_content)
     return js_content if @config['debug']
 
@@ -290,8 +294,7 @@ class JSProcessor
     # Ensure output directory exists
     FileUtils.mkdir_p(@output_dir)
 
-    # Get all JS files from source directory (recursive — event packs live in _js/events/)
-    js_files = Dir.glob(File.join(@source_dir, '**', '*.js'))
+    js_files = source_files_on_disk
 
     # Fail fast if location (build) contradicts classification (registry).
     assert_no_critical_in_injected!
