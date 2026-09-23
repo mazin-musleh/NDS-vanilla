@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "04/09/2026 - 05:30 AM"
+last_edit: "23/09/2026 - 08:24 PM"
 ---
 
 <!-- Basic Grid -->
@@ -459,7 +459,7 @@ last_edit: "04/09/2026 - 05:30 AM"
                     </div>
                     <div class="nds-definition-item">
                         <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-3-column"></i>
+                            <i class="hgi hgi-stroke hgi-layout-three-column"></i>
                             <span class="nds-label">Custom Track Layouts</span>
                         </span>
                         <p class="nds-item-desc">Define explicit <code class="nds-inline-code lang-html">grid-template-columns</code> per breakpoint with <code class="nds-inline-code lang-html">--max-track</code>, <code class="nds-inline-code lang-html">--mid-track</code>, and <code class="nds-inline-code lang-html">--min-track</code> for asymmetric layouts.</p>

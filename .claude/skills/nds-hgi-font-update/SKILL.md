@@ -1,92 +1,53 @@
 ---
 name: nds-hgi-font-update
 description: Update the local HGI stroke-rounded icon font and CSS from the HugeIcons CDN. Downloads the latest font file and rebuilds the icon class SCSS. Use when the CDN publishes new icons or fixes glyphs.
-argument-hint: "[optional: CDN URL override]"
+argument-hint: "(no arguments)"
 ---
 
 # Update HGI Icon Font from CDN
 
 ## Context
 
-The HGI icon font is served locally (not from CDN) to avoid CORS issues.
-It is used **only in content markup** via `<i class="hgi hgi-stroke hgi-*">` — component/chrome icons use the inline `mask-image` tier (`nds-icon nds-hgi-*`) and are unaffected by this skill.
+The HGI icon font is served locally (not from the CDN) to avoid CORS issues. It is used **only in content markup** via `<i class="hgi hgi-stroke hgi-*">`. Component and chrome icons use the inline `mask-image` tier (`nds-icon nds-hgi-*`) and are unaffected.
+
+**Source:** `https://use.hugeicons.com/font/icons.css`, the icon font hugeicons.com documents. The older `cdn.hugeicons.com/font/hgi-stroke-rounded.css` froze on 2024-07-24; never go back to it. The docs (`components/icons.md`) send readers to hugeicons.com to pick icons, so the font must match that site, redrawn icons included.
 
 ### Files touched
 
 | File | Role |
 |------|------|
-| `_sass/_hgiRoundedStroke.scss` | gate reveal + `.hgi-stroke` base + all `.hgi-stroke.hgi-*` icon rules (NO `@font-face` — that lives in `_sass/_fonts.scss`, crit) |
-| `assets/css/hgi-rounded-stroke-min.scss` | Jekyll wrapper (unchanged) |
-| `assets/fonts/hgi-stroke-rounded.woff2` | Binary font file |
+| `_sass/_hgiRoundedStroke.scss` | gate reveal + `.hgi-stroke` base + every `.hgi-stroke.hgi-*` rule + the deprecated-name alias block. NO `@font-face`: that lives in `_sass/_fonts.scss` (crit) |
+| `assets/fonts/hgi-stroke-rounded.woff2` | the font file |
+| `scripts/hgi-font-update.py` | does the work; holds the `ALIASES` map |
+| `_data/hgi.yml` | the version the docs state (CDN build date, icon count). The font itself only says "Version 1.0"; the build stamp is the real version |
 
-## CDN Source
-
-Default: `https://cdn.hugeicons.com/font/hgi-stroke-rounded.css`
-Override with `$ARGUMENTS` if a different URL is provided.
-
-## Step 1: Fetch CDN CSS
+## Step 1: Compare
 
 ```bash
-curl -sL "<CDN_URL>" -o <TEMP>/hgi-cdn.css
+python scripts/hgi-font-update.py
 ```
 
-## Step 2: Compare Old vs New
+Reports local vs CDN counts, added names, removed names, and any removed name with no alias. Nothing changed: report "already up to date" and stop.
 
-Parse the current local `_sass/_hgiRoundedStroke.scss` and the fetched CDN CSS to build two maps: `icon-name → unicode`. Report:
+## Step 2: Handle removed names
 
-- Total icons (old / new)
-- Changed unicode values
-- Added icons
-- Removed icons
+A name removed upstream breaks existing markup. For each one the script flags `NO ALIAS`:
 
-If **nothing changed**, stop here and report "already up to date".
+1. Find its new name (HugeIcons renames rather than deletes; the 2026-09 set spelled digits out: `layout-3-column` → `layout-three-column`).
+2. **Confirm by the glyph, not the name:** render the old and new glyphs side by side with fontTools + PIL and look.
+3. Add it to `ALIASES` in the script and to the HGI row in `DEPRECATIONS.md`.
 
-## Step 3: Rebuild `_sass/_hgiRoundedStroke.scss`
+## Step 3: Apply
 
-Parse icon rules from CDN CSS:
-
-```ruby
-matches = cdn_content.scan(/(\.hgi-stroke\.hgi-[a-z0-9-]+:before)\{content:"([^"]+)"\}/)
+```bash
+python scripts/hgi-font-update.py --apply
 ```
 
-**IMPORTANT**: Do NOT write any `@font-face` into this file — not the CDN's (it points to CDN URLs) and not a local one. The face lives in `_sass/_fonts.scss` (crit) on purpose: a `@font-face` landing in this deferred sheet after the reveal rebuilds the font cache and relayouts every text box. Only the woff2 file gets replaced (Step 4). Keep the local gate-reveal comment + rule and the `.hgi-stroke` base styles; the header must be:
+It rewrites the SCSS (keeping our header and family name `hgi-stroke-rounded`, since the loader and `_fonts.scss` key on it) and replaces the woff2. It refuses while any removed name lacks an alias.
 
-```scss
-html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
+## Step 4: Verify
 
-.hgi-stroke {
-  font-family: "hgi-stroke-rounded" !important;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  position: relative;
-  display: inline-block;
-  font-variant: normal;
-  line-height: normal;
-  text-rendering: auto;
-}
-```
-
-Then append all icon rules in formatted style:
-
-```scss
-.hgi-stroke.hgi-icon-name:before {
-  content: "X";
-}
-```
-
-## Step 4: Download New Font File
-
-Extract the woff2 URL from the CDN CSS `@font-face` block (typically `hgi-stroke-rounded.woff2?t=TIMESTAMP`). Download from:
-
-```
-https://cdn.hugeicons.com/font/hgi-stroke-rounded.woff2?t=<TIMESTAMP>
-```
-
-Replace `assets/fonts/hgi-stroke-rounded.woff2`.
-
-## Step 5: Verify
-
-- `bundle exec jekyll serve` — builds without errors
-- Content pages with `<i class="hgi hgi-stroke hgi-*">` render icons correctly
-- No FOUT (icons hidden briefly then appear) — `nds-fontLoading.js` handles this
+- `grep -rn "hgi-stroke hgi-<removed-name>"` over the repo; move this repo's own markup to the new names.
+- `bundle exec jekyll build`, then look at a page of content icons.
+- **The font's size moves the icon reveal:** measure an icon page before and after with `nds-perf` (`measure-lcp.mjs` prints `icons` per run). The 2026-09-23 update, 659 KB → 965 KB, moved icons from ~6.5 s to ~8.0 s on slow-4G with no change to LCP.
+- `components/icons.md` states the build and icon count from `_data/hgi.yml`, so it updates itself. The SCSS header line carries the same stamp.

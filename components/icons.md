@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.11.0"
-last_edit: "11/09/2026 - 02:27 AM"
+updated: "1.12.x"
+last_edit: "23/09/2026 - 08:37 PM"
 ---
 
 <!-- Content icons -->
@@ -21,24 +21,9 @@ last_edit: "11/09/2026 - 02:27 AM"
                 </a>
             </div>
             <h2 class="nds-section-title">Content Icons</h2>
-            <p class="nds-section-description">For icons you write into content. The Stroke Rounded font ships with the system, so any glyph it carries works by class name: <code class="nds-inline-code lang-html">hgi hgi-stroke</code> plus <code class="nds-inline-code lang-html">hgi-{name}</code>, where the name is the icon's name on <a class="nds-color" href="https://hugeicons.com/" target="_blank">hugeicons.com</a>.</p>
+            <p class="nds-section-description">For icons in your content. Add <code class="nds-inline-code lang-html">hgi hgi-stroke hgi-{name}</code>, where <code class="nds-inline-code lang-html">{name}</code> is the icon's name on <a class="nds-color" href="https://hugeicons.com/icons/stroke-rounded" target="_blank">hugeicons.com</a>. The font is build {{ site.data.hgi.build }}, with {{ site.data.hgi.icons }} icons.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
-                    <span class="nds-feedback nds-alert-icon">
-                        <span class="nds-feedback-icon">
-                            <i class="nds-icon" aria-hidden="true"></i>
-                        </span>
-                    </span>
-                    <div class="nds-alert-content">
-                        <div class="nds-alert-text">
-                            <span class="nds-alert-title">The font trails the catalog</span>
-                            <p class="nds-alert-description">The font carries 4,126 glyphs while <a class="nds-color" href="https://hugeicons.com/icons/stroke-rounded" target="_blank">hugeicons.com</a> lists close to 6,000, so not every icon on the site has a class. If <code class="nds-inline-code lang-html">hgi-{name}</code> renders nothing, pick another icon or use its SVG directly.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="nds-block">
                 <div class="nds-showcase">
                     <div class="nds-demo-card">
