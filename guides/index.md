@@ -55,7 +55,7 @@ sidemenu_mode: false
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">NDS IQ</span>
-                            <p class="nds-card-description">The instruction system AI agents follow to build with NDS: how it is engineered, tested per revision, versioned, and kept current in a project.</p>
+                            <p class="nds-card-description">The instruction system AI agents follow to build with NDS: how it is made, tested, versioned, and updated.</p>
                         </div>
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-blue nds-sm"><span class="nds-label">System</span></span>
