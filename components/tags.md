@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/09/2026 - 07:47 PM"
+last_edit: "23/09/2026 - 07:57 PM"
 ---
 
 <!-- Variants -->
@@ -460,7 +460,7 @@ last_edit: "23/09/2026 - 07:47 PM"
                         <tr><td><code class="nds-inline-code lang-html">--tag-icon</code></td><td><code class="nds-inline-code lang-html">--tag-icon-neutral</code></td><td>Icon and status dot color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-height</code></td><td><code class="nds-inline-code lang-html">32px</code></td><td>Tag height. An icon-only tag uses it as its width too.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-fs</code></td><td><code class="nds-inline-code lang-html">--typo-text-md-FS</code></td><td>Font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tag-padding-inline</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Horizontal padding</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-padding-inline</code></td><td><code class="nds-inline-code lang-html">--spacing-lg</code></td><td>Horizontal padding</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-dot-size</code></td><td><code class="nds-inline-code lang-html">10px</code></td><td>Size of the status dot.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tag-label-max</code></td><td><code class="nds-inline-code lang-html">160px</code></td><td>Widest the label gets before it ends with an ellipsis. A tag never grows wider than its container.</td></tr>
                     </tbody>
