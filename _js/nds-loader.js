@@ -50,8 +50,8 @@
  *                          each multi-page track is pinned to scrollLeft 0 after the
  *                          stamp (WebKit lands a newly overflowing RTL track at its end)
  * Gotchas:
- *   - Three bundles. nds-main.min.js is a defer script and GATES the page reveal; the
- *     delegated and extras bundles are injected after the reveal and never gate anything.
+ *   - nds-main.min.js is a defer script and GATES the page reveal; every other bundle
+ *     is injected after the reveal or pulled on demand, and never gates anything.
  *   - A component whose bundle has not arrived still answers: the loader installs a lazy
  *     stub, so NDS.X.method() triggers the load instead of throwing.
  *   - After injecting content, reach for NDS.Init.refresh(container) — one call, and
@@ -602,8 +602,8 @@
             // so this one is `lazy`: present, armed, but not fetched until a
             // press. eager() opts a returning visitor back in — their saved
             // modes have to apply at load, not after they press something.
-            // Dropping the bundle file is still a clean opt-out: loadBundle
-            // resolves on error and every call here is optional-chained.
+            // Dropping the bundle file is still a safe opt-out: loadBundle
+            // resolves on error, and the stubbed call only warns.
             name: 'Accessibility',
             selector: '[data-accessibility-toggle]',
             init: () => NDS.Accessibility?.init?.(),
@@ -768,8 +768,8 @@
     // returns the in-flight/settled promise on repeat calls, so the auto-load
     // (when a present component needs it, see below) and the public
     // NDS.loadBundle() (for content injected after load) share one fetch.
-    // Resolves on load OR error so callers never hang; a missing/blocked bundle
-    // leaves inits as ?. no-ops. Skips injection when a <script> for the bundle
+    // Resolves on load OR error so callers never hang; after a missing/blocked
+    // bundle, calls reach the lazy stub, which re-fetches once, then warns. Skips injection when a <script> for the bundle
     // already exists — a consumer under a no-injection CSP can self-host it with
     // their own nonce/integrity and the loader still drives init. Propagates
     // main's nonce so it passes nonce-only policies without 'strict-dynamic'.
@@ -870,7 +870,9 @@
     // read would force a recalc.
     function presplitPaged() {
         document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])').forEach(c => {
-            const n = parseInt(c.style.getPropertyValue('--per-page'), 10) || 6;
+            // readPerPage's rule: a negative value would index items[-1] and throw before the reveal.
+            const v = parseInt(c.style.getPropertyValue('--per-page'), 10);
+            const n = v > 0 ? v : 6;
             // Pagination's _pagedItems minus its [data-filtered] skip: a tbody
             // counts its own rows only (sub-rows ride their parent). Nothing
             // carries data-filtered here — only nds-filter.js writes it, and it
@@ -941,14 +943,16 @@
                     const knob = (prop, attr) => parseInt(s.style.getPropertyValue(prop)) || parseInt(s.getAttribute(attr)) || 0;
                     const per = knob(`--${tier}-slides`, 'slides-' + tier) || 1;
                     const peek = knob('--peek', 'peek');
-                    const pages = Math.ceil(s.querySelectorAll('.nds-swiper-slide').length / per);
+                    // Own slides only, as nds-swiper.js counts them: a swiper nested in a slide must not add pages.
+                    const w = s.querySelector('.nds-swiper-wrapper');
+                    const pages = Math.ceil((w ? w.querySelectorAll(':scope > .nds-swiper-slide').length : 0) / per);
                     s.style.setProperty('--slides', per);
                     if (peek && s.hasAttribute('peek')) s.style.setProperty('--peek', `${peek}px`);
                     s.toggleAttribute('data-swiper-peek', peek > 0 && pages > 1);
                     // One page: init keeps the nav hidden, so its reserve (_swiper.scss) goes now, not then.
                     s.toggleAttribute('data-swiper-single', pages <= 1);
                     s.setAttribute('data-swiper-preset', '');
-                    if (pages > 1 && NDS.isRTL) tracks.push(s.querySelector('.nds-swiper-wrapper'));
+                    if (pages > 1 && NDS.isRTL) tracks.push(w);
                 });
                 return tracks;
             };
@@ -1030,8 +1034,8 @@
 
                 // Injected-bundle components init in their own pass once that
                 // bundle arrives, so a (low-priority) download never delays the
-                // main idle drain above. loadBundle resolves on load OR error
-                // (missing/blocked bundle → inits no-op via ?.).
+                // main idle drain above. loadBundle resolves on load OR error; on
+                // error each init hits the lazy stub, which re-fetches once, then warns.
                 for (const name in injectedGroups) {
                     const group = injectedGroups[name];
                     loadBundle(name).then(() => drainList(group));
@@ -1220,9 +1224,8 @@
     //   - no component here re-sorts, re-pages or re-filters a result set the server
     //     produced. The walk only wires up markup and recounts what is in the DOM.
     //
-    // Registry order is init order, and it is load-bearing here too: Tables settles
-    // row order (re-applying an active sort) before Selection counts them, and both
-    // land before Filter re-resolves its item set.
+    // Registry order is init order, and it is load-bearing here too: Selection
+    // recounts before Filter re-resolves its item set.
     //
     // A stubbed namespace is SKIPPED, never touched: reading a property off the lazy
     // stub would force its bundle to load, and a bundle that never arrived has
