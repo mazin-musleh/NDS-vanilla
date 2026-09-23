@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "23/09/2026 - 05:35 PM"
+last_edit: "23/09/2026 - 06:44 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -211,7 +211,7 @@ Inventory the project and write NDS-PLAN.md for my review.
                     </div>
                 </div>
 
-                <h3 id="resuming">Resume Work</h3>
+                <h3 id="resuming">Next Session</h3>
                 <p>In a new session, paste:</p>
                 <div class="nds-code">
                     <div class="nds-code-action">

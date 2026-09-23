@@ -1,318 +1,136 @@
-# NDS Content Terminology & Editorial Style
+# NDS Editorial Guide
 
-When writing or refining NDS documentation, use the terminology, framing, and writing style established across the NDS documentation. The goal is technical clarity and consistency, not marketing copy.
+Every word NDS ships is read by non-native speakers and by weak AI models. Write it plain.
 
-## 1. General Writing Style
+This file is the one source for how NDS prose reads: sentences, words, claims, and tone. Read it before you write or rewrite any user-facing text: doc pages (`components/`, `layout/`, `utilities/`, `ui-shell/`, `core/`), `guides/`, the home page, `README.md`, alerts, demo and example copy, `CHANGELOG.md`, and `_includes/NDS-IQ.md`.
 
-Write as a technical product/documentation team would write for experienced developers.
+## 1. Sentences
 
-- Be clear, precise, and concise.
-- Prefer direct statements over promotional language.
-- Explain what something does, how it works, and why it matters.
-- Avoid exaggerated claims such as “powerful,” “seamless,” “effortless,” “revolutionary,” or “cutting-edge.”
-- Avoid unnecessary adjectives and filler.
-- Do not make technical concepts sound simpler than they are.
-- Do not add marketing language merely to make a section sound more impressive.
-- Preserve technical meaning when refining existing content.
-- Prefer short, information-dense sentences over long explanatory paragraphs.
-- Use consistent terminology throughout the documentation.
+- **One instruction per sentence.** Split long sentences. Never compress by dropping articles.
+- **Active voice. Name who acts.** "The agent records gaps", not "gaps are recorded". In a guide, keep "you" (the developer) and "the agent" distinct in every sentence.
+- **Imperative for steps.** "Paste this prompt", not "the prompt should be pasted".
+- **Under ~25 words.**
+- **Same word for the same thing, every time.** No synonyms for variety.
+- **No `-ing` forms as nouns or adjectives.** "Before you start", not "Before starting". "Resume a session", not "Resuming".
+- **Headings are nouns.** Name the content: "Legacy Library Removal", "Findings Report", "Browser Verification". Not verb phrases, not sales lines, and no `-ing` form.
+- **Plain words over insider words.** Explain a term the first time, or replace it: "when the agent's context is summarized", not "a compacted context".
+- **No em dashes (—) in sentences.** Use a colon, a comma, a period, or two sentences. Em dashes stay in data values (`2023 — Present`, `College — University`), in the CHANGELOG `- Name — sentence.` bullet format, and in `_includes/NDS-IQ.md`, which agents read.
+- **American spelling:** "organized", "behavior", "color".
 
-The writing should feel like **technical documentation for a production system**, not product advertising.
+## 2. Say It Once
 
-## 2. Do Not Repeat Yourself (DRY)
+- A fact shown in a table, code block, list, or alert is not repeated in the prose around it.
+- When two places need one fact, keep it where the reader acts on it. Link to it from the other place.
+- Do not restate a heading in the first sentence under it. Do not summarize a list right before or after it.
+- A rule that lives in NDS IQ is not copied into a guide. The guide says what the developer does; NDS IQ says how the agent does it.
 
-State each fact once, in the place the reader will look for it.
+Every copy of a fact can drift out of sync, and the reader pays for it twice.
 
-- A fact already shown in a table, code block, numbered step, or alert is not restated in the prose around it. The prose adds what those cannot say, or it says nothing.
-- When two sections need the same fact, keep it in the section where the reader acts on it and reference it by name from the other.
-- Do not summarize a list immediately before or after it.
-- Do not restate a heading in the first sentence under it.
-- A rule that lives in NDS IQ is not copied into a guide. The guide states what the developer does; NDS IQ states how the agent does it.
+## 3. Facts Before Words
 
-Repetition is not emphasis. Every duplicate is a second copy that can drift out of sync, and the reader pays for the same fact twice.
+- **Check every claim against the source before you keep or reword it:** counts, sizes, file names, API names, and what the agent does. A rewrite that polishes a wrong fact spreads it.
+- **Numbers come from a count or a measurement,** never from memory. Recount before you publish ("16 templates", "~139 KB").
+- **A guide describes what the rules or the code actually do.** Never promise a step the source does not take.
+- **Use the claim ladder exactly:**
 
-## 3. NDS Terminology
+| Word | Means |
+|---|---|
+| designed to | the intent; not yet proven |
+| supported | it works, and bugs in it get fixed |
+| validated | checked against a named baseline (Claude Sonnet for NDS IQ) |
+| tested | a named test ran and passed |
+| recommended | the default choice |
 
-Use these terms consistently:
+Do not swap these words. "Works with any release" is a claim; "is written to work with any release" is the intent.
 
-- **NDS** — the National Design System and the implementation being documented.
-- **NDS Vanilla Template** — the vanilla HTML, CSS, and JavaScript implementation.
-- **NDS IQ (Integration Quality)** — the versioned instruction system used by AI coding agents to build with NDS.
-- **AI coding agent** or **AI agent** — the preferred term for an AI tool that can inspect files, edit code, run commands, and verify results.
-- **Get Started** — the guide covering installation, setup, workflow, and upgrades.
-- **template** — the NDS implementation/reference package.
-- **runtime** — the CSS, JavaScript, fonts, icons, and other assets required by the implementation.
-- **reference source** — canonical NDS source material used by the agent.
-- **canonical markup** — markup taken from the authoritative NDS source rather than invented by the agent.
-- **project-specific context** — information supplied by the developer about the application, architecture, constraints, integrations, or existing implementation.
-- **workflow** — the defined sequence of work, such as inventory, plan, build, and verify.
-- **verification** — checking the implemented result in the browser and against the required behavior and visual result.
-- **validated baseline** — the model capability level against which NDS IQ has been tested and validated.
+## 4. No Sales Words
 
-Do not introduce alternative terms when an established term already exists.
+Describe what a thing does, not how good it is. The reader is already on the site.
 
-For example:
+- Never: powerful, seamless, effortless, revolutionary, cutting-edge, sleek, beautiful.
+- No benefit lists and no boasts ("so it never has to guess").
+- No claim a page cannot prove ("compliance-ready").
+- A score is a number, not a percentage: "a PageSpeed score of 100".
 
-- Prefer **“AI coding agent”** over “AI assistant” when referring to an agent that performs development work.
-- Prefer **“instruction system”** over “AI training,” “AI knowledge,” or “prompt system” when describing NDS IQ.
-- Prefer **“validated baseline”** over “minimum model” when describing model support.
-- Prefer **“canonical markup”** over “correct markup” when referring to markup sourced from NDS.
-- Prefer **“reference implementation”** over “example implementation” when the implementation is intended to serve as an authoritative reference.
+| Avoid | Write |
+|---|---|
+| Sleek Animations | Animations |
+| Compliance Ready | DGA Page Templates |
+| Build beautiful websites effortlessly | Build interfaces with the NDS components, with no framework |
+| …and stay current with upgrades | …and upgrade to new releases |
+
+## 5. Terms
+
+Use these terms, and only these:
+
+| Term | Meaning |
+|---|---|
+| **NDS** | the National Design System and this implementation |
+| **NDS Vanilla Template** | the plain HTML, CSS, and JavaScript package |
+| **NDS IQ (Integration Quality)** | the versioned instruction system AI coding agents use to build with NDS |
+| **AI coding agent** (or **AI agent**) | a tool that reads files, edits code, runs commands, and checks results. Not "AI assistant" |
+| **template** | the NDS reference package in `.nds/` |
+| **runtime** | the CSS, JavaScript, fonts, icons, and other assets a page loads |
+| **canonical markup** | markup copied from the NDS source, not invented. Not "correct markup" |
+| **reference implementation** | an implementation meant as the authority. Not "example implementation" |
+| **project-specific context** | what the developer supplies: stack, routes, integrations, constraints |
+| **workflow** | inventory → plan → build → verify |
+| **verification** | checking the result in a browser against the required behavior and look |
+| **validated baseline** | the model tier NDS IQ is validated against. Not "minimum model" |
+| **ask** / **request** / **task** | what the developer tells the agent. "Command" only for a shell command |
 
 ### Never name the brand color
 
-The palette is themeable. A consumer sets `--brand-primary` and the whole ramp moves, so
-any prose that names the shipped hue is wrong on their site. Describe the ROLE, not the color.
-
-- Prefer **"deep primary"** over "dark green".
-- Prefer **"brand primary"** or **"the primary brand color"** over "brand green" or "Saudi flag green".
-- Prefer **"a lighter primary tint"** over "a lighter green".
-- Prefer **"the brand variant"** over "the green variant".
-
-This covers every surface that renders the primary family: buttons, chips, footers, sections,
-heroes, charts, ratings, swiper bullets. It applies to prose, table cells, and demo copy alike.
-
-Three things stay literal, because they are names rather than descriptions: class names
-(`nds-green`, `nds-gradient-green`), token names (`--colors-green-600`), and the documented
-DEFAULT VALUE of a theme seed (`--brand-primary` ships as DGA green — that is the value a
-consumer replaces, so naming it is the point). Status hues (success green, error red) are a
-fixed family and keep their color names.
-
-## 4. How to Describe NDS IQ
-
-Do not describe NDS IQ as something that “teaches” or “trains” an AI model.
-
-Use language such as:
-
-> NDS IQ is a versioned instruction system that gives AI agents a consistent way to build with NDS.
-
-When discussing model compatibility, use this framing:
-
-> NDS IQ is built to produce consistent results across AI models rather than relying on the capabilities of the most advanced model available.
-
-> Claude Sonnet is the validated baseline for NDS IQ.
-
-> More capable models can build on the same baseline with greater accuracy and reasoning.
-
-The important distinction is:
-
-**The model provides the capability. NDS IQ provides the rules and workflow for using that capability with NDS.**
-
-## 5. How to Describe AI-Assisted Development
-
-Keep the developer and agent responsibilities distinct.
-
-The developer provides:
-
-- the desired outcome
-- project-specific context
-- content and data
-- constraints
-- existing application behavior
-- decisions that require human approval
-
-NDS IQ provides:
-
-- implementation rules
-- canonical sources
-- workflow
-- verification requirements
-- upgrade behavior
-- constraints on how NDS should be used
-
-Prefer this framing:
-
-> The developer describes what needs to change. NDS IQ defines how the agent carries out that work within NDS.
-
-Avoid implying that the developer needs to know the internal NDS implementation before asking the agent to perform a task.
-
-## 6. Terminology for Prompts and Requests
-
-When documenting everyday agent usage, call them **asks**, **requests**, or **tasks**, not “commands” unless they are actual shell commands.
-
-An everyday ask should describe:
-
-- what needs to be built or changed
-- relevant project context
-- content or data
-- constraints
-- existing integrations that must remain intact
-
-It normally does **not** need to specify:
-
-- which NDS components to use
-- the final HTML structure
-- NDS implementation details
-- how verification should be performed
-
-NDS IQ determines those implementation details.
-
-## 7. Technical Claims
-
-Do not strengthen a claim simply to make the documentation sound better.
-
-For example:
-
-Avoid:
-
-> NDS guarantees perfect results across every AI model.
-
-Prefer:
-
-> NDS IQ provides a validated baseline for consistent AI-assisted development across supported models.
-
-Avoid:
-
-> NDS works flawlessly with every AI assistant.
-
-Prefer:
-
-> NDS IQ is designed to be agent-agnostic and is validated against its documented baseline.
-
-Always distinguish between:
-
-- **designed to**
-- **supported**
-- **validated**
-- **tested**
-- **recommended**
-
-Do not use these terms interchangeably.
-
-## 8. Refining Existing Content
-
-When rewriting existing NDS content:
-
-1. Preserve the original technical meaning.
-2. Preserve important facts, constraints, examples, and terminology.
-3. Remove repetition and filler.
-4. Replace promotional wording with precise technical wording.
-5. Simplify sentences without removing technical information.
-6. Keep the same approximate content depth unless explicitly asked to shorten it.
-7. Do not introduce new claims that are not supported by the source.
-8. Do not replace established NDS terminology with synonyms merely for stylistic variation.
-
-The goal is **better technical writing, not different technical content**.
-
-## 9. Preferred Before / After Patterns
-
-### Marketing → Technical
-
-Avoid:
-
-> A powerful and seamless solution for modern government websites.
-
-Prefer:
-
-> A production-ready implementation for building accessible, consistent government websites.
-
-### Teaching → Instruction System
-
-Avoid:
-
-> NDS IQ teaches AI agents how to use NDS.
-
-Prefer:
-
-> NDS IQ provides the instructions and workflow AI agents use to build with NDS.
-
-### Absolute → Validated
-
-Avoid:
-
-> NDS works with any AI model.
-
-Prefer:
-
-> NDS IQ is designed to work across AI models, with a documented validated baseline.
-
-### Promotional → Descriptive
-
-Avoid:
-
-> Build beautiful websites effortlessly.
-
-Prefer:
-
-> Build interfaces using the NDS component library without introducing a frontend framework.
-
-### Vague → Specific
-
-Avoid:
-
-> Add information about your project.
-
-Prefer:
-
-> Provide project-specific context such as the technology stack, view or route locations, existing integrations, and constraints the agent must respect.
-
-## 10. Tone by Documentation Type
-
-### Homepage
-
-Concise and informative.
-
-Explain:
-
-- what NDS is
-- what the template provides
-- who it is for
-- how it integrates with AI agents
-
-Avoid turning the homepage into a sales page.
-
-### README
-
-Technical and practical.
-
-Prioritize:
-
-- what the repository contains
-- how it is structured
-- how to run it
-- development requirements
-- important architectural decisions
-- links to deeper documentation
-
-### Get Started
-
-Procedural and explicit.
-
-Tell the developer:
-
-- what to do
-- what the agent does
-- what requires approval
-- what files are created or changed
-- how verification works
-- how upgrades work
-
-### NDS IQ / Integration Quality
-
-System-oriented and precise.
-
-Explain:
-
-- how the instruction system works
-- where its rules come from
-- how they are validated
-- how they are versioned
-- how they are upgraded
-- what assumptions they make about the agent
-
-## 11. Final Editorial Test
-
-Before returning refined NDS content, ask:
-
-- Does this sound like technical documentation rather than marketing copy?
-- Is every technical claim supported?
-- Are NDS terms used consistently?
-- Did I preserve the original meaning?
-- Did I remove unnecessary filler?
-- Did I state each fact once, rather than restating what a table, code block, or list already shows?
-- Did I distinguish the AI model from NDS IQ?
-- Did I distinguish developer responsibilities from agent responsibilities?
-- Did I use “validated,” “tested,” and “supported” accurately?
-- Could an experienced developer understand the statement without additional interpretation?
-
-If the answer is yes, the wording is aligned with the NDS documentation style.
+The palette is themeable. A consumer sets `--brand-primary` and the whole ramp moves, so prose that names the shipped hue is wrong on their site. Name the role:
+
+- "deep primary", not "dark green"
+- "brand primary", not "brand green" or "Saudi flag green"
+- "a lighter primary tint", not "a lighter green"
+- "the brand variant", not "the green variant"
+
+This covers every surface on the primary family, in prose, tables, and demo copy. Three things stay literal, because they are names: class names (`nds-green`), token names (`--colors-green-600`), and a theme seed's documented default (`--brand-primary` ships as DGA green). Status hues (success green, error red) keep their color names.
+
+## 6. NDS IQ and AI Agents
+
+- NDS IQ is an **instruction system**. It never "teaches" or "trains" a model.
+- **The model provides the capability. NDS IQ provides the rules and the workflow.**
+- Model support: "Claude Sonnet is the validated baseline for NDS IQ. The rules are designed to produce consistent results across capable AI models."
+- **The developer says what to change; NDS IQ decides how the agent does it.** An everyday ask names the outcome, the content, the data, and the limits. It does not name components, markup, or verification steps.
+- Never imply the developer must know NDS internals before they ask.
+
+## 7. Languages in Demos
+
+- **Arabic UI strings drop short vowel marks** (fatha, damma, kasra, sukun): «عسر», not «عُسْر». Keep tanwin («رأسيًا», «ثوانٍ»), and keep shadda on verbs where it carries the form («يحسّن», «أكّد»).
+- **A non-Arabic RTL demo uses Persian (فارسی) or Urdu (اردو).** Never Hebrew.
+
+## 8. Tone by Surface
+
+| Surface | Tone | It says |
+|---|---|---|
+| Home page | short and factual, never a sales page | what NDS is, what the template gives, who it is for, how it works with AI agents |
+| `README.md` | technical and practical | what the repo holds, how to run it, requirements, links to the docs |
+| Get Started | step by step | what you do, what the agent does, what needs your approval, which files change, how verification and upgrades work |
+| NDS IQ guide | system-level and precise | how the rules work, where they come from, how they are tested, versioned, and updated |
+| Doc pages | plain technical book | what the part is, when to use it, how to use it. Mechanism and fact, no pitch, nothing the reader already knows |
+| Demo and example copy | realistic content | real-looking names, dates, and data for a government service |
+
+## 9. Rewriting Existing Content
+
+- **Check the facts first** (section 3), then reword.
+- Keep the technical meaning and the terms. Cut filler, repeats, and sales words.
+- Shorter is right when nothing the reader acts on is lost.
+- **Never change canonical markup, code blocks, or prompts a reader pastes.** Agents copy them as canon. Reword only the prose around them.
+- Keep heading `id`s, so existing links still work.
+- A prose-only edit on a doc page bumps `last_edit` only, never `updated`.
+
+## 10. Checklist
+
+Before you hand over any text:
+
+- [ ] Every fact, count, and name was checked against the source.
+- [ ] Every sentence has one instruction, an actor, and under ~25 words.
+- [ ] No `-ing` nouns, no em dashes in sentences, no sales words.
+- [ ] Headings are nouns.
+- [ ] Each fact appears once.
+- [ ] NDS terms and the claim ladder are used exactly.
+- [ ] Markup, code blocks, prompts, and heading `id`s are unchanged.

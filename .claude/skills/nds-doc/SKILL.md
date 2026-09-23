@@ -1,6 +1,6 @@
 ---
 name: nds-doc
-description: Work with NDS documentation pages — create new pages, refine existing ones, add sections, fix code tabs, update guidelines. Covers all doc page categories: components (components/*.md), UI Shell (ui-shell/*.md), layout (layout/*.md), and utilities (utilities/*.md). Use this skill for any task involving demo cards, code examples, toggle controls, or usage guidelines sections.
+description: Work with NDS documentation pages — create new pages, refine or audit existing ones, rewrite their prose in plain English, add sections, fix code tabs, update guidelines. Covers components/*.md, ui-shell/*.md, layout/*.md, utilities/*.md, and core/*.md. Use for any task on demo cards, code examples, toggle controls, reference tables, usage guidelines, or doc-page wording ("simplify this doc", "rewrite the prose", "make it easier to read").
 argument-hint: "[name] [optional: specific task]"
 ---
 
@@ -8,377 +8,236 @@ argument-hint: "[name] [optional: specific task]"
 
 Apply this skill to: `$ARGUMENTS`
 
-This skill builds documentation pages that serve as a **component inventory**. Developers browse the live demos, configure options with toggle controls, then copy the production-ready code. Every page must be a complete, accurate representation of what the SCSS and JS source files actually define.
+A doc page is a **component inventory**. Developers browse the live demos, set options with toggle controls, and copy production-ready code. AI coding agents copy the same code as canon. So every page must match what the SCSS and JS source actually define.
+
+Three sources decide a page, each for its own concern:
+
+| Concern | Source |
+|---|---|
+| Facts: variants, states, APIs, events, attributes | the component's SCSS and JS |
+| Structure: demo cards, code tabs, sections | `components/alert.md` |
+| Words: sentences, terms, claims, tone | `EDITORIAL.md` |
 
 ---
 
-## Phase 1: RESOLVE
+## Phase 1: Resolve
 
-Determine the target page and locate its source files.
+Find the target page and its source files.
 
-### Page Resolution
+1. Glob for `$0.md` in `components/`, `ui-shell/`, `layout/`, `utilities/`, `core/`.
+2. Found: use that path and its category. Not found: this is a new page (default `components/`).
 
-1. Glob for `$0.md` across `components/`, `ui-shell/`, `layout/`, `utilities/`
-2. If found: use that path and its category
-3. If not found: creating a new page (default to `components/`)
-
-| Category | Directory | SCSS source | Example |
-|----------|-----------|-------------|---------|
+| Category | Directory | SCSS | Example |
+|---|---|---|---|
 | Components | `components/` | `_sass/components/` | `accordion`, `modal`, `tags` |
-| UI Shell | `ui-shell/` | `_sass/components/` | `header`, `side-nav`, `footer` |
+| UI Shell | `ui-shell/` | `_sass/components/` | `header`, `sidemenu`, `footer` |
 | Layout | `layout/` | `_sass/layout/` | `grid`, `section` |
-| Utilities | `utilities/` | `_sass/` or `_sass/layout/` | `expandable-content`, `numbers`, `truncate-text` |
+| Utilities | `utilities/` | `_sass/` or `_sass/layout/` | `numbers`, `truncate-text` |
+| Core | `core/` | none | `refresh`, `request` |
 
-### Source File Discovery
+**Never assume file names.** Page names do not always match source names (`sidemenu` → `_js/nds-sideMenu.js`; `truncate-text` lives in `_sass/_utilities.scss`). Try the exact name, then partial matches in `_sass/components/`, `_sass/layout/`, and `_js/`. If nothing matches, grep for the root class (`.nds-$0`). Some components share a JS file (form controls live in `_js/nds-forms.js`); the component's entry in `_js/nds-loader.js` names its init function and namespace. Core pages document `_js/nds-core.js` and `_js/nds-loader.js` APIs.
 
-Page names don't always match SCSS/JS filenames (e.g., `side-nav` maps to `nds-sideMenu.js`, `truncate-text` maps to `_truncateText.scss`). **NEVER assume filenames.** Search broadly: try exact match first, then partial/wildcard matches across `_sass/components/`, `_sass/layout/`, and `_js/`. If no direct match, grep for the component's root class (`.nds-$0`) to locate the defining file.
-
-Some components share JS files rather than having their own (e.g., form controls live in `_js/nds-forms.js`). Check `_js/nds-loader.js` for the component's registry entry to find which init function and namespace it uses.
-
-### Category Adaptation
-
-- **Components / UI Shell / Utilities**: full treatment with variants, sizes, states, JS API, usage guidelines
-- **Layout**: lighter treatment. Skip Variants/States. Focus on CSS custom properties, grid demos, responsive behavior
+**Treatment by category:** components, UI shell, and utilities get the full page (variants, sizes, states, JS API, usage guidelines). Layout and core pages are lighter: skip Variants and States, and focus on custom properties, demos, and behavior.
 
 ---
 
-## Phase 2: READ
+## Phase 2: Read
 
-Read source files to build a complete understanding of the component. **The source files are the single source of truth. The existing page is suspect until validated.**
+**The source files are the truth. The existing page is suspect until checked.**
 
-### MUST read every time
+Read every time:
 
-- **`components/alert.md`**: the base standard for all page patterns. Extract from it:
-  - Demo card skeleton (`.nds-demo-card` with `demo-header`, `demo-container`, `demo-code`)
-  - Code tab structure (`.nds-tabs .nds-code` with HTML and JS API panels)
-  - Toggle controls (dropmenu pattern for selection groups, flat buttons for on/off)
-  - Built-in Features section (`.nds-definition-list.nds-divided.nds-grid.nds-doc-features` — the `.nds-doc-features` modifier sets the shared column/gap/icon-size custom properties; do NOT inline `style="--max-col:..."`)
-  - Usage Guidelines section (`nds-block` with `nds-block-title`)
-  - JS API documentation block (expandable code with inline comments)
+- **`EDITORIAL.md`**: how every sentence on the page reads.
+- **`components/alert.md`**: the structure standard. Take from it the demo card skeleton (`.nds-demo-card` with `demo-header`, `demo-container`, `demo-code`), the code tabs (`.nds-tabs .nds-code`), the toggle controls, the Built-in Features grid (`.nds-definition-list.nds-divided.nds-grid.nds-doc-features`), the Usage Guidelines blocks, and the JS API block.
+- **The SCSS file, whole:** every variant, size, state, modifier, layout mode, and accessibility mixin (`reduced-motion`, `high-contrast`, `print-media`).
+- **The JS file, whole and deeply:** init trigger, every public method (namespace and instance), every `CustomEvent` and its `detail`, every keyboard interaction, every `data-*` it reads, every state it manages, and how instances are reached.
+- **`_data/sidemenu/sidemenu.yml`**: the map of the system. Use it to name related parts, link them, and confirm that any part you mention exists.
+- **The page's entry in `_data/content/*.yml`**: its catalog card. Its description must agree with the page's hero description.
 
-### MUST read when they exist
+Read when relevant:
 
-- **SCSS source file**: read the entire file. Understand every variant class, size class, state, modifier, layout mode, and accessibility feature (`@include reduced-motion`, `@include high-contrast`, `@include print-media`). The page must document all of these.
-- **JS source file**: read the entire file **deeply**. Do not skim. Understand the full logic:
-  - How the component initializes and what triggers it
-  - Every public method exposed on the `NDS.*` namespace and on instances
-  - Every custom event dispatched (`CustomEvent`) and its `detail` shape
-  - Every keyboard interaction handled
-  - Every data attribute the JS reads for configuration
-  - Every state the JS manages (open/close, active/inactive, validation, etc.)
-  - How instances are accessed from the DOM
-  - The page must document all of these.
-- **Existing page** (if refining): read it but do NOT trust it. You will validate it against source files in Phase 3.
+- `standard-page.md` (front matter for a new page), `layout/section.md` (section tiers), `playground.md` (demo HTML).
+- `components/chart.md` (API-heavy), `components/cards.md` (builder demos), `components/modal.md` (overlay trigger pattern) for complex parts.
 
-### Split & de-criticalized components (affect doc accuracy)
-
-Some components are restructured for bundle performance (see `CLAUDE.md` → "JS Bundles & Shrinking the Critical Bundle"). Two cases change what the page must capture:
-
-- **Split component** — the JS is TWO files: `nds-X.js` (eager shell) + `nds-X__delegated.js` (lazy behavior half), each opening with a `// SPLIT COMPONENT` header. **Read BOTH.** The public `NDS.X` surface and first-paint behavior live in the shell, but deferred behavior — including some `CustomEvent`s and their `detail` shapes (e.g. Filter's `nds:filterFormComplete` / `nds:filterFormError` live in `nds-filter__delegated.js`) — lives in the half. The split is transparent to consumers (`NDS.X.method()` is unchanged), so demos and copy-paste markup don't change.
-- **De-criticalized component** (moved to the delegated bundle, e.g. accordion) — its JS now loads AFTER first paint, so any state the JS used to stamp must be **server-rendered in the canonical markup**. The live demo AND the code tab MUST carry those attributes (e.g. a default-open accordion item ships `data-state="open"` on BOTH the toggle button and the `.nds-accordion-collapse`), and the developer-facing ones belong in the **Data Attributes** table. Markup that omits them copies a component that flashes / CLSs on load.
-
-### MUST read for context
-
-- **`_data/sidemenu/sidemenu.yml`**: read this every time. It is your map of the entire design system: every component, layout, utility, UI shell element, and example page. Use it to:
-  - Know what related components exist when writing Best Practices ("don't use" alternatives, "use X with Y" suggestions)
-  - Link to related pages with `{{ 'path' | relative_url }}`
-  - Verify any component you mention by name actually exists
-  - Understand where the current component fits in the system
-
-### Read when relevant
-
-- `standard-page.md`: front matter template (new pages)
-- `layout/section.md`: section hierarchy and tiers (new pages or adding sections)
-- `playground.md`: existing demo HTML if available
-- Icon class lookup: **NEVER guess icon class names.** Plausible-sounding names frequently don't exist in the shipped font.
-  - **Always use content icons** for every `<i>` you add on a doc page (Built-in Features list, inline decorations, copy buttons, etc.): `<i class="hgi hgi-stroke hgi-NAME">`. The authoritative glyph list is `_sass/_hgiRoundedStroke.scss`. Verify names with the anchored pattern in Phase 5 ("Icon Verification") BEFORE emitting HTML.
-  - **Never introduce UI icons** (`<i class="nds-icon nds-hgi-NAME" aria-hidden="true">`) when authoring a doc page. They are reserved for chrome and pseudo-elements. The only time `nds-icon nds-hgi-*` may appear in your output is inside a code tab that copies the component's own live demo verbatim (e.g. a modal's close button icon the component itself renders). Do not substitute one mechanism for the other.
-- **Additional reference pages** for complex components: `components/chart.md` (API-heavy with options reference), `components/cards.md` (builder-style multi-dropmenu demos). Judge whether the component's complexity warrants reading these.
+**Delegated components** (moved out of the main bundle, e.g. accordion) load their JS after first paint. Any state the JS used to stamp must ship in the canonical markup: the live demo AND the code tab carry it (a default-open accordion item has `data-state="open"` on both the toggle button and `.nds-accordion-collapse`), and the Data Attributes table lists it. Markup without it flashes on load.
 
 ---
 
-## Phase 3: ANALYZE (Existing Pages Only)
+## Phase 3: Analyze (existing pages)
 
-Compare the existing page against what the source files actually define. Approach with fresh eyes. Do not assume the existing page is correct.
+Build a full model of what the source supports, then check each section of the page twice:
 
-### Build Understanding
+1. **Structure:** does it match `alert.md`? Code tabs must hold entity-encoded markup (`&lt;div&gt;`); raw HTML inside `<code class="lang-html code">` is OUTDATED.
+2. **Content:** does it match the source, completely? **Check every claim in the prose too:** counts, names, defaults, behavior. A wrong claim is OUTDATED, however well it reads.
 
-Thoroughly analyze the SCSS and JS source files from Phase 2. Build a complete mental model of what the component supports: every variant, size, state, modifier, layout mode, public method, event, keyboard interaction, and accessibility feature.
+Give each section one status:
 
-### Validate the Existing Page
-
-For each section of the existing page, check two things:
-
-1. **Structure**: does the HTML skeleton match `alert.md` patterns? (demo card layout, code tab structure, toggle controls, bottom sections). Code tabs must contain entity-encoded markup (`&lt;div&gt;` not `<div>`) — raw HTML inside `<code class="lang-html code">` counts as OUTDATED and must be converted during rebuild.
-2. **Content**: does it accurately and completely reflect what the source files define? Are all variants/methods/events/states covered?
-
-### Classify Each Section
-
-- **CURRENT**: both structure and content match. Leave untouched.
-- **INCOMPLETE**: structure is correct but content is missing items the source defines (undocumented variants, missing API methods, missing events). Add what is missing.
-- **OUTDATED**: structure doesn't match `alert.md` patterns, OR content contradicts/misrepresents the source files, OR contains placeholder text. Rebuild the section using `alert.md` patterns, preserving any valid content/text.
-- **MISSING**: a section that should exist but doesn't. Create it.
+| Status | Meaning | Action |
+|---|---|---|
+| CURRENT | structure, content, and prose all pass | leave it |
+| PROSE | structure and content pass; the wording fails the `EDITORIAL.md` checklist | rewrite the prose only |
+| INCOMPLETE | structure passes; the source defines items the page lacks | add them |
+| OUTDATED | wrong structure, a claim the source contradicts, or placeholder text | rebuild; keep valid text |
+| MISSING | a needed section does not exist | create it |
 
 ---
 
-## Phase 4: REPORT
+## Phase 4: Report
 
-**STOP. Present the classification report to the user before making any edits.**
+**Stop. Show the report and wait for approval before any edit.**
 
 ```
-## {Name} — Smart Merge Report
+## {Name} — Doc Report
 
 ### Source Inventory
-- SCSS: [list key variants, sizes, states, modifiers found]
-- JS: [list key methods, events, keyboard handling found]
+- SCSS: [variants, sizes, states, modifiers]
+- JS: [methods, events, keyboard, data attributes]
 
 ### Section Status
-- [Section name]: CURRENT | INCOMPLETE (missing: ...) | OUTDATED (reason: ...) | MISSING
-- ...repeat for each section...
+- [Section]: CURRENT | PROSE (n sentences) | INCOMPLETE (missing: …) | OUTDATED (wrong: … per source file:line) | MISSING
 
 ### Actions Planned
-- CURRENT sections: skip (no changes)
-- INCOMPLETE sections: add [specific items]
-- OUTDATED sections: rebuild [specific sections], preserving [valid content]
-- MISSING sections: create [specific sections]
+- per status, one line each
 ```
 
-Wait for user approval, then proceed to Phase 5.
+New pages and targeted edits skip Phases 3 and 4.
 
-For **new pages** and **targeted edits**: skip Phases 3-4 and go directly to Phase 5.
+**Timing:** while a component's behavior, markup, or API is still changing, do not edit its doc page. Do one accurate pass once the design settles.
 
 ---
 
-## Phase 5: BUILD
-
-Apply changes following the patterns extracted from `alert.md`. All HTML structure must match those patterns.
+## Phase 5: Build
 
 ### Front Matter
 
-All documentation pages are **English, LTR**. Always set `lang: en` and `direction: ltr`. Use `standard-page.md` as template for new pages. Do NOT use `layout_class: nds-cardView` or `sidemenu_mode: top`.
+- Doc pages are English and LTR: `lang: en`, `direction: ltr`. Copy `standard-page.md` for a new page. Never use `layout_class: nds-cardView` or `sidemenu_mode: top`.
+- `since`: the version the page first shipped. Set once.
+- `updated`: bump only when the COMPONENT changed (source, markup, or API). Value: `version` in `_config.yml` without `-dev`.
+- `last_edit`: bump on any content change, including a prose-only rewrite. Format `DD/MM/YYYY - HH:MM AM/PM`, Riyadh time (the local `date`).
 
 ### Naming
 
-- **Page title** (`title` in front matter): component name only
-- **Hero title**: `{Name} - National Design System`
-- **Hero description**: one sentence answering "What is this component and what does it do for me?" Study ALL demos on the page before writing this. Components often serve multiple purposes beyond what their name suggests. Do NOT list internal features ("smart positioning, keyboard navigation, accessibility support"). Do NOT narrow the component to one use case. Instead, state its purpose covering the full range of what the demos show. Example: "A toggle-activated menu for presenting actions, navigation links, or filter controls in a compact overlay."
-- **Section titles**: descriptive and SEO-friendly. Including the component name is fine
-- **Section descriptions**: orient the developer on what they are looking at and when they would pick this variant over other sections on the page. Do not restate the title. Do not describe internal mechanisms. Good: "A condensed layout for contextual messages placed near the content they relate to." Bad: "Compact single-line layout with bottom stripe and solid icon."
-- Each demo card gets its own section. The section title describes the variant or mode shown (e.g., "Standard", "With Leading Icons", "Inline", "Toast Notifications"), not generic labels like "Overview"
+- `title`: the component name only.
+- `hero_title`: `{Name} - National Design System`.
+- `hero_description`: one sentence on what the part is and what it is for, covering every use the demos show. No feature list. Keep the catalog card's description in agreement.
+- Section titles: nouns that name the variant or mode ("Inline", "Toast Notifications"), never "Overview".
+- Section descriptions: one or two sentences on when to pick this variant. Not how it works inside.
 
 ### Page Structure
 
 ```
-Section 1: Overview / Main Demo (demo cards with toggle controls)
-Section 2: Variants (if applicable)
-Section 3: Sizes (if applicable)
-Section 4: States (if applicable)
-Section 5: Built-in Features (definition-list grid with icons, its own section)
-Section 6: Usage Guidelines (content blocks: Best Practices + Modifier Classes + Data Attributes + CSS Custom Properties + JS API)
+1. Main demo (demo cards with toggle controls)
+2. Variants (if any)
+3. Sizes (if any)
+4. States (if any)
+5. Built-in Features (its own section)
+6. Usage Guidelines (Best Practices, reference tables, JS API)
 ```
 
-Components with distinct **display modes** (e.g., default/inline/toast for alerts) get a separate section per mode rather than forcing them into the Variants/Sizes/States structure.
+A component with distinct display modes (default, inline, toast) gets one section per mode. Complex parts may add sections (an API Reference, builder demos) when the source warrants it.
 
-Complex components may need additional sections beyond this baseline (e.g., API Reference for chart, builder demos for cards). Judge based on source file complexity.
+### Demos
 
-### Variant Organization
+- **Class-only variants** (style, size): `data-toggler` buttons in one demo card. **Structurally different variants:** separate demo cards. Cover every variant and state the SCSS defines.
+- **Toggle controls** (patterns in `alert.md`): one-of-many groups use a dropmenu with `.demo-toggle-menu`, placed first. On/off switches use flat `.demo-toggle-btn` buttons, placed after. Mark the default with `selected`.
+- **A card with no toggles** gets a `<div class="demo-label">` inside `.demo-header`.
+- **Loading state** is a toggle, not a section: a `.demo-toggle-btn` with `data-toggler='["nds-loading", "<root selector>", "loadingState"]'` on every demo card that has the standard action bar. The Modifier Classes and Data Attributes tables still list `nds-loading`.
+- **Overlays** (modal, drawer, dropmenu) need a trigger button plus the hidden component inside `.state-demo`. See `components/modal.md`.
+- **Demo-wiring JS** goes in `_js/nds-showcase.js`, never in the component's JS. A part that needs JS to render (charts, `NDS.Alert.create()`) uses a page-level `<script>` inside `DOMContentLoaded`.
+- **Demo languages:** follow `EDITORIAL.md` section 7 (no Arabic short vowel marks; Persian or Urdu, never Hebrew).
 
-- **Simple class-based variants** (style, size): use `data-toggler` buttons within a single demo card
-- **Structurally different variants** (different HTML structure): separate demo cards with their own code examples
-- MUST cover **all** variants and states the SCSS defines
+### Code Tabs
 
-### Demo Actions
+Code tabs hold **production-ready, copy-paste markup only**.
 
-Get the exact HTML patterns from `alert.md`:
-- **Selection groups** (one-of-many): dropmenu with `.demo-toggle-menu`. Place these first.
-- **On/off toggles** (independent): flat buttons with `.demo-toggle-btn`. Place these after dropmenus.
-- Add `selected` class to the button/item matching the demo's default state
-- **Demo cards with no actions**: add a `<div class="demo-label">` inside `.demo-header` with a short descriptive title. Only demo cards that have toggle controls (dropmenus or buttons) omit the label.
+- **A code tab is a direct copy of its live demo.** Take the markup from `.state-demo`, drop the demo-only wrappers (`.state-demo`, `.demo-container`), and fix the indentation. Never shorten it, cut items, or use placeholders ("Item title", `<!-- more items -->`).
+- **Entity-encode it:** `<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;`. Live demo markup stays raw HTML.
+- Unique IDs per card: `{component}-{variant}-{n}`. Tabs and panels: `tab-{component}-{variant}-{n}`, `panel-{component}-{variant}-{n}`.
+- **JS API tab** only when the part has a programmatic creation API (`NDS.Alert.create()`, `NDS.Chart.create()`). Not for event listeners or method calls.
+- Code longer than ~15 lines: add `nds-expandable` to the panel and wrap `<code>` in `<div class="nds-expandable-content">`.
+- **A code block with no live demo** (a structure tree, a reference snippet) sits directly in its `.nds-block`, with no `.nds-showcase` / `.nds-demo-card` wrapper.
 
-### Code Examples
+### Page Markup
 
-Code tabs are for **production-ready, copy-paste markup only**.
+- An `nds-block` holding bare `<p>`, `<ul>`, or `<ol>` gets `nds-prose`. A block of only components (tables, definition lists, demo cards) stays plain `nds-block`.
+- Titles that stay out of the heading outline use `<span>` (with `display: block` in their style rule). A card title in a grid of tiles is a `<span>`; a standalone card that is a page section gets a real heading one level below the nearest heading above it.
+- Inline code: `<code class="nds-inline-code lang-html">` for HTML, `lang-js` for JS. Never plain `<code>`.
+- Links: `<a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a>`. Never an absolute path.
 
-- **The code tab MUST be a direct copy of the live demo HTML.** Copy the markup from `.state-demo`, remove demo-only wrappers (`.state-demo`, `.demo-container`), and clean indentation. Do NOT simplify, abbreviate, reduce items, or use placeholder text like "Item title" or "<!-- more items -->". The developer copies what they see in the live demo.
-- MUST be production-ready: no demo wrappers, no showcase classes
-- **Use unique IDs** per demo card: `{component}-{variant}-{number}` (e.g., `modal-default-1`)
-- **HTML tab**: markup to render the component
-- **JS API tab** (label: "JS API"): only when the component has a **programmatic creation API** (e.g., `NDS.Alert.create()`, `NDS.Chart.create()`). This is the JS alternative to the HTML tab. Do NOT add a JS tab for event listeners or method calls.
-- For long code (>15 lines), add `nds-expandable` to the tab panel and wrap `<code>` in `<div class="nds-expandable-content">`
-- **Tab/Panel IDs**: use `panel-{component}-{variant}-{number}` / `tab-{component}-{variant}-{number}` pattern
+### Icons
 
-### Overlay Components
+**Never guess an icon name.** Plausible names often do not exist.
 
-Modal, drawer, and dropmenu need a **trigger button** + hidden component markup inside `.state-demo`. Check the component's JS for the trigger attribute. See `components/modal.md` for the pattern.
-
-### Custom JS in Demos
-
-Demo-wiring JS goes in `_js/nds-showcase.js`, NOT the component's own JS file. For components that require JS to render (charts, programmatic alerts), use a page-level `<script>` wrapped in `DOMContentLoaded`. For toggle logic beyond class/attr swapping, use inline `<script>` inside the demo card.
-
-### Icon Verification (MANDATORY before writing any `<i>` tag)
-
-Plausible-sounding names often don't exist. Before emitting HTML for Built-in Features or anywhere else, verify every HGI font icon name:
-
-```bash
-# One grep, all icons, anchored pattern (colon required — don't drop it):
-grep -E "\.hgi-(name1|name2|name3|name4|name5|name6):" _sass/_hgiRoundedStroke.scss
-```
-
-- Any name NOT printed by that command **does not exist** and must be replaced.
-- Do NOT use unanchored `grep "hgi-NAME"` — it gives false matches against unrelated class fragments.
-- To find a replacement for a missing name, browse candidates by topic:
+- A doc page authors **content icons only**: `<i class="hgi hgi-stroke hgi-NAME">`. Verify every name in one anchored grep before you write the HTML:
   ```bash
-  grep -E "\.hgi-TOPIC" _sass/_hgiRoundedStroke.scss | head -20
-  # TOPIC examples: resize, size, scale, arrow, toggle, text, color
+  grep -E "\.hgi-(name1|name2|name3):" _sass/_hgiRoundedStroke.scss
   ```
-- For UI icons (`nds-hgi-NAME`), apply the same discipline to `UI_ICONS` in `scripts/generate-icons-scss.mjs`.
+  A name the command does not print does not exist. Browse replacements with `grep -E "\.hgi-TOPIC" _sass/_hgiRoundedStroke.scss | head -20`. Never use an unanchored grep; it matches fragments.
+- **UI icons** (`nds-icon nds-hgi-NAME`) appear only inside a code tab that copies a component's own live demo. Their names are in `_data/content/icons.yml` (source: `_sass/_icons.scss`).
 
-Run this check once, covering every icon on the page. If you revise the page and add new icons, re-run.
+### Built-in Features
 
-**Content icons only.** Doc pages author only `hgi hgi-stroke hgi-NAME`. Never add `nds-icon nds-hgi-NAME` yourself. The only place `nds-icon` may appear in your output is inside a code tab that verbatim copies a component's own live demo where the component itself uses one. If you catch an `nds-icon nds-hgi-*` you wrote by hand (Built-in Features, inline decoration, anywhere else), replace it with the equivalent `hgi hgi-stroke hgi-NAME`.
+Its own section, not inside Usage Guidelines. Wrapper: `<div class="nds-definition-list nds-divided nds-grid nds-doc-features">`; the `.nds-doc-features` modifier sets the columns, gaps, and icon size, so add no inline `style`. Item markup comes from `alert.md`.
 
-### Built-in Features Section
+- Each item names a capability the developer gets with the component, stated as fact.
+- **Title:** a short, specific noun phrase ("Active Page Tracking", not "State Management").
+- **Description:** one sentence on what the developer sees or controls. Interaction patterns are fine (collapsible, responsive). Internal mechanisms are not (`:has()`, fixed positioning, DOM detection). Name an attribute only when the developer writes it (`data-state="active"`), never one JS applies (`aria-expanded`).
+- An even number of items (4, 6, 8) for the two-column grid.
+- A JS component starts with "Auto-initialization" and ends with "Programmatic Control".
+- Mention the SCSS accessibility mixins the component uses (reduced motion, high contrast, print).
 
-Its own section (NOT inside Usage Guidelines). The wrapper is `<div class="nds-definition-list nds-divided nds-grid nds-doc-features">` — the `.nds-doc-features` modifier (defined in `_sass/components/_definition-list.scss`) sets `--max-col`, `--mid-col`, `--min-col`, `--dl-icon-size`, `--row-gap`, and `--col-gap` so no inline `style="..."` is needed. Get the rest of the HTML pattern (item structure, icons) from `alert.md`.
+### Usage Guidelines
 
-- **Sells the component's capabilities.** Each item should make a developer think "I get that for free just by using this component."
-- **Titles**: short, concrete noun phrases that name the capability. Prefer specific names over abstract ones ("Active Page Tracking" over "State Management", "Programmatic Control" over "JavaScript API").
-- **Descriptions**: one flowing sentence per item. Lead with what the developer sees or controls, not how it works internally.
-  - **Interaction patterns are fine**: accordion, collapsible, toggle, responsive. These describe how the developer experiences it.
-  - **Internal mechanisms are not**: CSS selectors (`:has()`), DOM detection techniques, CSS positioning strategies (`fixed positioning`), internal state tracking. The developer never touches these.
-  - **Mention code references only when the developer writes or calls them**: `data-state="active"` (developer sets this in HTML) is useful. `aria-expanded` (auto-applied by JS) is noise.
-  - Example shift: "Automatically detects viewport boundaries and adjusts positioning" becomes "Menus stay fully visible regardless of trigger position, flipping direction near screen edges."
-- **Verify every icon name BEFORE emitting the HTML.** Names that sound plausible (`hgi-text-size`, `hgi-file-check`, etc.) often don't exist in the shipped font. Grep the font file directly with the anchored pattern below. Do NOT use unanchored `grep "hgi-NAME"` — it matches substrings in unrelated lines and gives false positives.
+1. **Best Practices:** as many bullets as the component needs, usually 5 to 10. Never pad. Cover: when to use it (specific scenarios), when not to and what to use instead (only parts that exist in `sidemenu.yml`), how to pick a variant when the demos do not make it obvious, and practical tips (item counts, grouping, content).
+2. **Modifier Classes** (if the part has class variants, sizes, or modes): a `nds-table nds-responsive` of every modifier class from the SCSS, with what it does.
+3. **Data Attributes** (if the JS reads `data-*` for configuration): each attribute, where it goes, and its values. Find them via `dataset` and `getAttribute('data-`. Skip internal ones (`data-initialized`).
+4. **CSS Custom Properties** (if the SCSS exposes `--component-*` knobs or `var()` fallbacks): property, default, description.
+5. **JavaScript API** (if the part has JS): the auto-init note plus an expandable code block of the full API with inline comments, as in `alert.md`.
 
-  ```bash
-  # Run once with ALL icons you plan to use in the Built-in Features + any other <i> tags:
-  grep -E "\.hgi-(name1|name2|name3|name4|name5|name6):" _sass/_hgiRoundedStroke.scss
-  ```
+Add Accessibility, Responsive Behavior, or Performance blocks only when the component genuinely needs them. Do not document what the reader already gets from the code (ARIA, semantic structure) or the demo toggles.
 
-  Each found line reports one OK icon. Any name NOT in the output doesn't exist and must be replaced before writing the HTML. For a missing name, browse candidates with `grep -E "\.hgi-TOPIC" _sass/_hgiRoundedStroke.scss | head -20` (e.g. TOPIC = `resize|size|scale` for sizing concepts) and pick a real one. For UI icons (`nds-hgi-NAME`), check `UI_ICONS` in `scripts/generate-icons-scss.mjs` the same way.
-- Aim for an **even number** of items (4, 6, 8) for the 2-column grid
-- For components with JS: include "Auto-initialization" (first item) and "Programmatic Control" (last item)
+### Prose
 
-### Usage Guidelines Section
+All wording follows `EDITORIAL.md`. On doc pages specifically:
 
-Required content blocks:
+- Write for the developer who uses the system, never its maintainers: no repo scripts, build steps, or SCSS internals.
+- A section description is one or two sentences, a feature description one sentence, a Best Practices bullet one clause.
 
-1. **Best Practices**: 7-12 bullets mixing decision guidance and practical tips:
-   - **Primary use cases** (2-3 bullets): when to reach for this component. Go beyond the obvious. Add value by explaining specific scenarios.
-   - **"Don't use" guidance** (1-2 bullets): when this is the wrong choice and what to use instead. Only suggest alternatives that exist in NDS. Check `_data/sidemenu/sidemenu.yml` to verify before naming any component as an alternative.
-   - **Variant selection** (1-2 bullets): how to choose between variants/sizes/modes when it's not obvious from the demos.
-   - **Practical tips** (2-3 bullets): recommended item counts, grouping strategies, icon usage, content guidelines. These help developers who already chose the component build it well.
-2. **Modifier Classes** (when the component has class-based variants, sizes, or modes): a compact `nds-table nds-responsive` listing every modifier class with what it does. Developers should not need to click through demo toggles to discover available options. Extract these from the SCSS source. Example format:
+**Prose-only rewrite (PROSE status):** change only the sentences. Leave the live demos, code tabs, table values that name classes or attributes, `id`s, and heading anchors exactly as they are. Bump `last_edit`, never `updated`.
 
-```html
-<table class="nds-table nds-responsive">
-    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-    <tbody>
-        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Compact size with reduced padding and font size</td></tr>
-        <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Adds separator lines between list items</td></tr>
-    </tbody>
-</table>
-```
+### Registration (new pages only)
 
-Skip this block if the component has no modifier classes beyond its base.
-
-3. **Data Attributes** (when the component's JS reads `data-*` attributes for configuration): a table listing each attribute, where to place it, and valid values. These are the knobs a developer turns without writing JS. Extract from the JS source by searching for `dataset` or `getAttribute('data-`. Example:
-
-```html
-<table class="nds-table nds-responsive">
-    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-    <tbody>
-        <tr><td><code class="nds-inline-code lang-html">data-state="active"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;li&gt;</code> to mark the current page. Parent menus expand automatically.</td></tr>
-    </tbody>
-</table>
-```
-
-Skip if the component has no developer-facing data attributes (ignore internal ones like `data-initialized`).
-
-4. **CSS Custom Properties** (when the SCSS defines `--component-*` variables or exposes tokens via `var()` fallbacks): a table of overridable properties with their defaults. Developers use these to customize without touching SCSS. Search the SCSS for custom property definitions. Example:
-
-```html
-<table class="nds-table nds-responsive">
-    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-    <tbody>
-        <tr><td><code class="nds-inline-code lang-html">--drawer-max-height</code></td><td>none</td><td>Maximum height before scroll overflow activates</td></tr>
-    </tbody>
-</table>
-```
-
-Skip if the component exposes no custom properties.
-
-5. **JavaScript API** (if the component has JS): auto-init note + expandable code block documenting the full API with inline comments. See `alert.md` for format.
-
-Additional blocks based on component needs (only when genuinely warranted):
-- Accessibility, Responsive Behavior, Content Guidelines, Performance
-
-Do NOT document things the developer already gets from copying the code examples (ARIA attributes, semantic structure) or from the demo toggles (configuration classes). Focus on capabilities and decision guidance.
-
-### Content Rules
-
-- **Read `EDITORIAL.md` before writing prose.** It carries the canonical NDS term list, how to describe NDS IQ, the claim ladder (`designed to` / `supported` / `validated` / `tested`), and the doc-page tone. The rules below are what this skill adds on top.
-- **Be brief.** Every sentence must earn its place. A section description is one or two sentences, a Built-in Features description is one line, a Best Practices bullet is one clause. Say the thing and stop: no restating the title, no explaining the same point twice in different words, no trailing "so that…" clause that repeats what the sentence already said. If a sentence can be cut without losing information the developer acts on, cut it.
-- **Write for the developer using the system, not for its maintainers.** No repo tooling (`scripts/*.mjs`, build steps, SCSS internals), no "how we register icons/tokens" mechanics. If the reader cannot act on it from their own project, it belongs in a skill or a source comment, not on a doc page.
-- **NEVER use em dashes** in any generated content. Use colons, commas, periods, or restructure instead.
-- **Use HTML entities inside code tabs**, not raw HTML. The `<code class="lang-html code">` body contains entity-encoded markup (`&lt;div&gt;`, `&lt;span class="..."&gt;`) so the browser renders it as literal text instead of parsing it. Live demo markup above (inside `.state-demo`) stays as raw HTML — only the code-tab copy is entity-encoded. When reviewing an existing page with raw HTML inside a code tab, convert every tag character: `<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;` (when not already part of an entity like `&lt;`).
-- Use `<code class="nds-inline-code lang-html">` for HTML references. Use `<code class="nds-inline-code lang-js">` for JS references. Do NOT use plain `<code>` or the `nds-code` wrapper for inline text.
-- **Links to other pages**: always use Jekyll's `relative_url` filter with `nds-color` class. Example: `<a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a>`. Never use absolute paths like `/components/stepper`.
-
-### Registration (New Pages Only)
-
-1. Create SCSS file if needed, add `@use` to `assets/css/nds-main.min.scss`
-2. Add to `_data/sidemenu/sidemenu.yml` under correct parent
-3. Set breadcrumb to match the category
-4. Run `bundle exec jekyll build` to verify
+1. If needed, create the SCSS file and add `@use` to `assets/css/nds-main.min.scss`.
+2. Add the page to `_data/sidemenu/sidemenu.yml` under its parent.
+3. Add its catalog entry to the matching `_data/content/*.yml`, copying a neighbor entry's keys exactly.
+4. Set the breadcrumb for its category.
+5. Run `bundle exec jekyll build` to verify.
 
 ---
 
-## Phase 6: VERIFY
+## Phase 6: Verify
 
-Before finishing, validate your work against this checklist. Every item MUST pass.
+Every item must pass. Fix any failure before you present the result.
 
-### Source Completeness
-- [ ] Every variant class from the SCSS source is demoed on the page
-- [ ] Every size class from the SCSS source is demoed on the page
-- [ ] Every state from the SCSS source is represented
-- [ ] Every public JS method is documented (in code block or Usage Guidelines)
-- [ ] Every custom event and its `detail` shape is documented
-- [ ] Every keyboard interaction is documented
-- [ ] Accessibility features from SCSS (`reduced-motion`, `high-contrast`, `print-media`) are mentioned in Built-in Features
+**Source**
+- [ ] Every variant, size, and state in the SCSS is demoed.
+- [ ] Every public method, event (with `detail`), and keyboard interaction in the JS is documented.
+- [ ] Every reference-table row comes from the source, not memory.
+- [ ] Every claim in the prose was checked against the source.
 
-### Structure and Patterns
-- [ ] All demo card HTML structure matches `alert.md` patterns
-- [ ] All code tabs contain production-ready, copy-paste markup
-- [ ] Code tab markup is entity-encoded (`&lt;`, `&gt;`, `&amp;`) — no raw `<` or `>` inside `<code class="lang-html code">`
-- [ ] Code tab markup is a direct copy of the live demo (same structure, classes, attributes, content, number of items. No abbreviation or placeholders)
-- [ ] All icons verified against `_sass/_hgiRoundedStroke.scss` (content-icon names) or `UI_ICONS` in `scripts/generate-icons-scss.mjs` (UI-icon names) — none guessed; chosen mechanism (`nds-hgi-` for UI vs `hgi hgi-stroke hgi-` for content) matches the usage context
-- [ ] Built-in Features section exists with even number of items
-- [ ] Usage Guidelines has "Best Practices" block
-- [ ] Usage Guidelines has "JS API" block (if component has JS)
-- [ ] Additional Usage Guidelines blocks exist where the component warrants them (API Reference for option-heavy components, Accessibility for keyboard-managed components, etc.)
+**Structure**
+- [ ] Demo cards match `alert.md`.
+- [ ] Each code tab is an entity-encoded, full copy of its live demo.
+- [ ] Unique IDs on all tabs and panels.
+- [ ] Every icon name was verified with the anchored grep; content icons only outside copied demos.
+- [ ] Built-in Features has an even number of items.
+- [ ] Usage Guidelines has Best Practices, the reference tables the source calls for, and the JS API block (if the part has JS).
 
-### Content Quality
-- [ ] Hero description states what the component does for the developer, not a list of internal features
-- [ ] Hero description covers the full range of use cases shown in the demos
-- [ ] Section descriptions orient the developer on when/why to pick this variant, not how it works internally
-- [ ] Built-in Features descriptions lead with outcomes, not internal mechanisms
-- [ ] Best Practices has at least 7 bullets including "don't use" guidance and practical tips
-- [ ] Best Practices covers both when to use/not use AND how to use well
-- [ ] Alternative components mentioned in "don't use" bullets actually exist in NDS
-- [ ] Prose is brief: section descriptions are one or two sentences, feature descriptions one line, bullets one clause. No sentence restates the title or makes the same point twice
-- [ ] No repo tooling, build steps, or maintainer mechanics anywhere on the page
+**Words**
+- [ ] The page passes the `EDITORIAL.md` checklist.
+- [ ] The hero description covers every use in the demos and agrees with the catalog card.
+- [ ] No maintainer mechanics anywhere on the page.
 
-### Reference Tables
-- [ ] Modifier Classes table exists (if component has class-based variants/sizes/modes)
-- [ ] Data Attributes table exists (if component JS reads data-* for configuration)
-- [ ] CSS Custom Properties table exists (if SCSS exposes overridable custom properties)
-- [ ] All table entries extracted from source files, not guessed
-
-### Formatting
-- [ ] No em dashes anywhere in the page
-- [ ] Front matter has `lang: en` and `direction: ltr`
-- [ ] Unique IDs on all tabs/panels (no conflicts across demo cards)
-- [ ] Registered in `sidemenu.yml` (new pages only)
-
-If any item fails, fix it before presenting the result.
+**Front matter and registration**
+- [ ] `lang: en`, `direction: ltr`; `since` / `updated` / `last_edit` set per the rules above.
+- [ ] New pages: in `sidemenu.yml` and in the `_data/content/*.yml` catalog.

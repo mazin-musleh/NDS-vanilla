@@ -234,20 +234,11 @@ last_edit: "15/07/2026 - 02:35 PM"  # timestamp of the most recent doc content e
 
 ## Content Skills
 
-Documentation pages under `components/`, `ui-shell/`, `layout/`, and `utilities/` are created, refined, and audited per `.claude/skills/nds-doc/SKILL.md` — Claude Code invokes it as `/nds-doc [name]`; other agents follow the SKILL.md workflow directly.
+Documentation pages under `components/`, `ui-shell/`, `layout/`, `utilities/`, and `core/` are created, refined, and audited per `.claude/skills/nds-doc/SKILL.md` — Claude Code invokes it as `/nds-doc [name]`; other agents follow the SKILL.md workflow directly.
 
-## Plain-English Register
+## Writing
 
-**Every word NDS ships is read by non-native speakers and by weak models — write it plain.** Applies to all authored prose: component/layout/utility doc pages, `guides/`, alert titles and descriptions, demo and example copy, setup/upgrade steps, and `_includes/NDS-IQ.md`.
-
-- One instruction per sentence; active voice; imperative for steps.
-- Same word for the same thing every time — no synonyms for variety.
-- No `-ing` forms as nouns or adjectives ("Before you start", not "Before starting").
-- Sentences stay under ~25 words; split them, don't compress by dropping articles.
-
-These are sentence mechanics, not a voice — each surface keeps its own register (doc pages stay plain technical book tone, per the doc skill). If the `ste100-writer` skill is installed it adds an approved-word check; the rules above stand without it.
-
-**Vocabulary and framing live in `EDITORIAL.md`** — the canonical term list (NDS IQ, AI coding agent, validated baseline, canonical markup), how to describe NDS IQ and AI-assisted development, the claim ladder (`designed to` / `supported` / `validated` / `tested`), and the tone each surface takes (homepage, README, Get Started, the NDS IQ guide). Read it before you write or refine any user-facing prose, and before you rewrite existing prose — its "Refining Existing Content" rules govern that. The register above is how to build a sentence; `EDITORIAL.md` is which words go in it.
+**All user-facing prose follows `EDITORIAL.md`: sentences, terms, claims, and tone per surface.** Read it before you write or rewrite any doc page, guide, alert, demo copy, README, changelog entry, or `_includes/NDS-IQ.md`. The `ste100-writer` skill, if installed, adds an approved-word check on top.
 
 ## Git Commits
 
