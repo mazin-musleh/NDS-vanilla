@@ -1331,9 +1331,14 @@
             const owned = [...root.querySelectorAll(selector)];
             if (root.matches?.(selector)) owned.unshift(root);
             for (const el of owned) {
+                // Count only a destroy that released a stamp: it no-ops on an element never
+                // initialized, already released by the backref walk above, or stamped for
+                // paint alone (an empty TOC).
+                const stamps = () => el.getAttributeNames().filter((n) => n.startsWith('data-nds-') && n.endsWith('-initialized')).length;
+                const before = stamps();
                 try {
                     ns.destroy(el);
-                    destroyed++;
+                    if (stamps() < before) destroyed++;
                 } catch (error) {
                     console.warn(`[NDS:destroy] ${component.name} failed:`, error);
                 }
