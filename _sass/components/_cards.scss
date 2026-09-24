@@ -138,7 +138,6 @@
       flex-direction: column;
       flex-wrap: wrap;
       align-content: flex-start;
-      justify-content: space-between;
 
       .nds-card-image {
         width: var(--card-image-width, 160px);
@@ -188,6 +187,8 @@
     }
   }
 
+  // .nds-full-width is deprecated here: inside a section it is the full-bleed
+  // breakout (_skeleton.scss). See DEPRECATIONS.md.
   &:is(.nds-full-width, .nds-full) {
     --card-width: 100%;
   }
@@ -237,13 +238,6 @@
       top: 0;
       inset-inline-end: 0;
     }
-  }
-
-  // A centred card reads as a statement, so it gets a taller block gutter.
-  // Retuning the -base value keeps --card-padding-block meaning exactly what it
-  // says: set it and you get that, untouched by the multiplier.
-  &.nds-center {
-    --_card-padding-block-base: calc(var(--_card-padding) * 1.5);
   }
 
   .nds-card-image:not(.nds-avatar) {
@@ -444,6 +438,20 @@
     margin: 0;
   }
 
+  // A row header is only a column around the icon, so the tag stays under it.
+  // Once a narrow row card stacks, the header spans the card again: back out.
+  &.nds-rowView:is(.nds-center, .nds-statistic) {
+    .nds-card-status {
+      position: static;
+    }
+
+    @container (width < 324px) {
+      .nds-card-status {
+        position: absolute;
+      }
+    }
+  }
+
   // Last, so it wins in every layout.
   .nds-card-image ~ .nds-card-status {
     position: absolute;
@@ -540,15 +548,6 @@
   }
 }
 
-
-// Statistic card variant
-.nds-card.nds-user {
-  --_card-width: var(--card-width, 224px);
-
-  .nds-card-tags {
-    min-height: 48px;
-  }
-}
 
 // ==============================================
 // COLORED CARD VARIANTS
@@ -783,6 +782,16 @@ html:not([data-nds-loaded]) .nds-card {
   :is(.nds-card-title, .nds-card-subtitle, .nds-card-description,
     .nds-card-number, .nds-card-rating-text) {
     @include skeleton-bar;
+  }
+
+  // One bar the width of the price line.
+  :is(.nds-card-value, .nds-card-price) {
+    @include skeleton-bar;
+
+    // Outranks the value line's own colour on the prominent number.
+    .nds-number-format {
+      color: transparent;
+    }
   }
 
   .nds-card-image:not(.nds-avatar) {

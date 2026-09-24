@@ -20,6 +20,7 @@ surface the theme controls. Count spellings and you will deprecate half the syst
 |---|---|---|---|
 | `slides-max`, `slides-mid`, `slides-min`, `peek` **attributes on `.nds-swiper`** | inline `--max-slides`, `--mid-slides`, `--min-slides`, `--peek` (`style="…"` on the same element) | 1.12.0 | `_js/nds-swiper.js` (constructor knob read), `_js/nds-loader.js` (presetSwipers) |
 | HGI content icons renamed upstream: `hgi-arrange-by-numbers-1-9`, `-9-1`, `hgi-cplusplus`, `hgi-go-backward-5-sec`, `hgi-go-forward-5-sec`, `hgi-layout-2-column`, `-2-row`, `-3-column`, `-3-row`, `hgi-mp-3-01`, `-3-02`, `hgi-mp-4-01`, `-4-02`, `hgi-ski-dice-faces-01`, `hgi-sorting-1-9`, `-9-1` | the hugeicons.com names: digits spelled out (`hgi-layout-three-column`, `hgi-mp-three-01`, `hgi-sorting-nine-1`, …), `hgi-cpp`, `hgi-ski` | 1.12.x | `_sass/_hgiRoundedStroke.scss` (alias block at the end) |
+| `.nds-full-width` **on `.nds-card`** | `.nds-full` — inside a section, `.nds-full-width` is the full-bleed breakout (`_skeleton.scss`), so the card breaks out of its container instead of filling it | 1.12.x | `_sass/components/_cards.scss` (`:is(.nds-full-width, .nds-full)`) |
 | `.nds-card-price` | `.nds-card-value` | 1.11.0 | `_sass/components/_cards.scss` (value line) |
 | `[data-loading]` **on `.nds-slider-container`** | `.nds-loading` (or the `loading` token from JS) | 1.12.0 | `_sass/components/_slider.scss` (skeleton rule) |
 | `.nds-404` | `.nds-status-section` | 1.10.0 | `_sass/layout/_section-layout.scss` (status section banner) |
