@@ -35,7 +35,11 @@ module DocsCanon
     table.scan(%r{<tr>(.*?)</tr>}m).each do |(tr)|
       group, option, markup, target = tr.scan(%r{<td[^>]*>(.*?)</td>}m).flatten.map { |c| text(c) }
       c = (choices["#{group}|#{option}"] ||= { group: group, option: option })
-      c[:structure] = Regexp.last_match(1) if markup =~ /\Acanon #([\w-]+)\z/
+      target = target.to_s.sub(/\s*\((start|end)\)\z/, '')
+      # `canon #id` swaps the markup in the Structure group; anywhere else it inserts a part block.
+      if markup =~ /\Acanon #([\w-]+)\z/
+        group == 'Structure' ? c[:structure] = Regexp.last_match(1) : (c[:inserts] ||= []) << Regexp.last_match(1)
+      end
       c[:live] ||= markup != '—'
       (c[:targets] ||= []) << target if markup != '—' && !c[:structure]
     end
@@ -98,7 +102,7 @@ module DocsCanon
     builder_only = {}
     html.scan(CANON_RE) do |attrs, _|
       table = attr(attrs, 'data-variants')
-      rows(html, table).each { |r| builder_only[r[:structure]] = true if r[:structure] } if table
+      rows(html, table).each { |r| [r[:structure], *r[:inserts]].compact.each { |id| builder_only[id] = true } } if table
     end
 
     # Shared doc-section knobs (DOC_STYLE). Written at build, not by JS, so the page paints in its

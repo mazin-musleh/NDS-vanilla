@@ -2,951 +2,417 @@
 layout: page
 title: Cards
 hero_title: Cards - National Design System
-hero_description: A composable container for grouping content, metrics, or actions with stroke, shadow, color-fill, and on-color treatments for any surface
+hero_description: A card groups one unit of content, such as a service, a product, an article, or a metric, into a single box
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "29/08/2026 - 02:41 PM"
+updated: "1.12.x"
+last_edit: "24/09/2026 - 11:14 PM"
 ---
 
-<!-- Standard Card -->
-<section id="standardCard" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Standard</h2>
-            <p class="nds-section-description">Build product, article, or service cards by combining header, content, tags, rating, and action sub-components</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Mode: ">
-                                        <span class="nds-label">Mode: Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-mode="default">
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-mode="expandable">
-                                                <span class="nds-label">Expandable</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-mode="selectable">
-                                                <span class="nds-label">Selectable</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-mode="actions">
-                                                <span class="nds-label">Actions</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Icon</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-header="icon">
-                                                <span class="nds-label">Icon</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-header="image">
-                                                <span class="nds-label">Image</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-header="avatar">
-                                                <span class="nds-label">Avatar</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-header="none">
-                                                <span class="nds-label">None</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="State: ">
-                                        <span class="nds-label">State: Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-state="default">
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-state="interactive">
-                                                <span class="nds-label">Interactive</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-state="disabled">
-                                                <span class="nds-label">Disabled</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Color: ">
-                                        <span class="nds-label">Color: None</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-color="none">
-                                                <span class="nds-label">None</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="neutral">
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="green">
-                                                <span class="nds-label">Green</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="yellow">
-                                                <span class="nds-label">Yellow</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="red">
-                                                <span class="nds-label">Red</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="blue">
-                                                <span class="nds-label">Blue</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="oncolor">
-                                                <span class="nds-label">Oncolor</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Layout: ">
-                                        <span class="nds-label">Layout: Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-layout="default">
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-layout="rowView">
-                                                <span class="nds-label">Row view</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-layout="center">
-                                                <span class="nds-label">Center</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-color", ".nds-card", "cardColor"]'>
-                                    <span class="nds-label">Color fill</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
-                                    <span class="nds-label">Stroke</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
-                                    <span class="nds-label">Shadow</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='[["nds-truncate", ".nds-card-title", "cardTruncate"],["nds-truncate", ".nds-card-description", "cardTruncate"]]'>
-                                    <span class="nds-label">Truncate</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected" data-card-toggle="tags">
-                                    <span class="nds-label">Tags</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-card-toggle="rating">
-                                    <span class="nds-label">Rating</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-card", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-header">
-                                        <div class="nds-card-image" style="--img-pos-x:50%; --img-pos-y:10%;" hidden>
-                                            <img src="{{ 'assets/img/riyadhcenter.webp' | relative_url }}" alt="Card image">
-                                        </div>
-                                        <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
-                                                <i class="hgi hgi-stroke hgi-stars"></i>
-                                            </span>
-                                        </div>
-                                        <div class="nds-avatar nds-xl" hidden>
-                                            <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-checkbox" hidden>
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" name="cardSelect" value="card-1" class="nds-check">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Card Title</span>
-                                            <span class="nds-card-subtitle">Card Subtitle</span>
-                                            <p class="nds-card-description">Short description of this card content goes here for demonstration.</p>
-                                        </div>
-                                        <div class="nds-card-meta">
-                                            <div class="nds-card-tags">
-                                                <span class="nds-tag nds-blue nds-sm">
-                                                    <span class="nds-label">Category</span>
-                                                </span>
-                                                <span class="nds-tag nds-gray nds-sm">
-                                                    <span class="nds-label">Topic</span>
-                                                </span>
-                                                <span class="nds-tag nds-green nds-sm">
-                                                    <span class="nds-label">Active</span>
-                                                </span>
-                                            </div>
-                                            <div class="nds-card-rating" hidden>
-                                                <div class="nds-rating nds-sm" data-rating="4.5">
-                                                    <span class="nds-rating-star"></span>
-                                                    <span class="nds-rating-star"></span>
-                                                    <span class="nds-rating-star"></span>
-                                                    <span class="nds-rating-star"></span>
-                                                    <span class="nds-rating-star"></span>
-                                                </div>
-                                                <span class="nds-card-rating-text">(12 reviews)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-actions" hidden>
-                                        <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
-                                            <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
-                                            <span class="nds-label">Learn More</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-card-standard-1" id="tab-card-standard-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-card-standard-1"
-                                    aria-labelledby="tab-card-standard-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;div class="nds-card nds-stroke"&gt;
-    &lt;div class="nds-card-header"&gt;
-        &lt;div class="nds-card-featured-icon"&gt;
-            &lt;span class="nds-featured-icon nds-circle nds-lg"&gt;
-                &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
-            &lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card-content"&gt;
-        &lt;div class="nds-card-text"&gt;
-            &lt;span class="nds-card-title"&gt;Card Title&lt;/span&gt;
-            &lt;span class="nds-card-subtitle"&gt;Card Subtitle&lt;/span&gt;
-            &lt;p class="nds-card-description"&gt;Short description of this card content goes here for demonstration.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-card-meta"&gt;
-            &lt;div class="nds-card-tags"&gt;
-                &lt;span class="nds-tag nds-blue nds-sm"&gt;
-                    &lt;span class="nds-label"&gt;Category&lt;/span&gt;
-                &lt;/span&gt;
-                &lt;span class="nds-tag nds-gray nds-sm"&gt;
-                    &lt;span class="nds-label"&gt;Topic&lt;/span&gt;
-                &lt;/span&gt;
-                &lt;span class="nds-tag nds-green nds-sm"&gt;
-                    &lt;span class="nds-label"&gt;Active&lt;/span&gt;
-                &lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="cardOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use a card for one scannable unit in a set: a service tile, a product, an article preview, or a dashboard number.
+- Use an [alert](../components/alert) for a short status message, and a [modal](../components/modal) to ask the user for a decision.
+- For a card whose text can expand, see [Expandable Content](../utilities/expandable-content). For a number with a trend line, see [Metric](../components/metric).
+
+</div>
+  </div>
 </section>
 
-<!-- Statistic Card -->
-<section id="statisticCard" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Statistic</h2>
-            <p class="nds-section-description">A centered metric layout for headline numbers in dashboards and stats grids</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Color: ">
-                                        <span class="nds-label">Color: None</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-color="none">
-                                                <span class="nds-label">None</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="neutral">
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="green">
-                                                <span class="nds-label">Green</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="yellow">
-                                                <span class="nds-label">Yellow</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="red">
-                                                <span class="nds-label">Red</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="blue">
-                                                <span class="nds-label">Blue</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="oncolor">
-                                                <span class="nds-label">Oncolor</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-color", ".nds-card", "cardColor"]'>
-                                    <span class="nds-label">Color fill</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
-                                    <span class="nds-label">Stroke</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
-                                    <span class="nds-label">Shadow</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-card", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-card nds-stroke nds-statistic">
-                                    <div class="nds-card-header">
-                                        <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-xl">
-                                                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="125847">0</span>
-                                            <p class="nds-card-description">Active Users</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-card-statistic-1" id="tab-card-statistic-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-card-statistic-1"
-                                    aria-labelledby="tab-card-statistic-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;div class="nds-card nds-stroke nds-statistic"&gt;
-    &lt;div class="nds-card-header"&gt;
-        &lt;div class="nds-card-featured-icon"&gt;
-            &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
-                &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card-content"&gt;
-        &lt;div class="nds-card-text"&gt;
-            &lt;span class="nds-card-number nds-counter-value nds-number-format" data-target="125847"&gt;0&lt;/span&gt;
-            &lt;p class="nds-card-description"&gt;Active Users&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="cardMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="card-standard" data-canon data-variants="cardVariantsTable">
+<div class="nds-card nds-stroke">
+  <div class="nds-card-header">
+    <div class="nds-card-featured-icon">
+      <span class="nds-featured-icon nds-circle nds-lg">
+        <i class="hgi hgi-stroke hgi-stars"></i>
+      </span>
+    </div>
+  </div>
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <span class="nds-card-title">Card Title</span>
+      <span class="nds-card-subtitle">Card Subtitle</span>
+      <p class="nds-card-description">Short description of this card content goes here for demonstration.</p>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="card-image" data-canon>
+<div class="nds-card nds-stroke">
+  <div class="nds-card-header">
+    <div class="nds-card-image" style="--img-pos-x:50%; --img-pos-y:10%;">
+      <img src="../assets/img/riyadhcenter.webp" alt="Card image">
+    </div>
+  </div>
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <span class="nds-card-title">Card Title</span>
+      <span class="nds-card-subtitle">Card Subtitle</span>
+      <p class="nds-card-description">Short description of this card content goes here for demonstration.</p>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="card-avatar" data-canon>
+<div class="nds-card nds-stroke">
+  <div class="nds-card-header">
+    <div class="nds-avatar nds-xl">
+      <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <span class="nds-card-title">Card Title</span>
+      <span class="nds-card-subtitle">Card Subtitle</span>
+      <p class="nds-card-description">Short description of this card content goes here for demonstration.</p>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="card-no-header" data-canon>
+<div class="nds-card nds-stroke">
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <span class="nds-card-title">Card Title</span>
+      <span class="nds-card-subtitle">Card Subtitle</span>
+      <p class="nds-card-description">Short description of this card content goes here for demonstration.</p>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="card-link" data-canon>
+<a href="#" class="nds-card nds-stroke">
+  <div class="nds-card-header">
+    <div class="nds-card-featured-icon">
+      <span class="nds-featured-icon nds-circle nds-lg">
+        <i class="hgi hgi-stroke hgi-stars"></i>
+      </span>
+    </div>
+  </div>
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <span class="nds-card-title">Card Title</span>
+      <p class="nds-card-description">The whole card is one link.</p>
+    </div>
+  </div>
+</a>
+</script>
+<script type="text/html" id="card-statistic" data-canon>
+<div class="nds-card nds-stroke nds-statistic">
+  <div class="nds-card-header">
+    <div class="nds-card-featured-icon">
+      <span class="nds-featured-icon nds-circle nds-xl">
+        <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
+      </span>
+    </div>
+  </div>
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <span class="nds-card-number nds-counter-value nds-number-format" data-target="125847">0</span>
+      <p class="nds-card-description">Active Users</p>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="card-tags" data-canon>
+<div class="nds-card-tags">
+  <span class="nds-tag nds-blue nds-sm">
+    <span class="nds-label">Category</span>
+  </span>
+  <span class="nds-tag nds-gray nds-sm">
+    <span class="nds-label">Topic</span>
+  </span>
+</div>
+</script>
+<script type="text/html" id="card-rating" data-canon>
+<div class="nds-card-rating">
+  <div class="nds-rating nds-sm" data-rating="4.5">
+    <span class="nds-rating-star"></span>
+    <span class="nds-rating-star"></span>
+    <span class="nds-rating-star"></span>
+    <span class="nds-rating-star"></span>
+    <span class="nds-rating-star"></span>
+  </div>
+  <span class="nds-card-rating-text">(12 reviews)</span>
+</div>
+</script>
+<script type="text/html" id="card-meta" data-canon>
+<div class="nds-card-meta">
+  <div class="nds-card-tags">
+    <span class="nds-tag nds-blue nds-sm">
+      <span class="nds-label">Category</span>
+    </span>
+    <span class="nds-tag nds-gray nds-sm">
+      <span class="nds-label">Topic</span>
+    </span>
+  </div>
+  <div class="nds-card-rating">
+    <div class="nds-rating nds-sm" data-rating="4.5">
+      <span class="nds-rating-star"></span>
+      <span class="nds-rating-star"></span>
+      <span class="nds-rating-star"></span>
+      <span class="nds-rating-star"></span>
+      <span class="nds-rating-star"></span>
+    </div>
+    <span class="nds-card-rating-text">(12 reviews)</span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="card-value-sale" data-canon>
+<div class="nds-card-value">
+  <span class="nds-number-format" data-currency="SAR">1299</span>
+  <s class="nds-number-format" data-currency="SAR">1599</s>
+</div>
+</script>
+<script type="text/html" id="card-value-unit" data-canon>
+<div class="nds-card-value">
+  <span class="nds-number-format" data-currency="SAR">89</span>
+  / kg
+</div>
+</script>
+<script type="text/html" id="card-checkbox" data-canon>
+<div class="nds-card-checkbox">
+  <div class="nds-form-container nds-check-container">
+    <div class="nds-form-control">
+      <input type="checkbox" name="cardSelect" value="card-1" class="nds-check" aria-label="Select card">
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="card-status" data-canon>
+<div class="nds-card-status">
+  <span class="nds-tag nds-sm" data-status="success">
+    <span class="nds-label">Active</span>
+  </span>
+</div>
+</script>
+<script type="text/html" id="card-actions" data-canon>
+<div class="nds-card-actions">
+  <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
+    <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+    <span class="nds-label">Learn More</span>
+  </a>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Product Pricing -->
-<section id="cardPricing" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Product Pricing</h2>
-            <p class="nds-section-description">A clear price line for product and service cards, built on the <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> utility: a prominent amount with its currency icon, an optional crossed-out original for sale pricing, and a muted unit suffix as plain text</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Sale pricing with the original crossed out</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-image">
-                                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=60" alt="Smart Watch" loading="lazy">
-                                    </div>
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Smart Watch</span>
-                                            <p class="nds-card-description">AMOLED display, water resistant to 50 meters.</p>
-                                        </div>
-                                        <div class="nds-card-value">
-                                            <span class="nds-number-format" data-currency="SAR">1299</span>
-                                            <s class="nds-number-format" data-currency="SAR">1599</s>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-actions">
-                                        <button class="nds-btn nds-primary nds-full" type="button">
-                                            <span class="nds-label">Add to Cart</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-card-price-1" id="tab-card-price-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-card-price-1"
-                                        aria-labelledby="tab-card-price-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-card nds-stroke"&gt;
-    &lt;div class="nds-card-image"&gt;
-        &lt;img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&amp;fit=crop&amp;w=800&amp;q=60" alt="Smart Watch" loading="lazy"&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card-content"&gt;
-        &lt;div class="nds-card-text"&gt;
-            &lt;span class="nds-card-title"&gt;Smart Watch&lt;/span&gt;
-            &lt;p class="nds-card-description"&gt;AMOLED display, water resistant to 50 meters.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-card-value"&gt;
-            &lt;span class="nds-number-format" data-currency="SAR"&gt;1299&lt;/span&gt;
-            &lt;s class="nds-number-format" data-currency="SAR"&gt;1599&lt;/s&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card-actions"&gt;
-        &lt;button class="nds-btn nds-primary nds-full" type="button"&gt;
-            &lt;span class="nds-label"&gt;Add to Cart&lt;/span&gt;
-        &lt;/button&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Unit pricing with a plain-text suffix</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-card nds-stroke">
-                                    <div class="nds-card-image">
-                                        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=60" alt="Specialty Coffee" loading="lazy">
-                                    </div>
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Specialty Coffee</span>
-                                            <p class="nds-card-description">Medium-roast single-origin Arabica beans.</p>
-                                        </div>
-                                        <div class="nds-card-value">
-                                            <span class="nds-number-format" data-currency="SAR">89</span>
-                                            / kg
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-actions">
-                                        <button class="nds-btn nds-primary nds-full" type="button">
-                                            <span class="nds-label">Add to Cart</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-card-price-2" id="tab-card-price-2">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-card-price-2"
-                                        aria-labelledby="tab-card-price-2">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-card nds-stroke"&gt;
-    &lt;div class="nds-card-image"&gt;
-        &lt;img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&amp;fit=crop&amp;w=800&amp;q=60" alt="Specialty Coffee" loading="lazy"&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card-content"&gt;
-        &lt;div class="nds-card-text"&gt;
-            &lt;span class="nds-card-title"&gt;Specialty Coffee&lt;/span&gt;
-            &lt;p class="nds-card-description"&gt;Medium-roast single-origin Arabica beans.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-card-value"&gt;
-            &lt;span class="nds-number-format" data-currency="SAR"&gt;89&lt;/span&gt;
-            / kg
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card-actions"&gt;
-        &lt;button class="nds-btn nds-primary nds-full" type="button"&gt;
-            &lt;span class="nds-label"&gt;Add to Cart&lt;/span&gt;
-        &lt;/button&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="cardVariants" class="nds-content-section nds-doc-variants">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Icon header (default) | — | — | A featured icon above the text |
+| Structure | Image header | canon `#card-image` | — | A photo above the text. Set the focal point with `--img-pos-x` and `--img-pos-y` |
+| Structure | Avatar header | canon `#card-avatar` | — | A person or an account |
+| Structure | No header | canon `#card-no-header` | — | Text only |
+| Structure | Link card | canon `#card-link` | — | The whole card is one `<a>` (or `<button>`). Hover and press feedback come from the element. Do not put links or buttons inside it |
+| Structure | Statistic | canon `#card-statistic` | — | One headline number with a label, centered. The number counts up from 0 to `data-target` when it scrolls into view. See [Numbers](../utilities/numbers#counterAnimation) |
+| Meta | None (default) | — | — | No tags or rating |
+| Meta | Tags | canon `#card-tags` | `.nds-card-content` | Tags alone go straight in the content |
+| Meta | Rating | canon `#card-rating` | `.nds-card-content` | A star rating with a count |
+| Meta | Tags and rating | canon `#card-meta` | `.nds-card-content` | `.nds-card-meta` groups two meta rows. Use it only when both are present |
+| Value | None (default) | — | — | No price line |
+| Value | Sale price | canon `#card-value-sale` | `.nds-card-content` | A price with the original crossed out in `<s>`. `data-currency` shows the currency icon. See [Numbers](../utilities/numbers) |
+| Value | Unit price | canon `#card-value-unit` | `.nds-card-content` | A price with a plain-text unit after it |
+| Checkbox | Checkbox | canon `#card-checkbox` | `.nds-card` (start) | Lets the user select the card. Sits in the top end corner |
+| Status | Status | canon `#card-status` | `.nds-card-header` | A status tag, such as a person's availability. `data-status` sets its color. It sits at the top end, under the avatar in a row card, and over the corner of an image. It moves clear of a checkbox |
+| Actions | Actions | canon `#card-actions` | `.nds-card` | Buttons after the content, never inside it |
+| Actions end | Actions end | `.nds-end` | `.nds-card-actions` | Aligns the actions to the end of the row |
+| Style | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border. For flat and content-heavy layouts |
+| Style | Shadow | `.nds-shadow` | `.nds-card` | An elevation shadow. For floating or modal-adjacent cards |
+| Style | Stroke and shadow | `.nds-stroke` | `.nds-card` | Both |
+| Style | Stroke and shadow | `.nds-shadow` | `.nds-card` | Both |
+| Style | Plain | — | — | No border and no shadow |
+| Color | None (default) | — | — | The default colors |
+| Color | Neutral | `.nds-neutral` | `.nds-card` | Also `.nds-gray` |
+| Color | Green | `.nds-green` | `.nds-card` | Tints the title, the icon and the hover border |
+| Color | Yellow | `.nds-yellow` | `.nds-card` | Tints the title, the icon and the hover border |
+| Color | Red | `.nds-red` | `.nds-card` | Tints the title, the icon and the hover border |
+| Color | Blue | `.nds-blue` | `.nds-card` | Tints the title, the icon and the hover border |
+| Tinted | Tinted | `.nds-color` | `.nds-card` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
+| On color | On color | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background |
+| Layout | Stacked (default) | — | — | Header above content |
+| Layout | Row | `.nds-rowView` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
+| Layout | Center | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing |
+| Width | Capped (default) | — | — | Up to 360px wide |
+| Width | Full width | `.nds-full-width` | `.nds-card` | Fills its container. Also `.nds-full` |
+| Width | User | `.nds-user` | `.nds-card` | A compact person card, 224px wide |
+| Number size | LG (default) | — | — | The display size |
+| Number size | MD | `.nds-md` | `.nds-card-number` | A smaller headline number |
+| Number size | SM | `.nds-sm` | `.nds-card-number` | The smallest headline number |
+| Truncate | Truncate | `.nds-truncate` | `.nds-card-title` | Cuts long text to one line. Set `--truncate` for more lines |
+| Truncate | Truncate | `.nds-truncate` | `.nds-card-description` | Cuts long text to one line. Set `--truncate` for more lines |
+| Disabled | Disabled | `.nds-disabled` | `.nds-card` | Mutes the card and blocks clicks. `[disabled]` works on a `<button>` card |
+| Loading | Loading | `.nds-loading` | `.nds-card` | Skeleton placeholders while the content loads |
+{: #cardVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Card Group -->
-<section id="cardGroup" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Card Group</h2>
-            <p class="nds-section-description">Pair cards with <code class="nds-inline-code lang-html">nds-grid</code> for responsive column-shifting layouts</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
-                                    <span class="nds-label">Stroke</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
-                                    <span class="nds-label">Shadow</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-card", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;">
-                                    <div class="nds-card nds-stroke nds-statistic">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-xl">
-                                                    <i class="hgi hgi-stroke hgi-user-multiple"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-number nds-counter-value nds-number-format" data-target="125847">0</span>
-                                                <p class="nds-card-description">Active Users</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card nds-stroke nds-statistic">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-xl">
-                                                    <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-number nds-counter-value nds-number-format" data-target="8542">0</span>
-                                                <p class="nds-card-description">Completed</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card nds-stroke nds-statistic">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-xl">
-                                                    <i class="hgi hgi-stroke hgi-star"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-number nds-counter-value nds-number-format" data-target="92%">0</span>
-                                                <p class="nds-card-description">Success Rate</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card nds-stroke nds-statistic">
-                                        <div class="nds-card-header">
-                                            <div class="nds-card-featured-icon">
-                                                <span class="nds-featured-icon nds-circle nds-xl">
-                                                    <i class="hgi hgi-stroke hgi-queue-01"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-number nds-counter-value nds-number-format" data-target="+1247">0</span>
-                                                <p class="nds-card-description">Pending</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-card-group-1" id="tab-card-group-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-card-group-1"
-                                    aria-labelledby="tab-card-group-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;"&gt;
-    &lt;div class="nds-card nds-stroke nds-statistic"&gt;
-        &lt;div class="nds-card-header"&gt;
-            &lt;div class="nds-card-featured-icon"&gt;
-                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
-                    &lt;i class="hgi hgi-stroke hgi-user-multiple"&gt;&lt;/i&gt;
-                &lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-card-content"&gt;
-            &lt;div class="nds-card-text"&gt;
-                &lt;span class="nds-card-number nds-counter-value nds-number-format" data-target="125847"&gt;0&lt;/span&gt;
-                &lt;p class="nds-card-description"&gt;Active Users&lt;/p&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card nds-stroke nds-statistic"&gt;
-        &lt;div class="nds-card-header"&gt;
-            &lt;div class="nds-card-featured-icon"&gt;
-                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
-                    &lt;i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"&gt;&lt;/i&gt;
-                &lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-card-content"&gt;
-            &lt;div class="nds-card-text"&gt;
-                &lt;span class="nds-card-number nds-counter-value nds-number-format" data-target="8542"&gt;0&lt;/span&gt;
-                &lt;p class="nds-card-description"&gt;Completed&lt;/p&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card nds-stroke nds-statistic"&gt;
-        &lt;div class="nds-card-header"&gt;
-            &lt;div class="nds-card-featured-icon"&gt;
-                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
-                    &lt;i class="hgi hgi-stroke hgi-star"&gt;&lt;/i&gt;
-                &lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-card-content"&gt;
-            &lt;div class="nds-card-text"&gt;
-                &lt;span class="nds-card-number nds-counter-value nds-number-format" data-target="92%"&gt;0&lt;/span&gt;
-                &lt;p class="nds-card-description"&gt;Success Rate&lt;/p&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card nds-stroke nds-statistic"&gt;
-        &lt;div class="nds-card-header"&gt;
-            &lt;div class="nds-card-featured-icon"&gt;
-                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
-                    &lt;i class="hgi hgi-stroke hgi-queue-01"&gt;&lt;/i&gt;
-                &lt;/span&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-card-content"&gt;
-            &lt;div class="nds-card-text"&gt;
-                &lt;span class="nds-card-number nds-counter-value nds-number-format" data-target="+1247"&gt;0&lt;/span&gt;
-                &lt;p class="nds-card-description"&gt;Pending&lt;/p&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="cardFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-puzzle"></i>
+            <span class="nds-label">CSS Only</span>
+          </span>
+          <p class="nds-item-desc">A card needs no script and no init call. Every look comes from classes.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-cursor-02"></i>
+            <span class="nds-label">Interactive States</span>
+          </span>
+          <p class="nds-item-desc">An <code class="nds-inline-code lang-html">&lt;a&gt;</code> or <code class="nds-inline-code lang-html">&lt;button&gt;</code> card changes its background on hover. A stroke card also changes its border, and a shadow card deepens its shadow.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-image-02"></i>
+            <span class="nds-label">Image Control</span>
+          </span>
+          <p class="nds-item-desc">The image keeps a 2:1 ratio by default. The ratio, the focal point and a dark overlay are set with custom properties on the image.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Loading Skeleton</span>
+          </span>
+          <p class="nds-item-desc">A card shows skeleton placeholders until the page reveals. Add <code class="nds-inline-code lang-html">nds-loading</code> to show them while your own data loads.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-filter"></i>
+            <span class="nds-label">Filter Ready</span>
+          </span>
+          <p class="nds-item-desc">Filter treats each <code class="nds-inline-code lang-html">.nds-card</code> as one item by default, and searches the text in <code class="nds-inline-code lang-html">.nds-card-content</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-customize"></i>
+            <span class="nds-label">Nested Cards</span>
+          </span>
+          <p class="nds-item-desc">A card resets its color, spacing and width properties, so a value set on an outer card does not reach a card inside it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="cardFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-            <p class="nds-section-description">What you get out of the box with zero configuration</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-puzzle"></i>
-                            <span class="nds-label">Composable Anatomy</span>
-                        </span>
-                        <p class="nds-item-desc">Mix header, content, tags, rating, price, checkbox, status, and actions to build product, article, service, or user cards.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-colors"></i>
-                            <span class="nds-label">Seven Color Variants</span>
-                        </span>
-                        <p class="nds-item-desc">Default, neutral, yellow, red, and blue treatments adjust title, border, and icon tints together. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a tinted fill.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-chart-bar-line"></i>
-                            <span class="nds-label">Statistic Mode</span>
-                        </span>
-                        <p class="nds-item-desc">Centered metric layout with display-sized numbers and an icon for dashboards and stats grids.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-image-02"></i>
-                            <span class="nds-label">Image with Overlay</span>
-                        </span>
-                        <p class="nds-item-desc">Aspect ratio, focal point, and gradient overlay are tunable per card through CSS variables on the image container.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-bucket"></i>
-                            <span class="nds-label">On-Color Treatment</span>
-                        </span>
-                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-oncolor</code> to adapt text, borders, and icon tints for dark sections, hero backgrounds, or photographic surfaces.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-cursor-02"></i>
-                            <span class="nds-label">Interactive States</span>
-                        </span>
-                        <p class="nds-item-desc">Use the card as <code class="nds-inline-code lang-html">&lt;a&gt;</code> or <code class="nds-inline-code lang-html">&lt;button&gt;</code> to get hover and active feedback on stroke and shadow variants.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-customize"></i>
-                            <span class="nds-label">CSS-Driven Theming</span>
-                        </span>
-                        <p class="nds-item-desc">Override padding, gap, radius, colors, and width per instance via <code class="nds-inline-code lang-html">--card-*</code> custom properties.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-01"></i>
-                            <span class="nds-label">Responsive Layout</span>
-                        </span>
-                        <p class="nds-item-desc">Card actions stack on mobile. Pair with <code class="nds-inline-code lang-html">nds-grid</code> for column-shifting card groups.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="cardPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Make a whole card clickable by using `<a>` or `<button>` as the card root. Do not wrap a card in a separate link.
+- Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
+- Size the featured icon or avatar up (`nds-lg`, `nds-xl`) on statistic cards and in grids, where the icon carries the meaning.
+- Show a price with `.nds-card-value`, not with a tag.
+- Keep the description to one or two lines. For longer text, truncate it or link to a detail page.
+- Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
+- Use `data-status` only when the card really has that status. For a color without a status, use the color class.
+- Put a row of cards in a [grid](../layout/grid).
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="cardGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-            <p class="nds-section-description">When and how to use cards effectively</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <strong>cards</strong> to group related content into scannable units: service tiles, product listings, article previews, and dashboard widgets</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-statistic</code> for headline metrics in dashboards: a single number, a label, and an optional icon. Pair multiple statistic cards inside a <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">grid</a> for KPI rows</li>
-                    <li>Choose <code class="nds-inline-code lang-html">nds-stroke</code> for flat or content-heavy layouts. Use <code class="nds-inline-code lang-html">nds-shadow</code> for elevated, floating, or modal-adjacent cards</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-color</code> together with a color variant (<code class="nds-inline-code lang-html">nds-blue</code>, <code class="nds-inline-code lang-html">nds-yellow</code>, etc.) to category-code or status-code groups of cards in dashboards</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-oncolor</code> when placing cards on dark sections, hero backgrounds, or imagery so text and borders stay readable</li>
-                    <li>Make the entire card clickable by using <code class="nds-inline-code lang-html">&lt;a&gt;</code> or <code class="nds-inline-code lang-html">&lt;button&gt;</code> as the root element, not by wrapping a card in a separate link</li>
-                    <li>Don't use a card for a transient status message: use an <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> instead. Don't use a card to block the user for a decision: use a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">Modal</a></li>
-                    <li>Wrap tags in <code class="nds-inline-code lang-html">nds-card-meta</code> only when a second meta row sits beside them, such as a rating. The wrapper is a flex column that groups those rows. Tags on their own go straight inside <code class="nds-inline-code lang-html">nds-card-content</code>, with no wrapper: <code class="nds-inline-code lang-html">nds-card-tags</code> is styled by the card root, not by the wrapper</li>
-                    <li>Don't nest cards inside cards. If you need internal structure, use <code class="nds-inline-code lang-html">nds-card-meta</code>, <code class="nds-inline-code lang-html">nds-card-tags</code>, or a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">definition list</a> inside the content area</li>
-                    <li>Place <code class="nds-inline-code lang-html">nds-card-actions</code> after <code class="nds-inline-code lang-html">nds-card-content</code>, not inside it. Only the content area scrolls inside a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">modal</a>, so buttons placed inside it scroll out of reach on a long form. Actions inside the content still work: a modal pins them to the bottom, and an <code class="nds-inline-code lang-html">nds-rowView</code> card keeps them in the content column</li>
-                    <li>Add a featured icon or avatar in the header for quick visual recognition. Size up (<code class="nds-inline-code lang-html">nds-lg</code>, <code class="nds-inline-code lang-html">nds-xl</code>) on statistic cards and grid contexts where the icon carries the meaning</li>
-                    <li>Show a price, a rate, or a size with <code class="nds-inline-code lang-html">nds-card-value</code>, not tags: the value is an <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> span (<code class="nds-inline-code lang-html">data-currency</code> renders the riyal icon), a <code class="nds-inline-code lang-html">&lt;s&gt;</code> child is the crossed-out original, and a unit suffix like <code class="nds-inline-code lang-html">/ kg</code> is plain text</li>
-                    <li>Keep card descriptions to one or two lines. For longer copy, add <code class="nds-inline-code lang-html">nds-truncate</code> on the title and description, or link out to a detail page from the actions area</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-stroke</code></td><td>card root</td><td>Adds a 1px outline border around the card</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-shadow</code></td><td>card root</td><td>Adds an elevation shadow; deepens on hover when the card is interactive</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-color</code></td><td>card root</td><td>Tinted background fill that matches the active color variant</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>card root</td><td>Switches the card to a horizontal row layout. The header sits beside the content and keeps its own size, so an avatar or featured icon stays compact. An image header is 160px wide; set <code class="nds-inline-code lang-html">--card-image-width</code> to change it. When the card is too narrow for both columns, the header takes the full width and the content moves under it</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>card root</td><td>Centers header, content, tags, rating, and actions horizontally. It must sit on the root, not on an inner part: the card also reads it to switch the featured icon's alignment, so a misplaced <code class="nds-inline-code lang-html">nds-center</code> centers nothing and leaves the icon on the old rule</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-statistic</code></td><td>card root</td><td>Centered metric layout with a large display number; size with <code class="nds-inline-code lang-html">nds-md</code> or <code class="nds-inline-code lang-html">nds-sm</code> on the number element</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-user</code></td><td>card root</td><td>Compact user-card preset with a 224px default width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-full-width</code> / <code class="nds-inline-code lang-html">nds-full</code></td><td>card root</td><td>Removes the max-width cap so the card fills its container</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>card root</td><td>Adapts text, borders, and icon tints for dark or photographic surfaces</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code>, <code class="nds-inline-code lang-html">nds-yellow</code>, <code class="nds-inline-code lang-html">nds-red</code>, <code class="nds-inline-code lang-html">nds-blue</code>, <code class="nds-inline-code lang-html">nds-green</code></td><td>card root</td><td>Color variants that retint title, border-hover, and icon. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a matching tinted fill</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-end</code></td><td><code class="nds-inline-code lang-html">.nds-card-actions</code></td><td>Right-aligns the actions row within the card</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-card-status</code></td><td>child of the card root</td><td>Absolute-positioned status badge slot pinned to the top-start corner of the card; place a tag or badge inside</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-disabled</code> / <code class="nds-inline-code lang-html">[disabled]</code></td><td>card root</td><td>Mutes colors, dims sub-content, and removes pointer interactions</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>card root</td><td>Declares the state the card is in. Values: <code class="nds-inline-code lang-html">neutral</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">critical</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">success</code>. It renders as the matching color variant, but it is not a color picker. Set it only when the card really carries that state. For a tint on a card that asserts no status, use the color class instead (<code class="nds-inline-code lang-html">nds-blue</code>, <code class="nds-inline-code lang-html">nds-green</code>, and the rest), and leave <code class="nds-inline-code lang-html">data-status</code> off</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>card root, or a parent <code class="nds-inline-code lang-html">.nds-grid</code> / <code class="nds-inline-code lang-html">.nds-paged-content</code></td><td>Renders skeleton shimmer placeholders on the card, or on every child card when set on the parent. Equivalent to adding <code class="nds-inline-code lang-html">nds-loading</code> as a class</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--card-bg</code></td><td><code class="nds-inline-code lang-html">--background-card</code></td><td>Card background color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-bg-hover</code></td><td><code class="nds-inline-code lang-html">--background-card-hovered</code></td><td>Background when the card is interactive and hovered</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-border</code></td><td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td><td>Stroke color for the <code class="nds-inline-code lang-html">nds-stroke</code> variant</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-border-hover</code></td><td><code class="nds-inline-code lang-html">--border-primary</code></td><td>Stroke color when the card is hovered</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-border-active</code></td><td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td><td>Stroke color when the card is pressed</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Inner padding of the card, on both axes</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-padding-block</code></td><td><code class="nds-inline-code lang-html">--card-padding</code></td><td>Top and bottom padding alone. Set it to pad one axis without touching the other</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-padding-inline</code></td><td><code class="nds-inline-code lang-html">--card-padding</code></td><td>Start and end padding alone. Tab content reads it too, so a card-style tab panel keeps the same gutter</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-gap</code></td><td><code class="nds-inline-code lang-html">--spacing-3xl</code></td><td>Vertical gap between header, content, meta, and actions</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-radius</code></td><td><code class="nds-inline-code lang-html">--radius-lg</code></td><td>Corner radius</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-width</code></td><td><code class="nds-inline-code lang-html">100%</code></td><td>Card width inside its container</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-width-min</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Minimum width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-width-max</code></td><td><code class="nds-inline-code lang-html">360px</code></td><td>Maximum width cap</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-title</code></td><td><code class="nds-inline-code lang-html">--text-display</code></td><td>Title color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-subtitle</code></td><td><code class="nds-inline-code lang-html">--text-primary</code></td><td>Subtitle color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-text</code></td><td><code class="nds-inline-code lang-html">--text-display</code></td><td>Description and body text color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-number</code></td><td><code class="nds-inline-code lang-html">--text-primary-strong</code></td><td>Statistic number color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-rating</code></td><td><code class="nds-inline-code lang-html">--text-secondary-paragraph</code></td><td>Rating helper text color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--featuredicon-color</code></td><td><code class="nds-inline-code lang-html">--featuredicons-icon-primary</code></td><td>Featured-icon color (also drives the avatar color)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--featuredicon-bg</code></td><td><code class="nds-inline-code lang-html">--featuredicons-background-primary-light</code></td><td>Featured-icon background color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-image-width</code></td><td><code class="nds-inline-code lang-html">160px</code></td><td>Width of the image column in an <code class="nds-inline-code lang-html">nds-rowView</code> card. It has no effect on a stacked card, where the image fills the card width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--img-ratio</code></td><td><code class="nds-inline-code lang-html">2 / 1</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-card-image</code> to control aspect ratio</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--img-pos-x</code></td><td><code class="nds-inline-code lang-html">50%</code></td><td>Horizontal focal point of the image</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--img-pos-y</code></td><td><code class="nds-inline-code lang-html">50%</code></td><td>Vertical focal point of the image</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--overlay</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Opacity of the dark gradient overlay on the image (0 to 1)</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<section id="cardApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-status` | `.nds-card` | The status of the card: `neutral`, `warning`, `error`, `critical`, `info` or `success`. It shows the matching color |
+| `data-state~="loading"` | `.nds-card`, or a parent `.nds-grid`, `.nds-paged-content` or `.nds-swiper` | Skeleton placeholders on the card, or on every card inside the parent. The same as the `nds-loading` class |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on `.nds-card`, except the image properties, which go on `.nds-card-image`.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--card-bg` | `var(--background-card)` | Background |
+| `--card-bg-hover` | `var(--background-card-hovered)` | Background of a hovered link or button card |
+| `--card-border` | `var(--border-neutral-primary)` | Border color of a stroke card |
+| `--card-border-hover` | `var(--border-primary)` | Border color on hover |
+| `--card-border-active` | `var(--border-neutral-primary)` | Border color on press |
+| `--card-padding` | `var(--spacing-xl)` | Padding on both axes |
+| `--card-padding-block` | `var(--card-padding)` | Top and bottom padding |
+| `--card-padding-inline` | `var(--card-padding)` | Start and end padding. Card-style tab panels read it too |
+| `--card-gap` | `var(--spacing-3xl)` | Gap between header, content and actions, and between the rows in `.nds-card-meta` |
+| `--card-radius` | `var(--radius-lg)` | Corner radius |
+| `--card-width` | `100%` | Width |
+| `--card-width-min` | `0` | Minimum width |
+| `--card-width-max` | `360px` | Maximum width |
+| `--card-title` | `var(--text-display)` | Title color |
+| `--card-subtitle` | `var(--text-primary-paragraph)` | Subtitle color |
+| `--card-text` | `var(--text-display)` | Description color |
+| `--card-number` | `var(--text-primary-strong)` | Statistic number color |
+| `--card-rating` | `var(--text-secondary-paragraph)` | Rating count color |
+| `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Featured icon and avatar color. Color classes change it |
+| `--featuredicon-bg` | `var(--featuredicons-background-primary-light)` | Featured icon background |
+| `--card-image-width` | `160px` | Image width in a row card. No effect on a stacked card, where the image fills the width |
+| `--img-ratio` | `2 / 1` | Image aspect ratio |
+| `--img-pos-x` | `50%` | Horizontal focal point of the image |
+| `--img-pos-y` | `50%` | Vertical focal point of the image |
+| `--overlay` | `0` | Opacity of a dark overlay on the image, from 0 to 1 |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+Cards have no script, methods or events.
+
+</div>
+  </div>
+</section>
+
+<section id="cardRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Home Page Template](../templates/home-template): service and news cards.
+- [KPIs Template](../templates/kpis-template): statistic cards in a grid.
+- [Admin Console Demo](../examples/console-demo): cards in a dashboard.
+
+</div>
+  </div>
 </section>

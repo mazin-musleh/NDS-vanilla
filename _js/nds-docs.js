@@ -6,7 +6,9 @@
  *
  * Variants table Markup cell (CSS selector syntax):
  *   .cls  class · [attr]  bare attribute · [attr="v"]  attribute · [data-state~="t"]  token
- *   --prop: v  inline custom property · .prop = v  JS property · canon #id  structure swap
+ *   --prop: v  inline custom property · .prop = v  JS property
+ *   canon #id  in the Structure group: swap the whole markup; elsewhere: insert that part block
+ *              into "On element", at its end, or its start with "(start)"
  * Rows sharing Group + Option are one choice.
  */
 (function () {
@@ -55,13 +57,33 @@
         return !sel || sel === '—' ? [root.firstElementChild] : Array.prototype.slice.call(root.querySelectorAll(sel));
     }
 
-    // Markup ops go on the pristine copy; JS properties have no markup, so they go on the live preview.
-    function apply(root, choice, props) {
+    // Insert a part block as el's first or last child, indented to match its siblings.
+    function insert(el, html, pos) {
+        var kids = el.childNodes, first = kids[0], last = kids[kids.length - 1];
+        var tail = function (n) { return n && n.nodeType === 3 ? (n.textContent.match(/\n([ \t]*)$/) || [])[1] : null; };
+        var ind = tail(first);
+        if (ind == null) ind = (tail(last) || '') + '  ';
+        var t = document.createElement('template');
+        t.innerHTML = html.split('\n').join('\n' + ind);
+        if (pos === 'start') {
+            t.content.appendChild(document.createTextNode('\n' + ind));
+            el.insertBefore(t.content, first && first.nodeType === 3 ? first.nextSibling : first);
+        } else {
+            var ref = last && last.nodeType === 3 ? last : null;
+            el.insertBefore(document.createTextNode('\n' + ind), ref);
+            el.insertBefore(t.content, ref);
+        }
+    }
+
+    // Phase 'insert' adds part blocks, 'markup' the rest; JS properties ('prop') go on the live preview only.
+    function apply(root, choice, phase) {
         choice.ops.forEach(function (o) {
             var op = o.op;
-            if (!op || op.kind === 'structure' || (op.kind === 'prop') !== props) return;
+            if (!op || op.kind === 'structure') return;
+            if ((op.kind === 'insert' ? 'insert' : op.kind === 'prop' ? 'prop' : 'markup') !== phase) return;
             targets(root, o.target).forEach(function (el) {
-                if (op.kind === 'class') el.classList.add(op.name);
+                if (op.kind === 'insert') insert(el, dedent(document.getElementById(op.id).textContent), o.pos);
+                else if (op.kind === 'class') el.classList.add(op.name);
                 else if (op.kind === 'attr') el.setAttribute(op.name, op.value);
                 else if (op.kind === 'token') {
                     var set = (el.getAttribute(op.name) || '').split(/\s+/).filter(Boolean);
@@ -69,6 +91,22 @@
                     el.setAttribute(op.name, set.join(' '));
                 } else if (op.kind === 'style') el.style.setProperty(op.name, op.value);
                 else if (op.kind === 'prop') el[op.name] = op.value;
+            });
+        });
+    }
+
+    // A `(default)` row describes the canon as written; picking another option in its group removes it.
+    function unapply(root, choice) {
+        choice.ops.forEach(function (o) {
+            var op = o.op;
+            if (!op) return;
+            targets(root, o.target).forEach(function (el) {
+                if (op.kind === 'class') el.classList.remove(op.name);
+                else if (op.kind === 'attr') el.removeAttribute(op.name);
+                else if (op.kind === 'token') {
+                    var set = (el.getAttribute(op.name) || '').split(/\s+/).filter(function (t) { return t && t !== op.value; });
+                    set.length ? el.setAttribute(op.name, set.join(' ')) : el.removeAttribute(op.name);
+                } else if (op.kind === 'style') el.style.removeProperty(op.name);
             });
         });
     }
@@ -81,8 +119,11 @@
             var c = tr.cells, group = c[0].textContent.trim(), option = c[1].textContent.trim();
             var key = group + '|' + option, op = parseOp(c[2].textContent);
             if (!op && c[2].textContent.trim() !== '—') console.warn('[NDS Docs] unparsed Markup cell:', c[2].textContent.trim());
+            // `canon #id` swaps the markup in the Structure group; anywhere else it inserts a part block.
+            if (op && op.kind === 'structure' && group !== 'Structure') op.kind = 'insert';
+            var at = c[3].textContent.trim().match(/^(.*?)\s*(?:\((start|end)\))?$/);
             if (!byKey[key]) { byKey[key] = { key: key, group: group, option: option, ops: [] }; choices.push(byKey[key]); }
-            byKey[key].ops.push({ op: op, target: c[3].textContent.trim() });
+            byKey[key].ops.push({ op: op, target: at[1], pos: at[2] || 'end' });
             if (op && op.kind === 'structure') byKey[key].structure = op.id;
         });
         return choices;
@@ -93,10 +134,11 @@
         var baseSrc = dedent(script.textContent);
         var preview = bar.nextElementSibling.nextElementSibling;
         var codeEl = preview.nextElementSibling.querySelector('code');
-        var byKey = {}, order = [], active = {};
+        var byKey = {}, order = [], active = {}, defaults = {};
         readTable(script.getAttribute('data-variants')).forEach(function (c) {
             byKey[c.key] = c;
             if (order.indexOf(c.group) < 0) order.push(c.group);
+            if (/\(default\)/.test(c.option)) defaults[c.group] = c;
         });
         bar.querySelectorAll('.nds-dropmenu-item[data-state~="selected"]').forEach(function (it) {
             var c = byKey[it.getAttribute('data-builder-option')];
@@ -124,13 +166,15 @@
         function render() {
             var struct = active.Structure && active.Structure.structure;
             pristine.innerHTML = struct ? dedent(document.getElementById(struct).textContent) : baseSrc;
+            order.forEach(function (g) { if (defaults[g] && active[g] !== defaults[g]) unapply(pristine, defaults[g]); });
+            order.forEach(function (g) { if (active[g]) apply(pristine, active[g], 'insert'); });
             showApplicable();
-            order.forEach(function (g) { if (active[g]) apply(pristine, active[g], false); });
+            order.forEach(function (g) { if (active[g]) apply(pristine, active[g], 'markup'); });
             var html = serialize(pristine);
 
             NDS.Init.destroy(preview);
             preview.innerHTML = html;
-            order.forEach(function (g) { if (active[g]) apply(preview, active[g], true); });
+            order.forEach(function (g) { if (active[g]) apply(preview, active[g], 'prop'); });
             // On-color markup needs the deep surface behind it (the build sets it for the default state).
             preview.querySelector('.nds-oncolor') ? preview.style.setProperty('--card-bg', 'var(--background-primary-strong)') : preview.style.removeProperty('--card-bg');
             NDS.Init.mount(preview);
