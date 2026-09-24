@@ -403,13 +403,55 @@
 
 
   // ==============================================
-  // CARD Status SECTION
+  // CARD STATUS SLOT
   // ==============================================
+  // A status tag in the header: the top end when stacked, under the avatar in a
+  // row card, out of the flow when centred (so the icon stays centred), and over
+  // an image's start corner. The checkbox comes before the header in canonical
+  // markup, so a sibling rule clears it — its inset + width + a gap, minus the
+  // padding the header already sits inside. No :has(). Another part that needs
+  // this spot (a badge, an icon button) joins these rules under its own name.
+
+  .nds-card-checkbox ~ .nds-card-header {
+    --_card-status-shift: calc(var(--spacing-2xl) + var(--nds-input-size, 16px) + var(--spacing-md) - var(--_card-padding-inline));
+  }
 
   .nds-card-status {
+    display: flex;
+    align-self: flex-start;
+    margin-inline-start: auto;
+    margin-inline-end: var(--_card-status-shift, 0);
+  }
+
+  &.nds-rowView .nds-card-status {
+    margin-inline: 0;
+  }
+
+  // A narrow row card stacks again (see .nds-rowView), so the tag returns to the end.
+  &.nds-rowView {
+    @container (width < 324px) {
+      .nds-card-status {
+        margin-inline-start: auto;
+        margin-inline-end: var(--_card-status-shift, 0);
+      }
+    }
+  }
+
+  &:is(.nds-center, .nds-statistic) .nds-card-status {
     position: absolute;
     top: 0;
-    inset-inline-start: 0;
+    inset-inline-end: var(--_card-status-shift, 0);
+    margin: 0;
+  }
+
+  // Last, so it wins in every layout.
+  .nds-card-image ~ .nds-card-status {
+    position: absolute;
+    top: var(--spacing-md);
+    inset-inline-start: var(--spacing-md);
+    inset-inline-end: auto;
+    margin: 0;
+    z-index: 3;
   }
 
 

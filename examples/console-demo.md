@@ -557,19 +557,21 @@ hideFeedback: true
                                 <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                 {% endif %}
                             </div>
-                            {% if user.status == "active" %}
-                            <span class="nds-tag nds-sm" data-status="success">
-                                <span class="nds-label" data-filter="status" data-filter-value="active">Active</span>
-                            </span>
-                            {% elsif user.status == "away" %}
-                            <span class="nds-tag nds-sm" data-status="warning">
-                                <span class="nds-label" data-filter="status" data-filter-value="away">Away</span>
-                            </span>
-                            {% elsif user.status == "offline" %}
-                            <span class="nds-tag nds-sm" data-status="neutral">
-                                <span class="nds-label" data-filter="status" data-filter-value="offline">Offline</span>
-                            </span>
-                            {% endif %}
+                            <div class="nds-card-status">
+                                {% if user.status == "active" %}
+                                <span class="nds-tag nds-sm" data-status="success">
+                                    <span class="nds-label" data-filter="status" data-filter-value="active">Active</span>
+                                </span>
+                                {% elsif user.status == "away" %}
+                                <span class="nds-tag nds-sm" data-status="warning">
+                                    <span class="nds-label" data-filter="status" data-filter-value="away">Away</span>
+                                </span>
+                                {% elsif user.status == "offline" %}
+                                <span class="nds-tag nds-sm" data-status="neutral">
+                                    <span class="nds-label" data-filter="status" data-filter-value="offline">Offline</span>
+                                </span>
+                                {% endif %}
+                            </div>
                         </div>
                         <div class="nds-card-content">
                             <div class="nds-card-text">
