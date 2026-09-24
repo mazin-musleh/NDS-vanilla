@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "playwright-core": "^1.63.0",
-    "puppeteer-core": "^25.1.0",
     "terser": "^5.43.1"
   }
 }

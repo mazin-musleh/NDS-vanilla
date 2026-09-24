@@ -9,7 +9,7 @@
 //   viewport  = 412×915 mobile, DPR 2.6
 //   cold browser per run, median of 3, cache disabled.
 //
-// USAGE (run from the project root so puppeteer-core resolves):
+// USAGE (run from the project root; the browser launches through scripts/lib/browser.mjs):
 //   node .claude/skills/nds-perf/measure-lcp.mjs                 # home, _site, 3 runs
 //   node .claude/skills/nds-perf/measure-lcp.mjs components/ components/forms.html
 //   node .claude/skills/nds-perf/measure-lcp.mjs https://mazin-musleh.github.io/NDS-vanilla/
@@ -26,7 +26,7 @@
 //                   LoAF long tasks w/ forced-layout attribution, reflow hotspots)
 import fs from 'fs';
 import { startServer } from './gz-serve.mjs';
-import puppeteer from 'puppeteer-core';
+import { launch, cdp as newCdp } from '../../../scripts/lib/browser.mjs';
 
 // ---- args ----
 const args = process.argv.slice(2);
@@ -43,7 +43,8 @@ const BASEURL = flag('baseurl', '/NDS-vanilla');
 const SELECTORS = !!flag('selectors', false);
 const TRACE = !!flag('trace', false) || SELECTORS;
 const MONITOR = !!flag('monitor', false);
-// The monitor is injected by the harness (evaluateOnNewDocument), so pages
+const CHROME = flag('chrome', null);
+// The monitor is injected by the harness (addInitScript), so pages
 // don't need a perf_monitor:true rebuild and remote URLs work too.
 let MONITOR_SRC = null;
 if (MONITOR) {
@@ -75,22 +76,6 @@ const PAGES = (() => {
   return positional.length ? positional.map(norm) : [{ local: '' }];
 })();
 const HAS_LOCAL = PAGES.some((p) => p.local != null);
-
-// ---- locate Chrome ----
-function findChrome() {
-  const env = flag('chrome', process.env.CHROME_PATH);
-  const candidates = [
-    typeof env === 'string' ? env : null,
-    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/usr/bin/google-chrome', '/usr/bin/chromium-browser', '/usr/bin/chromium',
-  ].filter(Boolean);
-  const found = candidates.find((p) => { try { return fs.existsSync(p); } catch { return false; } });
-  if (!found) { console.error('Chrome not found. Pass --chrome=PATH or set CHROME_PATH.'); process.exit(1); }
-  return found;
-}
-const CHROME = findChrome();
 
 if (HAS_LOCAL && !fs.existsSync(DIR)) {
   console.error(`Site dir "${DIR}" not found. Build first:  bundle exec jekyll build -d ${DIR}`);
@@ -244,18 +229,13 @@ function printMonitor(m) {
 
 // ---- one cold measurement ----
 async function measure(pageUrl) {
-  // pipe, not a port: Chrome 151 fails the port handshake when an instance is already running (see svg-render-diff.mjs).
-  // Retried: the previous run's Chrome may still be tearing down, and puppeteer then reports the fresh profile as locked.
-  let browser;
-  for (let attempt = 1; ; attempt++) {
-    try { browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', pipe: true }); break; }
-    catch (e) { if (attempt >= 3) throw e; await new Promise(r => setTimeout(r, 1500)); }
-  }
+  const browser = await launch(typeof CHROME === 'string' ? { executablePath: CHROME } : {});
   try {
-    const page = await browser.newPage();
-    await page.setViewport({ width: 412, height: 915, isMobile: true, hasTouch: true, deviceScaleFactor: 2.6 });
-    await page.setUserAgent('Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36');
-    const cdp = await page.createCDPSession();
+    const page = await browser.newPage({
+      viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2.6,
+      userAgent: 'Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
+    });
+    const cdp = await newCdp(page);
     await cdp.send('Network.enable');
     await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
     if (THROTTLE) {
@@ -267,8 +247,8 @@ async function measure(pageUrl) {
     }
     await cdp.send('Emulation.setCPUThrottlingRate', { rate: THROTTLE ? CPU : 1 });
 
-    if (MONITOR) await page.evaluateOnNewDocument(MONITOR_SRC);
-    await page.evaluateOnNewDocument(() => {
+    if (MONITOR) await page.addInitScript(MONITOR_SRC);
+    await page.addInitScript(() => {
       window.__lcp = [];
       new PerformanceObserver((l) => {
         for (const e of l.getEntries()) window.__lcp.push({
@@ -297,21 +277,22 @@ async function measure(pageUrl) {
       });
     });
 
-    if (TRACE) await page.tracing.start({
+    if (TRACE) await browser.startTracing(page, {
       categories: ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'toplevel', 'v8.execute', 'blink.user_timing',
         // .stack puts a JS stack on every UpdateLayoutTree/Layout event so the raw trace names the forcing frame.
         // .invalidationTracking adds StyleRecalcInvalidationTracking events (reason + node) so a recalc no JS forced can still be explained.
         ...(SELECTORS ? ['disabled-by-default-blink.debug', 'disabled-by-default-devtools.timeline.stack', 'disabled-by-default-devtools.timeline.invalidationTracking'] : [])],
     });
-    const resp = await page.goto(pageUrl, { waitUntil: 'networkidle2', timeout: 120000 });
+    const resp = await page.goto(pageUrl, { waitUntil: 'load', timeout: 120000 });
     if (resp && resp.status() !== 200) throw new Error(`HTTP ${resp.status()} for ${pageUrl} — check the page path`);
+    // Best effort: a remote page's beacon can hold the network open forever.
+    await page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {});
     await new Promise((r) => setTimeout(r, 1800)); // let LCP settle past late images
-    // networkidle2 tolerates one open request, so a slow icon font can still be downloading: wait for it.
-    await page.waitForFunction(() => window.__icons !== null || !document.querySelector('.hgi-stroke'), { timeout: 30000 }).catch(() => {});
+    await page.waitForFunction(() => window.__icons !== null || !document.querySelector('.hgi-stroke'), null, { timeout: 30000 }).catch(() => {});
 
     let breakdown = null, selectors = null;
     if (TRACE) {
-      const buf = await page.tracing.stop(); // Uint8Array in puppeteer ≥22
+      const buf = await browser.stopTracing();
       if (buf) {
         const trace = JSON.parse(new TextDecoder().decode(buf));
         breakdown = mainThreadBreakdown(trace);

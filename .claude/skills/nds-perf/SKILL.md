@@ -1,6 +1,6 @@
 ---
 name: nds-perf
-description: Measure real page performance for NDS pages (local builds or remote https URLs) using the repo's calibrated throttled-Chrome harness — LCP, FCP, reveal-gate timing, and with --trace a main-thread breakdown (style/layout/script self-time, culprit script frames, long tasks) — instead of hand-writing a Puppeteer script each time. Builds (if needed), gzip-serves the site like GitHub Pages, drives headless Chrome under slow-4G + 6.6× CPU on a mobile viewport, names the actual LCP element, and reports per-run values + median. Use for "measure LCP", "test LCP", "measure INP", "why is this component slow to respond", "interaction latency", "check page speed", "measure performance of <page>", "did this change regress LCP", "what's the LCP on mobile", "measure the live site", "profile the main thread", "what's blocking the main thread", "find long tasks". For the Lighthouse LAB score (the simulated 0–100), see the "Lighthouse lab score" section below — but trust this harness's real numbers over lantern's simulated LCP, which over-estimates ~2× on this site.
+description: Measure real page performance for NDS pages (local builds or remote https URLs) using the repo's calibrated throttled-Chrome harness — LCP, FCP, reveal-gate timing, and with --trace a main-thread breakdown (style/layout/script self-time, culprit script frames, long tasks) — instead of hand-writing a browser script each time. Builds (if needed), gzip-serves the site like GitHub Pages, drives headless Chrome under slow-4G + 6.6× CPU on a mobile viewport, names the actual LCP element, and reports per-run values + median. Use for "measure LCP", "test LCP", "measure INP", "why is this component slow to respond", "interaction latency", "check page speed", "measure performance of <page>", "did this change regress LCP", "what's the LCP on mobile", "measure the live site", "profile the main thread", "what's blocking the main thread", "find long tasks". For the Lighthouse LAB score (the simulated 0–100), see the "Lighthouse lab score" section below — but trust this harness's real numbers over lantern's simulated LCP, which over-estimates ~2× on this site.
 argument-hint: "[page-paths-or-urls…] [--runs=N] [--no-throttle] [--dir=PATH]"
 ---
 
@@ -28,7 +28,7 @@ Three traps this harness avoids — all have produced wrong answers before:
    ```
    Skip if `_site` is already current for what you're measuring. To compare a change, build the baseline to one dir and the change to another (e.g. `-d _site-after`) and run the script against each with `--dir`.
 
-2. **Run the measurement** from the project root (so `puppeteer-core` resolves):
+2. **Run the measurement** from the project root (it launches through `scripts/lib/browser.mjs`):
    ```bash
    # home page, 3 runs, calibrated throttle
    node .claude/skills/nds-perf/measure-lcp.mjs

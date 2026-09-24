@@ -5,7 +5,7 @@
 // main-thread / style+layout / paint→presentation with per-script attribution.
 // Same calibration as measure-lcp.mjs (see its header).
 //
-// USAGE (run from the project root so puppeteer-core resolves):
+// USAGE (run from the project root; the browser launches through scripts/lib/browser.mjs):
 //   node .claude/skills/nds-perf/measure-inp.mjs --url=http://localhost:4002/NDS-vanilla/ --click="button.nds-nav-link[aria-expanded]"
 //   node .claude/skills/nds-perf/measure-inp.mjs --url=https://example.gov.sa/ --click=".a" --click=".b" --cpu=20
 //
@@ -22,7 +22,8 @@
 //        --chrome=PATH (else auto-detect)
 //
 // TWO GOTCHAS, both of which produced a wrong answer before this script existed:
-// 1. Never use page.setRequestInterception() here. It silently suppresses every
+// 1. Never intercept requests here (page.route, or Puppeteer's setRequestInterception —
+//    both ride CDP's Fetch domain). It silently suppresses every
 //    event-timing entry — interactionCount reads 0 and the run looks like a fast
 //    page instead of a broken rig. Use Network.setBlockedURLs for --block, and
 //    trust the interactionCount guard below.
@@ -32,8 +33,7 @@
 //    window, and 1,900ms of style recalc that the frame timestamps put at 0.7ms.
 //    Long-animation-frame timestamps are the wall-clock truth; this script uses
 //    those, and reports only what a frame's own start/render/paint/present say.
-import fs from 'fs';
-import puppeteer from 'puppeteer-core';
+import { launch, cdp as newCdp } from '../../../scripts/lib/browser.mjs';
 
 const args = process.argv.slice(2);
 const flag = (name, def) => {
@@ -54,26 +54,12 @@ const REDUCED = !!flag('reduced', false);
 const HEADED = !!flag('headed', false);
 const TRACE = !!flag('trace', false);
 const BLOCK = flags('block');
+const CHROME = flag('chrome', null);
 
 if (!URL || !CLICKS.length) {
   console.error('Usage: --url=URL --click=SELECTOR [--click=SELECTOR …]  (see header for all flags)');
   process.exit(1);
 }
-
-function findChrome() {
-  const env = flag('chrome', process.env.CHROME_PATH);
-  const candidates = [
-    typeof env === 'string' ? env : null,
-    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/usr/bin/google-chrome', '/usr/bin/chromium-browser', '/usr/bin/chromium',
-  ].filter(Boolean);
-  const found = candidates.find((p) => { try { return fs.existsSync(p); } catch { return false; } });
-  if (!found) { console.error('Chrome not found. Pass --chrome=PATH or set CHROME_PATH.'); process.exit(1); }
-  return found;
-}
-const CHROME = findChrome();
 
 const OBS = () => {
   window.__e = [];
@@ -119,13 +105,13 @@ const OBS = () => {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function run(runIndex) {
-  // pipe, not a port: Chrome 151 fails the port handshake when an instance is already running (see svg-render-diff.mjs).
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: HEADED ? false : 'new', pipe: true });
+  const browser = await launch({ headless: !HEADED, ...(typeof CHROME === 'string' ? { executablePath: CHROME } : {}) });
   try {
-    const page = await browser.newPage();
-    await page.setViewport({ width: 412, height: 915, isMobile: true, hasTouch: true, deviceScaleFactor: 2.6 });
-    await page.setUserAgent('Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36');
-    const cdp = await page.createCDPSession();
+    const page = await browser.newPage({
+      viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2.6,
+      userAgent: 'Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
+    });
+    const cdp = await newCdp(page);
     await cdp.send('Network.enable');
     if (BLOCK.length) await cdp.send('Network.setBlockedURLs', { urls: BLOCK });
     if (THROTTLE) {
@@ -139,16 +125,17 @@ async function run(runIndex) {
     if (REDUCED) await cdp.send('Emulation.setEmulatedMedia', {
       features: [{ name: 'prefers-reduced-motion', value: 'reduce' }],
     });
-    await page.evaluateOnNewDocument(OBS);
+    await page.addInitScript(OBS);
 
-    await page.goto(URL, { waitUntil: 'networkidle2', timeout: 90000 });
+    await page.goto(URL, { waitUntil: 'load', timeout: 90000 });
+    await page.waitForLoadState('networkidle', { timeout: 30000 }).catch(() => {});
     await sleep(SETTLE); // don't charge leftover load work to the first click
 
     // Trace only the first run: the invalidation categories perturb timing, and one
     // run is enough to name what a click invalidates. user_timing carries the click
     // marks — the trace clock and performance.now() do not line up.
     const tracing = TRACE && runIndex === 0;
-    if (tracing) await page.tracing.start({ categories: ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink.user_timing',
+    if (tracing) await browser.startTracing(page, { categories: ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink.user_timing',
       'disabled-by-default-devtools.timeline.stack', 'disabled-by-default-devtools.timeline.invalidationTracking'] });
 
     const steps = [];
@@ -162,7 +149,7 @@ async function run(runIndex) {
       steps.push({ sel, from, to: await page.evaluate(() => performance.now()) });
     }
     const { e, loaf, count } = await page.evaluate(() => ({ e: window.__e, loaf: window.__loaf, count: performance.interactionCount }));
-    const trace = tracing ? JSON.parse(Buffer.from(await page.tracing.stop()).toString('utf8')).traceEvents : null;
+    const trace = tracing ? JSON.parse(Buffer.from(await browser.stopTracing()).toString('utf8')).traceEvents : null;
     return { e, loaf, count, steps, trace };
   } finally {
     await browser.close();

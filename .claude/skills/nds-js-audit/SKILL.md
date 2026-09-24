@@ -52,7 +52,7 @@ Default to advancing, not asking. Run the obvious next step automatically and re
 
 Read-only / reversible steps (running the audit, emitting the report) take the recommended action without an extra confirmation round-trip. When nothing is ambiguous, do it and say so — don't stop to ask permission for the step you already recommended.
 
-**Live behavior verification (Puppeteer) is NEVER auto-run.** The static review is the automatic Phase 6 gate; the live browser drive is always the user's choice — the skill offers `verify in browser` (skill drives it) vs a manual review the user performs, states a risk-based recommendation, and drives the browser ONLY on an explicit `verify in browser`. Auto-advance through a clean fix batch still applies (static review + rebundle are the gate); behavior verification rides alongside as an offered option, not a blocker.
+**Live behavior verification (browser) is NEVER auto-run.** The static review is the automatic Phase 6 gate; the live browser drive is always the user's choice — the skill offers `verify in browser` (skill drives it) vs a manual review the user performs, states a risk-based recommendation, and drives the browser ONLY on an explicit `verify in browser`. Auto-advance through a clean fix batch still applies (static review + rebundle are the gate); behavior verification rides alongside as an offered option, not a blocker.
 
 ---
 
@@ -394,5 +394,5 @@ This skill deliberately does not cover:
 - Replacing eslint. No lint config is authored; the rules are NDS-specific conventions enforced through an agent loop.
 - Profiler-driven *detection*. The JSP/JSA catalogs are static-read heuristics — they surface candidates, not hotspots, and don't replace a DevTools Performance / Lighthouse pass. (The Phase 6 perf *verification* is different: a bounded before/after measurement of one applied fix, not a profiler sweep.)
 - Including `_js/nds-core.js` or `_js/nds-loader.js` in full-tree `js` runs. Single-file audits on either ARE supported — see the "Excluded files" carve-out in Phase 1.
-- Running `bundle exec jekyll build` unless the user explicitly asks. `ruby _plugins/js_processor.rb` runs automatically per-file in Phase 5/6, and the Phase 6 Puppeteer test MAY start/reuse `bundle exec jekyll serve` (port 4002) — see `PUPPETEER.md`.
+- Running `bundle exec jekyll build` unless the user explicitly asks. `ruby _plugins/js_processor.rb` runs automatically per-file in Phase 5/6, and the Phase 6 browser test MAY start/reuse `bundle exec jekyll serve` (port 4002) — see `BROWSER.md`.
 - Editing files outside the Phase 5 / Phase 7 paths. Phase 5 edits `_js/nds-*.js`, plus `_js/nds-loader.js` / `_js/nds-core.js` only when a finding's `Fix:` routes there (JSA-05 registry edits; `promote <api-name>` candidates), plus `_sass/**/*.scss` only when a JSA finding's `Fix:` routes there (JSA-15 CSS-subsume migrations — see `FIX.md` → "Out-of-scope modifications" for the bounds). Phase 7 edits this `SKILL.md`, the `RULES-*.md` group files, and `PERSONA.md` only on an explicit `evolve` go. Nothing else.

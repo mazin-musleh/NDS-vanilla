@@ -1,4 +1,4 @@
-# Puppeteer Behavior Test — playbook for the per-file review agent
+# Browser Behavior Test — playbook for the per-file review agent
 
 Phase 6's review agent uses this to **actually drive the fixed component in a real
 browser** instead of handing the user a "test 1/2/3" checklist. Re-running the rule
@@ -12,15 +12,12 @@ clean per-file summary exactly like a static-review regression.
 
 ## Environment (already provisioned in this repo)
 
-- **Driver:** `puppeteer-core` (in `node_modules/` — confirm with `node -e "require('puppeteer-core')"`).
-  `puppeteer-core` ships **no** bundled browser, so an `executablePath` is **required**.
-- **Browser executablePath**, first that exists:
-  1. `C:\Program Files\Google\Chrome\Application\chrome.exe`
-  2. `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`
-  3. `C:\Program Files\Microsoft\Edge\Application\msedge.exe`
-- **Dev server:** `bundle exec jekyll serve` on **http://localhost:4002**.
+- **Driver:** Playwright, launched through `scripts/lib/browser.mjs` — it finds the installed
+  Chrome (or `CHROME_PATH`). Never call `chromium.launch()` yourself; `ENGINE=webkit` runs
+  the same script as Safari (CDP calls are Chromium-only).
+- **Dev server:** `bundle exec jekyll serve` on **http://localhost:4002/NDS-vanilla/**.
   Reuse a running server (`curl -s -o /dev/null -w "%{http_code}" http://localhost:4002`
-  → `200`). If none is up, the user's "test the fix with Puppeteer" request is the
+  → `200`). If none is up, the user's "verify in browser" request is the
   explicit authorization to start one — launch it in the background, wait until the
   port answers `200`, and leave it running for the rest of the batch (don't restart
   per file). After a `_js/` fix you already ran `ruby _plugins/js_processor.rb`, and
@@ -31,12 +28,12 @@ clean per-file summary exactly like a static-review regression.
 
 Pick the first reachable surface; the served URL mirrors the source path:
 
-1. `components/{name}.md` → `http://localhost:4002/components/{name}.html` — the live demo + every variant. Preferred: it exercises real markup.
+1. `components/{name}.md` → `http://localhost:4002/NDS-vanilla/components/{name}.html` — the live demo + every variant. Preferred: it exercises real markup.
 2. `examples/*.md` that embed the component → the example's served URL.
 3. `playground.html` → drop the canonical markup (from the component doc's `<code class="lang-html code">` block) onto the playground and drive that.
 4. **No headless-reachable surface** (UI-shell pieces — `header`, `footer`, `mainnav`, `theme` — or an interaction that can't be reproduced without a real user gesture the browser blocks): do **not** fake a pass. Report `behavior: "not-headless-testable"`, name why, and fall back to emitting the per-rule user checklist for that rule only.
 
-Never use `file://` — NDS fetches (i18n JSON, autocomplete) fail under CORS there (see project memory). Always go through `http://localhost:4002`.
+Never use `file://` — NDS fetches (i18n JSON, autocomplete) fail under CORS there (see project memory). Always go through `http://localhost:4002/NDS-vanilla/`.
 
 ## What every test must capture
 
@@ -53,27 +50,24 @@ Never use `file://` — NDS fetches (i18n JSON, autocomplete) fail under CORS th
 
 ## Run shape
 
-Write a throwaway ESM script to `c:\tmp\nds-pup-{name}.mjs`, run it with `node`, parse its single-line JSON verdict, then delete it.
+Write a throwaway ESM script to the repo's `tmp/nds-browser-{name}.mjs`, run it with `node` from the project root, parse its single-line JSON verdict, then delete it.
 
 ```js
-import puppeteer from 'puppeteer-core';
-const EXE = ['C:/Program Files/Google/Chrome/Application/chrome.exe',
-             'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-             'C:/Program Files/Microsoft/Edge/Application/msedge.exe']
-            .find(p => (await import('fs')).existsSync(p));
-const browser = await puppeteer.launch({ executablePath: EXE, headless: true });
+import { launch } from '../scripts/lib/browser.mjs';
+const browser = await launch();
 const page = await browser.newPage();
 const errors = [];
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 page.on('pageerror', e => errors.push(String(e)));
-await page.goto('http://localhost:4002/components/{name}.html', { waitUntil: 'networkidle2' });
+await page.goto('http://localhost:4002/NDS-vanilla/components/{name}.html', { waitUntil: 'networkidle' });
 // ── per-rule interaction + assertions via page.$eval / page.evaluate / page.click ──
+// page.evaluate takes ONE argument after the function — pass [a, b], not a, b.
 const result = { /* per-rule pass flags */ };
 await browser.close();
 console.log(JSON.stringify({ consoleErrors: errors, result }));
 ```
 
-(`headless: false` is fine for debugging a flaky assertion locally, but default to `true` for the batch.)
+(`launch({ headless: false })` is fine for debugging a flaky assertion locally, but default to `true` for the batch.)
 
 ## Performance measurement (before/after)
 
@@ -85,16 +79,16 @@ For a **perf fix** (any actionable JSP finding, or a JSA perf finding with a hea
 
 | Rule(s) | Metric | How to capture |
 |---|---|---|
-| JSP-01, JSP-02, JSP-07 (resize/scroll/debounce throttle) | Handler invocation count + scripting time during a fixed event burst | `page.evaluateOnNewDocument` to install a counter the real handler increments, OR wrap and count; dispatch a fixed burst (e.g. 100 `scroll`/`resize`/`input` events), read the count. Throttled fix → far fewer invocations for the same burst. |
-| JSP-03, JSP-04, JSP-05 (observer pooling) | Live observer-instance count | `evaluateOnNewDocument` to wrap `IntersectionObserver`/`ResizeObserver`/`MutationObserver` constructors with a global counter; load the page, read the count. Pooled fix → constant count regardless of element count. |
+| JSP-01, JSP-02, JSP-07 (resize/scroll/debounce throttle) | Handler invocation count + scripting time during a fixed event burst | `page.addInitScript` to install a counter the real handler increments, OR wrap and count; dispatch a fixed burst (e.g. 100 `scroll`/`resize`/`input` events), read the count. Throttled fix → far fewer invocations for the same burst. |
+| JSP-03, JSP-04, JSP-05 (observer pooling) | Live observer-instance count | `addInitScript` to wrap `IntersectionObserver`/`ResizeObserver`/`MutationObserver` constructors with a global counter; load the page, read the count. Pooled fix → constant count regardless of element count. |
 | JSP-06, JSP-08, JSP-09, JSD-09, JSA-03 (leaks / unbounded growth) | JS heap + detached-node count across N create→destroy (or open→close) cycles | CDP `Performance.getMetrics` → `JSHeapUsedSize`; run ~20 cycles with a forced GC (`HeapProfiler.collectGarbage` via CDP) between measure points. Leak fix → flat heap instead of monotonic growth. |
-| JSP-10, JSA-01 (eager IIFE / blocking init loops) | Long-task time / init duration | `PerformanceObserver({type:'longtask'})` installed via `evaluateOnNewDocument`; sum long-task duration through load. Or `performance.measure` around the init mark. Fix → lower total blocking time. |
+| JSP-10, JSA-01 (eager IIFE / blocking init loops) | Long-task time / init duration | `PerformanceObserver({type:'longtask'})` installed via `addInitScript`; sum long-task duration through load. Or `performance.measure` around the init mark. Fix → lower total blocking time. |
 | JSA-02, JSD-06 (layout thrashing) | Forced `LayoutCount` / `RecalcStyleCount` | CDP `Performance.enable` then `Performance.getMetrics` before and after driving the interaction; diff `LayoutCount` and `RecalcStyleCount`. Batched-reads fix → fewer forced layouts for the same interaction. |
 | JSA-06 (unaborted fetch) | Concurrent in-flight requests during a typeahead burst | Count `page.on('request')` minus `requestfinished`/`requestfailed` at peak while firing rapid `input` events. Abort fix → at most 1 in flight. |
 
 **CDP metrics snippet:**
 ```js
-const cdp = await page.target().createCDPSession();
+const cdp = await page.context().newCDPSession(page);
 await cdp.send('Performance.enable');
 const read = async () => Object.fromEntries(
   (await cdp.send('Performance.getMetrics')).metrics.map(m => [m.name, m.value]));
