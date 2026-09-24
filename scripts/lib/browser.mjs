@@ -1,15 +1,13 @@
 // Shared browser launch for scripts/*.mjs. ENGINE=webkit runs a check as Safari;
 // CDP calls (throttling, touch, traces) are Chromium-only and throw under it.
-// WebKit lives in tmp/webkit/browsers and is fetched on first use, or again when a
+// WebKit lives in Playwright's per-user cache, fetched on first use or again when a
 // playwright-core update needs a newer build.
 import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { chromium, webkit } from 'playwright-core';
 
 const ROOT = join(import.meta.dirname, '..', '..');
-// Read when playwright-core loads, so it is set before the import.
-process.env.PLAYWRIGHT_BROWSERS_PATH ||= join(ROOT, 'tmp', 'webkit', 'browsers');
-const { chromium, webkit } = await import('playwright-core');
 
 export const ENGINE = process.env.ENGINE || 'chromium';
 

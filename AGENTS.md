@@ -18,7 +18,7 @@ node scripts/run-audit.mjs [page.html]          # print a built page's NDS.Init.
 node scripts/find-unused-icons.mjs              # UI icons nothing references
 ```
 
-**Browser checks launch through `scripts/lib/browser.mjs` (Playwright)** — `ENGINE=webkit node scripts/<check>.mjs` runs one as Safari. The root ships `playwright-core` only (no browser download; Chromium is your installed Chrome); the WebKit browser lives in `tmp/webkit/browsers`, fetched once with `PLAYWRIGHT_BROWSERS_PATH=$PWD/tmp/webkit/browsers npx playwright-core install webkit`. CDP calls (throttling, touch, traces) are Chromium-only.
+**Browser checks launch through `scripts/lib/browser.mjs` (Playwright)** — `ENGINE=webkit node scripts/<check>.mjs` runs one as Safari. The root ships `playwright-core` only (no browser download; Chromium is your installed Chrome); WebKit lives in Playwright's per-user cache and downloads itself on the first Safari run. CDP calls (throttling, touch, traces) are Chromium-only.
 
 **Judge an SVG by its GZIP size, not its bytes on disk** — Pages serves SVG compressed, so a 331 KB Figma export is 113 KB on the wire and disk numbers send you optimizing the wrong file. `optimize-assets.py` reports both. It also always encodes raster BOTH lossless and lossy and keeps whichever is smaller: flat-colour artwork (logos, UI graphics, hard edges) goes smaller AND pixel-perfect lossless, while photos and gradients want lossy — a 201 KB PNG here landed at 74 KB lossless vs 102 KB at q95. Never pick from the file extension.
 
@@ -58,17 +58,19 @@ it, so a late-injected slide swaps in visibly.
 
 ## Scratch Files
 
-**Anything temporary goes in the repo's `tmp/`** — backups before an overwrite,
-throwaway test fixtures and harness output, intermediate data, one-off comparison
-builds. Mirror the source tree under it when the file shadows a real one
+**Anything temporary goes in the repo's `tmp/`, and `tmp/` is disposable** — it may be
+emptied at any time, so nothing in it is ever the only copy of anything. It holds
+backups before an overwrite (git holds the original once the change is committed),
+throwaway fixtures and harness output, intermediate data, one-off comparison builds.
+Mirror the source tree under it when the file shadows a real one
 (`tmp/asset-backups/docs-assets/events/Hajj/hayyakom.svg`), so same-named files
 from different folders cannot collide.
 
-Not a sibling `.orig/`/`.bak` next to the original: those folders ship, so the
-scratch file reaches `_site`, a pack zip and the release zip. Not the session
-scratchpad: it dies with the session, and a master or baseline needed next week
-goes with it. Reusable harnesses still live in `scripts/` — it is their *output*
-that belongs in `tmp/`.
+What must outlive the task does not go in `tmp/`: an image master or other source
+material is committed, and a reusable harness lives in `scripts/` — only its
+*output* belongs in `tmp/`. Not a sibling `.orig/`/`.bak` next to the original
+either: those folders ship, so the scratch file reaches `_site`, a pack zip and the
+release zip.
 
 `tmp/` needs BOTH guards to stay invisible, and it had only one until 2026-08-28:
 `/tmp/` in `.gitignore` AND `tmp` in `_config.yml` `exclude:`. Without the second,
