@@ -250,6 +250,12 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
   &:is(.lang-js, .lang-javascript, .language-js, .language-javascript) {
     color: var(--_syntax-keyword);
   }
+
+  // In a table a value never splits at its hyphens; the table wrapper scrolls
+  // instead. Not in prose, where a long value would push the page sideways.
+  :is(.nds-table, table) & {
+    white-space: nowrap;
+  }
 }
 
 .nds-code {
