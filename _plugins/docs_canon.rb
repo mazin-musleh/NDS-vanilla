@@ -35,7 +35,7 @@ module DocsCanon
     table.scan(%r{<tr>(.*?)</tr>}m).each do |(tr)|
       group, option, markup, target = tr.scan(%r{<td[^>]*>(.*?)</td>}m).flatten.map { |c| text(c) }
       c = (choices["#{group}|#{option}"] ||= { group: group, option: option })
-      target = target.to_s.sub(/\s*\((start|end)\)\z/, '')
+      target = target.to_s.sub(/\s*\((start|end|after)\)\z/, '')
       # `canon #id` swaps the markup in the Structure group; anywhere else it inserts a part block.
       if markup =~ /\Acanon #([\w-]+)\z/
         group == 'Structure' ? c[:structure] = Regexp.last_match(1) : (c[:inserts] ||= []) << Regexp.last_match(1)
@@ -80,6 +80,8 @@ module DocsCanon
     # A group whose every row changes nothing (e.g. "Field states → Forms") is reference only.
     groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
     hide = ->(on) { on ? '' : ' hidden' }
+    # Dropmenus first, then toggles, each in table order.
+    groups = groups.partition { |_, list| list.size > 1 }.flatten(1)
     items = groups.map do |group, list|
       if list.size == 1
         r = list.first
@@ -91,7 +93,7 @@ module DocsCanon
           %(<button type="button" class="nds-btn nds-subtle nds-dropmenu-item"#{sel}#{hide[applies?(r, src)]} data-builder-option="#{CGI.escapeHTML("#{group}|#{r[:option]}")}"><span class="nds-label">#{CGI.escapeHTML(label(r[:option]))}</span></button>)
         end
         shown = list.any? { |r| r[:live] && applies?(r, src) }
-        %(<div class="nds-dropmenu"#{hide[shown]}><button type="button" class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger"><span class="nds-label">#{CGI.escapeHTML(default ? label(default[:option]) : group)}</span></button><div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">#{opts.join}</div></div></div>)
+        %(<div class="nds-dropmenu"#{hide[shown]}><button type="button" class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger"><span class="nds-label">#{CGI.escapeHTML(default ? "#{group}: #{label(default[:option])}" : group)}</span></button><div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">#{opts.join}</div></div></div>)
       end
     end
     %(<div class="nds-toolbar" data-builder-for="#{id}"><div class="nds-bar-start">#{items.join}</div></div>\n) +
@@ -111,6 +113,15 @@ module DocsCanon
 
     # Markdown backtick code gets the NDS inline-code look.
     html = html.gsub('<code class="language-plaintext highlighter-rouge">', '<code class="nds-inline-code lang-html">')
+    # Table code is nowrap (it never splits at a hyphen), so a multi-part value
+    # (`.a ~ * .b`) would widen its column. It stays ONE <code> (one value to any
+    # reader) and moves the nowrap onto each part, so it wraps only at the spaces.
+    html = html.gsub(%r{<td>.*?</td>}m) do |td|
+      td.gsub(%r{<code class="nds-inline-code lang-html">([^<]* [^<]*)</code>}) do
+        parts = Regexp.last_match(1).split(' ').map { |part| %(<span style="white-space:nowrap">#{part}</span>) }
+        %(<code class="nds-inline-code lang-html" style="white-space:normal">#{parts.join(' ')}</code>)
+      end
+    end
 
     html.gsub(CANON_RE) do |whole|
       attrs, body = Regexp.last_match(1), Regexp.last_match(2)

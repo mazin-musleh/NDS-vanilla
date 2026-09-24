@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/09/2026 - 11:14 PM"
+last_edit: "25/09/2026 - 12:42 AM"
 ---
 
 <section id="cardOverview" class="nds-content-section nds-doc-overview">
@@ -171,6 +171,11 @@ last_edit: "24/09/2026 - 11:14 PM"
   </div>
 </div>
 </script>
+<script type="text/html" id="card-value-price" data-canon>
+<div class="nds-card-value">
+  <span class="nds-number-format" data-currency="SAR">1299</span>
+</div>
+</script>
 <script type="text/html" id="card-value-sale" data-canon>
 <div class="nds-card-value">
   <span class="nds-number-format" data-currency="SAR">1299</span>
@@ -231,10 +236,12 @@ last_edit: "24/09/2026 - 11:14 PM"
 | Meta | Rating | canon `#card-rating` | `.nds-card-content` | A star rating with a count |
 | Meta | Tags and rating | canon `#card-meta` | `.nds-card-content` | `.nds-card-meta` groups two meta rows. Use it only when both are present |
 | Value | None (default) | — | — | No price line |
-| Value | Sale price | canon `#card-value-sale` | `.nds-card-content` | A price with the original crossed out in `<s>`. `data-currency` shows the currency icon. See [Numbers](../utilities/numbers) |
-| Value | Unit price | canon `#card-value-unit` | `.nds-card-content` | A price with a plain-text unit after it |
+| Value | Price | canon `#card-value-price` | `.nds-card-text` (after) | A price. `data-currency` shows the currency icon. See [Numbers](../utilities/numbers) |
+| Value | Sale price | canon `#card-value-sale` | `.nds-card-text` (after) | A price with the original crossed out in `<s>` |
+| Value | Unit price | canon `#card-value-unit` | `.nds-card-text` (after) | A price with a plain-text unit after it |
 | Checkbox | Checkbox | canon `#card-checkbox` | `.nds-card` (start) | Lets the user select the card. Sits in the top end corner |
 | Status | Status | canon `#card-status` | `.nds-card-header` | A status tag, such as a person's availability. `data-status` sets its color. It sits at the top end, under the avatar in a row card, and over the corner of an image. It moves clear of a checkbox |
+| Status | Status | `.nds-inverted` | `.nds-card-image ~ * .nds-tag` | Over an image, the tag needs a solid background to stay readable, so give it `.nds-inverted` |
 | Actions | Actions | canon `#card-actions` | `.nds-card` | Buttons after the content, never inside it |
 | Actions end | Actions end | `.nds-end` | `.nds-card-actions` | Aligns the actions to the end of the row |
 | Style | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border. For flat and content-heavy layouts |
@@ -250,17 +257,15 @@ last_edit: "24/09/2026 - 11:14 PM"
 | Color | Blue | `.nds-blue` | `.nds-card` | Tints the title, the icon and the hover border |
 | Tinted | Tinted | `.nds-color` | `.nds-card` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
 | On color | On color | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background |
+| On color | On color | `.nds-oncolor` | `.nds-card-actions .nds-btn` | Buttons do not follow the card. Give each action button `.nds-oncolor` too |
+| On color | On color | `.nds-oncolor` | `.nds-tag` | Tags do not follow the card either. Give each tag, including the status tag, `.nds-oncolor` |
 | Layout | Stacked (default) | — | — | Header above content |
 | Layout | Row | `.nds-rowView` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
 | Layout | Center | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing |
-| Width | Capped (default) | — | — | Up to 360px wide |
-| Width | Full width | `.nds-full-width` | `.nds-card` | Fills its container. Also `.nds-full` |
-| Width | User | `.nds-user` | `.nds-card` | A compact person card, 224px wide |
+| Full width | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
 | Number size | LG (default) | — | — | The display size |
 | Number size | MD | `.nds-md` | `.nds-card-number` | A smaller headline number |
 | Number size | SM | `.nds-sm` | `.nds-card-number` | The smallest headline number |
-| Truncate | Truncate | `.nds-truncate` | `.nds-card-title` | Cuts long text to one line. Set `--truncate` for more lines |
-| Truncate | Truncate | `.nds-truncate` | `.nds-card-description` | Cuts long text to one line. Set `--truncate` for more lines |
 | Disabled | Disabled | `.nds-disabled` | `.nds-card` | Mutes the card and blocks clicks. `[disabled]` works on a `<button>` card |
 | Loading | Loading | `.nds-loading` | `.nds-card` | Skeleton placeholders while the content loads |
 {: #cardVariantsTable .nds-table .nds-responsive}
@@ -334,7 +339,7 @@ last_edit: "24/09/2026 - 11:14 PM"
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
 - Size the featured icon or avatar up (`nds-lg`, `nds-xl`) on statistic cards and in grids, where the icon carries the meaning.
 - Show a price with `.nds-card-value`, not with a tag.
-- Keep the description to one or two lines. For longer text, truncate it or link to a detail page.
+- Keep the description to one or two lines. For longer text, [truncate](../utilities/truncate-text) it or link to a detail page.
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
 - Use `data-status` only when the card really has that status. For a color without a status, use the color class.
 - Put a row of cards in a [grid](../layout/grid).

@@ -8,7 +8,8 @@
  *   .cls  class · [attr]  bare attribute · [attr="v"]  attribute · [data-state~="t"]  token
  *   --prop: v  inline custom property · .prop = v  JS property
  *   canon #id  in the Structure group: swap the whole markup; elsewhere: insert that part block
- *              into "On element", at its end, or its start with "(start)"
+ *              into "On element", at its end, its start with "(start)", or right
+ *              after it with "(after)"
  * Rows sharing Group + Option are one choice.
  */
 (function () {
@@ -58,14 +59,19 @@
     }
 
     // Insert a part block as el's first or last child, indented to match its siblings.
+    // `after` puts it right after el instead, as el's next sibling.
     function insert(el, html, pos) {
         var kids = el.childNodes, first = kids[0], last = kids[kids.length - 1];
         var tail = function (n) { return n && n.nodeType === 3 ? (n.textContent.match(/\n([ \t]*)$/) || [])[1] : null; };
-        var ind = tail(first);
+        var ind = pos === 'after' ? tail(el.previousSibling) || '' : tail(first);
         if (ind == null) ind = (tail(last) || '') + '  ';
         var t = document.createElement('template');
         t.innerHTML = html.split('\n').join('\n' + ind);
-        if (pos === 'start') {
+        if (pos === 'after') {
+            var next = el.nextSibling;
+            el.parentNode.insertBefore(document.createTextNode('\n' + ind), next);
+            el.parentNode.insertBefore(t.content, next);
+        } else if (pos === 'start') {
             t.content.appendChild(document.createTextNode('\n' + ind));
             el.insertBefore(t.content, first && first.nodeType === 3 ? first.nextSibling : first);
         } else {
@@ -121,7 +127,7 @@
             if (!op && c[2].textContent.trim() !== '—') console.warn('[NDS Docs] unparsed Markup cell:', c[2].textContent.trim());
             // `canon #id` swaps the markup in the Structure group; anywhere else it inserts a part block.
             if (op && op.kind === 'structure' && group !== 'Structure') op.kind = 'insert';
-            var at = c[3].textContent.trim().match(/^(.*?)\s*(?:\((start|end)\))?$/);
+            var at = c[3].textContent.trim().match(/^(.*?)\s*(?:\((start|end|after)\))?$/);
             if (!byKey[key]) { byKey[key] = { key: key, group: group, option: option, ops: [] }; choices.push(byKey[key]); }
             byKey[key].ops.push({ op: op, target: at[1], pos: at[2] || 'end' });
             if (op && op.kind === 'structure') byKey[key].structure = op.id;
@@ -188,7 +194,7 @@
             if (btn.classList.contains('nds-dropmenu-item')) {
                 btn.parentNode.querySelectorAll('[data-state~="selected"]').forEach(function (x) { x.removeAttribute('data-state'); });
                 btn.setAttribute('data-state', 'selected');
-                btn.closest('.nds-dropmenu').querySelector('.nds-dropmenu-trigger .nds-label').textContent = btn.textContent;
+                btn.closest('.nds-dropmenu').querySelector('.nds-dropmenu-trigger .nds-label').textContent = c.group + ': ' + btn.textContent;
                 active[c.group] = c;
             } else {
                 btn.setAttribute('aria-pressed', String(on));
