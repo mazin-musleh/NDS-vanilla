@@ -15,8 +15,7 @@ Three sources decide a page, each for its own concern:
 | Concern | Source |
 |---|---|
 | Facts: variants, states, APIs, events, attributes | the component's SCSS and JS |
-| Structure: sections, toggles, feature grid, guidelines | `components/alert.md` |
-| Demos: the `demo.html` include | `components/tags.md` (the first converted page) |
+| Structure: demo cards, code tabs, sections | `components/alert.md` |
 | Words: sentences, terms, claims, tone | `EDITORIAL.md` |
 
 ---
@@ -49,10 +48,9 @@ Find the target page and its source files.
 Read every time:
 
 - **`EDITORIAL.md`**: how every sentence on the page reads.
-- **`components/alert.md`**: the structure standard. Take from it the section layout, the toggle controls, the Built-in Features grid (`.nds-definition-list.nds-divided.nds-grid.nds-doc-features`), the Usage Guidelines blocks, and the JS API block.
+- **`components/alert.md`**: the structure standard. Take from it the demo card skeleton (`.nds-demo-card` with `demo-header`, `demo-container`, `demo-code`), the code tabs (`.nds-tabs .nds-code`), the toggle controls, the Built-in Features grid (`.nds-definition-list.nds-divided.nds-grid.nds-doc-features`), the Usage Guidelines blocks, and the JS API block.
 - **The SCSS file, whole:** every variant, size, state, modifier, layout mode, and accessibility mixin (`reduced-motion`, `high-contrast`, `print-media`).
 - **The JS file, whole and deeply:** init trigger, every public method (namespace and instance), every `CustomEvent` and its `detail`, every keyboard interaction, every `data-*` it reads, every state it manages, and how instances are reached.
-- **`components/tags.md`**: the demo standard. Every demo is a capture plus one `{% include demo.html %}` call.
 - **`_data/sidemenu/sidemenu.yml`**: the map of the system. Use it to name related parts, link them, and confirm that any part you mention exists.
 - **The page's entry in `_data/content/*.yml`**: its catalog card. Its description must agree with the page's hero description.
 
@@ -69,7 +67,7 @@ Read when relevant:
 
 Build a full model of what the source supports, then check each section of the page twice:
 
-1. **Structure:** are the demos built with `{% include demo.html %}`? Hand-written demo cards are OUTDATED: convert them with `scripts/doc-to-include.py`. Does the section layout match `alert.md`?
+1. **Structure:** does it match `alert.md`? Code tabs must hold entity-encoded markup (`&lt;div&gt;`); raw HTML inside `<code class="lang-html code">` is OUTDATED.
 2. **Content:** does it match the source, completely? **Check every claim in the prose too:** counts, names, defaults, behavior. A wrong claim is OUTDATED, however well it reads.
 
 Give each section one status:
@@ -148,31 +146,16 @@ A component with distinct display modes (default, inline, toast) gets one sectio
 - **Demo-wiring JS** goes in `_js/nds-showcase.js`, never in the component's JS. A part that needs JS to render (charts, `NDS.Alert.create()`) uses a page-level `<script>` inside `DOMContentLoaded`.
 - **Demo languages:** follow `EDITORIAL.md` section 7 (no Arabic short vowel marks; Persian or Urdu, never Hebrew).
 
-### Demo Cards and Code Tabs
+### Code Tabs
 
-**Build every demo with the include.** Write the markup once; the include renders the live preview and its code tab from it, so they cannot drift:
+Code tabs hold **production-ready, copy-paste markup only**.
 
-```liquid
-{%- capture tag_status_1_actions %}
-<button class="nds-btn nds-subtle demo-toggle-btn" data-toggler='["nds-inverted", ".nds-tag", "statusStyle"]'>
-    <span class="nds-label">Inverted</span>
-</button>
-{%- endcapture %}
-{%- capture tag_status_1 %}
-<span class="nds-tag" data-status="neutral">
-    <span class="nds-label">Status</span>
-</span>
-{%- endcapture %}
-{% include demo.html id="tag-status-1" html=tag_status_1 actions=tag_status_1_actions %}
-```
-
-- Parameters (`_includes/demo.html`): `id` (tab and panel ids), `html` (the markup, written at column 0), `actions` (toggles), `label` (title for a demo with no toggles), `js` (JS API tab), `long` (expandable code), `bg` (extra class on `.demo-container`, e.g. `dark-bg`).
-- **The markup is the canonical, production-ready markup.** Never shorten it, cut items, or use placeholders ("Item title", `<!-- more items -->`). No demo-only classes inside it.
-- Ids: `{component}-{variant}-{n}`.
+- **A code tab is a direct copy of its live demo.** Take the markup from `.state-demo`, drop the demo-only wrappers (`.state-demo`, `.demo-container`), and fix the indentation. Never shorten it, cut items, or use placeholders ("Item title", `<!-- more items -->`).
+- **Entity-encode it:** `<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;`. Live demo markup stays raw HTML.
+- Unique IDs per card: `{component}-{variant}-{n}`. Tabs and panels: `tab-{component}-{variant}-{n}`, `panel-{component}-{variant}-{n}`.
 - **JS API tab** only when the part has a programmatic creation API (`NDS.Alert.create()`, `NDS.Chart.create()`). Not for event listeners or method calls.
-- **Convert an existing page** with `python scripts/doc-to-include.py <page>.md`, build, then run it again with `--verify`: it proves every preview, code tab, toggle, and id is unchanged. Cards with a JS API tab are converted by hand.
-- **A code block with no live demo** (a structure tree, a reference snippet) sits directly in its `.nds-block`, with no demo card.
-- Pages not yet converted keep hand-written cards: each code tab is a full, entity-encoded copy of its `.state-demo` markup (`&lt;div&gt;`).
+- Code longer than ~15 lines: add `nds-expandable` to the panel and wrap `<code>` in `<div class="nds-expandable-content">`.
+- **A code block with no live demo** (a structure tree, a reference snippet) sits directly in its `.nds-block`, with no `.nds-showcase` / `.nds-demo-card` wrapper.
 
 ### Page Markup
 
@@ -244,7 +227,7 @@ Every item must pass. Fix any failure before you present the result.
 
 **Structure**
 - [ ] Demo cards match `alert.md`.
-- [ ] Every demo uses `{% include demo.html %}`; a converted page passes `doc-to-include.py --verify`.
+- [ ] Each code tab is an entity-encoded, full copy of its live demo.
 - [ ] Unique IDs on all tabs and panels.
 - [ ] Every icon name was verified with the anchored grep; content icons only outside copied demos.
 - [ ] Built-in Features has an even number of items.
