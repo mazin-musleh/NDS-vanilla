@@ -102,9 +102,9 @@
     font-weight: var(--font-weight-bold);
     letter-spacing: -0.02rem;
     margin-top: 0;
-    // No wrap: the text is one flex item, so wrapping drops an icon beside it
-    // onto a line of its own. Nowrap lets the text shrink and wrap inside
-    // itself while the icon stays put. .nds-center stacks via column instead.
+    // Each child is its own flex item, so a tag inside the title drops to a new
+    // line instead of squeezing beside the text.
+    flex-wrap: wrap;
     max-width: var(--paragraph-max-width);
 
     // Same escape the subtitle and description carry.
@@ -120,6 +120,17 @@
         // word, so it stops tracking the title size. Re-declared rather than
         // given a -base: the section root already resolved the knob above.
         --_section-icon-size: var(--section-icon-size, 48px);
+
+        .nds-section-icon + * {
+            flex: initial;
+        }
+    }
+
+    // Zero basis always fits the row, so the text wraps beside the mark
+    // instead of wrapping below it.
+    .nds-section-icon + * {
+        flex: 1 1 0;
+        min-width: 0;
     }
 
     &:not(:last-child) {

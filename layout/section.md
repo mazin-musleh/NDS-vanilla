@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "15/09/2026 - 12:22 PM"
+last_edit: "24/09/2026 - 08:03 AM"
 ---
 
 <!-- Section Structure Overview -->
@@ -1281,7 +1281,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Title Icon</h2>
-            <p class="nds-section-description">A mark that sits beside the heading, for sections that carry an emblem or a category symbol. Put <code class="nds-inline-code lang-html">nds-section-icon</code> inside the title and it takes the heading height, so it rescales with the title on every breakpoint. The title holds the mark on one row, so a long heading wraps its text and leaves the mark in place. Add <code class="nds-inline-code lang-html">nds-center</code> to the section to center the head and stack the mark above the text.</p>
+            <p class="nds-section-description">A mark that sits beside the heading, for sections that carry an emblem or a category symbol. Put <code class="nds-inline-code lang-html">nds-section-icon</code> inside the title, with the heading text in a <code class="nds-inline-code lang-html">&lt;span&gt;</code> after it, and the mark takes the heading height, so it rescales with the title on every breakpoint. The title holds the mark on one row, so a long heading wraps its text and leaves the mark in place. Add <code class="nds-inline-code lang-html">nds-center</code> to the section to center the head and stack the mark above the text.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block nds-prose">
@@ -1304,7 +1304,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                                 <span class="nds-featured-icon nds-section-icon">
                                                     <i class="hgi hgi-stroke hgi-stars"></i>
                                                 </span>
-                                                Digital services
+                                                <span>Digital services</span>
                                             </h2>
                                             <p class="nds-section-description">Services you can complete online, without a visit to a branch.</p>
                                         </div>
@@ -1343,7 +1343,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                 &lt;span class="nds-featured-icon nds-section-icon"&gt;
                     &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
                 &lt;/span&gt;
-                Digital services
+                &lt;span&gt;Digital services&lt;/span&gt;
             &lt;/h2&gt;
             &lt;p class="nds-section-description"&gt;Services you can complete online, without a visit to a branch.&lt;/p&gt;
         &lt;/div&gt;
