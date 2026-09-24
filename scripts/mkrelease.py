@@ -176,6 +176,13 @@ def verify(out, version):
     if deck.returncode:
         sys.exit('check-deck-copy.py failed:\n' + deck.stdout + deck.stderr)
 
+    # A pack's inline <style> wins over its fresh .min.css, so a pack not rebuilt
+    # after an SCSS change ships the old look.
+    packs = subprocess.run('python scripts/check-event-css.py', cwd=ROOT,
+                           shell=True, capture_output=True, text=True)
+    if packs.returncode:
+        sys.exit('check-event-css.py failed:\n' + packs.stdout + packs.stderr)
+
     # head.md prints the inline critical gate as canonical markup a consumer
     # copies into their own <head>. It is a hand-maintained copy of what
     # _includes/critical-inline.html compiles from _sass/_fold.scss, so it can

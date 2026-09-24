@@ -13,6 +13,9 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 python scripts/optimize-assets.py <path>        # shrink SVG/PNG/JPG — dry-run report; add --apply to write
 node scripts/svg-render-diff.mjs <path>         # REQUIRED after an SVG --apply: proves the render is unchanged
 python scripts/check-data-state-tails.py        # after any [data-state]/[data-status] rule change — --report lists every tail
+node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest quality above a PSNR floor — always from the master
+node scripts/run-audit.mjs [page.html]          # print a built page's NDS.Init.audit() warnings
+node scripts/find-unused-icons.mjs              # UI icons nothing references
 ```
 
 **Test Safari with Playwright WebKit in `tmp/webkit/`** — never install it in the root, where `npm install` writes to the tracked `package.json`. Set `PLAYWRIGHT_BROWSERS_PATH=$PWD/browsers` when you run it.

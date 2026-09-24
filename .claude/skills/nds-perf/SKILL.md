@@ -114,3 +114,7 @@ npx -y lighthouse "http://localhost:4100/NDS-vanilla/" --quiet \
 # then read .audits.metrics.details.items[0].observed* for the REAL paint vs the simulated LCP
 ```
 When lantern shows a scary LCP, check the report's `observed*` metrics (or this harness) before believing it. The PSI anonymous API quota is shared and exhaustible; `npx lighthouse` against the live deploy is the fallback.
+
+**Before believing any PSI result, run `python scripts/psi-report.py <pagespeed.web.dev permalink>`** (no API key) and read `benchmarkIndex` — Google's speed probe of the box that ran the test. Below ~800 it is a slow-box run: discard it. On 2026-09-06 the same page, same minute, scored 99 on a 790 box (TBT 30 ms) and 72 on a 262 box (TBT 760 ms). Compare runs only at similar indices.
+
+**Page jumps during load?** `node scripts/check-scroll-jump.mjs [/page.html] [--desktop|--mobile]` logs every layout shift and `scrollY` change under the house throttle.
