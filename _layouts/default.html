@@ -18,6 +18,9 @@
     {%- unless page.exclude_showcase == true %}
     <script defer src="{{ 'docs-assets/js/nds-showcase.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
     {%- endunless %}
+    {%- if content contains 'data-canon' %}
+    <script defer src="{{ 'docs-assets/js/nds-docs.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
+    {%- endif %}
     {%- if page.custom_js %}
     {%- for js_file in page.custom_js %}
     <script defer src="{{ js_file | relative_url }}"></script>

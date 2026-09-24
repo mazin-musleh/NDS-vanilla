@@ -87,9 +87,10 @@ const SCOPE = [
     ['nds-voice-input.js', 'VoiceInput'],
 ];
 
-// Deliberately bannerless: two seasonal themes and a showcase file (docs-site only, no
-// public surface).
+// Deliberately bannerless: two seasonal themes and two docs-site files (showcase, docs
+// builder; no public surface).
 const EXCLUDED = new Set([
+    'nds-docs.js',
     'nds-showcase.js',
     'nds-theme-foundation-day.js',
     'nds-theme-hajj.js',

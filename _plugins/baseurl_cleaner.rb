@@ -29,9 +29,9 @@ class BaseurlCleaner
   # File extensions to process
   FILE_EXTENSIONS = %w[.html].freeze
 
-  # <code> blocks are displayed doc samples — shield them so the URL rewrite
+  # <code> blocks and doc canon scripts are displayed doc samples — shield them so the URL rewrite
   # rules (esp. the file-existence pretty-URL rule) can't mutate their text.
-  CODE_RE = /<code\b[^>]*>.*?<\/code>/mi
+  CODE_RE = /<code\b[^>]*>.*?<\/code>|<script type="text\/html"[^>]*>.*?<\/script>/mi
 
   def initialize(dry_run: false)
     @dry_run = dry_run

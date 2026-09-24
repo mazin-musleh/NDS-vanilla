@@ -48,6 +48,7 @@ class JSProcessor
     # not loader-managed.
     @output_overrides = {
       'nds-showcase.js' => 'docs-assets/js',
+      'nds-docs.js' => 'docs-assets/js',
     }
     # Event packs (_js/events/) are NOT built here: scripts/mkevent.py owns a pack end to end
     # (minify, inline its CSS, zip). Building them here too blanked the inlined CSS on every run.

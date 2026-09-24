@@ -2,443 +2,258 @@
 layout: page
 title: Switch
 hero_title: Switch - National Design System
-hero_description: Toggle switches for binary choices with clear visual feedback and accessibility support
+hero_description: A switch turns one setting on or off, and the change applies at once
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "06/08/2026 - 09:45 PM"
+last_edit: "24/09/2026 - 09:27 PM"
 ---
 
-<!-- Single Switch -->
-<section id="switchSingle" class="nds-content-section nds-demo-section">
+<section id="switchOverview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Single Switch</h2>
-      <p class="nds-section-description">Standalone toggle for enabling or disabling a single setting</p>
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use a switch for a setting that takes effect as soon as the user changes it, such as a settings page or a feature toggle.
+- Use a [checkbox](../components/checkbox) when the change applies only after the user submits a form.
+- Use [radio buttons](../components/radio) when the user picks one of three or more options.
+
+</div>
+  </div>
+</section>
+
+<section id="switchMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">MD</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="nds-label">SM</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lg", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-neutral", ".nds-switch", "variantToggle"]'>
-                <span class="nds-label">Neutral</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-switch-container", "disabledToggle", "data-state"]'>
-                <span class="nds-label">Disabled</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container nds-switch-container">
-                <div class="nds-form-header" data-feedback-target>
-                  <label for="demo-switch-single">
-                    <span class="nds-label">Enable notifications</span>
-                    <span class="nds-info">Receive push notifications for important updates</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <div class="nds-switch">
-                    <input type="checkbox" id="demo-switch-single" name="notifications" value="enabled"
-                      class="nds-switch-input">
-                    <div class="nds-switch-track">
-                      <div class="nds-switch-thumb"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided">
-            <div class="nds-tab-list-container nds-scroll-more">
-              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                  aria-controls="panel-switch-single-1" id="tab-switch-single-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-switch-single-1"
-                aria-labelledby="tab-switch-single-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                    <i class="nds-icon nds-hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
-&lt;div class="nds-form-container nds-switch-container"&gt;
-  &lt;div class="nds-form-header" data-feedback-target&gt;
-&lt;label for="switch-1"&gt;
-  &lt;span class="nds-label"&gt;Enable notifications&lt;/span&gt;
-  &lt;span class="nds-info"&gt;Receive push notifications for important updates&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;div class="nds-switch"&gt;
-  &lt;input type="checkbox" id="switch-1" name="notifications" value="enabled" class="nds-switch-input"&gt;
-  &lt;div class="nds-switch-track"&gt;
-    &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-              </code>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
+<script type="text/html" id="switch-single" data-canon data-variants="switchVariantsTable">
+<div class="nds-form-container nds-switch-container">
+  <div class="nds-form-header" data-feedback-target>
+    <label for="switch-1">
+      <span class="nds-label">Enable notifications</span>
+      <span class="nds-info">Receive push notifications for important updates</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-switch">
+      <input type="checkbox" id="switch-1" name="notifications" value="enabled" class="nds-switch-input">
+      <div class="nds-switch-track">
+        <div class="nds-switch-thumb"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="switch-group" data-canon>
+<fieldset class="nds-form-group nds-switch-group">
+  <legend class="nds-label">Notification preferences</legend>
+  <div class="nds-form-container nds-switch-container">
+    <div class="nds-form-header">
+      <label for="switch1">
+        <span class="nds-label">Email alerts</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <div class="nds-switch">
+        <input type="checkbox" id="switch1" name="notifications" value="email" class="nds-switch-input">
+        <div class="nds-switch-track">
+          <div class="nds-switch-thumb"></div>
         </div>
       </div>
     </div>
   </div>
-</section>
-
-<!-- Switch Group -->
-<section id="switchGroup" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Switch Group</h2>
-      <p class="nds-section-description">Related settings grouped together with column or row layout</p>
+  <div class="nds-form-container nds-switch-container">
+    <div class="nds-form-header">
+      <label for="switch2">
+        <span class="nds-label">Push notifications</span>
+        <span class="nds-info">Instant alerts on your device</span>
+      </label>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">MD</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="nds-label">SM</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lg", ".nds-switch-container", "sizeToggle"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-switch-group", "disabledToggle", "data-state"]'>
-                <span class="nds-label">Disabled</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-rowView", ".nds-switch-group", "layoutToggle"]'>
-                <span class="nds-label">Row View</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-                <fieldset class="nds-form-group nds-switch-group">
-                  <legend class="nds-label">Notification preferences</legend>
-                  <div class="nds-form-container nds-switch-container">
-                    <div class="nds-form-header">
-                      <label for="demo-switch1">
-                        <span class="nds-label">Email alerts</span>
-                      </label>
-                    </div>
-                    <div class="nds-form-control">
-                      <div class="nds-switch">
-                        <input type="checkbox" id="demo-switch1" name="notifications" value="email" class="nds-switch-input">
-                        <div class="nds-switch-track">
-                          <div class="nds-switch-thumb"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="nds-form-container nds-switch-container">
-                    <div class="nds-form-header">
-                      <label for="demo-switch2">
-                        <span class="nds-label">Push notifications</span>
-                        <span class="nds-info">Instant alerts on your device</span>
-                      </label>
-                    </div>
-                    <div class="nds-form-control">
-                      <div class="nds-switch">
-                        <input type="checkbox" id="demo-switch2" name="notifications" value="push" checked class="nds-switch-input">
-                        <div class="nds-switch-track">
-                          <div class="nds-switch-thumb"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="nds-form-container nds-switch-container">
-                    <div class="nds-form-header">
-                      <label for="demo-switch3">
-                        <span class="nds-label">SMS alerts</span>
-                      </label>
-                    </div>
-                    <div class="nds-form-control">
-                      <div class="nds-switch">
-                        <input type="checkbox" id="demo-switch3" name="notifications" value="sms" class="nds-switch-input">
-                        <div class="nds-switch-track">
-                          <div class="nds-switch-thumb"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </fieldset>
-            </div>
-          </div>
-          <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided">
-            <div class="nds-tab-list-container nds-scroll-more">
-              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                  aria-controls="panel-switch-group-1" id="tab-switch-group-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-switch-group-1"
-                aria-labelledby="tab-switch-group-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                    <i class="nds-icon nds-hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
-&lt;fieldset class="nds-form-group nds-switch-group"&gt;
-  &lt;legend class="nds-label"&gt;Notification preferences&lt;/legend&gt;
-  &lt;div class="nds-form-container nds-switch-container"&gt;
-&lt;div class="nds-form-header"&gt;
-  &lt;label for="switch1"&gt;
-    &lt;span class="nds-label"&gt;Email alerts&lt;/span&gt;
-  &lt;/label&gt;
-&lt;/div&gt;
-&lt;div class="nds-form-control"&gt;
-  &lt;div class="nds-switch"&gt;
-    &lt;input type="checkbox" id="switch1" name="notifications" value="email" class="nds-switch-input"&gt;
-    &lt;div class="nds-switch-track"&gt;
-      &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-container nds-switch-container"&gt;
-&lt;div class="nds-form-header"&gt;
-  &lt;label for="switch2"&gt;
-    &lt;span class="nds-label"&gt;Push notifications&lt;/span&gt;
-    &lt;span class="nds-info"&gt;Instant alerts on your device&lt;/span&gt;
-  &lt;/label&gt;
-&lt;/div&gt;
-&lt;div class="nds-form-control"&gt;
-  &lt;div class="nds-switch"&gt;
-    &lt;input type="checkbox" id="switch2" name="notifications" value="push" checked class="nds-switch-input"&gt;
-    &lt;div class="nds-switch-track"&gt;
-      &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-container nds-switch-container"&gt;
-&lt;div class="nds-form-header"&gt;
-  &lt;label for="switch3"&gt;
-    &lt;span class="nds-label"&gt;SMS alerts&lt;/span&gt;
-  &lt;/label&gt;
-&lt;/div&gt;
-&lt;div class="nds-form-control"&gt;
-  &lt;div class="nds-switch"&gt;
-    &lt;input type="checkbox" id="switch3" name="notifications" value="sms" class="nds-switch-input"&gt;
-    &lt;div class="nds-switch-track"&gt;
-      &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/fieldset&gt;
-              </code>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
+    <div class="nds-form-control">
+      <div class="nds-switch">
+        <input type="checkbox" id="switch2" name="notifications" value="push" class="nds-switch-input">
+        <div class="nds-switch-track">
+          <div class="nds-switch-thumb"></div>
         </div>
       </div>
     </div>
   </div>
+  <div class="nds-form-container nds-switch-container">
+    <div class="nds-form-header">
+      <label for="switch3">
+        <span class="nds-label">SMS alerts</span>
+      </label>
+    </div>
+    <div class="nds-form-control">
+      <div class="nds-switch">
+        <input type="checkbox" id="switch3" name="notifications" value="sms" class="nds-switch-input">
+        <div class="nds-switch-track">
+          <div class="nds-switch-thumb"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</fieldset>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="switchFeatures" class="nds-content-section nds-demo-section">
+<section id="switchVariants" class="nds-content-section nds-doc-variants">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Single (default) | — | — | One setting on its own |
+| Structure | Group | canon `#switch-group` | — | Related settings under one legend |
+| Size | SM | `.nds-sm` | `.nds-switch-container` | 36×18px track, 12px thumb. Dense forms and tables |
+| Size | MD (default) | — | — | 48×24px track, 16px thumb. Most forms |
+| Size | LG | `.nds-lg` | `.nds-switch-container` | 56×28px track, 20px thumb. Touch-first screens |
+| Color | Neutral (demo: + Checked) | `.nds-neutral` | `.nds-switch` | The on state uses the neutral color, not the primary color. Use it when the setting is not a brand action. The color shows only when the switch is on, so the demo also turns on Checked |
+| Checked | Checked | `[checked]` | `.nds-switch-input` | The switch is on when the page loads |
+| Disabled | Disabled | `[disabled]` | `.nds-switch-input` | The user cannot change the setting now |
+| Layout | Row | `.nds-rowView` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+{: #switchVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="switchFeatures" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
-      <p class="nds-section-description">What you get out of the box with zero configuration</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+      <div class="nds-definition-list nds-divided nds-grid">
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Form Integration</span>
           </span>
-          <p class="nds-item-desc">Auto-initializes with the forms system. Two-way binding syncs <code class="nds-inline-code lang-html">disabled</code> state between inputs and containers. Use <code class="nds-inline-code lang-html">data-state="disabled"</code> on the group to disable all switches at once.</p>
+          <p class="nds-item-desc">The forms script starts every switch. No switch script or init call is needed.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Toggle Input</span>
+          </span>
+          <p class="nds-item-desc">A click on the track or the label toggles the switch. Space and Enter toggle it from the keyboard. Each toggle fires <code class="nds-inline-code lang-js">nds:switchChange</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-square-lock-02"></i>
+            <span class="nds-label">Disabled Sync</span>
+          </span>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-html">disabled</code> on the input and <code class="nds-inline-code lang-html">data-state="disabled"</code> on the container stay in sync, in both directions.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-cursor-02"></i>
             <span class="nds-label">Visual Feedback</span>
           </span>
-          <p class="nds-item-desc">Ripple effect on hover, thumb stretch on press, and smooth slide animation. Three sizes (SM, MD, LG) with proportional scaling.</p>
+          <p class="nds-item-desc">A ripple grows around the track on hover. The thumb widens while the track is pressed, and slides to the other end when the switch toggles.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Support</span>
+            <i class="hgi hgi-stroke hgi-text-align-right"></i>
+            <span class="nds-label">RTL Direction</span>
           </span>
-          <p class="nds-item-desc">Space and Enter keys toggle the switch. Track click, label click, and keyboard all fire the <code class="nds-inline-code lang-js">nds:switchChange</code> event.</p>
+          <p class="nds-item-desc">The thumb moves toward the end of the line. In Arabic the on position is on the left.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01"></i>
-            <span class="nds-label">Responsive Layout</span>
+            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
+            <span class="nds-label">Mobile Spacing</span>
           </span>
-          <p class="nds-item-desc">Column layout by default, row layout with <code class="nds-inline-code lang-html">nds-rowView</code> class. Gaps adjust on mobile for touch-friendly spacing.</p>
+          <p class="nds-item-desc">On phones, the gap between a switch and its label is smaller, and so is the gap between rows in a group.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="switchGuidelines" class="nds-content-section nds-demo-section">
+<section id="switchPractices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Usage Guidelines</h2>
-      <p class="nds-section-description">When and how to use switches effectively</p>
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">When to Use</h3>
-        <ul>
-          <li>Instant on/off actions that take effect immediately without form submission</li>
-          <li>Settings pages, preference panels, and feature toggles</li>
-          <li>Use <a href="{{ 'components/checkbox' | relative_url }}" class="nds-color">checkboxes</a> when the change requires a submit action to apply</li>
-          <li>Use <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> when choosing between more than two mutually exclusive options</li>
-          <li>Always label clearly what state "on" represents</li>
-        </ul>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Modifier Classes</h3>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Small size: 36x18px track, 12px thumb</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Large size: 56x28px track, 20px thumb</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td><code class="nds-inline-code lang-html">.nds-switch</code></td><td>Uses neutral color palette for the checked state instead of primary</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">.nds-switch-group</code></td><td>Lays out switches in a horizontal row instead of the default column</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Data Attributes</h3>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Disables the individual switch: sets not-allowed cursor and mutes track and thumb colors. Synced automatically from the input's <code class="nds-inline-code lang-html">disabled</code> attribute by the forms system</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-switch-group</code></td><td>Disables all switches in the group at once via CSS opacity and pointer-events</td></tr>
-          </tbody>
-        </table>
-      </div>
+- Write the label as the setting, not the action: "Email alerts", not "Turn on email alerts".
+- Apply the change as soon as the switch moves. Do not add a Save button for a switch.
+- Put related switches in a group with a legend.
+- If the change fails, turn the switch back and show feedback on the field.
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">CSS Custom Properties</h3>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td><code class="nds-inline-code lang-html">20px</code></td><td>Controls the label line-height and ripple baseline; set via size modifier classes</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--switch-width</code></td><td><code class="nds-inline-code lang-html">48px</code></td><td>Width of the switch track</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--switch-height</code></td><td><code class="nds-inline-code lang-html">24px</code></td><td>Height of the switch track</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-size</code></td><td><code class="nds-inline-code lang-html">16px</code></td><td>Diameter of the thumb circle</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-offset</code></td><td><code class="nds-inline-code lang-html">4px</code></td><td>Distance from the track edge to the thumb in unchecked and checked states</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--switch-track-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Track background color; overridden by checked state and disabled state</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--switch-track-border</code></td><td><code class="nds-inline-code lang-html">--switch-neutral-default</code></td><td>Track border color; overridden by checked state and disabled state</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-bg</code></td><td><code class="nds-inline-code lang-html">--switch-neutral-default</code></td><td>Thumb background color; overridden by checked state and disabled state</td></tr>
-          </tbody>
-        </table>
-      </div>
+</div>
+  </div>
+</section>
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">JavaScript API</h3>
-        <div class="nds-code nds-expandable">
-              <div class="nds-code-action">
-                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                  <i class="nds-icon nds-hgi-copy-01"></i>
-                </button>
-              </div>
-              <div class="nds-expandable-content">
-                <code class="lang-javascript code">
-// Listen for switch state changes
-var switchEl = document.querySelector('.nds-switch');
-switchEl.addEventListener('nds:switchChange', function(e) {
-  console.log('Checked:', e.detail.checked);
-  console.log('Value:', e.detail.value);
-  console.log('Input:', e.detail.input);
+<section id="switchApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-state~="disabled"` | `.nds-switch-container` | Not-allowed cursor and muted track and thumb. Also disables the input |
+| `data-state~="disabled"` | `.nds-switch-group` | Half opacity and no pointer events. Also disables every input in the group |
+| `data-feedback-target` | `.nds-form-header` | Receives the feedback message of the field |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on `.nds-switch-container`. The size classes set the first five.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--switch-width` | `48px` | Track width |
+| `--switch-height` | `24px` | Track height |
+| `--switch-thumb-size` | `16px` | Thumb diameter |
+| `--switch-thumb-offset` | `4px` | Gap between the thumb and the track edge |
+| `--nds-input-size` | `20px` | Label line height |
+| `--switch-track-bg` | `var(--background-default)` | Track background when off |
+| `--switch-track-border` | `var(--switch-neutral-default)` | Track border when off |
+| `--switch-thumb-bg` | `var(--switch-neutral-default)` | Thumb color when off |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:switchChange` | `.nds-switch` (bubbles) | `{ checked, value, input }` |
+{: .nds-table .nds-responsive}
+
+To change a switch from code, set `checked` on the input and dispatch `change`. The full API is in the banner of `_js/nds-forms.js`.
+
+<script type="text/html" id="switch-js" data-canon data-lang="js">
+document.querySelector('.nds-switch').addEventListener('nds:switchChange', function (e) {
+  console.log(e.detail.checked, e.detail.value);
 });
 
-// Toggle programmatically
 var input = document.querySelector('.nds-switch-input');
 input.checked = !input.checked;
 input.dispatchEvent(new Event('change'));
-            </code>
-      </div>
-        </div>
-      </div>
-    </div>
+</script>
+
+</div>
   </div>
 </section>
