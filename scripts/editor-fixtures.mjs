@@ -3,7 +3,7 @@
 // demos pull the extras bundle) and injects its own two harness fields
 // (#story, #report) — the playground stays a clean scratch page.
 // Run: node scripts/editor-fixtures.mjs  (dev server must be up on :4002)
-import puppeteer from 'puppeteer-core';
+import { launch } from './lib/browser.mjs';
 
 const FIXTURES = [
     {
@@ -600,14 +600,11 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
     },
 ];
 
-const browser = await puppeteer.launch({
-    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    headless: 'new',
-});
+const browser = await launch();
 try {
     const page = await browser.newPage();
-    await page.goto('http://localhost:4002/NDS-vanilla/components/editor.html', { waitUntil: 'networkidle2', timeout: 60000 });
-    await page.waitForSelector('.nds-editor[data-nds-editor-initialized]', { timeout: 20000 });
+    await page.goto('http://localhost:4002/NDS-vanilla/components/editor.html', { waitUntil: 'networkidle', timeout: 60000 });
+    await page.waitForSelector('.nds-editor[data-nds-editor-initialized]', { state: 'attached', timeout: 20000 });
 
     // Inject the harness fields the fixtures drive by id — self-contained, so
     // no authored page has to carry them.
@@ -2269,13 +2266,8 @@ try {
     // E2E: server-upload mode — the consumer stamps NDS.Upload's own attrs on
     // the generated container; the URL field takes the server's {url} response
     // and no base64 enters the value. The POST is intercepted in-flight.
-    await page.setRequestInterception(true);
-    const onFakeUpload = (req) => {
-        if (req.url().includes('/fake-upload')) {
-            req.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: 'https://cdn.example.com/uploaded-42.png' }) });
-        } else req.continue();
-    };
-    page.on('request', onFakeUpload);
+    const onFakeUpload = (route) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: 'https://cdn.example.com/uploaded-42.png' }) });
+    await page.route('**/fake-upload*', onFakeUpload);
     const serverOut = await page.evaluate(async () => {
         const waitFor = async (fn) => {
             for (let i = 0; i < 40; i++) {
@@ -2323,8 +2315,7 @@ try {
         delete up.dataset.autoUpload;
         return { serverUrlArrives, chipComplete, inserted };
     });
-    page.off('request', onFakeUpload);
-    await page.setRequestInterception(false);
+    await page.unroute('**/fake-upload*', onFakeUpload);
     const serverProblems = Object.entries(serverOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
     if (serverProblems.length) {
         failures++;

@@ -19,15 +19,9 @@
 //
 //   node scripts/check-time-picker.mjs [baseUrl]
 // Defaults to the dev server. Start it with `bundle exec jekyll serve` if down.
-import puppeteer from 'puppeteer-core';
-import { existsSync } from 'node:fs';
+import { launch } from './lib/browser.mjs';
 
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const PAGE = `${BASE}/components/time-picker.html`;
 const probe = await fetch(PAGE).catch(() => null);
@@ -36,7 +30,7 @@ if (!probe?.ok) {
     process.exit(2);
 }
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+const browser = await launch();
 const results = [];
 const ok = (name, pass, detail = '') => {
     results.push({ name, pass });
@@ -46,13 +40,13 @@ const ok = (name, pass, detail = '') => {
 const page = await browser.newPage();
 page.on('pageerror', (e) => console.error('PAGE ERROR:', e.message));
 page.on('console', (m) => { if (m.type() === 'error') console.error('CONSOLE:', m.text()); });
-await page.setViewport({ width: 1280, height: 900 });
-await page.goto(PAGE, { waitUntil: 'networkidle0' });
-await page.waitForFunction(() => window.NDS?.TimePicker && window.NDS?.CustomSelect, { timeout: 15000 });
+await page.setViewportSize({ width: 1280, height: 900 });
+await page.goto(PAGE, { waitUntil: 'networkidle' });
+await page.waitForFunction(() => window.NDS?.TimePicker && window.NDS?.CustomSelect, null, { timeout: 15000 });
 
 // Fields are built here rather than read off the page so a bounds case cannot
 // drift with the doc page's demo cards. `id` lands on the CONTAINER.
-const build = (id, attrs = {}, seed = '', typed = '') => page.evaluate((id, attrs, seed, typed) => {
+const build = (id, attrs = {}, seed = '', typed = '') => page.evaluate(([id, attrs, seed, typed]) => {
     document.getElementById(id)?.remove();
     const el = document.createElement('div');
     el.className = 'nds-form-container nds-time-picker';
@@ -76,7 +70,7 @@ const build = (id, attrs = {}, seed = '', typed = '') => page.evaluate((id, attr
     document.querySelector('#timePickerOverview .nds-section-body').appendChild(el);
     window.NDS.TimePicker.create(el);
     return id;
-}, id, attrs, seed, typed);
+}, [id, attrs, seed, typed]);
 
 // The panel may PORTAL to <body> when dropmenu opens it, so nothing here may
 // reach it through `#id ...` — every lookup goes via the instance.
@@ -95,26 +89,26 @@ await page.evaluate(() => {
 
 const openPanel = async (id) => {
     await page.evaluate((id) => document.querySelector('#' + id + ' .nds-time-input').click(), id);
-    await page.waitForFunction((id) => !!window.__tp.panel(id), { timeout: 4000 }, id);
+    await page.waitForFunction((id) => !!window.__tp.panel(id), id, { timeout: 4000 });
 };
 
 // Pick by real click inside the panel. A unit's menu may portal too, so the
 // option is looked up through the back-reference custom-select stamps.
 const pick = async (id, unit, value) => {
     await openPanel(id);
-    await page.evaluate((id, unit) => {
+    await page.evaluate(([id, unit]) => {
         const fc = window.__tp.unitFc(id, unit);
         fc.querySelector('.nds-select-input').focus();
         fc.querySelector('.nds-select-input').click();
-    }, id, unit);
-    await page.waitForFunction((id, unit) => !!window.__tp.unitFc(id, unit)._customSelectDropdown,
-        { timeout: 4000 }, id, unit);
-    return page.evaluate((id, unit, value) => {
+    }, [id, unit]);
+    await page.waitForFunction(([id, unit]) => !!window.__tp.unitFc(id, unit)._customSelectDropdown,
+        [id, unit], { timeout: 4000 });
+    return page.evaluate(([id, unit, value]) => {
         const opt = window.__tp.options(id, unit).find((o) => o.dataset.value === value);
         if (!opt || opt.disabled) return false;
         opt.click();
         return true;
-    }, id, unit, value);
+    }, [id, unit, value]);
 };
 
 // Type like a user. Deliberately focus() rather than click(): an earlier test's
@@ -145,8 +139,8 @@ const carrier = (id) => page.$eval('#' + id + ' .nds-time-value', (el) => el.val
 const unitsOf = (id) => page.evaluate((id) => Array.from(
     window.__tp.panel(id).querySelectorAll('[data-time-picker-unit]'))
     .map((e) => e.getAttribute('data-time-picker-unit')), id);
-const optionValues = (id, unit) => page.evaluate((id, unit) =>
-    window.__tp.options(id, unit).map((o) => ({ v: o.dataset.value, off: o.disabled })), id, unit);
+const optionValues = (id, unit) => page.evaluate(([id, unit]) =>
+    window.__tp.options(id, unit).map((o) => ({ v: o.dataset.value, off: o.disabled })), [id, unit]);
 
 // ---- LAZY PANEL --------------------------------------------------------
 
@@ -340,7 +334,7 @@ ok('a lang toggle re-renders the display and keeps the value', await (async () =
     const arShown = await shown('lang');
     await page.evaluate(() => document.documentElement.setAttribute('lang', 'en'));
     await page.waitForFunction(() => /PM/.test(document.querySelector('#lang .nds-time-input').value),
-        { timeout: 4000 }).catch(() => {});
+        null, { timeout: 4000 }).catch(() => {});
     const enShown = await shown('lang');
     const kept = await carrier('lang');
     await page.evaluate(() => document.documentElement.setAttribute('lang', 'en'));
@@ -355,7 +349,7 @@ ok('a lang toggle re-renders the display and keeps the value', await (async () =
 // A panel that detaches from its field on scroll is the classic failure.
 // `filler` only for the scrollable-container cases — in the bottom-pinned case it
 // would push the field back UP the viewport and quietly test nothing.
-const buildProbe = (boxCss, filler = true, open = true) => page.evaluate((boxCss, filler, open) => {
+const buildProbe = (boxCss, filler = true, open = true) => page.evaluate(([boxCss, filler, open]) => {
     document.getElementById('probeBox')?.remove();
     const box = document.createElement('div');
     box.id = 'probeBox';
@@ -376,7 +370,7 @@ const buildProbe = (boxCss, filler = true, open = true) => page.evaluate((boxCss
     document.body.appendChild(box);
     window.NDS.TimePicker.create(el);
     if (open) el.querySelector('.nds-time-input').click();
-}, boxCss, filler, open);
+}, [boxCss, filler, open]);
 
 const probeGeom = () => page.evaluate(() => {
     const tp = document.querySelector('#probe .nds-time-input')._ndsTimePicker;
