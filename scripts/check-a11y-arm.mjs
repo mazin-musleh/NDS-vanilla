@@ -14,41 +14,21 @@
 //   4. a visitor WITH saved prefs must get the bundle without pressing anything,
 //      or their saved modes silently stop applying
 //   node scripts/check-a11y-arm.mjs [_site]
-import puppeteer from 'puppeteer-core';
+import { launch } from './lib/browser.mjs';
 import { spawn } from 'node:child_process';
-import { existsSync, globSync, rmSync } from 'node:fs';
 
 const DIR = process.argv[2] || '_site';
 const PORT = 4198;
 const URL = `http://localhost:${PORT}/NDS-vanilla/components/tokens.html`;
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const server = spawn(process.execPath, ['.claude/skills/nds-perf/gz-serve.mjs', DIR, String(PORT)], { stdio: 'ignore' });
 await new Promise((r) => setTimeout(r, 1200));
 
-// Own profile dir: puppeteer's default is shared, and a leftover headless
-// Chrome from another check refuses the launch. Swept at start, not on exit,
-// so it never races the Chrome this run is still shutting down.
-// timeout: a slow launch on a loaded machine surfaces as "The browser is
-// already running for <dir>" on Windows — puppeteer reports every launch
-// failure that way when a lockfile exists (BrowserLauncher.js). 30s default
-// isn't enough when a build or a sibling check is running.
-const PROFILE = `tmp/chrome-a11y-arm-${Date.now()}`;
-for (const d of globSync('tmp/chrome-a11y-arm-*')) rmSync(d, { recursive: true, force: true });
-const browser = await puppeteer.launch({
-    executablePath: CHROME,
-    headless: 'new',
-    userDataDir: PROFILE,
-    timeout: 90000,
-});
-// Each check runs in its own browser context: localStorage is shared across
-// pages of one context, so the saved-prefs check would otherwise leave every
-// later "cold" page warm — and silently pass for the wrong reason.
-const freshPage = async () => (await browser.createBrowserContext()).newPage();
+const browser = await launch();
+// Each check runs in its own browser context (browser.newPage() makes one):
+// localStorage is shared across pages of one context, so the saved-prefs check
+// would otherwise leave every later "cold" page warm — and pass for the wrong reason.
+const freshPage = () => browser.newPage();
 
 const fails = [];
 const note = (ok, name, detail) => {
@@ -82,7 +62,7 @@ const settle = async (page) => {
         const other = u.match(/nds-(delegated|extras|audit)\.min\.js/);
         if (pressed && other) afterPress.push(other[1]);
     });
-    await page.goto(URL, { waitUntil: 'networkidle0' });
+    await page.goto(URL, { waitUntil: 'networkidle' });
     await settle(page);
     note(css.length === 0, 'a no-prefs visitor never fetches the a11y sheet', css.join(' '));
     note(js.length === 0, 'a no-prefs visitor never fetches the a11y bundle', js.join(' '));
@@ -119,9 +99,9 @@ const settle = async (page) => {
 {
     // One context for both pages here — the returning visitor has to SEE the
     // prefs the seed wrote, which is the whole point of this check.
-    const ctx = await browser.createBrowserContext();
+    const ctx = await browser.newContext();
     const seed = await ctx.newPage();
-    await seed.goto(URL, { waitUntil: 'networkidle0' });
+    await seed.goto(URL, { waitUntil: 'networkidle' });
     await settle(seed);
     // Drive the real UI rather than guess the payload shape — load() discards a wrong one.
     const prefs = await seed.evaluate(async () => {
@@ -137,7 +117,7 @@ const settle = async (page) => {
     const back = await ctx.newPage();
     const js = [];
     back.on('request', (req) => { if (req.url().includes('nds-accessibility.min.js')) js.push(req.url()); });
-    await back.goto(URL, { waitUntil: 'networkidle0' });
+    await back.goto(URL, { waitUntil: 'networkidle' });
     await new Promise((r) => setTimeout(r, 2000));
     const stamped = await back.evaluate(() => document.documentElement.hasAttribute('data-a11y'));
     note(js.length > 0, 'a returning visitor fetches the bundle with no press');
@@ -148,7 +128,7 @@ const settle = async (page) => {
 // ---- cold: double activation, and the click is swallowed ----
 {
     const page = await freshPage();
-    await page.goto(URL, { waitUntil: 'networkidle0' });
+    await page.goto(URL, { waitUntil: 'networkidle' });
     await settle(page);
 
     const r = await page.evaluate(async () => {
@@ -181,7 +161,7 @@ const settle = async (page) => {
 // ---- warm: the click must reach the document bubble phase ----
 {
     const page = await freshPage();
-    await page.goto(URL, { waitUntil: 'networkidle0' });
+    await page.goto(URL, { waitUntil: 'networkidle' });
     await settle(page);
 
     const r = await page.evaluate(async () => {

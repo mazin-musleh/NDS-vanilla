@@ -18,7 +18,7 @@ node scripts/run-audit.mjs [page.html]          # print a built page's NDS.Init.
 node scripts/find-unused-icons.mjs              # UI icons nothing references
 ```
 
-**Test Safari with Playwright WebKit in `tmp/webkit/`** — never install it in the root, where `npm install` writes to the tracked `package.json`. Set `PLAYWRIGHT_BROWSERS_PATH=$PWD/browsers` when you run it.
+**Browser checks launch through `scripts/lib/browser.mjs` (Playwright)** — `ENGINE=webkit node scripts/<check>.mjs` runs one as Safari. The root ships `playwright-core` only (no browser download; Chromium is your installed Chrome); the WebKit browser lives in `tmp/webkit/browsers`, fetched once with `PLAYWRIGHT_BROWSERS_PATH=$PWD/tmp/webkit/browsers npx playwright-core install webkit`. CDP calls (throttling, touch, traces) are Chromium-only.
 
 **Judge an SVG by its GZIP size, not its bytes on disk** — Pages serves SVG compressed, so a 331 KB Figma export is 113 KB on the wire and disk numbers send you optimizing the wrong file. `optimize-assets.py` reports both. It also always encodes raster BOTH lossless and lossy and keeps whichever is smaller: flat-colour artwork (logos, UI graphics, hard edges) goes smaller AND pixel-perfect lossless, while photos and gradients want lossy — a 201 KB PNG here landed at 74 KB lossless vs 102 KB at q95. Never pick from the file extension.
 

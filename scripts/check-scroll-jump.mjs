@@ -4,18 +4,13 @@
 // fresh load at the top, and a reload with the page scrolled down (the loader's
 // scroll re-pin). Output: a summary per run, and tmp/scroll-jump-<run>.json.
 //   node scripts/check-scroll-jump.mjs [/page.html] [baseUrl] [--desktop|--mobile]
-import puppeteer from 'puppeteer-core';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { launch, cdp } from './lib/browser.mjs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 
 const argv = process.argv.slice(2);
 const PAGE = argv.find((a) => a.startsWith('/')) || '/';
 const BASE = (argv.find((a) => a.startsWith('http')) || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
 const VIEWPORTS = argv.includes('--mobile') ? ['mobile'] : argv.includes('--desktop') ? ['desktop'] : ['desktop', 'mobile'];
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const probe = await fetch(`${BASE}${PAGE}`).catch(() => null);
 if (!probe?.ok) { console.error(`cannot reach ${BASE}${PAGE} — is the dev server up?`); process.exit(2); }
@@ -84,23 +79,24 @@ const PROBE = () => {
     addEventListener('load', () => mark('load'));
 };
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+const browser = await launch();
 const newPage = async (vp) => {
-    const page = await browser.newPage();
-    if (vp === 'mobile') await page.setViewport({ width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 });
-    else await page.setViewport({ width: 1280, height: 800 });
-    await page.setCacheEnabled(false);
-    const cdp = await page.target().createCDPSession();
-    await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 400, downloadThroughput: (400 * 1024) / 8, uploadThroughput: (400 * 1024) / 8 });
-    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 6.6 });
-    await page.evaluateOnNewDocument(PROBE);
+    const page = await browser.newPage(vp === 'mobile'
+        ? { viewport: { width: 390, height: 844 }, isMobile: true, deviceScaleFactor: 2 }
+        : { viewport: { width: 1280, height: 800 } });
+    const session = await cdp(page);
+    await session.send('Network.enable');
+    await session.send('Network.setCacheDisabled', { cacheDisabled: true });
+    await session.send('Network.emulateNetworkConditions', { offline: false, latency: 400, downloadThroughput: (400 * 1024) / 8, uploadThroughput: (400 * 1024) / 8 });
+    await session.send('Emulation.setCPUThrottlingRate', { rate: 6.6 });
+    await page.addInitScript(PROBE);
     return page;
 };
 const settle = (ms) => new Promise((r) => setTimeout(r, ms));
 // The swiper bundle is injected after the reveal, so `load` fires long before
 // init on slow-4G: wait for the last non-hero deck's init stamp, then settle.
 const inited = async (page) => {
-    await page.waitForFunction(() => { const d = document.querySelectorAll('.nds-swiper:not(.nds-hero)'); return d.length && [...d].every((s) => s.hasAttribute('data-nds-swiper-initialized')); }, { timeout: 90000 }).catch(() => console.log('  (timed out waiting for swiper init)'));
+    await page.waitForFunction(() => { const d = document.querySelectorAll('.nds-swiper:not(.nds-hero)'); return d.length && [...d].every((s) => s.hasAttribute('data-nds-swiper-initialized')); }, null, { timeout: 90000 }).catch(() => console.log('  (timed out waiting for swiper init)'));
     await settle(2500);
 };
 const collect = (page) => page.evaluate(() => window.__jump);
@@ -130,7 +126,7 @@ const scrollDuringLoad = async (vp) => {
         const revealed = await page.evaluate(() => document.documentElement.hasAttribute('data-nds-loaded')).catch(() => false);
         if (revealed) break;
         const t = await page.evaluate(() => Math.round(performance.now())).catch(() => -1);
-        await page.mouse.wheel({ deltaY: 500 }); wheels.push({ t, dy: 500 });
+        await page.mouse.wheel(0, 500); wheels.push({ t, dy: 500 });
         await settle(1200);
     }
     await nav;

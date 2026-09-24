@@ -24,22 +24,13 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import puppeteer from 'puppeteer-core';
+import { launch } from './lib/browser.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Za-z]:)/, '$1'), '..');
 const BACKUPS = path.join(ROOT, 'tmp', 'asset-backups');
 const OUTDIR = path.join(ROOT, 'tmp', 'svg-render-diff');
 const SIZES = [64, 256, 1024];   // small (real UI use) → large (exaggerates geometry error)
 const THRESH = 8;                // per-channel delta below this is invisible dithering
-
-function findChrome() {
-  const cands = [process.env.CHROME_PATH,
-    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'].filter(Boolean);
-  const hit = cands.find(p => { try { return fs.existsSync(p); } catch { return false; } });
-  if (!hit) { console.error('Chrome not found. Set CHROME_PATH.'); process.exit(1); }
-  return hit;
-}
 
 function collect(targets) {
   const out = [];
@@ -67,23 +58,27 @@ async function shot(page, file, size) {
        render at its native size in every box, so the large runs would test nothing. */
     #b svg,#b img{width:100%;height:100%;display:block}
   </style><div id="b">${svg}</div>`;
-  await page.setViewport({ width: size, height: size, deviceScaleFactor: 1 });
+  await page.setViewportSize({ width: size, height: size });
   await page.setContent(html, { waitUntil: 'load' });
   const buf = await page.screenshot({ clip: { x: 0, y: 0, width: size, height: size } });
   return buf;
 }
 
 // PNG -> RGBA via the browser itself (no image library needed).
+// Pixels come back as a latin1 string: a 4M-entry array takes ~14s to cross, a string ~0.2s.
 async function decode(page, buf, size) {
-  return page.evaluate(async (b64, s) => {
+  return Buffer.from(await page.evaluate(async ([b64, s]) => {
     const img = new Image();
     img.src = 'data:image/png;base64,' + b64;
     await img.decode();
     const c = new OffscreenCanvas(s, s);
     const x = c.getContext('2d');
     x.drawImage(img, 0, 0);
-    return Array.from(x.getImageData(0, 0, s, s).data);
-  }, buf.toString('base64'), size);
+    const d = x.getImageData(0, 0, s, s).data;
+    let out = '';
+    for (let i = 0; i < d.length; i += 0x8000) out += String.fromCharCode.apply(null, d.subarray(i, i + 0x8000));
+    return out;
+  }, [buf.toString('base64'), size]), 'latin1');
 }
 
 function compare(a, b, size) {
@@ -125,9 +120,7 @@ const args = process.argv.slice(2);
 if (!args.length) { console.error('usage: svg-render-diff.mjs <file|dir>...'); process.exit(1); }
 
 fs.mkdirSync(OUTDIR, { recursive: true });
-// pipe, not a port: with a Chrome instance already running the DevTools port
-// handshake fails and puppeteer misreads the fresh profile as locked.
-const browser = await puppeteer.launch({ executablePath: findChrome(), headless: true, pipe: true });
+const browser = await launch();
 const page = await browser.newPage();
 
 console.log(`threshold: per-channel delta > ${THRESH}; "solid" = diff mask eroded 1px\n`);

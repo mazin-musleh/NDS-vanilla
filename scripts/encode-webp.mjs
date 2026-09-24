@@ -19,7 +19,7 @@
 // Always encode from the MASTER, never from an already-lossy export — re-encoding
 // compounds artefacts, and a smaller file out of a lossy input is damage, not a win.
 // Output lands beside the master: name.webp, name_md.webp, name_sm.webp.
-import puppeteer from 'puppeteer-core';
+import { launch } from './lib/browser.mjs';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, join } from 'node:path';
 
@@ -39,16 +39,11 @@ const boxes = flag('boxes', null);
 const psnrFloor = Number(flag('psnr', 42));
 const fixedQ = flag('quality', null) === null ? null : Number(flag('quality'));
 const suffixes = flag('suffix', '_md,_sm').split(',');
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const b64 = readFileSync(master).toString('base64');
 const mime = extname(master).toLowerCase() === '.png' ? 'image/png' : 'image/jpeg';
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+const browser = await launch();
 const page = await browser.newPage();
 
 const targets = boxes
@@ -56,7 +51,7 @@ const targets = boxes
     : widths.map((w) => ({ w, h: null }));
 
 const results = await page.evaluate(
-    async (dataUrl, targets, psnrFloor, fixedQ) => {
+    async ({ dataUrl, targets, psnrFloor, fixedQ }) => {
         const img = new Image();
         img.src = dataUrl;
         await img.decode();
@@ -110,10 +105,7 @@ const results = await page.evaluate(
         }
         return { natural: [img.naturalWidth, img.naturalHeight], out };
     },
-    `data:${mime};base64,${b64}`,
-    targets,
-    psnrFloor,
-    fixedQ
+    { dataUrl: `data:${mime};base64,${b64}`, targets, psnrFloor, fixedQ }
 );
 
 await browser.close();

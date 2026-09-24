@@ -18,15 +18,9 @@
 //
 //   node scripts/check-mount-timing.mjs [baseUrl]
 // Defaults to the dev server. Start it with `bundle exec jekyll serve` if down.
-import puppeteer from 'puppeteer-core';
-import { existsSync } from 'node:fs';
+import { launch } from './lib/browser.mjs';
 
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const probe = await fetch(`${BASE}/components/filter.html`).catch(() => null);
 if (!probe?.ok) {
@@ -34,7 +28,7 @@ if (!probe?.ok) {
     process.exit(2);
 }
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+const browser = await launch();
 const results = [];
 const ok = (name, pass, detail = '') => {
     results.push({ name, pass });
@@ -70,10 +64,9 @@ const settle = (ms = 1500) => new Promise((r) => setTimeout(r, ms));
 // Hold matching bundle requests until release() is called; everything else flows.
 async function holdBundle(page, match) {
     const held = [];
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        if (req.url().includes(match)) held.push(req);
-        else req.continue().catch(() => {});
+    await page.route('**/*', (route) => {
+        if (route.request().url().includes(match)) held.push(route);
+        else route.continue().catch(() => {});
     });
     return () => { held.forEach((r) => r.continue().catch(() => {})); held.length = 0; };
 }
@@ -84,11 +77,10 @@ async function holdBundle(page, match) {
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
     const release = await holdBundle(page, 'nds-main.min.js');
-    // The held defer script blocks DOMContentLoaded, so never await the goto
-    // ('commit' is unsupported in this puppeteer) — the parser streams the DOM
-    // in regardless, and the selector poll below catches the cloned-from markup.
-    page.goto(`${BASE}/components/filter.html`, { waitUntil: 'load', timeout: 60000 }).catch(() => {});
-    await page.waitForSelector('#basicFilterCards', { timeout: 15000 });
+    // The held defer script blocks DOMContentLoaded, so wait only for the commit —
+    // the parser streams the DOM in regardless, and the selector poll catches it.
+    await page.goto(`${BASE}/components/filter.html`, { waitUntil: 'commit' });
+    await page.waitForSelector('#basicFilterCards', { state: 'attached', timeout: 15000 });
     const mounted = await page.evaluate(MOUNT_VIEW('timingCase1'));
     ok('case1: view mounted while nds-main is still held', mounted === true);
     const guarded = await page.evaluate(() => {
@@ -111,7 +103,7 @@ async function holdBundle(page, match) {
     page.on('pageerror', (e) => errors.push(e.message));
     const release = await holdBundle(page, 'nds-delegated.min.js');
     await page.goto(`${BASE}/components/filter.html`, { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => !!window.NDS?.Init, { timeout: 15000 });
+    await page.waitForFunction(() => !!window.NDS?.Init, null, { timeout: 15000 });
     ok('case2: delegated bundle is genuinely absent at mount time',
         await page.evaluate(() => !window.NDS.Filter || NDS.Filter.__ndsStub === true));
     await page.evaluate(MOUNT_VIEW('timingCase2'));
@@ -141,12 +133,13 @@ async function holdBundle(page, match) {
 {
     const page = await browser.newPage();
     const attempts = [];
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        if (req.url().includes('nds-extras.min.js')) { attempts.push(req.url()); req.abort().catch(() => {}); }
-        else req.continue().catch(() => {});
+    let abort = true;
+    await page.route('**/*', (route) => {
+        const url = route.request().url();
+        if (url.includes('nds-extras.min.js')) attempts.push(url);
+        (abort && url.includes('nds-extras.min.js') ? route.abort() : route.continue()).catch(() => {});
     });
-    await page.goto(`${BASE}/components/button.html`, { waitUntil: 'networkidle0' });
+    await page.goto(`${BASE}/components/button.html`, { waitUntil: 'networkidle' });
     const stubbed = await page.evaluate(() =>
         (window.__NDS_BUNDLES?.extras?.ns || []).every((n) => !window.NDS[n] || NDS[n].__ndsStub === true));
     ok('case5: extras namespaces are lazy stubs after the failed load', stubbed === true,
@@ -159,8 +152,7 @@ async function holdBundle(page, match) {
     ok('case5: refresh() left the stubs untouched', await page.evaluate(() =>
         (window.__NDS_BUNDLES?.extras?.ns || []).every((n) => !window.NDS[n] || NDS[n].__ndsStub === true)));
     // Lift the abort; the documented path must now recover the real namespaces.
-    page.removeAllListeners('request');
-    page.on('request', (req) => req.continue().catch(() => {}));
+    abort = false;
     const loaded = await page.evaluate(async () => {
         await NDS.loadBundle('extras');
         return (window.__NDS_BUNDLES?.extras?.ns || []).some((n) => window.NDS[n] && NDS[n].__ndsStub !== true);

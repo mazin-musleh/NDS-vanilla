@@ -4,23 +4,17 @@
 // settles, so a rest-only re-anchor never sees it.
 //   node scripts/check-swiper-loop.mjs [/page.html] [baseUrl]
 // Needs the dev server up. One line per swiper x direction; exit 1 on a pin.
-import puppeteer from 'puppeteer-core';
-import { existsSync } from 'node:fs';
+import { launch, cdp } from './lib/browser.mjs';
 
 const argv = process.argv.slice(2);
 const PAGE = argv.find((a) => a.startsWith('/')) || '/';
 const BASE = (argv.find((a) => a.startsWith('http')) || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
 const FLICKS = 18, GAP = 250;   // faster than the settle: the burst that exhausts the budget
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const probe = await fetch(`${BASE}${PAGE}`).catch(() => null);
 if (!probe?.ok) { console.error(`cannot reach ${BASE}${PAGE} — is the dev server up?`); process.exit(2); }
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox'] });
+const browser = await launch();
 let failed = 0;
 
 const count = await withPage(async (page) =>
@@ -41,11 +35,11 @@ await browser.close();
 process.exit(failed ? 1 : 0);
 
 async function withPage(fn) {
-    const page = await browser.newPage();
-    await page.setViewport({ width: 412, height: 915, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
-    await (await page.createCDPSession()).send('Emulation.setCPUThrottlingRate', { rate: 6.6 });
-    await page.goto(`${BASE}${PAGE}`, { waitUntil: 'networkidle2' });
-    await page.waitForSelector('.nds-swiper[data-nds-swiper-initialized]', { timeout: 15000 });
+    const page = await browser.newPage({ viewport: { width: 412, height: 915 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    page.cdp = await cdp(page);
+    await page.cdp.send('Emulation.setCPUThrottlingRate', { rate: 6.6 });
+    await page.goto(`${BASE}${PAGE}`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('.nds-swiper[data-nds-swiper-initialized]', { state: 'attached', timeout: 15000 });
     try { return await fn(page); } finally { await page.close(); }
 }
 
@@ -67,10 +61,12 @@ async function run(page, which, dir) {
     }, which);
 
     const cy = Math.round(info.y), x0 = 206, span = 150 * (info.rtl ? -dir : dir);
+    // Playwright has no touch-move, so the gesture goes through CDP.
+    const touch = (type, x) => page.cdp.send('Input.dispatchTouchEvent', { type, touchPoints: x == null ? [] : [{ x, y: cy }] });
     for (let i = 0; i < FLICKS; i++) {
-        await page.touchscreen.touchStart(x0 + span / 2, cy);
-        for (let k = 1; k <= 5; k++) await page.touchscreen.touchMove(Math.round(x0 + span / 2 - span * k / 5), cy);
-        await page.touchscreen.touchEnd();
+        await touch('touchStart', x0 + span / 2);
+        for (let k = 1; k <= 5; k++) await touch('touchMove', Math.round(x0 + span / 2 - span * k / 5));
+        await touch('touchEnd');
         await new Promise((r) => setTimeout(r, GAP));
     }
     await new Promise((r) => setTimeout(r, 1200));

@@ -13,15 +13,9 @@
 //
 //   node scripts/check-filter-sort-ownership.mjs [baseUrl]
 // Defaults to the dev server. Start it with `bundle exec jekyll serve` if down.
-import puppeteer from 'puppeteer-core';
-import { existsSync } from 'node:fs';
+import { launch } from './lib/browser.mjs';
 
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const probe = await fetch(`${BASE}/components/filter.html`).catch(() => null);
 if (!probe?.ok) {
@@ -29,13 +23,13 @@ if (!probe?.ok) {
     process.exit(2);
 }
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+const browser = await launch();
 const page = await browser.newPage();
 const pageErrors = [];
 page.on('pageerror', (e) => pageErrors.push(String(e)));
 
-await page.goto(`${BASE}/components/filter.html`, { waitUntil: 'networkidle2' });
-await page.waitForFunction(() => window.NDS?.Filter?.init && window.NDS?.Sort?.create, { timeout: 20000 });
+await page.goto(`${BASE}/components/filter.html`, { waitUntil: 'networkidle' });
+await page.waitForFunction(() => window.NDS?.Filter?.init && window.NDS?.Sort?.create, null, { timeout: 20000 });
 
 const report = await page.evaluate(async () => {
     const findings = [];

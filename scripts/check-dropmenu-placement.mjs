@@ -22,15 +22,9 @@
 //
 //   node scripts/check-dropmenu-placement.mjs [baseUrl]
 // Defaults to the dev server. Start it with `bundle exec jekyll serve` if down.
-import puppeteer from 'puppeteer-core';
-import { existsSync } from 'node:fs';
+import { launch } from './lib/browser.mjs';
 
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const PAGE = `${BASE}/components/date-picker.html`;
 const probe = await fetch(PAGE).catch(() => null);
@@ -39,7 +33,7 @@ if (!probe?.ok) {
     process.exit(2);
 }
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+const browser = await launch();
 const results = [];
 const ok = (name, pass, detail = '') => {
     results.push({ name, pass });
@@ -48,7 +42,7 @@ const ok = (name, pass, detail = '') => {
 
 // Build N canonical date fields inside a scrolling modal, open the modal, then
 // open the picker on `row`. Returns everything the assertions need in one trip.
-const inModal = async (page, { rows = 8, row = 3 } = {}) => page.evaluate(async (rows, row) => {
+const inModal = async (page, { rows = 8, row = 3 } = {}) => page.evaluate(async ([rows, row]) => {
     document.getElementById('probe-modal')?.remove();
     const tpl = document.querySelector('.nds-form-container.nds-date-picker');
     const modal = document.createElement('div');
@@ -102,11 +96,11 @@ const inModal = async (page, { rows = 8, row = 3 } = {}) => page.evaluate(async 
         scrolls: menu.scrollHeight > menu.clientHeight + 1,
         navBottom: document.querySelector('.nds-main-nav')?.getBoundingClientRect().bottom ?? 0,
     };
-}, rows, row);
+}, [rows, row]);
 
 const page = await browser.newPage();
-await page.setViewport({ width: 1280, height: 900 });
-await page.goto(PAGE, { waitUntil: 'networkidle2' });
+await page.setViewportSize({ width: 1280, height: 900 });
+await page.goto(PAGE, { waitUntil: 'networkidle' });
 await page.waitForFunction('window.NDS?.DatePicker && window.NDS?.Modal');
 
 // ── PORTAL ─────────────────────────────────────────────────────────
@@ -131,7 +125,7 @@ ok('modal: flip ignores the nav it paints over',
 // Short viewport: the calendar fits neither side, so it must scroll rather
 // than run off the edge. This is the branch only a scroll-region-less menu
 // reaches.
-await page.setViewport({ width: 1280, height: 560 });
+await page.setViewportSize({ width: 1280, height: 560 });
 const tight = await inModal(page, { row: 3 });
 ok('short viewport: calendar stays inside the viewport',
     tight.top >= 0 && tight.bottom <= tight.vh,
@@ -143,7 +137,7 @@ ok('short viewport: calendar scrolls instead of overflowing', tight.scrolls,
 // The month/year pickers live INSIDE the calendar menu, which now sits at
 // <body>. A plain contains() check would read them as unrelated and close the
 // calendar under them.
-await page.setViewport({ width: 1280, height: 900 });
+await page.setViewportSize({ width: 1280, height: 900 });
 await inModal(page, { row: 3 });
 const nested = await page.evaluate(async () => {
     const control = document.querySelectorAll('#probe-modal .nds-form-control')[3];
@@ -164,7 +158,7 @@ ok('month sub-picker opens', nested.subOpen);
 // ── NO CLIPPING ANCESTOR ───────────────────────────────────────────
 // Nothing traps the page's own demo field, so it must NOT portal — the walk
 // has to stay specific or every menu on every page reparents.
-await page.reload({ waitUntil: 'networkidle2' });
+await page.reload({ waitUntil: 'networkidle' });
 await page.waitForFunction('window.NDS?.DatePicker && window.NDS?.Modal');
 const plain = await page.evaluate(async () => {
     const field = document.querySelector('.nds-form-container.nds-date-picker');
@@ -189,8 +183,8 @@ ok('plain page: calendar is inside the viewport', plain.inViewport);
 // spec computes that overflow-y to `auto` — which is why the vertical-axis
 // check catches a table without testing overflow-x. Proven, not assumed.
 const tablePage = await browser.newPage();
-await tablePage.setViewport({ width: 1280, height: 900 });
-await tablePage.goto(`${BASE}/components/dropmenu.html`, { waitUntil: 'networkidle2' });
+await tablePage.setViewportSize({ width: 1280, height: 900 });
+await tablePage.goto(`${BASE}/components/dropmenu.html`, { waitUntil: 'networkidle' });
 await tablePage.waitForFunction('window.NDS?.Dropmenu');
 const table = await tablePage.evaluate(async () => {
     const pair = [...document.querySelectorAll('.nds-table-wrapper')]

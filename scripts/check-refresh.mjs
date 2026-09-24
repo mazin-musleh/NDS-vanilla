@@ -18,15 +18,9 @@
 //
 //   node scripts/check-refresh.mjs [baseUrl]
 // Defaults to the dev server. Start it with `bundle exec jekyll serve` if it is down.
-import puppeteer from 'puppeteer-core';
-import { existsSync } from 'node:fs';
+import { launch } from './lib/browser.mjs';
 
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const probe = await fetch(`${BASE}/examples/manage-records.html`).catch(() => null);
 if (!probe?.ok) {
@@ -34,15 +28,15 @@ if (!probe?.ok) {
     process.exit(2);
 }
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+const browser = await launch();
 const report = [];
 const pageErrors = [];
 
 async function open(path) {
     const page = await browser.newPage();
-    await page.setViewport({ width: 1400, height: 1000 });
+    await page.setViewportSize({ width: 1400, height: 1000 });
     page.on('pageerror', (e) => pageErrors.push(`${path}: ${e.message}`));
-    await page.goto(`${BASE}${path}`, { waitUntil: 'networkidle0' });
+    await page.goto(`${BASE}${path}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => Promise.all([
         window.NDS.loadBundle('delegated').catch(() => {}),
         window.NDS.loadBundle('extras').catch(() => {}),

@@ -16,15 +16,10 @@
 //
 //   node scripts/check-init-destroy.mjs [baseUrl]
 // Defaults to the dev server. Start it with `bundle exec jekyll serve` if it is down.
-import puppeteer from 'puppeteer-core';
-import { existsSync, readdirSync } from 'node:fs';
+import { launch } from './lib/browser.mjs';
+import { readdirSync } from 'node:fs';
 
 const BASE = (process.argv[2] || 'http://localhost:4002/NDS-vanilla').replace(/\/$/, '');
-const CHROME = [
-    process.env.CHROME_PATH,
-    'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-].find((p) => p && existsSync(p));
 
 const probe = await fetch(`${BASE}/components/filter.html`).catch(() => null);
 if (!probe?.ok) {
@@ -32,12 +27,12 @@ if (!probe?.ok) {
     process.exit(2);
 }
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+const browser = await launch();
 const page = await browser.newPage();
 const pageErrors = [];
 page.on('pageerror', (e) => pageErrors.push(e.message));
-await page.setViewport({ width: 1400, height: 1000 });
-await page.goto(`${BASE}/components/filter.html`, { waitUntil: 'networkidle0' });
+await page.setViewportSize({ width: 1400, height: 1000 });
+await page.goto(`${BASE}/components/filter.html`, { waitUntil: 'networkidle' });
 await page.evaluate(() => window.NDS.loadBundle('delegated').catch(() => {}));
 await new Promise((r) => setTimeout(r, 1200));
 
@@ -136,8 +131,8 @@ const report = await page.evaluate(async () => {
 // the whole page must release every distinct backref type and leave nothing stamped.
 const records = await browser.newPage();
 records.on('pageerror', (e) => pageErrors.push(`manage-records: ${e.message}`));
-await records.setViewport({ width: 1400, height: 1000 });
-await records.goto(`${BASE}/examples/manage-records.html`, { waitUntil: 'networkidle0' });
+await records.setViewportSize({ width: 1400, height: 1000 });
+await records.goto(`${BASE}/examples/manage-records.html`, { waitUntil: 'networkidle' });
 await records.evaluate(() => Promise.all([
     window.NDS.loadBundle('delegated').catch(() => {}),
     window.NDS.loadBundle('extras').catch(() => {}),
@@ -262,7 +257,7 @@ const results = [];
 const queue = [...PAGES];
 
 async function sweepOne(tab, errs, path) {
-    await tab.goto(`${BASE}/${path}`, { waitUntil: 'networkidle0' });
+    await tab.goto(`${BASE}/${path}`, { waitUntil: 'networkidle' });
     await tab.evaluate(() => Promise.all([
         window.NDS.loadBundle('delegated').catch(() => {}),
         window.NDS.loadBundle('extras').catch(() => {}),
@@ -301,7 +296,7 @@ await Promise.all(Array.from({ length: 4 }, async () => {
     const tab = await browser.newPage();
     const errs = [];
     tab.on('pageerror', (e) => errs.push(e.message));
-    await tab.setViewport({ width: 1400, height: 1000 });
+    await tab.setViewportSize({ width: 1400, height: 1000 });
     for (let path = queue.shift(); path; path = queue.shift()) {
         try {
             results.push(await sweepOne(tab, errs, path));
