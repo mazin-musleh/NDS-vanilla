@@ -2769,8 +2769,7 @@
             // Walk up to find the .nds-paged-content wrapper (pagination expects this as the container).
             // Pagination resolves the nav itself (explicit data-auto-pagination="#id" or adjacency) and
             // no-ops when there's none, so we just hand it the wrapper.
-            const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
-                                 this.targetContainer.parentElement?.closest('.nds-paged-content');
+            const pagedContent = this.targetContainer.closest('.nds-paged-content');
             if (pagedContent) NDS.Pagination.refresh(pagedContent, options);
         }
 
