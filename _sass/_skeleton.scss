@@ -169,7 +169,7 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
 /* Icon gate (initial 0) lives in fold; the reveal (→ 1) is the :root block of
    _sass/_icons.scss, so it lands in the nds-icons sheet's own style pass.
    Content icons need no gate: until their font lands they render the hgi-blank
-   fallback (_fonts.scss), an invisible box of their final size. */
+   fallback (_fonts-hgi-blank.scss), an invisible box of their final size. */
 
 /* ── Filterable / paged content hold ──
    Filter + pagination are delegated — they init after the reveal, so their

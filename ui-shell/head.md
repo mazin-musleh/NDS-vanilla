@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "23/09/2026 - 08:55 PM"
+last_edit: "24/09/2026 - 07:31 AM"
 ---
 
 <!-- Page Setup -->
@@ -120,7 +120,7 @@ last_edit: "23/09/2026 - 08:55 PM"
                             <code class="lang-javascript code">
 // Apply the saved theme before first paint (no light-to-dark flip).
 (function () {
-  var v = localStorage.getItem('nds-theme');
+  var v; try { v = localStorage.getItem('nds-theme'); } catch (e) {}
   if (v) {
 var d = document.documentElement;
 var t = ((d.getAttribute('data-theme') || '') + ' ' + v).split(/\s+/)

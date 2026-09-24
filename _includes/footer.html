@@ -1,4 +1,3 @@
-<!-- _includes/footer.html -->
 <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer">
     {%- assign footer_data_file = page.footer | default: site.footer | default: "footer" %}
     {%- assign footer_data = site.data.footer[footer_data_file] %}
@@ -56,7 +55,6 @@
     </nav>
     {%- endif %}
     <hr class="nds-divider nds-lg">
-    <!-- Footer Bottom -->
     <div class="nds-footer-bottom">
         <div class="nds-footer-meta">
             {%- if footer_data.bottom.links and footer_data.bottom.links.size > 0 %}

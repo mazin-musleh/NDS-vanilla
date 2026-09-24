@@ -40,7 +40,7 @@
 // Hero section - First visual element on most pages
 @use 'components/hero';
 
-// Skeleton - pre-init layout reservations (body:not([data-nds-loaded]) scope)
+// Skeleton - pre-init layout reservations (html:not([data-nds-loaded]) scope)
 @use 'skeleton';
 
 // Universal hide primitive. !important so author display rules can't

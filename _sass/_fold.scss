@@ -2,8 +2,8 @@
    FOLD  ·  above-the-fold FCP gates + chrome reservations
    The minimum that must paint before crit lands: page canvas, topbar/nav
    heights, hero swiper first-slide collapse, page-level hide gate, pre-init
-   main overflow guard, and icon/HGI gate initials (their reveals live with
-   the respective sheets). Heavier structural skeleton (content-layout grid,
+   main overflow guard, and the icon gate initial (its reveal lives with
+   the icon sheet). Heavier structural skeleton (content-layout grid,
    hero CTA/swiper flex, critical-component safeguard) lives in _skeleton.scss
    — crit-only, no inline weight.
 

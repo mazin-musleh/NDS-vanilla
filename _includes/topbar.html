@@ -9,18 +9,18 @@
     <div class="nds-topbar-info">
         <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
         <span id="nds-realTimeClock" class="nds-text-icon" data-hidden="sm"></span>
-        <!--
+        {%- comment %}
         <span id="nds-cityName" class="nds-text-icon" data-hidden="sm md" data-city="{{ site.city_name_ar | default: 'الرياض' }}"
             data-city-en="{{ site.city_name | default: 'Riyadh' }}"></span>
         <span id="nds-weatherInfo" class="nds-text-icon" data-hidden="sm" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
             data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
-        -->
+        {% endcomment %}
         {% if site.brand_switcher %}
-        <!-- Theme switcher (demo). data-portal: the menu must escape the topbar's
+        {%- comment %} Theme switcher (demo). data-portal: the menu must escape the topbar's
              overflow-y:clip. Predefined themes toggle a data-theme token (seeds in
              _sass/themes/_register.scss); a stylesheet theme carries data-theme-js, the
              pack that holds its CSS too.
-             Applied by _js/nds-theme.js. -->
+             Applied by _js/nds-theme.js. {% endcomment %}
         <div class="nds-dropmenu nds-theme-switcher" data-portal>
             <button class="nds-btn nds-subtle nds-icon-only nds-dropmenu-trigger nds-tooltip" data-tooltip-hover="500" title="Choose a theme" aria-label="Choose a theme">
                 <i class="nds-icon nds-icon-theme" aria-hidden="true"></i>
@@ -52,7 +52,6 @@
 <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
     <div class="nds-content-wrapper">
         <div class="nds-digitalStamp-notices">
-            <!-- gov Links Notice -->
             <div class="nds-digitalStamp-card">
                 <div class="nds-digitalStamp-icon">
                     <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
@@ -66,7 +65,6 @@
                     </div>
                 </div>
             </div>
-            <!-- HTTPS Security Notice -->
             <div class="nds-digitalStamp-card">
                 <div class="nds-digitalStamp-icon">
                     <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>

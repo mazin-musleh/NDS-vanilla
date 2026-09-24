@@ -13,7 +13,6 @@ bundle_sizes:
   total_js: 139 # main + delegated + extras (full library, demand-loaded)
 ---
 
-<!-- Implementation Solution -->
 <section id="about" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -48,7 +47,6 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Who is this for? -->
 <section id="audience" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -112,7 +110,6 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- DGA Page Templates -->
 <section id="compliance" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -166,7 +163,6 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Real-World Examples -->
 <section id="examples" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -229,7 +225,6 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Event Themes -->
 <section id="events" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -315,7 +310,6 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Components -->
 <section id="components" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -431,7 +425,6 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Architecture & Performance -->
 <section id="architecture" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -540,7 +533,6 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Development Environment -->
 <section id="dev-environment" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -605,7 +597,6 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Get Started -->
 <section id="opensource" class="nds-content-section nds-brand">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">

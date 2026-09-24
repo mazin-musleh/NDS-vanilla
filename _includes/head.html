@@ -35,23 +35,22 @@
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
     {%- if site.brand %}
-    <!-- Default stylesheet theme: render-blocking so it resolves before paint (no flash). Only stylesheet themes need their own file; seed themes ride the [data-palette] slot in critical. -->
+    {%- comment %} Default stylesheet theme: render-blocking so it resolves before paint (no flash). Only stylesheet themes need their own file; seed themes ride the [data-palette] slot in critical. {% endcomment %}
     {%- assign _brands_flat = "" | split: "" -%}{%- for _g in site.data.themes -%}{%- assign _brands_flat = _brands_flat | concat: _g.list -%}{%- endfor %}
     {%- assign _brand = _brands_flat | where: 'value', site.brand | first %}
     {%- if _brand.css %}
     <link id="nds-theme-stylesheet" rel="stylesheet" href="{{ _brand.css | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
     {%- endif %}
-    <!-- Main CSS — deferred; the head script applies it, the loader adds the icon sheets. -->
+    {%- comment %} Main CSS — deferred; the head script applies it, the loader adds the icon sheets. {% endcomment %}
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low" data-nds-defer="main">
-    <!-- Custom page-specific CSS files with deferred loading -->
+    {%- comment %} Custom page-specific CSS files with deferred loading {% endcomment %}
     {%- if page.custom_css %}
     {%- for css_file in page.custom_css %}
     <link rel="preload" href="{{ css_file | relative_url }}" as="style" data-nds-defer>
     {%- endfor %}
     {%- endif %}
-    <!-- Favicon - low-priority fetch so it doesn't compete with critical assets.
-         Ships as a placeholder so a copied head renders; consumers swap the file. -->
+    {%- comment %} Favicon - low-priority fetch so it doesn't compete with critical assets. Ships as a placeholder so a copied head renders; consumers swap the file. {% endcomment %}
     <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}" fetchpriority="low">
     {%- unless page.exclude_showcase == true %}
     <link rel="preload" href="{{ 'docs-assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low" data-nds-defer>
@@ -60,7 +59,7 @@
     {% include perf-monitor.html %}
     {%- endif %}
     {%- if site.debug %}
-    <!-- Debug: enable the loader's per-component init logging + timing (pre-eval). -->
+    {%- comment %} Debug: enable the loader's per-component init logging + timing (pre-eval). {% endcomment %}
     <script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
     {%- endif %}
     {%- comment -%} Site-wide WebSite + Organization entity graph (every page) {%- endcomment -%}
@@ -69,7 +68,7 @@
     {%- if page.layout == 'page' or page.layout == 'post' or page.layout == 'console' %}
     {% include breadcrumb-jsonld.html %}
     {%- endif %}
-    <!-- Theme/brand stamp (FOUC guard) — placed last so resource preloads kick off first. -->
+    {%- comment %} Theme/brand stamp (FOUC guard) — placed last so resource preloads kick off first. {% endcomment %}
     {% include head-inline-scripts.html %}
     {% include google-analytics.html %}
 </head>
