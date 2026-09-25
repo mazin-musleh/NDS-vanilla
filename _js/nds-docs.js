@@ -224,8 +224,11 @@
         var script = document.getElementById(bar.getAttribute('data-builder-for'));
         var jsEl = script.hasAttribute('data-js') ? document.getElementById(script.getAttribute('data-js')) : null;
         // The build writes the Preview divider, the preview and the code right after the canon.
-        var preview = script.nextElementSibling.nextElementSibling;
-        var block = preview.nextElementSibling;
+        // A data-live canon changes the page's own copy instead (its footer), rebuilt from a clean clone.
+        var liveEl = script.hasAttribute('data-live') ? document.querySelector(script.getAttribute('data-live')) : null;
+        var liveOrig = liveEl && liveEl.cloneNode(true);
+        var preview = liveEl ? null : script.nextElementSibling.nextElementSibling;
+        var block = liveEl ? script.nextElementSibling : preview.nextElementSibling;
         var codeHtml = block.querySelector('code.lang-html'), codeJs = block.querySelector('code.lang-js');
         var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]');
         // The options sheet holds every choice.
@@ -235,9 +238,24 @@
         // The sheet covers the lower part of the screen: bring the preview up above it, unless
         // enough of it (160px, or all of a shorter one) already shows between header and sheet.
         sheet.addEventListener('nds:panel:opened', function () {
+            // A live copy sits below a top sheet: bring it up unless it already shows below the sheet.
+            if (liveEl) {
+                var lb = liveEl.getBoundingClientRect();
+                if (lb.top < sheet.getBoundingClientRect().bottom || lb.top > window.innerHeight - 160) {
+                    backTo = window.scrollY;
+                    liveEl.scrollIntoView({ block: 'end', behavior: 'smooth' });
+                }
+                return;
+            }
             var box = preview.getBoundingClientRect(), top = box.top, head = NDS.stickyHeaderBottom();
             if (top >= head && top + Math.min(box.height, 160) <= sheet.getBoundingClientRect().top) return;
             window.scrollTo({ top: top + window.scrollY - head - 16, behavior: 'smooth' });
+        });
+        // Scrolling away to the live copy on open is undone on close, back to the markup.
+        var backTo = null;
+        sheet.addEventListener('nds:panel:closed', function () {
+            if (backTo != null) window.scrollTo({ top: backTo, behavior: 'smooth' });
+            backTo = null;
         });
         var byKey = {}, order = [], active = {}, defaults = {}, sizes = {}, combos = {}, picks = {};
         readTable(script.getAttribute('data-variants')).forEach(function (c) {
@@ -310,6 +328,7 @@
                 if (!html && tabHtml.getAttribute('aria-selected') === 'true' && block.ndsTabs) block.ndsTabs.switchTo(1);
             }
 
+            if (liveEl) return renderLive();
             NDS.Init.destroy(preview);
             preview.style.removeProperty('--card-bg');
             if (!html) return runButton(js);
@@ -318,6 +337,22 @@
             // On-color markup needs the deep surface behind it (the build sets it for the default state).
             if (preview.querySelector('.nds-oncolor')) preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
             NDS.Init.mount(preview);
+        }
+
+        // The live copy is rebuilt from its clean clone, then gets the same choices as the code.
+        function renderLive() {
+            NDS.Init.destroy(liveEl);
+            var fresh = liveOrig.cloneNode(true);
+            liveEl.replaceWith(fresh);
+            liveEl = fresh;
+            var root = {
+                firstElementChild: liveEl,
+                querySelectorAll: function (s) { return [liveEl].concat(Array.prototype.slice.call(liveEl.querySelectorAll(s))).filter(function (e) { return e.matches(s); }); }
+            };
+            order.forEach(function (g) { if (defaults[g] && active[g] !== defaults[g]) unapply(root, defaults[g], active[g]); });
+            order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'insert'); });
+            order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'markup'); });
+            NDS.Init.mount(liveEl);
         }
 
         // A JS-only structure previews as a Run button that runs the code shown:

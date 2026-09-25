@@ -144,7 +144,7 @@ module DocsCanon
   # A combo row ("Tags + Rating") gets no chip either: it is the markup used when those chips are
   # both on. A chip that does not apply is disabled, and its row label says why (touch has no
   # hover); a hint shows on hover. No backdrop, so the preview stays live above it.
-  def self.sheet(id, rows, src, js, canons)
+  def self.sheet(id, rows, src, js, canons, side = 'bottom')
     groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
     multi, single = groups.partition { |_, list| list.size > 1 }
     esc = ->(t) { CGI.escapeHTML(t.to_s) }
@@ -166,7 +166,7 @@ module DocsCanon
       row[group, needs(live.first, rows, canons, src), live.none? { |r| applies?(r, src, js) }, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
     end
     body << row['More', '', false, single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
-    %(<aside id="#{id}-options" class="nds-panel" data-panel-side="bottom" data-panel-static style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i></span><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Reset" data-builder-reset disabled><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>)
+    %(<aside id="#{id}-options" class="nds-panel" data-panel-side="#{side}" data-panel-static style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i></span><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Reset" data-builder-reset disabled><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>)
   end
 
   def self.stamp(html)
@@ -207,16 +207,17 @@ module DocsCanon
       out << "\n"
       # data-js names the builder's JS form: the same component as one create() call.
       js = canons[attr(attrs, 'data-js')]&.last
-      if lang == 'html' && attr(attrs, 'data-preview') != 'none'
-        table = attr(attrs, 'data-variants')
-        if table
-          builders << id
-          out << %(<div class="nds-divider nds-xl">Preview</div>\n)
-        end
+      table = attr(attrs, 'data-variants')
+      preview = lang == 'html' && attr(attrs, 'data-preview') != 'none'
+      # data-live: a page-shell canon changes the page's own copy (its footer), not a preview card.
+      builder = lang == 'html' && table && (preview || attr(attrs, 'data-live'))
+      builders << id if builder
+      if preview
+        out << %(<div class="nds-divider nds-xl">Preview</div>\n) if table
         out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{src}\n</div>\n)
       end
       out << (js ? code_tabs(id, src, js) : code_block(lang, src))
-      out << "\n" << sheet(id, rows(html, attr(attrs, 'data-variants')), src, js, canons) if lang == 'html' && attr(attrs, 'data-variants') && attr(attrs, 'data-preview') != 'none'
+      out << "\n" << sheet(id, rows(html, table), src, js, canons, attr(attrs, 'data-sheet') || 'bottom') if builder
       out
     end
 

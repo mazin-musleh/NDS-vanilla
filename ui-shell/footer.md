@@ -2,468 +2,294 @@
 layout: page
 title: Footer
 hero_title: Footer - National Design System
-hero_description: A site-wide footer that organizes secondary navigation, contact links, social media, mobile app downloads, legal notices, and partner logos into a responsive multi-column layout.
+hero_description: The footer closes every page with secondary links, contact details, social and app links, legal notices and partner logos
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "11/09/2026 - 02:27 AM"
+last_edit: "25/09/2026 - 05:11 PM"
 ---
 
-<!-- Footer Structure -->
-<section id="footerStructure" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Footer Structure</h2>
-            <p class="nds-section-description">The footer sits at the bottom of every page and is split into two regions: a flex-wrap multi-column content area, and a bottom bar that stacks general links above the copyright and policy links below it, alongside partner logos.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Component Tree</div>
-                        </div>
-                        <div class="demo-container nds-noBg">
-                            <div class="nds-code nds-expandable">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="code">
-footer.nds-footer.nds-content-wrapper.nds-brand
-├── nav.nds-footer-content
-│   ├── div.nds-footer-column (link column)
-│   │   ├── span.nds-footer-heading
-│   │   └── ul.nds-footer-list
-│   │       └── li > a.nds-link.nds-footer-link
-│   └── div.nds-footer-column.nds-footer-icons (merged icons column)
-│       ├── div.nds-footer-icon-group (social)
-│       │   ├── span.nds-footer-heading
-│       │   └── div.nds-footer-icon-row
-│       │       └── a.nds-btn.nds-secondary-outline.nds-icon-only.nds-tooltip
-│       └── div.nds-footer-icon-group (mobile apps)
-│           ├── span.nds-footer-heading
-│           └── div.nds-footer-icon-row
-│               └── a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only.nds-tooltip
-│
-├── hr.nds-divider.nds-lg
-│
-└── div.nds-footer-bottom
-    ├── div.nds-footer-meta
-    │   ├── div.nds-footer-links (top row — underlined generic links)
-    │   └── div.nds-footer-legal (legal block)
-    │       ├── div.nds-footer-copyright (copyright text)
-    │       └── div.nds-footer-policy (policy/terms links — no underline)
-    └── div.nds-footer-logos
-        └── a > img (partner/government logos)
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="footerOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use one footer at the end of every page. It holds what people look for last: secondary links, contact details, social profiles, app downloads, legal notices and partner logos.
+- The [Header](../ui-shell/header) holds the main navigation, and the [Side Menu](../ui-shell/sidemenu) holds the navigation inside a section. The footer does not repeat them.
+- The footer is a page shell part, so it is not shown in a demo box. **The live copy is this page's own footer, at the bottom:** the Options change it.
+
+</div>
+  </div>
 </section>
 
-<!-- Footer Content Columns -->
-<section id="footerColumns" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Content Columns</h2>
-            <p class="nds-section-description">The footer content area uses a flex-wrap layout. Each column has a heading and a list of links. On desktop columns display side by side; on tablet they drop to two per row; on mobile they stack to one per row.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Link Column</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-footer-column-1" id="tab-footer-column-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-footer-column-1" aria-labelledby="tab-footer-column-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer"&gt;
-  &lt;nav class="nds-footer-content" aria-label="Footer navigation"&gt;
-    &lt;!-- Link column --&gt;
-    &lt;div class="nds-footer-column"&gt;
-      &lt;span class="nds-footer-heading"&gt;Services&lt;/span&gt;
-      &lt;ul class="nds-footer-list"&gt;
-        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/services/individuals"&gt;&lt;span class="nds-label"&gt;Individuals&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/services/businesses"&gt;&lt;span class="nds-label"&gt;Businesses&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/services/government"&gt;&lt;span class="nds-label"&gt;Government Entities&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/open-data"&gt;&lt;span class="nds-label"&gt;Open Data&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/div&gt;
-
-    &lt;!-- Contact column with leading icons --&gt;
-    &lt;div class="nds-footer-column"&gt;
-      &lt;span class="nds-footer-heading"&gt;Contact Us&lt;/span&gt;
-      &lt;ul class="nds-footer-list"&gt;
-        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="#"&gt;&lt;i class="nds-icon nds-hgi-location-01" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;Riyadh, King Fahd Road&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="tel:920000000"&gt;&lt;i class="nds-icon nds-hgi-headphones" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;920 000 000&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="mailto:info@example.gov.sa"&gt;&lt;i class="nds-icon nds-hgi-mail-01" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;info@example.gov.sa&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/div&gt;
-  &lt;/nav&gt;
-&lt;/footer&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="footerMarkup" class="nds-content-section nds-doc-markup">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="footer-canon" data-canon data-preview="none" data-variants="footerVariantsTable" data-live="footer.nds-footer" data-sheet="top">
+<footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer">
+  <nav class="nds-footer-content" aria-label="Footer navigation">
+    <div class="nds-footer-column">
+      <span class="nds-footer-heading" id="footer-col-1">Services</span>
+      <ul class="nds-footer-list" aria-labelledby="footer-col-1">
+        <li>
+          <a class="nds-link nds-footer-link" href="#">
+            <span class="nds-label">Individuals</span>
+          </a>
+        </li>
+        <li>
+          <a class="nds-link nds-footer-link" href="#">
+            <span class="nds-label">Businesses</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="nds-footer-column">
+      <span class="nds-footer-heading" id="footer-col-2">Contact Us</span>
+      <ul class="nds-footer-list" aria-labelledby="footer-col-2">
+        <li>
+          <a class="nds-link nds-footer-link" href="tel:920000000">
+            <i class="nds-icon nds-hgi-headphones" aria-hidden="true"></i>
+            <span class="nds-label">920 000 000</span>
+          </a>
+        </li>
+        <li>
+          <a class="nds-link nds-footer-link" href="mailto:info@example.gov.sa">
+            <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
+            <span class="nds-label">info@example.gov.sa</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="nds-footer-column nds-footer-icons">
+      <div class="nds-footer-icon-group">
+        <span class="nds-footer-heading" id="footer-social">Follow Us</span>
+        <div class="nds-footer-icon-row" role="group" aria-labelledby="footer-social">
+          <a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Follow Us on X" aria-label="Follow Us on X">
+            <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+          </a>
+          <a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Follow Us on LinkedIn" aria-label="Follow Us on LinkedIn">
+            <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      <div class="nds-footer-icon-group">
+        <span class="nds-footer-heading" id="footer-apps">Mobile App</span>
+        <div class="nds-footer-icon-row" role="group" aria-labelledby="footer-apps">
+          <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Apple App Store" aria-label="Apple App Store">
+            <i class="nds-icon nds-icon-apple" aria-hidden="true"></i>
+          </a>
+          <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Google Play Store" aria-label="Google Play Store">
+            <i class="nds-icon nds-icon-google-play" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr class="nds-divider nds-lg">
+  <div class="nds-footer-bottom">
+    <div class="nds-footer-meta">
+      <div class="nds-footer-links">
+        <a class="nds-link" href="#">
+          <span class="nds-label">Site Map</span>
+        </a>
+        <a class="nds-link" href="#">
+          <span class="nds-label">FAQ</span>
+        </a>
+      </div>
+      <div class="nds-footer-legal">
+        <div class="nds-footer-copyright">
+          <span>All Rights Reserved Ministry of Example &copy; 2026</span>
+        </div>
+        <div class="nds-footer-policy">
+          <a class="nds-link" href="#">
+            <span class="nds-label">Privacy Policy</span>
+          </a>
+          <a class="nds-link" href="#">
+            <span class="nds-label">Terms and Conditions</span>
+          </a>
+          <a class="nds-link" href="#">
+            <span class="nds-label">Accessibility</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="nds-footer-logos">
+      <a href="#">
+        <img class="nds-oncolor" src="../assets/img/palm_swords.svg" loading="lazy" width="40" height="40" alt="Authority logo">
+      </a>
+      <a href="https://www.vision2030.gov.sa/" target="_blank">
+        <img class="nds-oncolor" src="../assets/img/2030-vision.svg" loading="lazy" width="60" height="40" alt="Saudi Vision 2030">
+      </a>
+    </div>
+  </div>
+</footer>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Social and App Links -->
-<section id="footerSocial" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Social and App Links</h2>
-            <p class="nds-section-description">Social and mobile-app icon groups share a single merged column (<code class="nds-inline-code lang-html">nds-footer-icons</code>) so the two clusters sit side-by-side and wrap together. Social icons use outline icon buttons; app store links use the larger <code class="nds-inline-code lang-html">nds-xl</code> variant with inline SVG brand marks.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <!-- Social Icons -->
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Social Icons Column</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-footer-social-1" id="tab-footer-social-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-footer-social-1" aria-labelledby="tab-footer-social-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;!-- Merged icons column with social + mobile-app groups --&gt;
-&lt;div class="nds-footer-column nds-footer-icons"&gt;
-  &lt;div class="nds-footer-icon-group"&gt;
-    &lt;span class="nds-footer-heading"&gt;Follow Us&lt;/span&gt;
-    &lt;div class="nds-footer-icon-row"&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Twitter" aria-label="Twitter"&gt;
-        &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Facebook" aria-label="Facebook"&gt;
-        &lt;i class="nds-icon nds-hgi-facebook-02" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="YouTube" aria-label="YouTube"&gt;
-        &lt;i class="nds-icon nds-hgi-youtube" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="LinkedIn" aria-label="LinkedIn"&gt;
-        &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/a&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;!-- Mobile-app group lives in the same column --&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Mobile Apps -->
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Mobile App Column</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-footer-apps-1" id="tab-footer-apps-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-footer-apps-1" aria-labelledby="tab-footer-apps-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;!-- Mobile-app group (sibling of social inside .nds-footer-icons) --&gt;
-&lt;div class="nds-footer-icon-group"&gt;
-  &lt;span class="nds-footer-heading"&gt;Mobile App&lt;/span&gt;
-  &lt;div class="nds-footer-icon-row"&gt;
-    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Apple App Store" aria-label="Apple App Store"&gt;
-      &lt;svg&gt;...&lt;/svg&gt;
-    &lt;/a&gt;
-    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only nds-tooltip" data-tooltip-hover="500" href="#" target="_blank" title="Google Play Store" aria-label="Google Play Store"&gt;
-      &lt;svg&gt;...&lt;/svg&gt;
-    &lt;/a&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="footerParts" class="nds-content-section nds-doc-parts">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Parts</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+| Part | Holds | Required |
+|---|---|---|
+| `footer.nds-footer` | The whole footer. Add `nds-content-wrapper` to keep its content at the page width | Yes |
+| `nav.nds-footer-content` | The columns | No |
+| `.nds-footer-column` | One `.nds-footer-heading` and one `ul.nds-footer-list` of `a.nds-link.nds-footer-link` links. A link can start with an icon | No |
+| `.nds-footer-column.nds-footer-icons` | The social and app groups, side by side | No |
+| `.nds-footer-icon-group` | One `.nds-footer-heading` and one `.nds-footer-icon-row` of icon buttons | No |
+| `hr.nds-divider.nds-lg` | The line between the columns and the bottom bar | No |
+| `.nds-footer-bottom` | `.nds-footer-meta` on the start side and `.nds-footer-logos` on the end side | Yes |
+| `.nds-footer-links` | A row of underlined links, such as a site map | No |
+| `.nds-footer-legal` | `.nds-footer-copyright`, then `.nds-footer-policy` | Yes |
+| `.nds-footer-policy` | The policy links, not underlined: privacy, terms and accessibility | Yes |
+| `.nds-footer-logos` | Partner and government logos, each an `<img>`, alone or in a link | No |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Footer Bottom -->
-<section id="footerBottom" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Footer Bottom Bar</h2>
-            <p class="nds-section-description">A horizontal bar below the divider. The meta block stacks two regions: <code class="nds-inline-code lang-html">.nds-footer-links</code> (top, underlined generic links), and <code class="nds-inline-code lang-html">.nds-footer-legal</code> (the legal block, holding <code class="nds-inline-code lang-html">.nds-footer-copyright</code> above <code class="nds-inline-code lang-html">.nds-footer-policy</code>). Partner logos sit on the opposite side. On mobile the layout stacks vertically and centers.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Bottom Bar</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-footer-bottom-1" id="tab-footer-bottom-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-footer-bottom-1" aria-labelledby="tab-footer-bottom-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;hr class="nds-divider nds-lg"&gt;
-&lt;div class="nds-footer-bottom"&gt;
-  &lt;div class="nds-footer-meta"&gt;
-    &lt;div class="nds-footer-links"&gt;
-      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
-      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
-      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
-      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
-      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-footer-legal"&gt;
-      &lt;div class="nds-footer-copyright"&gt;
-        &lt;span&gt;All Rights Reserved Ministry of Digital Affairs &amp;copy; 2026&lt;/span&gt;
-      &lt;/div&gt;
-      &lt;div class="nds-footer-policy"&gt;
-        &lt;a href="/terms-and-conditions"&gt;&lt;span class="nds-label"&gt;Terms &amp; Conditions&lt;/span&gt;&lt;/a&gt;
-        &lt;a href="/privacy-policy"&gt;&lt;span class="nds-label"&gt;Privacy Policy&lt;/span&gt;&lt;/a&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-footer-logos"&gt;
-    &lt;a href="#"&gt;
-      &lt;img src="assets/img/logo.svg" loading="lazy" width="40" height="40" alt="Authority Logo"&gt;
-    &lt;/a&gt;
-    &lt;a href="https://www.vision2030.gov.sa/" target="_blank"&gt;
-      &lt;img src="assets/img/vision-2030.svg" loading="lazy" width="60" height="40" alt="Saudi Vision 2030"&gt;
-    &lt;/a&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="footerVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Surface | Brand (default) | `.nds-brand` | `.nds-footer` | The deep primary surface with white text. Buttons, links, headings and dividers switch to their on-color versions. `.nds-green` is a deprecated alias |
+| Surface | Light | — | — | Leave out `.nds-brand`: a light neutral surface, dark in dark mode |
+| Logo | On color | — | — | Add `.nds-oncolor` to a one-color logo `<img>` so it turns white on the brand footer and in dark mode. It is a choice per logo: leave it off a logo whose colors must stay |
+| App button | App store | — | — | An app-store button is `.nds-xl`, a larger icon button, with the mark `nds-icon-apple`, `nds-icon-google-play` or `nds-icon-huawei` |
+{: #footerVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="footerFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-03"></i>
-                            <span class="nds-label">Multi-Column Layout</span>
-                        </span>
-                        <p class="nds-item-desc">Content columns flow across 4 columns on desktop, 2 on tablet, and stack to 1 on mobile with no extra configuration.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-share-01"></i>
-                            <span class="nds-label">Merged Icons Column</span>
-                        </span>
-                        <p class="nds-item-desc">Social-media and mobile-app groups share one column (<code class="nds-inline-code lang-html">nds-footer-icons</code>) with flex-wrap content, so the two clusters sit side-by-side at wider widths and stack as space narrows. The column spans the full row on mobile. Social icons use outline icon buttons; app store links use the larger <code class="nds-inline-code lang-html">nds-xl</code> variant with inline SVG brand marks.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-image-01"></i>
-                            <span class="nds-label">Logo Bar</span>
-                        </span>
-                        <p class="nds-item-desc">A flexible logo strip in the bottom bar. Add <code class="nds-inline-code lang-html">nds-oncolor</code> to individual images to invert them to white on dark backgrounds.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-                            <span class="nds-label">Responsive Stacking</span>
-                        </span>
-                        <p class="nds-item-desc">The bottom bar switches from horizontal (links left, logos right) to centered vertical stacking on mobile.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-dark-mode"></i>
-                            <span class="nds-label">Light and Brand Variants</span>
-                        </span>
-                        <p class="nds-item-desc">The canonical footer above ships with <code class="nds-inline-code lang-html">nds-brand</code>: a deep primary background with white text and on-color button tokens. Remove the class for the light neutral background, which adapts to dark mode automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-swatch"></i>
-                            <span class="nds-label">On-Color Token Cascade</span>
-                        </span>
-                        <p class="nds-item-desc">The brand variant rewires all button, link, and divider tokens to their on-color equivalents automatically, so social icon buttons, navigation links, and headings stay legible on the deep primary background without any extra overrides in your markup.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="footerFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layout-01"></i>
+            <span class="nds-label">Wrapping Columns</span>
+          </span>
+          <p class="nds-item-desc">The columns share the row and wrap as space runs out: two to a row below 960px, one to a row on a phone.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-share-08"></i>
+            <span class="nds-label">Icons Column</span>
+          </span>
+          <p class="nds-item-desc">The social and app groups sit side by side in one column, and take a full row below 960px.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-paint-board"></i>
+            <span class="nds-label">Brand Surface</span>
+          </span>
+          <p class="nds-item-desc">On the brand footer, buttons, links, headings and dividers switch to their on-color versions, so no extra class is needed on them.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-moon-02"></i>
+            <span class="nds-label">Dark Mode</span>
+          </span>
+          <p class="nds-item-desc">Both surfaces follow dark mode. A logo with <code class="nds-inline-code lang-html">nds-oncolor</code> turns white on the brand footer and in dark mode.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
+            <span class="nds-label">Phone Layout</span>
+          </span>
+          <p class="nds-item-desc">On a phone, the bottom bar stacks and centers its links, legal notices and logos.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-puzzle"></i>
+            <span class="nds-label">CSS Only</span>
+          </span>
+          <p class="nds-item-desc">The footer needs no script. The icon buttons' tooltips come from <a href="../components/tooltip">Tooltip</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="footerGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use the footer on every page to provide consistent secondary navigation, legal links, and contact information</li>
-                    <li>Use the footer alongside the <a class="nds-color" href="{{ 'ui-shell/header' | relative_url }}">Header</a> and <a class="nds-color" href="{{ 'ui-shell/sidemenu' | relative_url }}">Side Menu</a> to complete the UI shell. The header handles primary navigation, the side menu handles section navigation, and the footer handles secondary and legal content</li>
-                    <li>Keep footer columns to <strong>6 or fewer</strong>. More columns crowd the layout on tablet where it drops to 2 columns</li>
-                    <li>Put the most important links (home, about, main sections) in the first column. Contact and social columns work best at the end</li>
-                    <li>Do not duplicate primary navigation links in the footer. The footer is for secondary access: legal pages, contact info, social profiles, and sitemap</li>
-                    <li>Add leading icons to contact links (location, email, phone) to make them scannable. Use icon classes from the HGI Stroke Rounded set</li>
-                    <li>Always include at minimum: privacy policy, terms and conditions, and accessibility links in the bottom bar for government compliance</li>
-                    <li>Use <code class="nds-inline-code lang-html">target="_blank"</code> on external links and social media to keep users on the site</li>
-                    <li>App store links use inline SVG for the Apple, Google Play, and Huawei logos rather than icon fonts, since these are brand marks not available in the icon set</li>
-                    <li>Keep <code class="nds-inline-code lang-html">nds-brand</code> on <code class="nds-inline-code lang-html">.nds-footer</code> unless you have a reason to drop it. The canonical markup above carries it, and it is the shipped look: deep primary with white text. Removing it is a choice, not a reset to a default, and gives you the light neutral background instead, which adapts to dark mode automatically</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-oncolor</code> to individual logo <code class="nds-inline-code lang-html">&lt;img&gt;</code> elements that should invert to white on dark backgrounds (dark mode and the brand variant). Logos without the class keep their original colors in all modes</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Applied To</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-brand</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-footer</code></td>
-                            <td>Deep primary background with white text, inverted logos, and on-color button/link tokens. Present in the canonical markup; drop it for the light neutral footer</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-oncolor</code></td>
-                            <td>Logo <code class="nds-inline-code lang-html">&lt;img&gt;</code> elements</td>
-                            <td>Inverts the image to white on dark backgrounds (dark mode and the brand variant)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-footer-icons</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-footer-column</code></td>
-                            <td>Marks a column as the merged social + mobile-app container. Lays out <code class="nds-inline-code lang-html">.nds-footer-icon-group</code> children with flex-wrap.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-icon-only</code></td>
-                            <td>Social and app link buttons</td>
-                            <td>Renders buttons as square icon-only buttons without labels</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-xl</code></td>
-                            <td>App store buttons</td>
-                            <td>Larger button size for the mobile app store SVG icons</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--background-footer</code></td>
-                            <td>Theme token</td>
-                            <td>Background color for the <code class="nds-inline-code lang-html">nds-brand</code> variant. Resolves to the deep primary surface in light mode and a semi-transparent primary wash in dark mode.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--divider-color</code></td>
-                            <td>Theme token</td>
-                            <td>Color of the heading underline and the legal-link separators. Inherits from the global divider token; the <code class="nds-inline-code lang-html">nds-brand</code> variant overrides it locally to <code class="nds-inline-code lang-html">--colors-alpha-white-10</code>.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="footerPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Keep to six columns or fewer. Below 960px they drop to two a row, and more columns make the footer long.
+- Put the most used links in the first column, and contact and social links last.
+- Do not repeat the main navigation. The footer is for secondary pages, contact details, social profiles and legal notices.
+- Start contact links with an icon (location, phone, email), so they are quick to scan.
+- Always include privacy, terms and accessibility links in `.nds-footer-policy`. Government sites must have them.
+- Give every icon-only button an `aria-label`, and the same text in `title` for its tooltip.
+- Open social profiles, app stores and other external sites in a new tab, with `target="_blank"`.
+- Keep `nds-brand` unless the design asks for the light footer. Leaving it out is a choice, not a reset.
+- Add `nds-oncolor` only to one-color logos that should turn white. A logo with brand colors stays as it is.
+
+</div>
+  </div>
+</section>
+
+<section id="footerApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--background-footer` | Theme token | The brand footer's background: the deep primary surface in light mode, a primary wash in dark mode |
+| `--divider-color` | Theme token | The heading underline and the divider line. The brand footer sets `--colors-alpha-white-10` |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+The footer has no script, methods or events.
+
+</div>
+  </div>
+</section>
+
+<section id="footerRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Header](../ui-shell/header), [Main Navigation](../ui-shell/mainnav) and [Side Menu](../ui-shell/sidemenu): the other parts of the page shell.
+- [Tooltip](../components/tooltip): the hover labels on the icon buttons.
+
+</div>
+  </div>
 </section>
