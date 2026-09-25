@@ -260,6 +260,11 @@
     min-height: 0;
     overflow-y: auto;
     padding: var(--_panel-padding);
+
+    // With no footer below, the last content would sit on the panel's edge.
+    &:last-child {
+        padding-block-end: var(--spacing-4xl);
+    }
 }
 
 .nds-panel-footer {
