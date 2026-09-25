@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/09/2026 - 11:05 PM"
+last_edit: "26/09/2026 - 01:34 AM"
 ---
 
 <section id="switchOverview" class="nds-content-section nds-doc-overview">
@@ -219,6 +219,9 @@ Pick another component when:
 |---|---|---|
 | `data-state~="disabled"` | `.nds-switch-container` | Not-allowed cursor and muted track and thumb. Also disables the input |
 | `data-state~="disabled"` | `.nds-switch-group` | Half opacity and no pointer events. Also disables every input in the group |
+| `data-required` | `.nds-switch-group` | At least one switch must be on before the form submits. It adds the required mark to the legend |
+| `data-min-checked`, `data-max-checked` | `.nds-switch-group` | The fewest and the most switches that may be on. The same rules as a [checkbox group](../components/checkbox) |
+| `data-error-message` | `.nds-switch-group` | Replaces the default message |
 | `data-feedback-target` | `.nds-form-header` | Receives the feedback message of the field |
 {: .nds-table .nds-responsive}
 

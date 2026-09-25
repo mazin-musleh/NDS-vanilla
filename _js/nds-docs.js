@@ -25,6 +25,8 @@
     var VOID = /^(area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
     // The group whose rows swap the whole markup. A reference page (grid) names it Example.
     var STRUCT = /^(Structure|Example)$/;
+    // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
+    var RULES = '[data-required], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"]';
 
     // An option's name without its markers: (default), (demo: + Other), (hint: text).
     function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/g, ''); }
@@ -351,6 +353,10 @@
             // On-color markup needs the deep surface behind it (the build sets it for the default state).
             if (slot.querySelector('.nds-oncolor')) preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
             NDS.Init.mount(slot);
+            // The Validate and Reset buttons show only while the field has a rule that can fail.
+            var acts = preview.querySelector('[data-demo-actions]');
+            if (acts) acts.hidden = !slot.querySelector(RULES);
+            dropAlert(slot.closest('form'));
         }
 
         // The live copy is rebuilt from its clean clone, then gets the same choices as the code.
@@ -437,7 +443,22 @@
     document.addEventListener('reset', function (e) {
         var slot = e.target.querySelector && e.target.querySelector('[data-demo-slot]');
         if (slot) slot.querySelectorAll('[data-status]').forEach(function (el) { NDS.Forms.clearStatus(el); });
+        if (slot) dropAlert(e.target);
     });
+
+    // A form harness that passes answers as a real page does: an inline success alert under the
+    // buttons. Fields carry errors only, so the alert is the success signal. A new check, a
+    // failed one, Reset and any builder choice remove it.
+    function dropAlert(form) {
+        if (form) form.querySelectorAll(':scope > .nds-alert').forEach(function (a) { a.remove(); });
+    }
+    document.addEventListener('nds:formValid', function (e) {
+        var form = e.target;
+        if (!form.querySelector('[data-demo-slot]')) return;
+        dropAlert(form);
+        NDS.Alert.create({ variant: 'success', display: 'inline', title: 'Valid:', description: 'every rule passes.', target: form });
+    });
+    document.addEventListener('nds:formInvalid', function (e) { dropAlert(e.target); });
 
     // The chips are built at site build; the Variants table is read only when the sheet first opens.
     document.querySelectorAll('[data-builder-for]').forEach(function (bar) {
