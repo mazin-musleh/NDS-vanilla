@@ -197,10 +197,19 @@
     @include mobile {
         gap: var(--spacing-lg);
 
-        > .nds-btn[data-panel-close] {
+        > .nds-btn[data-panel-close],
+        > .nds-panel-action > .nds-btn {
             --btn-size: 32px;
         }
     }
+}
+
+// Several header buttons (a reset beside the close) sit together, closer than the header gap.
+.nds-panel-action {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
 }
 
 // CANONICAL header structure, mirroring .nds-card-text: the title (and an
