@@ -213,7 +213,7 @@ module DocsCanon
       builder = lang == 'html' && table && (preview || attr(attrs, 'data-live'))
       builders << id if builder
       if preview
-        out << %(<div class="nds-divider nds-xl">Preview</div>\n) if table
+        out << %(<div class="nds-divider nds-xl" style="margin-block-start: 0; --divider-line-start: 24px;">Preview</div>\n) if table
         out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{src}\n</div>\n)
       end
       out << (js ? code_tabs(id, src, js) : code_block(lang, src))

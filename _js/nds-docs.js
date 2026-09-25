@@ -133,6 +133,14 @@
         var kids = el.childNodes, first = kids[0], last = kids[kids.length - 1];
         var tail = function (n) { return n && n.nodeType === 3 ? (n.textContent.match(/\n([ \t]*)$/) || [])[1] : null; };
         var ind = pos === 'after' ? tail(el.previousSibling) || '' : tail(first);
+        // An empty element (a badge into an icon) opens onto its own lines, one level in.
+        if (!first && pos !== 'after') {
+            var own = tail(el.previousSibling) || '';
+            ind = own + '  ';
+            el.appendChild(document.createTextNode('\n' + own));
+            first = last = el.firstChild;
+            pos = 'end';
+        }
         if (ind == null) ind = (tail(last) || '') + '  ';
         var t = document.createElement('template');
         t.innerHTML = html.split('\n').join('\n' + ind);
