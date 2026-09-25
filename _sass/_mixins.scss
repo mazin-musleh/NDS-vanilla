@@ -292,6 +292,11 @@ $breakpoints-range: (
     position: relative;
     z-index: 1;
 
+    // The strip owns the corners: a circle would round every seam.
+    &.nds-circle {
+      border-radius: 0;
+    }
+
     &:not(:last-child) {
       border-inline-end-width: 0;
     }
