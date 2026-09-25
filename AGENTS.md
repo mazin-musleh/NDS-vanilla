@@ -17,6 +17,7 @@ node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest qua
 node scripts/run-audit.mjs [page.html]          # print a built page's NDS.Init.audit() warnings
 node scripts/find-unused-icons.mjs              # UI icons nothing references
 python scripts/check-docs.py [page.md]          # one-source doc pages vs the nds-doc rules (no build needed)
+node scripts/doc-check.mjs <page.md>            # clicks every builder option: findings + one contact sheet per theme in tmp/doc-check/
 ```
 
 **Browser checks launch through `scripts/lib/browser.mjs` (Playwright)** — `ENGINE=webkit node scripts/<check>.mjs` runs one as Safari. The root ships `playwright-core` only (no browser download; Chromium is your installed Chrome); WebKit lives in Playwright's per-user cache and downloads itself on the first Safari run. CDP calls (throttling, touch, traces) are Chromium-only.
