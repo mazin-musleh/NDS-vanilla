@@ -13,6 +13,20 @@ module DocsCanon
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
               '.nds-doc-variants .nds-table{--min-width:900px}'
 
+  PLAIN_CODE_RE = %r{<code class="language-plaintext highlighter-rouge">(.*?)</code>}m
+  TABLE_LANG = { 'Method' => 'js', 'Option' => 'js', 'Event' => 'js', 'Action key' => 'js', 'Property' => 'css' }.freeze
+
+  # ponytail: a guess from the code's shape; a code that reads as neither takes its table's
+  # language, else HTML. Upgrade to an explicit `{: .lang-x}` if a page needs one.
+  def self.code_lang(code, kind = nil)
+    c = CGI.unescapeHTML(code)
+    return 'html' if c.match?(/\A(<|\.|\[|data-|aria-|nds-|canon )|\A[\w-]+="/)
+    return 'css' if c.match?(/\A(--|(var|calc|color-mix|min|max)\()|\A-?[\d.]+(px|ms|s|%|rem|em)\z|\d(px|ms)\b/)
+    return 'js' if c.match?(/\A(NDS\.|nds:|javascript:)|\A[a-z]\w*\(.*\)|\A\w+: |\A'.*'\z|\A\{.*\}\z/)
+
+    kind || 'html'
+  end
+
   def self.attr(attrs, name)
     m = attrs.match(/(?:\A|\s)#{Regexp.escape(name)}(?:="([^"]*)")?(?=\s|\z)/)
     m && (m[1] || '')
@@ -183,15 +197,27 @@ module DocsCanon
     # final layout.
     html = html.sub('</head>', "<style>#{DOC_STYLE}</style>\n</head>")
 
-    # Markdown backtick code gets the NDS inline-code look.
-    html = html.gsub('<code class="language-plaintext highlighter-rouge">', '<code class="nds-inline-code lang-html">')
+    # Markdown backtick code gets the NDS inline-code look, in its own language. A JS or CSS
+    # table (by its first header) sets the default for the codes in its name and value
+    # columns; the last column is prose, so its codes go by their shape alone.
+    tag = ->(src, kind = nil) { src.gsub(PLAIN_CODE_RE) { %(<code class="nds-inline-code lang-#{code_lang(Regexp.last_match(1), kind)}">#{Regexp.last_match(1)}</code>) } }
+    html = html.gsub(%r{<table\b.*?</table>}m) do |table|
+      kind = TABLE_LANG[text(table[%r{<th[^>]*>(.*?)</th>}m, 1].to_s)]
+      cols = table.scan(/<th\b/).size
+      table.gsub(%r{<tr>.*?</tr>}m) do |tr|
+        i = -1
+        tr.gsub(%r{<td\b.*?</td>}m) { |td| tag.call(td, (i += 1) < cols - 1 ? kind : nil) }
+      end
+    end
+    html = tag.call(html)
     # Table code is nowrap (it never splits at a hyphen), so a multi-part value
     # (`.a ~ * .b`) would widen its column. It stays ONE <code> (one value to any
     # reader) and moves the nowrap onto each part, so it wraps only at the spaces.
     html = html.gsub(%r{<td>.*?</td>}m) do |td|
-      td.gsub(%r{<code class="nds-inline-code lang-html">([^<]* [^<]*)</code>}) do
-        parts = Regexp.last_match(1).split(' ').map { |part| %(<span style="white-space:nowrap">#{part}</span>) }
-        %(<code class="nds-inline-code lang-html" style="white-space:normal">#{parts.join(' ')}</code>)
+      td.gsub(%r{<code class="nds-inline-code lang-(\w+)">([^<]* [^<]*)</code>}) do
+        lang = Regexp.last_match(1)
+        parts = Regexp.last_match(2).split(' ').map { |part| %(<span style="white-space:nowrap">#{part}</span>) }
+        %(<code class="nds-inline-code lang-#{lang}" style="white-space:normal">#{parts.join(' ')}</code>)
       end
     end
 
