@@ -252,7 +252,7 @@ Build the page only from NDS components. If the page looks wrong, the gap is in 
 ## Phase 6: Verify
 
 1. **Build:** `bundle exec jekyll build`. Restart `jekyll serve` after a change to `_plugins/`.
-2. **Check the page:** `python scripts/check-docs.py <page>` when the script exists.
+2. **Check the page:** `python scripts/check-docs.py <page>`. It checks the section order, the canons (no Liquid, escaping, `<form>` or `demo-` id), unique ids, every canon the Variants table names, and that no canon already carries an option it can turn off.
 3. **Inspect the built sheet:** list the chips in the built HTML and confirm the defaults and the disabled chips are right.
 4. **Cold read:** a sonnet agent reads ONLY the `.md` and writes 3 or 4 copy tasks ("a disabled large switch", "a vertical group of three medium buttons with the second chosen"). Every answer must be right. Fix the page where the agent guessed.
 5. **Parity:** a sonnet agent lists every fact in the old page (`git show HEAD:<page>`) as KEPT, CHANGED, LOST or CONTRADICTION against the new one. Check each LOST, CHANGED and CONTRADICTION item in the source: restore the true ones, and name the ones the source disproves in the commit message.
