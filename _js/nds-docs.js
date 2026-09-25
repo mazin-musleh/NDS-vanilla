@@ -229,14 +229,17 @@
         var preview = script.nextElementSibling.nextElementSibling;
         var block = preview.nextElementSibling;
         var codeHtml = block.querySelector('code.lang-html'), codeJs = block.querySelector('code.lang-js');
-        var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]'), tabJs = block.querySelector('[role="tab"][aria-controls$="-js"]');
+        var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]');
         // The options sheet holds every choice.
         var sheet = document.getElementById(script.id + '-options');
         var reset = sheet.querySelector('[data-builder-reset]');
         var controls = function () { return Array.prototype.slice.call(sheet.querySelectorAll('[data-builder-option]')); };
-        // The sheet covers the lower half, so bring the preview up above it.
+        // The sheet covers the lower part of the screen: bring the preview up above it, unless
+        // enough of it (160px, or all of a shorter one) already shows between header and sheet.
         sheet.addEventListener('nds:panel:opened', function () {
-            window.scrollTo({ top: preview.getBoundingClientRect().top + window.scrollY - NDS.stickyHeaderBottom() - 16, behavior: 'smooth' });
+            var box = preview.getBoundingClientRect(), top = box.top, head = NDS.stickyHeaderBottom();
+            if (top >= head && top + Math.min(box.height, 160) <= sheet.getBoundingClientRect().top) return;
+            window.scrollTo({ top: top + window.scrollY - head - 16, behavior: 'smooth' });
         });
         var byKey = {}, order = [], active = {}, defaults = {}, sizes = {}, combos = {}, picks = {};
         readTable(script.getAttribute('data-variants')).forEach(function (c) {
@@ -305,7 +308,8 @@
             });
             if (tabHtml) {
                 tabHtml.hidden = !html;
-                if (!html && tabHtml.getAttribute('aria-selected') === 'true') tabJs.click();
+                // Through the Tabs API: a synthetic click lands outside the open sheet and closes it.
+                if (!html && tabHtml.getAttribute('aria-selected') === 'true' && block.ndsTabs) block.ndsTabs.switchTo(1);
             }
 
             NDS.Init.destroy(preview);
