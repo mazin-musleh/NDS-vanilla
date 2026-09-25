@@ -265,6 +265,11 @@
     &:last-child {
         padding-block-end: var(--spacing-4xl);
     }
+
+    // The body padding already spaces the top; a leading divider keeps only a small gap.
+    > .nds-divider:first-child {
+        margin-block-start: var(--spacing-xl);
+    }
 }
 
 .nds-panel-footer {
