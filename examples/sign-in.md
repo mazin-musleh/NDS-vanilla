@@ -187,7 +187,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <!-- The three choices are the page's content, not its actions -->
-            <div class="nds-grid" style="--max-col: 1; --gap: var(--spacing-md);">
+            <div class="nds-grid" style="--max-col: 1; --gap: var(--spacing-md); --btn-width: 100%;">
               <button type="button" class="nds-btn nds-secondary-outline nds-col delivery-btn" data-delivery="your mobile app">
                 <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
                 <span class="nds-label">Mobile app</span>

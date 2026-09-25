@@ -484,6 +484,7 @@
     &:is(.nds-stacked, .nds-col) {
       flex-direction: column;
       align-items: stretch;
+      --btn-width: 100%;
     }
 
   }
