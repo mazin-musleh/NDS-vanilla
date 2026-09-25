@@ -124,37 +124,40 @@ module DocsCanon
     "--card-width: 100%; --card-radius: var(--radius-md);#{' --card-bg: var(--background-primary-strong);' if oncolor}"
   end
 
-  # Option markers: `(default)` pre-selects; `(demo: + Other)` also turns on option "Other" (demo aid only).
-  def self.label(option) = option.sub(/\s*\(default\)/, '').sub(/\s*\(demo:\s*\+[^)]*\)/, '')
+  # Option markers: `(default)` pre-selects; `(demo: + Other)` also turns on option "Other" (demo
+  # aid only); `(hint: text)` is a short description shown under the option in the sheet.
+  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/, '')
+  def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
-  def self.toolbar(id, rows, src, js, canons)
-    # A group whose every row changes nothing (e.g. "Field states → Forms") is reference only.
-    groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
-    off = ->(on) { on ? '' : ' disabled' }
-    # A control that does not apply yet stays in place, disabled; its wrapper says what turns it on
-    # (a disabled button takes no pointer events, so the hover lands on the wrapper).
-    tip = ->(on, need) { need.empty? ? '' : %( data-needs="#{CGI.escapeHTML(need)}"#{%( title="#{CGI.escapeHTML(need)}") unless on}) }
-    # Dropmenus first, then toggles, each in table order.
-    groups = groups.partition { |_, list| list.size > 1 }.flatten(1)
-    items = groups.map do |group, list|
-      if list.size == 1
-        r = list.first
-        on = applies?(r, src, js)
-        %(<span#{tip[on, needs(r, rows, canons, src)]}><button type="button" class="nds-chip nds-neutral nds-rounded" aria-pressed="false"#{off[on]} data-builder-option="#{CGI.escapeHTML("#{group}|#{r[:option]}")}"><span class="nds-label">#{CGI.escapeHTML(label(r[:option]))}</span></button></span>)
-      else
-        default = list.find { |r| r[:option].include?('(default)') }
-        opts = list.map do |r|
-          sel = r.equal?(default) ? ' data-state="selected"' : ''
-          %(<button type="button" class="nds-btn nds-subtle nds-dropmenu-item"#{sel}#{off[applies?(r, src, js)]} data-builder-option="#{CGI.escapeHTML("#{group}|#{r[:option]}")}"><span class="nds-label">#{CGI.escapeHTML(label(r[:option]))}</span></button>)
-        end
-        live = list.select { |r| r[:live] }
-        on = live.any? { |r| applies?(r, src, js) }
-        %(<div class="nds-dropmenu"#{tip[on, needs(live.first, rows, canons, src)]}><button type="button" class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger"#{off[on]}><span class="nds-label">#{CGI.escapeHTML(default ? "#{group}: #{label(default[:option])}" : group)}</span></button><div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">#{opts.join}</div></div></div>)
-      end
-    end
+  # The bar: Options (opens the sheet that holds every choice) and Reset.
+  def self.toolbar(id)
+    options = %(<button type="button" class="nds-btn nds-secondary-outline nds-md" data-panel-toggle="#{id}-options"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
     reset = %(<button type="button" class="nds-btn nds-subtle nds-sm" data-builder-reset disabled><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i><span class="nds-label">Reset</span></button>)
-    %(<div class="nds-toolbar" data-builder-for="#{id}"><div class="nds-bar-start">#{items.join}#{reset}</div></div>\n) +
-      %(<div class="nds-divider nds-4xl" style="--divider-line-start: 24px;">Preview</div>\n)
+    %(<div class="nds-toolbar" data-builder-for="#{id}"><div class="nds-bar-start">#{options}#{reset}</div></div>\n) +
+      %(<div class="nds-divider nds-4xl nds-start">Preview</div>\n)
+  end
+
+  # The options sheet: one labeled row of chips per group, single options last under "More".
+  # A chip that does not apply is disabled, and its row label says why (touch has no hover);
+  # a hint shows on hover. No backdrop, so the preview stays live above it.
+  def self.sheet(id, rows, src, js, canons)
+    groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
+    multi, single = groups.partition { |_, list| list.size > 1 }
+    esc = ->(t) { CGI.escapeHTML(t.to_s) }
+    chip = lambda do |group, r, sel|
+      tip = hint(r[:option]) ? %( title="#{esc[hint(r[:option])]}") : ''
+      %(<button type="button" class="nds-chip nds-neutral nds-rounded" aria-pressed="#{sel}"#{' data-state="selected"' if sel}#{' disabled' unless applies?(r, src, js)}#{tip} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
+    end
+    row = lambda do |name, need, off, chips|
+      text = off && !need.empty? ? "#{name} · #{need}" : name
+      %(<div class="nds-divider nds-4xl nds-start" data-builder-group="#{esc[name]}"#{need.empty? ? '' : %( data-needs="#{esc[need]}")}>#{esc[text]}</div><div class="nds-chips">#{chips.join}</div>)
+    end
+    body = multi.map do |group, list|
+      live = list.select { |r| r[:live] }
+      row[group, needs(live.first, rows, canons, src), live.none? { |r| applies?(r, src, js) }, list.map { |r| chip[group, r, r[:option].include?('(default)')] }]
+    end
+    body << row['More', '', false, single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
+    %(<aside id="#{id}-options" class="nds-panel" data-panel-side="bottom" style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div><div class="nds-panel-body">#{body.join}</div></aside>)
   end
 
   def self.stamp(html)
@@ -196,10 +199,12 @@ module DocsCanon
       js = canons[attr(attrs, 'data-js')]&.last
       if lang == 'html' && attr(attrs, 'data-preview') != 'none'
         table = attr(attrs, 'data-variants')
-        out << toolbar(id, rows(html, table), src, js, canons) if table
+        out << toolbar(id) if table
         out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{src}\n</div>\n)
       end
       out << (js ? code_tabs(id, src, js) : code_block(lang, src))
+      out << "\n" << sheet(id, rows(html, attr(attrs, 'data-variants')), src, js, canons) if lang == 'html' && attr(attrs, 'data-variants') && attr(attrs, 'data-preview') != 'none'
+      out
     end
   end
 end

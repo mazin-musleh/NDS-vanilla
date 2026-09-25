@@ -14,7 +14,8 @@
  * beside the HTML one. JS rows target `create()`, or `create({ key: value })` to apply only
  * while that option is set:  key: value  set an option · canon #id  add a part's options.
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
- * A control that does not apply stays in place, disabled; its wrapper's data-needs says why.
+ * The bar is Options + Reset; the sheet holds a chip row per group. A chip that does not apply
+ * stays in place, disabled, and its row label says why (data-needs).
  * Rows sharing Group + Option are one choice.
  */
 (function () {
@@ -226,13 +227,21 @@
         var codeHtml = block.querySelector('code.lang-html'), codeJs = block.querySelector('code.lang-js');
         var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]'), tabJs = block.querySelector('[role="tab"][aria-controls$="-js"]');
         var reset = bar.querySelector('[data-builder-reset]');
-        var byKey = {}, order = [], active = {}, defaults = {};
+        // The options sheet holds every choice.
+        var sheet = document.getElementById(script.id + '-options');
+        var controls = function () { return Array.prototype.slice.call(sheet.querySelectorAll('[data-builder-option]')); };
+        // The sheet covers the lower half, so bring the preview up above it.
+        sheet.addEventListener('nds:panel:opened', function () {
+            window.scrollTo({ top: preview.getBoundingClientRect().top + window.scrollY - NDS.stickyHeaderBottom() - 16, behavior: 'smooth' });
+        });
+        var byKey = {}, order = [], active = {}, defaults = {}, sizes = {};
         readTable(script.getAttribute('data-variants')).forEach(function (c) {
             byKey[c.key] = c;
+            sizes[c.group] = (sizes[c.group] || 0) + 1;
             if (order.indexOf(c.group) < 0) order.push(c.group);
             if (/\(default\)/.test(c.option)) defaults[c.group] = c;
         });
-        bar.querySelectorAll('.nds-dropmenu-item[data-state~="selected"]').forEach(function (it) {
+        sheet.querySelectorAll('[data-builder-option][data-state~="selected"]').forEach(function (it) {
             var c = byKey[it.getAttribute('data-builder-option')];
             if (c) active[c.group] = c;
         });
@@ -249,18 +258,16 @@
             });
         }
         function showApplicable() {
-            bar.querySelectorAll('[data-builder-option]').forEach(function (btn) {
+            controls().forEach(function (btn) {
                 btn.disabled = !applies(byKey[btn.getAttribute('data-builder-option')]);
             });
-            bar.querySelectorAll('.nds-dropmenu').forEach(function (dm) {
-                dm.querySelector('.nds-dropmenu-trigger').disabled = !Array.prototype.some.call(dm.querySelectorAll('.nds-dropmenu-item:not(:disabled)'), function (it) {
-                    return live(byKey[it.getAttribute('data-builder-option')]);
+            // A row whose options all do not apply says why in its label (touch screens have no hover).
+            sheet.querySelectorAll('[data-builder-group]').forEach(function (d) {
+                var off = !Array.prototype.some.call(d.nextElementSibling.querySelectorAll('[data-builder-option]:not(:disabled)'), function (b) {
+                    return live(byKey[b.getAttribute('data-builder-option')]);
                 });
-            });
-            // A disabled control takes no pointer events, so its wrapper carries the hover hint.
-            bar.querySelectorAll('[data-needs]').forEach(function (w) {
-                if (w.querySelector('[data-builder-option], .nds-dropmenu-trigger').disabled) w.title = w.getAttribute('data-needs');
-                else w.removeAttribute('title');
+                var need = d.getAttribute('data-needs');
+                d.textContent = d.getAttribute('data-builder-group') + (off && need ? ' · ' + need : '');
             });
             reset.disabled = order.every(function (g) { return (active[g] || null) === (defaults[g] || null); });
         }
@@ -310,48 +317,47 @@
             preview.firstChild.addEventListener('click', function () { new Function(code)(); });
         }
 
-        function set(btn, on) {
-            var c = byKey[btn.getAttribute('data-builder-option')];
-            if (btn.classList.contains('nds-dropmenu-item')) {
-                btn.parentNode.querySelectorAll('[data-state~="selected"]').forEach(function (x) { x.removeAttribute('data-state'); });
-                btn.setAttribute('data-state', 'selected');
-                btn.closest('.nds-dropmenu').querySelector('.nds-dropmenu-trigger .nds-label').textContent = c.group + ': ' + btn.textContent;
-                active[c.group] = c;
-            } else {
-                btn.setAttribute('aria-pressed', String(on));
-                on ? btn.setAttribute('data-state', 'selected') : btn.removeAttribute('data-state');
-                active[c.group] = on ? c : null;
-            }
+        function set(c, on) {
+            active[c.group] = on ? c : null;
+            controls().forEach(function (btn) {
+                var o = byKey[btn.getAttribute('data-builder-option')];
+                if (o.group !== c.group) return;
+                var sel = on && o === c;
+                sel ? btn.setAttribute('data-state', 'selected') : btn.removeAttribute('data-state');
+                btn.setAttribute('aria-pressed', String(sel));
+            });
         }
 
         reset.addEventListener('click', function () {
-            bar.querySelectorAll('[data-builder-option]').forEach(function (btn) {
-                var c = byKey[btn.getAttribute('data-builder-option')];
-                if (btn.classList.contains('nds-dropmenu-item')) { if (defaults[c.group] === c) set(btn, true); }
-                else set(btn, false);
+            order.forEach(function (g) {
+                if (defaults[g]) set(defaults[g], true);
+                else if (active[g]) set(active[g], false);
             });
             render();
         });
 
         // `Option (demo: + Other)` also turns on option "Other" — a demo aid (Neutral shows only when checked).
-        var label = function (o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*)\)/g, ''); };
-        bar.addEventListener('click', function (e) {
+        var label = function (o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/g, ''); };
+        function choose(e) {
             var btn = e.target.closest('[data-builder-option]');
             var c = btn && byKey[btn.getAttribute('data-builder-option')];
             if (!c) return;
-            var on = btn.classList.contains('nds-dropmenu-item') || btn.getAttribute('aria-pressed') !== 'true';
-            set(btn, on);
+            // A group with several options is pick-one; a single option toggles.
+            var on = sizes[c.group] > 1 || active[c.group] !== c;
+            set(c, on);
             var plus = on && c.option.match(/\(demo:\s*\+\s*([^)]+)\)/);
-            if (plus) {
-                bar.querySelectorAll('[data-builder-option]').forEach(function (other) {
-                    var oc = byKey[other.getAttribute('data-builder-option')];
-                    if (oc !== c && label(oc.option) === plus[1].trim()) set(other, true);
-                });
-            }
+            if (plus) Object.keys(byKey).forEach(function (k) {
+                var oc = byKey[k];
+                if (oc !== c && label(oc.option) === plus[1].trim()) set(oc, true);
+            });
             render();
-        });
+        }
+        sheet.addEventListener('click', choose);
     }
 
-    document.querySelectorAll('.nds-toolbar[data-builder-for]').forEach(wire);
+    // The chips are built at site build; the Variants table is read only when the sheet first opens.
+    document.querySelectorAll('.nds-toolbar[data-builder-for]').forEach(function (bar) {
+        bar.querySelector('[data-panel-toggle]').addEventListener('click', function () { wire(bar); }, { once: true });
+    });
 
 })();

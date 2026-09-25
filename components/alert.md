@@ -158,8 +158,8 @@ actions: [
 | Status | Warning | `variant: 'warning'` | `create()` | The same, in JavaScript |
 | Status | Error | `[data-status="error"]` | `.nds-alert` | A failure |
 | Status | Error | `variant: 'error'` | `create()` | The same, in JavaScript |
-| Status | Critical | `[data-status="critical"]` | `.nds-alert` | A system-level emergency. Same colors as Error, with its own icon |
-| Status | Critical | `variant: 'critical'` | `create()` | The same, in JavaScript |
+| Status | Critical (hint: Error colors with its own icon) | `[data-status="critical"]` | `.nds-alert` | A system-level emergency. Same colors as Error, with its own icon |
+| Status | Critical (hint: Error colors with its own icon) | `variant: 'critical'` | `create()` | The same, in JavaScript |
 | Status | Neutral | `[data-status="neutral"]` | `.nds-alert` | A general notice |
 | Status | Neutral | `variant: 'neutral'` | `create()` | The same, in JavaScript |
 | Actions | None (default) | — | — | No actions. Actions go last in `.nds-alert-content`, after `.nds-alert-text` |
@@ -167,8 +167,8 @@ actions: [
 | Actions | Buttons | canon `#alert-js-actions` | `create()` | The same, in JavaScript. `onClick` gets the alert element. `dismiss: true` closes the alert after the click |
 | Actions | Link | canon `#alert-link` | `.nds-alert-content` | A link to a detail page. Links inside an alert take neutral colors |
 | Actions | Link | canon `#alert-js-link` | `create()` | The same, in JavaScript. `class` replaces the button classes |
-| Actions | Copy | canon `#alert-copy` | `.nds-alert-content` | Copies `data-copy`, or the text of the element that `data-copy-target` selects. See [Copy](../utilities/copy) |
-| Actions | Copy | canon `#alert-js-copy` | `create()` | The same, in JavaScript. `create()` adds the copy icon |
+| Actions | Copy (hint: Copies a code or a log) | canon `#alert-copy` | `.nds-alert-content` | Copies `data-copy`, or the text of the element that `data-copy-target` selects. See [Copy](../utilities/copy) |
+| Actions | Copy (hint: Copies a code or a log) | canon `#alert-js-copy` | `create()` | The same, in JavaScript. `create()` adds the copy icon |
 | Close | Button (default) | canon `#alert-close` | `.nds-alert` | The close button removes the alert. It goes last in `.nds-alert` |
 | Close | None | — | — | No close button, for an alert the user cannot close |
 | Close | None | `closable: false` | `create()` | The same, in JavaScript. A toast with a `duration` keeps its close button, which shows the countdown |

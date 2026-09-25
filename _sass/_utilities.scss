@@ -207,8 +207,8 @@
 // VISIBILITY UTILITIES
 // ==============================================
 
-// Band-exact responsive hiding: data-hidden="sm|md|lg" hides an element ONLY
-// inside that range (sm ≤600, md 601-960, lg 961-1280). The original
+// Responsive hiding: data-hidden="sm|md|lg" hides an element ONLY inside that
+// range (sm <600, md 600-959, lg 960 and up). The original
 // mobile/tablet/desktop names stay accepted as aliases for shipped markup.
 // Combine tokens to span ranges: data-hidden="sm md" hides up to 960px.
 // Add the sr token to keep the element in the accessibility tree while hidden
@@ -223,7 +223,8 @@
   :is([data-hidden~="md"], [data-hidden~="tablet"]):not([data-hidden~="sr"]) { display: none !important; }
   :is([data-hidden~="md"], [data-hidden~="tablet"])[data-hidden~="sr"] { @include label-hidden; }
 }
-@include desktop {
+// lg has no upper edge: stopping at 1279px showed "hidden on desktop" content on most desktops.
+@include desktop('min') {
   :is([data-hidden~="lg"], [data-hidden~="desktop"]):not([data-hidden~="sr"]) { display: none !important; }
   :is([data-hidden~="lg"], [data-hidden~="desktop"])[data-hidden~="sr"] { @include label-hidden; }
 }

@@ -232,8 +232,8 @@ last_edit: "25/09/2026 - 10:36 AM"
 | Structure | Image header | canon `#card-image` | — | A photo above the text. Set the focal point with `--img-pos-x` and `--img-pos-y` |
 | Structure | Avatar header | canon `#card-avatar` | — | A person or an account |
 | Structure | No header | canon `#card-no-header` | — | Text only |
-| Structure | Link card | canon `#card-link` | — | The whole card is one `<a>` (or `<button>`). Hover and press feedback come from the element. Do not put links or buttons inside it |
-| Structure | Statistic | canon `#card-statistic` | — | One headline number with a label, centered. The number counts up from 0 to `data-target` when it scrolls into view. See [Numbers](../utilities/numbers#counterAnimation) |
+| Structure | Link card (hint: The whole card is one link) | canon `#card-link` | — | The whole card is one `<a>` (or `<button>`). Hover and press feedback come from the element. Do not put links or buttons inside it |
+| Structure | Statistic (hint: One headline number) | canon `#card-statistic` | — | One headline number with a label, centered. The number counts up from 0 to `data-target` when it scrolls into view. See [Numbers](../utilities/numbers#counterAnimation) |
 | Meta | None (default) | — | — | No tags or rating |
 | Meta | Tags | canon `#card-tags` | `.nds-card-content` | Tags alone go straight in the content |
 | Meta | Rating | canon `#card-rating` | `.nds-card-content` | A star rating with a count |
@@ -247,17 +247,14 @@ last_edit: "25/09/2026 - 10:36 AM"
 | Status | Status | `.nds-inverted` | `.nds-card-image ~ * .nds-tag` | Over an image, the tag needs a solid background to stay readable, so give it `.nds-inverted` |
 | Actions | None (default) | — | — | No actions |
 | Actions | Start | canon `#card-actions` | `div.nds-card` | Buttons after the content, never inside it. Not on a link card, which holds no links or buttons |
-| Actions | End | canon `#card-actions` | `div.nds-card` | The same, aligned to the end of the row |
-| Actions | End | `.nds-end` | `.nds-card-actions` | The same, aligned to the end of the row |
-| Actions | Full | canon `#card-actions` | `div.nds-card` | The same, with each button filling the width |
-| Actions | Full | `.nds-full` | `.nds-card-actions .nds-btn` | The same, with each button filling the width |
-| Actions | Stacked | canon `#card-actions` | `div.nds-card` | The same, with the buttons one above the other, each filling the width |
-| Actions | Stacked | `.nds-stacked` | `.nds-card-actions` | The same, with the buttons one above the other, each filling the width. `.nds-col` works too |
-| Style | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border. For flat and content-heavy layouts |
-| Style | Shadow | `.nds-shadow` | `.nds-card` | An elevation shadow. For floating or modal-adjacent cards |
-| Style | Stroke and shadow | `.nds-stroke` | `.nds-card` | Both |
-| Style | Stroke and shadow | `.nds-shadow` | `.nds-card` | Both |
-| Style | Plain | — | — | No border and no shadow |
+| Actions | End (hint: Aligned to the end of the row) | canon `#card-actions` | `div.nds-card` | The same, aligned to the end of the row |
+| Actions | End (hint: Aligned to the end of the row) | `.nds-end` | `.nds-card-actions` | The same, aligned to the end of the row |
+| Actions | Full (hint: The buttons share the width) | canon `#card-actions` | `div.nds-card` | The same, with each button filling the width |
+| Actions | Full (hint: The buttons share the width) | `.nds-full` | `.nds-card-actions .nds-btn` | The same, with each button filling the width |
+| Actions | Stacked (hint: One above the other, full width) | canon `#card-actions` | `div.nds-card` | The same, with the buttons one above the other, each filling the width |
+| Actions | Stacked (hint: One above the other, full width) | `.nds-stacked` | `.nds-card-actions` | The same, with the buttons one above the other, each filling the width. `.nds-col` works too |
+| Stroke | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border. For flat and content-heavy layouts. Leave out both stroke and shadow for a plain card |
+| Shadow | Shadow | `.nds-shadow` | `.nds-card` | An elevation shadow. For floating or modal-adjacent cards. It combines with the stroke |
 | Color | None (default) | — | — | The default colors |
 | Color | Neutral | `.nds-neutral` | `.nds-card` | Also `.nds-gray` |
 | Color | Green | `.nds-green` | `.nds-card` | Tints the title, the icon and the hover border |
@@ -267,7 +264,7 @@ last_edit: "25/09/2026 - 10:36 AM"
 | Color | On color | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card |
 | Color | On color | `.nds-oncolor` | `.nds-card-actions .nds-btn` | Buttons do not follow the card. Give each action button `.nds-oncolor` too |
 | Color | On color | `.nds-oncolor` | `.nds-tag` | Tags do not follow the card either. Give each tag, including the status tag, `.nds-oncolor` |
-| Tinted | Tinted | `.nds-color` | `.nds-card` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
+| Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
 | Layout | Stacked (default) | — | — | Header above content |
 | Layout | Row | `.nds-rowView` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
 | Layout | Center | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing |
@@ -276,7 +273,7 @@ last_edit: "25/09/2026 - 10:36 AM"
 | Number size | MD | `.nds-md` | `.nds-card-number` | A smaller headline number |
 | Number size | SM | `.nds-sm` | `.nds-card-number` | The smallest headline number |
 | Disabled | Disabled | `.nds-disabled` | `.nds-card` | Mutes the card and blocks clicks. `[disabled]` works on a `<button>` card |
-| Loading | Loading | `.nds-loading` | `.nds-card` | Skeleton placeholders while the content loads |
+| Loading | Loading (hint: Skeleton placeholders) | `.nds-loading` | `.nds-card` | Skeleton placeholders while the content loads |
 {: #cardVariantsTable .nds-table .nds-responsive}
 
 </div>
