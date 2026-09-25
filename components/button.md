@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/09/2026 - 11:05 PM"
+last_edit: "26/09/2026 - 12:17 AM"
 ---
 
 <section id="btnOverview" class="nds-content-section nds-doc-overview">
@@ -149,45 +149,45 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
       <div class="nds-definition-list nds-divided nds-grid">
         <div class="nds-definition-item">
           <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-tag-01"></i>
+            <span class="nds-label">Pure CSS</span>
+          </span>
+          <p class="nds-item-desc">No JavaScript needed. Every variant, size and state comes from classes and attributes.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-colors"></i>
+            <span class="nds-label">Six Variants</span>
+          </span>
+          <p class="nds-item-desc">Primary, neutral, secondary, secondary outline, subtle and transparent, each with its hover, pressed, selected, focused and disabled look.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Three Sizes</span>
+          </span>
+          <p class="nds-item-desc">24px, 32px and 40px high. The label, the icon and the indicator scale with the size.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-cursor-01"></i>
-            <span class="nds-label">State Styles</span>
+            <span class="nds-label">Layout Options</span>
           </span>
-          <p class="nds-item-desc">Hover, press and keyboard focus need no markup. <code class="nds-inline-code lang-html">data-state</code> tokens <code class="nds-inline-code lang-html">selected</code>, <code class="nds-inline-code lang-html">open</code>, <code class="nds-inline-code lang-html">active</code> and <code class="nds-inline-code lang-html">current</code> all give the selected look, so other components can mark their own button.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-circle-02"></i>
-            <span class="nds-label">Status Feedback</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">data-status</code> on a button shows the result of an action for a moment, such as a copy that worked. The status colors hold on hover and press, and the icon becomes the status icon.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
-            <span class="nds-label">Direction-Aware Arrows</span>
-          </span>
-          <p class="nds-item-desc">Next and previous arrows point with the reading direction, in Arabic and in English. The menu chevron turns while its menu is open.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Stable Width</span>
-          </span>
-          <p class="nds-item-desc">A loading button keeps its width. The spinner takes the place of the content and hides a badge.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-3-row"></i>
-            <span class="nds-label">Group Seams</span>
-          </span>
-          <p class="nds-item-desc">Buttons in a group share a 1px seam that follows the direction of the group. A group of MD or SM buttons uses a smaller corner radius.</p>
+          <p class="nds-item-desc">An icon before or after the label, icon only, label only, stacked, circle and full width, and a loading state.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
             <span class="nds-label">Accessibility</span>
           </span>
-          <p class="nds-item-desc">A focus ring on keyboard focus. The label scales with the accessibility text size. High contrast mode draws 2px borders, reduced motion stops the transitions, and print shows a plain black outline.</p>
+          <p class="nds-item-desc">A focus ring for keyboard users, thicker borders in high contrast mode, no motion when the user asks for reduced motion, and plain print styles.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-puzzle"></i>
+            <span class="nds-label">Composable</span>
+          </span>
+          <p class="nds-item-desc">Combines with destructive, on color, loading, progress, status, badge, indicator and groups.</p>
         </div>
       </div>
     </div>

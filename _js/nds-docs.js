@@ -7,7 +7,7 @@
  * Variants table Markup cell (CSS selector syntax):
  *   .cls  class · [attr]  bare attribute · [attr="v"]  attribute · [data-state~="t"]  token
  *   --prop: v  inline custom property · .prop = v  JS property · remove  delete "On element"
- *   canon #id  in the Structure group: swap the whole markup; elsewhere: insert that part block
+ *   canon #id  in the Structure (or Example) group: swap the whole markup; elsewhere: insert that part block
  *              into "On element", at its end, its start with "(start)", or right
  *              after it with "(after)"
  * `data-js="id"` on the base canon names its JS form, one create() call, shown in a JS code tab
@@ -22,6 +22,8 @@
     'use strict';
 
     var VOID = /^(area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
+    // The group whose rows swap the whole markup. A reference page (grid) names it Example.
+    var STRUCT = /^(Structure|Example)$/;
 
     // An option's name without its markers: (default), (demo: + Other), (hint: text).
     function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/g, ''); }
@@ -218,8 +220,8 @@
             var c = tr.cells, group = c[0].textContent.trim(), option = c[1].textContent.trim();
             var key = group + '|' + option, op = parseOp(c[2].textContent);
             if (!op && c[2].textContent.trim() !== '—') console.warn('[NDS Docs] unparsed Markup cell:', c[2].textContent.trim());
-            // `canon #id` swaps the markup in the Structure group; anywhere else it inserts a part block.
-            if (op && op.kind === 'structure' && group !== 'Structure') op.kind = 'insert';
+            // `canon #id` swaps the markup in the Structure (or Example) group; anywhere else it inserts a part block.
+            if (op && op.kind === 'structure' && !STRUCT.test(group)) op.kind = 'insert';
             var at = c[3].textContent.trim().match(/^(.*?)\s*(?:\((start|end|after)\))?$/);
             if (!byKey[key]) { byKey[key] = { key: key, group: group, option: option, ops: [] }; choices.push(byKey[key]); }
             byKey[key].ops.push({ op: op, target: at[1], pos: at[2] || 'end' });
@@ -308,7 +310,8 @@
         }
 
         function render() {
-            var struct = active.Structure && active.Structure.structure;
+            var sg = order.filter(function (g) { return STRUCT.test(g); })[0];
+            var struct = sg && active[sg] && active[sg].structure;
             var srcEl = struct ? document.getElementById(struct) : script;
             // A JS-only structure (a toast) has no HTML form.
             html = srcEl.getAttribute('data-lang') !== 'js';

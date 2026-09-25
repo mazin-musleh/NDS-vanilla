@@ -27,6 +27,9 @@ module DocsCanon
     kind || 'html'
   end
 
+  # The group whose rows swap the whole markup. A reference page (grid) names it Example.
+  def self.structure?(group) = %w[Structure Example].include?(group)
+
   def self.attr(attrs, name)
     m = attrs.match(/(?:\A|\s)#{Regexp.escape(name)}(?:="([^"]*)")?(?=\s|\z)/)
     m && (m[1] || '')
@@ -50,9 +53,9 @@ module DocsCanon
       group, option, markup, target = tr.scan(%r{<td[^>]*>(.*?)</td>}m).flatten.map { |c| text(c) }
       c = (choices["#{group}|#{option}"] ||= { group: group, option: option })
       target = target.to_s.sub(/\s*\((start|end|after)\)\z/, '')
-      # `canon #id` swaps the markup in the Structure group; anywhere else it inserts a part block.
+      # `canon #id` swaps the markup in the Structure (or Example) group; anywhere else it inserts a part block.
       if markup =~ /\Acanon #([\w-]+)\z/
-        group == 'Structure' ? c[:structure] = Regexp.last_match(1) : (c[:inserts] ||= []) << Regexp.last_match(1)
+        structure?(group) ? c[:structure] = Regexp.last_match(1) : (c[:inserts] ||= []) << Regexp.last_match(1)
       end
       c[:live] ||= markup != '—'
       (c[:targets] ||= []) << target if markup != '—' && !c[:structure]
@@ -90,13 +93,13 @@ module DocsCanon
 
     providers = rows.reject { |r| r.equal?(choice) }.select do |r|
       own = [r[:structure], *r[:inserts]].compact.map { |cid| canons[cid] }
-      own << ['html', base] if r[:group] == 'Structure' && !r[:structure]
+      own << ['html', base] if structure?(r[:group]) && !r[:structure]
       own.any? do |lang, text|
         choice[:targets].any? { |t| t != '—' && (lang == 'js' ? matches?('', t, text) : matches?(text, t)) }
       end
     end
     # Every structure holds it: the control can never be disabled, so it needs no hint.
-    structures = rows.select { |r| r[:group] == 'Structure' }
+    structures = rows.select { |r| structure?(r[:group]) }
     return '' if structures.any? && (structures - providers).empty?
 
     sizes = rows.group_by { |r| r[:group] }.transform_values(&:size)
@@ -108,7 +111,7 @@ module DocsCanon
     end
     # Most structures hold it: name the few that do not ("Not on Structure: Link card").
     missing = structures - providers
-    return "Not on #{names[missing].join(' or ')}" if providers.all? { |r| r[:group] == 'Structure' } && missing.size < providers.size
+    return "Not on #{names[missing].join(' or ')}" if providers.all? { |r| structure?(r[:group]) } && missing.size < providers.size
 
     list = names[providers]
     list.empty? ? '' : "Needs #{list.join(' or ')}"
