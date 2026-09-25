@@ -129,12 +129,11 @@ module DocsCanon
   def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
-  # The bar: Options (opens the sheet that holds every choice) and Reset.
-  def self.toolbar(id)
-    options = %(<button type="button" class="nds-btn nds-secondary-outline nds-md" data-panel-toggle="#{id}-options"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
-    reset = %(<button type="button" class="nds-btn nds-subtle nds-sm" data-builder-reset disabled><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i><span class="nds-label">Reset</span></button>)
-    %(<div class="nds-toolbar" data-builder-for="#{id}"><div class="nds-bar-start">#{options}#{reset}</div></div>\n) +
-      %(<div class="nds-divider nds-4xl nds-start">Preview</div>\n)
+  # The Options button floats beside the section title (layout/section.md), icon-only on a phone;
+  # it opens the sheet that holds every choice.
+  def self.actions(id)
+    options = %(<button type="button" class="nds-btn nds-neutral nds-md" data-panel-toggle="#{id}-options"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
+    %(<div class="nds-section-action nds-rowView nds-minimal" data-builder-for="#{id}">#{options}</div>)
   end
 
   # The options sheet: one labeled row of chips per group, single options last under "More".
@@ -157,7 +156,7 @@ module DocsCanon
       row[group, needs(live.first, rows, canons, src), live.none? { |r| applies?(r, src, js) }, list.map { |r| chip[group, r, r[:option].include?('(default)')] }]
     end
     body << row['More', '', false, single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
-    %(<aside id="#{id}-options" class="nds-panel" data-panel-side="bottom" style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div><div class="nds-panel-body">#{body.join}</div></aside>)
+    %(<aside id="#{id}-options" class="nds-panel" data-panel-side="bottom" style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Reset" data-builder-reset disabled><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>)
   end
 
   def self.stamp(html)
@@ -186,7 +185,8 @@ module DocsCanon
       end
     end
 
-    html.gsub(CANON_RE) do |whole|
+    builders = []
+    html = html.gsub(CANON_RE) do |whole|
       attrs, body = Regexp.last_match(1), Regexp.last_match(2)
       id = attr(attrs, 'id')
       next whole unless attr(attrs, 'data-canon') && !builder_only[id]
@@ -199,13 +199,23 @@ module DocsCanon
       js = canons[attr(attrs, 'data-js')]&.last
       if lang == 'html' && attr(attrs, 'data-preview') != 'none'
         table = attr(attrs, 'data-variants')
-        out << toolbar(id) if table
+        if table
+          builders << id
+          out << %(<div class="nds-divider nds-4xl nds-start">Preview</div>\n)
+        end
         out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{src}\n</div>\n)
       end
       out << (js ? code_tabs(id, src, js) : code_block(lang, src))
       out << "\n" << sheet(id, rows(html, attr(attrs, 'data-variants')), src, js, canons) if lang == 'html' && attr(attrs, 'data-variants') && attr(attrs, 'data-preview') != 'none'
       out
     end
+
+    # A float action is the head's first child.
+    builders.each do |id|
+      head = html.rindex('<div class="nds-section-head">', html.index(%(<script type="text/html" id="#{id}")))
+      html = html.insert(head + '<div class="nds-section-head">'.size, actions(id)) if head
+    end
+    html
   end
 end
 

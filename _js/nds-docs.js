@@ -1,7 +1,7 @@
 /**
  * NDS Docs — builder wiring for doc-page canon blocks (docs site only, no public surface).
- * _plugins/docs_canon.rb writes each builder's toolbar, preview and code block at build time;
- * this file only answers the toolbar. A choice re-renders the preview FROM the code it shows
+ * _plugins/docs_canon.rb writes each builder's controls, preview, code block and options sheet at
+ * build time; this file only answers them. A choice re-renders the preview FROM the code it shows
  * (one serialized source), then re-inits it, so preview and code cannot differ.
  *
  * Variants table Markup cell (CSS selector syntax):
@@ -14,7 +14,7 @@
  * beside the HTML one. JS rows target `create()`, or `create({ key: value })` to apply only
  * while that option is set:  key: value  set an option · canon #id  add a part's options.
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
- * The bar is Options + Reset; the sheet holds a chip row per group. A chip that does not apply
+ * The section action holds Options; the sheet holds Reset and a chip row per group. A chip that does not apply
  * stays in place, disabled, and its row label says why (data-needs).
  * Rows sharing Group + Option are one choice.
  */
@@ -222,13 +222,14 @@
     function wire(bar) {
         var script = document.getElementById(bar.getAttribute('data-builder-for'));
         var jsEl = script.hasAttribute('data-js') ? document.getElementById(script.getAttribute('data-js')) : null;
-        var preview = bar.nextElementSibling.nextElementSibling;
+        // The build writes the Preview divider, the preview and the code right after the canon.
+        var preview = script.nextElementSibling.nextElementSibling;
         var block = preview.nextElementSibling;
         var codeHtml = block.querySelector('code.lang-html'), codeJs = block.querySelector('code.lang-js');
         var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]'), tabJs = block.querySelector('[role="tab"][aria-controls$="-js"]');
-        var reset = bar.querySelector('[data-builder-reset]');
         // The options sheet holds every choice.
         var sheet = document.getElementById(script.id + '-options');
+        var reset = sheet.querySelector('[data-builder-reset]');
         var controls = function () { return Array.prototype.slice.call(sheet.querySelectorAll('[data-builder-option]')); };
         // The sheet covers the lower half, so bring the preview up above it.
         sheet.addEventListener('nds:panel:opened', function () {
@@ -356,7 +357,7 @@
     }
 
     // The chips are built at site build; the Variants table is read only when the sheet first opens.
-    document.querySelectorAll('.nds-toolbar[data-builder-for]').forEach(function (bar) {
+    document.querySelectorAll('[data-builder-for]').forEach(function (bar) {
         bar.querySelector('[data-panel-toggle]').addEventListener('click', function () { wire(bar); }, { once: true });
     });
 
