@@ -627,9 +627,9 @@ fieldset {
         flex-wrap: nowrap;
         justify-content: flex-end;
 
+        // The disabled hook wins here too, or a disabled option keeps a dark label.
         .nds-form-header .nds-label {
-            color: var(--text-display);
-            font-weight: var(--font-weight-medium);
+            color: var(--_header-color-forced, var(--text-display));
         }
 
         .nds-form-control {

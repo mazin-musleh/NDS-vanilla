@@ -48,6 +48,8 @@
  *     never constraint-validated, so required on it does nothing.
  *   - An autocomplete with data-strict is checked at submit too: typed text must match a
  *     picked suggestion (mechanism and carve-outs in the autocomplete banner).
+ *   - A readonly checkbox, radio or switch cannot change: Forms cancels the click that Space
+ *     or an arrow key sends, since the browser ignores readOnly on those inputs.
  *   - syncState() dispatches nothing, so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call syncState() or dispatch input/change.
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
@@ -979,6 +981,12 @@
             var c = resolveControl(e.target);
             if (c && c.formContainer && statesActive(c.input)) NDS.State.add(c.formContainer, 'typing');
         });
+        // The browser ignores readOnly on a checkbox or a radio, and the readonly CSS blocks only
+        // the pointer: cancel the click that Space or an arrow key sends, so the value stays.
+        doc.addEventListener('click', function(e) {
+            var t = e.target;
+            if (t.readOnly && (t.type === 'checkbox' || t.type === 'radio')) e.preventDefault();
+        }, true);
         doc.addEventListener('paste', function(e) {
             var c = resolveControl(e.target);
             if (c && c.formContainer) NDS.State.add(c.formContainer, 'typing');
@@ -1177,7 +1185,7 @@
 
                 // Toggle + notify — shared by track-click, keyboard, and label-click.
                 function toggleSwitch() {
-                    if (switchInput.disabled || switchElement.classList.contains('disabled')) return;
+                    if (switchInput.disabled || switchInput.readOnly || switchElement.classList.contains('disabled')) return;
                     switchInput.checked = !switchInput.checked;
                     Utils.triggerEvents(switchInput);
                     FieldSync.update(switchInput, formControl);
