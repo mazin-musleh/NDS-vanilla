@@ -479,6 +479,13 @@
       justify-content: flex-end;
     }
 
+    // Stacked actions fill the card width. .nds-stacked is the canon; the .nds-col
+    // flex utility gives the same result, since the sign-in example already uses it.
+    &:is(.nds-stacked, .nds-col) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
   }
 }
 

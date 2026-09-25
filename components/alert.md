@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "25/09/2026 - 09:22 AM"
+last_edit: "25/09/2026 - 10:17 AM"
 ---
 
 <section id="alertOverview" class="nds-content-section nds-doc-overview">
@@ -34,7 +34,7 @@ last_edit: "25/09/2026 - 09:22 AM"
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="alert-standard" data-canon data-variants="alertVariantsTable">
+<script type="text/html" id="alert-standard" data-canon data-variants="alertVariantsTable" data-js="alert-js">
 <div class="nds-alert nds-card" data-status="info" role="alert">
   <span class="nds-feedback nds-alert-icon nds-outline">
     <span class="nds-feedback-icon">
@@ -69,6 +69,11 @@ last_edit: "25/09/2026 - 09:22 AM"
     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
   </button>
 </div>
+</script>
+<script type="text/html" id="alert-close" data-canon>
+<button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
+  <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+</button>
 </script>
 <script type="text/html" id="alert-actions" data-canon>
 <div class="nds-alert-actions">
@@ -137,7 +142,7 @@ actions: [
     </div>
     <div class="nds-section-body" markdown="1">
 
-A row whose On element is `create()` sets an option of the `NDS.Alert.create()` call. `create({ display: 'toast' })` means only a call with that option.
+`#alert-js` is the same alert as one `NDS.Alert.create()` call (`data-js` on the base canon). A row whose On element is `create()` sets an option of that call, or of the toast's. `create({ display: 'toast' })` means only a call with that option.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -145,7 +150,6 @@ A row whose On element is `create()` sets an option of the `NDS.Alert.create()` 
 | Structure | Inline | canon `#alert-inline` | — | One line, with a thin stripe at the bottom and a solid icon. Always tinted. Actions go to the end of the line |
 | Structure | Inline | `display: 'inline'` | `create()` | The same, in JavaScript |
 | Structure | Toast | canon `#alert-toast` | — | Floats at a corner of the screen, so it needs no `target`. `duration` closes it after that many ms; `0` keeps it until the user closes it. A toast is made only with JavaScript: its timer and placement need the script |
-| JavaScript | JavaScript | canon `#alert-js` | `.nds-alert` (replace) | The same alert made by `NDS.Alert.create()`, with no HTML to write. Use it for an alert that appears after something happens, such as a save or a failed request. `target` is where it goes |
 | Status | Info (default) | `[data-status="info"]` | `.nds-alert` | Neutral news or an update |
 | Status | Info (default) | `variant: 'info'` | `create()` | The same, in JavaScript |
 | Status | Success | `[data-status="success"]` | `.nds-alert` | A confirmation |
@@ -165,8 +169,9 @@ A row whose On element is `create()` sets an option of the `NDS.Alert.create()` 
 | Actions | Link | canon `#alert-js-link` | `create()` | The same, in JavaScript. `class` replaces the button classes |
 | Actions | Copy | canon `#alert-copy` | `.nds-alert-content` | Copies `data-copy`, or the text of the element that `data-copy-target` selects. See [Copy](../utilities/copy) |
 | Actions | Copy | canon `#alert-js-copy` | `create()` | The same, in JavaScript. `create()` adds the copy icon |
-| Close | Without close | — | — | Leave out `.nds-alert-close` for an alert the user cannot close |
-| Close | Without close | `closable: false` | `create()` | The same, in JavaScript. A toast with a `duration` keeps its close button, which shows the countdown |
+| Close | Button (default) | canon `#alert-close` | `.nds-alert` | The close button removes the alert. It goes last in `.nds-alert` |
+| Close | None | — | — | No close button, for an alert the user cannot close |
+| Close | None | `closable: false` | `create()` | The same, in JavaScript. A toast with a `duration` keeps its close button, which shows the countdown |
 | Shadow | Shadow | `.nds-shadow` | `.nds-alert` | An elevation shadow |
 | Shadow | Shadow | `shadow: true` | `create()` | The same, in JavaScript. A toast has a shadow by default |
 | Color | Color | `.nds-color` | `.nds-alert` | Tints the background with the status color. Use it in dense layouts, where the stripe alone does not stand out. No effect on inline, which is always tinted |

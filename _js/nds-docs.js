@@ -9,12 +9,12 @@
  *   --prop: v  inline custom property · .prop = v  JS property
  *   canon #id  in the Structure group: swap the whole markup; elsewhere: insert that part block
  *              into "On element", at its end, its start with "(start)", or right
- *              after it with "(after)", or in place of the whole markup with "(replace)" while
- *              that element is in it (an HTML alert → its create() call)
- * A JS canon (data-lang="js") is one create() call. Its rows target `create()`, or
- * `create({ key: value })` to apply only while that option is set:
- *   key: value  set an option · canon #id  add a part's options
- * A JS call with a target previews in the card; one without (a toast) gets a Run button.
+ *              after it with "(after)"
+ * `data-js="id"` on the base canon names its JS form, one create() call, shown in a JS code tab
+ * beside the HTML one. JS rows target `create()`, or `create({ key: value })` to apply only
+ * while that option is set:  key: value  set an option · canon #id  add a part's options.
+ * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
+ * A control that does not apply stays in place, disabled; its wrapper's data-needs says why.
  * Rows sharing Group + Option are one choice.
  */
 (function () {
@@ -110,8 +110,11 @@
         var op = o.op;
         if (!callMatches(call, o.target)) return;
         if (op.kind === 'js') jsSet(call, op.name, op.value);
-        else if (op.kind === 'insert') parseCall('{' + document.getElementById(op.id).textContent + '}').entries.forEach(function (e) { jsSet(call, e.key, e.value); });
+        else if (op.kind === 'insert') partOf(op.id).entries.forEach(function (e) { jsSet(call, e.key, e.value); });
     }
+
+    // A JS part canon is a run of options, `actions: [...]`.
+    function partOf(id) { return parseCall('{' + document.getElementById(id).textContent + '}'); }
 
     function targets(root, sel) {
         return !sel || sel === '—' ? [root.firstElementChild] : Array.prototype.slice.call(root.querySelectorAll(sel));
@@ -144,7 +147,7 @@
     function apply(root, choice, phase) {
         choice.ops.forEach(function (o) {
             var op = o.op;
-            if (!op || op.kind === 'structure' || o.pos === 'replace') return;
+            if (!op || op.kind === 'structure') return;
             if ((op.kind === 'insert' ? 'insert' : op.kind === 'prop' ? 'prop' : 'markup') !== phase) return;
             // JS rows change a create() call, HTML rows the markup; each skips the other mode.
             if (isJs(o.target) || root.entries) { if (isJs(o.target) && root.entries) applyJs(root, o); return; }
@@ -171,11 +174,23 @@
             var again = next && next.ops.some(function (n) { return n.op && n.op.kind === op.kind && n.op.name === op.name && n.target === o.target; });
             if (again && (op.kind === 'attr' || op.kind === 'js')) return;
             if (isJs(o.target) || root.entries) {
-                if (isJs(o.target) && root.entries && op.kind === 'js') root.entries = root.entries.filter(function (e) { return e.key !== op.name; });
+                if (!isJs(o.target) || !root.entries) return;
+                var keys = op.kind === 'js' ? [op.name] : op.kind === 'insert' ? partOf(op.id).entries.map(function (e) { return e.key; }) : [];
+                root.entries = root.entries.filter(function (e) { return keys.indexOf(e.key) < 0; });
                 return;
             }
             targets(root, o.target).forEach(function (el) {
-                if (op.kind === 'class') el.classList.remove(op.name);
+                // A default part the canon already holds: remove it, with the line break before it.
+                if (op.kind === 'insert') {
+                    var t = document.createElement('template');
+                    t.innerHTML = dedent(document.getElementById(op.id).textContent);
+                    var sel = '.' + t.content.firstElementChild.className.trim().split(/\s+/).join('.');
+                    Array.prototype.slice.call(el.children).forEach(function (k) {
+                        if (!k.matches(sel)) return;
+                        if (k.previousSibling && k.previousSibling.nodeType === 3) k.previousSibling.remove();
+                        k.remove();
+                    });
+                } else if (op.kind === 'class') el.classList.remove(op.name);
                 else if (op.kind === 'attr') el.removeAttribute(op.name);
                 else if (op.kind === 'token') {
                     var set = (el.getAttribute(op.name) || '').split(/\s+/).filter(function (t) { return t && t !== op.value; });
@@ -195,7 +210,7 @@
             if (!op && c[2].textContent.trim() !== '—') console.warn('[NDS Docs] unparsed Markup cell:', c[2].textContent.trim());
             // `canon #id` swaps the markup in the Structure group; anywhere else it inserts a part block.
             if (op && op.kind === 'structure' && group !== 'Structure') op.kind = 'insert';
-            var at = c[3].textContent.trim().match(/^(.*?)\s*(?:\((start|end|after|replace)\))?$/);
+            var at = c[3].textContent.trim().match(/^(.*?)\s*(?:\((start|end|after)\))?$/);
             if (!byKey[key]) { byKey[key] = { key: key, group: group, option: option, ops: [] }; choices.push(byKey[key]); }
             byKey[key].ops.push({ op: op, target: at[1], pos: at[2] || 'end' });
             if (op && op.kind === 'structure') byKey[key].structure = op.id;
@@ -205,9 +220,12 @@
 
     function wire(bar) {
         var script = document.getElementById(bar.getAttribute('data-builder-for'));
-        var baseSrc = dedent(script.textContent);
+        var jsEl = script.hasAttribute('data-js') ? document.getElementById(script.getAttribute('data-js')) : null;
         var preview = bar.nextElementSibling.nextElementSibling;
-        var codeEl = preview.nextElementSibling.querySelector('code');
+        var block = preview.nextElementSibling;
+        var codeHtml = block.querySelector('code.lang-html'), codeJs = block.querySelector('code.lang-js');
+        var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]'), tabJs = block.querySelector('[role="tab"][aria-controls$="-js"]');
+        var reset = bar.querySelector('[data-builder-reset]');
         var byKey = {}, order = [], active = {}, defaults = {};
         readTable(script.getAttribute('data-variants')).forEach(function (c) {
             byKey[c.key] = c;
@@ -218,86 +236,78 @@
             var c = byKey[it.getAttribute('data-builder-option')];
             if (c) active[c.group] = c;
         });
-        var pristine = document.createElement('div'), base = document.createElement('div'), call = null;
+        var pristine = document.createElement('div'), call = null, html = false;
 
-        // A choice shows only when the element it changes is in the current markup ("Row" needs a group).
+        // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
         function live(c) { return c.structure || c.ops.some(function (o) { return o.op; }); }
         function applies(c) {
             if (c.structure) return true;
-            var ops = c.ops.filter(function (o) { return o.op && o.op.kind !== 'structure'; });
+            var ops = c.ops.filter(function (o) { return o.op; });
             return !ops.length || ops.some(function (o) {
                 if (isJs(o.target)) return !!call && callMatches(call, o.target);
-                // A replace shows while its element is in the markup it replaces.
-                if (o.pos === 'replace') return !!base.querySelector(o.target);
-                return !call && (!o.target || o.target === '—' || !!pristine.querySelector(o.target));
+                return html && (!o.target || o.target === '—' || !!pristine.querySelector(o.target));
             });
         }
         function showApplicable() {
             bar.querySelectorAll('[data-builder-option]').forEach(function (btn) {
-                btn.hidden = !applies(byKey[btn.getAttribute('data-builder-option')]);
+                btn.disabled = !applies(byKey[btn.getAttribute('data-builder-option')]);
             });
             bar.querySelectorAll('.nds-dropmenu').forEach(function (dm) {
-                dm.hidden = !Array.prototype.some.call(dm.querySelectorAll('.nds-dropmenu-item:not([hidden])'), function (it) {
+                dm.querySelector('.nds-dropmenu-trigger').disabled = !Array.prototype.some.call(dm.querySelectorAll('.nds-dropmenu-item:not(:disabled)'), function (it) {
                     return live(byKey[it.getAttribute('data-builder-option')]);
                 });
             });
+            // A disabled control takes no pointer events, so its wrapper carries the hover hint.
+            bar.querySelectorAll('[data-needs]').forEach(function (w) {
+                if (w.querySelector('[data-builder-option], .nds-dropmenu-trigger').disabled) w.title = w.getAttribute('data-needs');
+                else w.removeAttribute('title');
+            });
+            reset.disabled = order.every(function (g) { return (active[g] || null) === (defaults[g] || null); });
         }
 
         function render() {
             var struct = active.Structure && active.Structure.structure;
             var srcEl = struct ? document.getElementById(struct) : script;
-            base.innerHTML = srcEl.getAttribute('data-lang') === 'js' ? '' : dedent(srcEl.textContent);
-            // ponytail: a (replace) swaps the whole markup, so it fits a target that is the root.
-            order.forEach(function (g) {
-                (active[g] ? active[g].ops : []).forEach(function (o) {
-                    if (o.pos === 'replace' && base.querySelector(o.target)) srcEl = document.getElementById(o.op.id);
-                });
+            // A JS-only structure (a toast) has no HTML form.
+            html = srcEl.getAttribute('data-lang') !== 'js';
+            var callEl = html ? jsEl : srcEl;
+            pristine.innerHTML = html ? dedent(srcEl.textContent) : '';
+            call = callEl ? parseCall(dedent(callEl.textContent)) : null;
+            [html && pristine, call].forEach(function (root) {
+                if (!root) return;
+                order.forEach(function (g) { if (defaults[g] && active[g] !== defaults[g]) unapply(root, defaults[g], active[g]); });
+                // A default choice is the canon as written, so it adds nothing.
+                order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'insert'); });
+                order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'markup'); });
             });
-            var js = srcEl.getAttribute('data-lang') === 'js';
-            call = js ? parseCall(dedent(srcEl.textContent)) : null;
-            if (!js) pristine.innerHTML = dedent(srcEl.textContent);
-            var root = call || pristine;
-            order.forEach(function (g) { if (defaults[g] && active[g] !== defaults[g]) unapply(root, defaults[g], active[g]); });
-            order.forEach(function (g) { if (active[g]) apply(root, active[g], 'insert'); });
-            order.forEach(function (g) { if (active[g]) apply(root, active[g], 'markup'); });
             showApplicable();
-            var html = js ? printCall(call) : serialize(pristine);
+
+            var out = html ? serialize(pristine) : '', js = call ? printCall(call) : '';
+            [[codeHtml, out], [codeJs, js]].forEach(function (pair) {
+                if (!pair[0] || !pair[1]) return;
+                pair[0].textContent = pair[1];
+                if (pair[0].dataset.ndsCodeInitialized) NDS.Code.reprocessCodeElement(pair[0]);
+            });
+            if (tabHtml) {
+                tabHtml.hidden = !html;
+                if (!html && tabHtml.getAttribute('aria-selected') === 'true') tabJs.click();
+            }
 
             NDS.Init.destroy(preview);
-            // The code block names its language, so a swap between HTML and JS relabels it.
-            var lang = js ? 'js' : 'html';
-            if (!codeEl.classList.contains('lang-' + lang)) {
-                codeEl.className = codeEl.className.replace(/\blang-\w+/, 'lang-' + lang);
-                var tag = codeEl.closest('.nds-code').querySelector('.nds-code-lang');
-                if (tag) tag.remove();
-            }
-            codeEl.textContent = html;
-            if (codeEl.dataset.ndsCodeInitialized) NDS.Code.reprocessCodeElement(codeEl);
             preview.style.removeProperty('--card-bg');
-            if (js) return renderCall(html);
-
-            preview.innerHTML = html;
+            if (!html) return runButton(js);
+            preview.innerHTML = out;
             order.forEach(function (g) { if (active[g]) apply(preview, active[g], 'prop'); });
             // On-color markup needs the deep surface behind it (the build sets it for the default state).
-            preview.querySelector('.nds-oncolor') ? preview.style.setProperty('--card-bg', 'var(--background-primary-strong)') : preview.style.removeProperty('--card-bg');
+            if (preview.querySelector('.nds-oncolor')) preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
             NDS.Init.mount(preview);
         }
 
-        // A call with a target renders into the preview; one without (a toast) waits for Run.
-        // Both run the code shown: the page's own canon, never user input.
-        function renderCall(code) {
-            preview.innerHTML = '';
-            if (call.entries.some(function (e) { return e.key === 'target'; })) {
-                jsSet(call, 'target', '__preview');
-                new Function('__preview', printCall(call))(preview);
-                return;
-            }
-            var run = document.createElement('button');
-            run.type = 'button';
-            run.className = 'nds-btn nds-primary nds-md';
-            run.innerHTML = '<span class="nds-label">Run</span>';
-            run.addEventListener('click', function () { new Function(code)(); });
-            preview.appendChild(run);
+        // A JS-only structure previews as a Run button that runs the code shown:
+        // the page's own canon, never user input.
+        function runButton(code) {
+            preview.innerHTML = '<button type="button" class="nds-btn nds-primary nds-md"><span class="nds-label">Run</span></button>';
+            preview.firstChild.addEventListener('click', function () { new Function(code)(); });
         }
 
         function set(btn, on) {
@@ -313,6 +323,15 @@
                 active[c.group] = on ? c : null;
             }
         }
+
+        reset.addEventListener('click', function () {
+            bar.querySelectorAll('[data-builder-option]').forEach(function (btn) {
+                var c = byKey[btn.getAttribute('data-builder-option')];
+                if (btn.classList.contains('nds-dropmenu-item')) { if (defaults[c.group] === c) set(btn, true); }
+                else set(btn, false);
+            });
+            render();
+        });
 
         // `Option (demo: + Other)` also turns on option "Other" — a demo aid (Neutral shows only when checked).
         var label = function (o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*)\)/g, ''); };
