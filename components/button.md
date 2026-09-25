@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/09/2026 - 09:17 PM"
+last_edit: "25/09/2026 - 11:05 PM"
 ---
 
 <section id="btnOverview" class="nds-content-section nds-doc-overview">
@@ -18,13 +18,14 @@ last_edit: "25/09/2026 - 09:17 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Use a `<button>` for an action on the page, such as save, delete or open a panel.
-- Use an `<a class="nds-btn">` when the click goes to another page. The classes are the same.
-- Pick the variant by emphasis: one primary button for the main action in a view, and a quieter variant for the others.
-- Use a button group for a short row of related actions. To switch between views, use a [Content Switcher](../components/content-switcher).
-- Use a [Cooldown Button](../components/cooldown-button) for an action that must wait before the next press, such as resend code.
-- A menu button opens a [Dropmenu](../components/dropmenu). A copy button is a [Copy](../utilities/copy) button.
-- Buttons need no JavaScript. Every variant, size and state comes from classes and attributes.
+A button is a `<button>` or an `<a>` with the `nds-btn` class, a variant class and a label. Add an icon before or after the label, or show the icon only. The variant sets the emphasis, from primary for the main action to transparent for the least. Size and shape are more classes, and a state is an attribute, such as `disabled`. A button needs no JavaScript.
+
+A button can also open a [Dropmenu](../components/dropmenu) or copy text with [Copy](../utilities/copy).
+
+Pick another component when:
+
+- the click only switches the view on the page: [Content Switcher](../components/content-switcher)
+- the action must wait before the next press, such as resend code: [Cooldown Button](../components/cooldown-button)
 
 </div>
   </div>
@@ -200,6 +201,8 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
+- Use a `<button>` for an action on the page, and an `<a class="nds-btn">` when the click opens another page. The classes are the same.
+- Use a button group for a short row of related actions.
 - Use one primary button per view, for the main action. Use neutral, secondary or secondary outline for the actions beside it, and subtle or transparent for cancel and dismiss.
 - Use destructive for delete and other actions that cannot be undone. Ask the user to confirm in a [Modal](../components/modal) first.
 - Add `nds-oncolor` to a button on a deep primary or dark background. Without it, the button can be hard to see.

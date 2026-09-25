@@ -195,6 +195,9 @@ module DocsCanon
       end
     end
 
+    # A prose column keeps a readable width on a phone; the table scrolls in its wrapper instead.
+    html = html.gsub(%r{<th>(Effect|Controls|Holds|Detail|Use)</th>}, '<th style="min-width: 320px">\1</th>')
+
     builders = []
     html = html.gsub(CANON_RE) do |whole|
       attrs, body = Regexp.last_match(1), Regexp.last_match(2)

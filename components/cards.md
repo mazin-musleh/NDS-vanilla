@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/09/2026 - 10:36 AM"
+last_edit: "25/09/2026 - 11:05 PM"
 ---
 
 <section id="cardOverview" class="nds-content-section nds-doc-overview">
@@ -18,9 +18,13 @@ last_edit: "25/09/2026 - 10:36 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Use a card for one scannable unit in a set: a service tile, a product, an article preview, or a dashboard number.
-- Use an [alert](../components/alert) for a short status message, and a [modal](../components/modal) to ask the user for a decision.
-- For a card whose text can expand, see [Expandable Content](../utilities/expandable-content). For a number with a trend line, see [Metric](../components/metric).
+A card holds one unit in a set, such as a service tile, a product, an article preview or a dashboard number. The optional header holds an icon, an image or an avatar. The content holds a title and text, and optional actions go after it. The whole card can be one link. To let the text expand in place, see [Expandable Content](../utilities/expandable-content).
+
+Pick another component when:
+
+- the message is a short status: [Alert](../components/alert)
+- the user must make a decision: [Modal](../components/modal)
+- a number needs a trend line: [Metric](../components/metric)
 
 </div>
   </div>

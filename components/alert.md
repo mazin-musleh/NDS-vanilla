@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "25/09/2026 - 10:17 AM"
+last_edit: "25/09/2026 - 11:05 PM"
 ---
 
 <section id="alertOverview" class="nds-content-section nds-doc-overview">
@@ -18,11 +18,17 @@ last_edit: "25/09/2026 - 10:17 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Use a standard alert for a message with a title and a description inside a page section.
-- Use an inline alert for a one-line message next to a form or an action, where space is limited.
-- Use a toast for short feedback after an action, such as save, delete or submit. A toast floats over the page and can close itself.
-- Write the HTML for an alert that is in the page when it loads. Call `NDS.Alert.create()` for an alert that appears after something happens, such as a save or a failed request. A toast is made only with `create()`: its timer and placement need the script.
-- Use a [modal](../components/modal) when the user must make a decision before they continue. An alert never blocks the page.
+An alert shows a short status message. It has a status icon, a title, a description and a close button. `data-status` sets the icon and the colors. An alert comes in three forms:
+
+- A standard alert sits in a page section.
+- An inline alert is one line next to a form or an action, where space is limited.
+- A toast floats over the page after an action, such as save, delete or submit, and can close itself.
+
+Write the HTML for an alert that is in the page when it loads. Call `NDS.Alert.create()` for an alert that appears later, such as after a failed request. A toast is made only with `create()`: its timer and placement need the script.
+
+Pick another component when:
+
+- the user must make a decision before they continue: [Modal](../components/modal). An alert never blocks the page.
 
 </div>
   </div>

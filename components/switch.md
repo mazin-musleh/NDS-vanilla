@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "25/09/2026 - 09:22 AM"
+last_edit: "25/09/2026 - 11:05 PM"
 ---
 
 <section id="switchOverview" class="nds-content-section nds-doc-overview">
@@ -18,9 +18,12 @@ last_edit: "25/09/2026 - 09:22 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Use a switch for a setting that takes effect as soon as the user changes it, such as a settings page or a feature toggle.
-- Use a [checkbox](../components/checkbox) when the change applies only after the user submits a form.
-- Use [radio buttons](../components/radio) when the user picks one of three or more options.
+A switch turns one setting on or off. The change takes effect at once. It is a checkbox input drawn as a track and a thumb, inside a form field with a label and optional info text. Related switches go in a group under one legend.
+
+Pick another component when:
+
+- the change applies only after the user submits a form: [Checkbox](../components/checkbox)
+- the user picks one of three or more options: [Radio buttons](../components/radio)
 
 </div>
   </div>
@@ -193,7 +196,6 @@ last_edit: "25/09/2026 - 09:22 AM"
 
 - Write the label as the setting, not the action: "Email alerts", not "Turn on email alerts".
 - Apply the change as soon as the switch moves. Do not add a Save button for a switch.
-- Put related switches in a group with a legend.
 - Use `nds-sm` in dense forms and tables, and `nds-lg` on touch-first screens.
 - Use `nds-neutral` when the setting is not a brand action.
 - For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.

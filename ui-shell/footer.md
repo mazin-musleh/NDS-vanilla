@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "25/09/2026 - 05:11 PM"
+last_edit: "25/09/2026 - 11:05 PM"
 ---
 
 <section id="footerOverview" class="nds-content-section nds-doc-overview">
@@ -18,9 +18,11 @@ last_edit: "25/09/2026 - 05:11 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Use one footer at the end of every page. It holds what people look for last: secondary links, contact details, social profiles, app downloads, legal notices and partner logos.
-- The [Header](../ui-shell/header) holds the main navigation, and the [Side Menu](../ui-shell/sidemenu) holds the navigation inside a section. The footer does not repeat them.
-- The footer is a page shell part, so it is not shown in a demo box. **The live copy is this page's own footer, at the bottom:** the Options change it.
+The footer ends every page. It holds what people look for last: secondary links, contact details, social profiles, app downloads, legal notices and partner logos. Columns of links sit at the top, and a bottom bar holds the copyright, the policy links and the logos.
+
+The footer is a page shell part, so it is not shown in a demo box. **The live copy is this page's own footer, at the bottom:** the Options change it.
+
+The main navigation belongs in the [Header](../ui-shell/header), and the navigation inside a section in the [Side Menu](../ui-shell/sidemenu).
 
 </div>
   </div>
