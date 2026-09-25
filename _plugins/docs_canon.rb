@@ -139,6 +139,14 @@ module DocsCanon
     HTML
   end
 
+  # data-harness="form": the preview sits in a real NDS form with a Validate button, so a field's
+  # validation can be tried. Preview only: the code block never shows the form.
+  def self.harness(src, kind)
+    return src unless kind == 'form'
+
+    %(<form class="nds-form" data-ajax><div data-demo-slot>\n#{src}\n</div><div class="nds-form-actions"><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
+  end
+
   # On-color markup needs the deep surface behind it; everything else sits on a normal card.
   def self.preview_style(oncolor)
     "--card-width: 100%; --card-radius: var(--radius-md);#{' --card-bg: var(--background-primary-strong);' if oncolor}"
@@ -246,7 +254,7 @@ module DocsCanon
       builders << id if builder
       if preview
         out << %(<div class="nds-divider nds-xl" style="margin-block-start: 0; --divider-line-start: 24px;">Preview</div>\n) if table
-        out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{src}\n</div>\n)
+        out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{harness(src, attr(attrs, 'data-harness'))}\n</div>\n)
       end
       out << (js ? code_tabs(id, src, js) : code_block(lang, src))
       out << "\n" << sheet(id, rows(html, table), src, js, canons, attr(attrs, 'data-sheet') || 'bottom') if builder

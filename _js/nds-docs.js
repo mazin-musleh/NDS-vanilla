@@ -14,6 +14,7 @@
  * beside the HTML one. JS rows target `create()`, or `create({ key: value })` to apply only
  * while that option is set:  key: value  set an option · canon #id  add a part's options.
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
+ * data-harness="form" renders the preview inside a form with Validate and Reset buttons, outside the code.
  * The section action holds Options; the sheet holds Reset and a chip row per group. A chip that does not apply
  * stays in place, disabled, and its row label says why (data-needs).
  * Rows sharing Group + Option are one choice.
@@ -340,14 +341,16 @@
             }
 
             if (liveEl) return renderLive();
-            NDS.Init.destroy(preview);
+            // A form harness keeps its form and Validate button; only the slot inside it re-renders.
+            var slot = preview.querySelector('[data-demo-slot]') || preview;
+            NDS.Init.destroy(slot);
             preview.style.removeProperty('--card-bg');
             if (!html) return runButton(js);
-            preview.innerHTML = out;
-            order.forEach(function (g) { if (active[g]) apply(preview, active[g], 'prop'); });
+            slot.innerHTML = out;
+            order.forEach(function (g) { if (active[g]) apply(slot, active[g], 'prop'); });
             // On-color markup needs the deep surface behind it (the build sets it for the default state).
-            if (preview.querySelector('.nds-oncolor')) preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
-            NDS.Init.mount(preview);
+            if (slot.querySelector('.nds-oncolor')) preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
+            NDS.Init.mount(slot);
         }
 
         // The live copy is rebuilt from its clean clone, then gets the same choices as the code.
@@ -428,6 +431,13 @@
         }
         sheet.addEventListener('click', choose);
     }
+
+    // A form harness's Reset puts the fields back as drawn and clears their messages, so the
+    // validation can be tried again.
+    document.addEventListener('reset', function (e) {
+        var slot = e.target.querySelector && e.target.querySelector('[data-demo-slot]');
+        if (slot) slot.querySelectorAll('[data-status]').forEach(function (el) { NDS.Forms.clearStatus(el); });
+    });
 
     // The chips are built at site build; the Variants table is read only when the sheet first opens.
     document.querySelectorAll('[data-builder-for]').forEach(function (bar) {

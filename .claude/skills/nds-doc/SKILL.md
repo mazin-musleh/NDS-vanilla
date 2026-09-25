@@ -160,6 +160,7 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
   - **JS:** `data-lang="js"`. `data-js="{id}"` on the base names its JS twin: the same component as one `create()` call, shown in a JS tab. A JS-only structure (a toast) previews as a Run button that runs the code shown.
   - **Code-only:** `data-preview="none"`, for shells, `<head>` and JS examples.
 - **A canon never holds `</script>`.** Code with a `<script>` tag inside stays out of the canon format for now (see `ui-shell/head.md`).
+- **Form fields** whose validation is worth trying add `data-harness="form"` to the base canon: the preview sits in a real `form.nds-form` with Validate and Reset buttons. The code never shows the form. Skip it where a field can fail only one way that the builder already shows (radio: only when nothing is chosen).
 - **Shell pages** add `data-live="footer.nds-footer"` to change the page's own copy, and `data-sheet="top"` to slide the options from the top.
 - **Reference pages:** each example canon opens with an HTML comment that says what it does: `<!-- 3 columns on desktop, 2 on tablets, 1 on phones -->`.
 
@@ -192,6 +193,8 @@ A short paragraph above the table explains any target that is not obvious (what 
 
 **On element cell:**
 - A selector for the element the change goes on. A row whose element is not in the current markup is disabled, and its row label says why ("Needs Structure: Group", "Not on Structure: Progress").
+- **The build reads only a target on one element:** a tag, classes, pseudo-classes, `:not(.cls)`, or an `#id`. A descendant target (`.a .b`) works in the browser, but the build cannot read it, so its chip starts disabled. Use a descendant target only as the second row of a choice whose first row the build can read.
+- **One item of a repeated set** (the first radio in a group): target it by its canon id (`#radio-1`), or by `:first-of-type` / `:first-child` on the element itself. Say in the paragraph above the table that the option goes on the item the user means.
 - `(start)`, `(after)`: where a part is inserted. The default is the end.
 - `:not(.cls)` disables an option where it does not fit: `.nds-btn:not(.nds-progress)`, `.nds-btn:not(.nds-btn-group > .nds-btn)`. **Use it for every combination the component cannot style.** When the fix belongs in the component, fix the SCSS instead: the docs never paper over a component gap.
 - `create()`, `create({ key: value })`, `create():not({ key: value })`: a row on the JS twin.
