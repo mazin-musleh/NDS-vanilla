@@ -6,7 +6,7 @@
  *
  * Variants table Markup cell (CSS selector syntax):
  *   .cls  class · [attr]  bare attribute · [attr="v"]  attribute · [data-state~="t"]  token
- *   --prop: v  inline custom property · .prop = v  JS property
+ *   --prop: v  inline custom property · .prop = v  JS property · remove  delete "On element"
  *   canon #id  in the Structure group: swap the whole markup; elsewhere: insert that part block
  *              into "On element", at its end, its start with "(start)", or right
  *              after it with "(after)"
@@ -60,6 +60,7 @@
         if ((m = s.match(/^\[([\w-]+)(?:="([^"]*)")?\]$/))) return { kind: 'attr', name: m[1], value: m[2] == null ? '' : m[2] };
         if ((m = s.match(/^(--[\w-]+)\s*:\s*(.+)$/))) return { kind: 'style', name: m[1], value: m[2] };
         if ((m = s.match(/^canon #([\w-]+)$/))) return { kind: 'structure', id: m[1] };
+        if (s === 'remove') return { kind: 'remove' };
         if ((m = s.match(/^([a-z]\w*)\s*:\s*(.+)$/i))) return { kind: 'js', name: m[1], value: m[2] };
         return null;
     }
@@ -105,9 +106,11 @@
 
     var isJs = function (target) { return /^create\(/.test(target || ''); };
     // `create()` matches any call; `create({ display: 'toast' })` only one with that option set.
+    // `create():not({ key: value })` matches any call without that option.
     function callMatches(call, target) {
-        var m = target.match(/^create\((?:\{\s*(\w+)\s*:\s*(.+?)\s*\})?\)$/);
-        return !!m && (!m[1] || call.entries.some(function (e) { return e.key === m[1] && e.value === m[2]; }));
+        var m = target.match(/^create\((?:\{\s*(\w+)\s*:\s*(.+?)\s*\})?\)(?::not\(\{\s*(\w+)\s*:\s*(.+?)\s*\}\))?$/);
+        var has = function (k, v) { return call.entries.some(function (e) { return e.key === k && e.value === v; }); };
+        return !!m && (!m[1] || has(m[1], m[2])) && !(m[3] && has(m[3], m[4]));
     }
 
     function applyJs(call, o) {
@@ -157,6 +160,11 @@
             if (isJs(o.target) || root.entries) { if (isJs(o.target) && root.entries) applyJs(root, o); return; }
             targets(root, o.target).forEach(function (el) {
                 if (op.kind === 'insert') insert(el, dedent(document.getElementById(op.id).textContent), o.pos);
+                else if (op.kind === 'remove') {
+                    // Take the line break before it too, so the code keeps its indentation.
+                    if (el.previousSibling && el.previousSibling.nodeType === 3) el.previousSibling.remove();
+                    el.remove();
+                }
                 else if (op.kind === 'class') el.classList.add(op.name);
                 else if (op.kind === 'attr') el.setAttribute(op.name, op.value);
                 else if (op.kind === 'token') {
@@ -184,17 +192,7 @@
                 return;
             }
             targets(root, o.target).forEach(function (el) {
-                // A default part the canon already holds: remove it, with the line break before it.
-                if (op.kind === 'insert') {
-                    var t = document.createElement('template');
-                    t.innerHTML = dedent(document.getElementById(op.id).textContent);
-                    var sel = '.' + t.content.firstElementChild.className.trim().split(/\s+/).join('.');
-                    Array.prototype.slice.call(el.children).forEach(function (k) {
-                        if (!k.matches(sel)) return;
-                        if (k.previousSibling && k.previousSibling.nodeType === 3) k.previousSibling.remove();
-                        k.remove();
-                    });
-                } else if (op.kind === 'class') el.classList.remove(op.name);
+                if (op.kind === 'class') el.classList.remove(op.name);
                 else if (op.kind === 'attr') el.removeAttribute(op.name);
                 else if (op.kind === 'token') {
                     var set = (el.getAttribute(op.name) || '').split(/\s+/).filter(function (t) { return t && t !== op.value; });

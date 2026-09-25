@@ -70,11 +70,6 @@ last_edit: "25/09/2026 - 10:17 AM"
   </button>
 </div>
 </script>
-<script type="text/html" id="alert-close" data-canon>
-<button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-  <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-</button>
-</script>
 <script type="text/html" id="alert-actions" data-canon>
 <div class="nds-alert-actions">
   <button class="nds-btn nds-primary nds-sm">
@@ -142,7 +137,7 @@ actions: [
     </div>
     <div class="nds-section-body" markdown="1">
 
-`#alert-js` is the same alert as one `NDS.Alert.create()` call (`data-js` on the base canon). A row whose On element is `create()` sets an option of that call, or of the toast's. `create({ display: 'toast' })` means only a call with that option.
+`#alert-js` is the same alert as one `NDS.Alert.create()` call (`data-js` on the base canon). A row whose On element is `create()` sets an option of that call, or of the toast's. `create({ display: 'toast' })` means only a call with that option, and `create():not({ display: 'inline' })` any call without it.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -169,13 +164,12 @@ actions: [
 | Actions | Link | canon `#alert-js-link` | `create()` | The same, in JavaScript. `class` replaces the button classes |
 | Actions | Copy (hint: Copies a code or a log) | canon `#alert-copy` | `.nds-alert-content` | Copies `data-copy`, or the text of the element that `data-copy-target` selects. See [Copy](../utilities/copy) |
 | Actions | Copy (hint: Copies a code or a log) | canon `#alert-js-copy` | `create()` | The same, in JavaScript. `create()` adds the copy icon |
-| Close | Button (default) | canon `#alert-close` | `.nds-alert` | The close button removes the alert. It goes last in `.nds-alert` |
-| Close | None | — | — | No close button, for an alert the user cannot close |
-| Close | None | `closable: false` | `create()` | The same, in JavaScript. A toast with a `duration` keeps its close button, which shows the countdown |
+| No close | No close | `remove` | `.nds-alert-close` | Leave out the close button, for an alert the user cannot close |
+| No close | No close | `closable: false` | `create()` | The same, in JavaScript. A toast with a `duration` keeps its close button, which shows the countdown |
 | Shadow | Shadow | `.nds-shadow` | `.nds-alert` | An elevation shadow |
 | Shadow | Shadow | `shadow: true` | `create()` | The same, in JavaScript. A toast has a shadow by default |
-| Color | Color | `.nds-color` | `.nds-alert` | Tints the background with the status color. Use it in dense layouts, where the stripe alone does not stand out. No effect on inline, which is always tinted |
-| Color | Color | `color: true` | `create()` | The same, in JavaScript |
+| Color | Color | `.nds-color` | `.nds-alert:not(.nds-inline)` | Tints the background with the status color. Use it in dense layouts, where the stripe alone does not stand out. No effect on inline, which is always tinted |
+| Color | Color | `color: true` | `create():not({ display: 'inline' })` | The same, in JavaScript |
 | Position | Top (default) | — | `create({ display: 'toast' })` | At the top, on the end side, below the sticky header |
 | Position | Top start | `position: 'top-start'` | `create({ display: 'toast' })` | Top, on the start side. `-start` and `-end` follow the text direction |
 | Position | Top end | `position: 'top-end'` | `create({ display: 'toast' })` | The same as Top |
