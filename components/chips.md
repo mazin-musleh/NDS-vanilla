@@ -2,388 +2,242 @@
 layout: page
 title: Chips
 hero_title: Chips - National Design System
-hero_description: Interactive elements for selections, filtering, and categorization
+hero_description: A chip is a small button for a choice, a filter or a value the user can remove
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "21/08/2026 - 07:12 PM"
+updated: "1.12.x"
+last_edit: "26/09/2026 - 02:00 AM"
 ---
 
-<!-- Standard -->
-<section id="chipStandard" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Standard</h2>
-            <p class="nds-section-description">Two color variants across all interaction states</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Primary</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-primary", ".nds-chip", "chipVariant"]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-neutral", ".nds-chip", "chipVariant"]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">MD</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-lg", ".nds-chip", "chipSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-md", ".nds-chip", "chipSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-chip", "chipSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-rounded", ".nds-chip", "chipRounded"]'>
-                                    <span class="nds-label">Rounded</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='[["nds-oncolor", ".nds-chip", "chipOncolor"],["dark-bg", ".demo-container", "chipOncolor"]]'>
-                                    <span class="nds-label">On Color</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["<i class=\"hgi hgi-stroke hgi-add-01\"></i>", ".nds-chip", "chipIcon", "content-prepend"]'>
-                                    <span class="nds-label">Icon</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-chip nds-primary nds-rounded" data-state="default">
-                                    <span class="nds-label">Default</span>
-                                </button>
-                                <button class="nds-chip nds-primary nds-rounded" data-state="hover">
-                                    <span class="nds-label">Hover</span>
-                                </button>
-                                <button class="nds-chip nds-primary nds-rounded" data-state="pressed">
-                                    <span class="nds-label">Pressed</span>
-                                </button>
-                                <button class="nds-chip nds-primary nds-rounded" data-state="selected">
-                                    <span class="nds-label">Selected</span>
-                                </button>
-                                <button class="nds-chip nds-primary nds-rounded focus" data-state="focused">
-                                    <span class="nds-label">Focused</span>
-                                </button>
-                                <button class="nds-chip nds-primary nds-rounded" disabled>
-                                    <span class="nds-label">Disabled</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chip-standard-1" id="tab-chip-standard-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chip-standard-1"
-                                        aria-labelledby="tab-chip-standard-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;button class="nds-chip nds-primary nds-rounded"&gt;
-  &lt;span class="nds-label"&gt;Label&lt;/span&gt;
-&lt;/button&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="chipOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A chip is a small `<button>` with the `nds-chip` class, a color class and a label, with an optional icon. Chips sit together in an `nds-chips` group, as filter choices, categories or picked values. A chip needs no script for its look; your script sets it selected when the user picks it.
+
+Pick another component when:
+
+- the label only describes something and cannot be clicked: [Tags](../components/tags)
+- the chips are the values of a field the user types into: [Tag Input](../components/taginput)
+- the choices filter a list of items: [Filter](../components/filter), which draws its own chips
+
+</div>
+  </div>
 </section>
 
-<!-- Icon Chip -->
-<section id="chipIcons" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">With Icons</h2>
-            <p class="nds-section-description">Leading and trailing icons are positioned with <code class="nds-inline-code lang-html">nds-lead-icon</code> or <code class="nds-inline-code lang-html">nds-trail-icon</code> on the chip</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-chip nds-primary nds-rounded nds-lead-icon">
-                                    <i class="hgi hgi-stroke hgi-add-01"></i>
-                                    <span class="nds-label">Lead Icon</span>
-                                </button>
-                                <button class="nds-chip nds-neutral nds-rounded nds-trail-icon">
-                                    <span class="nds-label">Trail Icon</span>
-                                    <i class="hgi hgi-stroke hgi-add-01"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chip-icons-1" id="tab-chip-icons-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chip-icons-1"
-                                        aria-labelledby="tab-chip-icons-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;!-- Leading icon --&gt;
-&lt;button class="nds-chip nds-primary nds-rounded nds-lead-icon"&gt;
-  &lt;i class="hgi hgi-stroke hgi-add-01"&gt;&lt;/i&gt;
-  &lt;span class="nds-label"&gt;Lead Icon&lt;/span&gt;
-&lt;/button&gt;
-
-&lt;!-- Trailing icon --&gt;
-&lt;button class="nds-chip nds-neutral nds-rounded nds-trail-icon"&gt;
-  &lt;span class="nds-label"&gt;Trail Icon&lt;/span&gt;
-  &lt;i class="hgi hgi-stroke hgi-add-01"&gt;&lt;/i&gt;
-&lt;/button&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="chipMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="chip-single" data-canon data-variants="chipVariantsTable">
+<button type="button" class="nds-chip nds-primary">
+  <span class="nds-label">Services</span>
+</button>
+</script>
+<script type="text/html" id="chip-group" data-canon>
+<div class="nds-chips">
+  <button type="button" class="nds-chip nds-primary">
+    <span class="nds-label">All</span>
+  </button>
+  <button type="button" class="nds-chip nds-primary">
+    <span class="nds-label">Services</span>
+  </button>
+  <button type="button" class="nds-chip nds-primary">
+    <span class="nds-label">News</span>
+  </button>
+  <button type="button" class="nds-chip nds-primary">
+    <span class="nds-label">Events</span>
+  </button>
+</div>
+</script>
+<script type="text/html" id="chip-icon" data-canon>
+<i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+</script>
+<script type="text/html" id="chip-remove" data-canon>
+<i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Chip Group -->
-<section id="chipGroup" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Chip Group</h2>
-            <p class="nds-section-description">Wrap multiple chips for consistent spacing and flow layout</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="nds-chips">
-                                <button class="nds-chip nds-primary nds-rounded" data-state="selected">
-                                    <span class="nds-label">All</span>
-                                </button>
-                                <button class="nds-chip nds-neutral nds-rounded">
-                                    <span class="nds-label">Category A</span>
-                                </button>
-                                <button class="nds-chip nds-neutral nds-rounded">
-                                    <span class="nds-label">Category B</span>
-                                </button>
-                                <button class="nds-chip nds-neutral nds-rounded">
-                                    <span class="nds-label">Category C</span>
-                                </button>
-                                <button class="nds-chip nds-neutral nds-rounded">
-                                    <span class="nds-label">Category D</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chip-group-1" id="tab-chip-group-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chip-group-1"
-                                        aria-labelledby="tab-chip-group-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-chips"&gt;
-  &lt;button class="nds-chip nds-primary nds-rounded" data-state="selected"&gt;
-    &lt;span class="nds-label"&gt;All&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;button class="nds-chip nds-neutral nds-rounded"&gt;
-    &lt;span class="nds-label"&gt;Category A&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;button class="nds-chip nds-neutral nds-rounded"&gt;
-    &lt;span class="nds-label"&gt;Category B&lt;/span&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="chipVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder uses `.nds-chip:first-child`, but on a page it goes on the chip the user picked.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Single (default) | — | — | One chip |
+| Structure | Group | canon `#chip-group` | — | Several chips in a row that wraps, with an even gap |
+| Color | Primary (default) | `.nds-primary` | `.nds-chip` | The brand color. Also `.nds-green` |
+| Color | Neutral | `.nds-neutral` | `.nds-chip` | A quieter gray. Also `.nds-gray` |
+| Size | MD (default) | — | — | 24px high. It needs no class |
+| Size | SM | `.nds-sm` | `.nds-chip` | 20px high |
+| Size | LG | `.nds-lg` | `.nds-chip` | 32px high, with a larger label |
+| Content | Label (default) | — | — | Text only |
+| Content | Icon and label | canon `#chip-icon` | `.nds-chip` (start) | An icon before the label |
+| Content | Icon and label | `.nds-lead-icon` | `.nds-chip` | The same: adds the space after the icon |
+| Content | Label and icon | canon `#chip-icon` | `.nds-chip` | An icon after the label |
+| Content | Label and icon | `.nds-trail-icon` | `.nds-chip` | The same: adds the space before the icon |
+| Content | Removable (hint: A value the user can remove) | canon `#chip-remove` | `.nds-chip` | A cancel icon after the label, for a picked value the user can remove with a click. `NDS.buildChip()` builds this chip |
+| Selected | Selected | `[data-state~="selected"]` | `.nds-chip:first-child` | The chip the user picked. Your script sets it |
+| Selected | Selected | `[aria-pressed="true"]` | `.nds-chip:first-child` | The same. It tells screen readers the chip is on. Give the other chips of a choice `aria-pressed="false"` |
+| Disabled | Disabled | `[disabled]` | `.nds-chip` | The user cannot pick these chips now. Put it on one chip to disable one |
+| Rounded | Rounded | `.nds-rounded` | `.nds-chip` | Fully round ends |
+| On color | On color | `.nds-oncolor` | `.nds-chip` | For chips on a deep primary or dark background |
+| Center | Center (hint: Group only) | `.nds-center` | `.nds-chips` | Centers the chips in their row |
+{: #chipVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="chipFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-tag-01"></i>
-                            <span class="nds-label">Pure CSS</span>
-                        </span>
-                        <p class="nds-item-desc">No JavaScript required. All variants, sizes, and states render from HTML markup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-cursor-01"></i>
-                            <span class="nds-label">Interactive States</span>
-                        </span>
-                        <p class="nds-item-desc">Hover, pressed, selected, focused, and disabled with focus-visible ring.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-more-horizontal"></i>
-                            <span class="nds-label">Label Truncation</span>
-                        </span>
-                        <p class="nds-item-desc">Labels auto-truncate with ellipsis, configurable via --truncate.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-puzzle"></i>
-                            <span class="nds-label">Composable</span>
-                        </span>
-                        <p class="nds-item-desc">Combine with icons, rounded shape, on-color variant, and chip groups.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="chipFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-tag-01"></i>
+            <span class="nds-label">Pure CSS</span>
+          </span>
+          <p class="nds-item-desc">No JavaScript needed for the look. Every color, size and state comes from classes and attributes.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-cursor-01"></i>
+            <span class="nds-label">Interactive States</span>
+          </span>
+          <p class="nds-item-desc">Hover, pressed, selected, disabled, and a focus ring for keyboard users. On color chips keep a visible ring on a dark background.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-more-horizontal"></i>
+            <span class="nds-label">Label Truncation</span>
+          </span>
+          <p class="nds-item-desc">A label longer than 160px ends with an ellipsis. A label that holds a formatted number, such as a price range, is never cut. <code class="nds-inline-code lang-css">--truncate</code> sets how many lines it shows first.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-puzzle"></i>
+            <span class="nds-label">Composable</span>
+          </span>
+          <p class="nds-item-desc">Combines with icons, the rounded shape, the on color version and chip groups. Tag Input, Multiselect and Filter build their removable chips with <code class="nds-inline-code lang-js">NDS.buildChip()</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="chipGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use chips for interactive selections like filters, categories, and multi-select options</li>
-                    <li>Use <strong>primary</strong> for emphasis and <strong>neutral</strong> for standard options. Selected state is handled by the selected class</li>
-                    <li>For non-interactive labels and metadata display, use tags instead</li>
-                    <li>Group related chips together for filter bars, category selectors, and multi-select inputs</li>
-                    <li>Add leading icons when the chip represents a category with a recognizable symbol</li>
-                </ul>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <p><code class="nds-inline-code lang-html">nds-green</code> is an alias for <code class="nds-inline-code lang-html">nds-primary</code>, and <code class="nds-inline-code lang-html">nds-gray</code> is an alias for <code class="nds-inline-code lang-html">nds-neutral</code>.</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Primary color variant</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-green</code></td><td>Alias for <code class="nds-inline-code lang-html">nds-primary</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Neutral (gray) color variant</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-gray</code></td><td>Alias for <code class="nds-inline-code lang-html">nds-neutral</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-rounded</code></td><td>Fully rounded pill shape (border-radius: 999px)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>On-color variant for use on dark or brand-colored backgrounds</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Small size, 20px height</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size, 24px height (default)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Large size, 32px height</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lead-icon</code></td><td>Apply to the chip when the first child is an icon; adds inline spacing after the icon</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-trail-icon</code></td><td>Apply to the chip when the last child is an icon; adds inline spacing before the icon</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--chip-bg</code></td><td><code class="nds-inline-code lang-html">--chip-background-neutral-default</code></td><td>Background color of the chip</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--chip-text</code></td><td><code class="nds-inline-code lang-html">--chip-text-neutral-default</code></td><td>Text color of the chip</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--chip-icon</code></td><td>Inherits <code class="nds-inline-code lang-html">--chip-text</code></td><td>Icon color inside the chip</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--chip-size</code></td><td><code class="nds-inline-code lang-html">24px</code></td><td>Height of the chip (overridden by size modifiers)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--truncate</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Number of lines before label text truncates with ellipsis</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="chipPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use chips for choices the user clicks: filters, categories and picked values. For a label that only describes something, use a [Tag](../components/tags).
+- Use one color for every chip of a choice. The selected state shows which one is on, so do not use a second color for it.
+- When a chip turns on and off, set `data-state="selected"` and `aria-pressed="true"` together, and `aria-pressed="false"` when it is off.
+- Put related chips in one `nds-chips` group, so they share the gap and wrap together.
+- Keep labels to one or two words. A label longer than 160px is cut with an ellipsis.
+- Add an icon only when it helps the user recognize the choice.
+- Give each chip `type="button"`, so a chip inside a form does not send the form.
+- Add `nds-oncolor` to chips on a deep primary or dark background.
+
+</div>
+  </div>
+</section>
+
+<section id="chipApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-green` | `.nds-chip` | The same as `nds-primary` |
+| `nds-gray` | `.nds-chip` | The same as `nds-neutral` |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-state~="selected"` | `.nds-chip` | The selected look |
+| `data-state~="disabled"` | `.nds-chip` | The disabled look, the same as the `disabled` attribute |
+| `data-state~="hover"`, `data-state~="pressed"`, `data-state~="focused"` | `.nds-chip` | Shows that look without a pointer or a keyboard, for a design review |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on the chip. The size classes set `--chip-size`, and the color classes set `--chip-bg` and `--chip-text`.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--chip-size` | `24px` | Height |
+| `--chip-bg` | `var(--chip-background-neutral-default)` | Background |
+| `--chip-text` | `var(--chip-text-neutral-default)` | Label color |
+| `--chip-icon` | `--chip-text` | Icon color |
+| `--truncate` | `1` | Lines the label shows before the ellipsis |
+{: .nds-table .nds-responsive}
+
+The theme-wide chip colors are the `--chip-background-*` and `--chip-text-*` tokens. See [Tokens](../components/tokens).
+
+### JavaScript
+{: .nds-block-title}
+
+A chip has no script of its own. `NDS.buildChip()` builds a removable chip for your own list of values.
+
+| Method | Effect |
+|---|---|
+| `NDS.buildChip(label, options)` | Returns a removable chip: a `<button>` with the label and a cancel icon. `options.chipClass` adds classes, `options.data` adds data attributes, `options.onRemove` runs on a click anywhere on the chip, and `options.disabled` disables it |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="chip-js" data-canon data-lang="js">
+var chips = document.querySelector('#picked');
+chips.appendChild(NDS.buildChip('Riyadh', {
+  chipClass: 'nds-neutral nds-rounded',
+  data: { value: 'riyadh' },
+  onRemove: function (e) { e.currentTarget.remove(); }
+}));
+</script>
+
+</div>
+  </div>
+</section>
+
+<section id="chipRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Filter](../components/filter), [Multiselect](../components/multiselect) and [Tag Input](../components/taginput): the removable chips that `NDS.buildChip()` builds.
+- [Tags](../components/tags): labels that describe, and cannot be clicked.
+
+</div>
+  </div>
 </section>
