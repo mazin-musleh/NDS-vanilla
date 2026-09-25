@@ -209,8 +209,10 @@
             // throw focus at a button that open never came from.
             const opener = panel._opener;
             if (pendingOpen !== panel) delete panel._opener;
+            // preventScroll: the page may have scrolled while the panel was open; focus goes
+            // back to the opener without jumping the page to it.
             if (!pendingOpen && opener && typeof opener.focus === 'function' && document.contains(opener)) {
-                opener.focus();
+                opener.focus({ preventScroll: true });
             }
 
             panel.dispatchEvent(new CustomEvent('nds:panel:closed', {
