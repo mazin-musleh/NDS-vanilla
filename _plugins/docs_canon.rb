@@ -35,7 +35,7 @@ module DocsCanon
     table.scan(%r{<tr>(.*?)</tr>}m).each do |(tr)|
       group, option, markup, target = tr.scan(%r{<td[^>]*>(.*?)</td>}m).flatten.map { |c| text(c) }
       c = (choices["#{group}|#{option}"] ||= { group: group, option: option })
-      target = target.to_s.sub(/\s*\((start|end|after)\)\z/, '')
+      target = target.to_s.sub(/\s*\((start|end|after|replace)\)\z/, '')
       # `canon #id` swaps the markup in the Structure group; anywhere else it inserts a part block.
       if markup =~ /\Acanon #([\w-]+)\z/
         group == 'Structure' ? c[:structure] = Regexp.last_match(1) : (c[:inserts] ||= []) << Regexp.last_match(1)
@@ -50,6 +50,8 @@ module DocsCanon
   # attribute selector counts as present. Upgrade to a real parser if a table needs one.
   def self.matches?(src, sel)
     return true if sel == '—'
+    # ponytail: a `create()` row belongs to a JS structure, and the default structure is HTML.
+    return false if sel.start_with?('create(')
 
     classes = sel.scan(/\.([\w-]+)/).flatten
     classes.empty? || src.scan(/class="([^"]*)"/).any? { |(cls)| (classes - cls.split).empty? }

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "24/09/2026 - 09:27 PM"
+last_edit: "25/09/2026 - 09:22 AM"
 ---
 
 <section id="switchOverview" class="nds-content-section nds-doc-overview">
@@ -105,7 +105,7 @@ last_edit: "24/09/2026 - 09:27 PM"
   </div>
 </section>
 
-<section id="switchVariants" class="nds-content-section nds-doc-variants">
+<section id="switchVariants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -194,6 +194,9 @@ last_edit: "24/09/2026 - 09:27 PM"
 - Write the label as the setting, not the action: "Email alerts", not "Turn on email alerts".
 - Apply the change as soon as the switch moves. Do not add a Save button for a switch.
 - Put related switches in a group with a legend.
+- Use `nds-sm` in dense forms and tables, and `nds-lg` on touch-first screens.
+- Use `nds-neutral` when the setting is not a brand action.
+- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
 - If the change fails, turn the switch back and show feedback on the field.
 
 </div>

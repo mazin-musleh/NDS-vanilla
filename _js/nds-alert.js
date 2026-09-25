@@ -20,7 +20,8 @@
  *     focus, and a CLICK pins the pause: it then stays until closed.
  *   - title and description are escaped. An action's href is scheme-checked, and an
  *     unsafe one downgrades the action to a plain button.
- *   - An action is {label, variant, size, onClick, dismiss, href, target, copy, copyTarget}.
+ *   - An action is {label, variant, size, class, onClick, dismiss, href, target, copy, copyTarget};
+ *     class replaces the variant/size classes.
  *     Set dismiss:true to close the alert after onClick.
  */
 /**

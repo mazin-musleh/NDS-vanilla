@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/09/2026 - 12:42 AM"
+last_edit: "25/09/2026 - 09:22 AM"
 ---
 
 <section id="cardOverview" class="nds-content-section nds-doc-overview">
@@ -216,7 +216,7 @@ last_edit: "25/09/2026 - 12:42 AM"
   </div>
 </section>
 
-<section id="cardVariants" class="nds-content-section nds-doc-variants">
+<section id="cardVariants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -335,7 +335,10 @@ last_edit: "25/09/2026 - 12:42 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Make a whole card clickable by using `<a>` or `<button>` as the card root. Do not wrap a card in a separate link.
+- Make a whole card clickable by using `<a>` or `<button>` as the card root. Do not wrap a card in a separate link, and do not put links or buttons inside a clickable card.
+- Use a stroke card in flat, content-heavy layouts, and a shadow card where the card floats over other content.
+- Put `nds-center` on the card root only. On an inner part, it centers nothing.
+- To fill the container, use `nds-full` on a card, not `nds-full-width`. Inside a section, `nds-full-width` breaks out to the full screen width.
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
 - Size the featured icon or avatar up (`nds-lg`, `nds-xl`) on statistic cards and in grids, where the icon carries the meaning.
 - Show a price with `.nds-card-value`, not with a tag.
