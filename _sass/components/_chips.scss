@@ -33,6 +33,8 @@
   white-space: nowrap;
   cursor: pointer;
   box-sizing: border-box;
+  // A column layout would otherwise stretch a lone chip to its full width.
+  width: fit-content;
   height: var(--_chip-size);
   line-height: var(--_chip-size);
   background-color: var(--_chip-bg);
@@ -47,11 +49,12 @@
   }
 
   &:is(:disabled, [data-state~="disabled"]) {
-    opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
     background-color: var(--background-disabled);
     color: var(--chip-text-disabled);
+    // Icons read --_chip-icon, not the text colour: follow the disabled text.
+    --_chip-icon: currentColor;
   }
 
   .nds-label {
@@ -149,6 +152,7 @@
       &:is(:disabled, [data-state~="disabled"]) {
         background-color: var(--chip-background-oncolor-disabled);
         color: var(--chip-text-oncolor-disabled);
+        --_chip-icon: currentColor;
       }
     }
   }
@@ -198,6 +202,7 @@
       &:is(:disabled, [data-state~="disabled"]) {
         background-color: var(--chip-background-oncolor-disabled);
         color: var(--chip-text-oncolor-disabled);
+        --_chip-icon: currentColor;
       }
     }
   }
