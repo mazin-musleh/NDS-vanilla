@@ -237,7 +237,7 @@ last_edit: "25/09/2026 - 10:36 AM"
 | Meta | None (default) | — | — | No tags or rating |
 | Meta | Tags | canon `#card-tags` | `.nds-card-content` | Tags alone go straight in the content |
 | Meta | Rating | canon `#card-rating` | `.nds-card-content` | A star rating with a count |
-| Meta | Tags and rating | canon `#card-meta` | `.nds-card-content` | `.nds-card-meta` groups two meta rows. Use it only when both are present |
+| Meta | Tags + Rating | canon `#card-meta` | `.nds-card-content` | Both together: `.nds-card-meta` groups the two meta rows. Use it only when both are present |
 | Value | None (default) | — | — | No price line |
 | Value | Price | canon `#card-value-price` | `.nds-card-text` (after) | A price. `data-currency` shows the currency icon. See [Numbers](../utilities/numbers) |
 | Value | Sale price | canon `#card-value-sale` | `.nds-card-text` (after) | A price with the original crossed out in `<s>` |

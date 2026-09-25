@@ -23,6 +23,9 @@
 
     var VOID = /^(area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
 
+    // An option's name without its markers: (default), (demo: + Other), (hint: text).
+    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/g, ''); }
+
     function dedent(s) {
         s = s.replace(/^\s*\n/, '').replace(/\s+$/, '');
         var m = s.match(/^[ \t]*(?=\S)/gm) || [''];
@@ -235,17 +238,21 @@
         sheet.addEventListener('nds:panel:opened', function () {
             window.scrollTo({ top: preview.getBoundingClientRect().top + window.scrollY - NDS.stickyHeaderBottom() - 16, behavior: 'smooth' });
         });
-        var byKey = {}, order = [], active = {}, defaults = {}, sizes = {};
+        var byKey = {}, order = [], active = {}, defaults = {}, sizes = {}, combos = {}, picks = {};
         readTable(script.getAttribute('data-variants')).forEach(function (c) {
             byKey[c.key] = c;
             sizes[c.group] = (sizes[c.group] || 0) + 1;
             if (order.indexOf(c.group) < 0) order.push(c.group);
             if (/\(default\)/.test(c.option)) defaults[c.group] = c;
+            // "Tags + Rating": the markup for those chips on together, so the group is multi-select.
+            if (/ \+ /.test(label(c.option))) (combos[c.group] = combos[c.group] || []).push(c);
         });
         sheet.querySelectorAll('[data-builder-option][data-state~="selected"]').forEach(function (it) {
             var c = byKey[it.getAttribute('data-builder-option')];
             if (c) active[c.group] = c;
         });
+        // A group with no chip on starts on its default (None has no chip).
+        order.forEach(function (g) { if (!active[g] && defaults[g]) active[g] = defaults[g]; });
         var pristine = document.createElement('div'), call = null, html = false;
 
         // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
@@ -320,32 +327,50 @@
 
         function set(c, on) {
             active[c.group] = on ? c : null;
+            if (combos[c.group]) picks[c.group] = on && c !== defaults[c.group] ? [c] : [];
+            paint(c.group);
+        }
+        function paint(g) {
             controls().forEach(function (btn) {
                 var o = byKey[btn.getAttribute('data-builder-option')];
-                if (o.group !== c.group) return;
-                var sel = on && o === c;
+                if (o.group !== g) return;
+                var sel = combos[g] ? (picks[g] || []).indexOf(o) >= 0 : active[g] === o;
                 sel ? btn.setAttribute('data-state', 'selected') : btn.removeAttribute('data-state');
                 btn.setAttribute('aria-pressed', String(sel));
             });
+        }
+        var isNone = function (c) { return !!c && label(c.option) === 'None'; };
+        // Several chips on at once resolve to the combo row made of exactly them.
+        function toggle(c) {
+            var g = c.group, list = (picks[g] || []).slice(), i = list.indexOf(c);
+            i >= 0 ? list.splice(i, 1) : list.push(c);
+            var names = list.map(function (o) { return label(o.option); }).sort().join('|');
+            var combo = combos[g].filter(function (k) { return label(k.option).split(' + ').sort().join('|') === names; })[0];
+            if (list.length > 1 && !combo) list = [c];
+            picks[g] = list;
+            active[g] = list.length > 1 ? combo : list[0] || defaults[g] || null;
+            paint(g);
         }
 
         reset.addEventListener('click', function () {
             order.forEach(function (g) {
                 if (defaults[g]) set(defaults[g], true);
-                else if (active[g]) set(active[g], false);
+                else if (active[g] || (picks[g] || []).length) set(active[g] || picks[g][0], false);
             });
             render();
         });
 
         // `Option (demo: + Other)` also turns on option "Other" — a demo aid (Neutral shows only when checked).
-        var label = function (o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/g, ''); };
         function choose(e) {
             var btn = e.target.closest('[data-builder-option]');
             var c = btn && byKey[btn.getAttribute('data-builder-option')];
             if (!c) return;
-            // A group with several options is pick-one; a single option toggles.
-            var on = sizes[c.group] > 1 || active[c.group] !== c;
-            set(c, on);
+            // A multi-select group toggles each chip; a group whose default is None turns off when
+            // its chosen chip is tapped again; any other group is pick-one; a single option toggles.
+            var on = true;
+            if (combos[c.group]) toggle(c);
+            else if (sizes[c.group] > 1 && active[c.group] === c && isNone(defaults[c.group])) set(defaults[c.group], true);
+            else { on = sizes[c.group] > 1 || active[c.group] !== c; set(c, on); }
             var plus = on && c.option.match(/\(demo:\s*\+\s*([^)]+)\)/);
             if (plus) Object.keys(byKey).forEach(function (k) {
                 var oc = byKey[k];

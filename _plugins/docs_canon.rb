@@ -137,15 +137,18 @@ module DocsCanon
   end
 
   # The options sheet: one labeled row of chips per group, single options last under "More".
-  # A chip that does not apply is disabled, and its row label says why (touch has no hover);
-  # a hint shows on hover. No backdrop, so the preview stays live above it.
+  # A group whose default is "None" gets no None chip: tapping the chosen chip again turns it off.
+  # A combo row ("Tags + Rating") gets no chip either: it is the markup used when those chips are
+  # both on. A chip that does not apply is disabled, and its row label says why (touch has no
+  # hover); a hint shows on hover. No backdrop, so the preview stays live above it.
   def self.sheet(id, rows, src, js, canons)
     groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
     multi, single = groups.partition { |_, list| list.size > 1 }
     esc = ->(t) { CGI.escapeHTML(t.to_s) }
-    chip = lambda do |group, r, sel|
+    # Primary chips pick one of a set that always has a value; neutral chips can be turned off.
+    chip = lambda do |group, r, sel, tone = 'neutral'|
       tip = hint(r[:option]) ? %( title="#{esc[hint(r[:option])]}") : ''
-      %(<button type="button" class="nds-chip nds-neutral nds-rounded" aria-pressed="#{sel}"#{' data-state="selected"' if sel}#{' disabled' unless applies?(r, src, js)}#{tip} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
+      %(<button type="button" class="nds-chip nds-#{tone} nds-rounded" aria-pressed="#{sel}"#{' data-state="selected"' if sel}#{' disabled' unless applies?(r, src, js)}#{tip} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
     end
     row = lambda do |name, need, off, chips|
       text = off && !need.empty? ? "#{name} · #{need}" : name
@@ -153,10 +156,14 @@ module DocsCanon
     end
     body = multi.map do |group, list|
       live = list.select { |r| r[:live] }
-      row[group, needs(live.first, rows, canons, src), live.none? { |r| applies?(r, src, js) }, list.map { |r| chip[group, r, r[:option].include?('(default)')] }]
+      default = list.find { |r| r[:option].include?('(default)') }
+      none = default && label(default[:option]) == 'None'
+      chips = list.reject { |r| (none && r.equal?(default)) || label(r[:option]).include?(' + ') }
+      tone = none || list.any? { |r| label(r[:option]).include?(' + ') } ? 'neutral' : 'primary'
+      row[group, needs(live.first, rows, canons, src), live.none? { |r| applies?(r, src, js) }, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
     end
     body << row['More', '', false, single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
-    %(<aside id="#{id}-options" class="nds-panel" data-panel-side="bottom" style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Reset" data-builder-reset disabled><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>)
+    %(<aside id="#{id}-options" class="nds-panel" data-panel-side="bottom" style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i></span><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Reset" data-builder-reset disabled><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>)
   end
 
   def self.stamp(html)
@@ -201,7 +208,7 @@ module DocsCanon
         table = attr(attrs, 'data-variants')
         if table
           builders << id
-          out << %(<div class="nds-divider nds-4xl nds-start">Preview</div>\n)
+          out << %(<div class="nds-divider nds-xl">Preview</div>\n)
         end
         out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{src}\n</div>\n)
       end
