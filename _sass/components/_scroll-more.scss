@@ -26,7 +26,8 @@
     // Internal tokens with external fallbacks
     --_scroll-fade:       var(--scroll-fade, 48px);
     --_scroll-max-height: var(--scroll-max-height, none);
-    --_scroll-max-width:  var(--scroll-max-width, none);
+    // 100%: fits its content, but never wider than its container, so wide content scrolls.
+    --_scroll-max-width:  var(--scroll-max-width, 100%);
     --_scroll-gap:        var(--scroll-gap, 0);
     --_scroll-divider:    var(--scroll-divider, var(--divider-color));
     --_scroll-padding:    var(--scroll-padding, var(--spacing-xs));
