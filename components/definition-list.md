@@ -2,596 +2,304 @@
 layout: page
 title: Definition List
 hero_title: Definition List - National Design System
-hero_description: Semantic term-definition component for displaying structured information with optional icons and multiple layout modes
+hero_description: Pairs of a title and a value, with optional icons, in a stacked, table, row or grid layout
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "04/09/2026 - 05:30 AM"
+updated: "1.12.x"
+last_edit: "26/09/2026 - 05:18 PM"
 ---
 
-<!-- With Icons -->
-<section id="definitionListIcons" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Semantic Definition List</h2>
-            <p class="nds-section-description">Uses dl/dt/dd elements for accessible term-definition pairs with optional icons</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Layout: ">
-                                        <span class="nds-label">Layout: Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-definition-list", "dlLayout"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-tableView", ".nds-definition-list", "dlLayout"]'>
-                                                <span class="nds-label">Table View</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-tableView-sm", ".nds-definition-list", "dlLayout"]'>
-                                                <span class="nds-label">Table View (Mobile)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-tableView-md", ".nds-definition-list", "dlLayout"]'>
-                                                <span class="nds-label">Table View (Tablet+)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-tableView-lg", ".nds-definition-list", "dlLayout"]'>
-                                                <span class="nds-label">Table View (Desktop+)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-rowView", ".nds-definition-list", "dlLayout"]'>
-                                                <span class="nds-label">Row View</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-grid", ".nds-definition-list", "dlLayout"]'
-                                                data-toggle-style=".nds-definition-list { --max-col:2; --mid-col:2; --min-col:1; width:fit-content }">
-                                                <span class="nds-label">Grid View</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Style: ">
-                                        <span class="nds-label">Style: Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='[["", ".nds-definition-list", "dlStyle"], ["", ".nds-definition-item", "dlStyle"]]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-divided", ".nds-definition-list", "dlStyle"], ["", ".nds-definition-item", "dlStyle"]]'>
-                                                <span class="nds-label">Divided</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["", ".nds-definition-list", "dlStyle"], ["nds-card nds-stroke", ".nds-definition-item", "dlStyle"]]'>
-                                                <span class="nds-label">Card</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                        <span class="nds-label">Size: Large</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-definition-list", "dlSize"]'>
-                                                <span class="nds-label">Large</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-definition-list", "dlSize"]'>
-                                                <span class="nds-label">Medium</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-definition-list", "dlSize"]'>
-                                                <span class="nds-label">Small</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-definition-list", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <dl class="nds-definition-list">
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-user-account"></i>
-                                            <span class="nds-label">Full Name</span>
-                                        </dt>
-                                        <dd>Mohammed Al-Harbi</dd>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-building-02"></i>
-                                            <span class="nds-label">Organization</span>
-                                        </dt>
-                                        <dd>Digital Services Department</dd>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-briefcase-02"></i>
-                                            <span class="nds-label">Position</span>
-                                        </dt>
-                                        <dd>Senior Developer</dd>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i>
-                                            <span class="nds-label">Location</span>
-                                        </dt>
-                                        <dd>Riyadh</dd>
-                                    </div>
-                                </dl>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-dl-icons-1" id="tab-dl-icons-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                        id="panel-dl-icons-1" aria-labelledby="tab-dl-icons-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;dl class="nds-definition-list"&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;dt&gt;
-      &lt;i class="hgi hgi-stroke hgi-user-account"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Full Name&lt;/span&gt;
-    &lt;/dt&gt;
-    &lt;dd&gt;Mohammed Al-Harbi&lt;/dd&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;dt&gt;
-      &lt;i class="hgi hgi-stroke hgi-building-02"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Organization&lt;/span&gt;
-    &lt;/dt&gt;
-    &lt;dd&gt;Digital Services Department&lt;/dd&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;dt&gt;
-      &lt;i class="hgi hgi-stroke hgi-briefcase-02"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Position&lt;/span&gt;
-    &lt;/dt&gt;
-    &lt;dd&gt;Senior Developer&lt;/dd&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;dt&gt;
-      &lt;i class="nds-icon nds-hgi-location-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Location&lt;/span&gt;
-    &lt;/dt&gt;
-    &lt;dd&gt;Riyadh&lt;/dd&gt;
-  &lt;/div&gt;
-&lt;/dl&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dlOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A definition list shows pairs of a title and a value, such as the fields of a profile or the points of a feature list. The list is `nds-definition-list`, and each pair is an `nds-definition-item`. A title can start with an icon.
+
+Pick another component when:
+
+- the data has several values for each row, or the user sorts it: [Tables](../components/tables)
+- the items are links to other pages: [Link](../components/link) in a plain list
+- the items start actions: [Dropmenu](../components/dropmenu)
+
+</div>
+  </div>
 </section>
 
-<!-- Generic Elements -->
-<section id="definitionListGeneric" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Feature List</h2>
-            <p class="nds-section-description">Uses class-based markup for icon grids, feature highlights, and content that doesn't need term-definition semantics</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Style: ">
-                                        <span class="nds-label">Style: Divided</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["", ".nds-definition-list", "dlStyle"], ["", ".nds-definition-item", "dlStyle"]]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='[["nds-divided", ".nds-definition-list", "dlStyle"], ["", ".nds-definition-item", "dlStyle"]]'>
-                                                <span class="nds-label">Divided</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["", ".nds-definition-list", "dlStyle"], ["nds-card nds-stroke", ".nds-definition-item", "dlStyle"]]'>
-                                                <span class="nds-label">Card</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-definition-list", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                                    <div class="nds-definition-item">
-                                        <span class="nds-item-title">
-                                            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-                                            <span class="nds-label">Accessibility</span>
-                                        </span>
-                                        <p class="nds-item-desc">WCAG 2.1 compliant with full keyboard navigation and screen reader support.</p>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <span class="nds-item-title">
-                                            <i class="hgi hgi-stroke hgi-shield-01"></i>
-                                            <span class="nds-label">Security</span>
-                                        </span>
-                                        <p class="nds-item-desc">Built-in XSS protection and content security policy headers.</p>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <span class="nds-item-title">
-                                            <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                            <span class="nds-label">Performance</span>
-                                        </span>
-                                        <p class="nds-item-desc">Lazy loading and staggered initialization for fast page loads.</p>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <span class="nds-item-title">
-                                            <i class="hgi hgi-stroke hgi-star"></i>
-                                            <span class="nds-label">Theming</span>
-                                        </span>
-                                        <p class="nds-item-desc">CSS custom properties for full visual customization without overrides.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-dl-generic-1" id="tab-dl-generic-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                        id="panel-dl-generic-1" aria-labelledby="tab-dl-generic-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap:24px; --col-gap:32px;"&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;span class="nds-item-title"&gt;
-      &lt;i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Accessibility&lt;/span&gt;
-    &lt;/span&gt;
-    &lt;p class="nds-item-desc"&gt;WCAG 2.1 compliant with full keyboard navigation and screen reader support.&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;span class="nds-item-title"&gt;
-      &lt;i class="hgi hgi-stroke hgi-shield-01"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Security&lt;/span&gt;
-    &lt;/span&gt;
-    &lt;p class="nds-item-desc"&gt;Built-in XSS protection and content security policy headers.&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;span class="nds-item-title"&gt;
-      &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Performance&lt;/span&gt;
-    &lt;/span&gt;
-    &lt;p class="nds-item-desc"&gt;Lazy loading and staggered initialization for fast page loads.&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;span class="nds-item-title"&gt;
-      &lt;i class="hgi hgi-stroke hgi-star"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Theming&lt;/span&gt;
-    &lt;/span&gt;
-    &lt;p class="nds-item-desc"&gt;CSS custom properties for full visual customization without overrides.&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dlMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="dl-details" data-canon data-variants="dlVariantsTable">
+<dl class="nds-definition-list">
+  <div class="nds-definition-item">
+    <dt>
+      <i class="hgi hgi-stroke hgi-user-account" aria-hidden="true"></i>
+      <span class="nds-label">Full name</span>
+    </dt>
+    <dd>Mohammed Al-Harbi</dd>
+  </div>
+  <div class="nds-definition-item">
+    <dt>
+      <i class="hgi hgi-stroke hgi-building-02" aria-hidden="true"></i>
+      <span class="nds-label">Organization</span>
+    </dt>
+    <dd>Digital Services Department</dd>
+  </div>
+  <div class="nds-definition-item">
+    <dt>
+      <i class="hgi hgi-stroke hgi-briefcase-02" aria-hidden="true"></i>
+      <span class="nds-label">Position</span>
+    </dt>
+    <dd>Senior Developer</dd>
+  </div>
+</dl>
+</script>
+<script type="text/html" id="dl-features" data-canon>
+<div class="nds-definition-list">
+  <div class="nds-definition-item">
+    <span class="nds-item-title">
+      <i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i>
+      <span class="nds-label">Security</span>
+    </span>
+    <p class="nds-item-desc">Every request is checked and logged.</p>
+  </div>
+  <div class="nds-definition-item">
+    <span class="nds-item-title">
+      <i class="hgi hgi-stroke hgi-universal-access" aria-hidden="true"></i>
+      <span class="nds-label">Accessibility</span>
+    </span>
+    <p class="nds-item-desc">Full keyboard access and screen reader support.</p>
+  </div>
+  <div class="nds-definition-item">
+    <span class="nds-item-title">
+      <i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i>
+      <span class="nds-label">Speed</span>
+    </span>
+    <p class="nds-item-desc">Pages load in under two seconds on a mobile network.</p>
+  </div>
+</div>
+</script>
+<script type="text/html" id="dl-actions" data-canon>
+<dl class="nds-definition-list">
+  <div class="nds-definition-item">
+    <dt>
+      <i class="hgi hgi-stroke hgi-link-01" aria-hidden="true"></i>
+      <span class="nds-label">Profile URL</span>
+    </dt>
+    <dd>
+      <div class="nds-item-action">
+        <span>https://example.gov.sa/profile</span>
+        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-sm">
+          <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
+          <span class="nds-label">Copy URL</span>
+        </button>
+        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-sm">
+          <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+          <span class="nds-label">Share URL</span>
+        </button>
+      </div>
+    </dd>
+  </div>
+  <div class="nds-definition-item">
+    <dt>
+      <i class="hgi hgi-stroke hgi-mail-01" aria-hidden="true"></i>
+      <span class="nds-label">Email</span>
+    </dt>
+    <dd>
+      <div class="nds-item-action">
+        <span>user@example.gov.sa</span>
+        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-sm">
+          <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
+          <span class="nds-label">Copy email</span>
+        </button>
+      </div>
+    </dd>
+  </div>
+</dl>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="definitionListFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-table-01"></i>
-                            <span class="nds-label">Table View Layout</span>
-                        </span>
-                        <p class="nds-item-desc">Two-column grid with CSS subgrid for perfect alignment across all term-definition pairs.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-smartphone-wifi"></i>
-                            <span class="nds-label">Responsive Table View</span>
-                        </span>
-                        <p class="nds-item-desc">Breakpoint variants let you choose when the table view activates: mobile only, tablet and up, or desktop and up.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-border-all-01"></i>
-                            <span class="nds-label">Divided Borders</span>
-                        </span>
-                        <p class="nds-item-desc">Optional border separators between items. Works in both default and table view layouts, including responsive variants.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-grid-view"></i>
-                            <span class="nds-label">Grid Layout</span>
-                        </span>
-                        <p class="nds-item-desc">Multi-column responsive grid with configurable breakpoints via --max-col, --mid-col, and --min-col properties.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-board"></i>
-                            <span class="nds-label">CSS Custom Properties</span>
-                        </span>
-                        <p class="nds-item-desc">Control icon size, gap, title font size, and row spacing through custom properties without overriding styles.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-indent"></i>
-                            <span class="nds-label">Automatic Icon Indent</span>
-                        </span>
-                        <p class="nds-item-desc">Descriptions auto-indent to align with the label text when icons are present in stacked layout.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dlVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The Layout, Style, Size and Loading rows go on the list. The two Cards rows are one choice: add both classes to every item. Title icons are optional: leave out the `<i>` for a list without them.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Details (default) | — | — | `dl`, `dt` and `dd`, for data where each title names its value, such as a profile |
+| Structure | Feature list | canon `#dl-features` | — | Plain elements with `nds-item-title` and `nds-item-desc`, for feature lists and highlights |
+| Structure | With actions | canon `#dl-actions` | — | Values with buttons after them, such as copy and share. `nds-item-action` holds the value and its buttons in one row |
+| Layout | Stacked (default) | — | — | Each value under its title, for long values |
+| Layout | Table | `.nds-tableView` | `.nds-definition-list` | Titles in one column and values in the next, aligned across every item |
+| Layout | Table on phones | `.nds-tableView-sm` | `.nds-definition-list` | The table layout below 600px only. Stacked on wider screens |
+| Layout | Table on tablets | `.nds-tableView-md` | `.nds-definition-list` | The table layout from 600px to 959px only. Add `nds-tableView-lg` too for tablets and wider |
+| Layout | Table on desktops | `.nds-tableView-lg` | `.nds-definition-list` | The table layout from 960px up. Stacked on smaller screens |
+| Layout | Row | `.nds-rowView` | `.nds-definition-list` | Each title and value on one row that wraps, with no shared columns. For compact card details |
+| Layout | Grid | `.nds-grid` | `.nds-definition-list` | Items in columns. `--max-col`, `--mid-col` and `--min-col` set the columns, see [Grid](../layout/grid) |
+| Style | Plain (default) | — | — | No lines between items |
+| Style | Divided | `.nds-divided` | `.nds-definition-list` | A line between items. In a table layout, the lines span both columns |
+| Style | Cards | `.nds-card` | `.nds-definition-item` | Each item in its own card |
+| Style | Cards | `.nds-stroke` | `.nds-definition-item` | The same: gives each card its border |
+| Size | LG (default) | — | — | A 20px icon, a large title and the largest gap |
+| Size | MD | `.nds-md` | `.nds-definition-list` | An 18px icon, a medium title, the same value size and a smaller gap |
+| Size | SM | `.nds-sm` | `.nds-definition-list` | An 18px icon, a small title, a small value and the smallest gap |
+| Loading | Loading | `.nds-loading` | `.nds-definition-list` | Gray bars in place of the titles and values while the data loads. The icons hide |
+{: #dlVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Item Action -->
-<section id="definitionListItemAction" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Item Action</h2>
-            <p class="nds-section-description">Wrap a description and its trailing action buttons in <code class="nds-inline-code lang-html">.nds-item-action</code> to place them in a flex row. Any number of buttons share a single gap and stay aligned with the value.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <dl class="nds-definition-list nds-divided">
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-link-01"></i>
-                                            <span class="nds-label">Profile URL</span>
-                                        </dt>
-                                        <dd>
-                                            <div class="nds-item-action">
-                                                <span>https://example.gov.sa/profile</span>
-                                                <button class="nds-btn nds-subtle nds-sm" aria-label="Copy URL">
-                                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
-                                                </button>
-                                                <button class="nds-btn nds-subtle nds-sm" aria-label="Share URL">
-                                                    <i class="hgi hgi-stroke hgi-share-01"></i>
-                                                </button>
-                                            </div>
-                                        </dd>
-                                    </div>
-                                    <div class="nds-definition-item">
-                                        <dt>
-                                            <i class="hgi hgi-stroke hgi-edit-01"></i>
-                                            <span class="nds-label">Email</span>
-                                        </dt>
-                                        <dd>
-                                            <div class="nds-item-action">
-                                                <span>user@example.gov.sa</span>
-                                                <button class="nds-btn nds-subtle nds-sm" aria-label="Edit email">
-                                                    <i class="hgi hgi-stroke hgi-edit-01"></i>
-                                                </button>
-                                            </div>
-                                        </dd>
-                                    </div>
-                                </dl>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-definition-list-action-1" id="tab-definition-list-action-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                        id="panel-definition-list-action-1" aria-labelledby="tab-definition-list-action-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;dl class="nds-definition-list nds-divided"&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;dt&gt;
-      &lt;i class="hgi hgi-stroke hgi-link-01"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Profile URL&lt;/span&gt;
-    &lt;/dt&gt;
-    &lt;dd&gt;
-      &lt;div class="nds-item-action"&gt;
-        &lt;span&gt;https://example.gov.sa/profile&lt;/span&gt;
-        &lt;button class="nds-btn nds-subtle nds-sm" aria-label="Copy URL"&gt;
-          &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-        &lt;button class="nds-btn nds-subtle nds-sm" aria-label="Share URL"&gt;
-          &lt;i class="hgi hgi-stroke hgi-share-01"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/dd&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-definition-item"&gt;
-    &lt;dt&gt;
-      &lt;i class="hgi hgi-stroke hgi-edit-01"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Email&lt;/span&gt;
-    &lt;/dt&gt;
-    &lt;dd&gt;
-      &lt;div class="nds-item-action"&gt;
-        &lt;span&gt;user@example.gov.sa&lt;/span&gt;
-        &lt;button class="nds-btn nds-subtle nds-sm" aria-label="Edit email"&gt;
-          &lt;i class="hgi hgi-stroke hgi-edit-01"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/dd&gt;
-  &lt;/div&gt;
-&lt;/dl&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dlFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layout-table-01"></i>
+            <span class="nds-label">Table View Layout</span>
+          </span>
+          <p class="nds-item-desc">Two columns built on CSS subgrid, so titles and values line up across every item.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-smartphone-wifi"></i>
+            <span class="nds-label">Responsive Table View</span>
+          </span>
+          <p class="nds-item-desc">Turn the table layout on for phones, tablets or desktops only. Combine the classes to cover more than one screen range.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-border-all-01"></i>
+            <span class="nds-label">Divided Borders</span>
+          </span>
+          <p class="nds-item-desc">Lines between items in every layout. With a responsive table view, the lines follow the layout on each screen size.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-grid-view"></i>
+            <span class="nds-label">Grid Layout</span>
+          </span>
+          <p class="nds-item-desc">Items in columns that change with the screen size, set with <code class="nds-inline-code lang-css">--max-col</code>, <code class="nds-inline-code lang-css">--mid-col</code> and <code class="nds-inline-code lang-css">--min-col</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-paint-board"></i>
+            <span class="nds-label">CSS Custom Properties</span>
+          </span>
+          <p class="nds-item-desc">Custom properties set the icon size, the gaps and the font sizes, so no style needs an override.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-indent"></i>
+            <span class="nds-label">Automatic Icon Indent</span>
+          </span>
+          <p class="nds-item-desc">In the stacked layout, a value lines up with its title's text when the title has an icon.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Loading Skeleton</span>
+          </span>
+          <p class="nds-item-desc">Gray bars stand in for the titles and values before the page is ready, and while <code class="nds-inline-code lang-html">nds-loading</code> is on.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="definitionListGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <strong>semantic markup</strong> (<code class="nds-inline-code lang-html">&lt;dl&gt;/&lt;dt&gt;/&lt;dd&gt;</code>) for data display like user profiles, service details, or specifications where screen reader semantics matter</li>
-                    <li>Use <strong>generic markup</strong> (<code class="nds-inline-code lang-html">.nds-item-title</code> / <code class="nds-inline-code lang-html">.nds-item-desc</code>) for feature lists, highlights, or content grids where semantic term-definition relationships don't apply</li>
-                    <li>Use <strong>default layout</strong> for vertical stacking when descriptions vary in length or include multiple lines</li>
-                    <li>Use <strong>table view</strong> (<code class="nds-inline-code lang-html">nds-tableView</code>) for compact side-by-side key-value display. Subgrid keeps all columns aligned</li>
-                    <li>Use <strong>responsive table view</strong> variants to control when the two-column layout activates: <code class="nds-inline-code lang-html">nds-tableView-md</code> for tablet and up (stacked on mobile), <code class="nds-inline-code lang-html">nds-tableView-lg</code> for desktop and up, or <code class="nds-inline-code lang-html">nds-tableView-sm</code> for mobile only</li>
-                    <li>Use <strong>row view</strong> (<code class="nds-inline-code lang-html">nds-rowView</code>) for compact inline label/value pairs where each item flows on its own wrappable row. No shared columns across items, so short pairs stay tight and long values wrap naturally beside the label. Good for card meta</li>
-                    <li>Use <strong>size modifiers</strong> (<code class="nds-inline-code lang-html">nds-md</code>, <code class="nds-inline-code lang-html">nds-sm</code>) to scale icon size, title font size, and row gap in step. Default (no class) is large. Individual CSS custom properties (<code class="nds-inline-code lang-html">--dl-icon-size</code>, <code class="nds-inline-code lang-html">--dl-title-FS</code>, <code class="nds-inline-code lang-html">--row-gap</code>) still override size defaults when you need finer control</li>
-                    <li>Use <strong>grid layout</strong> (<code class="nds-inline-code lang-html">nds-grid</code>) for multi-column responsive grids. Configure breakpoints with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, <code class="nds-inline-code lang-html">--min-col</code></li>
-                    <li>Do not use definition list for navigation or action items. Use a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> or standard list instead</li>
-                    <li>Combine <strong>styles</strong> independently with any layout: <code class="nds-inline-code lang-html">nds-divided</code> for border separators, <code class="nds-inline-code lang-html">nds-card nds-stroke</code> on items for card appearance</li>
-                    <li>The <code class="nds-inline-code lang-html">nds-divided</code> style adapts automatically to responsive table view variants, showing stacked dividers outside the active breakpoint and table view dividers inside it</li>
-                    <li>Add icons to titles for visual identification. The component auto-indents descriptions to align with the label text in stacked layout</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tableView</code></td><td>Two-column key-value grid layout at all screen sizes</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-sm</code></td><td>Table view on mobile only (max-width: 599px), stacked on larger screens</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-md</code></td><td>Table view from tablet and up (min-width: 600px), stacked on mobile</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tableView-lg</code></td><td>Table view from desktop and up (min-width: 960px), stacked below</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>Each item places dt and dd on a single wrappable row. Looser than table view: no shared columns across items</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Adds border separators between items. Adapts styling for table view and stacked layouts</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size: 18px icon (floored, no visual change from lg), medium title font, medium row gap</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Small size: 18px icon (floored, no visual change from lg/md), small title font, small row gap</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-last-row</code></td><td>On a <code class="nds-inline-code lang-html">.nds-definition-item</code>, strips the bottom border in divided layout when the item is not the last child (for example when a wrapping <code class="nds-inline-code lang-html">.nds-card</code> breaks CSS <code class="nds-inline-code lang-html">:last-child</code>)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td>On <code class="nds-inline-code lang-html">.nds-definition-list</code>: animates skeleton bars over terms and descriptions, hides icons. Equivalent to <code class="nds-inline-code lang-html">data-state="loading"</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-item-action</code></td><td>On a wrapper inside <code class="nds-inline-code lang-html">.nds-definition-item</code>: flex row that places a description value alongside one or more trailing action buttons (copy, edit, share) with a shared gap</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-icon-size</code></td><td>20px (lg) / 18px (md) / 18px (sm)</td><td>Width and height of title icons. Floored at 18px; icons never render smaller, even when this value or a size modifier requests less</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-icon-gap</code></td><td>half of icon size</td><td>Gap between the icon and label text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-title-FS</code></td><td>--typo-text-lg-FS (lg) / --typo-text-clamp-md-FS (md) / --typo-text-clamp-sm-FS (sm)</td><td>Font size of term/title text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-desc-FS</code></td><td>--typo-text-md-FS (lg) / --typo-text-md-FS inherited (md) / --typo-text-sm-FS (sm)</td><td>Font size of description/value text. The large and medium sizes default to <code class="nds-inline-code lang-html">--typo-text-md-FS</code>; small explicitly sets <code class="nds-inline-code lang-html">--typo-text-sm-FS</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--row-gap</code></td><td>--spacing-lg</td><td>Vertical spacing between items</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--col-gap</code></td><td>--spacing-xl (table view) / --spacing-sm (row view)</td><td>Horizontal spacing between dt and dd in table view and row view</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="dlPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use `dl`, `dt` and `dd` when each title names its value, such as a profile or the details of a service. Screen readers read them as pairs.
+- Use the plain elements with `nds-item-title` and `nds-item-desc` for feature lists and highlights.
+- Keep the stacked layout when values are long or wrap to more lines.
+- Use the table layout for short values side by side. For tablets and wider, add both `nds-tableView-md` and `nds-tableView-lg`.
+- Use the row layout for compact details inside a card.
+- Give every title icon `aria-hidden="true"`. The label names the item.
+- Keep the label inside an icon-only action button. Screen readers read it as the button's name.
+- In a divided list, add `nds-last-row` to the last item when another element comes after it in the list. Otherwise the item keeps the line under it.
+
+</div>
+  </div>
+</section>
+
+<section id="dlApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-last-row` | `.nds-definition-item` | Removes the line under the last divided item when another element comes after it in the list |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-state="loading"` | `.nds-definition-list` | The same as `nds-loading`, for a script that already sets states. Use one of the two |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on the list. The size classes set the icon size, the title size and the row gap. A value in the list's `style` attribute wins over the size class.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--dl-icon-size` | `20px` | Size of a title icon. An icon never renders below 18px |
+| `--dl-icon-gap` | half of `--dl-icon-size` | Gap between a title icon and its label |
+| `--dl-title-FS` | `var(--typo-text-lg-FS)` | Title font size. `nds-md` sets `--typo-text-md-FS` and `nds-sm` sets `--typo-text-sm-FS` |
+| `--dl-desc-FS` | `var(--typo-text-md-FS)` | Value font size. `nds-sm` sets `--typo-text-sm-FS` |
+| `--row-gap` | `var(--spacing-lg)` | Gap between items |
+| `--col-gap` | `var(--spacing-xl)` | Gap between a title and its value in the table layout. The row layout uses `var(--spacing-sm)` |
+| `--gap` | — | Sets both gaps when `--row-gap` and `--col-gap` are not set |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="dlRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Faculty](../examples/faculty): table layouts for staff details, and a divided table on desktops.
+- [Contact Us Template](../templates/contact-us-template): contact details in a table layout.
+- [Form Template](../templates/form-template): a divided list of the answers to review before the user sends the form.
+- [Help and Support Template](../templates/help-support-template): medium lists of support channels.
+- Every component page: the Built-in Features section is a divided definition list in a grid.
+
+</div>
+  </div>
 </section>
