@@ -108,13 +108,14 @@
 
     &.nds-md {
         --dl-icon-size: 18px;
-        --dl-title-FS: var(--typo-text-clamp-md-FS);
+        // Fixed, not fluid: a clamp shrank the title below its value on phones.
+        --dl-title-FS: var(--typo-text-md-FS);
         --row-gap: var(--spacing-md);
     }
 
     &.nds-sm {
         --dl-icon-size: 18px;
-        --dl-title-FS: var(--typo-text-clamp-sm-FS);
+        --dl-title-FS: var(--typo-text-sm-FS);
         --dl-desc-FS: var(--typo-text-sm-FS);
         --row-gap: var(--spacing-sm);
     }
