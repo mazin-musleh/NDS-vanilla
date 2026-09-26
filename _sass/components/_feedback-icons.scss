@@ -74,6 +74,12 @@
         line-height: var(--typo-text-md-LH);
     }
 
+    &.nds-lg {
+        --feedback-size: 32px;
+        font-size: var(--typo-text-lg-FS);
+        line-height: var(--typo-text-lg-LH);
+    }
+
     .nds-feedback-message {
         flex: 1;
     }
