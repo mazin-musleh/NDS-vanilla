@@ -212,6 +212,7 @@ Only for a component whose structures or options change what it DOES, not only h
 - Written for people, who never see the Variants table. It explains; it never copies a Use cell.
 - One `### Name` heading per entry (a noun), then 2 to 4 sentences: what it does, when to pick it, how it behaves, and the attribute or class that turns it on.
 - Facts that a table holds (every attribute, every key) stay in the API and are not repeated.
+- **Behavior or Built-in Features?** A fact that a structure or an option turns on goes to Behavior. A fact that happens with no option goes to Built-in Features. It never goes in both.
 
 ### Built-in Features
 
@@ -220,6 +221,7 @@ The component's showcase: its highlights and what they give the developer. An ex
 - Wrapper: `<div class="nds-definition-list nds-divided nds-grid">` inside the section. The build sets the columns: no inline style, no extra class.
 - Item markup comes from a model page. Title: a short noun phrase. Description: one or two sentences.
 - RTL and dark mode are project features, not a component's: leave them out.
+- Only what happens with no option. What an option turns on goes to Behavior.
 - A structure or a part (a status tag's dot, a group) is not a feature: the Markup section shows it.
 - Usually 4 to 8 items.
 

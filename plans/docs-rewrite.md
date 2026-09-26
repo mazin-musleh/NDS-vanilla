@@ -152,7 +152,7 @@ Neither reader is served well today.
 
 **The Variants table is a blueprint, not reading (owner rule 2026-09-25).** It exists to build the toolbar and for agents to read in the `.md`; people learn the options by clicking the builder, and its terse Use cells lack the context a person needs. So the Variants section ships `hidden` (the builder and the build still read it from the page, and it stays in the HTML twin). Anything a person needs from it is written for people in another section — Best Practices, Overview, or a new section when that reads better — as advice with its reason, not a copy of the row.
 
-**Behavior section (owner call 2026-09-26).** A component whose structures or options change what it does (dropmenu, pagination, filter, tables, the form fields) gets an optional `nds-doc-behavior` section after the hidden Variants: one heading per structure or option, 2 to 4 sentences for people. The old pages had a description per demo section; the one-source format had lost it for people. Pages of looks only skip it.
+**Behavior section (owner call 2026-09-26).** A component whose structures or options change what it does (dropmenu, pagination, filter, tables, the form fields) gets an optional `nds-doc-behavior` section after the hidden Variants: one heading per structure or option, 2 to 4 sentences for people. The old pages had a description per demo section; the one-source format had lost it for people. Pages of looks only skip it. The line with Built-in Features: a fact that a structure or an option turns on is Behavior; a fact that happens with no option is a Feature; never both.
 
 **What it means for the page:**
 - The toolbar and the table can never disagree.
