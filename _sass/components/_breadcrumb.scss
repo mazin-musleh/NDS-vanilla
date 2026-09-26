@@ -9,6 +9,8 @@
    ======================================== */
 
 .nds-breadcrumb {
+    // Crumbs are neutral: the link default is primary.
+    @include link-colors(neutral);
     list-style: none;
     display: flex;
     padding: 0;

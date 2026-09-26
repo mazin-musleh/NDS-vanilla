@@ -118,7 +118,7 @@
     margin-inline-end: var(--spacing-md);
   }
 
-  // Neutralize links inside alerts; the content-section rule otherwise promotes a bare .nds-link to primary.
+  // Links inside an alert are neutral; the link default is primary.
   a {
     font-size: var(--typo-text-md-FS);
     line-height: var(--typo-text-md-LH);

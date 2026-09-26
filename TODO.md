@@ -46,6 +46,8 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 
 - **Release notes, Cards — Changed:** `nds-center` on a card centers its content only; the card no longer moves to the middle of its container (the global `nds-center` utility's `margin-inline: auto` leaked onto it). To center a card, center it with its container: `nds-grid nds-center`, or `nds-flex nds-center` for a single card. A modal is unchanged. **Added:** `nds-center` on `nds-flex` centers its children (and across, with `nds-col`) without an inline `--justify`.
 
+- **Release notes, Link — Changed:** a link is primary by default everywhere, not only inside a content section; `nds-neutral` makes it neutral anywhere. Breadcrumb, footer and alert keep neutral links, and a link that is an avatar keeps its own look. A plain `<a>` outside a section that relied on the neutral default turns primary: add `nds-neutral` to keep it neutral.
+
 - **Release notes, Tags — Migrating:** normal tags no longer take `nds-inverted` or `nds-ghost`, and status tags no longer take `nds-outline` (`f1d14c38`). An icon-only tag now keeps its `.nds-label` readable by screen readers (`de24a23d`); existing icon-only markup renders the same, and adding a label to it is recommended, not required.
 
 - **`nds-code` keeps its init stamp after `NDS.Init.destroy()`.** `check-init-destroy.mjs` triage line: `data-nds-code-initialized` survives teardown on 62 of 63 pages with code blocks. Puppeteer showed ~17 only because its four sweep tabs share one window and background tabs never ran the lazy code init. A left stamp blocks a re-mount of the same markup.

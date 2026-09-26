@@ -4,6 +4,8 @@
    ======================================== */
 
 .nds-footer {
+    // Footer links are neutral: the link default is primary.
+    @include link-colors(neutral);
     background: var(--colors-neutral-100);
     padding-block: var(--spacing-4xl);
     z-index: 1;

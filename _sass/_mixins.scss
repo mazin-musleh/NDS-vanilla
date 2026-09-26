@@ -98,6 +98,20 @@ $breakpoints-range: (
 }
 
 // ==============================================
+// LINK COLORS
+// ==============================================
+
+// One link color family (primary, neutral, oncolor) for every state. Set on a link,
+// or on a host whose links take that family.
+@mixin link-colors($family) {
+  --link-color: var(--link-#{$family});
+  --link-hover: var(--link-#{$family}-hovered);
+  --link-pressed: var(--link-#{$family}-pressed);
+  --link-focused: var(--link-#{$family}-focused);
+  --link-visited: var(--link-#{$family}-visited);
+}
+
+// ==============================================
 // DARK MODE
 // ==============================================
 

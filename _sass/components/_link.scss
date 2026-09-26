@@ -1,7 +1,8 @@
 @use '../mixins' as *;
 
-:where(.nds-link, a):not(.nds-btn, .nds-card) {
-    color: var(--link-color, var(--link-neutral));
+// Primary by default; .nds-neutral opts out. Buttons, cards and avatars that are links keep their own look.
+:where(.nds-link, a):not(.nds-btn, .nds-card, .nds-avatar) {
+    color: var(--link-color, var(--link-primary));
     text-decoration: var(--link-decoration, none);
     word-wrap: break-word;
 
@@ -12,11 +13,11 @@
     // LVHA-ordered state colors. Setting `color` directly avoids the custom-property
     // round-trip on :visited (which is inconsistent across engines).
     &:visited {
-        color: var(--link-visited, var(--link-neutral-visited));
+        color: var(--link-visited, var(--link-primary-visited));
     }
 
     &:focus {
-        color: var(--link-focused, var(--link-neutral-focused));
+        color: var(--link-focused, var(--link-primary-focused));
     }
 
     // Padding gives the focus outline breathing room; negative margin
@@ -27,39 +28,28 @@
     }
 
     &:hover {
-        color: var(--link-hover, var(--link-neutral-hovered));
+        color: var(--link-hover, var(--link-primary-hovered));
     }
 
     &:active {
-        color: var(--link-pressed, var(--link-neutral-pressed));
+        color: var(--link-pressed, var(--link-primary-pressed));
     }
 
+    // Primary on a link inside a host that sets neutral links (a breadcrumb).
     &:is(.nds-primary, .nds-color) {
-        --link-color: var(--link-primary);
-        --link-hover: var(--link-primary-hovered);
-        --link-pressed: var(--link-primary-pressed);
-        --link-focused: var(--link-primary-focused);
-        --link-visited: var(--link-primary-visited);
+        @include link-colors(primary);
+    }
+
+    &.nds-neutral {
+        @include link-colors(neutral);
     }
 
     &.nds-oncolor {
-        --link-color: var(--link-oncolor);
-        --link-hover: var(--link-oncolor-hovered);
-        --link-pressed: var(--link-oncolor-pressed);
-        --link-focused: var(--link-oncolor-focused);
-        --link-visited: var(--link-oncolor-visited);
+        @include link-colors(oncolor);
     }
 
     :where(.nds-content-section:not(.nds-demo-section)) & {
         --link-decoration: underline;
-
-        &:not(.nds-neutral, .nds-oncolor) {
-            --link-color: var(--link-primary);
-            --link-hover: var(--link-primary-hovered);
-            --link-pressed: var(--link-primary-pressed);
-            --link-focused: var(--link-primary-focused);
-            --link-visited: var(--link-primary-visited);
-        }
     }
 }
 
