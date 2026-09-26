@@ -119,8 +119,8 @@
     // Name the block from the class the author wrote, so the label can't drift
     // from the highlighting — and so a language we don't lex (bash, json) still
     // labels correctly. Absolutely positioned in the block's top corner, so the
-    // late-loading label costs no layout. Tabbed blocks already name their
-    // languages on the tabs, and a sniffed block is a guess we won't print.
+    // late-loading label costs no layout. A block with no lang class is named
+    // from the sniffed language.
     function labelLanguage(codeElement, detected) {
         const wrapper = codeElement.closest('.nds-code');
         if (!wrapper) return;
