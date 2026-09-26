@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "20/09/2026 - 01:00 PM"
+last_edit: "26/09/2026 - 12:45 PM"
 ---
 
 <!-- Experimental notice (dark mode) -->
@@ -247,6 +247,84 @@ last_edit: "20/09/2026 - 01:00 PM"
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dark Areas -->
+<section id="themesDarkArea" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Dark Areas</h2>
+            <p class="nds-section-description">Put <code class="nds-inline-code lang-html">data-theme="dark"</code> on a dark surface, such as a deep primary section, the footer or a card on a photo. Every component inside it takes its dark-mode colors, and the rest of the page stays as it is. Status tags keep their status colors. On a single component, such as a card, it renders that component in dark mode.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block">
+                <div class="nds-showcase">
+                    <div class="nds-demo-card">
+                        <div class="demo-header">
+                            <div class="demo-label">A deep primary section</div>
+                        </div>
+                        <div class="demo-container">
+                            <div class="state-demo">
+                                <section class="nds-content-section nds-primary" data-theme="dark">
+                                    <div class="nds-section-wrapper">
+                                        <div class="nds-section-body">
+                                            <div class="nds-block">
+                                                <div class="nds-tags">
+                                                    <span class="nds-tag" data-status="success"><span class="nds-label">Approved</span></span>
+                                                    <span class="nds-tag" data-status="warning"><span class="nds-label">Expiring</span></span>
+                                                    <span class="nds-tag nds-outline"><span class="nds-label">Riyadh</span></span>
+                                                </div>
+                                            </div>
+                                            <button class="nds-btn nds-secondary-outline"><span class="nds-label">View requests</span></button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="demo-code">
+                            <div class="nds-tabs nds-code nds-divided">
+                                <div class="nds-tab-list-container nds-scroll-more">
+                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                            aria-controls="panel-themes-darkarea-1" id="tab-themes-darkarea-1">
+                                            <span class="nds-tab-label">HTML</span>
+                                        </button>
+                                    </nav>
+                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-tab-content">
+                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-darkarea-1"
+                                        aria-labelledby="tab-themes-darkarea-1">
+                                        <div class="nds-code-action">
+                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                                <i class="nds-icon nds-hgi-copy-01"></i>
+                                            </button>
+                                        </div>
+                                        <code class="lang-html code">
+&lt;section class="nds-content-section nds-primary" data-theme="dark"&gt;
+  &lt;div class="nds-section-wrapper"&gt;
+    &lt;div class="nds-section-body"&gt;
+      &lt;div class="nds-block"&gt;
+        &lt;div class="nds-tags"&gt;
+          &lt;span class="nds-tag" data-status="success"&gt;&lt;span class="nds-label"&gt;Approved&lt;/span&gt;&lt;/span&gt;
+          &lt;span class="nds-tag" data-status="warning"&gt;&lt;span class="nds-label"&gt;Expiring&lt;/span&gt;&lt;/span&gt;
+          &lt;span class="nds-tag nds-outline"&gt;&lt;span class="nds-label"&gt;Riyadh&lt;/span&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button class="nds-btn nds-secondary-outline"&gt;&lt;span class="nds-label"&gt;View requests&lt;/span&gt;&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code>
                                     </div>
                                 </div>
                             </div>
@@ -611,7 +689,8 @@ root.setAttribute('data-palette', '');
                     <li>Reference semantic tokens (<code class="nds-inline-code lang-css">--background-card</code>, <code class="nds-inline-code lang-css">--text-default</code>) in your own component CSS so it follows both mode and theme automatically</li>
                     <li>Do not hardcode colours in your CSS: hardcoded values respond to neither dark mode nor themes</li>
                     <li>For a custom palette, check WCAG contrast (4.5:1 text, 3:1 UI) on your primary against white. The seed anchors the 600 step exactly, but the derived steps are perceptual approximations and are not contrast-guaranteed</li>
-                    <li>Scope your own dark overrides with <code class="nds-inline-code lang-css">:root[data-theme~="dark"]</code>: the word selector matches even when a theme token is also present, such as <code class="nds-inline-code lang-html">"dark crimson"</code></li>
+                    <li>Scope your own dark rules with <code class="nds-inline-code lang-css">[data-theme~="dark"] .your-class</code>. It matches in dark mode and in a dark area, and the word selector matches even when a theme token is also present, such as <code class="nds-inline-code lang-html">"dark crimson"</code></li>
+                    <li>Put <code class="nds-inline-code lang-html">data-theme="dark"</code> on the dark surface itself, not on each component inside it. On a light page, put it on a card to make a dark card. On an element, only the <code class="nds-inline-code lang-html">dark</code> token works: a theme name applies to the whole page only</li>
                     <li>Test every component in both modes and across your themes whenever you add a surface</li>
                 </ul>
             </div>
@@ -622,7 +701,7 @@ root.setAttribute('data-palette', '');
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-theme-toggle</code></td><td>Place on any button or switch container to register it as a dark-mode toggle. Keeps <code class="nds-inline-code lang-html">aria-pressed</code>, the moon and sun icon, and the checkbox state in sync. Flips only the <code class="nds-inline-code lang-html">dark</code> token, preserving any active theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme</code></td><td>Set on the root element. A space-separated token list: the mode (<code class="nds-inline-code lang-html">dark</code>; light is the default, no token) plus an optional theme name. Matched per token by the <code class="nds-inline-code lang-css">~=</code> word selector, so they coexist.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-theme</code></td><td>Set on the root element for the whole page, or <code class="nds-inline-code lang-html">data-theme="dark"</code> on a dark surface for a dark area. On the root it is a space-separated token list: the mode (<code class="nds-inline-code lang-html">dark</code>; light is the default, no token) plus an optional theme name. Matched per token by the <code class="nds-inline-code lang-css">~=</code> word selector, so they coexist.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-theme-value</code></td><td>Set on a switcher item. On click the matching theme token is written into <code class="nds-inline-code lang-html">data-theme</code> (preserving the dark token), the choice is saved, and <code class="nds-inline-code lang-html">aria-current</code> syncs. An empty string restores the DGA default.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-palette</code> + <code class="nds-inline-code lang-html">--brand-*</code></td><td>Set on the root element to activate the runtime OKLCH ramp from your inline seed variables (<code class="nds-inline-code lang-css">--brand-primary</code> required; <code class="nds-inline-code lang-css">-secondary</code>, <code class="nds-inline-code lang-css">-tertiary</code>, <code class="nds-inline-code lang-css">--neutral-tint</code>, <code class="nds-inline-code lang-css">--nds-font-brand</code>, <code class="nds-inline-code lang-css">--font-weight-{regular,medium,semibold,bold}</code> optional). With no flag the page is pure DGA.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-seed-*</code></td><td>Place on a switcher item (alongside <code class="nds-inline-code lang-html">data-theme-value</code>) to apply a custom palette on click: <code class="nds-inline-code lang-html">data-seed-primary</code> (required), plus optional <code class="nds-inline-code lang-html">data-seed-secondary</code>, <code class="nds-inline-code lang-html">data-seed-tertiary</code>, <code class="nds-inline-code lang-html">data-seed-tint</code>, <code class="nds-inline-code lang-html">data-seed-font</code>, <code class="nds-inline-code lang-html">data-seed-weight-{regular,medium,semibold,bold}</code> (for a brand font that reads lighter or heavier than IBM Plex at the same nominal weight). The switcher sets the matching <code class="nds-inline-code lang-css">--brand-*</code> seeds plus <code class="nds-inline-code lang-html">data-palette</code>, then persists the palette so it restores on the next visit.</td></tr>

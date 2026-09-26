@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 11:24 AM"
+last_edit: "26/09/2026 - 12:45 PM"
 ---
 
 <section id="tagOverview" class="nds-content-section nds-doc-overview">
@@ -87,7 +87,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 | Color | Blue | `.nds-blue` | `.nds-tag:not([data-status])` | Pick the color by meaning |
 | Color | Yellow | `.nds-yellow` | `.nds-tag:not([data-status])` | Pick the color by meaning |
 | Color | Red | `.nds-red` | `.nds-tag:not([data-status])` | Pick the color by meaning |
-| Color | On color | `.nds-oncolor` | `.nds-tag` | For tags on a deep primary or dark background. It replaces the color classes. On a status tag the dot turns white too, so the label must name the state |
+| Color | On color | `.nds-oncolor` | `.nds-tag:not([data-status])` | The DGA white look for a standard tag on a deep primary or dark background. It replaces the color classes. A status tag keeps its colors: give the dark surface `data-theme="dark"` instead |
 | Status | Neutral (default) | — | — | A state with no meaning of its own, such as submitted or draft |
 | Status | Success | `[data-status="success"]` | `.nds-tag[data-status]` | A good result, such as approved or complete |
 | Status | Info | `[data-status="info"]` | `.nds-tag[data-status]` | A state to note, such as in review |
@@ -167,7 +167,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 - Keep labels to one to three words. A label longer than 160px ends with an ellipsis.
 - Put related tags in one `nds-tags` group, so they share the gap and wrap together.
 - Keep the label of an icon-only tag, and give its icon `aria-hidden="true"`. Screen readers read the label.
-- Add `nds-oncolor` to tags on a deep primary or dark background, including a status tag in an on-color card.
+- On a deep primary or dark surface, give the surface `data-theme="dark"`: every tag inside takes its dark-mode colors, status tags included. See [Dark Areas](../components/themes#themesDarkArea). For the DGA white look on a standard tag, add `nds-oncolor` instead.
 
 </div>
   </div>

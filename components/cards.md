@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/09/2026 - 11:05 PM"
+last_edit: "26/09/2026 - 12:45 PM"
 ---
 
 <section id="cardOverview" class="nds-content-section nds-doc-overview">
@@ -267,7 +267,7 @@ Pick another component when:
 | Color | Blue | `.nds-blue` | `.nds-card` | Tints the title, the icon and the hover border |
 | Color | On color | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card |
 | Color | On color | `.nds-oncolor` | `.nds-card-actions .nds-btn` | Buttons do not follow the card. Give each action button `.nds-oncolor` too |
-| Color | On color | `.nds-oncolor` | `.nds-tag` | Tags do not follow the card either. Give each tag, including the status tag, `.nds-oncolor` |
+| Color | On color | `.nds-oncolor` | `.nds-tag:not([data-status])` | Tags do not follow the card either. Give each standard tag `.nds-oncolor`. A status tag keeps its colors |
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
 | Layout | Stacked (default) | — | — | Header above content |
 | Layout | Row | `.nds-rowView` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
