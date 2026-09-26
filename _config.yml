@@ -179,6 +179,7 @@ exclude:
   - EDITORIAL.md
   - TODO.md
   - DEPRECATIONS.md
+  - plans
   - .claude
   - .github
   - package.json
