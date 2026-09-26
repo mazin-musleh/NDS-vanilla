@@ -164,7 +164,7 @@ module DocsCanon
 
   # On-color markup needs the deep surface behind it; everything else sits on a normal card.
   def self.preview_style(oncolor)
-    "--card-width: 100%; --card-radius: var(--radius-md);#{' --card-bg: var(--background-primary-strong);' if oncolor}"
+    "--card-width: 100%; --card-radius: var(--radius-md); min-height: 200px; display: flex; justify-content: center; align-items: center;#{' --card-bg: var(--background-primary-strong);' if oncolor}"
   end
 
   # Option markers: `(default)` pre-selects; `(demo: + Other)` also turns on option "Other" (demo
