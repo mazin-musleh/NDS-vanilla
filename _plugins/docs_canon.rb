@@ -132,7 +132,7 @@ module DocsCanon
   def self.code_tabs(id, html_src, js_src)
     tabs = [['html', 'HTML', html_src], ['js', 'JS', js_src]]
     list = tabs.each_with_index.map do |(lang, name, _), i|
-      %(<button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="#{i.zero?}" aria-controls="#{id}-panel-#{lang}" id="#{id}-tab-#{lang}"><span class="nds-tab-label">#{name}</span></button>)
+      %(<button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="#{i.zero?}" aria-controls="#{id}-panel-#{lang}" id="#{id}-tab-#{lang}"><span class="nds-label">#{name}</span></button>)
     end
     panels = tabs.each_with_index.map do |(lang, _, src), i|
       %(<div class="nds-tab-panel code-example" role="tabpanel" id="#{id}-panel-#{lang}" aria-labelledby="#{id}-tab-#{lang}"#{' hidden' unless i.zero?}><div class="nds-code-action"><button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example"><i class="nds-icon nds-hgi-copy-01"></i></button></div><code class="lang-#{lang} code">
