@@ -6,9 +6,12 @@
 // The light block is plain :root, so themes/_register.scss ([data-theme~=]) always
 // outranks it — but the dark block matches register's specificity, which is why the
 // critical bundle @use's this file AFTER register.
+// data-theme="dark" on any element makes a dark area: both blocks re-list it, because
+// an alias token resolves where it is declared and would keep its light value.
 // ════════════════════════════════════════════════════════════════════════════
 
-:root {
+:root,
+[data-theme~="dark"]:not(:root) {
     // ── Status alpha ramp — palette extension (DGA ships none; NDS-authored, so it lives here, not in the vendored mirror) ──
     --colors-yellow-alpha-10: #dc680319;
     --colors-yellow-alpha-20: #dc680333;
@@ -183,10 +186,11 @@
 /* ── Dark Mode — the same layer's dark half ──
    Sections run in the SAME ORDER as the light block above, so a token and its
    dark rebind sit at the same relative position in both halves.
-   Activated via: <html data-theme="dark">
+   Activated via: <html data-theme="dark">, or data-theme="dark" on a dark surface
    ── */
 
-:root[data-theme~="dark"] {
+:root[data-theme~="dark"],
+[data-theme~="dark"]:not(:root) {
     // ── Shadows (~2x light opacity for dark surfaces) ──
     --shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, .10);
     --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, .12), 0px 1px 3px 0px rgba(0, 0, 0, .2);
@@ -296,4 +300,11 @@
     --controls-disabled: var(--colors-alpha-white-30);
     --controls-icon-disabled: var(--colors-neutral-400);
     --controls-text-error: var(--colors-red-400);
+}
+
+// A dark area inherits its text as a resolved light-mode color: set it again.
+// Zero specificity, so a component that carries data-theme keeps its own color.
+:where([data-theme~="dark"]:not(:root)) {
+    color: var(--text-default);
+    color-scheme: dark;
 }

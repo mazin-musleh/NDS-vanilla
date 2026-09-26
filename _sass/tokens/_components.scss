@@ -3,9 +3,11 @@
 // --{component}-{property}-{variant}-{state}. Each consumes semantic/brand tokens.
 // The dark block at the bottom of this file is the same layer's dark half;
 // foundation tokens (+ their dark) live in tokens/_semantic.scss.
+// A dark area (data-theme="dark" on any element) re-lists both blocks, as there.
 // ════════════════════════════════════════════════════════════════════════════
 
-:root {
+:root,
+[data-theme~="dark"]:not(:root) {
 
     // ── autocomplete ──
     --autocomplete-highlight: var(--colors-primary-100);
@@ -305,10 +307,11 @@
 /* ── Dark Mode — the same layer's dark half ──
    Components run in the SAME ORDER as the light block above, so a token and its
    dark rebind sit at the same relative position in both halves.
-   Activated via: <html data-theme="dark">
+   Activated via: <html data-theme="dark">, or data-theme="dark" on a dark surface
    ── */
 
-:root[data-theme~="dark"] {
+:root[data-theme~="dark"],
+[data-theme~="dark"]:not(:root) {
 
     // ── autocomplete ──
     --autocomplete-highlight: var(--colors-primary-alpha-50);

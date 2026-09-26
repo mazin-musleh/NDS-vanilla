@@ -310,7 +310,8 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
 
   @at-root {
     .nds-btn.nds-oncolor,
-    :where(:root[data-theme~="dark"]) .nds-btn:not(.nds-primary, .nds-neutral) {
+    :where(:root[data-theme~="dark"]) .nds-btn:not(.nds-primary, .nds-neutral),
+    .nds-btn:not(.nds-primary, .nds-neutral):where([data-theme~="dark"], [data-theme~="dark"] *) {
       --btn-color-disabled: var(--text-default-oncolor-disabled);
       // The alpha wash is an ONCOLOR treatment: the button sits on an arbitrary
       // brand fill, so any fixed neutral would fight it. Dark overrides the
@@ -452,7 +453,8 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
 
   @at-root {
     .nds-btn.nds-oncolor.nds-destructive,
-    :where(:root[data-theme~="dark"]) .nds-btn.nds-destructive {
+    :where(:root[data-theme~="dark"]) .nds-btn.nds-destructive,
+    .nds-btn.nds-destructive:where([data-theme~="dark"], [data-theme~="dark"] *) {
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--colors-alpha-white-20);
 

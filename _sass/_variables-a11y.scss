@@ -49,8 +49,10 @@ $a11y-filters: (
 // Light wires every semantic token to four internal vars (--_hc-bg/-fg/
 // -link/-link-*); dark redefines only those vars and the long token list
 // cascades through. Buttons + on-color text are theme-invariant.
+// A dark area re-lists both blocks: its own dark tokens would otherwise win.
 // ----------------------------------------------
-:root[data-a11y~="high-contrast"] {
+:root[data-a11y~="high-contrast"],
+:root[data-a11y~="high-contrast"] [data-theme~="dark"] {
     --_hc-bg:           var(--colors-base-white);
     --_hc-fg:           var(--colors-base-black);
     --_hc-link:         var(--colors-primary-800);
@@ -132,7 +134,8 @@ $a11y-filters: (
 }
 
 // Dark HC: invert bg/fg, shift the link ladder.
-:root[data-a11y~="high-contrast"][data-theme~="dark"] {
+:root[data-a11y~="high-contrast"][data-theme~="dark"],
+:root[data-a11y~="high-contrast"] [data-theme~="dark"] {
     --_hc-bg:           var(--colors-base-black);
     --_hc-fg:           var(--colors-base-white);
     --_hc-link:         var(--colors-primary-300);
@@ -166,7 +169,8 @@ $a11y-filters: (
     --btn-loading-color:      var(--text-oncolor-primary);
     --btn-loading-track:      var(--colors-alpha-white-20);
 }
-:root[data-a11y~="high-contrast"][data-theme~="dark"] .nds-btn:is(.nds-primary,.nds-neutral):not(.nds-oncolor) {
+:root[data-a11y~="high-contrast"][data-theme~="dark"] .nds-btn:is(.nds-primary,.nds-neutral):not(.nds-oncolor),
+:root[data-a11y~="high-contrast"] .nds-btn:is(.nds-primary,.nds-neutral):not(.nds-oncolor):is([data-theme~="dark"], [data-theme~="dark"] *) {
     --btn-bg:             var(--button-background-oncolor-default);
     --btn-bg-hover:       var(--button-background-oncolor-hovered);
     --btn-bg-active:      var(--button-background-oncolor-pressed);

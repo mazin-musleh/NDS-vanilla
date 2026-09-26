@@ -5,6 +5,7 @@
 
 @use "sass:math";
 @use "sass:map";
+@use "sass:selector";
 
 // ==============================================
 // BREAKPOINTS
@@ -100,11 +101,16 @@ $breakpoints-range: (
 // DARK MODE
 // ==============================================
 
+// A dark area (data-theme="dark" on any element) matches the element itself and
+// everything inside it, at the same specificity as page dark mode.
+$dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root) *)';
+
 @mixin dark {
   @at-root {
     @each $selector in & {
 
-      :root[data-theme~="dark"] #{$selector} {
+      :root[data-theme~="dark"] #{$selector},
+      #{selector.unify($selector, $dark-area)} {
         @content;
       }
     }

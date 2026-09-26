@@ -126,7 +126,7 @@
 // Current segment on a dark surface: brand fill. Two triggers, one treatment —
 // the theme's dark mode, and .nds-oncolor on a light-mode page. The primary
 // ladder carries no dark re-bind, so a single rule serves both.
-:is(:root[data-theme~="dark"] .nds-content-switcher, .nds-content-switcher.nds-oncolor) .nds-tab[aria-selected="true"] {
+:is([data-theme~="dark"] .nds-content-switcher, .nds-content-switcher[data-theme~="dark"], .nds-content-switcher.nds-oncolor) .nds-tab[aria-selected="true"] {
   --btn-bg: var(--button-background-primary-default);
   --btn-bg-hover: var(--button-background-primary-default);
   --btn-bg-active: var(--button-background-primary-default);

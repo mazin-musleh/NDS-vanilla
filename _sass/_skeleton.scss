@@ -272,10 +272,13 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
     --nds-skeleton-angle: 270deg;
 }
 
-:root[data-theme~="dark"] {
+:root[data-theme~="dark"],
+[data-theme~="dark"]:not(:root) {
     --nds-skeleton-stops: rgba(77, 87, 97, 0.2) 0%,
         rgba(108, 114, 126, 0.2) 50%,
         rgba(157, 164, 174, 0.2) 100%;
+    // Re-declared so a dark area resolves it with its own stops.
+    --nds-skeleton-fill: linear-gradient(var(--nds-skeleton-angle), var(--nds-skeleton-stops));
     --nds-skeleton-solid: rgba(108, 114, 126, 0.2);
 }
 

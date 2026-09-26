@@ -43,6 +43,7 @@ ACCEPTED = {
     '.nds-share .nds-dropmenu-menu [data-status=success] i::before': "success glyph; a host cannot supply each item's own glyph as the fallback",
     ':root[data-theme~=dark] .nds-feedback:is([data-status=neutral],[data-status=help])': 'dark neutral/help tweak on the feedback\'s own icon',
     ':root[data-theme~=dark] :is([data-status=neutral],[data-status=help]) .nds-feedback': 'dark neutral/help tweak on the feedback\'s own icon',
+    '.nds-feedback-icon:is([data-theme~=dark]:not(:root),[data-theme~=dark]:not(:root) *)': 'the same tweaks in a dark area',
 }
 
 

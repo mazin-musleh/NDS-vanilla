@@ -130,6 +130,8 @@ not the obvious thing. Match the density of the file you are in; do not out-comm
 3. **Semantic** (`tokens/_semantic.scss`, critical bundle): ONE name per meaning, system-wide (e.g. `--background-overlay`, `--text-oncolor-primary`). Its dark block matches `themes/_register.scss` on specificity, so crit `@use`s it AFTER register — keep that order.
 4. **Component** (`tokens/_components.scss`, main bundle): `--{component}-{property}-{variant}-{state}` — a per-component dial.
 
+**Dark areas:** `data-theme="dark"` on any element renders its subtree in dark mode. Both blocks of the semantic and component tiers (and the high-contrast overlay) also list `[data-theme~="dark"]:not(:root)`: the light block too, because an alias token resolves where it is declared. Keep the selector on both blocks when you edit them, and write a hand-made dark rule as `@include dark`, never a bare `:root[data-theme~="dark"]`, so it reaches dark areas. The mixin matches the element that carries `data-theme` and everything inside it (`$dark-area` in `_mixins.scss`).
+
 Rule-level dark tweaks (not tokens) stay next to the rule they modify via `@include dark`. `_variables-a11y.scss` is a separate `[data-a11y]` overlay in the accessibility bundle, not a tier.
 
 **Knobs** (`--btn-size`, `--section-*`, `--hero-*`) are NOT tokens: per-instance styling the consumer sets on the element, undefined by default, resolved via the `--_x: var(--x, default)` private pattern. Tokens theme the system; knobs style one element.

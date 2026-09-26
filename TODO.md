@@ -42,6 +42,8 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 
 - **Release notes, Cards (from the docs-rewrite pilot):** `.nds-card-status` became the header status slot; `.nds-full-width` on a card is deprecated for `.nds-full` (in `DEPRECATIONS.md`); `.nds-user` was removed (user cards went from 224px to 360px); centred cards lost the 1.5× block padding.
 
+- **Release notes, Dark areas — Added:** `data-theme="dark"` on any element renders it and everything inside it in dark mode: a deep primary or neutral section, the footer, a card on a photo, or a dark card on a light page; page-level DGA colors are unchanged. See the Themes page, Dark Areas. **Changed:** `nds-oncolor` no longer applies to a status tag; the tag keeps its status colors, and a dark surface takes `data-theme="dark"` instead.
+
 - **Release notes, Tags — Migrating:** normal tags no longer take `nds-inverted` or `nds-ghost`, and status tags no longer take `nds-outline` (`f1d14c38`). An icon-only tag now keeps its `.nds-label` readable by screen readers (`de24a23d`); existing icon-only markup renders the same, and adding a label to it is recommended, not required.
 
 - **`nds-code` keeps its init stamp after `NDS.Init.destroy()`.** `check-init-destroy.mjs` triage line: `data-nds-code-initialized` survives teardown on 62 of 63 pages with code blocks. Puppeteer showed ~17 only because its four sweep tabs share one window and background tabs never ran the lazy code init. A left stamp blocks a re-mount of the same markup.
