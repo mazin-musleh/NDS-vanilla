@@ -54,7 +54,8 @@
             });
             out += '>';
             if (VOID.test(tag)) return;
-            out += serialize(c) + '</' + tag + '>';
+            // A <template> keeps its markup in .content, not in its child nodes.
+            out += serialize(tag === 'template' ? c.content : c) + '</' + tag + '>';
         });
         return out;
     }
