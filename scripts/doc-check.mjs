@@ -149,8 +149,9 @@ for (const md of pages) {
                                 if (getComputedStyle(e).display.startsWith('inline') || e.offsetWidth < b.width * 0.9) rects.push(e.getBoundingClientRect());
                             }
                             else rects.push(e.getBoundingClientRect());
-                            const p = e.parentElement;
-                            if (p !== box && (getComputedStyle(p).display.startsWith('inline') || p.offsetWidth < b.width * 0.9)) rects.push(p.getBoundingClientRect());
+                            const p = e.parentElement, ps = getComputedStyle(p);
+                            // A drawn background is content too: a code block's line-number stripe.
+                            if (p !== box && (ps.display.startsWith('inline') || p.offsetWidth < b.width * 0.9 || ps.backgroundImage !== 'none')) rects.push(p.getBoundingClientRect());
                         });
                         rects.forEach((r) => {
                             if (!r.width || !r.height) return;
