@@ -193,6 +193,12 @@
     --card-width: 100%;
   }
 
+  // Centers the content only: the global .nds-center utility would also center the
+  // card in its parent, which is the container's job. A modal keeps its own margin.
+  &.nds-center:not(.nds-modal) {
+    margin-inline: 0;
+  }
+
   &:is(.nds-center, .nds-statistic) {
     :is(.nds-card-header, .nds-card-content > *, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
       align-items: center;

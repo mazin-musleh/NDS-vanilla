@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 12:45 PM"
+last_edit: "26/09/2026 - 01:49 PM"
 ---
 
 <section id="cardOverview" class="nds-content-section nds-doc-overview">
@@ -271,7 +271,7 @@ Pick another component when:
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
 | Layout | Stacked (default) | — | — | Header above content |
 | Layout | Row | `.nds-rowView` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
-| Layout | Center | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing |
+| Layout | Center | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
 | Full width | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
 | Number size | LG (default) | — | — | The display size |
 | Number size | MD | `.nds-md` | `.nds-card-number` | A smaller headline number |
@@ -348,6 +348,7 @@ Pick another component when:
 - Make a whole card clickable by using `<a>` or `<button>` as the card root. Do not wrap a card in a separate link, and do not put links or buttons inside a clickable card.
 - Use a stroke card in flat, content-heavy layouts, and a shadow card where the card floats over other content.
 - Put `nds-center` on the card root only. On an inner part, it centers nothing.
+- `nds-center` centers the card's content, not the card. To center the card itself, center it with its container, such as `nds-center` on an `nds-grid`.
 - To fill the container, use `nds-full` on a card, not `nds-full-width`. Inside a section, `nds-full-width` breaks out to the full screen width.
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
 - Size the featured icon or avatar up (`nds-lg`, `nds-xl`) on statistic cards and in grids, where the icon carries the meaning.
