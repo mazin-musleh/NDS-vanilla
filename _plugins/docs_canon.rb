@@ -63,8 +63,9 @@ module DocsCanon
     choices.values
   end
 
-  # ponytail: `tag.a.b:not(.c)` needs both classes and not c on one element of that tag; an
-  # attribute or a descendant part counts as present. Upgrade to a real parser if a table needs one.
+  # ponytail: `tag.a.b[x]:not(.c):not([y])` needs both classes and x, and neither c nor y, on one
+  # element of that tag; an attribute counts by name only, a descendant part as present.
+  # Upgrade to a real parser if a table needs values or descendants.
   def self.matches?(src, sel, js = nil)
     return true if sel == '—'
     # A `create()` row changes the JS form; `create({ k: v })` only one with that option,
@@ -77,8 +78,18 @@ module DocsCanon
 
     tag = sel[/\A([a-z][\w-]*)\./, 1]
     excluded = sel.scan(/:not\(\.([\w-]+)\)/).flatten
-    classes = sel.gsub(/:not\([^)]*\)/, '').scan(/\.([\w-]+)/).flatten
-    classes.empty? || src.scan(/<([a-z][\w-]*)[^>]*?\sclass="([^"]*)"/).any? { |t, cls| (tag.nil? || t == tag) && (classes - cls.split).empty? && (excluded & cls.split).empty? }
+    no_attrs = sel.scan(/:not\(\[([\w-]+)/).flatten
+    own = sel.gsub(/:not\([^)]*\)/, '')
+    classes = own.gsub(/\[[^\]]*\]/, '').scan(/\.([\w-]+)/).flatten
+    attrs = own.scan(/\[([\w-]+)/).flatten
+    return true if classes.empty? && attrs.empty?
+
+    src.scan(/<([a-z][\w-]*)([^>]*)>/).any? do |t, a|
+      cls = (a[/\sclass="([^"]*)"/, 1] || '').split
+      names = a.gsub(/"[^"]*"/, '').scan(/\s([\w-]+)/).flatten
+      (tag.nil? || t == tag) && (classes - cls).empty? && (excluded & cls).empty? &&
+        (attrs - names).empty? && (no_attrs & names).empty?
+    end
   end
 
   # A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).

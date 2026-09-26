@@ -210,6 +210,7 @@ The component's showcase: its highlights and what they give the developer. An ex
 - Wrapper: `<div class="nds-definition-list nds-divided nds-grid">` inside the section. The build sets the columns: no inline style, no extra class.
 - Item markup comes from a model page. Title: a short noun phrase. Description: one or two sentences.
 - RTL and dark mode are project features, not a component's: leave them out.
+- A structure or a part (a status tag's dot, a group) is not a feature: the Markup section shows it.
 - Usually 4 to 8 items.
 
 ### Best Practices

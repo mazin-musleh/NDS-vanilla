@@ -137,14 +137,15 @@ for (const md of pages) {
                         if (live) return { x: b.x, y: b.y, width: b.width, height: b.height };
                         let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
                         // Text by its own box (a block label is full width); a parent only when
-                        // it is inline-level, as a button or a chip is, so its drawn icon stays.
+                        // it is inline-level or narrower than the preview (a flex parent blockifies
+                        // a tag or a chip), so its drawn icon or dot stays.
                         const rects = [];
                         box.querySelectorAll('*').forEach((e) => {
                             if (e.children.length) return;
                             if (e.textContent.trim()) { const g = document.createRange(); g.selectNodeContents(e); rects.push(g.getBoundingClientRect()); }
                             else rects.push(e.getBoundingClientRect());
                             const p = e.parentElement;
-                            if (p !== box && getComputedStyle(p).display.startsWith('inline')) rects.push(p.getBoundingClientRect());
+                            if (p !== box && (getComputedStyle(p).display.startsWith('inline') || p.offsetWidth < b.width * 0.9)) rects.push(p.getBoundingClientRect());
                         });
                         rects.forEach((r) => {
                             if (!r.width || !r.height) return;
