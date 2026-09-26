@@ -34,6 +34,8 @@
   // content width. Preferred over a width: a width resolves against the
   // parent's content box and ignores the element's own inline margins.
   flex: 1;
+  // The cross axis: a column parent that centers its items would shrink it too.
+  align-self: stretch;
 
   // ---- Divider ----
   // Base rail for horizontal tabs. `.nds-vertical.nds-divided` below overrides
@@ -88,10 +90,8 @@
 
     &.nds-divided {
       .nds-tab {
-        flex-direction: row-reverse;
         margin-bottom: unset;
         border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-        justify-content: end;
 
         @include ltr {
           border-radius: var(--radius-sm) 0 0 var(--radius-sm);
@@ -322,7 +322,8 @@
     // supplies the card gutter). Overrides still route through the knobs
     // so a consumer's --tab-panel-padding{,-inline,-block} still wins.
     .nds-tab-panel {
-      --_tab-panel-padding: var(--tab-panel-padding, 0);
+      --_tab-panel-padding-inline: var(--tab-panel-padding-inline, var(--tab-panel-padding, 0));
+      --_tab-panel-padding-block: var(--tab-panel-padding-block, var(--tab-panel-padding, 0));
     }
   }
 

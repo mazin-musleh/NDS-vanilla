@@ -241,12 +241,13 @@
                     targetIndex = next();
                     break;
 
+                // First and last in reading order, in RTL too (WAI-ARIA tabs pattern).
                 case 'Home':
-                    targetIndex = isRTL && !this.isVertical ? lastIndex : 0;
+                    targetIndex = 0;
                     break;
 
                 case 'End':
-                    targetIndex = isRTL && !this.isVertical ? 0 : lastIndex;
+                    targetIndex = lastIndex;
                     break;
 
                 case 'Enter':
