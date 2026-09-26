@@ -142,7 +142,11 @@ for (const md of pages) {
                         const rects = [];
                         box.querySelectorAll('*').forEach((e) => {
                             if (e.children.length) return;
-                            if (e.textContent.trim()) { const g = document.createRange(); g.selectNodeContents(e); rects.push(g.getBoundingClientRect()); }
+                            if (e.textContent.trim()) {
+                                const g = document.createRange(); g.selectNodeContents(e); rects.push(g.getBoundingClientRect());
+                                // A leaf's own box holds its ::before/::after (a link's icon), unless it is a full-width block.
+                                if (getComputedStyle(e).display.startsWith('inline') || e.offsetWidth < b.width * 0.9) rects.push(e.getBoundingClientRect());
+                            }
                             else rects.push(e.getBoundingClientRect());
                             const p = e.parentElement;
                             if (p !== box && (getComputedStyle(p).display.startsWith('inline') || p.offsetWidth < b.width * 0.9)) rects.push(p.getBoundingClientRect());
