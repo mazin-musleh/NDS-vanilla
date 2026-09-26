@@ -8,476 +8,311 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.2"
-last_edit: "10/08/2026 - 12:42 AM"
+last_edit: "26/09/2026 - 07:27 PM"
 ---
 
-<!-- Vertical Overflow -->
-<section id="scrollMoreVertical" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Vertical Overflow</h2>
-            <p class="nds-section-description">A constrained height exposes a faded bottom edge and a full-width show-more button. Each click advances the list by one page minus the fade distance.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-divided", ".nds-scroll-more", "scrollMoreVerticalDivider"]'>
-                                    <span class="nds-label">Divider</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-scroll-more" style="--scroll-max-height: 240px;">
-                                    <ul class="nds-scroll-more-content nds-list">
-                                        <li>Riyadh</li>
-                                        <li>Jeddah</li>
-                                        <li>Mecca</li>
-                                        <li>Medina</li>
-                                        <li>Dammam</li>
-                                        <li>Khobar</li>
-                                        <li>Taif</li>
-                                        <li>Tabuk</li>
-                                        <li>Abha</li>
-                                        <li>Buraydah</li>
-                                        <li>Khamis Mushait</li>
-                                        <li>Hail</li>
-                                    </ul>
-                                    <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-                                        <span class="nds-label">Show more</span>
-                                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-scroll-more-vertical-1" id="tab-scroll-more-vertical-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-scroll-more-vertical-1"
-                                        aria-labelledby="tab-scroll-more-vertical-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-scroll-more" style="--scroll-max-height: 240px;"&gt;
-  &lt;ul class="nds-scroll-more-content nds-list"&gt;
-    &lt;li&gt;Riyadh&lt;/li&gt;
-    &lt;li&gt;Jeddah&lt;/li&gt;
-    &lt;li&gt;Mecca&lt;/li&gt;
-    &lt;li&gt;Medina&lt;/li&gt;
-    &lt;li&gt;Dammam&lt;/li&gt;
-    &lt;li&gt;Khobar&lt;/li&gt;
-    &lt;li&gt;Taif&lt;/li&gt;
-    &lt;li&gt;Tabuk&lt;/li&gt;
-    &lt;li&gt;Abha&lt;/li&gt;
-    &lt;li&gt;Buraydah&lt;/li&gt;
-    &lt;li&gt;Khamis Mushait&lt;/li&gt;
-    &lt;li&gt;Hail&lt;/li&gt;
-  &lt;/ul&gt;
-  &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
-    &lt;span class="nds-label"&gt;Show more&lt;/span&gt;
-    &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="scrollMoreOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Scroll More fits long content into a set height or width. The wrapper is `nds-scroll-more`, and the part that scrolls is `nds-scroll-more-content`. When the content does not fit, its edges fade, and an optional `nds-show-more` button moves it on one page at a time. The script finds the scroll direction by itself.
+
+Pick another component when:
+
+- the items are tabs: [Tabs](../components/tabs), which scroll their own tab row
+- a "Show all" button is enough and paging is not needed: [Expandable Content](../utilities/expandable-content)
+- the content is a menu with levels: [Drawer](../components/drawer)
+
+</div>
+  </div>
 </section>
 
-<!-- Horizontal Overflow -->
-<section id="scrollMoreHorizontal" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Horizontal Overflow</h2>
-            <p class="nds-section-description">A row that exceeds its container fades on both inline edges. The button spans full height with a vertically written label and scrolls one page per click.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-divided", ".nds-scroll-more", "scrollMoreHorizontalDivider"]'>
-                                    <span class="nds-label">Divider</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-scroll-more" style="--scroll-max-width: 480px;">
-                                    <div class="nds-scroll-more-content nds-flex" style="align-items: center;">
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">All</span></button>
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Healthcare</span></button>
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Education</span></button>
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Transport</span></button>
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Housing</span></button>
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Employment</span></button>
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Commercial</span></button>
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Tourism</span></button>
-                                        <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Utilities</span></button>
-                                    </div>
-                                    <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-                                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-scroll-more-horizontal-1" id="tab-scroll-more-horizontal-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-scroll-more-horizontal-1"
-                                        aria-labelledby="tab-scroll-more-horizontal-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-scroll-more" style="--scroll-max-width: 480px;"&gt;
-  &lt;div class="nds-scroll-more-content nds-flex" style="align-items: center;"&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;All&lt;/span&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Healthcare&lt;/span&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Education&lt;/span&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Transport&lt;/span&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Housing&lt;/span&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Employment&lt;/span&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Commercial&lt;/span&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Tourism&lt;/span&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Utilities&lt;/span&gt;&lt;/button&gt;
-  &lt;/div&gt;
-  &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
-    &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="scrollMoreMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="sm-list" data-canon data-variants="smVariantsTable">
+<div class="nds-scroll-more" style="--scroll-max-height: 240px;">
+  <ul class="nds-scroll-more-content">
+    <li>Riyadh</li>
+    <li>Jeddah</li>
+    <li>Makkah</li>
+    <li>Madinah</li>
+    <li>Dammam</li>
+    <li>Khobar</li>
+    <li>Taif</li>
+    <li>Tabuk</li>
+    <li>Abha</li>
+    <li>Buraydah</li>
+    <li>Khamis Mushait</li>
+    <li>Hail</li>
+  </ul>
+  <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+    <span class="nds-label">Show more</span>
+    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+  </button>
+</div>
+</script>
+<script type="text/html" id="sm-row" data-canon>
+<div class="nds-scroll-more" style="--scroll-max-width: 480px;">
+  <div class="nds-scroll-more-content nds-flex" style="--align: center;">
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">All</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Healthcare</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Education</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Transport</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Housing</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Employment</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Social support</span></button>
+    <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Justice</span></button>
+  </div>
+  <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+    <span class="nds-label">Show more</span>
+    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+  </button>
+</div>
+</script>
+<script type="text/html" id="sm-cards" data-canon>
+<div class="nds-scroll-more">
+  <div class="nds-scroll-more-content nds-grid" style="--max-col: 6; --min-width: 280px;">
+    <div class="nds-card nds-stroke">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">Renew a passport</span>
+          <p class="nds-card-description">Renew it online before it expires.</p>
+        </div>
+      </div>
+    </div>
+    <div class="nds-card nds-stroke">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">Book an appointment</span>
+          <p class="nds-card-description">Pick a time at the nearest service center.</p>
+        </div>
+      </div>
+    </div>
+    <div class="nds-card nds-stroke">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">Pay a fine</span>
+          <p class="nds-card-description">See your traffic fines and pay them.</p>
+        </div>
+      </div>
+    </div>
+    <div class="nds-card nds-stroke">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">Register a business</span>
+          <p class="nds-card-description">Get a commercial registration in one day.</p>
+        </div>
+      </div>
+    </div>
+    <div class="nds-card nds-stroke">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">Apply for housing</span>
+          <p class="nds-card-description">Check your eligibility for housing support.</p>
+        </div>
+      </div>
+    </div>
+    <div class="nds-card nds-stroke">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">Report an issue</span>
+          <p class="nds-card-description">Tell us about a problem with a service.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+    <span class="nds-label">Show more</span>
+    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+  </button>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Card Track -->
-<section id="scrollMoreCards" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Horizontal Card Track</h2>
-            <p class="nds-section-description">A row of cards in a grid track that exceeds its container, producing a horizontal overflow, dual-edge fade, and a full-height show-more button beside the track.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-divided", ".nds-scroll-more", "scrollMoreCardsDivider"]'>
-                                    <span class="nds-label">Divider</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-snap", ".nds-scroll-more", "scrollMoreCardsSnap"]'>
-                                    <span class="nds-label">Snap</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-scroll-more nds-snap" style="--scroll-gap: var(--spacing-md);">
-                                    <div class="nds-scroll-more-content nds-grid" style="--max-col: 6; --min-width: 280px;">
-                                        {% for service in site.data.content.services limit:6 %}
-                                        <div class="nds-card nds-stroke">
-                                            <div class="nds-card-header">
-                                                <div class="nds-card-featured-icon">
-                                                    <span class="nds-featured-icon nds-circle nds-xl">
-                                                        {{ service.icon }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="nds-card-content">
-                                                <div class="nds-card-text">
-                                                    <span class="nds-card-title">{{ service.title }}</span>
-                                                    <p class="nds-card-description">{{ service.description }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-                                    </div>
-                                    <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-                                        <span class="nds-label">Show more</span>
-                                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-scroll-more-cards-1" id="tab-scroll-more-cards-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-scroll-more-cards-1"
-                                        aria-labelledby="tab-scroll-more-cards-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-scroll-more nds-snap" style="--scroll-gap: var(--spacing-md);"&gt;
-  &lt;div class="nds-scroll-more-content nds-grid" style="--max-col: 6; --min-width: 280px;"&gt;
-    {% raw %}{% for service in site.data.content.services limit:6 %}{% endraw %}
-    &lt;div class="nds-card nds-stroke"&gt;
-      &lt;div class="nds-card-header"&gt;
-        &lt;div class="nds-card-featured-icon"&gt;
-          &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
-            {% raw %}{{ service.icon }}{% endraw %}
-          &lt;/span&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class="nds-card-content"&gt;
-        &lt;div class="nds-card-text"&gt;
-          &lt;span class="nds-card-title"&gt;{% raw %}{{ service.title }}{% endraw %}&lt;/span&gt;
-          &lt;p class="nds-card-description"&gt;{% raw %}{{ service.description }}{% endraw %}&lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-    {% raw %}{% endfor %}{% endraw %}
-  &lt;/div&gt;
-  &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
-    &lt;span class="nds-label"&gt;Show more&lt;/span&gt;
-    &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="scrollMoreVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Every row goes on the wrapper. The wrapper fits its content, but never grows wider than its container, so a wide row scrolls. A list scrolls only once `--scroll-max-height` limits its height.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Vertical list (default) | — | — | A list with a set height. The button stands under it |
+| Structure | Horizontal row | canon `#sm-row` | — | A row of buttons or chips with a set width. The button stands at the row's end, with its label written sideways |
+| Structure | Card track | canon `#sm-cards` | — | A row of cards wider than its container. The wrapper stops at the container's width, and the cards scroll inside it |
+| Divided | Divided | `.nds-divided` | `.nds-scroll-more` | A hairline between the content and the button, shown while the content overflows |
+| Snap | Snap (hint: For card tracks) | `.nds-snap` | `.nds-scroll-more` | Each item's start snaps to the edge of the scrolling area |
+| Gap | Gap | `--scroll-gap: var(--spacing-md)` | `.nds-scroll-more` | Space between the content and the button. With Divided, the hairline sits in the gap |
+{: #smVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="scrollMoreFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates on any <code class="nds-inline-code lang-html">.nds-scroll-more</code> on the page. Overflow detection, scroll listeners, and button handlers attach automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical"></i>
-                            <span class="nds-label">Axis Auto-detection</span>
-                        </span>
-                        <p class="nds-item-desc">Measures content on both axes and picks vertical or horizontal based on which one overflows. No configuration attribute required.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-blur"></i>
-                            <span class="nds-label">Edge Fade Mask</span>
-                        </span>
-                        <p class="nds-item-desc">Fades the scrollable edges to hint at hidden content. The fade adapts to start, middle, and end positions and adjusts for RTL horizontal scroll.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
-                            <span class="nds-label">Item-aware Step</span>
-                        </span>
-                        <p class="nds-item-desc">One full item from the previous page stays visible as an anchor on the next click, so users never lose their place when paging through long lists or card tracks.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-repeat"></i>
-                            <span class="nds-label">Loop to Start</span>
-                        </span>
-                        <p class="nds-item-desc">When the user reaches the end, the button flips its icon and the next click returns the scroll position to the start.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-resize-01"></i>
-                            <span class="nds-label">Reactive to Layout</span>
-                        </span>
-                        <p class="nds-item-desc">A ResizeObserver on the content re-runs overflow detection when the container or its children change size, so the button appears and disappears as needed.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-touch-01"></i>
-                            <span class="nds-label">Free-scroll Friendly</span>
-                        </span>
-                        <p class="nds-item-desc">Passive scroll listener throttled by requestAnimationFrame, with the maximum scroll range cached and refreshed only when layout changes, so touch and trackpad momentum scroll stay smooth.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Re-initialize, manually recheck overflow, or tear down listeners per element through <code class="nds-inline-code lang-js">NDS.ScrollMore</code>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="scrollMoreFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-scroll-more</code> on the page starts by itself. The overflow check, the scroll listener and the button need no call.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical"></i>
+            <span class="nds-label">Axis Auto-detection</span>
+          </span>
+          <p class="nds-item-desc">The script measures both directions and scrolls the one that overflows. When both do, it scrolls vertically.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-blur"></i>
+            <span class="nds-label">Edge Fade Mask</span>
+          </span>
+          <p class="nds-item-desc">An edge fades only while more content lies past it, so there is no fade at the very start or the very end.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
+            <span class="nds-label">Item-aware Step</span>
+          </span>
+          <p class="nds-item-desc">Each click moves one page minus one item, so the last item stays in view as an anchor. The first item's size sets the step.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-repeat"></i>
+            <span class="nds-label">Loop to Start</span>
+          </span>
+          <p class="nds-item-desc">At the end, the button's arrow flips, and the next click scrolls back to the start.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Reactive to Layout</span>
+          </span>
+          <p class="nds-item-desc">The script checks the overflow again when the content area changes size, so the button shows and hides as needed.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-touch-01"></i>
+            <span class="nds-label">Free-scroll Friendly</span>
+          </span>
+          <p class="nds-item-desc">Touch, trackpad and mouse-wheel scrolling work as usual. The scroll listener is passive and runs at most once a frame.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-api"></i>
+            <span class="nds-label">Programmatic Control</span>
+          </span>
+          <p class="nds-item-desc">Start a new wrapper, check the overflow again or remove the behavior through <code class="nds-inline-code lang-js">NDS.ScrollMore</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="scrollMoreGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
+<section id="scrollMorePractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <strong>Scroll More</strong> when you need to fit a long list, chip row, or card track into a bounded area while preserving full access to every item</li>
-                    <li>Set <code class="nds-inline-code lang-html">--scroll-max-height</code> for vertical lists and <code class="nds-inline-code lang-html">--scroll-max-width</code> for horizontal rows. Without a size limit the content will not overflow and the button will not appear</li>
-                    <li>Use a single wrapper for either direction; the axis is auto-detected from whichever dimension overflows, so the same markup works for vertical lists and horizontal rows</li>
-                    <li>Do not use Scroll More for navigational tabs. Use <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a>, which has its own overflow and active-tab tracking</li>
-                    <li>Do not use Scroll More for nested menus or multi-level navigation. Use <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a>, which handles submenu open/close state</li>
-                    <li>Do not use Scroll More when a "Show all" affordance is enough and pagination is not needed. Use <a class="nds-color" href="{{ 'utilities/expandable-content' | relative_url }}">Expandable Content</a> instead</li>
-                    <li>Keep the first child uniform in size when you expect item-aware paging. The step is computed from the first child; uneven sizes still work but the "one page at a time" feel is weaker</li>
-                    <li>Set <code class="nds-inline-code lang-html">--scroll-gap</code> when you want visible breathing room between the content and the show-more button. Pair with <code class="nds-inline-code lang-html">nds-divided</code> for a hairline separator on top of the gap</li>
-                    <li>If children have borders, outlines, or shadows that get clipped by the overflow container, apply inline padding to <code class="nds-inline-code lang-html">.nds-scroll-more-content</code> to reserve breathing room</li>
-                </ul>
-            </div>
+- Use Scroll More to fit a long list, a row of chips or a card track into a set area, with every item still in reach.
+- Give a vertical list a height limit with `--scroll-max-height`. Without one, the list never overflows and the button never shows.
+- Keep the items the same size when you want even paging. The first item sets the step.
+- Keep the visible "Show more" label on the button. It names the button for screen readers.
+- Add `nds-snap` to a card track, so each click stops at the start of a card.
+- When items have borders or shadows that the edge clips, add inline padding to `.nds-scroll-more-content`.
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Renders a hairline separator between the content and the show-more button when overflow is present. No child element required</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-snap</code></td><td>Applies CSS scroll-snap so each direct child's leading edge aligns with the scroll container. Good for card tracks and large items</td></tr>
-                    </tbody>
-                </table>
-            </div>
+</div>
+  </div>
+</section>
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-axis</code></td><td>Set automatically by the JS on <code class="nds-inline-code lang-html">.nds-scroll-more</code>. Values: <code class="nds-inline-code lang-html">vertical</code>, <code class="nds-inline-code lang-html">horizontal</code>. Removed when content does not overflow</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Managed automatically. Tokens: <code class="nds-inline-code lang-html">has-more</code> (overflow present), <code class="nds-inline-code lang-html">at-start</code> (scroll position 0), <code class="nds-inline-code lang-html">at-end</code> (scroll position max). Drives mask fade and button icon direction</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<section id="scrollMoreApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--scroll-max-height</code></td><td><code class="nds-inline-code lang-html">none</code></td><td>Maximum block size of the wrapper. Drives vertical overflow</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--scroll-max-width</code></td><td><code class="nds-inline-code lang-html">none</code></td><td>Maximum inline size of the wrapper. Drives horizontal overflow</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--scroll-fade</code></td><td><code class="nds-inline-code lang-html">48px</code></td><td>Length of the edge fade gradient on the overflow side(s)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--scroll-gap</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Gap between the content and the show-more button</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--scroll-divider</code></td><td><code class="nds-inline-code lang-html">--divider-color</code></td><td>Color of the border between content and button</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--scroll-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-xs</code></td><td>Padding at the scroll end, so the last item's border and focus ring are not clipped. Follows the scroll axis; the start edge is left flush. Set <code class="nds-inline-code lang-html">0</code> to opt out</td></tr>
-                    </tbody>
-                </table>
-            </div>
+### Data Attributes
+{: .nds-block-title}
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.ScrollMore</strong> API exposes initialization and teardown hooks. For dynamically added markup, call <strong>NDS.ScrollMore.init()</strong> to activate the new instances.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialize all instances on the page ─────────────
-// Called automatically on DOMContentLoaded; call again after
-// injecting new .nds-scroll-more markup.
-NDS.ScrollMore.init();
+The script writes these on the wrapper. Read them in your own CSS or script. Do not set them.
 
-// ── Initialize a single element ──────────────────────
-// Idempotent: safe to call on an already-initialized wrapper.
-const wrapper = document.querySelector('.nds-scroll-more');
-NDS.ScrollMore.create(wrapper);          // alias: initElement
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-axis` | `.nds-scroll-more` | `vertical` or `horizontal`: the direction that overflows. Removed when nothing overflows |
+| `data-state` | `.nds-scroll-more` | `has-more` while the content overflows, `at-start` at the start of the scroll and `at-end` at the end. They drive the fade and the direction of the button's arrow |
+{: .nds-table .nds-responsive}
 
-// ── Recheck overflow after content changes ───────────
-// The built-in ResizeObserver handles size changes, but if
-// you mutate the DOM (add/remove items) without resizing
-// the container, call this to refresh the state.
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on the wrapper.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--scroll-max-height` | `none` | Height limit of the wrapper, for vertical overflow |
+| `--scroll-max-width` | `100%` | Width limit of the wrapper, for horizontal overflow. The default stops it at its container's width |
+| `--scroll-fade` | `48px` | Length of the edge fade |
+| `--scroll-gap` | `0` | Space between the content and the button |
+| `--scroll-divider` | `var(--divider-color)` | Color of the `nds-divided` hairline |
+| `--scroll-padding` | `var(--spacing-xs)` | Space at the end of the scroll, so the last item's border and focus ring are not clipped. The start stays flush. Set `0` to remove it |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.ScrollMore.init()` | Starts every `.nds-scroll-more` on the page that has not started yet. `reinit()` is the same |
+| `NDS.ScrollMore.create(wrapper)` | Starts one wrapper. It does nothing on a wrapper that has started |
+| `NDS.ScrollMore.checkOverflow(wrapper)` | Checks the overflow again. Call it after you add or remove items while the wrapper keeps its size |
+| `NDS.ScrollMore.destroy(wrapper)` | Removes the listeners. Call it before you remove the wrapper |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="sm-js" data-canon data-lang="js">
+var wrapper = document.querySelector('.nds-scroll-more');
+wrapper.querySelector('.nds-scroll-more-content').insertAdjacentHTML('beforeend', '<li>Jazan</li>');
 NDS.ScrollMore.checkOverflow(wrapper);
+</script>
 
-// ── Tear down a single instance ──────────────────────
-// Disconnects the ResizeObserver and clears cached refs.
-// Use before removing the element from the DOM.
-NDS.ScrollMore.destroy(wrapper);
+The full API is in the banner of `_js/nds-scroll-more.js`.
 
-// ── Re-run init on all elements ──────────────────────
-// Alias for init(); useful after bulk DOM replacement.
-NDS.ScrollMore.reinit();
-                        </code>
-                    </div>
-                </div>
-            </div>
+</div>
+  </div>
+</section>
 
-        </div>
+<section id="scrollMoreRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Tabs](../components/tabs): the tab row scrolls through Scroll More.
+- Every code block on this site: its row of language tabs is a Scroll More.
+
+</div>
+  </div>
 </section>
