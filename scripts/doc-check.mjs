@@ -110,7 +110,8 @@ for (const md of pages) {
                     if (box && !live) {
                         const w = inner.clientWidth;
                         inner.querySelectorAll('.nds-btn, .nds-chip, .nds-tag').forEach((el) => {
-                            if (el.closest('.nds-full, .nds-dropmenu-menu, .nds-card-actions, .nds-grid') || !el.offsetWidth) return;
+                            // Full width by design: a vertical scroll-more's show-more button.
+                            if (el.closest('.nds-full, .nds-dropmenu-menu, .nds-card-actions, .nds-grid, [data-axis="vertical"] > .nds-show-more') || !el.offsetWidth) return;
                             if (el.offsetWidth > w * 0.9) issues.push(`stretched: ${el.className}`);
                         });
                     }
