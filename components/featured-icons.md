@@ -7,346 +7,202 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "05/09/2026 - 07:33 PM"
+updated: "1.12.x"
+last_edit: "26/09/2026 - 03:26 PM"
 ---
 
-<!-- Featured Icons -->
-<section id="featuredIconsOverview" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Featured Icons</h2>
-            <p class="nds-section-description">Combine a color variant, size, and style to match the context where the icon appears</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Color: ">
-                                        <span class="nds-label">Color: Brand</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-featured-icon", "iconColor"]'
-                                                data-trigger-label="Brand">
-                                                <span class="nds-label">Brand (default)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-green", ".nds-featured-icon", "iconColor"]'>
-                                                <span class="nds-label">Green</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-blue", ".nds-featured-icon", "iconColor"]'>
-                                                <span class="nds-label">Blue</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-yellow", ".nds-featured-icon", "iconColor"]'>
-                                                <span class="nds-label">Yellow</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-red", ".nds-featured-icon", "iconColor"]'>
-                                                <span class="nds-label">Red</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-neutral", ".nds-featured-icon", "iconColor"]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                        <span class="nds-label">Size: Medium</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-featured-icon", "iconSize"]'>
-                                                <span class="nds-label">Small (32px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-featured-icon", "iconSize"]'
-                                                data-trigger-label="Medium">
-                                                <span class="nds-label">Medium (40px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-lg", ".nds-featured-icon", "iconSize"]'>
-                                                <span class="nds-label">Large (48px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-featured-icon", "iconSize"]'>
-                                                <span class="nds-label">Extra Large (56px)</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-circle", ".nds-featured-icon", "iconShape"]'>
-                                    <span class="nds-label">Circle</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-outline", ".nds-featured-icon", "iconStyle"]'>
-                                    <span class="nds-label">Outline</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-dark", ".nds-featured-icon", "iconStyle"]'>
-                                    <span class="nds-label">Dark</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-subtle", ".nds-featured-icon", "iconStyle"]'>
-                                    <span class="nds-label">Subtle</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <span class="nds-featured-icon">
-                                    <i class="hgi hgi-stroke hgi-stars"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-featured-icon-1" id="tab-featured-icon-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-featured-icon-1"
-                                        aria-labelledby="tab-featured-icon-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;span class="nds-featured-icon"&gt;
-  &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
-&lt;/span&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="featuredIconOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A featured icon is a `<span>` with the `nds-featured-icon` class around one icon. It marks a card, a list item or a page section, and its color can report a status.
+
+Pick another component when:
+
+- the icon reports the result of a form field or a message: [Feedback Icons](../components/feedback-icons)
+- the image is a person or an organization: [Avatar](../components/avatar)
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="featuredIconsFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-colors"></i>
-                            <span class="nds-label">Six Color Variants</span>
-                        </span>
-                        <p class="nds-item-desc">Brand, success, info, warning, error, and neutral. Each sets the background and icon color automatically through design tokens.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-resize-01"></i>
-                            <span class="nds-label">Four Sizes</span>
-                        </span>
-                        <p class="nds-item-desc">From 32px to 56px. Icon and padding scale proportionally through the <code class="nds-inline-code lang-html">--featuredicon-size</code> property.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-square-circle"></i>
-                            <span class="nds-label">Shape and Style Modifiers</span>
-                        </span>
-                        <p class="nds-item-desc">Rounded square by default, with circle, outline, and dark fill options that combine freely with any color and size.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-board"></i>
-                            <span class="nds-label">Custom Color Override</span>
-                        </span>
-                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--featuredicon-bg</code> and <code class="nds-inline-code lang-html">--featuredicon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="featuredIconMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="featured-icon-single" data-canon data-variants="featuredIconVariantsTable">
+<span class="nds-featured-icon">
+  <i class="hgi hgi-stroke hgi-stars" aria-hidden="true"></i>
+</span>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="featuredIconsGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use featured icons to visually anchor key items in <a href="{{ 'components/cards' | relative_url }}">Cards</a>, <a href="{{ 'components/definition-list' | relative_url }}">Definition Lists</a>, and page sections where a plain icon would not stand out enough</li>
-                    <li>Use inside <a href="{{ 'components/alert' | relative_url }}">Alerts</a> and <a href="{{ 'components/modal' | relative_url }}">Modals</a> to reinforce the message type with a matching color variant</li>
-                    <li>Use as leading icons in <a href="{{ 'components/drawer' | relative_url }}">Drawer</a> navigation items to give each section a distinct visual identity</li>
-                    <li>Match the color variant to the meaning: brand for primary actions, success/error/warning for status, info for informational, neutral for general purpose</li>
-                    <li>Don't use for decorative icons that carry no meaning. A plain icon without a container is lighter and less visually demanding</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-sm</code> in dense layouts like table rows or sidebar items. Use <code class="nds-inline-code lang-html">nds-lg</code> or <code class="nds-inline-code lang-html">nds-xl</code> for hero sections and landing page features</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-circle</code> when the icon sits next to rounded elements like avatars. Use the default rounded square for card headers and list items</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-dark</code> when the icon needs to stand out on light backgrounds with stronger visual weight. Use <code class="nds-inline-code lang-html">nds-outline</code> for a lighter, secondary treatment</li>
-                    <li>Override <code class="nds-inline-code lang-html">--featuredicon-bg</code> and <code class="nds-inline-code lang-html">--featuredicon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants</li>
-                </ul>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Color Variants</h3>
-                <p>Brand is the default color. Pick a color with a color class, the same set tags use. <code class="nds-inline-code lang-html">data-status</code> paints the same colors and says more: it declares the state the icon reports. Use the class when you want the color, and the attribute when the icon reports an outcome. The attribute also inherits, and the class does not: an icon inside a card or a drawer item that carries <code class="nds-inline-code lang-html">data-status</code> takes that color unless it sets its own.</p>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Class</th>
-                            <th>Status</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><em>none</em></td>
-                            <td><em>none</em></td>
-                            <td>Primary brand color (default).</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-green</code></td>
-                            <td><code class="nds-inline-code lang-html">data-status="success"</code></td>
-                            <td>Green for positive outcomes and confirmations.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-blue</code></td>
-                            <td><code class="nds-inline-code lang-html">data-status="info"</code></td>
-                            <td>Blue for informational content and tips.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-yellow</code></td>
-                            <td><code class="nds-inline-code lang-html">data-status="warning"</code></td>
-                            <td>Yellow/amber for cautionary information.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-red</code></td>
-                            <td><code class="nds-inline-code lang-html">data-status="error"</code></td>
-                            <td>Red for errors and validation failures.</td>
-                        </tr>
-                        <tr>
-                            <td><em>none</em></td>
-                            <td><code class="nds-inline-code lang-html">data-status="critical"</code></td>
-                            <td>Red, same cascade as error. Use for system-level critical alerts and outages.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-neutral</code></td>
-                            <td><code class="nds-inline-code lang-html">data-status="neutral"</code></td>
-                            <td>Gray for general purpose and default states.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Class</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-sm</code></td>
-                            <td>Small size, 32px. For dense layouts and secondary features.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-md</code></td>
-                            <td>Medium size, 40px. Default when no size is specified.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-lg</code></td>
-                            <td>Large size, 48px. For prominent features and section headers.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-xl</code></td>
-                            <td>Extra large, 56px. For hero sections and landing page features.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-circle</code></td>
-                            <td>Fully rounded shape instead of the default rounded square.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-outline</code></td>
-                            <td>Transparent background with a colored border. Lighter visual weight.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-dark</code></td>
-                            <td>Solid filled background with white icon. Stronger visual weight for emphasis.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <p>Each knob can be set on the element itself or on any ancestor — the status cascade and host components (cards, drawer, metric) set these to color a nested featured icon.</p>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--featuredicon-bg</code></td>
-                            <td>Background fill color. Set without a variant to create custom color pairings.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--featuredicon-color</code></td>
-                            <td>Icon glyph color. Pair with <code class="nds-inline-code lang-html">--featuredicon-bg</code> for full control.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--featuredicon-size</code></td>
-                            <td>Container diameter. Icon, padding, and radius scale proportionally. The size classes (<code class="nds-inline-code lang-html">nds-sm</code>–<code class="nds-inline-code lang-html">nds-xl</code>) set it.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--featuredicon-radius</code></td>
-                            <td>Corner rounding. Defaults to a proportional rounded square; <code class="nds-inline-code lang-html">nds-circle</code> forces a full circle.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--featuredicon-dark-bg</code></td>
-                            <td>Fill color for the <code class="nds-inline-code lang-html">nds-dark</code> variant.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--featuredicon-bg-forced</code><br><code class="nds-inline-code lang-html">--featuredicon-color-forced</code><br><code class="nds-inline-code lang-html">--featuredicon-dark-bg-forced</code></td>
-                            <td>The same three colors, set on a parent element instead. Use them when the parent must win over a variant class on the icon. The plain knobs above lose that contest.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="featuredIconVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Every row goes on the `.nds-featured-icon` element. Pick one option from each group.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Color | Brand (default) | — | — | The brand color, for an icon with no status to report |
+| Color | Green | `.nds-green` | `.nds-featured-icon` | Success and confirmation. `data-status="success"` gives the same color and says the icon reports an outcome |
+| Color | Blue | `.nds-blue` | `.nds-featured-icon` | Information and tips. `data-status="info"` gives the same color |
+| Color | Yellow | `.nds-yellow` | `.nds-featured-icon` | A warning. `data-status="warning"` gives the same color |
+| Color | Red | `.nds-red` | `.nds-featured-icon` | An error or a failure. `data-status="error"` gives the same color |
+| Color | Neutral | `.nds-neutral` | `.nds-featured-icon` | General use, with no meaning of its own. `data-status="neutral"` gives the same color |
+| Size | SM | `.nds-sm` | `.nds-featured-icon` | 32px, for dense layouts such as table rows and side menus |
+| Size | MD (default) | — | — | 40px. It needs no class |
+| Size | LG | `.nds-lg` | `.nds-featured-icon` | 48px, for section headers |
+| Size | XL | `.nds-xl` | `.nds-featured-icon` | 56px, for hero sections and landing pages |
+| Shape | Rounded (default) | — | — | A square with rounded corners, for card headers and list items |
+| Shape | Circle | `.nds-circle` | `.nds-featured-icon` | A circle, beside round parts such as avatars. It changes nothing on the Subtle style |
+| Style | Light (default) | — | — | A light fill in the icon's color |
+| Style | Outline | `.nds-outline` | `.nds-featured-icon` | No fill and a border in the icon's color, for a lighter look |
+| Style | Dark | `.nds-dark` | `.nds-featured-icon` | A solid fill and a white icon, for the strongest emphasis |
+| Style | Subtle | `.nds-subtle` | `.nds-featured-icon` | No container: the icon alone, drawn at the full size |
+{: #featuredIconVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="featuredIconFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-colors"></i>
+            <span class="nds-label">Six Color Variants</span>
+          </span>
+          <p class="nds-item-desc">Brand, success, info, warning, error and neutral. Each one sets the fill and the icon color through design tokens.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-hierarchy"></i>
+            <span class="nds-label">Status from a Parent</span>
+          </span>
+          <p class="nds-item-desc">A <code class="nds-inline-code lang-html">data-status</code> on a parent, such as a card or a drawer item, colors the featured icon inside it. An icon with its own color keeps it.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Four Sizes</span>
+          </span>
+          <p class="nds-item-desc">From 32px to 56px. The icon, the padding and the corner radius scale with <code class="nds-inline-code lang-css">--featuredicon-size</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-square-circle"></i>
+            <span class="nds-label">Shape and Style Modifiers</span>
+          </span>
+          <p class="nds-item-desc">A rounded square or a circle, with a light, outline, dark or subtle style. Each shape and style works with every color and size.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-paint-board"></i>
+            <span class="nds-label">Custom Color Override</span>
+          </span>
+          <p class="nds-item-desc">Set <code class="nds-inline-code lang-css">--featuredicon-bg</code> and <code class="nds-inline-code lang-css">--featuredicon-color</code> on an icon with no color class to get a color pair beyond the six variants.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="featuredIconPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use a featured icon to mark a key item in a card, a definition list or a page section, where a plain icon would not stand out.
+- Leave out the container for an icon that only decorates. A plain icon is lighter.
+- Put one icon inside: any HGI font icon, `<i class="hgi hgi-stroke hgi-NAME">`, or a UI icon, `<i class="nds-icon nds-hgi-NAME">`.
+- Give the icon `aria-hidden="true"`. The text next to the featured icon names the item for screen readers.
+- Pick the color by meaning. Use brand for main features and neutral for general items. Use success, info, warning or error for a status.
+- Use `data-status` when the icon reports an outcome, and a color class when you want only the color.
+- In a modal, match the icon's color to the message, such as red before the user deletes something.
+- Use `nds-sm` in dense layouts such as table rows. Use `nds-lg` or `nds-xl` in hero sections and on landing pages.
+- Use `nds-circle` beside round parts such as avatars. Keep the rounded square in card headers and list items.
+- Use `nds-dark` for the strongest emphasis, and `nds-outline` for a lighter, secondary look.
+
+</div>
+  </div>
+</section>
+
+<section id="featuredIconApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-gray` | `.nds-featured-icon` | The same as `nds-neutral` |
+| `nds-md` | `.nds-featured-icon` | The same as no size class: 40px |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-status` | `.nds-featured-icon` or any parent | `success`, `info`, `warning`, `error` or `neutral` gives the matching color. `critical` gives the error color: keep it for system-level alerts |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on the icon, in a `style` attribute or in your stylesheet. On a parent, they reach every featured icon inside it. The size classes set `--featuredicon-size`, and the color classes and statuses set the three color properties.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--featuredicon-size` | `40px` | Width and height. The icon, the padding and the corner radius scale with it |
+| `--featuredicon-bg` | `var(--featuredicons-background-primary-light)` | Fill |
+| `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Icon color |
+| `--featuredicon-dark-bg` | `var(--background-primary)` | Fill of the `nds-dark` style |
+| `--featuredicon-radius` | `calc(var(--featuredicon-size) / 4 - 2px)` | Corner radius. `nds-circle` sets 50% |
+| `--featuredicon-bg-forced`, `--featuredicon-color-forced`, `--featuredicon-dark-bg-forced` | — | The same three colors, set on a parent that must win over a color class on the icon. A plain knob set on a parent loses to the icon's own class |
+{: .nds-table .nds-responsive}
+
+The theme-wide colors are the `--featuredicons-background-*` and `--featuredicons-icon-*` tokens. See [Tokens](../components/tokens).
+
+</div>
+  </div>
+</section>
+
+<section id="featuredIconRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Home Page Template](../templates/home-template): extra-large circle icons on the statistic cards.
+- [Form Template](../templates/form-template): a dark success icon on the confirmation card after the form is sent.
+- [Admin Console Demo](../examples/console-demo): circle icons on the figure cards.
+- [Cards](../components/cards), [Drawer](../components/drawer), [Metric](../components/metric) and [Modal](../components/modal): the components that place a featured icon in their own parts.
+
+</div>
+  </div>
 </section>
