@@ -122,6 +122,7 @@ Sections in this order. Each `<section>` carries its class. A section the compon
 | Markup | `nds-doc-markup nds-demo-section` | the base canon (the builder), then its structure, part and JS canons |
 | Parts (shell only) | `nds-doc-parts` | Part \| Holds \| Required |
 | Variants | `nds-doc-variants`, with `hidden` | the builder's table |
+| Behavior (optional) | `nds-doc-behavior` | one entry per structure or option that behaves differently, for people |
 | Built-in Features | `nds-doc-features` | the component's highlights |
 | Best Practices | `nds-doc-practices` | do and don't bullets |
 | API | `nds-doc-api` | reference tables and one JS example |
@@ -203,6 +204,14 @@ A short paragraph above the table explains any target that is not obvious (what 
 **Use cell:** when to pick it, one or two sentences, and what not to combine it with.
 
 **Not in the builder:** state that a script sets for a moment (a button's `data-status` flash) goes in the API table, not the Variants table. Field states shared with every field are one reference row that links to Forms, with `—` in Markup and On element, so it gets no chip: `| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |`.
+
+### Behavior
+
+Only for a component whose structures or options change what it DOES, not only how it looks: a picker, a search box, a portal, a lazy menu (dropmenu, pagination, filter, tables, the form fields). A page of looks only (tags, cards, link) has no Behavior section.
+
+- Written for people, who never see the Variants table. It explains; it never copies a Use cell.
+- One `### Name` heading per entry (a noun), then 2 to 4 sentences: what it does, when to pick it, how it behaves, and the attribute or class that turns it on.
+- Facts that a table holds (every attribute, every key) stay in the API and are not repeated.
 
 ### Built-in Features
 
