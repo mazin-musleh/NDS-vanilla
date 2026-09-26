@@ -173,10 +173,11 @@ module DocsCanon
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
   # The Options button floats beside the section title (layout/section.md), icon-only on a phone;
-  # it opens the sheet that holds every choice.
-  def self.actions(id)
+  # it opens the sheet that holds every choice. A preview also gets a Dark mode toggle.
+  def self.actions(id, preview)
+    dark = %(<button type="button" class="nds-btn nds-subtle nds-icon-only nds-md" data-builder-dark aria-pressed="false" aria-label="Dark mode"><i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i></button>) if preview
     options = %(<button type="button" class="nds-btn nds-neutral nds-md" data-panel-toggle="#{id}-options"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
-    %(<div class="nds-section-action nds-rowView nds-minimal" data-builder-for="#{id}">#{options}</div>)
+    %(<div class="nds-section-action nds-rowView nds-minimal" data-builder-for="#{id}">#{dark}#{options}</div>)
   end
 
   # The options sheet: one labeled row of chips per group, single options last under "More".
@@ -266,7 +267,7 @@ module DocsCanon
       preview = lang == 'html' && attr(attrs, 'data-preview') != 'none'
       # data-live: a page-shell canon changes the page's own copy (its footer), not a preview card.
       builder = lang == 'html' && table && (preview || attr(attrs, 'data-live'))
-      builders << id if builder
+      builders << [id, preview] if builder
       if preview
         out << %(<div class="nds-divider nds-xl" style="margin-block-start: 0; --divider-line-start: 24px;">Preview</div>\n) if table
         out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{harness(src, attr(attrs, 'data-harness'))}\n</div>\n)
@@ -277,9 +278,9 @@ module DocsCanon
     end
 
     # A float action is the head's first child.
-    builders.each do |id|
+    builders.each do |id, preview|
       head = html.rindex('<div class="nds-section-head">', html.index(%(<script type="text/html" id="#{id}")))
-      html = html.insert(head + '<div class="nds-section-head">'.size, actions(id)) if head
+      html = html.insert(head + '<div class="nds-section-head">'.size, actions(id, preview)) if head
     end
     html
   end

@@ -18,6 +18,8 @@
  * The section action holds Options; the sheet holds Reset and a chip row per group. A chip that does not apply
  * stays in place, disabled, and its row label says why (data-needs).
  * Rows sharing Group + Option are one choice.
+ * The Dark mode toggle beside Options puts data-theme="dark" on the markup's outer element (code and preview)
+ * and on the preview frame.
  */
 (function () {
     'use strict';
@@ -285,7 +287,7 @@
         });
         // A group with no chip on starts on its default (None has no chip).
         order.forEach(function (g) { if (!active[g] && defaults[g]) active[g] = defaults[g]; });
-        var pristine = document.createElement('div'), call = null, html = false;
+        var pristine = document.createElement('div'), call = null, html = false, dark = false;
 
         // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
         function live(c) { return c.structure || c.ops.some(function (o) { return o.op; }); }
@@ -329,6 +331,8 @@
                 order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'markup'); });
             });
             showApplicable();
+            // Dark: data-theme="dark" on the markup's outer element, so the copied code carries it.
+            if (dark) Array.prototype.forEach.call(pristine.children, function (el) { el.setAttribute('data-theme', 'dark'); });
 
             var out = html ? serialize(pristine) : '', js = call ? printCall(call) : '';
             [[codeHtml, out], [codeJs, js]].forEach(function (pair) {
@@ -343,6 +347,8 @@
             }
 
             if (liveEl) return renderLive();
+            // The frame goes dark too, so a dark component is not shown on a light card.
+            dark ? preview.setAttribute('data-theme', 'dark') : preview.removeAttribute('data-theme');
             // A form harness keeps its form and Validate button; only the slot inside it re-renders.
             var slot = preview.querySelector('[data-demo-slot]') || preview;
             NDS.Init.destroy(slot);
@@ -436,6 +442,16 @@
             render();
         }
         sheet.addEventListener('click', choose);
+
+        return {
+            dark: function (btn) {
+                dark = !dark;
+                dark ? btn.setAttribute('data-state', 'selected') : btn.removeAttribute('data-state');
+                btn.setAttribute('aria-pressed', String(dark));
+                btn.querySelector('.nds-icon').className = 'nds-icon ' + (dark ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
+                render();
+            }
+        };
     }
 
     // A form harness's Reset puts the fields back as drawn and clears their messages, so the
@@ -461,8 +477,12 @@
     document.addEventListener('nds:formInvalid', function (e) { dropAlert(e.target); });
 
     // The chips are built at site build; the Variants table is read only when the sheet first opens.
+    // The Dark button (a preview's toggle) wires its builder on first use too.
     document.querySelectorAll('[data-builder-for]').forEach(function (bar) {
-        bar.querySelector('[data-panel-toggle]').addEventListener('click', function () { wire(bar); }, { once: true });
+        var api, get = function () { return api || (api = wire(bar)); };
+        bar.querySelector('[data-panel-toggle]').addEventListener('click', get, { once: true });
+        var btn = bar.querySelector('[data-builder-dark]');
+        if (btn) btn.addEventListener('click', function () { get().dark(btn); });
     });
 
 })();
