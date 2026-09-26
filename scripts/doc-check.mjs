@@ -10,8 +10,8 @@
 // Checks per state: console errors, an empty preview, a small component (button, chip, tag)
 // stretched to the full preview width, and a disabled control whose icon and label differ in
 // color. ponytail: the stretch and color checks are heuristics; widen them when a real bug slips by.
-// ponytail: an overlay (dropmenu, modal, drawer, tooltip) is shot closed. Open its trigger and
-// shoot the overlay too when the first overlay page is converted.
+// A dropmenu is also shot open. ponytail: other overlays (modal, drawer, tooltip) are shot
+// closed; open their trigger the same way when their page is converted.
 import { execSync } from 'node:child_process';
 import { createServer } from 'node:http';
 import { mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
@@ -108,7 +108,8 @@ for (const md of pages) {
                     if (!box || !box.offsetHeight) issues.push('empty preview');
                     const inner = box && box.querySelector('[data-demo-slot]') || box;
                     if (box && !live) {
-                        const w = inner.clientWidth;
+                        // The preview's width: a form harness's slot shrinks to its content.
+                        const w = box.clientWidth;
                         inner.querySelectorAll('.nds-btn, .nds-chip, .nds-tag').forEach((el) => {
                             // Full width by design: a vertical scroll-more's show-more button.
                             if (el.closest('.nds-full, .nds-dropmenu-menu, .nds-card-actions, .nds-grid, [data-axis="vertical"] > .nds-show-more') || !el.offsetWidth) return;
@@ -169,6 +170,30 @@ for (const md of pages) {
                     // h: the height the shot takes in a 380px sheet column.
                     shots.push({ name: st.name, png: (await page.screenshot({ clip })).toString('base64'), h: 40 + clip.height * 2 * Math.min(1, 380 / (clip.width * 2)) });
                     if (page.viewportSize().height !== vh) await page.setViewportSize({ width: WIDTH, height: vh });
+                    // A dropmenu is shot open too: the preview plus its menu, which may sit in <body>.
+                    const trigger = await page.evaluateHandle((id) => {
+                        const s = document.getElementById(id), box = s.nextElementSibling.nextElementSibling;
+                        return s.getAttribute('data-live') ? null : box.querySelector('.nds-dropmenu-trigger');
+                    }, id);
+                    if (await trigger.evaluate((t) => !!t)) {
+                        // data-delay holds the first open back by its own ms.
+                        const delay = await trigger.evaluate((t) => { t.click(); return parseInt(NDS.Dropmenu.from(t).getAttribute('data-delay'), 10) || 0; });
+                        await page.waitForTimeout(700 + delay);
+                        const open = await page.evaluate(({ id, c }) => {
+                            const box = document.getElementById(id).nextElementSibling.nextElementSibling;
+                            const menu = NDS.Dropmenu.menuOf(NDS.Dropmenu.from(box.querySelector('.nds-dropmenu-trigger')));
+                            if (!menu || menu.hidden) return null;
+                            const m = menu.getBoundingClientRect(), pad = 16;
+                            const x1 = Math.max(0, Math.min(c.x, m.left - pad)), y1 = Math.max(0, Math.min(c.y, m.top - pad));
+                            const x2 = Math.min(innerWidth, Math.max(c.x + c.width, m.right + pad)), y2 = Math.min(innerHeight, Math.max(c.y + c.height, m.bottom + pad));
+                            return { x: x1, y: y1, width: x2 - x1, height: y2 - y1 };
+                        }, { id, c: clip });
+                        if (open) shots.push({ name: `${st.name} (open)`, png: (await page.screenshot({ clip: open })).toString('base64'), h: 40 + open.height * 2 * Math.min(1, 380 / (open.width * 2)) });
+                        else report(`${st.name}: the menu did not open`);
+                        await page.keyboard.press('Escape');
+                        await page.evaluate(() => document.body.click());
+                        await page.waitForTimeout(400);
+                    }
                     await page.evaluate((id) => { document.getElementById(id + '-options').style.visibility = ''; }, id);
                 }
             }
