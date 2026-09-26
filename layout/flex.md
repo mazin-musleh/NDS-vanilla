@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "18/07/2026 - 12:58 AM"
+updated: "1.12.x"
+last_edit: "26/09/2026 - 01:53 PM"
 ---
 
 <!-- Basic Alignment -->
@@ -369,6 +369,7 @@ last_edit: "18/07/2026 - 12:58 AM"
                         <tr><td><code class="nds-inline-code lang-html">nds-row</code></td><td>Sets <code class="nds-inline-code lang-html">flex-direction: row</code>. Unscoped: works with or without <code class="nds-inline-code lang-html">nds-flex</code> on the same element</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-col</code></td><td>Sets <code class="nds-inline-code lang-html">flex-direction: column</code>. Unscoped: works with or without <code class="nds-inline-code lang-html">nds-flex</code> on the same element</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-reverse</code></td><td>Reverses visual child order: <code class="nds-inline-code lang-html">row-reverse</code> on a flex or <code class="nds-inline-code lang-html">nds-row</code> container, <code class="nds-inline-code lang-html">column-reverse</code> when combined with <code class="nds-inline-code lang-html">nds-col</code>. Scoped to the flex utility, so it never overrides a component's own <code class="nds-inline-code lang-html">nds-reverse</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Centers the children along the row, the same as <code class="nds-inline-code lang-css">--justify: center</code>. With <code class="nds-inline-code lang-html">nds-col</code> it also centers them across, so a single card sits in the middle</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>Enables <code class="nds-inline-code lang-html">flex-wrap: wrap</code> so children flow onto multiple lines when the container is too narrow</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-nowrap</code></td><td>Forces <code class="nds-inline-code lang-html">flex-wrap: nowrap</code> so children stay on one line, potentially overflowing</td></tr>
                     </tbody>

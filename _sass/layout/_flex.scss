@@ -14,6 +14,16 @@
   gap: var(--gap, var(--spacing-xl));
 }
 
+// Centers the children along the row; a column also centers them across, where a
+// lone child (a card) would otherwise start at the edge.
+.nds-flex.nds-center {
+  --justify: center;
+
+  &.nds-col {
+    --align: center;
+  }
+}
+
 // Direction overrides — unscoped so components like .nds-card-actions
 // can flip direction with just .nds-row without wrapping in .nds-flex.
 .nds-row {
