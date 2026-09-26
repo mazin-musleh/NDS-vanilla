@@ -46,6 +46,8 @@
  *   - A required custom select is validated through its hidden .nds-select-value carrier:
  *     author data-required on the .nds-select container. The readonly display input is
  *     never constraint-validated, so required on it does nothing.
+ *   - A dropmenu picker (data-select-name) with data-required is checked the same way,
+ *     through its hidden carrier; the error shows on the field that holds it.
  *   - An autocomplete with data-strict is checked at submit too: typed text must match a
  *     picked suggestion (mechanism and carve-outs in the autocomplete banner).
  *   - A readonly checkbox, radio or switch cannot change: Forms cancels the click that Space
@@ -194,7 +196,8 @@
     // check-container, not the wrapper being validated). Groups/feedback keep
     // the legacy first-match behavior.
     function ownField(container) {
-        var fields = container.querySelectorAll('input, textarea, select');
+        // Never a hidden carrier: a picker in the prefix slot puts one before the real input.
+        var fields = container.querySelectorAll('input:not([type="hidden"]), textarea, select');
         if (!container.classList.contains('nds-form-container')) return fields[0] || null;
         for (var i = 0; i < fields.length; i++) {
             if (fields[i].closest('.nds-form-container') === container) return fields[i];
@@ -557,6 +560,18 @@
             return this._finishGroupValidation(container, options, isValid, message, { value: carrier ? carrier.value : '' });
         },
 
+        // Dropmenu picker (data-select-name): the pick lives in a hidden carrier,
+        // which constraint validation skips. Internal — reached via validateForm.
+        validateDropmenuSelect: function(dm, options) {
+            options = options || { showMessage: true };
+            // Own carrier only: a picker nested in this menu holds its own.
+            var carrier = Array.prototype.find.call(dm.querySelectorAll('input[data-nds-select-value]'),
+                function(el) { return el.closest('.nds-dropmenu') === dm; });
+            var isValid = !!(carrier && carrier.value.trim());
+            var message = isValid ? '' : (NDS.isArabic ? 'يرجى اختيار خيار' : 'Please select an option');
+            return this._finishGroupValidation(dm, options, isValid, message, { value: carrier ? carrier.value : '' });
+        },
+
         // Autocomplete strict: data-strict says typed text must match a picked
         // suggestion. The hidden .nds-autocomplete-value carrier (JS-created at
         // build under data-strict) holds the last picked text; typing or clear
@@ -714,6 +729,19 @@
                     var anchor = cs.querySelector('.nds-select-input');
                     acc.invalidFields.push(cs);
                     acc.errors.push({ field: cs, input: anchor, message: result.message });
+                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
+                }
+            });
+
+            // Dropmenu pickers: same pattern, keyed on the wrapper's data-required.
+            // Anchor is the trigger (focusable).
+            form.querySelectorAll('.nds-dropmenu[data-select-name][data-required]').forEach(function(dm) {
+                if (!isFieldVisible(dm, form)) return;
+                var result = Validator.validateDropmenuSelect(dm, { showMessage: options.showMessages });
+                if (!result.valid) {
+                    var anchor = dm.querySelector('.nds-dropmenu-trigger') || dm;
+                    acc.invalidFields.push(dm);
+                    acc.errors.push({ field: dm, input: anchor, message: result.message });
                     if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
                 }
             });
