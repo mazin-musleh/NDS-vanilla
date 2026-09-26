@@ -294,6 +294,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     --btn-color-disabled: var(--text-default-oncolor-disabled);
     --btn-color: var(--colors-base-black);
     --btn-loading-color: var(--colors-base-black);
+    --btn-loading-track: var(--colors-alpha-black-10);
     // The hover wash is white on white here, so a group seam would vanish.
     --_btn-seam: color-mix(in srgb, var(--_btn-color) 20%, transparent);
 
@@ -729,12 +730,6 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       animation: button-progress-countdown linear forwards;
       animation-duration: var(--progress-duration, 4000ms);
     }
-  }
-
-  // On-color variant adjustments
-  &.nds-oncolor .nds-progress-circle {
-    --progress-track-color: var(--colors-alpha-white-20);
-    --progress-color: var(--text-oncolor-primary);
   }
 
   &:not(.nds-progress) .nds-progress-circle {
