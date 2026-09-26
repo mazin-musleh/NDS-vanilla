@@ -105,13 +105,10 @@
       color: var(--icon-oncolor);
     }
 
+    // Only the brand default, as the last fallback: a knob set here would beat the
+    // status a parent passes down. The status shades live in the cascade below.
     @include dark {
-      --featuredicon-dark-bg: var(--colors-primary-700);
-      &:is(.nds-green, [data-status="success"]) { --featuredicon-dark-bg: var(--colors-green-700); }
-      &:is(.nds-blue, [data-status="info"]) { --featuredicon-dark-bg: var(--colors-blue-700); }
-      &:is(.nds-yellow, [data-status="warning"]) { --featuredicon-dark-bg: var(--colors-yellow-700); }
-      &:is(.nds-red, [data-status="error"], [data-status="critical"]) { --featuredicon-dark-bg: var(--colors-red-700); }
-      &:is(.nds-neutral, .nds-gray, [data-status="neutral"]) { --featuredicon-dark-bg: var(--colors-neutral-900); }
+      --_featuredicon-dark-bg: var(--featuredicon-dark-bg-forced, var(--featuredicon-dark-bg, var(--colors-primary-700)));
     }
   }
 }
@@ -132,28 +129,40 @@
   --featuredicon-bg: var(--featuredicons-background-success-light);
   --featuredicon-color: var(--featuredicons-icon-success);
   --featuredicon-dark-bg: var(--background-success);
+
+  @include dark { --featuredicon-dark-bg: var(--colors-green-700); }
 }
 
 :is(.nds-blue, [data-status="info"]) {
   --featuredicon-bg: var(--featuredicons-background-info-light);
   --featuredicon-color: var(--featuredicons-icon-info);
   --featuredicon-dark-bg: var(--background-info);
+
+  @include dark { --featuredicon-dark-bg: var(--colors-blue-700); }
 }
 
 :is(.nds-yellow, [data-status="warning"]) {
   --featuredicon-bg: var(--featuredicons-background-warning-light);
   --featuredicon-color: var(--featuredicons-icon-warning);
   --featuredicon-dark-bg: var(--background-warning);
+
+  @include dark { --featuredicon-dark-bg: var(--colors-yellow-700); }
 }
 
 :is(.nds-red, [data-status="error"], [data-status="critical"]) {
   --featuredicon-bg: var(--featuredicons-background-error-light);
   --featuredicon-color: var(--featuredicons-icon-error);
   --featuredicon-dark-bg: var(--background-error);
+
+  @include dark { --featuredicon-dark-bg: var(--colors-red-700); }
 }
 
 :is(.nds-neutral, .nds-gray, [data-status="neutral"]) {
   --featuredicon-bg: var(--featuredicons-background-default-light);
   --featuredicon-color: var(--featuredicons-icon-neutral);
-  --featuredicon-dark-bg: var(--colors-neutral-400);
+  // 600/700 like the other colors: 400 failed contrast with the white icon, and a
+  // 900 fill vanished into the dark page.
+  --featuredicon-dark-bg: var(--colors-neutral-600);
+
+  @include dark { --featuredicon-dark-bg: var(--colors-neutral-700); }
 }
