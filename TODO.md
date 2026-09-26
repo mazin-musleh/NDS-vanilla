@@ -24,9 +24,9 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
   **Applied 2026-09-15** (uncommitted) — the `--_img-x` fix as described, +6/−5. `check-data-state-tails.py` and `check-release-guards.py` both pass, and the built CSS no longer carries the `img` tail. The deck-motion eyeball is still outstanding: the Chrome extension was not connected, and the thing to watch is whether the image still tweens now that the flip rides an inherited custom property rather than its own rule. If it snaps instead of sliding, register `--_img-x` with `@property` / `syntax: "<transform-list>"`.
 
 - **Docs rewrite for people and AI agents — IN PROGRESS; plan in `plans/docs-rewrite.md`, page tracker below.** Every doc page gets rewritten one by one, as a long task, to read better for people and for agents (fewer tokens, more accurate copies). Plan it first: page structure, where the canon lives, how agents find it, and which NDS IQ sentences change with it, then one eval gate for the whole change.
-  - **Progress: 17 / 90 pages (19%).** One page at a time. Tick a page `[x]` and bump the count in the page's own commit (`git log -- <page>` finds it). Order is the working order: a component that others reuse comes before them, so a bug found in it is fixed once.
-    - **Done:** [x] switch · [x] cards · [x] alert · [x] footer · [x] button · [x] grid · [x] radio · [x] checkbox · [x] chips · [x] tags · [x] featured-icons · [x] link · [x] definition-list · [x] tabs · [x] scroll-more · [x] code · [x] dropmenu
-    - **Tier 1, base components** (other components are built from these): [ ] feedback-icons · [ ] avatar · [ ] progress · [ ] tooltip · [ ] loading · [ ] panels
+  - **Progress: 18 / 90 pages (20%).** One page at a time. Tick a page `[x]` and bump the count in the page's own commit (`git log -- <page>` finds it). Order is the working order: a component that others reuse comes before them, so a bug found in it is fixed once.
+    - **Done:** [x] switch · [x] cards · [x] alert · [x] footer · [x] button · [x] grid · [x] radio · [x] checkbox · [x] chips · [x] tags · [x] featured-icons · [x] link · [x] definition-list · [x] tabs · [x] scroll-more · [x] code · [x] dropmenu · [x] feedback-icons
+    - **Tier 1, base components** (other components are built from these): [ ] avatar · [ ] progress · [ ] tooltip · [ ] loading · [ ] panels
     - **Tier 2, built on the base** (each uses tier 1 or finished parts): [ ] breadcrumb · [ ] content-switcher · [ ] pagination · [ ] accordion · [ ] modal · [ ] drawer · [ ] metric · [ ] empty · [ ] persona · [ ] toolbar · [ ] fab · [ ] cooldown-button · [ ] toc · [ ] sort · [ ] swiper · [ ] cookies · [ ] user-feedback
     - **Tier 3, form fields and complex** (the heaviest; most ride on dropmenu, chips or forms): [ ] password · [ ] otp · [ ] slider · [ ] selection · [ ] autocomplete · [ ] multiselect · [ ] taginput · [ ] date-picker · [ ] time-picker · [ ] upload · [ ] voice-input · [ ] export · [ ] ipv · [ ] editor
     - **Builder pages:** [ ] stepper · [ ] rating · [ ] quote
@@ -54,6 +54,8 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 - **Release notes, Tabs — Fixed:** a tab set in a card no longer doubles the panel padding; Home and End go to the first and the last tab in RTL too (Content Switcher shares this); a tab set in a column that centers its items keeps its full width; a vertical divided tab keeps its icon before the label and starts at the edge.
 
 - **Release notes, Scroll More — Changed:** `--scroll-max-width` defaults to `100%` (was `none`), so a wrapper never grows wider than its container and wide content scrolls; set `none` to restore the old behavior.
+
+- **Release notes, Feedback Icons — Added:** `nds-lg` (and `size: 'lg'` in `NDS.Feedback.create()`): a 32px icon with large text.
 
 - **Release notes, Forms — Fixed:** a required field with a picker in its prefix (a phone number with a country code) is checked again; before, the form submitted with the field empty. **Added:** `data-required` on a Dropmenu picker (`data-select-name`) now stops the form until a value is picked; before, it did nothing.
 

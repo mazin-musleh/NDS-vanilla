@@ -2,635 +2,285 @@
 layout: page
 title: Feedback Icons
 hero_title: Feedback Icons - National Design System
-hero_description: Status icons and inline messages for communicating validation results, system states, and contextual hints
+hero_description: A feedback icon shows a status as a colored icon, alone or before a short message.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.8.1"
-last_edit: "16/08/2026 - 04:24 PM"
+updated: "1.12.x"
+last_edit: "26/09/2026 - 10:22 PM"
 ---
 
-<!-- Feedback Icons -->
-<section id="feedbackIcons" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Feedback Icons</h2>
-            <p class="nds-section-description">Status-colored circular icons that automatically display the correct glyph for each status type</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Status: ">
-                                        <span class="nds-label">Status: Success</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["data-status=success", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                                <span class="nds-label">Success</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=info", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                                <span class="nds-label">Info</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=warning", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                                <span class="nds-label">Warning</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=error", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                                <span class="nds-label">Error</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=critical", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                                <span class="nds-label">Critical</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=neutral", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=help", ".nds-feedback", "feedbackStatus", "attr"]'>
-                                                <span class="nds-label">Help</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                        <span class="nds-label">Size: Medium</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-feedback", "feedbackSize"]'>
-                                                <span class="nds-label">Small (16px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-feedback", "feedbackSize"]'
-                                                data-trigger-label="Medium">
-                                                <span class="nds-label">Medium (24px)</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-ring", ".nds-feedback", "feedbackStyle"]'>
-                                    <span class="nds-label">Ring</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-outline", ".nds-feedback", "feedbackStyle"]'>
-                                    <span class="nds-label">Outline</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <span class="nds-feedback" data-status="success">
-                                    <span class="nds-feedback-icon">
-                                        <i class="nds-icon" aria-hidden="true"></i>
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-feedback-icon-1" id="tab-feedback-icon-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-feedback-icon-js-1" id="tab-feedback-icon-js-1">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-1"
-                                        aria-labelledby="tab-feedback-icon-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;span class="nds-feedback" data-status="success"&gt;
-  &lt;span class="nds-feedback-icon"&gt;
-    &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-&lt;/span&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-js-1"
-                                        aria-labelledby="tab-feedback-icon-js-1" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-javascript code">NDS.Feedback.create({
-    status: 'success',
-    target: '#container',
-    size: 'md',
-    style: '',
-    showIcon: true
-});</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="feedbackOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Feedback is a `nds-feedback` element with a `data-status`. It holds a status icon (`nds-feedback-icon`) and an optional short message (`nds-feedback-message`).
+
+Pick another component when:
+
+- the message is about a form field: `NDS.Forms.setStatus()` in [Forms](../components/forms), which also marks the field
+- the message is for the whole page or needs a title or actions: [Alert](../components/alert)
+- the status is a label on an item, such as "Approved": [Tags](../components/tags)
+
+</div>
+  </div>
 </section>
 
-<!-- Feedback Messages -->
-<section id="feedbackMessages" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Feedback Messages</h2>
-            <p class="nds-section-description">Combine the status icon with a text message for inline validation results and contextual hints</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Status: ">
-                                        <span class="nds-label">Status: Error</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["data-status=error", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                                <span class="nds-label">Error</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=critical", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                                <span class="nds-label">Critical</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=success", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                                <span class="nds-label">Success</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=warning", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                                <span class="nds-label">Warning</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=info", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                                <span class="nds-label">Info</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=neutral", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=help", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
-                                                <span class="nds-label">Help</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                        <span class="nds-label">Size: Small</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-sm", ".nds-feedback", "feedbackMsgSize"]'>
-                                                <span class="nds-label">Small (16px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-feedback", "feedbackMsgSize"]'>
-                                                <span class="nds-label">Medium (24px)</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-ring", ".nds-feedback", "feedbackMsgStyle"]'>
-                                    <span class="nds-label">Ring</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-outline", ".nds-feedback", "feedbackMsgStyle"]'>
-                                    <span class="nds-label">Outline</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <span class="nds-feedback nds-sm" data-status="error">
-                                    <span class="nds-feedback-icon">
-                                        <i class="nds-icon" aria-hidden="true"></i>
-                                    </span>
-                                    <span class="nds-feedback-message">This field is required</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-feedback-msg-1" id="tab-feedback-msg-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-feedback-msg-js-1" id="tab-feedback-msg-js-1">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-1"
-                                        aria-labelledby="tab-feedback-msg-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;span class="nds-feedback nds-sm" data-status="error"&gt;
-  &lt;span class="nds-feedback-icon"&gt;
-    &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-  &lt;span class="nds-feedback-message"&gt;This field is required&lt;/span&gt;
-&lt;/span&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-js-1"
-                                        aria-labelledby="tab-feedback-msg-js-1" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-javascript code">NDS.Feedback.create({
-    message: 'This field is required',
-    status: 'error',
-    target: '#container',
-    size: 'sm',
-    style: ''
-});</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="feedbackMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="fb-message" data-canon data-variants="fbVariantsTable" data-js="fb-js">
+<span class="nds-feedback nds-sm nds-outline" data-status="error">
+  <span class="nds-feedback-icon">
+    <i class="nds-icon" aria-hidden="true"></i>
+  </span>
+  <span class="nds-feedback-message">Enter a valid email address</span>
+</span>
+</script>
+<script type="text/html" id="fb-icon" data-canon>
+<span class="nds-feedback nds-sm nds-outline" data-status="error">
+  <span class="nds-feedback-icon">
+    <i class="nds-icon" aria-hidden="true"></i>
+  </span>
+</span>
+</script>
+<script type="text/html" id="fb-js" data-canon data-lang="js">
+NDS.Feedback.create({
+  message: 'Enter a valid email address',
+  status: 'error',
+  target: '#email-hint'
+});
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="feedbackFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-colors"></i>
-                            <span class="nds-label">Auto Icon by Status</span>
-                        </span>
-                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-status</code> and the correct icon glyph appears automatically: checkmark for success, alert for warning, X for error, info circle for info.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layers-01"></i>
-                            <span class="nds-label">Parent Status Inheritance</span>
-                        </span>
-                        <p class="nds-item-desc">Place a feedback icon inside any element with <code class="nds-inline-code lang-html">data-status</code> and it inherits the status color and icon without needing its own attribute.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-square-circle"></i>
-                            <span class="nds-label">Three Visual Styles</span>
-                        </span>
-                        <p class="nds-item-desc">Solid fill by default, outline for lighter weight, and ring for extra emphasis. Combine freely with any status and size.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-code-circle"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Create, dismiss, and manage feedback lifecycle with <code class="nds-inline-code lang-js">NDS.Feedback.create()</code>. Permanent feedback survives status changes and restores automatically.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="feedbackVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+`#fb-js` is the same message as one `NDS.Feedback.create()` call (`data-js` on the base canon). A row whose On element is `create()` sets an option of that call. The call's defaults match the canon: `size: 'sm'` and `style: 'outline'`.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Message (default) | — | — | The icon and a short message |
+| Structure | Icon only | canon `#fb-icon` | — | The icon alone, where the text around it already says the status |
+| Structure | Icon only | `message: ''` | `create()` | The same, in JavaScript: leave out `message` |
+| Status | Error (default) | `[data-status="error"]` | `.nds-feedback` | Something failed or is wrong |
+| Status | Error (default) | `status: 'error'` | `create()` | The same, in JavaScript |
+| Status | Critical | `[data-status="critical"]` | `.nds-feedback` | A severe error. Error colors with an exclamation mark |
+| Status | Critical | `status: 'critical'` | `create()` | The same, in JavaScript |
+| Status | Success | `[data-status="success"]` | `.nds-feedback` | A confirmation |
+| Status | Success | `status: 'success'` | `create()` | The same, in JavaScript |
+| Status | Warning | `[data-status="warning"]` | `.nds-feedback` | A risk the user should know about |
+| Status | Warning | `status: 'warning'` | `create()` | The same, in JavaScript |
+| Status | Info | `[data-status="info"]` | `.nds-feedback` | News or a tip |
+| Status | Info | `status: 'info'` | `create()` | The same, in JavaScript |
+| Status | Neutral | `[data-status="neutral"]` | `.nds-feedback` | A general hint. Gray, with an "i" |
+| Status | Neutral | `status: 'neutral'` | `create()` | The same, in JavaScript |
+| Status | Help | `[data-status="help"]` | `.nds-feedback` | Help text. Gray, with a question mark |
+| Status | Help | `status: 'help'` | `create()` | The same, in JavaScript |
+| Size | Small (default) | `.nds-sm` | `.nds-feedback` | A 16px icon, for a message in a form or in text |
+| Size | Medium | `.nds-md` | `.nds-feedback` | A 24px icon and larger text, for a status that stands alone |
+| Size | Medium | `size: 'md'` | `create()` | The same, in JavaScript |
+| Size | Large | `.nds-lg` | `.nds-feedback` | A 32px icon and large text, for the main status of a page or a panel |
+| Size | Large | `size: 'lg'` | `create()` | The same, in JavaScript |
+| Style | Outline (default) | `.nds-outline` | `.nds-feedback` | The icon drawn as a line in the status color |
+| Style | Solid | — | — | A filled disc in the status color, with a white symbol. It is the look with no style class, and it is stronger than outline |
+| Style | Solid | `style: ''` | `create()` | The same, in JavaScript |
+| Style | Ring | `.nds-ring` | `.nds-feedback` | A solid disc with a light halo around it, for a status that must stand out |
+| Style | Ring | `style: 'ring'` | `create()` | The same, in JavaScript |
+{: #fbVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="feedbackGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <code class="nds-inline-code lang-js">NDS.Feedback.create()</code> for general-purpose feedback on any element: tooltips, notifications, hints on divs, sections, or cards</li>
-                    <li>For form validation, use <code class="nds-inline-code lang-js">NDS.Forms.setStatus()</code> instead, which creates feedback internally and also drives the error border and ARIA attributes. A field carries error, help, or nothing. See <a class="nds-color" href="{{ 'components/forms' | relative_url }}">Forms</a></li>
-                    <li>Use icon-only feedback (no message) inside components like <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alerts</a> and form headers where the status is already communicated by surrounding context</li>
-                    <li>Use feedback with message for standalone inline validation below form fields or as contextual hints</li>
-                    <li>Don't use feedback icons for page-level notifications. Use an <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> instead</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-sm</code> for inline text and form validation. Use <code class="nds-inline-code lang-html">nds-md</code> for standalone status indicators that need more visual presence</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-ring</code> for critical messages that need immediate attention. Use <code class="nds-inline-code lang-html">nds-outline</code> for hints and informational messages</li>
-                    <li>Use <code class="nds-inline-code lang-js">permanent: true</code> for baseline hints that should reappear after temporary errors are cleared</li>
-                    <li>Match the status to the message severity: <code class="nds-inline-code lang-html">error</code> for validation failures, <code class="nds-inline-code lang-html">success</code> for confirmations, <code class="nds-inline-code lang-html">warning</code> for caution, <code class="nds-inline-code lang-html">info</code> for tips, <code class="nds-inline-code lang-html">neutral</code> for general hints</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Class</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-sm</code></td>
-                            <td>Small size, 16px icon. For inline text and form validation.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-md</code></td>
-                            <td>Medium size, 24px icon. Default when no size is specified.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-outline</code></td>
-                            <td>Transparent background with the status icon shown as a stroke icon. Lighter visual weight.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-ring</code></td>
-                            <td>Adds a colored ring around the icon for extra emphasis on critical messages.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-status</code></td>
-                            <td>Set on the <code class="nds-inline-code lang-html">.nds-feedback</code> element or any parent. Values: <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">neutral</code>, <code class="nds-inline-code lang-html">help</code>, <code class="nds-inline-code lang-html">critical</code>. Sets color and auto-selects the icon.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-permanent</code></td>
-                            <td>Set on a feedback element in HTML to mark it as permanent. Survives status changes and is restored when temporary feedback is dismissed.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p><strong>NDS.Feedback</strong> creates and manages feedback elements programmatically. For form validation, use <a class="nds-color" href="{{ 'components/forms' | relative_url }}">NDS.Forms.setStatus()</a> which calls Feedback internally and also sets form-specific attributes.</p>
-
-                <h4 style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); font-weight: var(--font-weight-semibold);">NDS.Feedback.create(options)</h4>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Option</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">message</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">''</code></td>
-                            <td>Feedback message text. Omit for icon-only feedback.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">status</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">'neutral'</code></td>
-                            <td><code class="nds-inline-code lang-js">'error'</code>, <code class="nds-inline-code lang-js">'success'</code>, <code class="nds-inline-code lang-js">'warning'</code>, <code class="nds-inline-code lang-js">'info'</code>, <code class="nds-inline-code lang-js">'neutral'</code>, <code class="nds-inline-code lang-js">'help'</code>, <code class="nds-inline-code lang-js">'critical'</code></td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">target</code></td>
-                            <td>string | Element</td>
-                            <td>null</td>
-                            <td>CSS selector or DOM element to attach feedback to</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">position</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">'append'</code></td>
-                            <td><code class="nds-inline-code lang-js">'before'</code>, <code class="nds-inline-code lang-js">'after'</code>, <code class="nds-inline-code lang-js">'prepend'</code>, <code class="nds-inline-code lang-js">'append'</code></td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">size</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">'sm'</code></td>
-                            <td><code class="nds-inline-code lang-js">'sm'</code>, <code class="nds-inline-code lang-js">'md'</code></td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">style</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">''</code></td>
-                            <td><code class="nds-inline-code lang-js">''</code> (solid), <code class="nds-inline-code lang-js">'ring'</code>, <code class="nds-inline-code lang-js">'outline'</code></td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">showIcon</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Show or hide the status icon</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">permanent</code></td>
-                            <td>boolean</td>
-                            <td>false</td>
-                            <td>Persist across status changes. Hidden when new non-permanent feedback appears, restored on dismiss.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">id</code></td>
-                            <td>string</td>
-                            <td>null</td>
-                            <td>Custom ID for the feedback element</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">className</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">''</code></td>
-                            <td>Additional CSS classes</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">ariaLive</code></td>
-                            <td>string</td>
-                            <td>null</td>
-                            <td><code class="nds-inline-code lang-js">'polite'</code> or <code class="nds-inline-code lang-js">'assertive'</code>. Auto-set based on status if omitted.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">onDismiss</code></td>
-                            <td>Function</td>
-                            <td>null</td>
-                            <td>Callback when feedback is dismissed</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">onCreate</code></td>
-                            <td>Function</td>
-                            <td>null</td>
-                            <td>Callback after feedback is created</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); font-weight: var(--font-weight-semibold);">Other Methods</h4>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Method</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">NDS.Feedback.dismiss(element)</code></td>
-                            <td>Dismiss a single feedback element. Restores any hidden permanent feedback.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">NDS.Feedback.dismissAll(container)</code></td>
-                            <td>Dismiss all non-permanent feedback in a container. Restores permanent feedback visibility.</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); font-weight: var(--font-weight-semibold);">Custom Events</h4>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Target</th>
-                            <th>Detail</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">nds:feedbackCreate</code></td>
-                            <td><code class="nds-inline-code lang-js">document</code></td>
-                            <td><code class="nds-inline-code lang-js">{ feedback, options }</code></td>
-                            <td>Fired after a feedback element is created and inserted. <code class="nds-inline-code lang-js">feedback</code> is the new element; <code class="nds-inline-code lang-js">options</code> is the original options object.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">nds:feedbackDismiss</code></td>
-                            <td><code class="nds-inline-code lang-js">document</code></td>
-                            <td><code class="nds-inline-code lang-js">{ feedback }</code></td>
-                            <td>Fired before a feedback element is removed from the DOM. <code class="nds-inline-code lang-js">feedback</code> is the element being dismissed.</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <p>Set on <code class="nds-inline-code lang-html">.nds-feedback-icon</code> or any ancestor to override individual rendering knobs.</p>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-size</code></td>
-                            <td><code class="nds-inline-code lang-html">24px</code></td>
-                            <td>Diameter of the icon chip.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-color</code></td>
-                            <td><code class="nds-inline-code lang-html">--icon-neutral</code></td>
-                            <td>Outline glyph color (re-tints in dark mode).</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-ring</code></td>
-                            <td><code class="nds-inline-code lang-html">--icon-neutral-ring</code></td>
-                            <td>Color of the ring-accent halo when <code class="nds-inline-code lang-html">nds-ring</code> is applied.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-ring-inset</code></td>
-                            <td><code class="nds-inline-code lang-html">~6% of size</code></td>
-                            <td>Inset bridging the gap between the disc glyph edge and the ring halo. Automatically zeroed for outline style.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-icon-color</code></td>
-                            <td><code class="nds-inline-code lang-html">--feedback-icon-fill-neutral</code></td>
-                            <td>Solid disc fill color (frozen status color, not re-tinted in dark).</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-icon-disc</code></td>
-                            <td><code class="nds-inline-code lang-html">--nds-icon-disc</code></td>
-                            <td>Mask shape used for the solid disc layer.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-icon-stroke</code></td>
-                            <td><code class="nds-inline-code lang-html">--nds-icon-information-circle</code></td>
-                            <td>Outline glyph shape shown when <code class="nds-inline-code lang-html">nds-outline</code> is applied.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-icon-symbol</code></td>
-                            <td>transparent</td>
-                            <td>Mask shape for the symbol painted over the solid disc. Inert until a status sets it.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--feedback-symbol-color</code></td>
-                            <td><code class="nds-inline-code lang-html">--icon-oncolor</code></td>
-                            <td>Fill color of the symbol layer (white by default so it shows over the colored disc).</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="feedbackBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Permanent Message
+{: .nds-block-title}
+
+A permanent message is a hint that stays in place, such as "Use 8 characters or more". Mark it with `data-permanent`, or `permanent: true` in `create()`. When a newer message arrives in the same place, the hint hides instead of being removed. When that newer message is dismissed, the hint shows again.
+
+</div>
+  </div>
+</section>
+
+<section id="feedbackFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-checkmark-circle-02"></i>
+            <span class="nds-label">Auto Icon by Status</span>
+          </span>
+          <p class="nds-item-desc">The status picks the icon: a check for success, an exclamation mark for warning and critical, a cross for error, "i" for info and neutral, and a question mark for help. The icon element stays empty in the markup.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-hierarchy"></i>
+            <span class="nds-label">Parent Status Inheritance</span>
+          </span>
+          <p class="nds-item-desc">A feedback icon inside any element with a <code class="nds-inline-code lang-html">data-status</code> takes that status, with no attribute of its own. This is how an alert, a form field and a progress bar color their icons.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-volume-high"></i>
+            <span class="nds-label">Screen Reader Announcement</span>
+          </span>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">create()</code> marks the message so that a screen reader reads it when it appears. An error is read at once, and any other status after the screen reader finishes what it is reading.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-reload-horizontal"></i>
+            <span class="nds-label">One Message per Place</span>
+          </span>
+          <p class="nds-item-desc">A new message replaces the one already in the same place, so messages never pile up. A target with <code class="nds-inline-code lang-html">hidden</code> shows while a message is in it, and hides again when the last one is dismissed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="feedbackPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Match the status to the message: error for a failure, success for a confirmation, warning for a risk, info for news, neutral for a general hint and help for help text.
+- Keep the message to one short sentence.
+- Use an icon alone only where the text around it already says the status. The icon has no text for screen readers.
+- Add a message from a script with `NDS.Feedback.create()`, not with your own markup, so a screen reader reads it.
+- Use Small in forms and in text. Use Medium for a status that stands alone, and Large for the main status of a page or a panel.
+- Keep Solid and Ring for a status that must stand out. Outline suits most messages.
+
+</div>
+  </div>
+</section>
+
+<section id="feedbackApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-status` | `.nds-feedback`, or any parent | `error`, `critical`, `success`, `warning`, `info`, `neutral` or `help`. Sets the icon and the colors |
+| `data-permanent` | `.nds-feedback` | Makes the message permanent. See Behavior |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on the `.nds-feedback-icon`, on the `.nds-feedback`, or on a parent. Each status sets its own colors and shapes.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--feedback-size` | `24px`, `16px` with `nds-sm`, `32px` with `nds-lg` | Size of the icon. `nds-sm`, `nds-md` and `nds-lg` set it on the `.nds-feedback`, so set yours on the `.nds-feedback-icon` to change a sized icon |
+| `--feedback-color` | `var(--icon-neutral)` | Color of the outline icon. It changes in dark mode |
+| `--feedback-icon-color` | `var(--feedback-icon-fill-neutral)` | Fill of the solid disc. It stays the same in dark mode, so the white symbol keeps its contrast |
+| `--feedback-ring` | `var(--icon-neutral-ring)` | Color of the ring halo |
+| `--feedback-symbol-color` | `var(--icon-oncolor)` | Color of the symbol on the solid disc |
+| `--feedback-icon-symbol` | the "i" in a `.nds-feedback`, none elsewhere | Shape of the symbol, as an icon mask |
+| `--feedback-icon-stroke` | `var(--nds-icon-information-circle)` | Shape of the outline icon, as an icon mask |
+| `--feedback-icon-disc` | `var(--nds-icon-disc)` | Shape of the solid disc, as an icon mask |
+| `--feedback-ring-inset` | 6% of the size | Inner edge of the ring, which closes the gap between the disc and the halo. `0` with `nds-outline` |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+There is no `init()`: nothing scans the page for feedback. The script only builds messages.
+
+| Method | Effect |
+|---|---|
+| `NDS.Feedback.create(options)` | Builds a message, puts it in place and returns the element. It replaces the message already in the same place |
+| `NDS.Feedback.dismiss(elOrSelector)` | Removes one message, and shows again a permanent message it hid. Returns `true` when it existed |
+| `NDS.Feedback.dismissAll(container)` | Removes every message in a container except the permanent ones, which show again |
+{: .nds-table .nds-responsive}
+
+| Option | Default | Effect |
+|---|---|---|
+| `message` | `''` | The message text. Leave it out for an icon alone |
+| `status` | `'neutral'` | The status, as in `data-status` |
+| `target` | `null` | The element or selector the message goes to |
+| `position` | `'append'` | `'append'` or `'prepend'` puts it inside the target, `'before'` or `'after'` beside it |
+| `size` | `'sm'` | `'sm'`, `'md'` or `'lg'` |
+| `style` | `'outline'` | `'outline'`, `''` for solid, or `'ring'` |
+| `showIcon` | `true` | `false` leaves out the icon |
+| `permanent` | `false` | Makes the message permanent |
+| `ariaLive` | from the status | `'assertive'` for error, else `'polite'` |
+| `id`, `className` | none | An id and more classes for the message |
+| `onCreate(el)`, `onDismiss()` | none | Run after the message is built, and when it is dismissed |
+{: .nds-table .nds-responsive}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:feedbackCreate` | `document` | `{ feedback, options }`, after the message is in place |
+| `nds:feedbackDismiss` | `document` | `{ feedback }`, before the message is removed |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="fb-js-example" data-canon data-lang="js">
+var hint = NDS.Feedback.create({
+  message: 'Use 8 characters or more',
+  status: 'help',
+  target: '#password-hint',
+  permanent: true
+});
+NDS.Feedback.create({
+  message: 'The password is too short',
+  status: 'error',
+  target: '#password-hint'
+});
+// Later: the error goes, and the hint shows again
+NDS.Feedback.dismissAll('#password-hint');
+</script>
+
+The full API is in the banner of `_js/nds-feedback.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="feedbackRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Forms](../components/forms): `NDS.Forms.setStatus()` shows field messages with it.
+- [Alert](../components/alert): the status icon at the start of every alert.
+- [User Feedback](../components/user-feedback): the thank-you message after a vote.
+- [Upload](../components/upload): the status of each file.
+
+</div>
+  </div>
 </section>
