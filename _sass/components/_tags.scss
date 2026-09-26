@@ -29,6 +29,8 @@
   font-size: var(--_tag-fs);
   line-height: var(--_tag-height);
   height: var(--_tag-height);
+  // A column layout would otherwise stretch a lone tag to its full width.
+  width: fit-content;
   // Shrink to the container before the label does, so a long tag ellipsizes
   // instead of escaping the card or cell it sits in.
   min-width: 0;
@@ -164,6 +166,11 @@
     &.nds-outline:not([data-status]) {
       --tag-bg: transparent;
       --tag-border: var(--tag-border-oncolor);
+      --tag-text: var(--text-oncolor-primary);
+    }
+
+    // Ghost's neutral text outranks the on-color text above.
+    &[data-status].nds-ghost {
       --tag-text: var(--text-oncolor-primary);
     }
   }
