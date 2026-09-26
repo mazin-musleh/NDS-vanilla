@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "25/09/2026 - 11:05 PM"
+last_edit: "26/09/2026 - 10:22 PM"
 ---
 
 <section id="alertOverview" class="nds-content-section nds-doc-overview">
@@ -192,6 +192,27 @@ actions: [
   </div>
 </section>
 
+<section id="alertBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Toast
+{: .nds-block-title}
+
+A toast is an alert that floats at a corner of the screen and fades in, so it needs no `target`. Only `NDS.Alert.create()` makes one, with `display: 'toast'`, because its placement and timer need the script. Top toasts sit below the sticky header, with the newest first. Bottom toasts stack with the newest last. On a phone, a toast takes the full width. To dock toasts in a place of your own, add a `.nds-alert-placeholder` with `data-position`.
+
+### Auto Close
+{: .nds-block-title}
+
+A toast with a `duration` closes itself after that many milliseconds, and a ring on its close button counts down. The timer pauses while the pointer is over the toast or the keyboard focus is in it, and resumes when they leave. A click stops the timer for good, and the ring goes away: the toast then stays until the user closes it. On a touch screen, a tap does the same.
+
+</div>
+  </div>
+</section>
+
 <section id="alertFeatures" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
@@ -212,27 +233,6 @@ actions: [
             <span class="nds-label">Close Button</span>
           </span>
           <p class="nds-item-desc">The close button removes the alert. It works on alerts in the page at load. For alerts you add later, call <code class="nds-inline-code lang-js">NDS.Alert.init()</code>, or create them with <code class="nds-inline-code lang-js">NDS.Alert.create()</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-square"></i>
-            <span class="nds-label">Toasts</span>
-          </span>
-          <p class="nds-item-desc">A toast fades in at a corner of the screen. With a <code class="nds-inline-code lang-js">duration</code>, a ring on the close button counts down, and the toast closes itself.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-pause"></i>
-            <span class="nds-label">Pausable Timer</span>
-          </span>
-          <p class="nds-item-desc">The timer pauses on hover and on keyboard focus, and resumes when they leave. A click stops the timer, and the toast stays until the user closes it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01"></i>
-            <span class="nds-label">Toast Placement</span>
-          </span>
-          <p class="nds-item-desc">Top toasts sit below the sticky header and stack newest first. Bottom toasts stack newest last. On a phone, toasts use the full width.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
