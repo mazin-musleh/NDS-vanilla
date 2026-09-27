@@ -320,7 +320,9 @@
                     return live(byKey[b.getAttribute('data-builder-option')]);
                 });
                 var need = d.getAttribute('data-needs');
-                d.textContent = d.getAttribute('data-builder-group') + (off && need ? ' · ' + need : '');
+                // More mixes groups: it names each chip that is off, with its own reason.
+                var own = Array.prototype.map.call(d.nextElementSibling.querySelectorAll('[data-needs]:disabled'), function (b) { return b.getAttribute('data-needs'); });
+                d.textContent = [d.getAttribute('data-builder-group')].concat(off && need ? [need] : own).join(' · ');
             });
         }
 
@@ -476,6 +478,13 @@
         var slot = e.target.querySelector && e.target.querySelector('[data-demo-slot]');
         if (slot) slot.querySelectorAll('[data-status]').forEach(function (el) { NDS.Forms.clearStatus(el); });
         if (slot) dropAlert(e.target);
+    });
+
+    // A link in a preview stays on the doc page: the component still gets the click, the browser
+    // does not follow it. NDS.closest also reaches a menu that moved to <body>.
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href]');
+        if (a && NDS.closest(a, '[data-demo-slot]')) e.preventDefault();
     });
 
     // A form harness that passes answers as a real page does: an inline success alert under the

@@ -216,9 +216,10 @@ module DocsCanon
     multi, single = groups.partition { |_, list| list.size > 1 }
     esc = ->(t) { CGI.escapeHTML(t.to_s) }
     # Primary chips pick one of a set that always has a value; neutral chips can be turned off.
-    chip = lambda do |group, r, sel, tone = 'neutral'|
+    chip = lambda do |group, r, sel, tone = 'neutral', need = ''|
       tip = hint(r[:option]) ? %( title="#{esc[hint(r[:option])]}") : ''
-      %(<button type="button" class="nds-chip nds-#{tone} nds-rounded" aria-pressed="#{sel}"#{' data-state="selected"' if sel}#{' disabled' unless applies?(r, src, js)}#{tip} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
+      need = need.empty? ? '' : %( data-needs="#{esc[need]}")
+      %(<button type="button" class="nds-chip nds-#{tone} nds-rounded" aria-pressed="#{sel}"#{' data-state="selected"' if sel}#{' disabled' unless applies?(r, src, js)}#{tip}#{need} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
     end
     row = lambda do |name, need, off, chips|
       text = off && !need.empty? ? "#{name} · #{need}" : name
@@ -232,7 +233,12 @@ module DocsCanon
       tone = none || list.any? { |r| label(r[:option]).include?(' + ') } ? 'neutral' : 'primary'
       row[group, needs(live.first, rows, canons, src), live.none? { |r| applies?(r, src, js) }, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
     end
-    body << row['More', '', false, single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
+    # More mixes groups, so each chip carries its own reason, and the label names the chips that are off.
+    if single.any?
+      need = ->(r) { n = needs(r, rows, canons, src); n.empty? ? '' : "#{label(r[:option])} #{n[0].downcase}#{n[1..]}" }
+      off = single.map { |_, (r)| need[r] unless applies?(r, src, js) }.compact.reject(&:empty?)
+      body << %(<div class="nds-divider nds-4xl" data-builder-group="More">#{esc[['More', *off].join(' · ')]}</div><div class="nds-chips">#{single.map { |group, (r)| chip[group, r, r[:option].include?('(default)'), 'neutral', need[r]] }.join}</div>)
+    end
     panel = side || (mode ? mode == 'panel' : body.size > 3)
     return [%(<div id="#{id}-options" class="nds-builder-options" role="group" aria-label="Options" hidden>#{body.join}</div>\n), false] unless panel
 
