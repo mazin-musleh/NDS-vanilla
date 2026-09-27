@@ -2,434 +2,226 @@
 layout: page
 title: Breadcrumb
 hero_title: Breadcrumb - National Design System
-hero_description: Navigation component showing the current page's location within the site hierarchy
+hero_description: A trail of links that shows where the current page sits in the site.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "24/08/2026 - 04:42 PM"
+updated: "1.12.x"
+last_edit: "27/09/2026 - 09:49 PM"
 ---
 
-<!-- Standard -->
-<section id="breadcrumbStandard" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Standard</h2>
-            <p class="nds-section-description">Three-level breadcrumb with linked parent pages and current page indicator</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="#">Components</a></li>
-                                        <li aria-current="page">Breadcrumb</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-breadcrumb-standard-1" id="tab-breadcrumb-standard-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-standard-1"
-                                        aria-labelledby="tab-breadcrumb-standard-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-  &lt;ol class="nds-breadcrumb"&gt;
-    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;Components&lt;/a&gt;&lt;/li&gt;
-    &lt;li aria-current="page"&gt;Breadcrumb&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/nav&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="breadcrumbOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A breadcrumb is a `<nav>` that holds an ordered list: one item per level, from Home to the current page. A script collapses a long trail behind a More button.
+
+Pick another component when:
+
+- the links are the site's navigation: [Main Navigation](../ui-shell/mainnav) or [Side Menu](../ui-shell/sidemenu)
+- the links move between the steps of one task: [Stepper](../components/stepper)
+- the links switch views on one page: [Tabs](../components/tabs)
+
+</div>
+  </div>
 </section>
 
-<!-- Two Level -->
-<section id="breadcrumbTwoLevel" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Two Level</h2>
-            <p class="nds-section-description">Minimal breadcrumb for pages one level deep</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li aria-current="page">Components</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-breadcrumb-twolevel-1" id="tab-breadcrumb-twolevel-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-twolevel-1"
-                                        aria-labelledby="tab-breadcrumb-twolevel-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-  &lt;ol class="nds-breadcrumb"&gt;
-    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-    &lt;li aria-current="page"&gt;Components&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/nav&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="breadcrumbMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="breadcrumb-standard" data-canon data-variants="breadcrumbVariantsTable">
+<nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+  <ol class="nds-breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Services</a></li>
+    <li aria-current="page">Register a new commercial establishment and issue its first license</li>
+  </ol>
+</nav>
+</script>
+
+<script type="text/html" id="breadcrumb-two-levels" data-canon>
+<nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+  <ol class="nds-breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li aria-current="page">Services</li>
+  </ol>
+</nav>
+</script>
+
+<script type="text/html" id="breadcrumb-deep" data-canon>
+<nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+  <ol class="nds-breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Business</a></li>
+    <li><a href="#">Licenses</a></li>
+    <li><a href="#">Commercial</a></li>
+    <li><a href="#">Renewals</a></li>
+    <li aria-current="page">Renew a commercial license</li>
+  </ol>
+</nav>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Long Title -->
-<section id="breadcrumbLongTitle" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Long Title</h2>
-            <p class="nds-section-description">Truncate long page titles with nds-truncate to prevent wrapping</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="#">Components</a></li>
-                                        <li class="nds-truncate" aria-current="page">Very Long Page Title That May Wrap or Truncate</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-breadcrumb-long-1" id="tab-breadcrumb-long-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-breadcrumb-long-1"
-                                        aria-labelledby="tab-breadcrumb-long-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-  &lt;ol class="nds-breadcrumb"&gt;
-    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;Components&lt;/a&gt;&lt;/li&gt;
-    &lt;li class="nds-truncate" aria-current="page"&gt;Very Long Page Title&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/nav&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="breadcrumbVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+`li:last-child` is the current page item.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Standard (default) | — | — | Three levels: Home, a parent page and the current page |
+| Structure | Short trail | `canon #breadcrumb-two-levels` | — | Two levels: Home and the current page, for a page one step below Home |
+| Structure | Deep trail | `canon #breadcrumb-deep` | — | Seven levels. The script shows the first level, a More button and the last two |
+| Truncate | Truncate | `.nds-truncate` | `li:last-child` | Cuts a long current page title with an ellipsis, so the trail stays on one line |
+| Loading | Loading | `.nds-loading` | `.nds-breadcrumb-nav` | Shows each label as a pulsing skeleton bar while the trail content loads. Remove it when the content is ready |
+{: #breadcrumbVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Automatic Collapsing -->
-<section id="breadcrumbCollapsed" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Automatic Collapsing</h2>
-            <p class="nds-section-description">Breadcrumbs with 5+ levels collapse into a dropmenu showing Home, ellipsis, and the last two items</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="#">Services</a></li>
-                                        <li><a href="#">Category</a></li>
-                                        <li><a href="#">Subcategory</a></li>
-                                        <li><a href="#">Section</a></li>
-                                        <li><a href="#">Parent</a></li>
-                                        <li aria-current="page">Current Page</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-breadcrumb-collapsed-1" id="tab-breadcrumb-collapsed-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-breadcrumb-collapsed-1"
-                                        aria-labelledby="tab-breadcrumb-collapsed-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;!-- Write the full breadcrumb. JS collapses 5+ levels automatically --&gt;
-&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-  &lt;ol class="nds-breadcrumb"&gt;
-    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;Services&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;Category&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;Subcategory&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;Section&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;Parent&lt;/a&gt;&lt;/li&gt;
-    &lt;li aria-current="page"&gt;Current Page&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/nav&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="breadcrumbFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">The script sets up every <code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code> when the page loads. It needs no call.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-menu-02"></i>
+            <span class="nds-label">Automatic Collapse</span>
+          </span>
+          <p class="nds-item-desc">A trail of more than 5 levels shows the first level, a More button and the last two. The button opens a menu of the hidden levels.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Support</span>
+          </span>
+          <p class="nds-item-desc">The More menu is a <a href="../components/dropmenu">Dropmenu</a>, so it opens, moves between items and closes with the keyboard.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Stable Layout</span>
+          </span>
+          <p class="nds-item-desc">Until the script runs, each label shows as a skeleton bar. A long trail already takes its collapsed size, so the page does not shift when it collapses.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-link-01"></i>
+            <span class="nds-label">Neutral Links</span>
+          </span>
+          <p class="nds-item-desc">The links use the neutral link colors, so the trail stays quieter than the page content. Add <code class="nds-inline-code lang-html">nds-primary</code> to one link that must stand out.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="breadcrumbFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates when .nds-breadcrumb-nav is on the page. No JavaScript setup required.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
-                            <span class="nds-label">Smart Collapsing</span>
-                        </span>
-                        <p class="nds-item-desc">Deep hierarchies collapse into a dropmenu. Shows Home, ellipsis, and last two items.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard"></i>
-                            <span class="nds-label">Keyboard Support</span>
-                        </span>
-                        <p class="nds-item-desc">Collapsed dropmenu is fully keyboard accessible via Enter, Space, and Escape.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-more-horizontal"></i>
-                            <span class="nds-label">Title Truncation</span>
-                        </span>
-                        <p class="nds-item-desc">Add nds-truncate to the current page item to prevent a long title from wrapping.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="breadcrumbPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Show a breadcrumb on every page below Home. Leave it off the home page.
+- Start the trail with Home.
+- End the trail with the current page as plain text in `<li aria-current="page">`. Do not make it a link.
+- Keep `aria-label` on the `<nav>`, so screen readers can name the landmark.
+- Write every level in the markup. Do not hide levels yourself: the script collapses the trail.
+- Make each middle level a plain `<a>` with text. The More menu copies only the link address and its text.
+- Keep the text of each level short, so the trail reads at a glance.
+- Add `nds-truncate` to the current item when page titles can be long. The title then stops at about 45 characters.
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="breadcrumbGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
+<section id="breadcrumbApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">When to Use</h3>
-                <ul>
-                    <li>Use breadcrumbs on pages 2+ levels deep to show location within the site hierarchy</li>
-                    <li>Always start with "Home" as the first item. The current page is the last item and should not be a link</li>
-                    <li>Keep titles short and scannable. Use nds-truncate for pages with long names</li>
-                    <li>Write the full hierarchy in HTML. The JS handles collapsing automatically for deep structures</li>
-                    <li>Skip breadcrumbs on the homepage and single-level landing pages</li>
-                </ul>
-            </div>
+### Other Classes
+{: .nds-block-title}
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td><code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code></td><td>Shows the skeleton pulse animation while breadcrumb content is loading. Alias for <code class="nds-inline-code lang-html">data-state="loading"</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-breadcrumb-ellipsis</code></td><td><code class="nds-inline-code lang-html">&lt;li&gt;</code></td><td>Applied by JS to the generated collapse container holding the dropmenu for hidden items</td></tr>
-                    </tbody>
-                </table>
-            </div>
+| Class | Element | Effect |
+|---|---|---|
+| `nds-breadcrumb-ellipsis` | `<li>` | The script adds this item to a collapsed trail. It holds the More button and its menu |
+| `nds-breadcrumb-menu` | `.nds-dropmenu-menu` | The script adds it to the More menu. Style the menu with this class: it still matches when the menu moves to `<body>` |
+{: .nds-table .nds-responsive}
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-nds-breadcrumb-initialized</code></td><td><code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code></td><td>Stamped by JS after init. Releases the pre-init skeleton. Prevents double-initialization on <code class="nds-inline-code lang-js">reinit()</code> calls</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td><code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code></td><td>Triggers the skeleton pulse animation. Equivalent to adding <code class="nds-inline-code lang-html">nds-loading</code></td></tr>
-                    </tbody>
-                </table>
-            </div>
+### Data Attributes
+{: .nds-block-title}
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Breadcrumb</strong> API handles auto-collapsing. For dynamically added breadcrumbs, call <strong>NDS.Breadcrumb.reinit()</strong> to process new elements.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// Re-scan and initialize new breadcrumbs
-NDS.Breadcrumb.init();
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-state="loading"` | `.nds-breadcrumb-nav` | The same as `nds-loading` |
+{: .nds-table .nds-responsive}
 
-// Shorthand for init()
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Breadcrumb.init()` | Sets up every `.nds-breadcrumb-nav` that is not set up yet, and stores its instance in `nav.ndsBreadcrumb`. It runs on page load |
+| `NDS.Breadcrumb.reinit()` | The same as `init()`. Call it after you add a breadcrumb to the page |
+| `NDS.Breadcrumb.create(nav)` | Sets up one breadcrumb and returns its instance |
+| `instance.destroy()` | Removes the More menu and puts every level back |
+{: .nds-table .nds-responsive}
+
+Destroy a trail before you change its list, then call `reinit()`:
+
+<script type="text/html" id="breadcrumb-js" data-canon data-lang="js">
+const nav = document.querySelector('.nds-breadcrumb-nav');
+nav.ndsBreadcrumb?.destroy();
+nav.querySelector('.nds-breadcrumb').innerHTML =
+  '<li><a href="/">Home</a></li><li aria-current="page">Services</li>';
 NDS.Breadcrumb.reinit();
+</script>
 
-// Create instance for a specific element
-const instance = NDS.Breadcrumb.create(document.querySelector('.nds-breadcrumb-nav'));
+The full API is in the banner of `_js/nds-breadcrumb.js`.
 
-// Access existing instance
-const existing = document.querySelector('.nds-breadcrumb-nav').ndsBreadcrumb;
+</div>
+  </div>
+</section>
 
-// Clean up
-instance.destroy();
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<section id="breadcrumbRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Hero](../ui-shell/hero): the sub hero holds the page's breadcrumb above the title, with a truncated current item.
+- [Service Template](../templates/service-template): a template page whose breadcrumb shows its parent section.
+
+</div>
+  </div>
 </section>
