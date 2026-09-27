@@ -13,7 +13,7 @@ module DocsCanon
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
               '.nds-doc-variants .nds-table{--min-width:900px}' \
               '[data-builder-group]{--divider-line-start:24px}' \
-              '.nds-doc-grid{background-image:linear-gradient(var(--divider-color) 1px,transparent 1px),linear-gradient(90deg,var(--divider-color) 1px,transparent 1px);background-size:24px 24px;background-position:right 12px top 12px}' \
+              '.nds-doc-grid{--_grid-line:color-mix(in srgb,var(--divider-color) 50%,transparent);background-image:linear-gradient(var(--_grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--_grid-line) 1px,transparent 1px);background-size:24px 24px;background-position:right 12px top 12px}' \
               ':is(html[dir="ltr"],.ltr) .nds-doc-grid{background-position:12px 12px}' \
               '.nds-builder-options>.nds-divider:first-child{margin-block-start:0}' \
               '.nds-builder-options{margin-block-end:var(--spacing-4xl)}' \
