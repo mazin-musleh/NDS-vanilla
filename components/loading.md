@@ -1,470 +1,238 @@
 ---
 layout: page
 title: Loading
-hero_title: Loading Component - National Design System
-hero_description: A versatile loading spinner for indicating loading states across any element
+hero_title: Loading - National Design System
+hero_description: A loading state dims the content of a container and shows a spinner over it while the content updates
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "03/09/2026 - 01:31 AM"
+updated: "1.12.x"
+last_edit: "27/09/2026 - 03:50 PM"
 ---
 
-<!-- Loading Overview -->
-<section id="loadingOverview" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Loading Spinner</h2>
-            <p class="nds-section-description">Add .nds-loading to any container to dim its content and show a centered spinner. JS-toggled state can set data-state="loading" instead; nds-core mirrors it onto the class</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <!-- Default Loading -->
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Default Loading</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-xxs", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">XXS</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-xs", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">XS</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-sm", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">SM</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-md", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">MD</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-lg", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-xl", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">XL</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-2xl", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">2XL</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-neutral", ".nds-loading","loadingColor"]'>
-                                    <span class="nds-label">Neutral</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-loading"
-                                    style="width: 200px; padding: 16px; background: var(--background-surface-default); border-radius: 8px; border: 1px solid var(--border-default);">
-                                    <p style="margin: 0;">Content is dimmed while loading</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-loading-1" id="tab-loading-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-loading-1"
-                                    aria-labelledby="tab-loading-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;div class="nds-loading"&gt;
-  &lt;p&gt;Content is dimmed while loading&lt;/p&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-
-                    <!-- On-color Loading -->
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">On-color Loading (Dark Background)</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-xxs", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">XXS</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-xs", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">XS</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-sm", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">SM</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-md", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">MD</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-lg", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">LG</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-xl", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">XL</span>
-                                </button>
-                                <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-2xl", ".nds-loading","loadingSize"]'>
-                                    <span class="nds-label">2XL</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container" style="background: var(--colors-primary-600);">
-                            <div class="state-demo oncolor-demo">
-                                <div class="nds-loading nds-oncolor"
-                                    style="width: 200px; padding: 16px; border-radius: 8px;">
-                                    <p style="margin: 0; color: var(--colors-base-white);">Content is dimmed while loading</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-loading-2" id="tab-loading-2">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-loading-2"
-                                    aria-labelledby="tab-loading-2">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;div class="nds-loading nds-oncolor"&gt;
-  &lt;p&gt;Content is dimmed while loading&lt;/p&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="loadingOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Loading is a state, not an element. The `nds-loading` class goes on any container, and blocks clicks until you remove it. Most containers show a spinner. A component that has a skeleton shows gray bars in the shape of its content instead.
+
+Pick another component when:
+
+- the task has a known length: [Progress](../components/progress)
+- the content finished loading and is empty: [Empty](../components/empty)
+
+</div>
+  </div>
 </section>
 
-<!-- Neutral Loading -->
-<section id="neutralLoading" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Neutral</h2>
-            <p class="nds-section-description">Black spinner on light backgrounds, automatically inverts to white in dark mode</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Neutral Loading</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-loading nds-neutral"
-                                    style="width: 200px; padding: 16px; background: var(--background-surface-default); border-radius: 8px; border: 1px solid var(--border-default);">
-                                    <p style="margin: 0;">Content is dimmed while loading</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-loading-neutral-1" id="tab-loading-neutral-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-loading-neutral-1"
-                                    aria-labelledby="tab-loading-neutral-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;div class="nds-loading nds-neutral"&gt;
-  &lt;p&gt;Content is dimmed while loading&lt;/p&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="loadingMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="loading-spinner" data-canon data-variants="loadingVariantsTable">
+<div class="nds-loading" aria-busy="true">
+  <div class="nds-card nds-stroke">
+    <div class="nds-card-content">
+      <div class="nds-card-text">
+        <span class="nds-card-title">Application status</span>
+        <p class="nds-card-description">The status of your application updates every few minutes.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Size Variants -->
-<section id="sizeVariants" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Size Variants</h2>
-            <p class="nds-section-description">Loading spinners are available in 7 sizes: xxs (20px), xs (24px), sm
-                (28px), md (32px default), lg (36px), xl (40px), 2xl (44px)</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">All Sizes</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo" style="gap: 24px; flex-wrap: wrap;">
-                                <div style="text-align: center;">
-                                    <div class="nds-loading nds-xxs"
-                                        style="width: 48px; height: 48px; background: var(--background-surface-default); border-radius: 8px;">
-                                    </div>
-                                    <small style="display: block; margin-top: 8px;">XXS (20px)</small>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div class="nds-loading nds-xs"
-                                        style="width: 52px; height: 52px; background: var(--background-surface-default); border-radius: 8px;">
-                                    </div>
-                                    <small style="display: block; margin-top: 8px;">XS (24px)</small>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div class="nds-loading nds-sm"
-                                        style="width: 56px; height: 56px; background: var(--background-surface-default); border-radius: 8px;">
-                                    </div>
-                                    <small style="display: block; margin-top: 8px;">SM (28px)</small>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div class="nds-loading"
-                                        style="width: 60px; height: 60px; background: var(--background-surface-default); border-radius: 8px;">
-                                    </div>
-                                    <small style="display: block; margin-top: 8px;">MD (32px)</small>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div class="nds-loading nds-lg"
-                                        style="width: 64px; height: 64px; background: var(--background-surface-default); border-radius: 8px;">
-                                    </div>
-                                    <small style="display: block; margin-top: 8px;">LG (36px)</small>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div class="nds-loading nds-xl"
-                                        style="width: 68px; height: 68px; background: var(--background-surface-default); border-radius: 8px;">
-                                    </div>
-                                    <small style="display: block; margin-top: 8px;">XL (40px)</small>
-                                </div>
-                                <div style="text-align: center;">
-                                    <div class="nds-loading nds-2xl"
-                                        style="width: 72px; height: 72px; background: var(--background-surface-default); border-radius: 8px;">
-                                    </div>
-                                    <small style="display: block; margin-top: 8px;">2XL (44px)</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-sizes-1" id="tab-sizes-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sizes-1"
-                                    aria-labelledby="tab-sizes-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;div class="nds-loading nds-xxs"&gt;...&lt;/div&gt;  &lt;!-- 20px --&gt;
-&lt;div class="nds-loading nds-xs"&gt;...&lt;/div&gt;   &lt;!-- 24px --&gt;
-&lt;div class="nds-loading nds-sm"&gt;...&lt;/div&gt;   &lt;!-- 28px --&gt;
-&lt;div class="nds-loading"&gt;...&lt;/div&gt;         &lt;!-- 32px (default) --&gt;
-&lt;div class="nds-loading nds-lg"&gt;...&lt;/div&gt;   &lt;!-- 36px --&gt;
-&lt;div class="nds-loading nds-xl"&gt;...&lt;/div&gt;   &lt;!-- 40px --&gt;
-&lt;div class="nds-loading nds-2xl"&gt;...&lt;/div&gt;  &lt;!-- 44px --&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="loadingVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The size and color classes go on the element that carries `nds-loading`.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Size | XXS | `.nds-xxs` | `.nds-loading` | 20px spinner, 2px stroke. Small parts, such as a table cell |
+| Size | XS | `.nds-xs` | `.nds-loading` | 24px spinner, 2px stroke |
+| Size | SM | `.nds-sm` | `.nds-loading` | 28px spinner, 2px stroke |
+| Size | MD (default) | — | `.nds-loading` | 32px spinner, 3px stroke. Most containers |
+| Size | LG | `.nds-lg` | `.nds-loading` | 36px spinner, 3px stroke |
+| Size | XL | `.nds-xl` | `.nds-loading` | 40px spinner, 4px stroke. Large areas |
+| Size | 2XL | `.nds-2xl` | `.nds-loading` | 44px spinner, 4px stroke. A whole page or panel |
+| Color | Primary (default) | — | `.nds-loading` | The primary color on a light surface. White in dark mode |
+| Color | Neutral | `.nds-neutral` | `.nds-loading` | Black on a light surface, white in dark mode. Use it where the primary color clashes with the content |
+| Color | On color (hint: White spinner for a dark or colored surface) | `.nds-oncolor` | `.nds-loading` | White in every mode. Use it on a surface that is always dark or colored, such as a primary banner. On a white surface the spinner does not show |
+{: #loadingVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="loadingFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-code"></i>
-                            <span class="nds-label">CSS Only</span>
-                        </span>
-                        <p class="nds-item-desc">No JavaScript required. Add the class and the spinner renders immediately via CSS <code class="nds-inline-code lang-html">::after</code>.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-dark-mode"></i>
-                            <span class="nds-label">Automatic Dark Mode</span>
-                        </span>
-                        <p class="nds-item-desc">The default spinner inverts to white in dark mode. <code class="nds-inline-code lang-html">nds-neutral</code> follows the same inversion automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-mouse-01"></i>
-                            <span class="nds-label">Interaction Blocked</span>
-                        </span>
-                        <p class="nds-item-desc"><code class="nds-inline-code lang-html">pointer-events: none</code> is applied to the loading container, preventing clicks on dimmed content.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layers-01"></i>
-                            <span class="nds-label">Skeleton Suppression</span>
-                        </span>
-                        <p class="nds-item-desc">On skeleton-capable elements (grids, cards, accordions, tabs, tables), the spinner is suppressed and child opacity is restored so the skeleton provides the feedback.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="loadingBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Spinner
+{: .nds-block-title}
+
+A container that has no skeleton of its own shows a spinner. Its children fade to 15% opacity, and the spinner turns in the center of the container. The size and color classes in the builder change only the spinner.
+
+### Skeleton
+{: .nds-block-title}
+
+A component that has a skeleton, such as a card, a table or tabs, replaces its text with gray bars in the shape of its content. The bars pulse, the children do not fade, and no spinner shows. Put `nds-loading` on a grid of cards to turn every card in it into a skeleton. Each component's page shows its own skeleton.
+
+<script type="text/html" id="loading-skeleton" data-canon>
+<div class="nds-card nds-stroke nds-loading" aria-busy="true">
+  <div class="nds-card-header">
+    <div class="nds-card-featured-icon">
+      <span class="nds-featured-icon nds-circle nds-lg">
+        <i class="hgi hgi-stroke hgi-stars"></i>
+      </span>
+    </div>
+  </div>
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <span class="nds-card-title">Card Title</span>
+      <span class="nds-card-subtitle">Card Subtitle</span>
+      <p class="nds-card-description">Short description of this card content goes here for demonstration.</p>
+    </div>
+  </div>
+</div>
+</script>
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="loadingGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use the <code class="nds-inline-code lang-html">nds-loading</code> class in markup and in simple class toggles. For JS-toggled state, call <code class="nds-inline-code lang-js">NDS.State.add(el, 'loading')</code>; nds-core mirrors the token onto the class, and the CSS reads the class only</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-neutral</code> when the spinner appears over a white or light-tinted surface where the default primary-colored spinner would clash</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-oncolor</code> when the container background is always dark (for example, a primary-colored banner); this forces the spinner white regardless of color scheme</li>
-                    <li>Buttons carry their own loading look: the spinner replaces the label and the child-dim rule is excluded for them. Set the token from JS with <code class="nds-inline-code lang-js">NDS.State.add(btn, 'loading')</code>, or the class in markup</li>
-                    <li>On skeleton-capable elements (<code class="nds-inline-code lang-html">.nds-grid</code>, <code class="nds-inline-code lang-html">.nds-card</code>, <code class="nds-inline-code lang-html">.nds-accordion</code>, <code class="nds-inline-code lang-html">.nds-tabs</code>, <code class="nds-inline-code lang-html">tbody</code>), the skeleton IS the visual feedback; the spinner is automatically suppressed by CSS and you do not need to handle it separately</li>
-                    <li>Size the spinner to match the container: use <code class="nds-inline-code lang-html">nds-xxs</code> or <code class="nds-inline-code lang-html">nds-xs</code> inside compact components (table cells, small cards) and <code class="nds-inline-code lang-html">nds-xl</code> or <code class="nds-inline-code lang-html">nds-2xl</code> for full-page overlays</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Black spinner on light backgrounds; inverts to white in dark mode</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Forces a white spinner regardless of color scheme, for use on always-dark backgrounds</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-xxs</code></td><td>Spinner 20px, border 2px</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-xs</code></td><td>Spinner 24px, border 2px</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Spinner 28px, border 2px</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Spinner 32px, border 3px (same as the default)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Spinner 36px, border 3px</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Spinner 40px, border 4px</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-2xl</code></td><td>Spinner 44px, border 4px</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>The JS token for the loading state. nds-core mirrors it onto the <code class="nds-inline-code lang-html">nds-loading</code> class, and the CSS reads the class only, so this form needs the NDS JS bundle. Useful when a component already manages <code class="nds-inline-code lang-html">data-state</code> for other states</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--loading-color</code></td><td><code class="nds-inline-code lang-html">--background-primary</code> (white in dark)</td><td>Spinner arc color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--loading-track</code></td><td><code class="nds-inline-code lang-html">--colors-alpha-black-10</code> (colors-alpha-white-20 in dark)</td><td>Spinner track (background ring) color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--loading-size</code></td><td><code class="nds-inline-code lang-html">32px</code></td><td>Diameter of the spinner</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--loading-border</code></td><td><code class="nds-inline-code lang-html">3px</code></td><td>Stroke width of the spinner ring</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--loading-opacity</code></td><td><code class="nds-inline-code lang-html">0.15</code></td><td>Opacity applied to child elements while loading</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Skeleton Processing State</h3>
-                <p>When <code class="nds-inline-code lang-html">nds-loading</code> is applied to the following elements (or <code class="nds-inline-code lang-html">data-state="loading"</code>, which nds-core mirrors onto it), the spinner (<code class="nds-inline-code lang-html">::after</code>) is suppressed and child opacity is restored to 1. The skeleton styling defined in each component provides the visual feedback instead. <code class="nds-inline-code lang-html">pointer-events: none</code> still applies.</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Element</th><th>Notes</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-grid</code></td><td>Card grids in a loading state show skeleton cards</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-paged-content</code></td><td>Paginated content region; skeleton suppresses spinner during page turns</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">tbody</code>, <code class="nds-inline-code lang-html">.nds-table</code></td><td>Table body and table wrapper; skeleton rows replace the spinner</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Accordion panels show skeleton items</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-tabs</code>, <code class="nds-inline-code lang-html">.nds-tab-list</code></td><td>Tab strip and tab panels</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-card</code></td><td>Individual card in a loading state shows a skeleton body</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-definition-list</code></td><td>Definition list</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-stepper</code></td><td>Stepper component</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code></td><td>Breadcrumb navigation</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="loadingFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-code"></i>
+            <span class="nds-label">CSS Only</span>
+          </span>
+          <p class="nds-item-desc">The spinner is the <code class="nds-inline-code lang-css">::after</code> of the container. No script and no extra element are needed.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-mouse-01"></i>
+            <span class="nds-label">Interaction Blocked</span>
+          </span>
+          <p class="nds-item-desc">The container gets <code class="nds-inline-code lang-css">pointer-events: none</code> and <code class="nds-inline-code lang-css">user-select: none</code>, so the user cannot click or select the content while it loads.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-accessibility"></i>
+            <span class="nds-label">Reduce Motion</span>
+          </span>
+          <p class="nds-item-desc">The spinner keeps turning when the user turns on reduce motion in the accessibility panel. It shows that work is in progress, so it is not decoration.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Buttons and Fields</span>
+          </span>
+          <p class="nds-item-desc">On a button, the spinner takes the button's colors and hides the label, so the button keeps its size. Form fields skip this spinner and show their own.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="loadingPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Put `aria-busy="true"` on the container while it loads, and remove it with the class. The spinner is CSS only, so a screen reader does not announce it.
+- Put the class on the smallest container that updates, not on the whole page.
+- Keep the content in place while it loads. The dim shows the user what is about to change.
+- Match the size to the container: `nds-xxs` or `nds-xs` in a table cell, `nds-xl` or `nds-2xl` over a whole page.
+- Use `nds-oncolor` only on a surface that is always dark or colored. In dark mode, the default and `nds-neutral` turn white on their own.
+- Do not add a size or a color class to a component that has a skeleton. It shows no spinner.
+- Do not put `nds-loading` on a form field. Form fields show their own loading look. See [Forms](../components/forms).
+
+</div>
+  </div>
+</section>
+
+<section id="loadingApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-md` | `.nds-loading` | The same as the default size |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-state~="loading"` | any container | The same as the `nds-loading` class. The core script adds the class when the token is set and removes it when the token goes. The CSS reads only the class, so this form needs the NDS script. Use it on an element whose other states a script already sets with `data-state` |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on the loading container, or on a parent.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--loading-color` | `var(--background-primary)`, `var(--icon-oncolor)` in dark mode | Spinner arc color |
+| `--loading-track` | `var(--colors-alpha-black-10)`, `var(--colors-alpha-white-20)` in dark mode | Spinner ring color |
+| `--loading-size` | `32px` | Spinner diameter. It wins over the size classes |
+| `--loading-border` | `3px` | Spinner stroke width. It wins over the size classes |
+| `--loading-opacity` | `0.15` | Opacity of the children while the container loads |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+Loading has no script and no events. To turn it on and off from code, set the `loading` token with `NDS.State`.
+
+<script type="text/html" id="loading-js" data-canon data-lang="js">
+var list = document.querySelector('#results');
+
+NDS.State.add(list, 'loading');
+list.setAttribute('aria-busy', 'true');
+
+fetch('/api/results').then(function () {
+  NDS.State.remove(list, 'loading');
+  list.removeAttribute('aria-busy');
+});
+</script>
+
+The code that copies the token to the class is in `_js/nds-core.js`, under Token mirrors.
+
+</div>
+  </div>
 </section>
