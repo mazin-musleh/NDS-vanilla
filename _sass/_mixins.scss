@@ -443,7 +443,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
       line-height: normal;
     }
     .nds-progress-of {
-      font-size: clamp(14px, calc(var(--_progress-size, #{$size}) * 0.1 + 4px), 30px);
+      font-size: clamp(12px, calc(var(--_progress-size, #{$size}) * 0.1 + 4px), 30px);
       line-height: normal;
     }
     .nds-progress-text {
