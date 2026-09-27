@@ -4,7 +4,7 @@
  * Methods:
  *   NDS.Breadcrumb.init() / .reinit()   scan + initialize .nds-breadcrumb-nav
  *   NDS.Breadcrumb.create(nav)          instance one breadcrumb
- *   instance.destroy()                  drop the overflow menu
+ *   instance.destroy()                  drop the overflow menu, restore every level
  * Events:
  *   (none)
  * Hooks:
@@ -107,11 +107,10 @@
         }
 
         destroy() {
-            // Remove nds-dropmenu and restore original breadcrumb
-            const dropdownContainer = this.breadcrumb.querySelector('.nds-dropmenu');
-            if (dropdownContainer) {
-                dropdownContainer.closest('li')?.remove();
-            }
+            // Put back the original items: collapse detached the middle ones.
+            const menu = this.breadcrumb.querySelector('.nds-breadcrumb-ellipsis .nds-dropmenu');
+            menu?.ndsDropmenu?.destroy?.();
+            this.breadcrumb.replaceChildren(...this.items);
             // Releasing the stamp is what keeps destroy two-way: without it the same
             // markup stays marked as claimed, so no later init() or NDS.Init.refresh()
             // can ever collapse it again.
