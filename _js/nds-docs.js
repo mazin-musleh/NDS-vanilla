@@ -294,7 +294,8 @@
         function live(c) { return c.structure || c.ops.some(function (o) { return o.op; }); }
         function applies(c) {
             if (c.structure) return true;
-            var ops = c.ops.filter(function (o) { return o.op; });
+            // A `—` row with a target (a default that fits only some structures) is checked too.
+            var ops = c.ops.filter(function (o) { return o.op || (o.target && o.target !== '—'); });
             return !ops.length || ops.some(function (o) {
                 if (isJs(o.target)) return !!call && callMatches(call, o.target);
                 return html && (!o.target || o.target === '—' || !!pristine.querySelector(o.target));

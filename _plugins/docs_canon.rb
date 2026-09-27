@@ -59,7 +59,8 @@ module DocsCanon
         structure?(group) ? c[:structure] = Regexp.last_match(1) : (c[:inserts] ||= []) << Regexp.last_match(1)
       end
       c[:live] ||= markup != '—'
-      (c[:targets] ||= []) << target if markup != '—' && !c[:structure]
+      # A `—` row with a target (a default that fits only some structures) is checked too.
+      (c[:targets] ||= []) << target if (markup != '—' || !['—', ''].include?(target)) && !c[:structure]
     end
     choices.values
   end
