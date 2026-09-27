@@ -57,6 +57,8 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 
 - **Release notes, Avatar — Fixed:** an avatar that is also an `nds-btn` shows its photo; the button padding hid it. **Changed:** a stacked group draws a ring in `--avatar-border` around each avatar, 1px at XS and SM, 2px at MD and LG, 4px at XL and larger; at 3XL it replaces the border, so the photos keep their full size.
 
+- **Release notes, Button — Added:** an `nds-avatar` in a button takes the icon size, 24px on a large button, for a user button with a photo and a name. It hides under the spinner while the button loads. `nds-vertical` on a More button (`nds-ellipsis`) stands its three dots in a column.
+
 - **Release notes, Dropmenu — Fixed:** a dropmenu in a row that centers its items is centered too; it stretched to the row's height, and its trigger sat at the top. It still fills the width of a column section action.
 
 - **Release notes, Feedback Icons — Added:** `nds-lg` (and `size: 'lg'` in `NDS.Feedback.create()`): a 32px icon with large text.

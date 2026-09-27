@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 12:17 AM"
+last_edit: "27/09/2026 - 08:48 AM"
 ---
 
 <section id="btnOverview" class="nds-content-section nds-doc-overview">
@@ -67,6 +67,19 @@ Pick another component when:
   </span>
 </button>
 </script>
+<script type="text/html" id="btn-user" data-canon>
+<button type="button" class="nds-btn nds-primary">
+  <span class="nds-avatar">
+    <img src="../docs-assets/img/avatar2.webp" alt="Noura Al-Qahtani">
+  </span>
+  <span class="nds-label">Noura Al-Qahtani</span>
+</button>
+</script>
+<script type="text/html" id="btn-more" data-canon>
+<button type="button" class="nds-btn nds-primary nds-ellipsis nds-icon-only">
+  <span class="nds-label">More actions</span>
+</button>
+</script>
 <script type="text/html" id="btn-icon" data-canon>
 <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
 </script>
@@ -84,13 +97,15 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-child` changes one button. The builder uses the first one, but on a page it goes on the button you mean, such as the chosen one in a group. Two rows with the same Group and Option are one choice: write both. `:not(.nds-progress)` means the option is not for a progress button.
+A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-child` changes one button. The builder uses the first one, but on a page it goes on the button you mean, such as the chosen one in a group. Two rows with the same Group and Option are one choice: write both. `:not(.nds-progress)`, `:not(.nds-ellipsis)` and `:not(:has(> .nds-avatar))` mean the option is not for a progress, a More or a user button. Direction goes on a group or on a More button: make the change that fits the markup.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Standard (default) | — | — | One button |
 | Structure | Group | canon `#btn-group` | — | A row of related buttons joined into one strip. The two ends keep the rounded corners |
 | Structure | Progress (hint: A ring around an icon button) | canon `#btn-progress` | — | A ring around an icon-only button, such as the close button of a toast that closes itself. The ring is `aria-hidden`, so the label names the action. A disabled progress button keeps its colors, so `disabled` can stop a second press while the ring runs |
+| Structure | More (hint: Three dots, for a menu of more actions) | canon `#btn-more` | — | A square button with three dots, for a menu of more actions. The label is hidden and names the button for screen readers |
+| Structure | User | canon `#btn-user` | — | A user's photo and name, such as the account button in a header. The avatar takes the icon size. Add Menu for a button that opens the account menu |
 | Variant | Primary (default) | `.nds-primary` | `.nds-btn` | The main action in a view. Use one per view |
 | Variant | Neutral | `.nds-neutral` | `.nds-btn` | A strong action next to the primary one |
 | Variant | Secondary | `.nds-secondary` | `.nds-btn` | A supporting action, with a light fill |
@@ -101,20 +116,18 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Size | MD | `.nds-md` | `.nds-btn` | 32px high |
 | Size | SM | `.nds-sm` | `.nds-btn` | 24px high |
 | Content | Label (default) | — | — | Text only |
-| Content | Icon and label | canon `#btn-icon` | `.nds-btn:not(.nds-progress)` (start) | An icon before the label |
-| Content | Label and icon | canon `#btn-icon` | `.nds-btn:not(.nds-progress)` | An icon after the label. `.nds-trail-icon` does the same with the icon first in the markup |
-| Content | Icon above label | canon `#btn-icon` | `.nds-btn:not(.nds-progress)` (start) | The icon stacks above the label |
-| Content | Icon above label | `.nds-col` | `.nds-btn:not(.nds-progress)` | The same. The padding is equal on all sides, the label can wrap to two lines, and the button fills the height of its row |
-| Content | Icon only | canon `#btn-icon` | `.nds-btn:not(.nds-progress)` (start) | A square button with only the icon |
-| Content | Icon only | `.nds-icon-only` | `.nds-btn:not(.nds-progress)` | The same. Keep the label: it is hidden on screen and names the button for screen readers |
+| Content | Icon and label | canon `#btn-icon` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis):not(:has(> .nds-avatar))` (start) | An icon before the label |
+| Content | Label and icon | canon `#btn-icon` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis):not(:has(> .nds-avatar))` | An icon after the label. `.nds-trail-icon` does the same with the icon first in the markup |
+| Content | Icon above label | canon `#btn-icon` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis):not(:has(> .nds-avatar))` (start) | The icon stacks above the label |
+| Content | Icon above label | `.nds-col` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | The same. The padding is equal on all sides, the label can wrap to two lines, and the button fills the height of its row |
+| Content | Icon only | canon `#btn-icon` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis):not(:has(> .nds-avatar))` (start) | A square button with only the icon |
+| Content | Icon only | `.nds-icon-only` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | The same. Keep the label: it is hidden on screen and names the button for screen readers. On a user button, it shows only the photo |
 | Built-in icon | None (default) | — | — | No drawn icon |
-| Built-in icon | Menu | `.nds-menu-btn` | `.nds-btn:not(.nds-progress)` | A chevron after the label. It turns when the button has `data-state~="open"` or `aria-expanded="true"`, which the [Dropmenu](../components/dropmenu) sets |
-| Built-in icon | Next | `.nds-next` | `.nds-btn:not(.nds-progress)` | An arrow that points forward in the reading direction |
-| Built-in icon | Previous | `.nds-prev` | `.nds-btn:not(.nds-progress)` | An arrow that points back in the reading direction. The arrow comes before the label |
-| Built-in icon | Up | `.nds-up` | `.nds-btn:not(.nds-progress)` | An arrow that points up |
-| Built-in icon | Down | `.nds-down` | `.nds-btn:not(.nds-progress)` | An arrow that points down |
-| Built-in icon | More (hint: Three dots, for a menu of more actions) | `.nds-ellipsis` | `.nds-btn:not(.nds-progress)` | A square button with three dots |
-| Built-in icon | More (hint: Three dots, for a menu of more actions) | `.nds-icon-only` | `.nds-btn:not(.nds-progress)` | The same. The label is hidden and names the button for screen readers |
+| Built-in icon | Menu | `.nds-menu-btn` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | A chevron after the label. It turns when the button has `data-state~="open"` or `aria-expanded="true"`, which the [Dropmenu](../components/dropmenu) sets |
+| Built-in icon | Next | `.nds-next` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | An arrow that points forward in the reading direction |
+| Built-in icon | Previous | `.nds-prev` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | An arrow that points back in the reading direction. The arrow comes before the label |
+| Built-in icon | Up | `.nds-up` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | An arrow that points up |
+| Built-in icon | Down | `.nds-down` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | An arrow that points down |
 | State | None (default) | — | — | Ready to press |
 | State | Selected | `[data-state~="selected"]` | `.nds-btn:first-child:not(.nds-progress)` | The chosen button, such as a pressed toggle or the chosen button in a group |
 | State | Selected | `[aria-pressed="true"]` | `.nds-btn:first-child:not(.nds-progress)` | Set it with `data-state~="selected"`. It tells screen readers the button is on |
@@ -124,8 +137,9 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Ring | Countdown (default) | `--progress-duration: 4000ms` | `.nds-progress` | The ring fills once over this time |
 | Ring | Fixed value | `.nds-progress-static` | `.nds-progress` | The ring shows a fixed part, such as upload progress |
 | Ring | Fixed value | `--progress-value: 25` | `.nds-progress` | The same. The value is a percentage, from 0 to 100 |
-| Direction | Horizontal (default) | — | — | The buttons sit in a row |
+| Direction | Horizontal (default) | — | — | The buttons sit in a row, or the three dots of a More button |
 | Direction | Vertical | `.nds-vertical` | `.nds-btn-group` | The buttons stack in a column. The top and bottom keep the rounded corners |
+| Direction | Vertical | `.nds-vertical` | `.nds-btn.nds-ellipsis` | On a More button, the three dots stand in a column, for a menu at the end of a row or a card |
 | Destructive | Destructive (hint: Not with Neutral) | `.nds-destructive` | `.nds-btn:not(.nds-neutral)` | Error colors, for delete, remove or any action that cannot be undone. It works with every variant except neutral |
 | On color | On color | `.nds-oncolor` | `.nds-btn` | For a button on a deep primary or dark background |
 | Indicator | Indicator | `.nds-indicator` | `.nds-btn` | A bar at the bottom edge. It shows on hover, focus and the selected state, as in a tab or a menu bar |
