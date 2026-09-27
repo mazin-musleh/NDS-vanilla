@@ -131,8 +131,14 @@
     // A JS part canon is a run of options, `actions: [...]`.
     function partOf(id) { return parseCall('{' + document.getElementById(id).textContent + '}'); }
 
+    // A lazy canon keeps its element in a <template>, which querySelectorAll does not enter.
     function targets(root, sel) {
-        return !sel || sel === '—' ? [root.firstElementChild] : Array.prototype.slice.call(root.querySelectorAll(sel));
+        if (!sel || sel === '—') return [root.firstElementChild];
+        var found = Array.prototype.slice.call(root.querySelectorAll(sel));
+        Array.prototype.forEach.call(root.querySelectorAll('template'), function (t) {
+            found = found.concat(targets(t.content, sel));
+        });
+        return found;
     }
 
     // Insert a part block as el's first or last child, indented to match its siblings.
@@ -298,7 +304,7 @@
             var ops = c.ops.filter(function (o) { return o.op || (o.target && o.target !== '—'); });
             return !ops.length || ops.some(function (o) {
                 if (isJs(o.target)) return !!call && callMatches(call, o.target);
-                return html && (!o.target || o.target === '—' || !!pristine.querySelector(o.target));
+                return html && (!o.target || o.target === '—' || targets(pristine, o.target).length > 0);
             });
         }
         function showApplicable() {
