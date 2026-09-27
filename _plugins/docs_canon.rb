@@ -17,7 +17,7 @@ module DocsCanon
               ':is(html[dir="ltr"],.ltr) .nds-doc-grid{background-position:12px 12px}' \
               '.nds-builder-options>.nds-divider:first-child{margin-block-start:0}' \
               '.nds-builder-options{margin-block-end:var(--spacing-4xl)}' \
-              ':root[data-theme~="dark"] [data-builder-dark]{display:none}' # a dark site has nothing to toggle to
+              '.nds-card.nds-doc-preview{padding-block:56px}'               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px}'               '.nds-doc-preview>[data-demo-slot]{display:contents}'               ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
 
   PLAIN_CODE_RE = %r{<code class="language-plaintext highlighter-rouge">(.*?)</code>}m
   TABLE_LANG = { 'Method' => 'js', 'Option' => 'js', 'Event' => 'js', 'Action key' => 'js', 'Property' => 'css' }.freeze
@@ -166,8 +166,9 @@ module DocsCanon
   # each choice), so they never sit there with nothing to test.
   RULE_RE = /\s(data-required|data-min-checked|data-max-checked|required|pattern|minlength|min|max)[\s=>]|\stype="(email|url)"|nds-required/
 
+  # The demo sits in a slot, so a re-render keeps the card's view toggles.
   def self.harness(src, kind)
-    return src unless kind == 'form'
+    return %(<div data-demo-slot>\n#{src}\n</div>) unless kind == 'form'
 
     %(<form class="nds-form" data-ajax><div data-demo-slot>\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
   end
@@ -182,16 +183,21 @@ module DocsCanon
   def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
+  # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner.
+  def self.view
+    dark = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-sm" data-preview-dark aria-pressed="false" aria-label="Dark mode"><i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i></button>)
+    grid = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-sm" data-preview-grid aria-pressed="true" aria-label="Grid lines"><i class="hgi hgi-stroke hgi-grid-off" aria-hidden="true"></i></button>)
+    %(<div class="nds-btn-group nds-doc-view">#{dark}#{grid}</div>)
+  end
+
   # The Options button floats beside the section title (layout/section.md), icon-only on a phone,
-  # with Reset beside it, all one button group. A preview also gets Dark mode and Grid lines toggles.
-  # The group class sits on the action itself: nested, it would miss .nds-minimal's `> .nds-btn` rules.
-  def self.actions(id, preview, panel)
-    dark = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-dark aria-pressed="false" aria-label="Dark mode"><i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i></button>) if preview
-    grid = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-grid aria-pressed="true" aria-label="Grid lines"><i class="hgi hgi-stroke hgi-grid-off" aria-hidden="true"></i></button>) if preview
+  # with Reset beside it, one button group. The group class sits on the action itself: nested, it
+  # would miss .nds-minimal's `> .nds-btn` rules.
+  def self.actions(id, panel)
     reset = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-reset aria-label="Reset"><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button>)
     toggle = panel ? %(data-panel-toggle="#{id}-options") : %(data-builder-toggle aria-controls="#{id}-options" aria-expanded="false")
     options = %(<button type="button" class="nds-btn nds-secondary-outline nds-md" #{toggle}><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
-    %(<div class="nds-section-action nds-btn-group nds-rowView nds-minimal" data-builder-for="#{id}">#{options}#{dark}#{grid}#{reset}</div>)
+    %(<div class="nds-section-action nds-btn-group nds-rowView nds-minimal" data-builder-for="#{id}">#{options}#{reset}</div>)
   end
 
   # The options: one labeled row of chips per group, single options last under "More". Up to 3
@@ -293,22 +299,24 @@ module DocsCanon
       builder = lang == 'html' && table && (preview || live)
       if builder
         sheet, panel = options(id, rows(html, table), src, js, canons, attr(attrs, 'data-options'), attr(attrs, 'data-sheet'))
-        builders << [id, preview, panel]
+        builders << [id, panel]
         out << sheet
       end
       if preview || (builder && live)
         out << %(<div class="nds-divider nds-xl" style="margin-block-start: 0; --divider-line-start: 24px;">Preview</div>\n) if table
         demo = preview ? harness(src, attr(attrs, 'data-harness')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
-        out << %(<div class="nds-block nds-card nds-doc-grid" style="#{preview_style(preview && src.include?('nds-oncolor'))}">\n#{demo}\n</div>\n)
+        # A builder's card names its builder, so Dark reaches the code too.
+        card = preview ? %( nds-doc-preview"#{%( data-builder-card="#{id}") if builder}) : '"'
+        out << %(<div class="nds-block nds-card nds-doc-grid#{card} style="#{preview_style(preview && src.include?('nds-oncolor'))}">\n#{view if preview}#{demo}\n</div>\n)
       end
       out << (js ? code_tabs(id, src, js) : code_block(lang, src))
       out
     end
 
     # A float action is the head's first child.
-    builders.each do |id, preview, panel|
+    builders.each do |id, panel|
       head = html.rindex('<div class="nds-section-head">', html.index(%(<script type="text/html" id="#{id}")))
-      html = html.insert(head + '<div class="nds-section-head">'.size, actions(id, preview, panel)) if head
+      html = html.insert(head + '<div class="nds-section-head">'.size, actions(id, panel)) if head
     end
     html
   end

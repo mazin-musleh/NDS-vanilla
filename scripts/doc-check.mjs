@@ -143,7 +143,8 @@ for (const md of pages) {
                         // a tag or a chip), so its drawn icon or dot stays.
                         const rects = [];
                         box.querySelectorAll('*').forEach((e) => {
-                            if (e.children.length) return;
+                            // The card's own Dark and Grid toggles are not the demo.
+                            if (e.children.length || e.closest('.nds-doc-view')) return;
                             if (e.textContent.trim()) {
                                 const g = document.createRange(); g.selectNodeContents(e); rects.push(g.getBoundingClientRect());
                                 // A leaf's own box holds its ::before/::after (a link's icon), unless it is a full-width block.

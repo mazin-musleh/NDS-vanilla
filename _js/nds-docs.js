@@ -18,8 +18,8 @@
  * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
  * stays in place, disabled, and its row label says why (data-needs).
  * Rows sharing Group + Option are one choice.
- * The Dark mode toggle beside Options puts data-theme="dark" on the markup's outer element (code and preview)
- * and on the preview frame.
+ * Each preview card has Dark mode and Grid lines toggles in its corner. On a builder card, Dark puts
+ * data-theme="dark" on the markup's outer element (code and preview) and on the card; elsewhere, on the card only.
  */
 (function () {
     'use strict';
@@ -360,7 +360,7 @@
             var slot = preview.querySelector('[data-demo-slot]') || preview;
             NDS.Init.destroy(slot);
             preview.style.removeProperty('--card-bg');
-            if (!html) return runButton(js);
+            if (!html) return runButton(slot, js);
             slot.innerHTML = out;
             order.forEach(function (g) { if (active[g]) apply(slot, active[g], 'prop'); });
             // On-color markup needs the deep surface behind it (the build sets it for the default state).
@@ -390,9 +390,9 @@
 
         // A JS-only structure previews as a Run button that runs the code shown:
         // the page's own canon, never user input.
-        function runButton(code) {
-            preview.innerHTML = '<button type="button" class="nds-btn nds-primary nds-md"><span class="nds-label">Run</span></button>';
-            preview.firstChild.addEventListener('click', function () { new Function(code)(); });
+        function runButton(slot, code) {
+            slot.innerHTML = '<button type="button" class="nds-btn nds-primary nds-md"><span class="nds-label">Run</span></button>';
+            slot.firstChild.addEventListener('click', function () { new Function(code)(); });
         }
 
         function set(c, on) {
@@ -483,9 +483,10 @@
     document.addEventListener('nds:formInvalid', function (e) { dropAlert(e.target); });
 
     // The chips are built at site build; the Variants table is read only when the options first open.
-    // The Dark button (a preview's toggle) wires its builder on first use too.
+    // A builder card's Dark button wires its builder on first use too.
+    var builders = {};
     document.querySelectorAll('[data-builder-for]').forEach(function (bar) {
-        var api, get = function () { return api || (api = wire(bar)); };
+        var api, get = builders[bar.getAttribute('data-builder-for')] = function () { return api || (api = wire(bar)); };
         var toggle = bar.querySelector('[data-builder-toggle]');
         // A panel opens itself (data-panel-toggle); inline options are shown here.
         if (!toggle) bar.querySelector('[data-panel-toggle]').addEventListener('click', get, { once: true });
@@ -495,12 +496,22 @@
             box.hidden = !box.hidden;
             toggle.setAttribute('aria-expanded', String(!box.hidden));
         });
-        var btn = bar.querySelector('[data-builder-dark]');
-        if (btn) btn.addEventListener('click', function () { get().dark(btn); });
-        // Grid lines: a class on the preview card, which a re-render keeps (only its content is replaced).
-        var grid = bar.querySelector('[data-builder-grid]');
-        if (grid) grid.addEventListener('click', function () {
-            var card = document.getElementById(bar.getAttribute('data-builder-for') + '-options').nextElementSibling.nextElementSibling;
+    });
+
+    // Each preview card's view toggles. Dark on a builder card goes through the builder, so the
+    // code carries it; on a plain card it darkens the card only. Grid lines is a class on the card,
+    // which a re-render keeps (only the slot is replaced).
+    document.querySelectorAll('.nds-doc-view').forEach(function (view) {
+        var card = view.parentElement, dark = view.querySelector('[data-preview-dark]'), grid = view.querySelector('[data-preview-grid]');
+        dark.addEventListener('click', function () {
+            var id = card.getAttribute('data-builder-card');
+            if (id) return builders[id]().dark(dark);
+            var on = card.getAttribute('data-theme') !== 'dark';
+            on ? card.setAttribute('data-theme', 'dark') : card.removeAttribute('data-theme');
+            dark.setAttribute('aria-pressed', String(on));
+            dark.querySelector('.nds-icon').className = 'nds-icon ' + (on ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
+        });
+        grid.addEventListener('click', function () {
             var on = card.classList.toggle('nds-doc-grid');
             grid.setAttribute('aria-pressed', String(on));
             grid.querySelector('i').className = 'hgi hgi-stroke ' + (on ? 'hgi-grid-off' : 'hgi-grid');
