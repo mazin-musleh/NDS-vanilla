@@ -65,6 +65,7 @@ module DocsCanon
 
   # ponytail: `tag.a.b[x]:not(.c):not([y])` needs both classes and x, and neither c nor y, on one
   # element of that tag; an attribute counts by name only, a descendant part as present.
+  # `:has(> tag)` needs that tag anywhere in the markup.
   # Upgrade to a real parser if a table needs values or descendants.
   def self.matches?(src, sel, js = nil)
     return true if sel == '—'
@@ -79,7 +80,9 @@ module DocsCanon
     tag = sel[/\A([a-z][\w-]*)\./, 1]
     excluded = sel.scan(/:not\(\.([\w-]+)\)/).flatten
     no_attrs = sel.scan(/:not\(\[([\w-]+)/).flatten
-    own = sel.gsub(/:not\([^)]*\)/, '')
+    has_tags = sel.scan(/:has\(>?\s*([a-z][\w-]*)\)/).flatten
+    return false unless has_tags.all? { |t| src.include?("<#{t}") }
+    own = sel.gsub(/:(?:not|has)\([^)]*\)/, '')
     classes = own.gsub(/\[[^\]]*\]/, '').scan(/\.([\w-]+)/).flatten
     attrs = own.scan(/\[([\w-]+)/).flatten
     return true if classes.empty? && attrs.empty?
