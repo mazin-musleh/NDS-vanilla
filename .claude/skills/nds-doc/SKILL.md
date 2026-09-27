@@ -162,7 +162,7 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
   - **Code-only:** `data-preview="none"`, for shells, `<head>` and JS examples.
 - **A canon never holds `</script>`.** Code with a `<script>` tag inside stays out of the canon format for now (see `ui-shell/head.md`).
 - **Form fields** whose validation is worth trying add `data-harness="form"` to the base canon: the preview sits in a real `form.nds-form`, with Validate and Reset buttons that show only while a rule can fail (required, min and max checked, pattern, length). A pass shows an inline success alert: fields carry errors only. The code never shows the form. Make rules that can combine (at least, at most) a combo row, not separate exclusive options. Skip it where a field can fail only one way that the builder already shows (radio: only when nothing is chosen).
-- **Dark mode:** every builder with a preview gets a Dark mode toggle beside Options. It writes `data-theme="dark"` on the markup's outer element, so the copied code carries it. Never add a Dark option to the Variants table.
+- **Dark mode:** every builder with a preview gets a Dark mode toggle beside Options. It writes `data-theme="dark"` on the markup's outer element, so the copied code carries it. The toggle hides while the site itself is dark: NDS has no light area to switch to. Never add a Dark option to the Variants table.
 - **Shell pages** add `data-live="footer.nds-footer"` to change the page's own copy, and `data-sheet="top"` to slide the options from the top.
 - **Reference pages:** each example canon opens with an HTML comment that says what it does: `<!-- 3 columns on desktop, 2 on tablets, 1 on phones -->`.
 
@@ -255,7 +255,7 @@ Links to the examples and templates that use the component, each with what it sh
 
 ### No Docs CSS
 
-Build the page only from NDS components. If the page looks wrong, the gap is in a component: fix its SCSS. The only doc styling is what `_plugins/docs_canon.rb` writes: the features grid knobs, the Variants table width, the preview frame, the Preview divider, and the prose column width.
+Build the page only from NDS components. If the page looks wrong, the gap is in a component: fix its SCSS. The only doc styling is what `_plugins/docs_canon.rb` writes: the features grid knobs, the Variants table width, the preview frame, the Preview divider, the prose column width, and the Dark mode toggle hidden on a dark site.
 
 ### Registration (new pages only)
 

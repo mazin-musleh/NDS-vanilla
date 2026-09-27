@@ -11,7 +11,8 @@ module DocsCanon
   CANON_RE = %r{<script type="text/html"([^>]*)>(.*?)</script>}m
   # Knobs only, scoped to the skeleton section classes (nds-doc-{name}).
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
-              '.nds-doc-variants .nds-table{--min-width:900px}'
+              '.nds-doc-variants .nds-table{--min-width:900px}' \
+              ':root[data-theme~="dark"] [data-builder-dark]{display:none}' # a dark site has nothing to toggle to
 
   PLAIN_CODE_RE = %r{<code class="language-plaintext highlighter-rouge">(.*?)</code>}m
   TABLE_LANG = { 'Method' => 'js', 'Option' => 'js', 'Event' => 'js', 'Action key' => 'js', 'Property' => 'css' }.freeze
