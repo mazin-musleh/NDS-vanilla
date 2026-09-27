@@ -17,7 +17,12 @@ module DocsCanon
               ':is(html[dir="ltr"],.ltr) .nds-doc-grid{background-position:12px 12px}' \
               '.nds-builder-options>.nds-divider:first-child{margin-block-start:0}' \
               '.nds-builder-options{margin-block-end:var(--spacing-4xl)}' \
-              '.nds-card.nds-doc-preview{padding-block:56px}'               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px}'               '.nds-doc-preview>[data-demo-slot]{display:contents}'               ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
+              '.nds-card.nds-doc-preview{padding-block:56px}' \
+              '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px}' \
+              '.nds-doc-preview>[data-demo-slot]{display:contents}' \
+              '.nds-doc-options{--panel-height:30svh}' \
+              '@media (width < 600px){.nds-doc-options{--panel-height:35svh}}' \
+              ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
 
   PLAIN_CODE_RE = %r{<code class="language-plaintext highlighter-rouge">(.*?)</code>}m
   TABLE_LANG = { 'Method' => 'js', 'Option' => 'js', 'Event' => 'js', 'Action key' => 'js', 'Property' => 'css' }.freeze
@@ -235,7 +240,7 @@ module DocsCanon
     return [%(<div id="#{id}-options" class="nds-builder-options" role="group" aria-label="Options" hidden>#{body.join}</div>\n), false] unless panel
 
     # No backdrop, so the preview stays live above it.
-    [%(<aside id="#{id}-options" class="nds-panel" data-panel-side="#{side || 'bottom'}" data-panel-static style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i></span><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>\n), true]
+    [%(<aside id="#{id}-options" class="nds-panel nds-doc-options" data-panel-side="#{side || 'bottom'}" data-panel-static aria-label="Options" hidden><div class="nds-panel-header"><span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i></span><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>\n), true]
   end
 
   def self.stamp(html)
