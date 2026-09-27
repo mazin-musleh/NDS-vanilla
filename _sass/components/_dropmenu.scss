@@ -13,9 +13,6 @@
 .nds-dropmenu {
   position: relative;
   display: inline-flex;
-  // Follow the parent's cross-axis when it stretches (e.g. column-flex
-  // action rows); no-op in inline / row contexts.
-  align-self: stretch;
 
   // Delayed first open (data-delay) parks the trigger in the loading state,
   // which _loading.scss makes pointer-events:none. Keep it clickable so a

@@ -347,6 +347,11 @@
     flex-wrap: wrap;
     --btn-width: 100%;
 
+    // The column aligns to the start, so a dropmenu stretches to fill it like the buttons.
+    &:not(.nds-rowView) > .nds-dropmenu {
+        align-self: stretch;
+    }
+
     &.nds-rowView {
         flex-direction: row;
         --btn-width: unset;
