@@ -772,8 +772,8 @@
 // PROCESSING SKELETON
 // ==============================================
 // While a filter/pagination pass runs, the loading container renders its
-// cards as skeleton placeholders instead of the spinner + dim (suppression
-// in _loading.scss). The card chrome (bg, border, padding) stays; content
+// cards as skeleton placeholders instead of the spinner + dim (turned
+// off at the end of this file). The card chrome (bg, border, padding) stays; content
 // slots become gradient bars/fills. Bars pulse via the shared `processing`
 // keyframes; the a11y reduce-motion kill leaves them static.
 // The same look serves the pre-init hold: not-yet-initialized filter grids
@@ -846,4 +846,9 @@ html:not([data-nds-loaded]) .nds-card {
       visibility: hidden;
     }
   }
+}
+
+// Loading shows the skeleton above, not the spinner.
+:is(.nds-grid, .nds-paged-content, .nds-card).nds-loading {
+  @include loading-skeleton-host;
 }

@@ -185,9 +185,10 @@
 // PROCESSING SKELETON
 // ==============================================
 
-/* Star shapes pulse as skeleton placeholders while loading; spinner + child dim suppressed in _loading.scss. */
+/* Star shapes pulse as skeleton placeholders while loading; loading-skeleton-host drops the spinner + child dim. */
 .nds-rating.nds-loading {
   @include skeleton-pulse;
+  @include loading-skeleton-host;
 }
 
 .nds-rating.nds-loading .nds-rating-star {

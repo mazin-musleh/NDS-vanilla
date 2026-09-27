@@ -179,7 +179,7 @@
 // ==============================================
 // While a filter pass runs on the accordion (e.g. faq-template targets it
 // with data-filter-items="nds-accordion-item"), items render as bars
-// instead of the spinner + dim (suppression in _loading.scss). The same
+// instead of the spinner + dim (turned off at the end of this file). The same
 // look serves the pre-init hold: a not-yet-initialized filter target shows
 // shimmer (crit exempts accordions from its visibility hold and shapes the
 // item count; bar text is transparent so URL-filtered loads can't flash).
@@ -222,4 +222,9 @@
             }
         }
     }
+}
+
+// Loading shows the skeleton above, not the spinner.
+.nds-accordion.nds-loading {
+    @include loading-skeleton-host;
 }

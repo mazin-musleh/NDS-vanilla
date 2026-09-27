@@ -95,3 +95,8 @@
 
     .nds-drawer-list .nds-btn.nds-menu-btn::after { display: none; }
 }
+
+// Loading shows the skeleton above, not the spinner.
+.nds-toc.nds-loading {
+    @include loading-skeleton-host;
+}

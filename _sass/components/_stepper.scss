@@ -871,7 +871,7 @@
 // step without data-state~="current") — its first step is forced visible
 // as the placeholder row. Released by data-nds-stepper-initialized.
 // The same look serves the explicit loading state (.nds-loading on the
-// root — spinner + dim suppressed in _loading.scss).
+// root — spinner + dim off at the end of this file).
 :is(.nds-stepper:not([data-nds-stepper-initialized]),
     .nds-stepper.nds-loading) {
     @include skeleton-pulse;
@@ -948,3 +948,7 @@
     display: flex !important;
 }
 
+// Loading shows the skeleton above, not the spinner.
+.nds-stepper.nds-loading {
+    @include loading-skeleton-host;
+}

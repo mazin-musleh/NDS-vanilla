@@ -720,3 +720,8 @@
         --_deck-dur: 0s;
     }
 }
+
+// Loading shows the skeleton above, not the spinner.
+.nds-swiper.nds-loading {
+    @include loading-skeleton-host;
+}

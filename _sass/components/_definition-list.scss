@@ -237,8 +237,8 @@
 // PROCESSING SKELETON
 // ==============================================
 // A loading definition list bars its terms and descriptions (fit-content
-// width, per the legacy skeleton) — icons hide; spinner + dim suppressed
-// in _loading.scss. No JS owns this component, so its pre-init default
+// width, per the legacy skeleton) — icons hide; spinner + dim off
+// at the end of this file. No JS owns this component, so its pre-init default
 // keys on the page stamp (html:not([data-nds-loaded])) — the
 // no-JS-component pattern, covering regions visible before the reveal.
 :is(.nds-definition-list.nds-loading,
@@ -253,4 +253,9 @@
     :is(.nds-icon, i) {
         visibility: hidden;
     }
+}
+
+// Loading shows the skeleton above, not the spinner.
+.nds-definition-list.nds-loading {
+    @include loading-skeleton-host;
 }

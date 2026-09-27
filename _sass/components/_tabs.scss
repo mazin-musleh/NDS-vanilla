@@ -405,8 +405,8 @@ section>.nds-max-width {
 // ==============================================
 // A loading tab strip (or tabs root) bars only each tab's label
 // (text-sized, like the table cell bars) — the button chrome stays,
-// icons and the active indicator hide. Spinner + dim suppressed in
-// _loading.scss.
+// icons and the active indicator hide. Spinner + dim off at the
+// end of this file.
 // Skeleton is also the DEFAULT pre-init state: any tabs root bars its
 // labels until its init stamp lands.
 :is(:is(.nds-tabs, .nds-tab-list).nds-loading,
@@ -444,4 +444,9 @@ section>.nds-max-width {
     >* {
         visibility: hidden;
     }
+}
+
+// Loading shows the skeleton above, not the spinner.
+:is(.nds-tabs, .nds-tab-list).nds-loading {
+    @include loading-skeleton-host;
 }

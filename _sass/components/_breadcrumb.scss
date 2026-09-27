@@ -103,3 +103,8 @@
         }
     }
 }
+
+// Loading shows the skeleton above, not the spinner.
+.nds-breadcrumb-nav.nds-loading {
+    @include loading-skeleton-host;
+}

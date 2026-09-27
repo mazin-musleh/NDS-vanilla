@@ -500,6 +500,17 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
   }
 }
 
+// On the element that carries .nds-loading, for a component that draws its own
+// skeleton: the skeleton is the feedback, so the spinner and the child dim go.
+// Clicks stay blocked by the base rule.
+@mixin loading-skeleton-host {
+  --_loading-opacity: 1;
+
+  &::after {
+    content: none;
+  }
+}
+
 // ==============================================
 // SHARED PLACEHOLDERS
 // ==============================================
