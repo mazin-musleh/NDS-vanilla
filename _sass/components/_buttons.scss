@@ -560,6 +560,11 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       mask: var(--nds-icon-more-horizontal) center / contain no-repeat;
       opacity: var(--nds-icons-opacity);
     }
+
+    // The dots only: while loading, ::after is the spinner.
+    &.nds-vertical:not(.nds-loading)::after {
+      rotate: 90deg;
+    }
   }
 
   // ==============================================
@@ -667,6 +672,15 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     height: var(--_btn-icon-size);
     font-size: var(--_btn-icon-size);
     line-height: var(--_btn-icon-size);
+  }
+
+  > .nds-avatar {
+    --avatar-size: var(--_btn-icon-size);
+  }
+
+  // A photo ignores the transparent text color that hides the content under the spinner.
+  &.nds-loading > .nds-avatar {
+    visibility: hidden;
   }
 
   // ==============================================
