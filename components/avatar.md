@@ -2,787 +2,262 @@
 layout: page
 title: Avatar
 hero_title: Avatar - National Design System
-hero_description: Avatars represent users or entities with initials, icons, or images in various sizes and shapes
+hero_description: A round picture of a person or an account, with a photo, initials or an icon.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "02/07/2026 - 10:40 PM"
+updated: "1.12.x"
+last_edit: "27/09/2026 - 07:48 AM"
 ---
 
-<!-- Initials -->
-<section id="avatarInitials" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Initials</h2>
-            <p class="nds-section-description">Display user initials as a text-based avatar</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xs", ".nds-avatar", "avatarSize"]'>
-                                                <span class="nds-label">XS</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-avatar", "avatarSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-avatar", "avatarSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-avatar", "avatarSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-avatar", "avatarSize"]'>
-                                                <span class="nds-label">XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-avatar", "avatarSize"]'>
-                                                <span class="nds-label">2XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-3xl", ".nds-avatar", "avatarSize"]'>
-                                                <span class="nds-label">3XL</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-square", ".nds-avatar", "avatarShape"]'>
-                                    <span class="nds-label">Square</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-avatar nds-lg">
-                                    <span class="nds-label">AB</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-avatar-initials-1" id="tab-avatar-initials-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-avatar-initials-1"
-                                        aria-labelledby="tab-avatar-initials-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">&lt;div class="nds-avatar nds-lg"&gt;
-  &lt;span class="nds-label"&gt;AB&lt;/span&gt;
-&lt;/div&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="avatarOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+An avatar is an element with the `nds-avatar` class that holds one item: a photo (`<img>`), initials (`nds-label`) or an icon. It is round by default. The element can be a `<div>`, a link or a button. Several avatars sit together in an `nds-avatar-group`, spaced apart or stacked so they overlap.
+
+Pick another component when:
+
+- the picture sits beside a name and a role: [Persona](../components/persona)
+- the icon marks a status or a type, not a person: [Featured Icons](../components/featured-icons)
+
+</div>
+  </div>
 </section>
 
-<!-- Icon -->
-<section id="avatarIcon" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Icon</h2>
-            <p class="nds-section-description">Use an icon as the avatar content for generic user placeholders</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xs", ".nds-avatar", "iconAvatarSize"]'>
-                                                <span class="nds-label">XS</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-avatar", "iconAvatarSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-avatar", "iconAvatarSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-avatar", "iconAvatarSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-avatar", "iconAvatarSize"]'>
-                                                <span class="nds-label">XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-avatar", "iconAvatarSize"]'>
-                                                <span class="nds-label">2XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-3xl", ".nds-avatar", "iconAvatarSize"]'>
-                                                <span class="nds-label">3XL</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-square", ".nds-avatar", "iconAvatarShape"]'>
-                                    <span class="nds-label">Square</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-avatar nds-lg">
-                                    <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-avatar-icon-1" id="tab-avatar-icon-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-avatar-icon-1"
-                                        aria-labelledby="tab-avatar-icon-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">&lt;div class="nds-avatar nds-lg"&gt;
-  &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
-&lt;/div&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="avatarMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="avatar-icon" data-canon data-variants="avatarVariantsTable">
+<div class="nds-avatar nds-xl">
+  <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
+</div>
+</script>
+<script type="text/html" id="avatar-initials" data-canon>
+<div class="nds-avatar nds-xl">
+  <span class="nds-label">NQ</span>
+</div>
+</script>
+<script type="text/html" id="avatar-image" data-canon>
+<div class="nds-avatar nds-xl">
+  <img src="../docs-assets/img/avatar2.webp" alt="Noura Al-Qahtani">
+</div>
+</script>
+<script type="text/html" id="avatar-link" data-canon>
+<a href="#" class="nds-avatar nds-xl">
+  <img src="../docs-assets/img/avatar3.webp" alt="Faisal Al-Harbi">
+</a>
+</script>
+<script type="text/html" id="avatar-menu" data-canon>
+<div class="nds-dropmenu">
+  <button type="button" class="nds-avatar nds-xl nds-dropmenu-trigger" aria-label="Open the user menu">
+    <span class="nds-label">NQ</span>
+  </button>
+  <div class="nds-dropmenu-menu" hidden>
+    <div class="nds-dropmenu-scroll">
+      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+        <span class="nds-label">Profile</span>
+      </a>
+      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+        <span class="nds-label">Settings</span>
+      </a>
+      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
+        <span class="nds-label">Sign out</span>
+      </a>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="avatar-button" data-canon>
+<button type="button" class="nds-avatar nds-xl">
+  <img src="../docs-assets/img/avatar2.webp" alt="Noura Al-Qahtani">
+</button>
+</script>
+<script type="text/html" id="avatar-group" data-canon>
+<div class="nds-avatar-group nds-stacked nds-xl">
+  <div class="nds-avatar">
+    <img src="../docs-assets/img/avatar2.webp" alt="Noura Al-Qahtani">
+  </div>
+  <div class="nds-avatar">
+    <img src="../docs-assets/img/avatar3.webp" alt="Faisal Al-Harbi">
+  </div>
+  <div class="nds-avatar">
+    <img src="../docs-assets/img/avatar4.webp" alt="Reem Al-Otaibi">
+  </div>
+  <div class="nds-avatar">
+    <img src="../docs-assets/img/avatar5.webp" alt="Sara Al-Dosari">
+  </div>
+  <div class="nds-avatar">
+    <span class="nds-label">+9</span>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Image -->
-<section id="avatarImage" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Image</h2>
-            <p class="nds-section-description">Display a user photo with optional image border</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xs", ".nds-avatar", "imgAvatarSize"]'>
-                                                <span class="nds-label">XS</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-avatar", "imgAvatarSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-avatar", "imgAvatarSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-avatar", "imgAvatarSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-avatar", "imgAvatarSize"]'>
-                                                <span class="nds-label">XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-avatar", "imgAvatarSize"]'>
-                                                <span class="nds-label">2XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-3xl", ".nds-avatar", "imgAvatarSize"]'>
-                                                <span class="nds-label">3XL</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-image-border", ".nds-avatar", "imageBorder"]'>
-                                    <span class="nds-label">Image Border</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-square", ".nds-avatar", "imgAvatarShape"]'>
-                                    <span class="nds-label">Square</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-avatar nds-lg">
-                                    <img src="{{ 'docs-assets/img/avatar1.webp' | relative_url }}" alt="User Avatar">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-avatar-image-1" id="tab-avatar-image-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-avatar-image-1"
-                                        aria-labelledby="tab-avatar-image-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">&lt;div class="nds-avatar nds-lg"&gt;
-  &lt;img src="path/to/avatar.jpg" alt="User Avatar"&gt;
-&lt;/div&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="avatarVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The Link, Menu trigger and Button structures take any of the three contents: a photo, initials or an icon. Each size has two rows: the first sizes a single avatar, the second a group. Make the change that fits the markup. A row on `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` changes a single avatar only, not one inside a group. `:has(> img)` means the avatar holds a photo.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Icon (default) | — | — | A person icon, for an anonymous user or a system account |
+| Structure | Initials | canon `#avatar-initials` | — | Two letters from the person's name, when there is no photo |
+| Structure | Image | canon `#avatar-image` | — | A photo of the person. The `alt` text names them |
+| Structure | Link | canon `#avatar-link` | — | An avatar that opens a profile. The image `alt` names the link |
+| Structure | Menu trigger | canon `#avatar-menu` | — | An avatar that opens the user menu, as the trigger of a [Dropmenu](../components/dropmenu). `aria-label` names the button |
+| Structure | Button | canon `#avatar-button` | — | An avatar that runs an action on the page, such as opening a profile panel. The image `alt` names the button |
+| Structure | Group | canon `#avatar-group` | — | Several avatars in a row, such as the members of a team. The last one counts the people it does not show |
+| Size | XS | `.nds-xs` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 24px, for a line of text or a dense list |
+| Size | XS | `.nds-xs` | `.nds-avatar-group` | The same size for every avatar in the group, 2px apart |
+| Size | SM | `.nds-sm` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 32px, for a table row |
+| Size | SM | `.nds-sm` | `.nds-avatar-group` | The same size for every avatar in the group, 4px apart |
+| Size | MD | `.nds-md` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 40px, the same as no size class |
+| Size | MD | `.nds-md` | `.nds-avatar-group` | The same size for every avatar in the group, 6px apart |
+| Size | LG | `.nds-lg` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 48px, for a card |
+| Size | LG | `.nds-lg` | `.nds-avatar-group` | The same size for every avatar in the group, 8px apart |
+| Size | XL (default) | `.nds-xl` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 64px, for a card header |
+| Size | XL (default) | `.nds-xl` | `.nds-avatar-group` | The same size for every avatar in the group, 10px apart |
+| Size | 2XL | `.nds-2xl` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 80px, for a profile card |
+| Size | 2XL | `.nds-2xl` | `.nds-avatar-group` | The same size for every avatar in the group, 12px apart |
+| Size | 3XL | `.nds-3xl` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 120px with a 4px ring, for a profile header |
+| Size | 3XL | `.nds-3xl` | `.nds-avatar-group` | The same size and ring for every avatar in the group, 14px apart |
+| Square | Square | `.nds-square` | `.nds-avatar` | Rounded corners in place of a circle, for an organization or a service account. In a group, give it to every avatar |
+| Image border | Image border | `.nds-image-border` | `.nds-avatar:has(> img)` | A thin dark line inside the edge of the photo, so a light photo stays apart from a light page |
+| Stacked | Stacked (default) | `.nds-stacked` | `.nds-avatar-group` | The avatars overlap. Leave it out to space them apart by the group gap. Each stacked avatar has a ring in the border color. The ring is 1px at XS and SM, 2px at MD and LG, and 4px at XL and larger. At 3XL it replaces the border, so the photo keeps its full size |
+{: #avatarVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Link -->
-<section id="avatarLink" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Link</h2>
-            <p class="nds-section-description">Wrap in an anchor tag for clickable profile navigation</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xs", ".nds-avatar", "linkAvatarSize"]'>
-                                                <span class="nds-label">XS</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-avatar", "linkAvatarSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-avatar", "linkAvatarSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-avatar", "linkAvatarSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-avatar", "linkAvatarSize"]'>
-                                                <span class="nds-label">XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-avatar", "linkAvatarSize"]'>
-                                                <span class="nds-label">2XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-3xl", ".nds-avatar", "linkAvatarSize"]'>
-                                                <span class="nds-label">3XL</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-square", ".nds-avatar", "linkAvatarShape"]'>
-                                    <span class="nds-label">Square</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <a href="#" class="nds-avatar nds-lg">
-                                    <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-avatar-link-1" id="tab-avatar-link-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-avatar-link-1"
-                                        aria-labelledby="tab-avatar-link-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">&lt;a href="/user/profile" class="nds-avatar nds-lg"&gt;
-  &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
-&lt;/a&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="avatarFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-tag-01"></i>
+            <span class="nds-label">Pure CSS</span>
+          </span>
+          <p class="nds-item-desc">Avatars need no JavaScript. They show at the first paint, from the markup alone.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Seven Sizes</span>
+          </span>
+          <p class="nds-item-desc">From 24px (XS) to 120px (3XL). The initials are a third of the size and the icon is half, so both scale with it.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-puzzle"></i>
+            <span class="nds-label">Any Element</span>
+          </span>
+          <p class="nds-item-desc">The same class works on a <code class="nds-inline-code lang-html">&lt;div&gt;</code>, a link or a button. A link avatar keeps the avatar colors, not the link color.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-user-group"></i>
+            <span class="nds-label">Group Layout</span>
+          </span>
+          <p class="nds-item-desc">A size class on the group sets the size of every avatar in it, and the gap grows with the size.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-contrast"></i>
+            <span class="nds-label">High Contrast Ring</span>
+          </span>
+          <p class="nds-item-desc">In high contrast mode, every avatar gets a solid ring inside its edge, so a photo stays apart from the page.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Dropmenu Trigger -->
-<section id="avatarDropmenu" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Dropmenu Trigger</h2>
-            <p class="nds-section-description">Avatar as a dropmenu trigger for user menus and profile actions</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xs", ".nds-avatar", "btnAvatarSize"]'>
-                                                <span class="nds-label">XS</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-avatar", "btnAvatarSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-avatar", "btnAvatarSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-avatar", "btnAvatarSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-avatar", "btnAvatarSize"]'>
-                                                <span class="nds-label">XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-avatar", "btnAvatarSize"]'>
-                                                <span class="nds-label">2XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-3xl", ".nds-avatar", "btnAvatarSize"]'>
-                                                <span class="nds-label">3XL</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-square", ".nds-avatar", "btnAvatarShape"]'>
-                                    <span class="nds-label">Square</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-dropmenu">
-                                    <button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu">
-                                        <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <span class="nds-label">Profile</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <span class="nds-label">Settings</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <span class="nds-label">Sign out</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-avatar-dropmenu-1" id="tab-avatar-dropmenu-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-avatar-dropmenu-1"
-                                        aria-labelledby="tab-avatar-dropmenu-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-dropmenu"&gt;
-    &lt;button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu"&gt;
-        &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden&gt;
-        &lt;div class="nds-dropmenu-scroll"&gt;
-            &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
-                &lt;span class="nds-label"&gt;Profile&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
-                &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
-                &lt;span class="nds-label"&gt;Sign out&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="avatarPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Show a photo when one is available. When there is none, show two letters from the person's name.
+- Use an icon avatar for an anonymous user or a system account, where no one is named.
+- Write `alt` text that names the person. Use `alt=""` only when the name shows in text next to the avatar.
+- Give a link or button avatar a name. A photo names it through its `alt`. An avatar with initials or an icon needs `aria-label`, such as `aria-label="Open the user menu"`.
+- Pick the size by place: XS or SM in a line of text or a table row, MD or LG in a card, XL and larger in a profile header.
+- In a group, set the size on `nds-avatar-group`. The group size replaces a size class on an avatar inside it.
+- Use a group to show the members of a team or the people on a task in little space.
+- End a long group with an initials avatar that counts the people it does not show, such as `+9`.
+
+</div>
+  </div>
 </section>
 
-<!-- Group -->
-<section id="avatarGroup" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Group</h2>
-            <p class="nds-section-description">Stack multiple avatars together with overlapping or spaced layouts</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">MD</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xs", ".nds-avatar-group", "groupSize"]'>
-                                                <span class="nds-label">XS</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-avatar-group", "groupSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-md", ".nds-avatar-group", "groupSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-lg", ".nds-avatar-group", "groupSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-avatar-group", "groupSize"]'>
-                                                <span class="nds-label">XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-avatar-group", "groupSize"]'>
-                                                <span class="nds-label">2XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-3xl", ".nds-avatar-group", "groupSize"]'>
-                                                <span class="nds-label">3XL</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-stacked", ".nds-avatar-group", "stackedVariant"]'>
-                                    <span class="nds-label">Stacked</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-avatar-group nds-stacked nds-md">
-                                    <div class="nds-avatar">
-                                        <img src="{{ 'docs-assets/img/avatar1.webp' | relative_url }}" alt="User 1">
-                                    </div>
-                                    <div class="nds-avatar">
-                                        <img src="{{ 'docs-assets/img/avatar2.webp' | relative_url }}" alt="User 2">
-                                    </div>
-                                    <div class="nds-avatar">
-                                        <img src="{{ 'docs-assets/img/avatar3.webp' | relative_url }}" alt="User 3">
-                                    </div>
-                                    <div class="nds-avatar">
-                                        <img src="{{ 'docs-assets/img/avatar4.webp' | relative_url }}" alt="User 4">
-                                    </div>
-                                    <div class="nds-avatar">
-                                        <img src="{{ 'docs-assets/img/avatar5.webp' | relative_url }}" alt="User 5">
-                                    </div>
-                                    <div class="nds-avatar nds-lg">
-                                        <span class="nds-label">+99</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-avatar-group-1" id="tab-avatar-group-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-avatar-group-1"
-                                        aria-labelledby="tab-avatar-group-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-avatar-group nds-stacked nds-md"&gt;
-    &lt;div class="nds-avatar"&gt;
-        &lt;img src="path/to/avatar1.jpg" alt="User 1"&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-avatar"&gt;
-        &lt;img src="path/to/avatar2.jpg" alt="User 2"&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-avatar"&gt;
-        &lt;img src="path/to/avatar3.jpg" alt="User 3"&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-avatar"&gt;
-        &lt;img src="path/to/avatar4.jpg" alt="User 4"&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-avatar"&gt;
-        &lt;img src="path/to/avatar5.jpg" alt="User 5"&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-avatar"&gt;
-        &lt;span class="nds-label"&gt;+99&lt;/span&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="avatarApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--avatar-size` | `40px` | Width and height. The size classes set it. Set it on the avatar, or on a parent to size every avatar inside |
+| `--avatar-gap` | `6px` | Space between the avatars of a group. A stacked group overlaps them by twice this value. Set it on the group |
+{: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+Each token has a dark mode value. See [Tokens](../components/tokens).
+
+| Token | Default | Controls |
+|---|---|---|
+| `--avatar-background` | `var(--colors-neutral-100)` | Fill behind initials and icons |
+| `--avatar-color` | `var(--icon-default)` | Color of the initials and the icon |
+| `--avatar-border` | `var(--colors-base-white)` | Color of the 3XL ring and the stacked ring |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="avatarFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-tag-01"></i>
-                            <span class="nds-label">Pure CSS</span>
-                        </span>
-                        <p class="nds-item-desc">No JavaScript required. Renders immediately from HTML markup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-resize-01"></i>
-                            <span class="nds-label">Seven Sizes</span>
-                        </span>
-                        <p class="nds-item-desc">From 24px (XS) to 120px (3XL). Font and icon scale proportionally.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-puzzle"></i>
-                            <span class="nds-label">Element Agnostic</span>
-                        </span>
-                        <p class="nds-item-desc">Works on div, a, or button elements for display, navigation, or actions.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-user-group"></i>
-                            <span class="nds-label">Group Layout</span>
-                        </span>
-                        <p class="nds-item-desc">Stack avatars with overlapping or spaced arrangement and overflow count.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="avatarRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
-</section>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-<!-- Usage Guidelines -->
-<section id="avatarGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
+- [Admin Console Demo](../examples/console-demo): a 2XL avatar in each card of the team directory, with an icon when there is no photo.
+- [Faculty Profile](../examples/faculty): a 3XL photo with an image border beside the page title.
+- [Faculty CV](../examples/faculty-cv): a photo avatar in the hero, set by `hero_avatar`.
+- [Cards](../components/cards): an avatar in the card header.
+- [Persona](../components/persona): an avatar beside a name and a role.
+- [Quote](../components/quote): the avatar of the person quoted.
+- [Section](../layout/section): an avatar as the section image.
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use initials when no profile image is available. Two letters from the user's name</li>
-                    <li>Use icon avatars for anonymous or system-level users where no identity is needed</li>
-                    <li>Use image avatars when a real photo is available. Always include <code class="nds-inline-code lang-html">alt</code> text describing the person</li>
-                    <li>Use groups to show participants, collaborators, or team members in a compact space</li>
-                    <li>Choose the size based on context: XS/SM for inline mentions, MD/LG for cards, XL+ for profile headers</li>
-                    <li>For icon-only avatars used as buttons or links, add <code class="nds-inline-code lang-html">aria-label</code> to describe the action or person (for example, <code class="nds-inline-code lang-html">aria-label="Open user menu"</code>)</li>
-                    <li>For image avatars, write <code class="nds-inline-code lang-html">alt</code> text that names the person or conveys context. Use an empty <code class="nds-inline-code lang-html">alt=""</code> only when the avatar is purely decorative and the name appears nearby in text</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-square</code></td><td><code class="nds-inline-code lang-html">.nds-avatar</code></td><td>Applies a small border-radius for a rounded-square shape instead of a circle</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-image-border</code></td><td><code class="nds-inline-code lang-html">.nds-avatar</code></td><td>Adds a subtle inset outline on image avatars to separate the photo from the background</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-stacked</code></td><td><code class="nds-inline-code lang-html">.nds-avatar-group</code></td><td>Overlaps avatars so each one shifts behind the previous, creating a compact layered group</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--avatar-size</code></td><td><code class="nds-inline-code lang-html">40px</code></td><td>Width and height of the avatar. Overridden by each size modifier class</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--avatar-gap</code></td><td><code class="nds-inline-code lang-html">6px</code></td><td>Spacing between avatars inside <code class="nds-inline-code lang-html">.nds-avatar-group</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--avatar-background</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-100</code></td><td>Fill color of initials and icon avatars</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--avatar-color</code></td><td><code class="nds-inline-code lang-html">--icon-default</code></td><td>Foreground color for initials text and icons</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--avatar-border</code></td><td><code class="nds-inline-code lang-html">--colors-base-white</code></td><td>Border color applied to 3XL avatars and 3XL group members</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
+</div>
+  </div>
 </section>
