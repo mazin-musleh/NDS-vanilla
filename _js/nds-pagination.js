@@ -165,9 +165,10 @@
 
             this.valid = true;
             // Registered here, not in the sweep, so every construction path —
-            // sweep, reinit() and programmatic create() — reaches destroy().
+            // sweep, reinit() and programmatic create() — reaches destroy() and is stamped.
             paginationNav.ndsPagination = this;
             this.init();
+            paginationNav.setAttribute('data-nds-pagination-initialized', 'true');
         }
 
         init() {
@@ -417,12 +418,8 @@
                     wireGeneratedPagination(container, activePage, totalPages);
                 }
 
-                const paginationInstance = new NDSPagination(container);
-                // Stamp only successful constructions — a bailed (empty) nav stays
-                // eligible for the next reinit() instead of being skipped forever.
-                if (paginationInstance.valid) {
-                    container.setAttribute('data-nds-pagination-initialized', 'true');
-                }
+                // Only a valid construction stamps, so a bailed (empty) nav stays eligible.
+                new NDSPagination(container);
 
                 initializePaginationStates(container);
 

@@ -80,9 +80,11 @@
             this.currentTabIndex = this.findActiveTabIndex();
             this.valid = true;
             // Registered here, not in the sweep, so every construction path —
-            // sweep, reinit() and programmatic create() — publishes el.ndsTabs.
+            // sweep, reinit() and programmatic create() — publishes el.ndsTabs and
+            // the stamp that ends the skeleton and stops a second sweep.
             tabsContainer.ndsTabs = this;
             this.init();
+            tabsContainer.setAttribute('data-nds-tabs-initialized', 'true');
         }
 
         get isVertical() {
@@ -352,13 +354,8 @@
         document.querySelectorAll('.nds-tabs').forEach(container => {
             if (container.closest('code, .code-example')) return;
             if (container.hasAttribute('data-nds-tabs-initialized')) return;
-
-            const instance = new NDSTabs(container);
-            // Stamp only successful constructions — late-filled tab markup stays
-            // eligible for the next reinit().
-            if (instance.valid) {
-                container.setAttribute('data-nds-tabs-initialized', 'true');
-            }
+            // Only a valid construction stamps, so late-filled markup stays eligible.
+            new NDSTabs(container);
         });
     }
 

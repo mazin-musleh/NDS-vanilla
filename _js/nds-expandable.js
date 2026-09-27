@@ -58,9 +58,10 @@
 
             this.valid = true;
             // Registered here, not in the sweep, so every construction path —
-            // sweep, reinit() and programmatic create() — is reachable.
+            // sweep, reinit() and programmatic create() — is reachable and stamped.
             expandableContainer.ndsExpandable = this;
             this.init();
+            expandableContainer.setAttribute('data-nds-expandable-initialized', 'true');
         }
 
         init() {
@@ -312,14 +313,8 @@
                     return;
                 }
 
-                if (!container.hasAttribute('data-nds-expandable-initialized')) {
-                    const expandableInstance = new NDSExpandable(container);
-                    // Stamp only successful constructions — content that renders late
-                    // stays eligible for the next reinit().
-                    if (expandableInstance.valid) {
-                        container.setAttribute('data-nds-expandable-initialized', 'true');
-                    }
-                }
+                // Only a valid construction stamps, so content that renders late stays eligible.
+                if (!container.hasAttribute('data-nds-expandable-initialized')) new NDSExpandable(container);
             });
         });
     }

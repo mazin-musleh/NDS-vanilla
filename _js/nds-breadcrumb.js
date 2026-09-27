@@ -38,7 +38,10 @@
             }
 
             this.valid = true;
+            // Here, not in the sweep, so create() also ends the skeleton and stops a second sweep.
+            breadcrumbNav.ndsBreadcrumb = this;
             this.init();
+            breadcrumbNav.setAttribute('data-nds-breadcrumb-initialized', 'true');
         }
 
         init() {
@@ -115,6 +118,7 @@
             // markup stays marked as claimed, so no later init() or NDS.Init.refresh()
             // can ever collapse it again.
             this.breadcrumbNav.removeAttribute('data-nds-breadcrumb-initialized');
+            delete this.breadcrumbNav.ndsBreadcrumb;
         }
     }
 
@@ -128,15 +132,8 @@
                 return;
             }
 
-            if (!nav.hasAttribute('data-nds-breadcrumb-initialized')) {
-                const breadcrumbInstance = new NDSBreadcrumb(nav);
-                // Stamp only successful constructions — an empty breadcrumb rendered
-                // late stays eligible for the next reinit().
-                if (breadcrumbInstance.valid) {
-                    nav.ndsBreadcrumb = breadcrumbInstance;
-                    nav.setAttribute('data-nds-breadcrumb-initialized', 'true');
-                }
-            }
+            // Only a valid construction stamps, so an empty breadcrumb rendered late stays eligible.
+            if (!nav.hasAttribute('data-nds-breadcrumb-initialized')) new NDSBreadcrumb(nav);
         });
     }
 
@@ -144,7 +141,7 @@
     NDS.Breadcrumb = {
         init: initializeBreadcrumbs,
         reinit: initializeBreadcrumbs,
-        create: (nav) => new NDSBreadcrumb(nav)
+        create: (nav) => nav.ndsBreadcrumb || new NDSBreadcrumb(nav)
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

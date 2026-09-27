@@ -343,9 +343,10 @@
             this.abortController = new AbortController();
 
             // Registered here, not in the sweep, so every construction path —
-            // sweep, reinit() and programmatic createResponsive() — is reachable.
+            // sweep, reinit() and programmatic createResponsive() — is reachable and stamped.
             tableElement.ndsTableResponsive = this;
             this.init();
+            tableElement.setAttribute('data-nds-tables-initialized', 'true');
         }
 
         init() {
@@ -1078,10 +1079,7 @@
             // table controls the scroll breakpoint. The stamp is the component's
             // one init signal: the pre-init cell skeleton and the global handlers
             // below key on it, so it lands for every table, sortable or not.
-            if (!table.ndsTableResponsive) {
-                new NDSResponsiveTable(table);   // registers itself on the table
-                table.setAttribute('data-nds-tables-initialized', 'true');
-            }
+            if (!table.ndsTableResponsive) new NDSResponsiveTable(table);   // registers and stamps itself
 
             // Own header only, matching the constructor's own scoping: a sub-row's
             // nested table carrying sort buttons or a select-all would otherwise
