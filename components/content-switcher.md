@@ -2,363 +2,254 @@
 layout: page
 title: Content Switcher
 hero_title: Content Switcher - National Design System
-hero_description: Content switcher allows users to toggle between different content sections within the same space on the screen
+hero_description: A row of joined buttons that switches between views of the same content, in one place on the page
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.6.0"
 updated: "1.7.0"
-last_edit: "21/08/2026 - 07:12 PM"
+last_edit: "27/09/2026 - 10:53 PM"
 ---
 
-<!-- Standard -->
-<section id="switcherStandard" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Standard</h2>
-            <p class="nds-section-description">The default strip. Reach for it when the choices are few, short, and equal in weight, and you want the current one to read at a glance.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                        <span class="nds-label">Size: Medium</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-content-switcher", "switcherSize"]'>
-                                                <span class="nds-label">Small (32px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-switcher", "switcherSize"]'>
-                                                <span class="nds-label">Medium (40px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-lg", ".nds-content-switcher", "switcherSize"]'>
-                                                <span class="nds-label">Large (48px)</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='[["nds-oncolor", ".nds-content-switcher", "containerBg"],["dark-bg", ".demo-container", "containerBg"]]'>
-                                    <span class="nds-label">On Color</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-tab-list", "switcherAlign"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-content-switcher", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-tabs nds-content-switcher" id="switcher-standard-1">
-                                    <div class="nds-tab-list" role="tablist" aria-label="Request status">
-                                        <button class="nds-btn nds-secondary nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-switcher-standard-all" id="tab-switcher-standard-all" tabindex="0">
-                                            <span class="nds-label">All</span>
-                                        </button>
-                                        <button class="nds-btn nds-secondary nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-switcher-standard-review" id="tab-switcher-standard-review" tabindex="-1">
-                                            <span class="nds-label">In Review</span>
-                                        </button>
-                                        <button class="nds-btn nds-secondary nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-switcher-standard-done" id="tab-switcher-standard-done" tabindex="-1">
-                                            <span class="nds-label">Completed</span>
-                                        </button>
-                                        <button class="nds-btn nds-secondary nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-switcher-standard-archived" id="tab-switcher-standard-archived" tabindex="-1">
-                                            <span class="nds-label">Archived</span>
-                                        </button>
-                                    </div>
-                                    <div class="nds-tab-content">
-                                        <div class="nds-tab-panel" role="tabpanel" id="panel-switcher-standard-all"
-                                            aria-labelledby="tab-switcher-standard-all" tabindex="0">
-                                            <p>Every request, unfiltered. Start here when you are scanning for anything that needs attention.</p>
-                                        </div>
-                                        <div class="nds-tab-panel" role="tabpanel" id="panel-switcher-standard-review"
-                                            aria-labelledby="tab-switcher-standard-review" tabindex="-1" aria-hidden="true" hidden>
-                                            <p>Requests still sitting with the reviewing authority. No action is required from you yet.</p>
-                                        </div>
-                                        <div class="nds-tab-panel" role="tabpanel" id="panel-switcher-standard-done"
-                                            aria-labelledby="tab-switcher-standard-done" tabindex="-1" aria-hidden="true" hidden>
-                                            <p>Requests that have been decided. The outcome and the decision date are on each record.</p>
-                                        </div>
-                                        <div class="nds-tab-panel" role="tabpanel" id="panel-switcher-standard-archived"
-                                            aria-labelledby="tab-switcher-standard-archived" tabindex="-1" aria-hidden="true" hidden>
-                                            <p>Requests closed more than a year ago, kept for reference and excluded from the other views.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-switcher-standard-code" id="tab-switcher-standard-code">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-switcher-standard-code"
-                                        aria-labelledby="tab-switcher-standard-code">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-tabs nds-content-switcher" id="switcher-standard-1"&gt;
-  &lt;div class="nds-tab-list" role="tablist" aria-label="Request status"&gt;
-    &lt;button class="nds-btn nds-secondary nds-tab" type="button" role="tab" aria-selected="true"
-      aria-controls="panel-switcher-standard-all" id="tab-switcher-standard-all" tabindex="0"&gt;
-      &lt;span class="nds-label"&gt;All&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-btn nds-secondary nds-tab" type="button" role="tab" aria-selected="false"
-      aria-controls="panel-switcher-standard-review" id="tab-switcher-standard-review" tabindex="-1"&gt;
-      &lt;span class="nds-label"&gt;In Review&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-btn nds-secondary nds-tab" type="button" role="tab" aria-selected="false"
-      aria-controls="panel-switcher-standard-done" id="tab-switcher-standard-done" tabindex="-1"&gt;
-      &lt;span class="nds-label"&gt;Completed&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-btn nds-secondary nds-tab" type="button" role="tab" aria-selected="false"
-      aria-controls="panel-switcher-standard-archived" id="tab-switcher-standard-archived" tabindex="-1"&gt;
-      &lt;span class="nds-label"&gt;Archived&lt;/span&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-tab-content"&gt;
-    &lt;div class="nds-tab-panel" role="tabpanel" id="panel-switcher-standard-all"
-      aria-labelledby="tab-switcher-standard-all" tabindex="0"&gt;
-      &lt;p&gt;Every request, unfiltered. Start here when you are scanning for anything that needs attention.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-tab-panel" role="tabpanel" id="panel-switcher-standard-review"
-      aria-labelledby="tab-switcher-standard-review" tabindex="-1" aria-hidden="true" hidden&gt;
-      &lt;p&gt;Requests still sitting with the reviewing authority. No action is required from you yet.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-tab-panel" role="tabpanel" id="panel-switcher-standard-done"
-      aria-labelledby="tab-switcher-standard-done" tabindex="-1" aria-hidden="true" hidden&gt;
-      &lt;p&gt;Requests that have been decided. The outcome and the decision date are on each record.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-tab-panel" role="tabpanel" id="panel-switcher-standard-archived"
-      aria-labelledby="tab-switcher-standard-archived" tabindex="-1" aria-hidden="true" hidden&gt;
-      &lt;p&gt;Requests closed more than a year ago, kept for reference and excluded from the other views.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="switcherOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A content switcher shows one view at a time, picked from a short row of joined buttons. It is a tab set with the class `nds-content-switcher` on its root: an `nds-tab-list` of `nds-tab` buttons, and an `nds-tab-content` area with one `nds-tab-panel` for each button. The open button has a solid fill.
+
+Pick another component when:
+
+- the views are different sections of a page, or need long labels, icons, a vertical list or more buttons than fit in one row: [Tabs](../components/tabs)
+- the choice is a form value that is sent with the form: [Radio](../components/radio)
+- the buttons run actions and do not change a view: [Button](../components/button)
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="switcherFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates on any switcher in the page. No setup call, no configuration object.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-exchange-01"></i>
-                            <span class="nds-label">Panel Switching</span>
-                        </span>
-                        <p class="nds-item-desc">Picking a segment reveals its panel and hides the rest, and fires an event you can listen for.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard"></i>
-                            <span class="nds-label">Keyboard Navigation</span>
-                        </span>
-                        <p class="nds-item-desc">Arrow keys walk the strip, Home and End jump to the ends, Enter or Space commits the choice.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-square-arrow-expand-01"></i>
-                            <span class="nds-label">Three Size Steps</span>
-                        </span>
-                        <p class="nds-item-desc">32, 40, and 48px strips, with label size, inline padding, and corner radius all following the step.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-moon-02"></i>
-                            <span class="nds-label">Dark Surface Support</span>
-                        </span>
-                        <p class="nds-item-desc">The current segment turns brand primary on dark backgrounds, in dark mode automatically or in light mode with one class.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-align-right"></i>
-                            <span class="nds-label">RTL Aware</span>
-                        </span>
-                        <p class="nds-item-desc">Rounded ends, seams, and arrow-key direction all mirror with text direction. No extra markup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-loading-03"></i>
-                            <span class="nds-label">Loading Skeleton</span>
-                        </span>
-                        <p class="nds-item-desc">Labels render as animated bars while data is in flight, and before the component's own script arrives.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Read or change the current segment from script, and re-scan the page after injecting new markup.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="switcherMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="switcher-standard" data-canon data-variants="switcherVariantsTable">
+<div class="nds-tabs nds-content-switcher">
+  <div class="nds-tab-list" role="tablist" aria-label="Request status">
+    <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="true" aria-controls="panel-all" id="tab-all" tabindex="0">
+      <span class="nds-label">All</span>
+    </button>
+    <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="false" aria-controls="panel-review" id="tab-review" tabindex="-1">
+      <span class="nds-label">In review</span>
+    </button>
+    <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="false" aria-controls="panel-done" id="tab-done" tabindex="-1">
+      <span class="nds-label">Completed</span>
+    </button>
+    <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="false" aria-controls="panel-archived" id="tab-archived" tabindex="-1">
+      <span class="nds-label">Archived</span>
+    </button>
+  </div>
+  <div class="nds-tab-content">
+    <div class="nds-tab-panel" role="tabpanel" id="panel-all" aria-labelledby="tab-all" tabindex="0">
+      <p>Every request you submitted, in all states.</p>
+    </div>
+    <div class="nds-tab-panel" role="tabpanel" id="panel-review" aria-labelledby="tab-review" tabindex="-1" hidden>
+      <p>Requests that the authority is reviewing. You do not need to do anything yet.</p>
+    </div>
+    <div class="nds-tab-panel" role="tabpanel" id="panel-done" aria-labelledby="tab-done" tabindex="-1" hidden>
+      <p>Requests with a decision. Each record shows the decision and its date.</p>
+    </div>
+    <div class="nds-tab-panel" role="tabpanel" id="panel-archived" aria-labelledby="tab-archived" tabindex="-1" hidden>
+      <p>Requests closed more than a year ago, kept for reference.</p>
+    </div>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="switcherGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
+<section id="switcherVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+The first button is open in the markup: its `aria-selected` is `true`, and every other panel has `hidden`. Keep that state in your markup, so the right panel shows before the script runs. To open another button first, give it `aria-selected="true"` and `tabindex="0"`, and remove `hidden` from its panel. Then set the first button and panel like the others.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Size | SM | `.nds-sm` | `.nds-content-switcher` | 32px buttons with a small label and smaller corners, for cards and toolbars |
+| Size | MD (default) | — | — | 40px buttons, for page content. It needs no class |
+| Size | LG | `.nds-lg` | `.nds-content-switcher` | 48px buttons, for a larger touch target |
+| On color | On color | `.nds-oncolor` | `.nds-content-switcher` | For a switcher on a deep primary or dark background. The open button turns brand primary, as in dark mode. The panel text turns white |
+| Center | Center | `.nds-center` | `.nds-tab-list` | Centers the row of buttons above the panels |
+| Loading | Loading | `.nds-loading` | `.nds-content-switcher` | Gray bars in place of the labels and the panel content while the data loads. On `.nds-tab-list` it bars the labels only |
+{: #switcherVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="switcherFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every content switcher on the page starts by itself. Switching and the keyboard need no call.</p>
         </div>
-        <div class="nds-section-body">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Navigation</span>
+          </span>
+          <p class="nds-item-desc">The arrow keys move between buttons, and left and right follow the reading direction. Home and End jump to the first and the last button. Enter or Space opens the focused button.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-square-arrow-expand-01"></i>
+            <span class="nds-label">Three Sizes</span>
+          </span>
+          <p class="nds-item-desc">32, 40 and 48px buttons. The label size, the padding and the corners follow the size.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Loading Skeleton</span>
+          </span>
+          <p class="nds-item-desc">Gray bars stand in for the labels and the open panel until the script starts, so the row is never bare.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-access"></i>
+            <span class="nds-label">High Contrast and Reduced Motion</span>
+          </span>
+          <p class="nds-item-desc">The open button gets a border in high-contrast mode, and the transitions stop when the user prefers reduced motion.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-notification-square"></i>
+            <span class="nds-label">Change Events</span>
+          </span>
+          <p class="nds-item-desc">Every switch fires <code class="nds-inline-code lang-js">nds:tab:change</code> with the new and the previous button and panel.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-api"></i>
+            <span class="nds-label">Programmatic Control</span>
+          </span>
+          <p class="nds-item-desc">Open a view, read the open panel or remove the behavior through <code class="nds-inline-code lang-js">NDS.Tabs</code> or the element's <code class="nds-inline-code lang-js">ndsTabs</code> property.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use a content switcher for <strong>two to four short, equal-weight views</strong> of the same subject: a date range, a status filter, a chart granularity</li>
-                    <li>Use it when the current choice must stay obvious at a glance. The solid fill reads faster than an underline across a dense page</li>
-                    <li>Do not use it for page-level navigation between unrelated areas. Use <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a>, which handle longer labels, icons, vertical layouts, and overflow scrolling</li>
-                    <li>Do not use it as a form input. Segments are tabs, not controls: no <code class="nds-inline-code lang-html">name</code>, no <code class="nds-inline-code lang-html">value</code>, nothing submitted. For a bounded choice inside a form use <a class="nds-color" href="{{ 'components/radio' | relative_url }}">Radio</a>, which looks different but is the only NDS control that submits a single choice</li>
-                    <li>Do not use it as a toolbar of actions. Segments select a view, they do not run commands. Use a plain <a class="nds-color" href="{{ 'components/button' | relative_url }}">Button</a> group for that</li>
-                    <li>Keep labels to one or two words. The strip does not scroll, so long labels either crowd the row or push it past its container</li>
-                    <li>Keep the segment count stable. A strip whose options come and go is a filter, not a switcher</li>
-                    <li>Pick the size from the surrounding density: <code class="nds-inline-code lang-html">nds-sm</code> inside cards and toolbars, the default in page content, <code class="nds-inline-code lang-html">nds-lg</code> for touch-first layouts</li>
-                    <li>Mark the starting segment in your HTML with <code class="nds-inline-code lang-html">aria-selected="true"</code> and give its panel no <code class="nds-inline-code lang-html">hidden</code> attribute, so the correct view paints before scripts run</li>
-                    <li>Every segment needs a panel. A switcher with no panels does not initialize; for a panel-free view toggle use a button group and handle clicks yourself</li>
-                </ul>
-            </div>
+<section id="switcherPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-content-switcher</code></td><td>Co-class on the <code class="nds-inline-code lang-html">.nds-tabs</code> root. Turns the tab strip into a segmented control</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>On <code class="nds-inline-code lang-html">.nds-tab-list</code>. Centers the strip in its row instead of aligning it to the inline start</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>On the root. Applies the dark-surface palette in light mode, for a strip placed on a dark or brand-filled panel</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>On the root. 32px segments with the small type step and a tighter corner radius</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>On the root. 48px segments. The unmodified default is 40px, so the middle step needs no class</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td>On the root or the strip. Renders labels as animated bars. Equivalent to <code class="nds-inline-code lang-html">data-state="loading"</code></td></tr>
-                    </tbody>
-                </table>
-            </div>
+- Use a content switcher for two to four short views of the same data, such as a date range, a status filter or a chart period.
+- Pick it over tabs when people must see the open view at a glance. A solid fill is easier to see than an underline on a busy page.
+- Keep labels to one or two words. The row does not scroll, so long labels push it past its container.
+- Keep the same buttons at all times. For choices that come and go, use a [Filter](../components/filter).
+- Put the view people open most first. It opens when the page loads.
+- Give every button a panel. A switcher with no panels does not start. For a row of view buttons with no panels, use a [button group](../components/button) and handle the clicks yourself.
+- Keep the buttons and the panels in the same order and the same number. Button one opens panel one, by their order in the markup.
+- Give `nds-tab-list` an `aria-label`, and pair each button and panel with `aria-controls` and `aria-labelledby`.
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">aria-selected="true"</code></td><td>Set on one segment to mark the starting choice. Its panel must not carry <code class="nds-inline-code lang-html">hidden</code>. Every other segment takes <code class="nds-inline-code lang-html">aria-selected="false"</code> and <code class="nds-inline-code lang-html">tabindex="-1"</code>, and its panel takes <code class="nds-inline-code lang-html">hidden</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">aria-controls</code></td><td>Set on each segment to the <code class="nds-inline-code lang-html">id</code> of its panel. Panels pair back with <code class="nds-inline-code lang-html">aria-labelledby</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on the root or the strip to show the skeleton while data loads. Equivalent to the <code class="nds-inline-code lang-html">nds-loading</code> class</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-nds-tabs-initialized</code></td><td>Stamped on the root by JS once wired. Until it lands the skeleton paints, so the strip is never bare</td></tr>
-                    </tbody>
-                </table>
-            </div>
+</div>
+  </div>
+</section>
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--btn-group-radius</code></td><td><code class="nds-inline-code lang-html">var(--radius-md)</code></td><td>Corner radius of the strip's outer ends. Set on <code class="nds-inline-code lang-html">.nds-tab-list</code>. Drops to <code class="nds-inline-code lang-html">var(--radius-sm)</code> at <code class="nds-inline-code lang-html">nds-sm</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--btn-size</code></td><td><code class="nds-inline-code lang-html">40px</code></td><td>Segment height. Set on <code class="nds-inline-code lang-html">.nds-tab</code> for a size between the three steps</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tab-button-padding-inline</code></td><td>the button's own padding</td><td>Horizontal padding inside each segment. Tracks the size step unless you override it</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tab-panel-padding</code></td><td><code class="nds-inline-code lang-html">var(--spacing-2xl)</code></td><td>Padding around panel content. Axial <code class="nds-inline-code lang-html">--tab-panel-padding-inline</code> and <code class="nds-inline-code lang-html">--tab-panel-padding-block</code> override one side each</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<section id="switcherApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The switcher is driven by <strong>NDS.Tabs</strong>, the same controller behind <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a>. It wires itself on page load. Call <strong>NDS.Tabs.reinit()</strong> after injecting a switcher into the page.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Reach the instance ───────────────────────────────
-// Parked on the root element once initialized
-const switcher = document.querySelector('#switcher-standard-1').ndsTabs;
+### Data Attributes
+{: .nds-block-title}
 
-// ── Read the current segment ─────────────────────────
-switcher.getActiveTabIndex();   // 0-based index
-switcher.getActiveTab();        // the segment button element
-switcher.getActivePanel();      // the visible panel element
+| Attribute | Element | Effect |
+|---|---|---|
+| `aria-selected="true"` | `.nds-tab` | Marks the button that opens when the page loads. With none, the first button opens |
+| `data-state="loading"` | `.nds-content-switcher` or `.nds-tab-list` | The same as `nds-loading`, for a script that already sets states |
+{: .nds-table .nds-responsive}
 
-// ── Change the current segment ───────────────────────
-switcher.switchTo(2);           // reveals the third panel, fires nds:tab:change
+### CSS Custom Properties
+{: .nds-block-title}
 
-// ── Listen for changes ───────────────────────────────
-// Bubbles from the root, so one listener can cover several switchers
-document.querySelector('#switcher-standard-1').addEventListener('nds:tab:change', (e) =&gt; {
-    e.detail.tabIndex;        // index of the new segment
-    e.detail.tab;             // the new segment button
-    e.detail.panel;           // the newly visible panel
-    e.detail.previousTab;     // the segment being left
-    e.detail.previousPanel;   // the panel being hidden
+| Property | Default | Controls |
+|---|---|---|
+| `--btn-group-radius` | `var(--radius-md)`, `var(--radius-sm)` with `nds-sm` | Corner radius of the two ends of the row. Set it on `.nds-tab-list` |
+| `--btn-size` | `40px` | Button height, for a size between the three sizes. Set it on `.nds-tab` |
+| `--tab-button-gap` | `var(--spacing-xs)` | Gap between a button's icon and its label |
+| `--tab-button-padding-block` | `0` | Padding above and below a button's label |
+| `--tab-button-padding-inline` | the button padding | Padding at the start and the end of a button. It follows the size |
+| `--tab-panel-padding` | `0` at the sides, `var(--spacing-2xl)` above and below | Padding of a panel on both axes. A panel with `nds-card` keeps `var(--spacing-2xl)` at the sides |
+| `--tab-panel-padding-inline`, `--tab-panel-padding-block` | `--tab-panel-padding` | Padding of a panel on one axis |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+The [Tabs](../components/tabs) controller, `NDS.Tabs`, runs the content switcher. The instance lives on the element as `ndsTabs`.
+
+| Method | Effect |
+|---|---|
+| `NDS.Tabs.init()` | Starts every switcher and tab set on the page that has not started yet. `reinit()` is the same |
+| `NDS.Tabs.create(element)` | Starts one switcher and returns its instance, or the instance it already has |
+| `instance.switchTo(index)` | Opens a view by its position, from 0 |
+| `instance.getActiveTabIndex()` | Returns the position of the open button |
+| `instance.getActiveTab()`, `instance.getActivePanel()` | Return the open button and its panel |
+| `instance.destroy()` | Removes the listeners. The markup stays as it is |
+{: .nds-table .nds-responsive}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:tab:change` | `.nds-content-switcher`, and it bubbles | `tabIndex`, `tab`, `panel`, `previousTab`, `previousPanel` |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="switcher-js" data-canon data-lang="js">
+var switcher = document.querySelector('#request-status');
+switcher.addEventListener('nds:tab:change', function (e) {
+  console.log('Opened view', e.detail.tabIndex);
 });
+switcher.ndsTabs.switchTo(2);
+</script>
 
-// ── Re-scan after injecting markup ───────────────────
-// Skips switchers that are already wired
-NDS.Tabs.reinit();
+The full API is in the banner of `_js/nds-tabs.js`.
 
-// ── Tear down ────────────────────────────────────────
-// Removes listeners and the init stamp, leaving markup in place
-switcher.destroy();
-</code>
-                    </div>
-                </div>
-            </div>
+</div>
+  </div>
+</section>
 
-        </div>
+<section id="switcherRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Tabs](../components/tabs): the same controller, drawn as a tab row with an underline.
+- [Button](../components/button): the button group, whose joined look the row shares.
+
+</div>
+  </div>
 </section>
