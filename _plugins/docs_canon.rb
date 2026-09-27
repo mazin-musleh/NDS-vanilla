@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Doc canon blocks — `<script type="text/html" data-canon>` on a doc page holds a component's
-# markup once. This hook writes its preview, code block and builder toolbar into the built
+# markup once. This hook writes its options, preview and code block into the built
 # HTML. Build time, not a JS stamp: the fold gate paints content before deferred scripts run,
 # so a JS stamp jumped the page (0.46 cold-load CLS). _js/nds-docs.js only wires the toolbar.
 # Runs on Pages via the Actions workflow; restart `jekyll serve` after editing this file.
@@ -12,6 +12,11 @@ module DocsCanon
   # Knobs only, scoped to the skeleton section classes (nds-doc-{name}).
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
               '.nds-doc-variants .nds-table{--min-width:900px}' \
+              '[data-builder-group]{--divider-line-start:24px}' \
+              '.nds-doc-grid{background-image:linear-gradient(var(--divider-color) 1px,transparent 1px),linear-gradient(90deg,var(--divider-color) 1px,transparent 1px);background-size:24px 24px;background-position:right 12px top 12px}' \
+              ':is(html[dir="ltr"],.ltr) .nds-doc-grid{background-position:12px 12px}' \
+              '.nds-builder-options>.nds-divider:first-child{margin-block-start:0}' \
+              '.nds-builder-options{margin-block-end:var(--spacing-4xl)}' \
               ':root[data-theme~="dark"] [data-builder-dark]{display:none}' # a dark site has nothing to toggle to
 
   PLAIN_CODE_RE = %r{<code class="language-plaintext highlighter-rouge">(.*?)</code>}m
@@ -177,20 +182,28 @@ module DocsCanon
   def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
-  # The Options button floats beside the section title (layout/section.md), icon-only on a phone;
-  # it opens the sheet that holds every choice. A preview also gets a Dark mode toggle.
-  def self.actions(id, preview)
-    dark = %(<button type="button" class="nds-btn nds-subtle nds-icon-only nds-md" data-builder-dark aria-pressed="false" aria-label="Dark mode"><i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i></button>) if preview
-    options = %(<button type="button" class="nds-btn nds-neutral nds-md" data-panel-toggle="#{id}-options"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
-    %(<div class="nds-section-action nds-rowView nds-minimal" data-builder-for="#{id}">#{dark}#{options}</div>)
+  # The Options button floats beside the section title (layout/section.md), icon-only on a phone,
+  # with Reset beside it, all one button group. A preview also gets Dark mode and Grid lines toggles.
+  # The group class sits on the action itself: nested, it would miss .nds-minimal's `> .nds-btn` rules.
+  def self.actions(id, preview, panel)
+    dark = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-dark aria-pressed="false" aria-label="Dark mode"><i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i></button>) if preview
+    grid = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-grid aria-pressed="true" aria-label="Grid lines"><i class="hgi hgi-stroke hgi-grid-off" aria-hidden="true"></i></button>) if preview
+    reset = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-reset aria-label="Reset"><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button>)
+    toggle = panel ? %(data-panel-toggle="#{id}-options") : %(data-builder-toggle aria-controls="#{id}-options" aria-expanded="false")
+    options = %(<button type="button" class="nds-btn nds-secondary-outline nds-md" #{toggle}><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
+    %(<div class="nds-section-action nds-btn-group nds-rowView nds-minimal" data-builder-for="#{id}">#{options}#{dark}#{grid}#{reset}</div>)
   end
 
-  # The options sheet: one labeled row of chips per group, single options last under "More".
+  # The options: one labeled row of chips per group, single options last under "More". Up to 3
+  # rows sit inline above the preview; more open in a bottom panel, so the preview stays in view
+  # while the rows scroll. `data-options="inline|panel"` on the canon picks one (a panel demo
+  # needs inline: its own panel would close the options panel).
   # A group whose default is "None" gets no None chip: tapping the chosen chip again turns it off.
   # A combo row ("Tags + Rating") gets no chip either: it is the markup used when those chips are
   # both on. A chip that does not apply is disabled, and its row label says why (touch has no
-  # hover); a hint shows on hover. No backdrop, so the preview stays live above it.
-  def self.sheet(id, rows, src, js, canons, side = 'bottom')
+  # hover); a hint shows on hover. `data-sheet="top"` (a shell page) opens a top panel instead.
+  # Returns [html, panel?].
+  def self.options(id, rows, src, js, canons, mode, side)
     groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
     multi, single = groups.partition { |_, list| list.size > 1 }
     esc = ->(t) { CGI.escapeHTML(t.to_s) }
@@ -201,7 +214,7 @@ module DocsCanon
     end
     row = lambda do |name, need, off, chips|
       text = off && !need.empty? ? "#{name} · #{need}" : name
-      %(<div class="nds-divider nds-4xl nds-start" data-builder-group="#{esc[name]}"#{need.empty? ? '' : %( data-needs="#{esc[need]}")}>#{esc[text]}</div><div class="nds-chips">#{chips.join}</div>)
+      %(<div class="nds-divider nds-4xl" data-builder-group="#{esc[name]}"#{need.empty? ? '' : %( data-needs="#{esc[need]}")}>#{esc[text]}</div><div class="nds-chips">#{chips.join}</div>)
     end
     body = multi.map do |group, list|
       live = list.select { |r| r[:live] }
@@ -212,7 +225,11 @@ module DocsCanon
       row[group, needs(live.first, rows, canons, src), live.none? { |r| applies?(r, src, js) }, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
     end
     body << row['More', '', false, single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
-    %(<aside id="#{id}-options" class="nds-panel" data-panel-side="#{side}" data-panel-static style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i></span><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Reset" data-builder-reset disabled><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>)
+    panel = side || (mode ? mode == 'panel' : body.size > 3)
+    return [%(<div id="#{id}-options" class="nds-builder-options" role="group" aria-label="Options" hidden>#{body.join}</div>\n), false] unless panel
+
+    # No backdrop, so the preview stays live above it.
+    [%(<aside id="#{id}-options" class="nds-panel" data-panel-side="#{side || 'bottom'}" data-panel-static style="--panel-height: 45svh;" aria-label="Options" hidden><div class="nds-panel-header"><span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i></span><div class="nds-panel-text"><span class="nds-panel-title">Options</span></div><div class="nds-panel-action"><button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close options"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button></div></div><div class="nds-panel-body">#{body.join}</div></aside>\n), true]
   end
 
   def self.stamp(html)
@@ -270,22 +287,28 @@ module DocsCanon
       js = canons[attr(attrs, 'data-js')]&.last
       table = attr(attrs, 'data-variants')
       preview = lang == 'html' && attr(attrs, 'data-preview') != 'none'
-      # data-live: a page-shell canon changes the page's own copy (its footer), not a preview card.
-      builder = lang == 'html' && table && (preview || attr(attrs, 'data-live'))
-      builders << [id, preview] if builder
-      if preview
+      # data-live: a page-shell canon changes the page's own copy (its footer); its preview card
+      # holds a button that scrolls there.
+      live = attr(attrs, 'data-live')
+      builder = lang == 'html' && table && (preview || live)
+      if builder
+        sheet, panel = options(id, rows(html, table), src, js, canons, attr(attrs, 'data-options'), attr(attrs, 'data-sheet'))
+        builders << [id, preview, panel]
+        out << sheet
+      end
+      if preview || (builder && live)
         out << %(<div class="nds-divider nds-xl" style="margin-block-start: 0; --divider-line-start: 24px;">Preview</div>\n) if table
-        out << %(<div class="nds-block nds-card" style="#{preview_style(src.include?('nds-oncolor'))}">\n#{harness(src, attr(attrs, 'data-harness'))}\n</div>\n)
+        demo = preview ? harness(src, attr(attrs, 'data-harness')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
+        out << %(<div class="nds-block nds-card nds-doc-grid" style="#{preview_style(preview && src.include?('nds-oncolor'))}">\n#{demo}\n</div>\n)
       end
       out << (js ? code_tabs(id, src, js) : code_block(lang, src))
-      out << "\n" << sheet(id, rows(html, table), src, js, canons, attr(attrs, 'data-sheet') || 'bottom') if builder
       out
     end
 
     # A float action is the head's first child.
-    builders.each do |id, preview|
+    builders.each do |id, preview, panel|
       head = html.rindex('<div class="nds-section-head">', html.index(%(<script type="text/html" id="#{id}")))
-      html = html.insert(head + '<div class="nds-section-head">'.size, actions(id, preview)) if head
+      html = html.insert(head + '<div class="nds-section-head">'.size, actions(id, preview, panel)) if head
     end
     html
   end

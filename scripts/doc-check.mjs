@@ -64,14 +64,14 @@ for (const md of pages) {
 
         for (const id of builders) {
             // The builder wires itself on the first Options click, as a person opens it.
-            await page.click(`[data-builder-for="${id}"] [data-panel-toggle]`);
+            await page.click(`[data-builder-for="${id}"] :is([data-builder-toggle], [data-panel-toggle])`);
             await page.waitForTimeout(500);
             const sheet = `#${id}-options`;
             const options = await page.$$eval(`${sheet} [data-builder-option]`, (els) => els.map((e) => e.getAttribute('data-builder-option')));
             const structures = options.filter((o) => /^(Structure|Example)\|/.test(o));
             const tap = (key) => page.$eval(`${sheet} [data-builder-option="${key.replace(/"/g, '\\"')}"]`, (e) => e.click()).then(() => page.waitForTimeout(250));
             const enabled = (key) => page.$eval(`${sheet} [data-builder-option="${key.replace(/"/g, '\\"')}"]`, (e) => !e.disabled);
-            const reset = async () => { await page.$eval(`${sheet} [data-builder-reset]`, (e) => { if (!e.disabled) e.click(); }); await page.waitForTimeout(250); };
+            const reset = async () => { await page.$eval(`[data-builder-for="${id}"] [data-builder-reset]`, (e) => e.click()); await page.waitForTimeout(250); };
 
             // The states: the default, each structure, then each other option on the first
             // structure that enables it.
@@ -103,7 +103,7 @@ for (const md of pages) {
                 const r = await page.evaluate((id) => {
                     const script = document.getElementById(id);
                     const live = script.getAttribute('data-live');
-                    const box = live ? document.querySelector(live) : script.nextElementSibling.nextElementSibling;
+                    const box = live ? document.querySelector(live) : script.nextElementSibling.nextElementSibling.nextElementSibling;
                     const issues = [];
                     if (!box || !box.offsetHeight) issues.push('empty preview');
                     const inner = box && box.querySelector('[data-demo-slot]') || box;
@@ -131,9 +131,9 @@ for (const md of pages) {
                     // shot on screen: a full-page shot resizes the page and moves the layout.
                     const measure = () => page.evaluate((id) => {
                         const s = document.getElementById(id), live = s.getAttribute('data-live');
-                        const box = live ? document.querySelector(live) : s.nextElementSibling.nextElementSibling;
+                        const box = live ? document.querySelector(live) : s.nextElementSibling.nextElementSibling.nextElementSibling;
                         box.scrollIntoView({ block: 'center' });
-                        // The options sheet covers the lower screen: hide it for the shot.
+                        // An options panel covers the lower screen: hide it for the shot.
                         document.getElementById(id + '-options').style.visibility = 'hidden';
                         const b = box.getBoundingClientRect();
                         if (live) return { x: b.x, y: b.y, width: b.width, height: b.height };
@@ -172,7 +172,7 @@ for (const md of pages) {
                     if (page.viewportSize().height !== vh) await page.setViewportSize({ width: WIDTH, height: vh });
                     // A dropmenu is shot open too: the preview plus its menu, which may sit in <body>.
                     const trigger = await page.evaluateHandle((id) => {
-                        const s = document.getElementById(id), box = s.nextElementSibling.nextElementSibling;
+                        const s = document.getElementById(id), box = s.nextElementSibling.nextElementSibling.nextElementSibling;
                         return s.getAttribute('data-live') ? null : box.querySelector('.nds-dropmenu-trigger');
                     }, id);
                     if (await trigger.evaluate((t) => !!t)) {
@@ -180,7 +180,7 @@ for (const md of pages) {
                         const delay = await trigger.evaluate((t) => { t.click(); return parseInt(NDS.Dropmenu.from(t).getAttribute('data-delay'), 10) || 0; });
                         await page.waitForTimeout(700 + delay);
                         const open = await page.evaluate(({ id, c }) => {
-                            const box = document.getElementById(id).nextElementSibling.nextElementSibling;
+                            const box = document.getElementById(id).nextElementSibling.nextElementSibling.nextElementSibling;
                             const menu = NDS.Dropmenu.menuOf(NDS.Dropmenu.from(box.querySelector('.nds-dropmenu-trigger')));
                             if (!menu || menu.hidden) return null;
                             const m = menu.getBoundingClientRect(), pad = 16;
@@ -198,7 +198,12 @@ for (const md of pages) {
                 }
             }
             await reset();
-            await page.$eval(`${sheet} [data-panel-close]`, (e) => e.click()).catch(() => {});
+            // Close the options: a panel may already be closed by the click that closed a menu.
+            await page.evaluate((id) => {
+                const o = document.getElementById(id + '-options');
+                if (o.hidden) return;
+                (o.querySelector('[data-panel-close]') || document.querySelector(`[data-builder-for="${id}"] [data-builder-toggle]`)).click();
+            }, id);
         }
         for (const e of errors.filter(() => !builders.length)) report(`console: ${e}`);
 

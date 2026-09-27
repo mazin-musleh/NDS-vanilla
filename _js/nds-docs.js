@@ -1,6 +1,6 @@
 /**
  * NDS Docs — builder wiring for doc-page canon blocks (docs site only, no public surface).
- * _plugins/docs_canon.rb writes each builder's controls, preview, code block and options sheet at
+ * _plugins/docs_canon.rb writes each builder's controls, options, preview and code block at
  * build time; this file only answers them. A choice re-renders the preview FROM the code it shows
  * (one serialized source), then re-inits it, so preview and code cannot differ.
  *
@@ -15,7 +15,7 @@
  * while that option is set:  key: value  set an option · canon #id  add a part's options.
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
  * data-harness="form" renders the preview inside a form with Validate and Reset buttons, outside the code.
- * The section action holds Options; the sheet holds Reset and a chip row per group. A chip that does not apply
+ * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
  * stays in place, disabled, and its row label says why (data-needs).
  * Rows sharing Group + Option are one choice.
  * The Dark mode toggle beside Options puts data-theme="dark" on the markup's outer element (code and preview)
@@ -245,22 +245,22 @@
     function wire(bar) {
         var script = document.getElementById(bar.getAttribute('data-builder-for'));
         var jsEl = script.hasAttribute('data-js') ? document.getElementById(script.getAttribute('data-js')) : null;
-        // The build writes the Preview divider, the preview and the code right after the canon.
+        // The build writes the options, the Preview divider, the preview and the code right after the canon.
         // A data-live canon changes the page's own copy instead (its footer), rebuilt from a clean clone.
         var liveEl = script.hasAttribute('data-live') ? document.querySelector(script.getAttribute('data-live')) : null;
         var liveOrig = liveEl && liveEl.cloneNode(true);
-        var preview = liveEl ? null : script.nextElementSibling.nextElementSibling;
-        var block = liveEl ? script.nextElementSibling : preview.nextElementSibling;
+        // The options sit inline or in a panel (4 rows or more).
+        var sheet = script.nextElementSibling;
+        var preview = sheet.nextElementSibling.nextElementSibling;
+        var block = preview.nextElementSibling;
         var codeHtml = block.querySelector('code.lang-html'), codeJs = block.querySelector('code.lang-js');
         var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]');
-        // The options sheet holds every choice.
-        var sheet = document.getElementById(script.id + '-options');
-        var reset = sheet.querySelector('[data-builder-reset]');
+        var reset = bar.querySelector('[data-builder-reset]');
         var controls = function () { return Array.prototype.slice.call(sheet.querySelectorAll('[data-builder-option]')); };
-        // The sheet covers the lower part of the screen: bring the preview up above it, unless
-        // enough of it (160px, or all of a shorter one) already shows between header and sheet.
+        // The panel covers the lower part of the screen: bring the preview up above it, unless
+        // enough of it (160px, or all of a shorter one) already shows between header and panel.
         sheet.addEventListener('nds:panel:opened', function () {
-            // A live copy sits below a top sheet: bring it up unless it already shows below the sheet.
+            // A live copy sits below a top panel: bring it up unless it already shows below the panel.
             if (liveEl) {
                 var lb = liveEl.getBoundingClientRect();
                 if (lb.top < sheet.getBoundingClientRect().bottom || lb.top > window.innerHeight - 160) {
@@ -319,7 +319,6 @@
                 var need = d.getAttribute('data-needs');
                 d.textContent = d.getAttribute('data-builder-group') + (off && need ? ' · ' + need : '');
             });
-            reset.disabled = order.every(function (g) { return (active[g] || null) === (defaults[g] || null); });
         }
 
         function render() {
@@ -350,7 +349,7 @@
             });
             if (tabHtml) {
                 tabHtml.hidden = !html;
-                // Through the Tabs API: a synthetic click lands outside the open sheet and closes it.
+                // Through the Tabs API: a synthetic click lands outside an open options panel and closes it.
                 if (!html && tabHtml.getAttribute('aria-selected') === 'true' && block.ndsTabs) block.ndsTabs.switchTo(1);
             }
 
@@ -454,7 +453,6 @@
         return {
             dark: function (btn) {
                 dark = !dark;
-                dark ? btn.setAttribute('data-state', 'selected') : btn.removeAttribute('data-state');
                 btn.setAttribute('aria-pressed', String(dark));
                 btn.querySelector('.nds-icon').className = 'nds-icon ' + (dark ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
                 render();
@@ -484,13 +482,39 @@
     });
     document.addEventListener('nds:formInvalid', function (e) { dropAlert(e.target); });
 
-    // The chips are built at site build; the Variants table is read only when the sheet first opens.
+    // The chips are built at site build; the Variants table is read only when the options first open.
     // The Dark button (a preview's toggle) wires its builder on first use too.
     document.querySelectorAll('[data-builder-for]').forEach(function (bar) {
         var api, get = function () { return api || (api = wire(bar)); };
-        bar.querySelector('[data-panel-toggle]').addEventListener('click', get, { once: true });
+        var toggle = bar.querySelector('[data-builder-toggle]');
+        // A panel opens itself (data-panel-toggle); inline options are shown here.
+        if (!toggle) bar.querySelector('[data-panel-toggle]').addEventListener('click', get, { once: true });
+        else toggle.addEventListener('click', function () {
+            get();
+            var box = document.getElementById(toggle.getAttribute('aria-controls'));
+            box.hidden = !box.hidden;
+            toggle.setAttribute('aria-expanded', String(!box.hidden));
+        });
         var btn = bar.querySelector('[data-builder-dark]');
         if (btn) btn.addEventListener('click', function () { get().dark(btn); });
+        // Grid lines: a class on the preview card, which a re-render keeps (only its content is replaced).
+        var grid = bar.querySelector('[data-builder-grid]');
+        if (grid) grid.addEventListener('click', function () {
+            var card = document.getElementById(bar.getAttribute('data-builder-for') + '-options').nextElementSibling.nextElementSibling;
+            var on = card.classList.toggle('nds-doc-grid');
+            grid.setAttribute('aria-pressed', String(on));
+            grid.querySelector('i').className = 'hgi hgi-stroke ' + (on ? 'hgi-grid-off' : 'hgi-grid');
+        });
+    });
+
+    // A live canon's preview button opens its options, which scroll to the page's own copy;
+    // with them already open it just scrolls (re-queried: a choice replaces the copy).
+    document.querySelectorAll('[data-builder-live]').forEach(function (b) {
+        var id = b.getAttribute('data-builder-live');
+        b.addEventListener('click', function () {
+            if (document.getElementById(id + '-options').hidden) document.querySelector('[data-builder-for="' + id + '"] [data-panel-toggle]').click();
+            else document.querySelector(document.getElementById(id).getAttribute('data-live')).scrollIntoView({ block: 'end', behavior: 'smooth' });
+        });
     });
 
 })();
