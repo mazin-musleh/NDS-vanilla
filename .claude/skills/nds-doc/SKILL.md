@@ -53,7 +53,7 @@ Read every time:
 - **`EDITORIAL.md`.**
 - **The SCSS, whole:** every class, modifier, knob (`--x` and its `var()` fallback), state selector, media rule, and the accessibility mixins.
 - **The JS, whole:** init, every public method, every event and its `detail`, keyboard handling, every `data-*` it reads, every state it writes. The banner at the top of the file is the public surface.
-- **The shared files it rides:** `_js/nds-forms.js` and `_sass/components/_forms.scss` for fields, `_js/nds-core.js` for `NDS.State` and `NDS.Status`.
+- **The shared files it rides, banner only:** `_js/nds-forms.js` and `_sass/components/_forms.scss` for fields, `_js/nds-core.js` for `NDS.State` and `NDS.Status`. Read further only for a fact the banner does not answer: each JS file is ~86 KB.
 - **`_data/sidemenu/sidemenu.yml`:** confirm every part you link exists.
 - **The page's entry in `_data/content/*.yml`:** its catalog card must agree with the hero description.
 - **The model page** for this page type.
@@ -267,6 +267,8 @@ Build the page only from NDS components. If the page looks wrong, the gap is in 
 
 ## Phase 6: Verify
 
+**Steps 1, 2, 3 and 6 run in one sonnet agent**, not in the main session: the build, check and screenshot loop is most of a page's turns, and every turn re-sends the whole session. Give it the page path and these steps; it fixes what the page owns (canons, Variants rows) and reports back only its findings, the fixes it made, and any component bug it did not fix. A component SCSS fix comes back to the main session.
+
 1. **Build:** `bundle exec jekyll build`. Restart `jekyll serve` after a change to `_plugins/`.
 2. **Check the page:** `python scripts/check-docs.py <page>`. It checks the section order, the canons (no Liquid, escaping, `<form>` or `demo-` id), unique ids, every canon the Variants table names, and that no canon already carries an option it can turn off.
 3. **Inspect the built sheet:** list the chips in the built HTML and confirm the defaults and the disabled chips are right.
@@ -287,3 +289,5 @@ Build the page only from NDS components. If the page looks wrong, the gap is in 
 - [ ] The page passes the `EDITORIAL.md` checklist.
 - [ ] `since`, `updated`, `last_edit` set per the rules.
 - [ ] The commit names every old claim the source disproved.
+
+**One page per session.** After the commit, tell the user to `/clear` before the next page: a session that runs page after page re-sends every earlier page's history on each turn (160–560 M cached tokens per session, measured 2026-09-27).
