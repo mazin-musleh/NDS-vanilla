@@ -16,7 +16,7 @@
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
  * data-harness="form" renders the preview inside a form with Validate and Reset buttons, outside the code.
  * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
- * stays in place, disabled, and its row label says why (data-needs).
+ * stays in place, disabled, and its tooltip says why.
  * Rows sharing Group + Option are one choice.
  * Each preview card has Dark mode and Grid lines toggles in its corner. On a builder card, Dark puts
  * data-theme="dark" on the markup's outer element (code and preview) and on the card; elsewhere, on the card only.
@@ -300,7 +300,6 @@
         var pristine = document.createElement('div'), call = null, html = false, dark = false, darkWins = false, wasOncolor = false;
 
         // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
-        function live(c) { return c.structure || c.ops.some(function (o) { return o.op; }); }
         function applies(c) {
             if (c.structure) return true;
             // A `—` row with a target (a default that fits only some structures) is checked too.
@@ -312,17 +311,12 @@
         }
         function showApplicable() {
             controls().forEach(function (btn) {
-                btn.disabled = !applies(byKey[btn.getAttribute('data-builder-option')]);
-            });
-            // A row whose options all do not apply says why in its label (touch screens have no hover).
-            sheet.querySelectorAll('[data-builder-group]').forEach(function (d) {
-                var off = !Array.prototype.some.call(d.nextElementSibling.querySelectorAll('[data-builder-option]:not(:disabled)'), function (b) {
-                    return live(byKey[b.getAttribute('data-builder-option')]);
-                });
-                var need = d.getAttribute('data-needs');
-                // More mixes groups: it names each chip that is off, with its own reason.
-                var own = Array.prototype.map.call(d.nextElementSibling.querySelectorAll('[data-needs]:disabled'), function (b) { return b.getAttribute('data-needs'); });
-                d.textContent = [d.getAttribute('data-builder-group')].concat(off && need ? [need] : own).join(' · ');
+                var off = !applies(byKey[btn.getAttribute('data-builder-option')]);
+                NDS.State[off ? 'add' : 'remove'](btn, 'disabled');
+                off ? btn.setAttribute('aria-disabled', 'true') : btn.removeAttribute('aria-disabled');
+                if (!off && btn.ndsTooltip) btn.ndsTooltip.close();                // The hint's native title would show beside the reason tooltip: park it while off.
+                if (off && btn.title) { btn.setAttribute('data-hint', btn.title); btn.removeAttribute('title'); }
+                else if (!off && btn.hasAttribute('data-hint')) btn.title = btn.getAttribute('data-hint');
             });
         }
 
@@ -417,7 +411,7 @@
                 var o = byKey[btn.getAttribute('data-builder-option')];
                 if (o.group !== g) return;
                 var sel = combos[g] ? (picks[g] || []).indexOf(o) >= 0 : active[g] === o;
-                sel ? btn.setAttribute('data-state', 'selected') : btn.removeAttribute('data-state');
+                NDS.State[sel ? 'add' : 'remove'](btn, 'selected');
                 btn.setAttribute('aria-pressed', String(sel));
             });
         }
@@ -447,6 +441,8 @@
             var btn = e.target.closest('[data-builder-option]');
             var c = btn && byKey[btn.getAttribute('data-builder-option')];
             if (!c) return;
+            // An off chip answers a click or tap with its reason (the tooltip closes itself on a button click).
+            if (btn.hasAttribute('aria-disabled')) { if (btn.ndsTooltip) btn.ndsTooltip.open(); return; }
             // A multi-select group toggles each chip; a group whose default is None turns off when
             // its chosen chip is tapped again; any other group is pick-one; a single option toggles.
             var on = true;
@@ -478,6 +474,11 @@
         var slot = e.target.querySelector && e.target.querySelector('[data-demo-slot]');
         if (slot) slot.querySelectorAll('[data-status]').forEach(function (el) { NDS.Forms.clearStatus(el); });
         if (slot) dropAlert(e.target);
+    });
+
+    // A chip's reason tooltip shows only while the chip is off.
+    document.addEventListener('nds:tooltip:opened', function (e) {
+        if (e.target.matches('[data-builder-option]:not([aria-disabled])')) e.target.ndsTooltip.close();
     });
 
     // A link in a preview stays on the doc page: the component still gets the click, the browser

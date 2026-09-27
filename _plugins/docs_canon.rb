@@ -13,6 +13,7 @@ module DocsCanon
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
               '.nds-doc-variants .nds-table{--min-width:900px}' \
               '[data-builder-group]{--divider-line-start:24px}' \
+              '.nds-chip[data-builder-option][aria-disabled]{pointer-events:auto}' \
               '.nds-doc-grid{--_grid-line:color-mix(in srgb,var(--divider-color) 50%,transparent);background-image:linear-gradient(var(--_grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--_grid-line) 1px,transparent 1px);background-size:24px 24px;background-position:right 12px top 12px}' \
               ':is(html[dir="ltr"],.ltr) .nds-doc-grid{background-position:12px 12px}' \
               '.nds-builder-options>.nds-divider:first-child{margin-block-start:0}' \
@@ -69,6 +70,7 @@ module DocsCanon
         structure?(group) ? c[:structure] = Regexp.last_match(1) : (c[:inserts] ||= []) << Regexp.last_match(1)
       end
       c[:live] ||= markup != '—'
+      (c[:adds] ||= []) << markup if markup =~ /\A(\.[\w-]+|\[[\w-]+(~?="[^"]*")?\])\z/
       # A `—` row with a target (a default that fits only some structures) is checked too.
       (c[:targets] ||= []) << target if (markup != '—' || !['—', ''].include?(target)) && !c[:structure]
     end
@@ -118,11 +120,13 @@ module DocsCanon
     return '' unless choice[:targets]
 
     providers = rows.reject { |r| r.equal?(choice) }.select do |r|
+      # A JS part is a run of options inside a call, not a call, so it never provides a create() target.
       own = [r[:structure], *r[:inserts]].compact.map { |cid| canons[cid] }
+      own.reject! { |lang, _| lang == 'js' } unless r[:structure]
       own << ['html', base] if structure?(r[:group]) && !r[:structure]
       own.any? do |lang, text|
         choice[:targets].any? { |t| t != '—' && (lang == 'js' ? matches?('', t, text) : matches?(text, t)) }
-      end
+      end || adds?(r, choice)
     end
     # Every structure holds it: the control can never be disabled, so it needs no hint.
     structures = rows.select { |r| structure?(r[:group]) }
@@ -141,6 +145,15 @@ module DocsCanon
 
     list = names[providers]
     list.empty? ? '' : "Needs #{list.join(' or ')}"
+  end
+
+  # An option that adds the class or attribute a choice's target asks for ("Stroke" needs Card).
+  def self.adds?(r, choice)
+    (r[:adds] || []).any? do |m|
+      choice[:targets].any? do |t|
+        m.start_with?('.') ? t.gsub(/:(?:not|has)\([^)]*\)/, '').scan(/\.([\w-]+)/).flatten.include?(m[1..]) : t.include?(m)
+      end
+    end
   end
 
   # HTML and JS forms of one builder: the canonical tabbed code block (components/code.md).
@@ -208,37 +221,34 @@ module DocsCanon
   # needs inline: its own panel would close the options panel).
   # A group whose default is "None" gets no None chip: tapping the chosen chip again turns it off.
   # A combo row ("Tags + Rating") gets no chip either: it is the markup used when those chips are
-  # both on. A chip that does not apply is disabled, and its row label says why (touch has no
-  # hover); a hint shows on hover. `data-sheet="top"` (a shell page) opens a top panel instead.
+  # both on. A chip that does not apply is disabled, and its tooltip says why; a hint shows
+  # on hover. `data-sheet="top"` (a shell page) opens a top panel instead.
   # Returns [html, panel?].
   def self.options(id, rows, src, js, canons, mode, side)
     groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
     multi, single = groups.partition { |_, list| list.size > 1 }
     esc = ->(t) { CGI.escapeHTML(t.to_s) }
     # Primary chips pick one of a set that always has a value; neutral chips can be turned off.
-    chip = lambda do |group, r, sel, tone = 'neutral', need = ''|
+    # A chip that can be off carries its reason as a hover tooltip; nds-docs.js opens it only while off.
+    # aria-disabled, not disabled: a disabled button gets no hover, focus or tap.
+    chip = lambda do |group, r, sel, tone = 'neutral'|
       tip = hint(r[:option]) ? %( title="#{esc[hint(r[:option])]}") : ''
-      need = need.empty? ? '' : %( data-needs="#{esc[need]}")
-      %(<button type="button" class="nds-chip nds-#{tone} nds-rounded" aria-pressed="#{sel}"#{' data-state="selected"' if sel}#{' disabled' unless applies?(r, src, js)}#{tip}#{need} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
+      need = needs(r, rows, canons, src)
+      state = [('selected' if sel), ('disabled' unless applies?(r, src, js))].compact.join(' ')
+      tooltip = need.empty? ? '' : %( data-tooltip-hover data-tooltip-message="#{esc[need]}")
+      %(<button type="button" class="nds-chip nds-#{tone} nds-rounded#{' nds-tooltip' unless need.empty?}" aria-pressed="#{sel}"#{%( data-state="#{state}") unless state.empty?}#{' aria-disabled="true"' if state.include?('disabled')}#{tip}#{tooltip} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
     end
-    row = lambda do |name, need, off, chips|
-      text = off && !need.empty? ? "#{name} · #{need}" : name
-      %(<div class="nds-divider nds-4xl" data-builder-group="#{esc[name]}"#{need.empty? ? '' : %( data-needs="#{esc[need]}")}>#{esc[text]}</div><div class="nds-chips">#{chips.join}</div>)
+    row = lambda do |name, chips|
+      %(<div class="nds-divider nds-4xl" data-builder-group="#{esc[name]}">#{esc[name]}</div><div class="nds-chips">#{chips.join}</div>)
     end
     body = multi.map do |group, list|
-      live = list.select { |r| r[:live] }
       default = list.find { |r| r[:option].include?('(default)') }
       none = default && label(default[:option]) == 'None'
       chips = list.reject { |r| (none && r.equal?(default)) || label(r[:option]).include?(' + ') }
       tone = none || list.any? { |r| label(r[:option]).include?(' + ') } ? 'neutral' : 'primary'
-      row[group, needs(live.first, rows, canons, src), live.none? { |r| applies?(r, src, js) }, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
+      row[group, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
     end
-    # More mixes groups, so each chip carries its own reason, and the label names the chips that are off.
-    if single.any?
-      need = ->(r) { n = needs(r, rows, canons, src); n.empty? ? '' : "#{label(r[:option])} #{n[0].downcase}#{n[1..]}" }
-      off = single.map { |_, (r)| need[r] unless applies?(r, src, js) }.compact.reject(&:empty?)
-      body << %(<div class="nds-divider nds-4xl" data-builder-group="More">#{esc[['More', *off].join(' · ')]}</div><div class="nds-chips">#{single.map { |group, (r)| chip[group, r, r[:option].include?('(default)'), 'neutral', need[r]] }.join}</div>)
-    end
+    body << row['More', single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
     panel = side || (mode ? mode == 'panel' : body.size > 3)
     return [%(<div id="#{id}-options" class="nds-builder-options" role="group" aria-label="Options" hidden>#{body.join}</div>\n), false] unless panel
 

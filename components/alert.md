@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "26/09/2026 - 10:22 PM"
+last_edit: "28/09/2026 - 12:33 AM"
 ---
 
 <section id="alertOverview" class="nds-content-section nds-doc-overview">
@@ -171,9 +171,9 @@ actions: [
 | Actions | Copy (hint: Copies a code or a log) | canon `#alert-copy` | `.nds-alert-content` | Copies `data-copy`, or the text of the element that `data-copy-target` selects. See [Copy](../utilities/copy) |
 | Actions | Copy (hint: Copies a code or a log) | canon `#alert-js-copy` | `create()` | The same, in JavaScript. `create()` adds the copy icon |
 | No close | No close | `remove` | `.nds-alert-close` | Leave out the close button, for an alert the user cannot close |
-| No close | No close | `closable: false` | `create()` | The same, in JavaScript. A toast with a `duration` keeps its close button, which shows the countdown |
+| No close | No close | `closable: false` | `create():not({ display: 'toast' })` | The same, in JavaScript. A toast with a `duration` keeps its close button, which shows the countdown |
 | Shadow | Shadow | `.nds-shadow` | `.nds-alert` | An elevation shadow |
-| Shadow | Shadow | `shadow: true` | `create()` | The same, in JavaScript. A toast has a shadow by default |
+| Shadow | Shadow | `shadow: true` | `create():not({ display: 'toast' })` | The same, in JavaScript. A toast has a shadow by default |
 | Color | Color | `.nds-color` | `.nds-alert:not(.nds-inline)` | Tints the background with the status color. Use it in dense layouts, where the stripe alone does not stand out. No effect on inline, which is always tinted |
 | Color | Color | `color: true` | `create():not({ display: 'inline' })` | The same, in JavaScript |
 | Position | Top (default) | — | `create({ display: 'toast' })` | At the top, on the end side, below the sticky header |
