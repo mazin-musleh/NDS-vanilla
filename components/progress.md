@@ -2,615 +2,301 @@
 layout: page
 title: Progress
 hero_title: Progress - National Design System
-hero_description: Circular and linear indicators for visualizing completion rates, upload status, and task progress across dashboards, forms, and workflows
+hero_description: A progress indicator shows how much of a task is done, as a circle or a bar
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "04/07/2026 - 04:46 AM"
+updated: "1.12.x"
+last_edit: "27/09/2026 - 11:25 AM"
 ---
 
-<!-- Progress Circle -->
-<section id="progressCircle" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Progress Circle</h2>
-            <p class="nds-section-description">Circular indicator that scales from compact inline counters to large hero displays</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["", ".nds-progress-circle", "progressSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-progress-circle", "progressSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-progress-circle", "progressSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-progress-circle", "progressSize"]'>
-                                                <span class="nds-label">XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-progress-circle", "progressSize"]'>
-                                                <span class="nds-label">2XL</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-progress-circle", "progressVariant"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-neutral", ".nds-progress-circle", "progressVariant"]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=success", ".nds-progress-circle", "progressVariant", "attr"]'>
-                                                <span class="nds-label">Success</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=error", ".nds-progress-circle", "progressVariant", "attr"]'>
-                                                <span class="nds-label">Error</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-    <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-progress-circle nds-lg" data-value="75">
-                                    <svg width="120" height="120" viewBox="0 0 24 24">
-                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-                                    </svg>
-                                    <div class="nds-progress-info">
-                                        <span class="nds-feedback">
-                                            <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                                        </span>
-                                        <span class="nds-progress-percentage">
-                                            <span class="nds-progress-number"></span>
-                                            <span class="nds-progress-symbol">%</span>
-                                        </span>
-                                        <span class="nds-progress-text">Active users</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-progress-circle-1" id="tab-progress-circle-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-circle-1"
-                                        aria-labelledby="tab-progress-circle-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-progress-circle nds-lg" data-value="75"&gt;
-  &lt;svg width="120" height="120" viewBox="0 0 24 24"&gt;
-    &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" /&gt;
-    &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-      stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" /&gt;
-  &lt;/svg&gt;
-  &lt;div class="nds-progress-info"&gt;
-    &lt;span class="nds-feedback"&gt;
-      &lt;span class="nds-feedback-icon"&gt;&lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/span&gt;
-    &lt;/span&gt;
-    &lt;span class="nds-progress-percentage"&gt;
-      &lt;span class="nds-progress-number"&gt;&lt;/span&gt;
-      &lt;span class="nds-progress-symbol"&gt;%&lt;/span&gt;
-    &lt;/span&gt;
-    &lt;span class="nds-progress-text"&gt;Active users&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+<section id="progressOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A progress indicator shows a value from 0 to 100. The circle draws it as a ring with the number in the middle, and a short text under the number. The bar draws it as a fill in a track, with a label above and a feedback message below. The circle can also show the value as a fraction, such as 3.75/5.
+
+Pick another component when:
+
+- the wait has no known length: [Loading](../components/loading)
+- the user moves through named steps: [Stepper](../components/stepper)
+- the user uploads files: [Upload](../components/upload), which draws its own progress
+
+</div>
+  </div>
 </section>
 
-<!-- Progress Circle — Out of -->
-<section id="progressOutOf" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Progress Circle — Out of</h2>
-            <p class="nds-section-description">Displays a value as a fraction (e.g. 3.75/5) instead of a percentage, ideal for GPA, ratings, and score displays</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["", ".nds-progress-circle", "progressOutOfSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-progress-circle", "progressOutOfSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-progress-circle", "progressOutOfSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-progress-circle", "progressOutOfSize"]'>
-                                                <span class="nds-label">XL</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-progress-circle", "progressOutOfSize"]'>
-                                                <span class="nds-label">2XL</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-progress-circle", "progressOutOfVariant"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-neutral", ".nds-progress-circle", "progressOutOfVariant"]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=success", ".nds-progress-circle", "progressOutOfVariant", "attr"]'>
-                                                <span class="nds-label">Success</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=error", ".nds-progress-circle", "progressOutOfVariant", "attr"]'>
-                                                <span class="nds-label">Error</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-progress-circle nds-lg" data-num="3.75" data-max="5">
-                                    <svg width="120" height="120" viewBox="0 0 24 24">
-                                        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-                                        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-                                            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-                                    </svg>
-                                    <div class="nds-progress-info">
-                                        <span class="nds-progress-out-of">
-                                            <span class="nds-progress-number"></span>
-                                            <span class="nds-progress-of"></span>
-                                        </span>
-                                        <span class="nds-progress-text">SGPA</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-progress-outof-1" id="tab-progress-outof-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-outof-1"
-                                        aria-labelledby="tab-progress-outof-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-progress-circle nds-lg" data-num="3.75" data-max="5"&gt;
-  &lt;svg width="120" height="120" viewBox="0 0 24 24"&gt;
-    &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" /&gt;
-    &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-      stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" /&gt;
-  &lt;/svg&gt;
-  &lt;div class="nds-progress-info"&gt;
-    &lt;span class="nds-progress-out-of"&gt;
-      &lt;span class="nds-progress-number"&gt;&lt;/span&gt;
-      &lt;span class="nds-progress-of"&gt;&lt;/span&gt;
-    &lt;/span&gt;
-    &lt;span class="nds-progress-text"&gt;SGPA&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+<section id="progressMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="progress-circle" data-canon data-variants="progressVariantsTable">
+<div class="nds-progress-circle nds-lg" data-value="75" role="progressbar" aria-labelledby="progress-circle-text">
+  <svg width="120" height="120" viewBox="0 0 24 24">
+    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
+    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+      stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+  </svg>
+  <div class="nds-progress-info">
+    <span class="nds-feedback">
+      <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+    </span>
+    <span class="nds-progress-percentage">
+      <span class="nds-progress-number"></span>
+      <span class="nds-progress-symbol">%</span>
+    </span>
+    <span class="nds-progress-text" id="progress-circle-text">Active users</span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="progress-out-of" data-canon>
+<div class="nds-progress-circle nds-lg" data-num="3.75" data-max="5" role="progressbar" aria-labelledby="progress-out-of-text">
+  <svg width="120" height="120" viewBox="0 0 24 24">
+    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
+    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+      stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+  </svg>
+  <div class="nds-progress-info">
+    <span class="nds-progress-out-of">
+      <span class="nds-progress-number"></span>
+      <span class="nds-progress-of"></span>
+    </span>
+    <span class="nds-progress-text" id="progress-out-of-text">SGPA</span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="progress-bar" data-canon>
+<div class="nds-progress-bar nds-lg" data-value="65" role="progressbar" aria-labelledby="progress-bar-label">
+  <span class="nds-progress-label" id="progress-bar-label">Uploading document.pdf</span>
+  <div class="nds-progress-track">
+    <div class="nds-progress-fill"></div>
+  </div>
+  <span class="nds-feedback nds-sm">
+    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+    <span class="nds-feedback-message">Processing your file</span>
+  </span>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Progress Bar -->
-<section id="progressBar" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Progress Line</h2>
-            <p class="nds-section-description">Linear indicator with label, fill percentage, and feedback message for file uploads, form completion, and multi-step workflows</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-progress-bar", "progressBarSize"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-progress-bar", "progressBarSize"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-progress-bar", "progressBarSize"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-progress-bar", "progressBarVariant"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-neutral", ".nds-progress-bar", "progressBarVariant"]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=success", ".nds-progress-bar", "progressBarVariant", "attr"]'>
-                                                <span class="nds-label">Success</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-status=error", ".nds-progress-bar", "progressBarVariant", "attr"]'>
-                                                <span class="nds-label">Error</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-progress-bar nds-lg" data-value="65">
-                                    <span class="nds-progress-label">Uploading document.pdf</span>
-                                    <div class="nds-progress-track">
-                                        <div class="nds-progress-fill"></div>
-                                    </div>
-                                    <span class="nds-feedback nds-sm">
-                                        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                                        <span class="nds-feedback-message">Processing your file...</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-progress-bar-1" id="tab-progress-bar-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-bar-1"
-                                        aria-labelledby="tab-progress-bar-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-progress-bar nds-lg" data-value="65"&gt;
-  &lt;span class="nds-progress-label"&gt;Uploading document.pdf&lt;/span&gt;
-  &lt;div class="nds-progress-track"&gt;
-    &lt;div class="nds-progress-fill"&gt;&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;span class="nds-feedback nds-sm"&gt;
-    &lt;span class="nds-feedback-icon"&gt;&lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/span&gt;
-    &lt;span class="nds-feedback-message"&gt;Processing your file...&lt;/span&gt;
-  &lt;/span&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+<section id="progressVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Color and Status have one row for the circle and one for the bar. Write the row whose element is in the markup. Status is not for Out of: a score is not a task that succeeds or fails.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Circle (default) | — | — | A value that is the focus of the view: a dashboard figure or a completion rate |
+| Structure | Out of | canon `#progress-out-of` | — | A score read as a fraction: a GPA, a rating. `data-num` and `data-max` replace `data-value` |
+| Structure | Bar | canon `#progress-bar` | — | A task the user waits for: an upload or a form to complete |
+| Circle size | SM | — | `.nds-progress-circle` | 64px, a circle with no size class. The text under the number does not show |
+| Circle size | MD | `.nds-md` | `.nds-progress-circle` | 80px. The text under the number does not show |
+| Circle size | LG (default) | `.nds-lg` | `.nds-progress-circle` | 120px |
+| Circle size | XL | `.nds-xl` | `.nds-progress-circle` | 160px |
+| Circle size | 2XL | `.nds-2xl` | `.nds-progress-circle` | 200px. A hero figure |
+| Bar size | SM | `.nds-sm` | `.nds-progress-bar` | 4px track. Beside other content |
+| Bar size | MD | — | `.nds-progress-bar` | 8px track. A bar with no size class is MD |
+| Bar size | LG (default) | `.nds-lg` | `.nds-progress-bar` | 16px track, with the percentage in the fill |
+| Color | Neutral | `.nds-neutral` | `.nds-progress-circle` | The neutral color, not the primary color. Use it when the value is not a brand figure |
+| Color | Neutral | `.nds-neutral` | `.nds-progress-bar` | The same, on a bar |
+| Status | None (default) | — | — | The task is running |
+| Status | Success | `[data-status="success"]` | `.nds-progress-circle:not([data-num])` | The task is done. The fill goes to 100% in the success color. The circle shows the success icon in place of the number |
+| Status | Success | `[data-status="success"]` | `.nds-progress-bar` | The same, on a bar. The feedback icon turns to success |
+| Status | Error | `[data-status="error"]` | `.nds-progress-circle:not([data-num])` | The task failed. The fill stays and turns to the error color. The circle shows the error icon in place of the number |
+| Status | Error | `[data-status="error"]` | `.nds-progress-bar` | The same, on a bar. The feedback icon turns to error |
+{: #progressVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="progressFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Reads <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code>, and <code class="nds-inline-code lang-html">data-max</code> on page load and sets CSS custom properties automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-percent-circle"></i>
-                            <span class="nds-label">Data-Driven Values</span>
-                        </span>
-                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-value</code> on any circle or bar and the fill, percentage text, and CSS properties update reactively through a shared attribute observer.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-divide-sign-circle"></i>
-                            <span class="nds-label">Out-of Display</span>
-                        </span>
-                        <p class="nds-item-desc">Show values as fractions like 3.75/5 using <code class="nds-inline-code lang-html">data-num</code> and <code class="nds-inline-code lang-html">data-max</code>. The progress fill auto-calculates from the ratio.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-resize-01"></i>
-                            <span class="nds-label">Scalable Sizes</span>
-                        </span>
-                        <p class="nds-item-desc">Five circle sizes from compact inline counters to large hero displays, plus three bar heights, with text and icons that scale proportionally.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-colors"></i>
-                            <span class="nds-label">Status Feedback</span>
-                        </span>
-                        <p class="nds-item-desc">Success and error statuses swap the percentage for a feedback icon and apply the matching color automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-chart-bar-line"></i>
-                            <span class="nds-label">Inline Bar Percentage</span>
-                        </span>
-                        <p class="nds-item-desc">The large progress bar displays the current percentage inside the fill track, keeping the value visible without extra labels.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-motion-02"></i>
-                            <span class="nds-label">Smooth Transitions</span>
-                        </span>
-                        <p class="nds-item-desc">Both circle and bar fills animate smoothly when the progress value changes, giving users clear visual feedback during updates.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-scroll"></i>
-                            <span class="nds-label">Scroll-triggered Fill</span>
-                        </span>
-                        <p class="nds-item-desc">The fill sweeps in as each indicator enters the viewport (0.5 threshold via <code class="nds-inline-code lang-js">NDS.onIntersect</code>), so the animation plays where it is seen. Under <code class="nds-inline-code lang-html">prefers-reduced-motion</code>, the value is applied immediately at load.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Update values at runtime with <code class="nds-inline-code lang-js">NDS.Progress.setValue()</code> and <code class="nds-inline-code lang-js">NDS.Progress.setOutOf()</code>. Changes propagate through the attribute observer automatically.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="progressBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Out Of
+{: .nds-block-title}
+
+The circle shows a score as a fraction, such as 3.75/5, in place of a percentage. Set `data-num` and `data-max` on the circle instead of `data-value`. The script writes the two numbers and fills the ring to their ratio. When both are set, they win over `data-value`.
+
+### Status
+{: .nds-block-title}
+
+`data-status="success"` fills the indicator to 100% in the success color, whatever its value. `data-status="error"` keeps the fill where it is and turns it to the error color. On a circle, the status icon takes the place of the number. On a bar, the feedback icon below the track changes. Out of takes no status: a score does not succeed or fail.
+
+### Percentage in the Bar
+{: .nds-block-title}
+
+A large bar (`nds-lg`) shows the percentage inside the fill, at its end. Small and medium bars are too thin for text, so they show no number. Use a large bar when the user needs the exact value.
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="progressGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <strong>progress circles</strong> for KPI displays, dashboard stats, and completion summaries where the value itself is the focus</li>
-                    <li>Use <strong>progress bars</strong> for file uploads, form completion, and any operation where the user is waiting for a process to finish</li>
-                    <li>Use the <strong>out-of display</strong> (<code class="nds-inline-code lang-html">data-num</code> + <code class="nds-inline-code lang-html">data-max</code>) for GPA, ratings, or scores where showing the fraction is more meaningful than a percentage</li>
-                    <li>Choose the <strong>large bar</strong> (<code class="nds-inline-code lang-html">nds-lg</code>) when you want the percentage visible inside the track without additional labels</li>
-                    <li>Use <strong>small or medium bars</strong> when the progress indicator sits alongside other content and should not dominate the layout</li>
-                    <li>Prefer <code class="nds-inline-code lang-html">data-value</code> over inline <code class="nds-inline-code lang-html">style="--progress-value"</code> for setting progress. Data attributes enable reactive updates and work with the JS API</li>
-                    <li>Set <code class="nds-inline-code lang-html">data-status="success"</code> only when the operation completes. The value automatically locks to 100% and shows a feedback icon</li>
-                    <li>Add a <code class="nds-inline-code lang-html">.nds-progress-label</code> and <code class="nds-inline-code lang-html">.nds-feedback-message</code> to the bar so users understand what is progressing and its current state</li>
-                    <li>Do not use progress components for indeterminate loading states. Use the <a class="nds-color" href="{{ 'components/loading' | relative_url }}">Loading</a> component instead</li>
-                    <li>For multi-step workflows with discrete stages, prefer the <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> component over a progress bar</li>
-                    <li>Use <code class="nds-inline-code lang-js">NDS.Progress.setValue()</code> or update <code class="nds-inline-code lang-html">data-value</code> directly to animate the fill at runtime. The CSS transition handles smooth movement automatically</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr><th>Class</th><th>Applies to</th><th>Description</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Bar only</td><td>4px track height, hides inline percentage</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Circle / Bar</td><td>Circle: 80px. Bar: 8px track height (default)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Circle / Bar</td><td>Circle: 120px. Bar: 16px track height with percentage inside the fill</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Circle</td><td>160px large display</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-2xl</code></td><td>Circle</td><td>200px hero display</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Circle / Bar</td><td>Neutral gray color variant</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr><th>Attribute</th><th>Description</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-value</code></td><td>Progress percentage (0–100). Sets <code class="nds-inline-code lang-html">--progress-value</code> via JS. Has priority over inline style</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-num</code></td><td>Numerator for "out of" display (e.g. 3.75). Populates <code class="nds-inline-code lang-html">.nds-progress-number</code> text and auto-calculates progress value</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-max</code></td><td>Denominator for "out of" display (e.g. 5). Populates <code class="nds-inline-code lang-html">.nds-progress-of</code> text. Used with <code class="nds-inline-code lang-html">data-num</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-status="success"</code></td><td>Locks value to 100%, applies success color, and shows a feedback icon instead of the percentage</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-status="error"</code></td><td>Applies error color and shows the feedback icon. Value stays at its current position</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr><th>Property</th><th>Default</th><th>Description</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-value</code></td><td>0</td><td>Current progress (0 to 100). Values above 100 are clamped. Update via JS to animate the fill</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-size</code></td><td>64px</td><td>Circle diameter. Overridden by size classes (nds-md through nds-2xl)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-color</code></td><td>var(--background-primary)</td><td>Fill and stroke color for both circle and bar</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-track-color</code></td><td>var(--colors-alpha-white-10) in dark mode</td><td>Circle track color in dark mode only. Light mode track is not a knob; the bar track is also hardcoded</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-height</code></td><td>8px</td><td>Bar track height. Overridden by size classes</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-circumference</code></td><td>62.83</td><td>SVG circle circumference (2&pi;r, r=10). Override when using a non-standard SVG radius</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-num</code></td><td>n/a</td><td>Set by JS in out-of mode from <code class="nds-inline-code lang-html">data-num</code>. Not intended for direct use</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-max</code></td><td>n/a</td><td>Set by JS in out-of mode from <code class="nds-inline-code lang-html">data-max</code>. Not intended for direct use</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Progress</strong> API reads <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code>, and <code class="nds-inline-code lang-html">data-max</code> attributes on initialization and observes changes reactively. For dynamically added elements, call <code class="nds-inline-code lang-js">NDS.Progress.init()</code> to pick them up.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Set progress value (circle or bar) ──────────────
-const el = document.querySelector('.nds-progress-circle');
-NDS.Progress.setValue(el, 80);       // Sets data-value="80", fill animates to 80%
-
-// ── Set out-of display (circle only) ────────────────
-NDS.Progress.setOutOf(el, 4.2, 5);  // Sets data-num="4.2" data-max="5"
-                                     // Fill auto-calculates to 84%
-                                     // Text shows "4.2" and "/5"
-
-// ── Direct attribute updates also work ──────────────
-// The shared observer picks up any data-* change
-el.dataset.value = 90;              // Fill animates to 90%
-el.dataset.num = 3.5;               // Recalculates from num/max
-
-// ── Initialize after dynamic HTML ───────────────────
-NDS.Progress.init();                // Scans for new elements
-
-// ── Initialize a single element ─────────────────────
-NDS.Progress.initCircle(el);        // Process one element directly
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<section id="progressFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">The script starts every circle and bar that has <code class="nds-inline-code lang-html">data-value</code> or <code class="nds-inline-code lang-html">data-num</code>. No init call is needed.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-percent-circle"></i>
+            <span class="nds-label">Data-Driven Values</span>
+          </span>
+          <p class="nds-item-desc">Change <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code> or <code class="nds-inline-code lang-html">data-max</code> and the indicator redraws. A value above 100 shows as 100.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-scroll"></i>
+            <span class="nds-label">Scroll-triggered Fill</span>
+          </span>
+          <p class="nds-item-desc">The fill starts when half of the indicator is on the screen, so the user sees it move. With reduced motion, the value shows at once.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-motion-02"></i>
+            <span class="nds-label">Smooth Transitions</span>
+          </span>
+          <p class="nds-item-desc">The fill moves to each new value in 0.3 seconds, on the circle and the bar.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Scalable Text</span>
+          </span>
+          <p class="nds-item-desc">The number, the text and the status icon grow with the circle, at every size class and at a custom <code class="nds-inline-code lang-css">--progress-size</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-accessibility"></i>
+            <span class="nds-label">Screen Reader Value</span>
+          </span>
+          <p class="nds-item-desc">The script adds <code class="nds-inline-code lang-html">role="progressbar"</code> if it is missing. It keeps <code class="nds-inline-code lang-html">aria-valuenow</code>, <code class="nds-inline-code lang-html">aria-valuemin</code> and <code class="nds-inline-code lang-html">aria-valuemax</code> in step with the value. A screen reader reads the value before the fill starts.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-api"></i>
+            <span class="nds-label">Programmatic Control</span>
+          </span>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.Progress.setValue()</code> and <code class="nds-inline-code lang-js">NDS.Progress.setOutOf()</code> change the value from code.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="progressPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Name every indicator: point `aria-labelledby` at its label or text. Without a name, a screen reader reads only a number.
+- Set the value with `data-value`, not with `--progress-value` in `style`. The script reads the attribute, and the screen reader value comes from it.
+- Keep the circle text to one or two words. It shows only at LG and larger.
+- Write a bar label that names the task, such as the file name, and a feedback message that says what happens now.
+- Set `data-status="success"` only when the task is done.
+- Do not use a progress indicator for a wait with no known length. Use [Loading](../components/loading).
+
+</div>
+  </div>
+</section>
+
+<section id="progressApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-value` | `.nds-progress-circle`, `.nds-progress-bar` | The value, 0 to 100 |
+| `data-num`, `data-max` | `.nds-progress-circle` | The fraction for Out of. Both are needed. They win over `data-value` |
+| `data-status` | `.nds-progress-circle`, `.nds-progress-bar` | `success` or `error`. See Status under Behavior |
+| `aria-labelledby` | `.nds-progress-circle`, `.nds-progress-bar` | The id of the element that names the indicator |
+{: .nds-table .nds-responsive}
+
+For Out of, the script sets `aria-valuemax` to `data-max`, not 100.
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these in the `style` of the circle or the bar. The size classes set `--progress-size` and `--progress-height` on the element, so a value set on a parent does not reach it.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--progress-value` | `0` | The fill, 0 to 100. The script sets it from `data-value` |
+| `--progress-color` | `var(--background-primary)` | The fill color |
+| `--progress-size` | `64px` | Circle only. The diameter |
+| `--progress-track-color` | `var(--colors-neutral-100)` | Circle only. The ring behind the fill. In dark mode, `var(--colors-alpha-white-10)`. The bar track has no knob |
+| `--progress-circumference` | `62.83` | Circle only. The ring length for an SVG circle with `r="10"`. Change it only with a different radius |
+| `--progress-height` | `8px` | Bar only. The track height |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Progress.init()` | Starts every indicator on the page. Call it after you add indicators |
+| `NDS.Progress.setValue(el, value)` | Sets `data-value` |
+| `NDS.Progress.setOutOf(el, num, max)` | Sets `data-num` and `data-max` |
+| `NDS.Progress.initCircle(el)` | Draws one indicator from its attributes now, with no wait for scroll |
+{: .nds-table .nds-responsive}
+
+The component fires no events. The methods only write the attributes, so writing them yourself works the same. The full API is in the banner of `_js/nds-progress.js`.
+
+<script type="text/html" id="progress-js" data-canon data-lang="js">
+var circle = document.querySelector('.nds-progress-circle');
+NDS.Progress.setValue(circle, 80);
+
+var score = document.querySelector('.nds-progress-circle[data-max]');
+NDS.Progress.setOutOf(score, 4.2, 5);
+</script>
+
+</div>
+  </div>
+</section>
+
+<section id="progressRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Contact Us](../templates/contact-us-template): a small circle beside each file while it uploads.
+- [Form](../templates/form-template): a circle that counts the steps done in the stepper.
+
+</div>
+  </div>
 </section>

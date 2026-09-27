@@ -604,7 +604,7 @@
   scss: _sass/components/_persona.scss
 
 - title: "Progress"
-  description: "Visual indicators for task completion and loading"
+  description: "A circle or a bar that shows how much of a task is done"
   use_when: "Show completion: progress bar, percentage indicator, upload progress. For labelled step-by-step stages use Stepper."
   icon: '<i class="hgi hgi-stroke hgi-loading-01"></i>'
   category: "UI"
