@@ -178,10 +178,7 @@ module DocsCanon
     %(<form class="nds-form" data-ajax><div data-demo-slot>\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
   end
 
-  # On-color markup needs the deep surface behind it; everything else sits on a normal card.
-  def self.preview_style(oncolor)
-    "--card-width: 100%; --card-radius: var(--radius-md); min-height: 200px; display: flex; justify-content: center; align-items: center;#{' --card-bg: var(--background-primary-strong);' if oncolor}"
-  end
+  PREVIEW_STYLE = '--card-width: 100%; --card-radius: var(--radius-md); min-height: 200px; display: flex; justify-content: center; align-items: center;'
 
   # Option markers: `(default)` pre-selects; `(demo: + Other)` also turns on option "Other" (demo
   # aid only); `(hint: text)` is a short description shown under the option in the sheet.
@@ -312,7 +309,9 @@ module DocsCanon
         demo = preview ? harness(src, attr(attrs, 'data-harness')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         # A builder's card names its builder, so Dark reaches the code too.
         card = preview ? %( nds-doc-preview"#{%( data-builder-card="#{id}") if builder}) : '"'
-        out << %(<div class="nds-block nds-card nds-doc-grid#{card} style="#{preview_style(preview && src.include?('nds-oncolor'))}">\n#{view if preview}#{demo}\n</div>\n)
+        # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
+        oncolor = preview && src.include?('nds-oncolor')
+        out << %(<div class="nds-block nds-card nds-doc-grid#{card}#{' data-theme="dark"' if oncolor} style="#{PREVIEW_STYLE}#{' --card-bg: var(--background-primary-strong);' if oncolor}">\n#{view if preview}#{demo}\n</div>\n)
       end
       out << (js ? code_tabs(id, src, js) : code_block(lang, src))
       out

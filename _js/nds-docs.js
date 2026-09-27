@@ -297,7 +297,7 @@
         });
         // A group with no chip on starts on its default (None has no chip).
         order.forEach(function (g) { if (!active[g] && defaults[g]) active[g] = defaults[g]; });
-        var pristine = document.createElement('div'), call = null, html = false, dark = false;
+        var pristine = document.createElement('div'), call = null, html = false, dark = false, darkWins = false, wasOncolor = false;
 
         // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
         function live(c) { return c.structure || c.ops.some(function (o) { return o.op; }); }
@@ -366,8 +366,15 @@
             if (!html) return runButton(slot, js);
             slot.innerHTML = out;
             order.forEach(function (g) { if (active[g]) apply(slot, active[g], 'prop'); });
-            // On-color markup needs the deep surface behind it (the build sets it for the default state).
-            if (slot.querySelector('.nds-oncolor')) preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
+            // On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
+            // The last tap wins: On color turned on shows primary, Dark turned on after it shows the dark card.
+            var oncolor = !!slot.querySelector('.nds-oncolor');
+            if (oncolor && !wasOncolor) darkWins = false;
+            wasOncolor = oncolor;
+            if (oncolor && !darkWins) {
+                preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
+                preview.setAttribute('data-theme', 'dark');
+            }
             NDS.Init.mount(slot);
             // The Validate and Reset buttons show only while the field has a rule that can fail.
             var acts = preview.querySelector('[data-demo-actions]');
@@ -455,7 +462,7 @@
 
         return {
             dark: function (btn) {
-                dark = !dark;
+                dark = darkWins = !dark;
                 btn.setAttribute('aria-pressed', String(dark));
                 btn.querySelector('.nds-icon').className = 'nds-icon ' + (dark ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
                 render();
@@ -509,8 +516,9 @@
         dark.addEventListener('click', function () {
             var id = card.getAttribute('data-builder-card');
             if (id) return builders[id]().dark(dark);
-            var on = card.getAttribute('data-theme') !== 'dark';
-            on ? card.setAttribute('data-theme', 'dark') : card.removeAttribute('data-theme');
+            // Read the button, not the card: an on-color card is dark from the start.
+            var on = dark.getAttribute('aria-pressed') !== 'true';
+            on || card.querySelector('.nds-oncolor') ? card.setAttribute('data-theme', 'dark') : card.removeAttribute('data-theme');
             dark.setAttribute('aria-pressed', String(on));
             dark.querySelector('.nds-icon').className = 'nds-icon ' + (on ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
         });
