@@ -819,7 +819,7 @@ html:not([data-nds-loaded]) .nds-card {
     }
   }
 
-  :is(.nds-tag, .nds-chip, .nds-btn):not(.nds-tab) {
+  :is(.nds-tag, .nds-chip, .nds-btn):not(.nds-tab, .nds-accordion-btn) {
     border-color: transparent;
     border-radius: var(--nds-skeleton-radius);
     @include skeleton-fill;
