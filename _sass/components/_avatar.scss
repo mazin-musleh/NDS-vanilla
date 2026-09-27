@@ -64,9 +64,13 @@
     text-transform: uppercase;
   }
 
+  &.nds-btn {
+    --_btn-padding-default: 0;
+  }
+
   &.nds-btn img {
-    width: var(--btn-height);
-    height: var(--btn-height);
+    width: var(--_btn-height);
+    height: var(--_btn-height);
     padding: var(--spacing-xs);
   }
 }
@@ -134,10 +138,22 @@
     gap: 0;
     padding-inline-end: var(--_stacked-gap);
 
+    // Outer ring, not border or inset: keeps the photo full size and paints over the overlapped neighbor.
     .nds-avatar {
       --avatar-size: 40px;
       margin-inline-end: calc(var(--_stacked-gap) * -1);
+      border: 0;
+      box-shadow: 0 0 0 var(--_avatar-ring, 2px) var(--avatar-border);
     }
+  }
+
+  &.nds-xs,
+  &.nds-sm {
+    --_avatar-ring: 1px;
+  }
+
+  &:is(.nds-xl, .nds-2xl, .nds-3xl) {
+    --_avatar-ring: 4px;
   }
 
   &.nds-xs {
@@ -193,6 +209,10 @@
 
     .nds-avatar {
       --avatar-size: 120px;
+    }
+
+    // Stacked draws the ring as a shadow instead.
+    &:not(.nds-stacked) .nds-avatar {
       border: 4px solid var(--avatar-border);
     }
   }
