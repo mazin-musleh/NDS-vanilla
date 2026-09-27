@@ -17,6 +17,8 @@
  *   - The value is applied when the indicator scrolls into view, so the fill animates where
  *     it is seen. Reduced motion applies it immediately.
  *   - Markup: .nds-progress-circle or .nds-progress-bar.
+ *   - Writes role="progressbar" (if absent) and aria-valuemin/max/now at once; the name is
+ *     the markup's (aria-labelledby on the label or text).
  */
 /**
  * NDS Progress Component
@@ -44,10 +46,26 @@
     'use strict';
 
     const SEL = '.nds-progress-circle, .nds-progress-bar';
-    const ATTRS = ['data-value', 'data-num', 'data-max'];
+    const ATTRS = ['data-value', 'data-num', 'data-max', 'data-status'];
+
+    // The value a screen reader hears; set at once, the fill waits for scroll.
+    function syncAria(el) {
+        const num = parseFloat(el.dataset.num);
+        const max = parseFloat(el.dataset.max);
+        const outOf = !isNaN(num) && !isNaN(max) && max > 0;
+        const top = outOf ? max : 100;
+        const now = el.dataset.status === 'success' ? top
+            : outOf ? Math.min(num, max) : Math.min(parseFloat(el.dataset.value), 100);
+        if (isNaN(now)) return;
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'progressbar');
+        el.setAttribute('aria-valuemin', 0);
+        el.setAttribute('aria-valuemax', top);
+        el.setAttribute('aria-valuenow', now);
+    }
 
     function syncFromData(el) {
         if (el.closest('code, .code-example')) return;
+        syncAria(el);
         const num = parseFloat(el.dataset.num);
         const max = parseFloat(el.dataset.max);
         const value = parseFloat(el.dataset.value);
@@ -85,6 +103,7 @@
 
             // Reduced motion (or no observer support): show the value at once.
             if (reduced || !canObserve) { syncFromData(el); return; }
+            syncAria(el);
 
             // Otherwise leave it empty and let the fill sweep when the indicator
             // scrolls into view — setting the value triggers the CSS transition.
