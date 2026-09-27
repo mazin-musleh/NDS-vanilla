@@ -257,8 +257,9 @@
         var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]');
         var reset = bar.querySelector('[data-builder-reset]');
         var controls = function () { return Array.prototype.slice.call(sheet.querySelectorAll('[data-builder-option]')); };
-        // The panel covers the lower part of the screen: bring the preview up above it, unless
-        // enough of it (160px, or all of a shorter one) already shows between header and panel.
+        // The panel covers the lower part of the screen: bring the preview into the space between
+        // header and panel. One that fits is centered there, unless it already shows whole; a taller
+        // one goes up under the header, unless 160px of it already shows.
         sheet.addEventListener('nds:panel:opened', function () {
             // A live copy sits below a top panel: bring it up unless it already shows below the panel.
             if (liveEl) {
@@ -270,8 +271,10 @@
                 return;
             }
             var box = preview.getBoundingClientRect(), top = box.top, head = NDS.stickyHeaderBottom();
-            if (top >= head && top + Math.min(box.height, 160) <= sheet.getBoundingClientRect().top) return;
-            window.scrollTo({ top: top + window.scrollY - head - 16, behavior: 'smooth' });
+            var room = sheet.getBoundingClientRect().top - head, fits = box.height <= room - 32;
+            if (top >= head && top + (fits ? box.height : 160) <= head + room) return;
+            var at = fits ? head + (room - box.height) / 2 : head + 16;
+            window.scrollTo({ top: top + window.scrollY - at, behavior: 'smooth' });
         });
         // Scrolling away to the live copy on open is undone on close, back to the markup.
         var backTo = null;
