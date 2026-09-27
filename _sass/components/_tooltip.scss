@@ -71,10 +71,17 @@
 
   // On the help wrapper itself, inherited by its icon; an outline icon has no disc
   // and never reads the fill, so the old outline exclusion is implicit.
-  &-trigger [data-status="help"] {
+  &-trigger .nds-feedback:is([data-status="help"], :not([data-status])) {
     --feedback-icon-color: var(--_tooltip-help-color);
   }
 
+}
+
+// A status-less chip in a tooltip draws the help "?". In the var() default, so a
+// data-status on the chip still wins.
+:is(.nds-tooltip-trigger, .nds-tooltip-balloon) .nds-feedback .nds-feedback-icon {
+  --_feedback-icon-stroke: var(--feedback-icon-stroke, var(--nds-icon-help-circle));
+  --_feedback-icon-symbol: var(--feedback-icon-symbol, var(--nds-icon-help));
 }
 
 // ==============================================

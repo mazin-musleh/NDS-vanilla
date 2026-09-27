@@ -13,7 +13,7 @@
  *   title                                       fallback message when data-tooltip-message
  *                                               is absent; stripped at init, balloon built
  *                                               on first open
- *   data-tooltip-status                         chip status, default "help"
+ *   data-tooltip-status                         chip status; none = the help look (CSS)
  *   data-tooltip-hover                          opt in to hover; the value is the open
  *                                               delay in ms (bare attribute = 120). A tap
  *                                               toggles a text term only; on a link/button
@@ -41,7 +41,7 @@
  *   - Explicit: author writes out `.nds-tooltip-trigger` + `.nds-tooltip-balloon`.
  *   - Declarative: author adds `data-tooltip-title` and/or `data-tooltip-message`
  *     to `.nds-tooltip`; JS generates the trigger chip and balloon contents.
- *     Optional `data-tooltip-status` (default "help") sets the chip status.
+ *     Optional `data-tooltip-status` sets the chip status; none = the help look.
  *     Any existing `.nds-tooltip-trigger` or `.nds-tooltip-balloon` child is
  *     kept as-is; only missing parts are generated.
  */
@@ -59,7 +59,7 @@
     function buildChip(status) {
         const wrap = document.createElement('span');
         wrap.className = 'nds-feedback nds-sm';
-        NDS.Status.set(wrap, status);
+        if (status) NDS.Status.set(wrap, status);
         const icon = document.createElement('span');
         icon.className = 'nds-feedback-icon';
         const i = document.createElement('i');
@@ -148,7 +148,7 @@
                 trigger.type = 'button';
                 trigger.className = 'nds-tooltip-trigger';
                 NDS.aria.label(trigger, title || 'More info');
-                trigger.appendChild(buildChip(this.root.dataset.tooltipStatus || 'help'));
+                trigger.appendChild(buildChip(this.root.dataset.tooltipStatus));
                 this.root.prepend(trigger);
             }
 
@@ -165,7 +165,7 @@
 
             // Leading icon chip only when there's also a title — a pure
             // message-only tooltip stays clean (just the text).
-            if (title) balloon.appendChild(buildChip(tooltipStatus || 'help'));
+            if (title) balloon.appendChild(buildChip(tooltipStatus));
 
             const body = document.createElement('span');
             body.className = 'nds-tooltip-body';
