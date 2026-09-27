@@ -2,549 +2,350 @@
 layout: page
 title: Accordion
 hero_title: Accordion - National Design System
-hero_description: Collapsible content panels for organizing information in a space-efficient manner
+hero_description: A stack of headings that each open a panel of content in place
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "01/09/2026 - 11:30 PM"
+last_edit: "28/09/2026 - 12:25 AM"
 ---
 
-<!-- Standard -->
-<section id="accordionOverview" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Standard</h2>
-            <p class="nds-section-description">Basic collapsible panels with toggle controls for size, card view, and always-open mode</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-accordion", "sizeToggle"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-accordion", "sizeToggle"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-accordion", "sizeToggle"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "accordionStyle"],["nds-noBg", ".demo-container", "containerBg"]]'>
-                                    <span class="nds-label">Card View</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["data-state=always-open", ".nds-accordion", "accordionBehavior", "attr"]'>
-                                    <span class="nds-label">Always Open</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="nds-accordion nds-lg" id="accordion-basic-1">
-                                <div class="nds-accordion-item">
-                                    <h3 class="nds-accordion-header" id="accordion-basic-heading-1">
-                                        <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                            aria-expanded="true" data-state="open" aria-controls="accordion-basic-collapse-1">
-                                            <span class="nds-accordion-title">Getting Started</span>
-                                        </button>
-                                    </h3>
-                                    <div class="nds-accordion-collapse" id="accordion-basic-collapse-1" data-state="open">
-                                        <div class="nds-accordion-content">
-                                            <div class="nds-accordion-body">
-                                                <p>Overview of the service and how to begin your application.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nds-accordion-item">
-                                    <h3 class="nds-accordion-header" id="accordion-basic-heading-2">
-                                        <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                            aria-expanded="false" aria-controls="accordion-basic-collapse-2">
-                                            <span class="nds-accordion-title">Requirements</span>
-                                        </button>
-                                    </h3>
-                                    <div class="nds-accordion-collapse" id="accordion-basic-collapse-2">
-                                        <div class="nds-accordion-content">
-                                            <div class="nds-accordion-body">
-                                                <p>Documents and eligibility criteria needed before applying.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nds-accordion-item">
-                                    <h3 class="nds-accordion-header" id="accordion-basic-heading-3">
-                                        <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                            aria-expanded="false" aria-controls="accordion-basic-collapse-3">
-                                            <span class="nds-accordion-title">Fees & Processing</span>
-                                        </button>
-                                    </h3>
-                                    <div class="nds-accordion-collapse" id="accordion-basic-collapse-3">
-                                        <div class="nds-accordion-content">
-                                            <div class="nds-accordion-body">
-                                                <p>Fee schedule and expected processing times.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-accordion-basic-1" id="tab-accordion-basic-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                        id="panel-accordion-basic-1" aria-labelledby="tab-accordion-basic-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-accordion nds-lg" id="my-accordion"&gt;
-    &lt;div class="nds-accordion-item"&gt;
-        &lt;h3 class="nds-accordion-header" id="heading-1"&gt;
-            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="true" data-state="open" aria-controls="collapse-1"&gt;
-                &lt;span class="nds-accordion-title"&gt;Getting Started&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="collapse-1" data-state="open"&gt;
-            &lt;div class="nds-accordion-content"&gt;
-                &lt;div class="nds-accordion-body"&gt;
-                    &lt;p&gt;Overview of the service and how to begin.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-accordion-item"&gt;
-        &lt;h3 class="nds-accordion-header" id="heading-2"&gt;
-            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="false" aria-controls="collapse-2"&gt;
-                &lt;span class="nds-accordion-title"&gt;Requirements&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="collapse-2"&gt;
-            &lt;div class="nds-accordion-content"&gt;
-                &lt;div class="nds-accordion-body"&gt;
-                    &lt;p&gt;Documents and eligibility criteria needed.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-accordion-item"&gt;
-        &lt;h3 class="nds-accordion-header" id="heading-3"&gt;
-            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="false" aria-controls="collapse-3"&gt;
-                &lt;span class="nds-accordion-title"&gt;Fees &amp; Processing&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="collapse-3"&gt;
-            &lt;div class="nds-accordion-content"&gt;
-                &lt;div class="nds-accordion-body"&gt;
-                    &lt;p&gt;Fee schedule and expected processing times.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="accordionOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+An accordion is a stack of items. Each item has a heading with a button, and a panel under it that the button opens and closes. The panels open in place and push the content below them down.
+
+Pick another component when:
+
+- people switch between views in one space, and see one at a time: [Tabs](../components/tabs)
+- people must compare the content side by side: [Cards](../components/cards)
+- the panel opens over the page, not in it: [Dropmenu](../components/dropmenu)
+
+</div>
+  </div>
 </section>
 
-<!-- With Leading Icons -->
-<section id="accordionIcons" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">With Leading Icons</h2>
-            <p class="nds-section-description">Add icons before each title for visual context and faster scanning</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">LG</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-accordion", "iconSizeToggle"]'>
-                                                <span class="nds-label">LG</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-accordion", "iconSizeToggle"]'>
-                                                <span class="nds-label">MD</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-accordion", "iconSizeToggle"]'>
-                                                <span class="nds-label">SM</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='[["nds-card nds-stroke nds-shadow", ".nds-accordion", "iconAccordionStyle"],["nds-noBg", ".demo-container", "containerBg"]]'>
-                                    <span class="nds-label">Card View</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["data-state=always-open", ".nds-accordion", "iconAccordionBehavior", "attr"]'>
-                                    <span class="nds-label">Always Open</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="nds-accordion nds-lg" id="accordion-icon-1">
-                                <div class="nds-accordion-item">
-                                    <h3 class="nds-accordion-header" id="accordion-icon-heading-1">
-                                        <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                            aria-expanded="true" aria-controls="accordion-icon-collapse-1">
-                                            <i class="hgi hgi-stroke hgi-home-01 nds-accordion-leading-icon"></i>
-                                            <span class="nds-accordion-title">Housing</span>
-                                        </button>
-                                    </h3>
-                                    <div class="nds-accordion-collapse" id="accordion-icon-collapse-1">
-                                        <div class="nds-accordion-content">
-                                            <div class="nds-accordion-body">
-                                                <p>Browse housing programs and check eligibility.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nds-accordion-item">
-                                    <h3 class="nds-accordion-header" id="accordion-icon-heading-2">
-                                        <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                            aria-expanded="false" aria-controls="accordion-icon-collapse-2">
-                                            <i class="hgi hgi-stroke hgi-graduation-scroll nds-accordion-leading-icon"></i>
-                                            <span class="nds-accordion-title">Education</span>
-                                        </button>
-                                    </h3>
-                                    <div class="nds-accordion-collapse" id="accordion-icon-collapse-2">
-                                        <div class="nds-accordion-content">
-                                            <div class="nds-accordion-body">
-                                                <p>Scholarships, transcripts, and certification exams.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="nds-accordion-item">
-                                    <h3 class="nds-accordion-header" id="accordion-icon-heading-3">
-                                        <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                            aria-expanded="false" aria-controls="accordion-icon-collapse-3">
-                                            <i class="hgi hgi-stroke hgi-car-01 nds-accordion-leading-icon"></i>
-                                            <span class="nds-accordion-title">Vehicles</span>
-                                        </button>
-                                    </h3>
-                                    <div class="nds-accordion-collapse" id="accordion-icon-collapse-3">
-                                        <div class="nds-accordion-content">
-                                            <div class="nds-accordion-body">
-                                                <p>Registration renewal, fines, and driving tests.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-accordion-icon-1" id="tab-accordion-icon-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                        id="panel-accordion-icon-1" aria-labelledby="tab-accordion-icon-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-accordion nds-lg" id="icon-accordion"&gt;
-    &lt;div class="nds-accordion-item"&gt;
-        &lt;h3 class="nds-accordion-header" id="icon-heading-1"&gt;
-            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="true" aria-controls="icon-collapse-1"&gt;
-                &lt;i class="hgi hgi-stroke hgi-home-01 nds-accordion-leading-icon"&gt;&lt;/i&gt;
-                &lt;span class="nds-accordion-title"&gt;Housing&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="icon-collapse-1"&gt;
-            &lt;div class="nds-accordion-content"&gt;
-                &lt;div class="nds-accordion-body"&gt;
-                    &lt;p&gt;Browse housing programs and check eligibility.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-accordion-item"&gt;
-        &lt;h3 class="nds-accordion-header" id="icon-heading-2"&gt;
-            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="false" aria-controls="icon-collapse-2"&gt;
-                &lt;i class="hgi hgi-stroke hgi-graduation-scroll nds-accordion-leading-icon"&gt;&lt;/i&gt;
-                &lt;span class="nds-accordion-title"&gt;Education&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="icon-collapse-2"&gt;
-            &lt;div class="nds-accordion-content"&gt;
-                &lt;div class="nds-accordion-body"&gt;
-                    &lt;p&gt;Scholarships, transcripts, and certification exams.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-accordion-item"&gt;
-        &lt;h3 class="nds-accordion-header" id="icon-heading-3"&gt;
-            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="false" aria-controls="icon-collapse-3"&gt;
-                &lt;i class="hgi hgi-stroke hgi-car-01 nds-accordion-leading-icon"&gt;&lt;/i&gt;
-                &lt;span class="nds-accordion-title"&gt;Vehicles&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="icon-collapse-3"&gt;
-            &lt;div class="nds-accordion-content"&gt;
-                &lt;div class="nds-accordion-body"&gt;
-                    &lt;p&gt;Registration renewal, fines, and driving tests.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="accordionMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="accordion-text" data-canon data-variants="accordionVariantsTable">
+<div class="nds-accordion" id="service-faq">
+  <div class="nds-accordion-item">
+    <h3 class="nds-accordion-header" id="faq-heading-1">
+      <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="true" data-state="open" aria-controls="faq-panel-1">
+        <span class="nds-accordion-title">Getting started</span>
+      </button>
+    </h3>
+    <div class="nds-accordion-collapse" id="faq-panel-1" data-state="open">
+      <div class="nds-accordion-content">
+        <div class="nds-accordion-body">
+          <p>An overview of the service and how to begin your application.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nds-accordion-item">
+    <h3 class="nds-accordion-header" id="faq-heading-2">
+      <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="false" aria-controls="faq-panel-2">
+        <span class="nds-accordion-title">Requirements</span>
+      </button>
+    </h3>
+    <div class="nds-accordion-collapse" id="faq-panel-2">
+      <div class="nds-accordion-content">
+        <div class="nds-accordion-body">
+          <p>The documents and the eligibility criteria you need before you apply.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nds-accordion-item">
+    <h3 class="nds-accordion-header" id="faq-heading-3">
+      <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="false" aria-controls="faq-panel-3">
+        <span class="nds-accordion-title">Fees and processing time</span>
+      </button>
+    </h3>
+    <div class="nds-accordion-collapse" id="faq-panel-3">
+      <div class="nds-accordion-content">
+        <div class="nds-accordion-body">
+          <p>The fee schedule and the expected processing time for each request.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="accordion-icons" data-canon>
+<div class="nds-accordion" id="service-topics">
+  <div class="nds-accordion-item">
+    <h3 class="nds-accordion-header" id="topic-heading-1">
+      <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="true" data-state="open" aria-controls="topic-panel-1">
+        <i class="hgi hgi-stroke hgi-home-01" aria-hidden="true"></i>
+        <span class="nds-accordion-title">Housing</span>
+      </button>
+    </h3>
+    <div class="nds-accordion-collapse" id="topic-panel-1" data-state="open">
+      <div class="nds-accordion-content">
+        <div class="nds-accordion-body">
+          <p>Browse the housing programs and check your eligibility.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nds-accordion-item">
+    <h3 class="nds-accordion-header" id="topic-heading-2">
+      <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="false" aria-controls="topic-panel-2">
+        <i class="hgi hgi-stroke hgi-graduation-scroll" aria-hidden="true"></i>
+        <span class="nds-accordion-title">Education</span>
+      </button>
+    </h3>
+    <div class="nds-accordion-collapse" id="topic-panel-2">
+      <div class="nds-accordion-content">
+        <div class="nds-accordion-body">
+          <p>Scholarships, transcripts and certification exams.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nds-accordion-item">
+    <h3 class="nds-accordion-header" id="topic-heading-3">
+      <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="false" aria-controls="topic-panel-3">
+        <i class="hgi hgi-stroke hgi-car-01" aria-hidden="true"></i>
+        <span class="nds-accordion-title">Vehicles</span>
+      </button>
+    </h3>
+    <div class="nds-accordion-collapse" id="topic-panel-3">
+      <div class="nds-accordion-content">
+        <div class="nds-accordion-body">
+          <p>Registration renewal, traffic fines and driving tests.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="accordionFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates when .nds-accordion is on the page. No JavaScript setup required.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-motion-01"></i>
-                            <span class="nds-label">Smooth Animations</span>
-                        </span>
-                        <p class="nds-item-desc">CSS grid transitions with automatic fallback when users prefer reduced motion.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard"></i>
-                            <span class="nds-label">Keyboard Navigation</span>
-                        </span>
-                        <p class="nds-item-desc">Arrow keys, Home, End, Enter, and Space for full keyboard control.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">JavaScript API</span>
-                        </span>
-                        <p class="nds-item-desc">Public API to open, close, and toggle items. Custom events fire on state change for analytics or dependent UI.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-printer"></i>
-                            <span class="nds-label">Print-ready</span>
-                        </span>
-                        <p class="nds-item-desc">All panels expand automatically so no content is hidden on paper.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
-                            <span class="nds-label">Accessibility</span>
-                        </span>
-                        <p class="nds-item-desc">High contrast and screen reader support built into every state.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="accordionVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The first item is open in the markup: its button has `aria-expanded="true"` and `data-state="open"`, and its `nds-accordion-collapse` has `data-state="open"`. Keep all three, so the item shows open before the script runs. To open another item first, move the three to it. To start with all items closed, remove both `data-state="open"` and set `aria-expanded="false"`. Stroke and Shadow need Card.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Text (default) | — | — | A title on each button. For most lists, such as questions and answers |
+| Structure | Leading icons | canon #accordion-icons | — | An icon before each title, for topics that people find faster by picture. Give every item an icon, or none |
+| Size | LG (default) | — | — | 56px headings, for page content. It needs no class |
+| Size | MD | `.nds-md` | `.nds-accordion` | 48px headings, for a side column or a card |
+| Size | SM | `.nds-sm` | `.nds-accordion` | 40px headings, for a dense list in a panel or a filter |
+| Card | Card | `.nds-card` | `.nds-accordion` | A card background and rounded corners around the whole list. The first item loses its top line |
+| Stroke | Stroke | `.nds-stroke` | `.nds-accordion.nds-card` | A border around the card |
+| Shadow | Shadow | `.nds-shadow` | `.nds-accordion.nds-card` | A shadow under the card, to lift it off a colored background |
+| Always open | Always open | `[data-state~="always-open"]` | `.nds-accordion` | Several items stay open at once. Without it, opening one item closes the others |
+| Loading | Loading | `.nds-loading` | `.nds-accordion` | Gray bars in place of the titles, the icons and the open panel while the content loads |
+{: #accordionVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="accordionGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
+<section id="accordionBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### One Open Item
+{: .nds-block-title}
+
+By default, one item is open at a time. When a person opens an item, the open one closes, so the list stays short. Pick it for questions and answers, where people read one answer and move on.
+
+### Always Open
+{: .nds-block-title}
+
+`data-state="always-open"` on `.nds-accordion` lets each item open and close on its own. Items stay open until the person closes them. Pick it when people compare two answers, or keep one panel open while they work in another.
+
+</div>
+  </div>
+</section>
+
+<section id="accordionFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every accordion on the page starts by itself. Opening, closing and the keyboard need no call.</p>
         </div>
-        <div class="nds-section-body">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-motion-01"></i>
+            <span class="nds-label">Animations</span>
+          </span>
+          <p class="nds-item-desc">Panels slide open and closed. The motion stops when the user prefers reduced motion, and an item that is open at load does not animate.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Navigation</span>
+          </span>
+          <p class="nds-item-desc">The up and down arrows move between the headings and wrap at the ends. Home and End jump to the first and the last heading. Enter or Space opens or closes the focused item.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Loading Skeleton</span>
+          </span>
+          <p class="nds-item-desc">Gray bars stand in for the titles and the open panel until the script starts. In a list that a filter controls, they stay until the filter has applied the choices in the URL.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layers-01"></i>
+            <span class="nds-label">Nested Accordions</span>
+          </span>
+          <p class="nds-item-desc">A panel can hold another accordion. Each accordion runs its own items and ignores the items of the one inside it.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-printer"></i>
+            <span class="nds-label">Print</span>
+          </span>
+          <p class="nds-item-desc">Every panel prints open, so no content is lost on paper.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-access"></i>
+            <span class="nds-label">Screen Readers and High Contrast</span>
+          </span>
+          <p class="nds-item-desc">The script keeps <code class="nds-inline-code lang-html">aria-expanded</code> on each button in step with its panel. In high-contrast mode, the lines between items get stronger and the focus ring gets wider.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-notification-square"></i>
+            <span class="nds-label">Open and Close Events</span>
+          </span>
+          <p class="nds-item-desc">An event fires when a panel has finished opening or closing, for analytics or for content that loads on open.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Applies to</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Large size: 56px header height, <code class="nds-inline-code lang-html">--spacing-xl</code> padding (default)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Medium size: 48px header height, <code class="nds-inline-code lang-html">--spacing-lg</code> padding</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Small size: 40px header height, <code class="nds-inline-code lang-html">--spacing-md</code> padding</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-card</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Card container view: collapses outer border and uses card gap. Combine with <code class="nds-inline-code lang-html">nds-stroke</code> and <code class="nds-inline-code lang-html">nds-shadow</code> for the full card look</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-stroke</code></td><td><code class="nds-inline-code lang-html">.nds-accordion.nds-card</code></td><td>Adds an outer border to the card container</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-shadow</code></td><td><code class="nds-inline-code lang-html">.nds-accordion.nds-card</code></td><td>Adds elevation shadow to the card container</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<section id="accordionPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Applies to</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="always-open"</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Allows multiple panels to be open at the same time. Without it, opening one panel closes the others</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="open"</code></td><td><code class="nds-inline-code lang-html">.nds-accordion-btn</code> and <code class="nds-inline-code lang-html">.nds-accordion-collapse</code></td><td>Server-rendered initial open state. Set on both the button and its collapse panel to expand a panel before JS initializes, preventing a 0fr animation on load</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-nds-accordion-initialized</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Stamped by JS after initialization. Enables collapse transitions and removes the skeleton loading state. Do not set this manually</td></tr>
-                    </tbody>
-                </table>
-            </div>
+- Use an accordion when people scan the headings and open only what they need: questions and answers, services grouped by topic, settings.
+- Keep titles short. People decide to open an item from its title alone.
+- Put the item people open most first, and open it at load when most visitors need it.
+- Pick the heading level that fits the page outline. The markup above uses `h3`, under an `h2` section title.
+- Keep one button and one `nds-accordion-collapse` in each item. The script pairs them by their order in the markup.
+- Give each button `aria-controls` with the `id` of its collapse.
+- Do not add `role="region"`, `aria-label` or `aria-labelledby` to `nds-accordion-collapse`. On a long list, every panel becomes a landmark. On a plain `div`, the two labels are not allowed, so an accessibility audit fails.
+- Do not hide content that people must see to finish a task, such as a required step or a warning.
+- After you add items to a live accordion, call `NDS.Accordion.reinit()`. The new items start working, and the open items stay open.
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Accessibility</h3>
-                <p>The button carries the relationship. JS keeps <code class="nds-inline-code lang-html">aria-expanded</code> in sync, and <code class="nds-inline-code lang-html">aria-controls</code> names the collapse panel by id.</p>
-                <p>The collapse panel is role-less on purpose. Do not add <code class="nds-inline-code lang-html">role="region"</code>, <code class="nds-inline-code lang-html">aria-label</code> or <code class="nds-inline-code lang-html">aria-labelledby</code> to it. The WAI-ARIA Authoring Practices Guide marks the region role optional and advises against it on long accordions, because every panel becomes a landmark. On a plain <code class="nds-inline-code lang-html">div</code>, <code class="nds-inline-code lang-html">aria-label</code> and <code class="nds-inline-code lang-html">aria-labelledby</code> are also prohibited, so an audit fails.</p>
-            </div>
+</div>
+  </div>
+</section>
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--accordion-header-height</code></td><td><code class="nds-inline-code lang-html">56px</code></td><td>Height of each accordion button. Overridden per size class (<code class="nds-inline-code lang-html">nds-lg/md/sm</code>). Set inline on <code class="nds-inline-code lang-html">.nds-accordion</code> to customize a single instance</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--accordion-header-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Inline padding of the accordion button. Overridden per size class. Set inline on <code class="nds-inline-code lang-html">.nds-accordion</code> to customize a single instance</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<section id="accordionApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Loading and Skeleton State</h3>
-                <p>The accordion shows a shimmer skeleton on its items in three situations: before JS initializes (<code class="nds-inline-code lang-html">:not([data-nds-accordion-initialized])</code>), when explicitly set to loading (<code class="nds-inline-code lang-html">nds-loading</code> class or <code class="nds-inline-code lang-html">data-state="loading"</code>), and when it is a filter target waiting for the filter to apply URL params (<code class="nds-inline-code lang-html">data-filter-items</code> without <code class="nds-inline-code lang-html">data-nds-filter-initialized</code>). Titles, leading icons, and open body content all animate as skeleton bars. Collapse transitions are suppressed until the init stamp lands so the initial open state paints without a 0fr transition.</p>
-            </div>
+### Data Attributes
+{: .nds-block-title}
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">When to Use</h3>
-                <ul>
-                    <li>Use accordions to progressively disclose content. Show headings first, let users expand what they need</li>
-                    <li>Good for FAQs, categorized service lists, and settings panels where users scan then drill down</li>
-                    <li>Avoid accordions for content users need to compare side-by-side. Use tabs or a flat layout instead</li>
-                    <li>Keep accordion titles short and scannable. Users decide whether to expand based on the title alone</li>
-                </ul>
-            </div>
+| Attribute | Element | Effect |
+|---|---|---|
+| `aria-expanded="true"` and `data-state="open"` | `.nds-accordion-btn` | Opens the item at load. The script reads `aria-expanded`. `data-state` turns the arrow before the script runs |
+| `data-state="open"` | `.nds-accordion-collapse` | Shows the panel at load, before the script runs. Set it with the two attributes above |
+| `data-state="loading"` | `.nds-accordion` | The same as `nds-loading`, for a script that already sets states |
+{: .nds-table .nds-responsive}
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Accordion</strong> API provides methods to create instances, control panels programmatically, and listen for state changes. For dynamically added accordions, call <strong>NDS.Accordion.reinit()</strong> to initialize new elements.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// Re-scan the page and initialize any new accordions
-NDS.Accordion.init();
+### CSS Custom Properties
+{: .nds-block-title}
 
-// Shorthand for init(), use after adding dynamic content
-NDS.Accordion.reinit();
+Set them on `.nds-accordion`, in its `style` attribute.
 
-// Create and return an instance for a specific element
-const instance = NDS.Accordion.create(document.querySelector('#my-accordion'));
+| Property | Default | Controls |
+|---|---|---|
+| `--accordion-header-height` | `56px`, `48px` with `nds-md`, `40px` with `nds-sm` | Minimum height of each heading button |
+| `--accordion-header-padding` | `var(--spacing-xl)`, `var(--spacing-lg)` with `nds-md`, `var(--spacing-md)` with `nds-sm` | Padding above and below the title in each heading button |
+{: .nds-table .nds-responsive}
 
-// Instance methods
-instance.openItem(0);       // Open first item
-instance.closeItem(1);      // Close second item
-instance.toggleItem(2);     // Toggle third item
-instance.closeAll();        // Close all items
+### JavaScript
+{: .nds-block-title}
 
-// Get currently open items
-const openItems = instance.getOpenItems();
-// Returns: [{index, button, collapse, isOpen}, ...]
+The instance lives on `.nds-accordion` as `ndsAccordion`. Item positions start at 0.
 
-// Access an existing instance from a DOM element
-const existing = document.querySelector('#my-accordion').ndsAccordion;
+| Method | Effect |
+|---|---|
+| `NDS.Accordion.init()` | Starts every accordion on the page that has not started yet. On an accordion that already started, it picks up the new items. `reinit()` is the same |
+| `NDS.Accordion.create(element)` | Starts one accordion and returns its instance, or the instance it already has |
+| `instance.openItem(index)`, `instance.closeItem(index)`, `instance.toggleItem(index)` | Open, close or toggle an item by its position |
+| `instance.closeAll()` | Closes every open item |
+| `instance.getOpenItems()` | Returns the open items, each as `{ index, button, collapse, isOpen }` |
+| `instance.refresh()` | Picks up the items put into this accordion after it started |
+| `instance.destroy()` | Removes the listeners. The markup stays as it is |
+{: .nds-table .nds-responsive}
 
-// Clean up when removing an accordion from the DOM
-instance.destroy();
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:accordion:shown` | `.nds-accordion`, after the panel opens, and it bubbles | `index`, `button`, `collapse`, `accordion` |
+| `nds:accordion:hidden` | `.nds-accordion`, after the panel closes, and it bubbles | `index`, `button`, `collapse`, `accordion` |
+{: .nds-table .nds-responsive}
 
-// Custom events (both bubble, same detail shape)
-document.addEventListener('nds:accordion:shown', (e) =&gt; {
-    // e.detail: {index, button, collapse, accordion}
-    console.log('Opened item:', e.detail.index);
+<script type="text/html" id="accordion-api-js" data-canon data-lang="js">
+var faq = document.querySelector('#service-faq');
+faq.addEventListener('nds:accordion:shown', function (e) {
+  console.log('Opened item', e.detail.index);
 });
+faq.ndsAccordion.openItem(2);
+</script>
 
-document.addEventListener('nds:accordion:hidden', (e) =&gt; {
-    console.log('Closed item:', e.detail.index);
-});
-                        </code>
-                    </div>
-                </div>
-            </div>
+The full API is in the banner of `_js/nds-accordion.js`.
 
-        </div>
+</div>
+  </div>
+</section>
+
+<section id="accordionRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [FAQ template](../templates/faq-template): questions and answers in an accordion, with a search filter and pages.
+- [Filter](../components/filter): `data-filter-accordion` shows a filter group as an accordion item.
+
+</div>
+  </div>
 </section>
