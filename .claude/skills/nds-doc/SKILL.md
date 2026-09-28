@@ -123,6 +123,7 @@ Sections in this order. Each `<section>` carries its class. A section the compon
 | Parts (shell only) | `nds-doc-parts` | Part \| Holds \| Required |
 | Variants | `nds-doc-variants`, with `hidden` | the builder's table |
 | Behavior (optional) | `nds-doc-behavior` | one entry per structure or option that behaves differently, for people |
+| Examples (optional) | `nds-doc-examples` | real uses of a layout component, each with a preview and its code |
 | Built-in Features | `nds-doc-features` | the component's highlights |
 | Best Practices | `nds-doc-practices` | do and don't bullets |
 | API | `nds-doc-api` | reference tables and one JS example |
@@ -216,6 +217,15 @@ Only for a component whose structures or options change what it DOES, not only h
 - One `### Name` heading per entry (a noun), then 2 to 4 sentences: what it does, when to pick it, how it behaves, and the attribute or class that turns it on.
 - Facts that a table holds (every attribute, every key) stay in the API and are not repeated.
 - **Behavior or Built-in Features?** A fact that a structure or an option turns on goes to Behavior. A fact that happens with no option goes to Built-in Features. It never goes in both.
+
+### Examples
+
+Only for a layout component whose builder shows placeholders, not a real use (toolbar). The builder teaches the layout; each example is one real use of it that an agent can copy whole.
+
+- One `### Name` heading per example (a noun, "Table Bar"), one sentence on what it shows, then one canon. The canon renders a preview and its code.
+- Copy a real use from `examples/` or from a component that builds the layout itself. Do not invent a use no page has.
+- An example has no options: it is one fixed use. The layout options stay in the builder.
+- A component that builds the layout itself (the editor's toolbar) is a visual example: a preview only, `data-code="none"`, and one short line that links its page. Do not explain how it builds the layout.
 
 ### Built-in Features
 
