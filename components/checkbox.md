@@ -114,9 +114,9 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 | Size | SM (default) | — | — | 16px tile. Dense forms and tables |
 | Size | MD | `.nds-md` | `.nds-check-container` | 20px tile. Most forms |
 | Size | LG | `.nds-lg` | `.nds-check-container` | 24px tile. Touch-first screens |
-| Color | Neutral (demo: + Checked) | `.nds-neutral` | `.nds-check` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked, so the demo turns Checked on too |
-| Checked | Checked | `[checked]` | `#terms` | The option is on when the page loads |
-| Checked | Checked | `[checked]` | `#check-1` | The same, in a group |
+| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-check` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked, so the demo turns Checked on too |
+| Checked | Checked (id: checked) | `[checked]` | `#terms` | The option is on when the page loads |
+| Checked | Checked (id: checked) | `[checked]` | `#check-1` | The same, in a group |
 | Validation | None (default) | — | — | No rule |
 | Validation | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-check-container:only-of-type` | A single checkbox must be checked before the form submits. The forms script adds `required` to the input |
 | Validation | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-check-group` | A group needs at least one option checked |

@@ -150,10 +150,10 @@ Every option goes on the `nds-modal` element. On a lazy modal, write it on the `
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Dialog (default) | — | — | A question or a short task, with a close button and two actions |
-| Structure | Status (demo: + SM) | canon `#modal-status` | — | The result of an action, centered, with a large icon and one action. It has no close button |
+| Structure | Status (demo: + size-sm) | canon `#modal-status` | — | The result of an action, centered, with a large icon and one action. It has no close button |
 | Structure | Lazy modal | canon `#modal-lazy` | — | The modal sits in a `<template>` and joins the page on the first click. For a large modal that most users never open |
 | Size | MD (default) | — | — | 600px wide. For a message with a short form |
-| Size | SM | `.nds-sm` | `.nds-modal` | 400px wide. For a status or a confirmation with one or two buttons |
+| Size | SM (id: size-sm) | `.nds-sm` | `.nds-modal` | 400px wide. For a status or a confirmation with one or two buttons |
 | Size | LG | `.nds-lg` | `.nds-modal` | 800px wide. For long content, such as terms of service or a data preview |
 | Size | Full | `.nds-full` | `.nds-modal` | The width of the screen, less 64px on each side. For a large preview, such as a document or an image |
 | Status | Success (default) | — | `.nds-modal.nds-center` | The action worked |

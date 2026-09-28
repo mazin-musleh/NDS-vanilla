@@ -88,6 +88,12 @@ def check(path):
             errs.append(f'canon #{cid}: Variants table #{tid} not found')
             continue
         html = '\n'.join(b for _, a, b in canons if (attr(a, 'data-lang') or 'html') == 'html')
+        # `(demo: + x)` turns on the row marked `(id: x)`: by id, so a translated page keeps working.
+        row_ids = {m for r in rows if len(r) == 5 for m in re.findall(r'\(id:\s*([\w-]+)\)', r[1])}
+        for r in rows:
+            if len(r) == 5:
+                errs += [f'#{tid}: {r[0]} / {r[1]}: (demo: + {d}) names no (id: {d}) row'
+                         for d in re.findall(r'\(demo:\s*\+\s*([^)]*?)\s*\)', r[1]) if d not in row_ids]
         for row in rows:
             if len(row) != 5:
                 errs.append(f'#{tid}: row with {len(row)} cells: {" | ".join(row)[:80]}')

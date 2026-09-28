@@ -122,8 +122,8 @@ Pick another component when:
 | Size | SM | `.nds-sm` | `.nds-switch-container` | 36×18px track, 12px thumb. Dense forms and tables |
 | Size | MD (default) | — | — | 48×24px track, 16px thumb. Most forms |
 | Size | LG | `.nds-lg` | `.nds-switch-container` | 56×28px track, 20px thumb. Touch-first screens |
-| Color | Neutral (demo: + Checked) | `.nds-neutral` | `.nds-switch` | The on state uses the neutral color, not the primary color. Use it when the setting is not a brand action. The color shows only when the switch is on, so the demo also turns on Checked |
-| Checked | Checked | `[checked]` | `.nds-switch-input` | The switch is on when the page loads |
+| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-switch` | The on state uses the neutral color, not the primary color. Use it when the setting is not a brand action. The color shows only when the switch is on, so the demo also turns on Checked |
+| Checked | Checked (id: checked) | `[checked]` | `.nds-switch-input` | The switch is on when the page loads |
 | Disabled | Disabled | `[disabled]` | `.nds-switch-input` | The user cannot change the setting now |
 | Layout | Row | `.nds-rowView` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |

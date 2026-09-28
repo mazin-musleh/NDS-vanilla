@@ -199,9 +199,9 @@ module DocsCanon
     %(<form class="nds-form" data-ajax><div data-demo-slot>\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
   end
 
-  # Option markers: `(default)` pre-selects; `(demo: + Other)` also turns on option "Other" (demo
-  # aid only); `(hint: text)` is a short description shown under the option in the sheet.
-  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/, '')
+  # Option markers: `(default)` pre-selects; `(demo: + x)` also turns on the row marked `(id: x)`
+  # (demo aid only); `(hint: text)` is a short description shown under the option in the sheet.
+  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
   # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner.

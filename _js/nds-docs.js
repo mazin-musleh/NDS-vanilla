@@ -31,8 +31,8 @@
     // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
     var RULES = '[data-required], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"]';
 
-    // An option's name without its markers: (default), (demo: + Other), (hint: text).
-    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/g, ''); }
+    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name).
+    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/g, ''); }
 
     function dedent(s) {
         s = s.replace(/^\s*\n/, '').replace(/\s+$/, '');
@@ -462,12 +462,13 @@
             if (combos[c.group]) toggle(c);
             else if (sizes[c.group] > 1 && active[c.group] === c && isNone(defaults[c.group])) set(defaults[c.group], true);
             else { on = sizes[c.group] > 1 || active[c.group] !== c; set(c, on); }
-            // An option can carry several: `(demo: + Subtle) (demo: + SM)`.
+            // `(demo: + x)` turns on the row marked `(id: x)`, by id so a translated page keeps
+            // working. An option can carry several.
             (on && c.option.match(/\(demo:\s*\+\s*[^)]+\)/g) || []).forEach(function (m) {
-                var name = m.replace(/^\(demo:\s*\+\s*|\)$/g, '').trim();
+                var id = m.replace(/^\(demo:\s*\+\s*|\)$/g, '').trim();
                 Object.keys(byKey).forEach(function (k) {
-                    var oc = byKey[k];
-                    if (oc !== c && label(oc.option) === name) set(oc, true);
+                    var oc = byKey[k], own = oc.option.match(/\(id:\s*([\w-]+)\)/);
+                    if (oc !== c && own && own[1] === id) set(oc, true);
                 });
             });
             render();

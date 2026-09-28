@@ -189,7 +189,7 @@ A short paragraph above the table explains any target that is not obvious (what 
 - A Group with one row is an on/off chip in the "More" row.
 - **Two rows with the same Group and Option are one choice** that makes both changes. Tell agents to write both.
 - `Structure` (or `Example` on a reference page) rows swap the whole markup: `canon #id` and `—` in On element.
-- **Option markers:** `(hint: text)` is the chip's tooltip. `(demo: + Other)` also turns on option Other, for a demo that only shows with it; a row can carry several. `A + B` is a combo row: its group becomes multi-select, and both chips on use the combo's markup.
+- **Option markers:** `(hint: text)` is the chip's tooltip. `(demo: + size-sm)` also turns on the row marked `(id: size-sm)`, for a demo that only shows with it. It goes by id, never by name, so a translated page keeps working. Mark every row of that choice with the id. A row can carry several `demo` markers. `A + B` is a combo row: its group becomes multi-select, and both chips on use the combo's markup.
 
 **Markup cell** (CSS selector syntax):
 - `.cls` class · `[attr]` bare attribute · `[attr="v"]` attribute · `[data-state~="t"]` a token
@@ -201,7 +201,7 @@ A short paragraph above the table explains any target that is not obvious (what 
 - A selector for the element the change goes on. A row whose element is not in the current markup is disabled, and its row label says why ("Needs Structure: Group", "Not on Structure: Progress").
 - **The build reads only a target on one element:** a tag, classes, pseudo-classes, `:not(.cls)`, or an `#id`. A descendant target (`.a .b`) works in the browser, but the build cannot read it, so its chip starts disabled. Use a descendant target only as the second row of a choice whose first row the build can read.
 - **One item of a repeated set** (the first radio in a group): target it by its canon id (`#radio-1`), or by `:first-of-type` / `:first-child` on the element itself. Say in the paragraph above the table that the option goes on the item the user means.
-- A `(default)` row with `—` in Markup and a target in On element is disabled where the target is missing: `Click (default)` on `.nds-tooltip:not(.nds-btn)` is off on the Button structure. Pair it with `(demo: + Other)` on that structure so it starts on its own default.
+- A `(default)` row with `—` in Markup and a target in On element is disabled where the target is missing: `Click (default)` on `.nds-tooltip:not(.nds-btn)` is off on the Button structure. Pair it with a `demo` marker on that structure so it starts on its own default.
 - `(start)`, `(after)`: where a part is inserted. The default is the end.
 - `:not(.cls)` disables an option where it does not fit: `.nds-btn:not(.nds-progress)`, `.nds-btn:not(.nds-btn-group > .nds-btn)`. **Use it for every combination the component cannot style.** When the fix belongs in the component, fix the SCSS instead: the docs never paper over a component gap.
 - `create()`, `create({ key: value })`, `create():not({ key: value })`: a row on the JS twin.

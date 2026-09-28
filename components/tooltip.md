@@ -86,10 +86,10 @@ Pick another component when:
 | Structure | Manual (default) | — | — | A help icon next to a field label or a heading. You write every part |
 | Structure | Auto | canon `#tooltip-auto` | — | The same help icon from two attributes. The script builds the trigger and the balloon |
 | Structure | Term | canon `#tooltip-term` | — | A word in a sentence is the trigger, with a dotted underline |
-| Structure | Button (demo: + Hover after 500ms) | canon `#tooltip-button` | — | An icon-only button whose `title` becomes the message. Add `data-tooltip-hover="500"`: a button needs hover, so its own click still works. An `<a>` link takes the same classes and attributes |
+| Structure | Button (demo: + hover-500) | canon `#tooltip-button` | — | An icon-only button whose `title` becomes the message. Add `data-tooltip-hover="500"`: a button needs hover, so its own click still works. An `<a>` link takes the same classes and attributes |
 | Open on | Click (default) | — | `.nds-tooltip:not(.nds-btn)` | A click, a tap, or Enter on the trigger opens and closes the balloon |
 | Open on | Hover | `[data-tooltip-hover]` | `.nds-tooltip` | The balloon opens 120ms after the mouse enters, and on keyboard focus. Use it on a link or a button |
-| Open on | Hover after 500ms | `[data-tooltip-hover="500"]` | `.nds-tooltip` | The same, with a longer wait. Use it in a row of icon buttons, so a passing mouse opens nothing |
+| Open on | Hover after 500ms (id: hover-500) | `[data-tooltip-hover="500"]` | `.nds-tooltip` | The same, with a longer wait. Use it in a row of icon buttons, so a passing mouse opens nothing |
 {: #tooltipVariantsTable .nds-table .nds-responsive}
 
 </div>

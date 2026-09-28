@@ -105,13 +105,13 @@ Variant and Size have two rows. On a single FAB, the class goes on the FAB butto
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Button (default) (demo: + LG) | — | — | One button. The usual FAB |
-| Structure | Group (demo: + Subtle) (demo: + SM) | canon `#fab-group` | — | Related actions, such as a set of share buttons. The group docks as one item, and the toggle is one of its buttons |
-| Edge | End (default) (demo: + Vertical) | — | — | The end edge of the reading direction: the left in Arabic, the right in English |
-| Edge | Start (demo: + Vertical) | `[data-panel-side="start"]` | `.nds-panel` | The start edge of the reading direction |
-| Edge | Left (demo: + Vertical) | `[data-panel-side="left"]` | `.nds-panel` | The left edge in every language |
-| Edge | Right (demo: + Vertical) | `[data-panel-side="right"]` | `.nds-panel` | The right edge in every language |
-| Edge | Bottom (demo: + Horizontal) | `[data-panel-side="bottom"]` | `.nds-panel` | The middle of the bottom edge. The panel is a sheet that rises from the bottom |
+| Structure | Button (default) (demo: + size-lg) | — | — | One button. The usual FAB |
+| Structure | Group (demo: + subtle) (demo: + size-sm) | canon `#fab-group` | — | Related actions, such as a set of share buttons. The group docks as one item, and the toggle is one of its buttons |
+| Edge | End (default) (demo: + vertical) | — | — | The end edge of the reading direction: the left in Arabic, the right in English |
+| Edge | Start (demo: + vertical) | `[data-panel-side="start"]` | `.nds-panel` | The start edge of the reading direction |
+| Edge | Left (demo: + vertical) | `[data-panel-side="left"]` | `.nds-panel` | The left edge in every language |
+| Edge | Right (demo: + vertical) | `[data-panel-side="right"]` | `.nds-panel` | The right edge in every language |
+| Edge | Bottom (demo: + horizontal) | `[data-panel-side="bottom"]` | `.nds-panel` | The middle of the bottom edge. The panel is a sheet that rises from the bottom |
 | Variant | Primary (default) | `.nds-primary` | `.nds-btn.nds-fab` | The main action on the page |
 | Variant | Primary (default) | `.nds-primary` | `.nds-fab > .nds-btn` | The same, on each button of a group |
 | Variant | Neutral | `.nds-neutral` | `.nds-btn.nds-fab` | A strong action that is not the brand color |
@@ -120,17 +120,17 @@ Variant and Size have two rows. On a single FAB, the class goes on the FAB butto
 | Variant | Secondary | `.nds-secondary` | `.nds-fab > .nds-btn` | The same, on each button of a group |
 | Variant | Secondary outline | `.nds-secondary-outline` | `.nds-btn.nds-fab` | A supporting action, with a border |
 | Variant | Secondary outline | `.nds-secondary-outline` | `.nds-fab > .nds-btn` | The same, on each button of a group |
-| Variant | Subtle | `.nds-subtle` | `.nds-btn.nds-fab` | A low-emphasis action, with the page background and a border |
-| Variant | Subtle | `.nds-subtle` | `.nds-fab > .nds-btn` | The same, on each button of a group |
-| Size | LG (default) | — | — | 56px, 48px on a phone. It needs no class |
+| Variant | Subtle (id: subtle) | `.nds-subtle` | `.nds-btn.nds-fab` | A low-emphasis action, with the page background and a border |
+| Variant | Subtle (id: subtle) | `.nds-subtle` | `.nds-fab > .nds-btn` | The same, on each button of a group |
+| Size | LG (default) (id: size-lg) | — | — | 56px, 48px on a phone. It needs no class |
 | Size | MD | `.nds-md` | `.nds-btn.nds-fab` | 48px, 40px on a phone |
 | Size | MD | `.nds-md` | `.nds-fab > .nds-btn` | The same, on each button of a group |
-| Size | SM | `.nds-sm` | `.nds-btn.nds-fab` | 40px, 32px on a phone |
-| Size | SM | `.nds-sm` | `.nds-fab > .nds-btn` | The same, on each button of a group |
+| Size | SM (id: size-sm) | `.nds-sm` | `.nds-btn.nds-fab` | 40px, 32px on a phone |
+| Size | SM (id: size-sm) | `.nds-sm` | `.nds-fab > .nds-btn` | The same, on each button of a group |
 | Shape | Circle (default) | `.nds-circle` | `.nds-btn.nds-fab` | A round button |
 | Shape | Square | — | `.nds-btn.nds-fab` | A button with rounded corners |
-| Direction | Vertical (default) | `.nds-vertical` | `.nds-btn-group` | The buttons stack in a column along a side edge |
-| Direction | Horizontal | — | `.nds-btn-group` | The buttons sit in a row. For the bottom edge |
+| Direction | Vertical (default) (id: vertical) | `.nds-vertical` | `.nds-btn-group` | The buttons stack in a column along a side edge |
+| Direction | Horizontal (id: horizontal) | — | `.nds-btn-group` | The buttons sit in a row. For the bottom edge |
 | Thumb | Thumb | `.nds-fab-thumb` | `.nds-fab` | The FAB sits against the screen edge, with square corners on that side. It moves aside when its panel opens from the same edge |
 | Gap | None (default) | — | — | The dock's own gap between FABs |
 | Gap | SM | `[data-fab-gap="sm"]` | `.nds-fab` | 8px of extra space between the FAB and the one before it |
