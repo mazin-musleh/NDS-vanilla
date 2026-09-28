@@ -331,7 +331,8 @@ module DocsCanon
         oncolor = preview && src.include?('nds-oncolor')
         out << %(<div class="nds-block nds-card nds-doc-grid#{card}#{' data-theme="dark"' if oncolor} style="#{PREVIEW_STYLE}#{' --card-bg: var(--background-primary-strong);' if oncolor}">\n#{view if preview}#{demo}\n</div>\n)
       end
-      out << (js ? code_tabs(id, src, js) : code_block(lang, src))
+      # data-code="none": a behavior demo, shown with no code.
+      out << (js ? code_tabs(id, src, js) : code_block(lang, src)) unless attr(attrs, 'data-code') == 'none'
       out
     end
 
