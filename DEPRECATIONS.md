@@ -23,6 +23,7 @@ surface the theme controls. Count spellings and you will deprecate half the syst
 | `.nds-full-width` **on `.nds-card`** | `.nds-full` — inside a section, `.nds-full-width` is the full-bleed breakout (`_skeleton.scss`), so the card breaks out of its container instead of filling it | 1.12.x | `_sass/components/_cards.scss` (`:is(.nds-full-width, .nds-full)`) |
 | `.nds-card-price` | `.nds-card-value` | 1.11.0 | `_sass/components/_cards.scss` (value line) |
 | `[data-loading]` **on `.nds-slider-container`** | `.nds-loading` (or the `loading` token from JS) | 1.12.0 | `_sass/components/_slider.scss` (skeleton rule) |
+| `.nds-filter-bar` | `.nds-toolbar` — predates the toolbar, undocumented, nothing in this repo uses it | 1.4.0 | `_sass/components/_toolbar.scss` (`:is(.nds-toolbar, .nds-filter-bar, …)`) |
 | `.nds-404` | `.nds-status-section` | 1.10.0 | `_sass/layout/_section-layout.scss` (status section banner) |
 | `.nds-green` **on a section or footer** | `.nds-primary` / `.nds-brand` | before 1.9 | `_sass/layout/_section.scss`, `_sass/components/_footer.scss` |
 | `.nds-gradient-green` | `.nds-gradient-primary` | before 1.9 | `_sass/layout/_section.scss`, `_sass/_variables-a11y.scss` |
