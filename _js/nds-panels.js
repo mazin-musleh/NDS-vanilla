@@ -12,12 +12,18 @@
  * Events (bubble from the .nds-panel, AFTER the slide finishes):
  *   nds:panel:opened   detail {panel}
  *   nds:panel:closed   detail {panel}
+ *   nds:panel:resized  detail {panel, size}
  * Hooks:
  *   data-panel-toggle   on any button anywhere — the id of the panel it opens
  *   data-panel-close    on a control inside the panel; the first one also takes focus
  *                       when the panel opens
  *   data-panel-side     start | end (logical, flips with direction) · left | right | top
  *                       | bottom (physical). Default: end
+ *   data-panel-resize   grow | shrink — on a control inside the panel; steps
+ *                       data-panel-size one rung and marks the end-of-ladder button
+ *                       aria-disabled
+ *   data-panel-size     sm | md | lg | xl on the panel (default md) — width of a side
+ *                       panel, height cap of a sheet. Set it in markup to start there
  *   data-panel-modal    trap focus and raise the backdrop
  *   data-panel-static   no ESC, no click-outside — it closes only through your own call
  *                       or a [data-panel-close] control
@@ -51,6 +57,7 @@
 
     const SELECTOR = '.nds-panel';
     const INIT_ATTR = 'data-nds-panel-initialized';
+    const SIZES = ['sm', 'md', 'lg', 'xl'];
 
     // Exactly one panel is open at a time, so a single pointer replaces the
     // Set that mainnav needs for its concurrently-open dropdowns.
@@ -115,7 +122,7 @@
         // header bottom moves. rAF-throttled — safe on scroll.
         const onScroll = NDS.rafThrottle(() => updateHeaderOffset(panel));
         window.addEventListener('scroll', onScroll, { passive: true, signal });
-        const offResize = NDS.onResize(() => updateHeaderOffset(panel));
+        const offResize = NDS.onResize(() => { updateHeaderOffset(panel); syncResize(panel); });
         signal.addEventListener('abort', offResize);
 
         if (panel.hasAttribute('data-panel-modal')) {
@@ -139,6 +146,7 @@
 
         // Force reflow so the closed offset paints before the open transition.
         void panel.offsetHeight;
+        syncResize(panel);
 
         addState(panel, 'open', 'opening');
 
@@ -235,6 +243,53 @@
         else open(panel);
     }
 
+    // ==============================================
+    // RESIZE
+    // ==============================================
+
+    const sizeIndex = (panel) => {
+        const i = SIZES.indexOf(panel.getAttribute('data-panel-size'));
+        return i < 0 ? 1 : i;
+    };
+
+    // Already as big as the screen allows: the full width for a side panel, header to floor for a sheet.
+    // ponytail: reads --_panel-top as px; a consumer --panel-top in rem skews the sheet check.
+    function atMax(panel) {
+        if (panel.hidden) return false;
+        const side = panel.getAttribute('data-panel-side');
+        if (side === 'top' || side === 'bottom') {
+            const top = parseFloat(getComputedStyle(panel).getPropertyValue('--_panel-top')) || 0;
+            return panel.offsetHeight >= window.innerHeight - top - 1;
+        }
+        return panel.offsetWidth >= window.innerWidth - 1;
+    }
+
+    // aria-disabled, not disabled: a disabled button drops the focus the user just clicked into.
+    function syncResize(panel) {
+        const i = sizeIndex(panel);
+        const full = i === SIZES.length - 1 || atMax(panel);
+        panel.querySelectorAll('[data-panel-resize]').forEach(btn => {
+            NDS.aria.disabled(btn, btn.dataset.panelResize === 'grow' ? full : i === 0);
+        });
+    }
+
+    function resize(panel, step) {
+        const from = sizeIndex(panel);
+        const to = Math.min(Math.max(from + step, 0), SIZES.length - 1);
+        if (to === from || (step > 0 && atMax(panel))) return;
+        panel.setAttribute('data-panel-size', SIZES[to]);
+        syncResize(panel);
+        // Measure the cap again once the size has settled.
+        if (panel._cancelResize) panel._cancelResize();
+        panel._cancelResize = NDS.onTransitionEnd(panel, () => {
+            delete panel._cancelResize;
+            syncResize(panel);
+        }, { fallbackMs: NDS.transitionSpeed() + 100 });
+        panel.dispatchEvent(new CustomEvent('nds:panel:resized', {
+            detail: { panel, size: SIZES[to] }, bubbles: true,
+        }));
+    }
+
     const isOpen = (ref) => {
         const panel = NDS.resolveEl(ref);
         return !!panel && hasState(panel, 'open') && !hasState(panel, 'closing');
@@ -274,8 +329,12 @@
             if (e.target.closest('[data-panel-close]')) {
                 e.stopPropagation();
                 close(panel);
+                return;
             }
+            const resizer = e.target.closest('[data-panel-resize]');
+            if (resizer) resize(panel, resizer.dataset.panelResize === 'grow' ? 1 : -1);
         }, { signal });
+        syncResize(panel);
 
         panel.setAttribute(INIT_ATTR, 'true');
     }
@@ -291,6 +350,10 @@
         if (panel._cancelAnim) {
             panel._cancelAnim();
             delete panel._cancelAnim;
+        }
+        if (panel._cancelResize) {
+            panel._cancelResize();
+            delete panel._cancelResize;
         }
         if (panel._panelAC) {
             panel._panelAC.abort();

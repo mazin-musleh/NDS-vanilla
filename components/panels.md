@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "27/09/2026 - 04:39 PM"
+last_edit: "28/09/2026 - 08:42 AM"
 lang: en
 direction: ltr
 ---
@@ -50,9 +50,11 @@ Pick another component when:
       <span class="nds-panel-title">Settings</span>
       <p class="nds-panel-description">Adjust how this page behaves.</p>
     </div>
-    <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel">
-      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-    </button>
+    <div class="nds-panel-action">
+      <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel">
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
   <div class="nds-panel-body">
     <div class="nds-content-placeholder">
@@ -66,6 +68,19 @@ Pick another component when:
     </button>
   </div>
 </aside>
+</script>
+<script type="text/html" id="panel-resize" data-canon>
+<div class="nds-btn-group nds-seamless">
+  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-resize="shrink" aria-label="Make panel smaller">
+    <i class="nds-icon nds-hgi-minus-sign" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-resize="grow" aria-label="Make panel larger">
+    <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" data-panel-close aria-label="Close panel">
+    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+  </button>
+</div>
 </script>
 <script type="text/html" id="panel-lazy" data-canon>
 <button type="button" class="nds-btn nds-primary nds-lg" data-panel-toggle="details-panel">
@@ -81,9 +96,11 @@ Pick another component when:
         <span class="nds-panel-title">Details</span>
         <p class="nds-panel-description">This panel joins the page on the first click.</p>
       </div>
-      <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel">
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
+      <div class="nds-panel-action">
+        <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel">
+          <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
     <div class="nds-panel-body">
       <div class="nds-content-placeholder">
@@ -110,12 +127,14 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Every option goes on the `nds-panel` element. On a lazy panel, write it on the `nds-panel` inside the `<template>`.
+Every option goes on the `nds-panel` element, except Resizable, which has two rows in the header: make both changes. On a lazy panel, write it on the `nds-panel` inside the `<template>`.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Panel (default) | — | — | The panel is in the page from the start |
 | Structure | Lazy panel | canon `#panel-lazy` | — | The panel sits in a `<template>` and joins the page on the first click. For a large panel that most users never open |
+| Resize | Resizable | canon `#panel-resize` | `.nds-panel-action` | Minus, plus and close buttons in one group make the panel smaller or larger. For content the user may want to see wider |
+| Resize | Resizable | remove | `.nds-panel-action > .nds-btn[data-panel-close]` | The group holds its own close button, so the lone one goes |
 | Side | End (default) | — | — | Slides in from the end edge of the reading direction: the left in Arabic, the right in English |
 | Side | Start | `[data-panel-side="start"]` | `.nds-panel` | Slides in from the start edge of the reading direction |
 | Side | Left | `[data-panel-side="left"]` | `.nds-panel` | Always slides in from the left, in every language |
@@ -157,6 +176,11 @@ A panel without `data-panel-modal` leaves the page usable, so the user can see a
 {: .nds-block-title}
 
 `data-panel-static` turns off the two ways a user closes a panel by accident: Escape and a click outside it. The panel closes only from a `data-panel-close` control or a script. A panel that another panel replaces still closes.
+
+### Resize
+{: .nds-block-title}
+
+A button with `data-panel-resize="grow"` or `"shrink"` moves the panel one step along four sizes: `sm`, `md` (the default), `lg` and `xl`. A side panel changes its width. A sheet changes its height, and a resizable sheet keeps that height even when its content is shorter. The panel never grows past the screen: the plus button gets `aria-disabled="true"` at the largest size, or sooner when the panel already fills the screen. The minus button gets it at the smallest size. Put the buttons in one `nds-btn-group` inside `nds-panel-action`, with the close button last. Put `data-panel-size` on the panel to start at another size. A `--panel-width` or `--panel-height` you set is the `md` size, and the other sizes scale from it: `sm` is three quarters of it, `lg` a third larger and `xl` three quarters larger.
 
 ### Lazy Panel
 {: .nds-block-title}
@@ -248,11 +272,11 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
 | Class | Element | Effect |
 |---|---|---|
 | `nds-panel` | the panel, usually an `<aside>` | The sliding surface |
-| `nds-panel-header` | `div` in `.nds-panel` | The top row: an optional featured icon, the text and the close button, with a divider below |
+| `nds-panel-header` | `div` in `.nds-panel` | The top row: an optional featured icon, the text and the header buttons, with a divider below |
 | `nds-panel-text` | `div` in `.nds-panel-header` | Holds the title and the description, and fills the free space in the row. A bare `nds-panel-title` also fills it |
 | `nds-panel-title` | `span` in `.nds-panel-text` | The panel's title |
 | `nds-panel-description` | `p` in `.nds-panel-text` | A short line below the title |
-| `nds-panel-action` | `div` in `.nds-panel-header` | Holds the close button and the buttons beside it, such as a Reset button. They sit closer together than the header items |
+| `nds-panel-action` | `div` in `.nds-panel-header` | Holds the header buttons: the close button, and any beside it, such as a Reset button or the resize group. They sit closer together than the header items |
 | `nds-panel-body` | `div` in `.nds-panel` | The content. It scrolls when the content is taller than the panel |
 | `nds-panel-footer` | `div` in `.nds-panel` | A row of buttons at the bottom, with a divider above |
 | `nds-scroll-more` | `div` in `.nds-panel`, in place of `.nds-panel-body` | A [Scroll More](../components/scroll-more) area fills the same space as the body |
@@ -268,6 +292,8 @@ On a phone, the header buttons shrink to 32px.
 |---|---|---|
 | `data-panel-toggle` | any button on the page | Opens or closes the panel whose `id` is its value. The script sets `aria-expanded` on it |
 | `data-panel-close` | any element in the panel | Closes the panel. The first one gets focus when the panel opens |
+| `data-panel-resize` | a button in the panel | `grow` makes the panel one size larger, `shrink` one size smaller |
+| `data-panel-size` | `.nds-panel` | The size: `sm`, `md` (the default), `lg` or `xl`. The script writes it when the user resizes the panel |
 | `data-panel-side` | `.nds-panel` | The edge: `end` (the default), `start`, `left`, `right`, `top` or `bottom` |
 | `data-panel-modal` | `.nds-panel` | Dims the page, stops it from scrolling and keeps focus in the panel |
 | `data-panel-static` | `.nds-panel` | Escape and a click outside do not close the panel |
@@ -281,8 +307,8 @@ Set these on the `.nds-panel` element.
 
 | Property | Default | Controls |
 |---|---|---|
-| `--panel-width` | `min(420px, 100vw)` | Width of a start, end, left or right panel |
-| `--panel-height` | `60svh` | Most height of a top or bottom sheet. The sheet also stops at the header |
+| `--panel-width` | `420px` | Width of a start, end, left or right panel, at the `md` size. The panel is never wider than the screen |
+| `--panel-height` | `60svh` | Most height of a top or bottom sheet, at the `md` size. The sheet also stops at the header |
 | `--panel-content-width` | `var(--nds-content-MaxWidth)` | Most width of a sheet's content. `100%` spans the full width, inside the page gutter |
 | `--panel-top` | the bottom of the sticky header | Where the panel starts. Any value turns off the header tracking. `0` covers the header too, and needs a `--panel-z` above the header's |
 | `--panel-padding` | `var(--spacing-lg)` | Space inside the header, the body and the footer |
@@ -311,6 +337,7 @@ Each method takes the panel element or its `id`.
 |---|---|---|
 | `nds:panel:opened` | `.nds-panel` | `{ panel }`, after the panel slides in |
 | `nds:panel:closed` | `.nds-panel` | `{ panel }`, after the panel slides out. When one panel replaces another, this fires before the new panel's `opened` |
+| `nds:panel:resized` | `.nds-panel` | `{ panel, size }`, after a resize button changes the size |
 | `nds:template:ready` | `.nds-panel` | `{ id }`, when a lazy panel joins the page |
 {: .nds-table .nds-responsive}
 

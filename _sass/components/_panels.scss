@@ -29,10 +29,12 @@
 // Root
 // ----------------------------------------------
 .nds-panel {
-    --_panel-width:   var(--panel-width, min(420px, 100vw));
+    // The knobs set the md size; data-panel-size scales from them.
+    --_panel-scale:   1;
+    --_panel-width:   min(calc(var(--panel-width, 420px) * var(--_panel-scale)), 100vw);
     // svh (not vh/dvh) so the sheet is sized for the smaller mobile viewport
     // and never gets cut off when the URL bar expands.
-    --_panel-height:  var(--panel-height, 60svh);
+    --_panel-height:  calc(var(--panel-height, 60svh) * var(--_panel-scale));
     // Sit below the sticky header by default — the nav paints at a higher
     // z-index (1000 > 999), so a panel pinned to top:0 would clip under it.
     // Priority: consumer knob --panel-top → JS live measurement --_header-offset
@@ -69,8 +71,13 @@
 }
 
 .nds-panel:is([data-state~="open"], [data-state~="closing"]) {
-    transition: transform var(--nds-transition);
+    transition: transform var(--nds-transition), width var(--nds-transition), height var(--nds-transition), max-height var(--nds-transition);
 }
+
+// Size ladder stepped by [data-panel-resize] (md is the root).
+.nds-panel[data-panel-size="sm"] { --_panel-scale: 0.75; }
+.nds-panel[data-panel-size="lg"] { --_panel-scale: 1.3333; }
+.nds-panel[data-panel-size="xl"] { --_panel-scale: 1.75; }
 
 // ----------------------------------------------
 // Inline sides — start / end / left / right
@@ -142,9 +149,16 @@
 .nds-panel:is([data-panel-side="top"], [data-panel-side="bottom"]) {
     --_panel-radius: var(--panel-radius, var(--radius-lg));
 
+    --_panel-max-height: min(var(--_panel-height), calc(100svh - var(--_panel-top)));
+
     inset-inline: 0;
     width: auto;
-    max-height: min(var(--_panel-height), calc(100svh - var(--_panel-top)));
+    max-height: var(--_panel-max-height);
+
+    // A resizable sheet takes its rung's height, so a short one still visibly resizes.
+    &:is([data-panel-size], :has([data-panel-resize])) {
+        height: var(--_panel-max-height);
+    }
 }
 
 .nds-panel[data-panel-side="top"] {
