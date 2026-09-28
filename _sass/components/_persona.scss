@@ -56,6 +56,11 @@
         align-self: stretch;
     }
 
+    // Whatever follows the divider (actions, a definition list) takes its own row.
+    .nds-divider ~ * {
+        flex: 1 100%;
+    }
+
     .nds-persona-action {
         flex: 1 100%;
         display: flex;
