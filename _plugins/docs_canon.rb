@@ -18,7 +18,10 @@ module DocsCanon
               ':is(html[dir="ltr"],.ltr) .nds-doc-grid{background-position:12px 12px}' \
               '.nds-builder-options>.nds-divider:first-child{margin-block-start:0}' \
               '.nds-builder-options{margin-block-end:var(--spacing-4xl)}' \
-              '.nds-card.nds-doc-preview{padding-block:56px}' \
+              '.nds-card.nds-doc-frame{--card-width:100%;--card-radius:var(--radius-md);min-height:200px;display:flex;justify-content:center;align-items:center}' \
+              '.nds-card.nds-doc-preview{padding-block:56px;--card-gap:0}' \
+              '.nds-doc-oncolor{--card-bg:var(--background-primary-strong)}' \
+              '.nds-divider.nds-doc-divider{margin-block-start:0;--divider-line-start:24px}' \
               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px}' \
               '.nds-doc-preview>[data-demo-slot]{display:contents}' \
               '.nds-doc-options{--panel-height:30svh}' \
@@ -193,8 +196,6 @@ module DocsCanon
     %(<form class="nds-form" data-ajax><div data-demo-slot>\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
   end
 
-  PREVIEW_STYLE = '--card-width: 100%; --card-radius: var(--radius-md); min-height: 200px; display: flex; justify-content: center; align-items: center;'
-
   # Option markers: `(default)` pre-selects; `(demo: + Other)` also turns on option "Other" (demo
   # aid only); `(hint: text)` is a short description shown under the option in the sheet.
   def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*)\)/, '')
@@ -323,13 +324,13 @@ module DocsCanon
         out << sheet
       end
       if preview || (builder && live)
-        out << %(<div class="nds-divider nds-xl" style="margin-block-start: 0; --divider-line-start: 24px;">Preview</div>\n) if table
+        out << %(<div class="nds-divider nds-xl nds-doc-divider">Preview</div>\n) if table
         demo = preview ? harness(src, attr(attrs, 'data-harness')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         # A builder's card names its builder, so Dark reaches the code too.
         card = preview ? %( nds-doc-preview"#{%( data-builder-card="#{id}") if builder}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = preview && src.include?('nds-oncolor')
-        out << %(<div class="nds-block nds-card nds-doc-grid#{card}#{' data-theme="dark"' if oncolor} style="#{PREVIEW_STYLE}#{' --card-bg: var(--background-primary-strong);' if oncolor}">\n#{view if preview}#{demo}\n</div>\n)
+        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view if preview}#{demo}\n</div>\n)
       end
       # data-code="none": a behavior demo, shown with no code.
       out << (js ? code_tabs(id, src, js) : code_block(lang, src)) unless attr(attrs, 'data-code') == 'none'
