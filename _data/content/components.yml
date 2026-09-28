@@ -389,8 +389,8 @@
   scss: _sass/layout/_flex.scss
 
 - title: "Floating Action Button"
-  description: "FAB that pins to a viewport corner and stacks with others"
-  use_when: "A button pinned to a corner of the viewport: FAB, floating add button, back-to-top, or a stack of quick actions."
+  description: "FAB that pins to an edge of the viewport and stacks with others"
+  use_when: "A button pinned to an edge of the viewport: FAB, floating add button, back-to-top, or a stack of quick actions."
   icon: '<i class="hgi hgi-stroke hgi-add-circle"></i>'
   category: "UI"
   tags: ["JS", "CSS", "API"]
