@@ -306,6 +306,8 @@
             var ops = c.ops.filter(function (o) { return o.op || (o.target && o.target !== '—'); });
             return !ops.length || ops.some(function (o) {
                 if (isJs(o.target)) return !!call && callMatches(call, o.target);
+                // A chosen `remove` row took its own target away: it stays on, so it can be turned off.
+                if (o.op && o.op.kind === 'remove' && active[c.group] === c) return true;
                 return html && (!o.target || o.target === '—' || targets(pristine, o.target).length > 0);
             });
         }
