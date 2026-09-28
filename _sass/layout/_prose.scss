@@ -41,7 +41,7 @@
         margin-block: var(--spacing-xl);
     }
 
-    :where(ul, ol) > li {
+    :where(ul, ol) > :where(li) {
         padding-block: var(--_list-item-pad);
 
         &:first-child { padding-block-start: 0; }
@@ -54,7 +54,7 @@
     :where(li) > :where(ul, ol) {
         margin-block: var(--_list-item-pad) 0;
 
-        > li { padding-block: var(--_sub-item-pad); }
+        > :where(li) { padding-block: var(--_sub-item-pad); }
     }
 
     // Markers cycle by depth the way native <ul> does: 1. → a. → i.
