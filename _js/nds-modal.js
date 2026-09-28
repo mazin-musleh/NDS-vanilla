@@ -20,6 +20,8 @@
  *                       shown and while it animates out. Read-only for consumers
  * Gotchas:
  *   - One modal at a time: open() closes the current one first.
+ *   - open() focuses the first close control (or the modal itself); close() returns focus
+ *     to whatever held it before the open.
  *   - nds-backdrop.js must be in the bundle. Without it init() and open() log an error
  *     and do nothing.
  */
@@ -41,6 +43,7 @@
   let initAbortController = null;
   let trapAbortController = null; // scopes the per-open-cycle focus-trap listener; aborted in close() and destroy()
   let _initDone = false;
+  let opener = null; // element focused before open; close() returns focus to it
 
   // Tab focus trap — delegates to the shared NDS.trapFocus factory.
   // The arrow form re-evaluates `activeModal` on every Tab press, so this
@@ -106,6 +109,12 @@
     trapAbortController = new AbortController();
     document.addEventListener('keydown', trapFocus, { signal: trapAbortController.signal });
 
+    // Focus moves in, so the trap has something to hold; close() hands it back to the opener.
+    opener = document.activeElement;
+    const focusTarget = modal.querySelector('[data-modal-close], .nds-modal-close') || modal;
+    if (focusTarget === modal && !modal.hasAttribute('tabindex')) modal.tabIndex = -1;
+    focusTarget.focus({ preventScroll: true });
+
     activeModal = modal;
   }
 
@@ -121,10 +130,15 @@
     trapAbortController?.abort();
     trapAbortController = null;
 
-    // Blur any focused element inside the modal to prevent aria-hidden warning
+    // Focus leaves before aria-hidden lands (the browser warns otherwise): back to the opener, else nowhere
     if (document.activeElement && modal.contains(document.activeElement)) {
-      document.activeElement.blur();
+      if (opener && opener !== document.body && document.contains(opener) && !modal.contains(opener)) {
+        opener.focus({ preventScroll: true });
+      } else {
+        document.activeElement.blur();
+      }
     }
+    opener = null;
 
     // Trigger closing animation
     NDS.State.set(modal, 'closing');
@@ -171,6 +185,7 @@
     activeModal.setAttribute('hidden', '');
     NDS.State.clear(activeModal);
     activeModal = null;
+    opener = null;
     return 1;
   }
 
