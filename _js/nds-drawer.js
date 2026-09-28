@@ -10,13 +10,13 @@
  *   nds:drawer:shown    detail {item, drawer} — after the expand transition
  *   nds:drawer:hidden   detail {item, drawer} — after the collapse transition
  * Hooks:
- *   data-open-on          which items start open. A breakpoint name from NDS.breakpoints,
- *                         or `always` / `never`. On the drawer it is the default; on an
- *                         <li> it overrides that default
- *   data-always-open-on   at this breakpoint every submenu is open and the toggles stop
- *                         responding (the drawer also gains data-state="always-open")
+ *   data-state="always-open"   on the drawer: submenus open and close on their own
+ *   data-state="open"          on an <li> and its <ul> (+ aria-expanded="true" on the
+ *                              button): the submenu starts open, painted by CSS
+ *   data-open-on, data-always-open-on   DEPRECATED breakpoint opening (DEPRECATIONS.md);
+ *                              the second stamps data-drawer-locked on the drawer
  * Gotchas:
- *   - Opening a submenu closes its siblings — one open branch per level.
+ *   - Opening a submenu closes its siblings — one open branch per level — unless always-open.
  *   - toggle() takes the BUTTON, not the <li>.
  *   - An <li> marked data-state="active" opens every ancestor branch at init.
  */
@@ -67,8 +67,8 @@
             return drawer.getAttribute('data-open-on');
         }
 
-        // Fallback: check if item has 'open' class (backward compatibility)
-        if (item.classList.contains('open')) {
+        // Opened in the markup (the `open` class is the legacy spelling)
+        if (hasState(item, 'open') || item.classList.contains('open')) {
             return 'always';
         }
 
@@ -106,9 +106,15 @@
             removeState(element, ...TRANSITION_STATES);
             addState(element, state);
         } else {
-            // Empty state = clear transition + active states, keep others
-            removeState(element, ...TRANSITION_STATES, 'active');
+            // Empty state = clear transition states only: an <li>'s `active` is the author's current-page mark
+            removeState(element, ...TRANSITION_STATES);
         }
+    }
+
+    // A closed toggle keeps its highlight while its <li> is the current page.
+    function clearButton(listItem, button) {
+        if (hasState(listItem, CONFIG.states.active)) setState(button, CONFIG.states.active);
+        else NDS.State.clear(button);
     }
 
     function isOpen(listItem) {
@@ -131,7 +137,7 @@
         } else {
             // Accordion: close siblings
             const parentList = listItem.parentElement;
-            if (parentList) {
+            if (parentList && !hasState(button.closest(CONFIG.selectors.drawer), 'always-open')) {
                 parentList.querySelectorAll(':scope > li').forEach(sibling => {
                     if (sibling === listItem) return;
                     if (!isOpen(sibling)) return;
@@ -166,7 +172,7 @@
         submenu.style.height = '0px';
         setState(listItem, CONFIG.states.closed);
         NDS.aria.expanded(button, false);
-        NDS.State.clear(button);
+        clearButton(listItem, button);
 
         NDS.onTransitionEnd(submenu, () => {
             setState(submenu, CONFIG.states.closed);
@@ -209,16 +215,12 @@
                 setState(item, CONFIG.states.closed);
                 setState(submenu, CONFIG.states.closed);
                 NDS.aria.expanded(button, false);
-                NDS.State.clear(button);
+                clearButton(item, button);
             }
         });
 
-        // Set always-open state on drawer for CSS targeting
-        if (isAlwaysOpen) {
-            addState(drawer, 'always-open');
-        } else {
-            removeState(drawer, 'always-open');
-        }
+        // Own attribute, not a data-state token: always-open means something else now
+        drawer.toggleAttribute('data-drawer-locked', isAlwaysOpen);
     }
 
     function initToggles(drawer) {
@@ -236,8 +238,7 @@
             button.classList.add('nds-menu-btn');
 
             button.addEventListener('click', (e) => {
-                // Don't toggle if drawer is in always-open mode
-                if (hasState(drawer, 'always-open')) {
+                if (drawer.hasAttribute('data-drawer-locked')) {
                     return;
                 }
 

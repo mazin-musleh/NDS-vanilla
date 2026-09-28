@@ -30,6 +30,9 @@ surface the theme controls. Count spellings and you will deprecate half the syst
 | `NDS.Filter` instance method `setSelectedTags(tags)` | `setFilterValues('tags', tags)` | before 1.9 | `_js/nds-filter.js` (marked "Legacy API for backward compatibility") |
 | `NDS.loadExtras()` | `NDS.loadBundle('extras')` | 1.1.0 | `_js/nds-loader.js` (marked "Back-compat shim … still calling the old extras-specific API") |
 | `NDS.Stepper._applyLayout()`, `NDS.Stepper._stamp()` | `NDS.Stepper.init()` — idempotent, and it stamps and applies layout itself | 1.1.0 | `_js/nds-stepper.js` (marked "Kept on the public surface for back-compat with any consumer that reached the shell-private stamping helpers") |
+| `data-open-on` **on a `.nds-drawer` or its `<li>`** | `data-state="open"` on the `<li>` and its `<ul>`, with `aria-expanded="true"` on the button | 1.12.x | `_js/nds-drawer.js` `getOpenOnValue`, `handleResize` |
+| `data-always-open-on` **on a `.nds-drawer`** | `data-state="always-open"` on the drawer (several submenus open at once; nothing locks) | 1.12.x | `_js/nds-drawer.js` `shouldBeAlwaysOpen`, `_sass/components/_drawer.scss` `[data-drawer-locked]` rules |
+| `NDS.Drawer.initDrawer(drawer)` | `NDS.Drawer.create(drawer)` — the same function | before 1.9 | `_js/nds-drawer.js` (banner: "the same function under its older name") |
 | `open` **class on a `.nds-drawer` item** | `data-open-on="always"` on the item (or on the drawer as the default) | 1.0.0 | `_js/nds-drawer.js` `getOpenOnValue` (marked "Fallback … backward compatibility") |
 
 **`.nds-{color}` is canon, and only the brand surface is not.** Tags take colour names as

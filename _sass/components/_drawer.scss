@@ -20,8 +20,6 @@
     --_indicator-width: var(--drawer-indicator-width, 5px);
     --_lined-width: var(--drawer-lined-width, 1px);
     --_indicator: var(--drawer-indicator, transparent);
-    --_indicator-active: var(--drawer-indicator-active, var(--background-primary));
-    --_indicator-hover: var(--drawer-indicator-hover, var(--colors-neutral-400));
     --truncate: var(--drawer-truncate, 1);
     --_transition: var(--drawer-transition, var(--nds-transition));
     --_max-height: var(--drawer-max-height, 400px);
@@ -116,27 +114,20 @@
 }
 
 // ==============================================
-// ALWAYS OPEN STATE
+// LOCKED STATE (deprecated data-always-open-on)
 // ==============================================
 
-// always-open is mirrored to .nds-always-open by core (the loading pattern): keyed on
-// the attribute, these `.nds-btn` rules would sit in the shared data-state set (PERF-06).
-.nds-drawer.nds-always-open {
+// Toggles only, at every depth: plain links stay clickable.
+.nds-drawer[data-drawer-locked] .nds-drawer-list .nds-btn.nds-menu-btn {
+    pointer-events: none;
+    cursor: default;
 
-    // Hide arrow icons in always-open mode
-    .nds-drawer-list>li>.nds-btn {
-        // Hide pseudo-element arrows (for menu buttons)
-        &.nds-menu-btn::after {
-            display: none;
-        }
+    &::after {
+        display: none;
+    }
 
-        &.nds-menu-btn::before {
-            background-color: transparent;
-        }
-
-        // Make button non-interactive visually
-        pointer-events: none;
-        cursor: default;
+    &::before {
+        background-color: transparent;
     }
 }
 
@@ -382,7 +373,7 @@
 
 .nds-drawer.nds-divided {
     .nds-drawer-list>li {
-        // always-open moves this border onto the button by setting --_item-border.
+        // The locked state moves this border onto the button by setting --_item-border.
         border-block-end: var(--_item-border, 1px solid var(--_divider));
         padding-bottom: var(--_gap);
 
@@ -392,9 +383,8 @@
         }
     }
 
-    // When always open, move border to button instead of li. The li side rides
-    // --_item-border: a `> li` tail here would join the shared data-state set (PERF-06).
-    &.nds-always-open {
+    // When locked, move border to button instead of li.
+    &[data-drawer-locked] {
         --_item-border: none;
 
         .nds-drawer-list>li>.nds-btn {
