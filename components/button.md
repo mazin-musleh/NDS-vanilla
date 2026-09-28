@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/09/2026 - 08:48 AM"
+last_edit: "28/09/2026 - 08:24 AM"
 ---
 
 <section id="btnOverview" class="nds-content-section nds-doc-overview">
@@ -140,6 +140,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Direction | Horizontal (default) | — | — | The buttons sit in a row, or the three dots of a More button |
 | Direction | Vertical | `.nds-vertical` | `.nds-btn-group` | The buttons stack in a column. The top and bottom keep the rounded corners |
 | Direction | Vertical | `.nds-vertical` | `.nds-btn.nds-ellipsis` | On a More button, the three dots stand in a column, for a menu at the end of a row or a card |
+| Seamless | Seamless | `.nds-seamless` | `.nds-btn-group` | No divider between the buttons. For subtle icon buttons that read as one set of tools |
 | Destructive | Destructive (hint: Not with Neutral) | `.nds-destructive` | `.nds-btn:not(.nds-neutral)` | Error colors, for delete, remove or any action that cannot be undone. It works with every variant except neutral |
 | On color | On color | `.nds-oncolor` | `.nds-btn` | For a button on a deep primary or dark background |
 | Indicator | Indicator | `.nds-indicator` | `.nds-btn` | A bar at the bottom edge. It shows on hover, focus and the selected state, as in a tab or a menu bar |
