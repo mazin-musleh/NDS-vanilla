@@ -62,6 +62,7 @@
     --mask-fade-distance: var(--_scroll-fade);
 
     overflow: auto;
+    margin-block: 0;       // a <ul> inside .nds-prose would take the list gap
     align-self: stretch;   // viewport must fill the wrapper's cross-axis even if the consumer sets align-items:center
     flex: 1;
     min-width: 0;
