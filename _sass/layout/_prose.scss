@@ -29,9 +29,11 @@
     }
 
     // Two-thirds of the 24px body line box: the break reads as a break without
-    // splitting the flow into separate blocks.
+    // splitting the flow into separate blocks. End side only: in flow it gives
+    // the same gap, and inside a flex or grid component (no margin collapse) it
+    // never pushes the element away from the one above it.
     :where(p, ul, ol, blockquote, figure, table, pre, .nds-code, .nds-alert) {
-        margin-block: var(--spacing-xl);
+        margin-block-end: var(--spacing-xl);
     }
 
     // A bare image straight from an editor. Direct children only: <figure>
