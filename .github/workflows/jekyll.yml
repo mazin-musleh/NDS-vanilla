@@ -86,8 +86,8 @@ jobs:
           key: ${{ steps.key.outputs.prefix }}${{ github.run_id }}
           restore-keys: ${{ steps.key.outputs.prefix }}
       - name: Setup Ruby
-        # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
-        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
+        # https://github.com/ruby/setup-ruby/releases/tag/v1.327.0
+        uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8
         with:
           ruby-version: '3.3' # Bundler 2.7+ requires Ruby >= 3.2
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
@@ -110,7 +110,7 @@ jobs:
         run: cp _includes/NDS-IQ.md _release/_includes/ && cp guides/integration-quality.md _release/guides/
       - name: Setup Ruby (release)
         if: ${{ !steps.saved.outputs.cache-matched-key }}
-        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
+        uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8
         with:
           ruby-version: '3.3'
           bundler-cache: true
