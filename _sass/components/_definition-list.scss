@@ -198,6 +198,7 @@
 .nds-definition-list :is(dd, .nds-item-desc) {
     color: var(--text-secondary-paragraph);
     font-size: var(--_dl-desc-FS);
+    margin: 0; // a <p> inside .nds-prose would take the paragraph gap
 }
 
 // Icon indent: always on by default, reset when tableView activates
