@@ -37,8 +37,17 @@ on:
       - 'subsite.md'
       - 'TODO.md'
 
+  # Publishing a release moves the site root to the new tag.
+  release:
+    types: [published]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      rebuild_release:
+        description: 'Rebuild the release site instead of reusing the saved copy'
+        type: boolean
+        default: false
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -53,12 +62,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Build job
+  # Build job — the site root is the latest release tag, /next/ is main.
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
+      - name: Find the latest release
+        id: release
+        run: echo "tag=$(gh release view --json tagName -q .tagName)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Restore the saved release site
+        # One saved build per tag; a new release or a forced rebuild misses it.
+        id: saved
+        if: ${{ !inputs.rebuild_release }}
+        uses: actions/cache/restore@v4
+        with:
+          path: _site
+          key: release-site-${{ steps.release.outputs.tag }}-${{ github.run_id }}
+          restore-keys: release-site-${{ steps.release.outputs.tag }}-
       - name: Setup Ruby
         # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
         uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
@@ -69,9 +92,42 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+
+      # Release site: only when nothing was restored.
+      - name: Checkout the latest release
+        if: ${{ !steps.saved.outputs.cache-matched-key }}
+        # Underscore folder: Jekyll skips it when building main.
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release.outputs.tag }}
+          path: _release
+      - name: Setup Ruby (release)
+        if: ${{ !steps.saved.outputs.cache-matched-key }}
+        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          cache-version: 0
+          working-directory: _release
+      - name: Build the release at the root
+        if: ${{ !steps.saved.outputs.cache-matched-key }}
+        working-directory: _release
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}" -d ../_site
+        env:
+          JEKYLL_ENV: production
+      - name: Save the release site
+        # Before the /next/ build, so the saved copy holds the release only.
+        if: ${{ !steps.saved.outputs.cache-matched-key }}
+        uses: actions/cache/save@v4
+        with:
+          path: _site
+          key: release-site-${{ steps.release.outputs.tag }}-${{ github.run_id }}
+
+      - name: Build main at /next/
+        # preview: true marks every page noindex (_includes/seo-meta.html).
+        run: |
+          echo 'preview: true' > "$RUNNER_TEMP/next.yml"
+          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}/next" --config "_config.yml,$RUNNER_TEMP/next.yml" -d _site/next
         env:
           JEKYLL_ENV: production
       - name: Upload artifact
