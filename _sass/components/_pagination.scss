@@ -74,6 +74,7 @@
 
 .nds-pagination-item {
   display: inline-flex;
+  padding: 0; // an <li> inside .nds-prose would take the list-item padding
 
   // Pagination button styling
   .nds-btn {
