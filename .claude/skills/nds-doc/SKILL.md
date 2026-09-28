@@ -161,6 +161,7 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
   - **Part:** a small block that a row inserts, such as an icon or an actions row.
   - **JS:** `data-lang="js"`. `data-js="{id}"` on the base names its JS twin: the same component as one `create()` call, shown in a JS tab. A JS-only structure (a toast) previews as a Run button that runs the code shown.
   - **Code-only:** `data-preview="none"`, for shells, `<head>` and JS examples.
+  - **Run:** `data-preview="run"`, for markup that leaves the card (a FAB docks at the screen edge). The card holds Run (`data-run-label` renames it), which adds a copy of the code shown, and Clear. A choice rebuilds the last copy added.
   - **Demo-only:** `data-code="none"`, a Behavior demo in a preview card with no code. Its wiring `<script>` sits after the canon, never in it.
 - **A canon never holds `</script>`.** Code with a `<script>` tag inside stays out of the canon format for now (see `ui-shell/head.md`).
 - **Form fields** whose validation is worth trying add `data-harness="form"` to the base canon: the preview sits in a real `form.nds-form`, with Validate and Reset buttons that show only while a rule can fail (required, min and max checked, pattern, length). A pass shows an inline success alert: fields carry errors only. The code never shows the form. Make rules that can combine (at least, at most) a combo row, not separate exclusive options. Skip it where a field can fail only one way that the builder already shows (radio: only when nothing is chosen).
@@ -188,7 +189,7 @@ A short paragraph above the table explains any target that is not obvious (what 
 - A Group with one row is an on/off chip in the "More" row.
 - **Two rows with the same Group and Option are one choice** that makes both changes. Tell agents to write both.
 - `Structure` (or `Example` on a reference page) rows swap the whole markup: `canon #id` and `—` in On element.
-- **Option markers:** `(hint: text)` is the chip's tooltip. `(demo: + Other)` also turns on option Other, for a demo that only shows with it. `A + B` is a combo row: its group becomes multi-select, and both chips on use the combo's markup.
+- **Option markers:** `(hint: text)` is the chip's tooltip. `(demo: + Other)` also turns on option Other, for a demo that only shows with it; a row can carry several. `A + B` is a combo row: its group becomes multi-select, and both chips on use the combo's markup.
 
 **Markup cell** (CSS selector syntax):
 - `.cls` class · `[attr]` bare attribute · `[attr="v"]` attribute · `[data-state~="t"]` a token

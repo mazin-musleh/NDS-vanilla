@@ -190,7 +190,10 @@ module DocsCanon
   RULE_RE = /\s(data-required|data-min-checked|data-max-checked|required|pattern|minlength|min|max)[\s=>]|\stype="(email|url)"|nds-required/
 
   # The demo sits in a slot, so a re-render keeps the card's view toggles.
-  def self.harness(src, kind)
+  # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
+  # holds Run (or `data-run-label`) and Clear, as a toast's does. Runs mount in the held box (nds-docs.js).
+  def self.harness(src, kind, run = nil)
+    return %(<div class="nds-flex" data-demo-run><button type="button" class="nds-btn nds-primary nds-md" data-run><span class="nds-label">#{run}</span></button><button type="button" class="nds-btn nds-subtle nds-md" data-run-clear><span class="nds-label">Clear</span></button></div><div data-demo-held></div>) if run
     return %(<div data-demo-slot>\n#{src}\n</div>) unless kind == 'form'
 
     %(<form class="nds-form" data-ajax><div data-demo-slot>\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
@@ -325,7 +328,7 @@ module DocsCanon
       end
       if preview || (builder && live)
         out << %(<div class="nds-divider nds-xl nds-doc-divider">Preview</div>\n) if table
-        demo = preview ? harness(src, attr(attrs, 'data-harness')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
+        demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         # A builder's card names its builder, so Dark reaches the code too.
         card = preview ? %( nds-doc-preview"#{%( data-builder-card="#{id}") if builder}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.

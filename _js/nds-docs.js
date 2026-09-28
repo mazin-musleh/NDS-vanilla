@@ -14,6 +14,7 @@
  * beside the HTML one. JS rows target `create()`, or `create({ key: value })` to apply only
  * while that option is set:  key: value  set an option · canon #id  add a part's options.
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
+ * data-preview="run" on an HTML canon does the same for markup that leaves the card (a FAB), with Clear.
  * data-harness="form" renders the preview inside a form with Validate and Reset buttons, outside the code.
  * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
  * stays in place, disabled, and its tooltip says why.
@@ -270,8 +271,11 @@
                 }
                 return;
             }
-            var box = preview.getBoundingClientRect(), top = box.top, head = NDS.stickyHeaderBottom();
-            var room = sheet.getBoundingClientRect().top - head, fits = box.height <= room - 32;
+            // The free space is below a top panel, or between the header and a bottom panel.
+            var box = preview.getBoundingClientRect(), top = box.top, s = sheet.getBoundingClientRect();
+            var down = sheet.getAttribute('data-panel-side') === 'top';
+            var head = down ? s.bottom : NDS.stickyHeaderBottom();
+            var room = (down ? window.innerHeight : s.top) - head, fits = box.height <= room - 32;
             if (top >= head && top + (fits ? box.height : 160) <= head + room) return;
             var at = fits ? head + (room - box.height) / 2 : head + 16;
             window.scrollTo({ top: top + window.scrollY - at, behavior: 'smooth' });
@@ -357,6 +361,13 @@
             if (liveEl) return renderLive();
             // The frame goes dark too, so a dark component is not shown on a light card.
             dark ? preview.setAttribute('data-theme', 'dark') : preview.removeAttribute('data-theme');
+            // A run card keeps its Run and Clear buttons: the next Run adds the code shown.
+            // A choice also rebuilds the last copy added, so it changes on the spot.
+            if (script.getAttribute('data-preview') === 'run') {
+                preview.ndsRunCode = out;
+                if (preview.ndsLastRun) fillRun(preview, preview.ndsLastRun);
+                return;
+            }
             // A form harness keeps its form and Validate button; only the slot inside it re-renders.
             var slot = preview.querySelector('[data-demo-slot]') || preview;
             NDS.Init.destroy(slot);
@@ -451,10 +462,13 @@
             if (combos[c.group]) toggle(c);
             else if (sizes[c.group] > 1 && active[c.group] === c && isNone(defaults[c.group])) set(defaults[c.group], true);
             else { on = sizes[c.group] > 1 || active[c.group] !== c; set(c, on); }
-            var plus = on && c.option.match(/\(demo:\s*\+\s*([^)]+)\)/);
-            if (plus) Object.keys(byKey).forEach(function (k) {
-                var oc = byKey[k];
-                if (oc !== c && label(oc.option) === plus[1].trim()) set(oc, true);
+            // An option can carry several: `(demo: + Subtle) (demo: + SM)`.
+            (on && c.option.match(/\(demo:\s*\+\s*[^)]+\)/g) || []).forEach(function (m) {
+                var name = m.replace(/^\(demo:\s*\+\s*|\)$/g, '').trim();
+                Object.keys(byKey).forEach(function (k) {
+                    var oc = byKey[k];
+                    if (oc !== c && label(oc.option) === name) set(oc, true);
+                });
             });
             render();
         }
@@ -538,6 +552,37 @@
             var on = card.classList.toggle('nds-doc-grid');
             grid.setAttribute('aria-pressed', String(on));
             grid.querySelector('i').className = 'hgi hgi-stroke ' + (on ? 'hgi-grid-off' : 'hgi-grid');
+        });
+    });
+
+    // data-preview="run": Run mounts a copy of the code shown in the card's held box, where it can
+    // leave the card (a FAB docks at the screen edge). Each copy's ids get its own suffix, so each
+    // keeps its own panel. Clear takes every copy away.
+    function fillRun(card, box) {
+        NDS.Init.destroy(box);
+        box.innerHTML = card.ndsRunCode || dedent(document.getElementById(card.getAttribute('data-builder-card')).textContent);
+        box.querySelectorAll('[id]').forEach(function (el) {
+            var id = el.id;
+            box.querySelectorAll('*').forEach(function (x) {
+                Array.prototype.forEach.call(x.attributes, function (a) { if (a.value === id) a.value = id + '-' + box.ndsRun; });
+            });
+        });
+        NDS.Init.mount(box);
+    }
+    var runs = 0;
+    document.querySelectorAll('[data-demo-run]').forEach(function (bar) {
+        var card = bar.closest('[data-builder-card]'), held = card.querySelector('[data-demo-held]');
+        bar.querySelector('[data-run]').addEventListener('click', function () {
+            var box = document.createElement('div');
+            box.ndsRun = ++runs;
+            held.appendChild(box);
+            card.ndsLastRun = box;
+            fillRun(card, box);
+        });
+        bar.querySelector('[data-run-clear]').addEventListener('click', function () {
+            NDS.Init.destroy(held);
+            held.innerHTML = '';
+            card.ndsLastRun = null;
         });
     });
 
