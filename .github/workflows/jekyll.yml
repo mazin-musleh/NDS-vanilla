@@ -73,15 +73,18 @@ jobs:
         run: echo "tag=$(gh release view --json tagName -q .tagName)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: Name the saved release site
+        # One saved build per tag + NDS IQ revision; a new release, an IQ edit or a forced rebuild misses it.
+        id: key
+        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ hashFiles('_includes/NDS-IQ.md', 'guides/integration-quality.md') }}-" >> "$GITHUB_OUTPUT"
       - name: Restore the saved release site
-        # One saved build per tag; a new release or a forced rebuild misses it.
         id: saved
         if: ${{ !inputs.rebuild_release }}
         uses: actions/cache/restore@v4
         with:
           path: _site
-          key: release-site-${{ steps.release.outputs.tag }}-${{ github.run_id }}
-          restore-keys: release-site-${{ steps.release.outputs.tag }}-
+          key: ${{ steps.key.outputs.prefix }}${{ github.run_id }}
+          restore-keys: ${{ steps.key.outputs.prefix }}
       - name: Setup Ruby
         # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
         uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
@@ -101,6 +104,10 @@ jobs:
         with:
           ref: ${{ steps.release.outputs.tag }}
           path: _release
+      - name: Take NDS IQ from main
+        # IQ versions apart from the template: the site shows the rules the raw main link serves.
+        if: ${{ !steps.saved.outputs.cache-matched-key }}
+        run: cp _includes/NDS-IQ.md _release/_includes/ && cp guides/integration-quality.md _release/guides/
       - name: Setup Ruby (release)
         if: ${{ !steps.saved.outputs.cache-matched-key }}
         uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
@@ -121,7 +128,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: _site
-          key: release-site-${{ steps.release.outputs.tag }}-${{ github.run_id }}
+          key: ${{ steps.key.outputs.prefix }}${{ github.run_id }}
 
       - name: Build main at /next/
         # preview: true marks every page noindex (_includes/seo-meta.html).
