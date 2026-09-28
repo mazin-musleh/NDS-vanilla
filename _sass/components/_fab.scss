@@ -235,6 +235,28 @@
 }
 
 // ----------------------------------------------
+// Gap
+// ----------------------------------------------
+// Extra space between a FAB and the one before it in the dock: sm, md (any
+// other value too) or lg. An attribute, since nds-sm/md already size the button.
+// Side docks stack on the block axis, the bottom dock on the inline one. The
+// bottom rule never touches margin-block-end: a bottom thumb owns it (below).
+.nds-fab-dock > [data-fab-gap] {
+    --_fab-gap: var(--fab-gap, var(--spacing-xl));
+
+    &[data-fab-gap="sm"] { --_fab-gap: var(--fab-gap, var(--spacing-md)); }
+    &[data-fab-gap="lg"] { --_fab-gap: var(--fab-gap, var(--spacing-4xl)); }
+}
+
+.nds-fab-dock:not([data-fab-dock-pos="bottom"]) > [data-fab-gap] {
+    margin-block-end: var(--_fab-gap);
+}
+
+.nds-fab-dock[data-fab-dock-pos="bottom"] > [data-fab-gap] {
+    margin-inline-start: var(--_fab-gap);
+}
+
+// ----------------------------------------------
 // Edge thumb
 // ----------------------------------------------
 // For a FAB that sits against the viewport edge with only its inner corners
