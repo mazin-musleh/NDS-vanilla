@@ -2,7 +2,8 @@
  * Rides: (none — base component)
  * Methods:
  *   NDS.Empty.init()                fill every empty .nds-empty now, then keep watching
- *   NDS.Empty.refresh(container)    re-evaluate one container by hand
+ *   NDS.Empty.refresh(container)    re-evaluate one container by hand; also resyncs a table
+ *                                   placeholder's colspan to the current column count
  * Events:
  *   (none)
  * Hooks:
@@ -164,7 +165,12 @@
       if (existing) existing.remove();
       return;
     }
-    if (existing) return;
+    if (existing) {
+      // A table's column count can change after the row went in.
+      const td = existing.querySelector('td');
+      if (td) td.colSpan = colspanFor(container.closest('table') || container);
+      return;
+    }
     inject(container);
   }
 
