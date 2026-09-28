@@ -242,6 +242,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  align-self: stretch;   // fills a centering flex parent's width, like a block does
   gap: var(--spacing-xs);
   min-height: max(120px, 100%);
   padding: var(--spacing-3xl) var(--spacing-xl);
@@ -261,6 +262,9 @@
 .nds-content-placeholder.nds-sm {
   --placeholder-FS: var(--typo-text-2xs-FS);
   --placeholder-LH: var(--typo-text-2xs-LH);
+  // One control tall (a default button), so it can stand in for a toolbar slot.
+  min-height: max(40px, 100%);
+  padding: var(--spacing-xs) var(--spacing-lg);
 }
 
 .nds-content-placeholder.nds-lg {

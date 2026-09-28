@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.5.0"
-updated: "1.5.0"
-last_edit: "25/07/2026 - 10:45 PM"
+updated: "1.12.x"
+last_edit: "28/09/2026 - 10:52 PM"
 ---
 
 <!-- Content Placeholder -->
@@ -164,7 +164,7 @@ last_edit: "25/07/2026 - 10:45 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Drops the label to the 2xs type ladder for tight regions, without hand-setting the size knobs</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Drops the label to the 2xs type ladder and the height to one control (40px), for tight regions such as a <a class="nds-color" href="{{ 'components/toolbar' | relative_url }}">Toolbar</a> slot</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Lifts the label to the sm type ladder for large regions</td></tr>
                     </tbody>
                 </table>
