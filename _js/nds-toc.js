@@ -20,6 +20,8 @@
  *     at init.
  *   - A link click scrolls manually so the heading lands below the sticky nav, and
  *     replaces the URL hash without a history entry.
+ *   - Headings inside a scrolling box (a panel or modal body) track and scroll that box,
+ *     with the box's top in place of the nav.
  *   - The instance lives on the element as el._ndsToc.
  */
 /**
@@ -54,6 +56,7 @@
             }
 
             this.active = null;
+            this.box = null;
             this.valid = true;
             this.init();
         }
@@ -76,7 +79,8 @@
             if (!headings.length) return;
 
             list.replaceChildren();
-            const minLevel = parseInt(headings[0].tagName[1], 10);
+            // Smallest level, not the first heading's: a shallower heading later would go negative and drop the rest.
+            const minLevel = Math.min(...headings.map(h => parseInt(h.tagName[1], 10)));
             // Stack indexed by depth — stack[0] is the root <ul>, stack[1] is
             // the <ul> nested in the most recent top-level <li>, and so on.
             const stack = [list];
@@ -136,7 +140,15 @@
 
             // Scroll + resize both change which section is at the top;
             // rafThrottle keeps the scroll handler off the layout thread.
-            window.addEventListener('scroll', NDS.rafThrottle(this.update), { passive: true, signal });
+            // Capture sees element scrolls too: the headings may scroll in a panel or a modal, not the page.
+            const onScroll = NDS.rafThrottle(this.update);
+            document.addEventListener('scroll', (e) => {
+                const t = e.target;
+                if (t === document) this.box = null;
+                else if (t.contains(this.entries[0].target)) this.box = t;
+                else return;
+                onScroll();
+            }, { capture: true, passive: true, signal });
             // Pooled handle takes no signal — bridge it onto the same teardown.
             const offResize = NDS.onResize(this.update);
             signal.addEventListener('abort', offResize);
@@ -146,16 +158,27 @@
             // idle slot keeps that read out of the component-init burst, where
             // the DOM is dirty and the read would force a synchronous reflow.
             // The scrollspy itself is already live via the scroll listener.
-            NDS.onIdle(this.update, 2000);
+            NDS.onIdle(() => { this.box = this.findBox(); this.update(); }, 2000);
             this.toc.setAttribute('data-nds-toc-initialized', 'true');
         }
 
-        // Live nav height + breathing room. scrollspy threshold and click
-        // scroll-to share this offset so clicking a link lands on the exact
-        // line where the section becomes "active".
+        // Top of the scroll area (the live nav height, or the scrolling box's top) + breathing
+        // room, in viewport px. Scrollspy threshold and click scroll-to share this offset so
+        // clicking a link lands on the exact line where the section becomes "active".
         navOffset() {
+            if (this.box) return this.box.getBoundingClientRect().top + 40;
             const nav = document.querySelector('.nds-main-nav');
             return (nav ? nav.offsetHeight : 0) + 40;
+        }
+
+        // Nearest ancestor that scrolls the headings, or null for the page. Click-time only:
+        // before the first scroll event there is no event target to learn it from.
+        findBox() {
+            for (let el = this.entries[0].target.parentElement; el && el !== document.body; el = el.parentElement) {
+                const o = getComputedStyle(el).overflowY;
+                if ((o === 'auto' || o === 'scroll') && el.scrollHeight > el.clientHeight) return el;
+            }
+            return null;
         }
 
         // Pick the last entry whose section top has crossed the nav band.
@@ -164,10 +187,10 @@
         // heading is actually reached — on mobile the TOC sits ABOVE the content,
         // so defaulting to entry[0] highlighted a section still off-screen.
         findActive() {
-            const threshold = window.scrollY + this.navOffset() + 1;
+            const threshold = this.navOffset() + 1;
             let active = null;
             for (const e of this.entries) {
-                if (e.target.getBoundingClientRect().top + window.scrollY <= threshold) {
+                if (e.target.getBoundingClientRect().top <= threshold) {
                     active = e;
                 } else {
                     break;
@@ -203,8 +226,9 @@
             e.preventDefault();
             this.setActive(entry);
 
-            const top = entry.target.getBoundingClientRect().top + window.scrollY - this.navOffset();
-            window.scrollTo({ top, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
+            this.box = this.findBox();
+            const top = entry.target.getBoundingClientRect().top - this.navOffset();
+            (this.box || window).scrollBy({ top, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
             history.replaceState(null, '', link.getAttribute('href'));
         }
 
