@@ -607,9 +607,8 @@
             // row under it hands pointerup to the twin, which loses the click.
             if (e.pointerType === 'mouse') return;
             this._aim = null;
-            const step = this._measuredStep;
-            if (this._loopPending || !step) return;
-            const pos = Math.abs(this.wrapper.scrollLeft) / step;
+            if (this._loopPending || !this._measuredStep) return;
+            const pos = this._pos();
             const dir = pos < this._head ? 1 : pos >= this._head + this._real ? -1 : 0;
             if (!dir) return;
 
@@ -646,8 +645,7 @@
         // settle re-anchors at the next rest.
         _shiftCycle(dir) {
             const n = this._real;
-            const step = this._measuredStep || (this.slides[0].offsetWidth + this.getGap()) || 1;
-            const landing = Math.abs(this.wrapper.scrollLeft) / step + dir * n;
+            const landing = this._pos() + dir * n;
             if (landing < 0 || landing > this.maxIndex) return false;
             const cycle = Math.abs(this.slides[this._head + n].offsetLeft - this.slides[this._head].offsetLeft);
             this._instant(() => { this.wrapper.scrollLeft += NDS.isRTL ? -dir * cycle : dir * cycle; });
@@ -689,13 +687,23 @@
                 this._measuredStep = Math.abs(this.slides[1].offsetLeft - this.slides[0].offsetLeft);
             }
 
-            const step = this._measuredStep || (this.slides[0].offsetWidth + this.getGap()) || 1;
-            const scrollPos = NDS.isRTL ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft;
+            this.currentIndex = Math.max(0, Math.min(Math.round(this._pos()), this.maxIndex));
+        }
 
-            this.currentIndex = Math.max(0, Math.min(
-                Math.round(scrollPos / step),
-                this.maxIndex
-            ));
+        // Where the row is, in slides. A spotlight counts the slide nearest the
+        // middle instead: content can make one slide wider, and then no step fits.
+        _pos() {
+            if (this._spotlight) {
+                const w = this.wrapper.getBoundingClientRect(), mid = w.left + w.right;
+                let pos = 0, best = Infinity;
+                this.slides.forEach((s, j) => {
+                    const r = s.getBoundingClientRect(), d = Math.abs(r.left + r.right - mid);
+                    if (d < best) { best = d; pos = j; }
+                });
+                return pos;
+            }
+            const step = this._measuredStep || (this.slides[0].offsetWidth + this.getGap()) || 1;
+            return (NDS.isRTL ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft) / step;
         }
 
         // ==============================================
@@ -857,6 +865,9 @@
             // While a move is under way the target stays open, so a jump over several
             // slides does not open each one it crosses (the loop clears _aim on arrival).
             const open = this._loopPending ? 0 : this._loop && this._aim != null ? this._aimReal : this._realIndex;
+            // Runs on every scroll frame; the marks change only when the open slide does.
+            if (open === this._open) return;
+            this._open = open;
             const n = this._real;
             this.slides.forEach((s, j) => {
                 // Side of the nearest twin of the open slide, so every twin has the
