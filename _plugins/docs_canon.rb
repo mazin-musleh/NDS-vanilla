@@ -199,6 +199,17 @@ module DocsCanon
     %(<form class="nds-form" data-ajax><div data-demo-slot>\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
   end
 
+  # data-preview="panel": the markup needs a page around it (a TOC over a long article), so the card
+  # holds Preview (or `data-run-label`), which opens a tall, resizable bottom panel; nds-docs.js mounts
+  # the code shown in its body. The body zeroes the nav height, so sticky parts pin to its top. `data-preview-flush` gives the body
+  # nds-flush, for markup that brings its own padding (a section).
+  def self.stage(id, label, flush)
+    btn = ->(attr, label, icon) { %(<button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" #{attr} aria-label="#{label}"><i class="nds-icon nds-hgi-#{icon}" aria-hidden="true"></i></button>) }
+    action = btn['data-panel-resize="shrink"', 'Make preview smaller', 'minus-sign'] + btn['data-panel-resize="grow"', 'Make preview larger', 'plus-sign'] + btn['data-panel-close', 'Close preview', 'cancel-01']
+    panel = %(<aside id="#{id}-stage" class="nds-panel" data-panel-side="bottom" data-panel-modal style="--panel-height: 80svh" aria-label="Preview" hidden><div class="nds-panel-header"><span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-eye" aria-hidden="true"></i></span><div class="nds-panel-text"><span class="nds-panel-title">Preview</span></div><div class="nds-panel-action"><div class="nds-btn-group nds-seamless">#{action}</div></div></div><div class="nds-panel-body#{' nds-flush' if flush}" data-demo-stage style="--nds-nav-height: 0px"></div></aside>)
+    [%(<button type="button" class="nds-btn nds-primary nds-lg" data-panel-toggle="#{id}-stage"><span class="nds-label">#{label}</span></button>), panel]
+  end
+
   # Option markers: `(default)` pre-selects; `(demo: + x)` also turns on the row marked `(id: x)`
   # (demo aid only); `(hint: text)` is a short description shown under the option in the sheet.
   def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/, '')
@@ -329,11 +340,13 @@ module DocsCanon
       if preview || (builder && live)
         out << %(<div class="nds-divider nds-xl nds-doc-divider">Preview</div>\n) if table
         demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
+        demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
         # A builder's card names its builder, so Dark reaches the code too.
         card = preview ? %( nds-doc-preview"#{%( data-builder-card="#{id}") if builder}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = preview && src.include?('nds-oncolor')
-        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view if preview}#{demo}\n</div>\n)
+        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view if preview && !stage_panel}#{demo}\n</div>\n)
+        out << "#{stage_panel}\n" if stage_panel
       end
       # data-code="none": a behavior demo, shown with no code.
       out << (js ? code_tabs(id, src, js) : code_block(lang, src)) unless attr(attrs, 'data-code') == 'none'

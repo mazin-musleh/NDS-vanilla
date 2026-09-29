@@ -368,6 +368,11 @@
                 if (preview.ndsLastRun) fillRun(preview, preview.ndsLastRun);
                 return;
             }
+            // A panel card keeps its Preview button: the next open mounts the code shown.
+            if (script.getAttribute('data-preview') === 'panel') {
+                preview.ndsRunCode = out;
+                return;
+            }
             // A form harness keeps its form and Validate button; only the slot inside it re-renders.
             var slot = preview.querySelector('[data-demo-slot]') || preview;
             NDS.Init.destroy(slot);
@@ -584,6 +589,27 @@
             NDS.Init.destroy(held);
             held.innerHTML = '';
             card.ndsLastRun = null;
+        });
+    });
+
+    // data-preview="panel": Preview mounts the code shown in its tall bottom panel, before the panel
+    // opens, so the demo builds on a page of its own. Closing the panel takes the copy away.
+    function fillStage(card) {
+        var stage = card.ndsStage;
+        NDS.Init.destroy(stage);
+        stage.innerHTML = card.ndsRunCode || dedent(document.getElementById(stage.closest('.nds-panel').id.replace(/-stage$/, '')).textContent);
+        NDS.Init.mount(stage);
+    }
+    document.querySelectorAll('[data-demo-stage]').forEach(function (stage) {
+        var panel = stage.closest('.nds-panel'), button = document.querySelector('[data-panel-toggle="' + panel.id + '"]');
+        var card = button.closest('.nds-doc-frame');
+        card.ndsStage = stage;
+        // Out of the doc layout: its card-view rules would give the staged section a shadow and padding.
+        document.body.appendChild(panel);
+        button.addEventListener('click', function () { fillStage(card); });
+        panel.addEventListener('nds:panel:closed', function () {
+            NDS.Init.destroy(stage);
+            stage.innerHTML = '';
         });
     });
 
