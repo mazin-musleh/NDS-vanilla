@@ -2,425 +2,324 @@
 layout: page
 title: TOC
 hero_title: TOC - National Design System
-hero_description: A navigable outline that auto-builds from a page's headings and keeps the reader's current section highlighted as they scroll.
+hero_description: A table of contents for a long page, built from its headings, that marks the section the reader is on
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "15/08/2026 - 10:04 PM"
+updated: "1.12.x"
+last_edit: "29/09/2026 - 08:18 AM"
 ---
 
-<!-- Auto-Populated TOC -->
-<section id="tocAutoPopulate" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Auto-Populated</h2>
-            <p class="nds-section-description">Point the TOC at an article with <code class="nds-inline-code lang-html">data-toc-source</code> and it builds the list from the headings it finds. Missing heading IDs get slugified automatically so anchors resolve.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Built from <code class="nds-inline-code lang-html">#tocSampleArticle</code> h2/h3/h4 headings</div>
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-toc", "loadingState"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo" style="display: flex; gap: var(--spacing-xl); align-items: flex-start; width: 100%;">
-                                <nav class="nds-toc" aria-label="Table of contents"
-                                    data-toc-source="#tocSampleArticle" style="width: 240px; flex-shrink: 0; --toc-skeleton-rows: 8;">
-                                    <div class="nds-toc-head">
-                                        <span class="nds-label">On this page</span>
-                                        <h2 class="nds-toc-title nds-truncate">Page Title</h2>
-                                    </div>
-                                    <div class="nds-drawer nds-lined">
-                                        <ul class="nds-drawer-list"></ul>
-                                    </div>
-                                </nav>
-                                <article id="tocSampleArticle" style="flex: 1; min-width: 0;">
-                                    <h2 id="toc-demo-intro">Introduction</h2>
-                                    <p>Overview paragraph describing the page purpose.</p>
-                                    <h2 id="toc-demo-setup">Setup</h2>
-                                    <p>Preparing the environment and installing dependencies.</p>
-                                    <h3 id="toc-demo-requirements">Requirements</h3>
-                                    <p>What you need before you begin.</p>
-                                    <h3 id="toc-demo-install">Install</h3>
-                                    <p>Running the install command.</p>
-                                    <h4 id="toc-demo-install-mac">macOS</h4>
-                                    <p>Notes for macOS users.</p>
-                                    <h4 id="toc-demo-install-win">Windows</h4>
-                                    <p>Notes for Windows users.</p>
-                                    <h2 id="toc-demo-usage">Usage</h2>
-                                    <p>Typical usage patterns.</p>
-                                    <h2 id="toc-demo-support">Support</h2>
-                                    <p>Where to go for help.</p>
-                                </article>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-toc-auto-1" id="tab-toc-auto-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-toc-auto-1"
-                                        aria-labelledby="tab-toc-auto-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;nav class="nds-toc" aria-label="Table of contents"
-  data-toc-source="#articleRoot" style="--toc-skeleton-rows: 8"&gt;
-  &lt;div class="nds-toc-head"&gt;
-    &lt;span class="nds-label"&gt;On this page&lt;/span&gt;
-    &lt;h2 class="nds-toc-title nds-truncate"&gt;Page Title&lt;/h2&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-drawer nds-lined"&gt;
-    &lt;ul class="nds-drawer-list"&gt;&lt;/ul&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="tocOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A TOC lists the sections of a long page and links to each one. It has a head with a label and the page title, and a lined [Drawer](../components/drawer) that holds the links. The script builds the links from the page's headings, or reads a list you write.
+
+Pick another component when:
+
+- the links go to other pages, not to sections of this page: [Drawer](../components/drawer)
+- the page is a form or a flow in steps: [Stepper](../components/stepper)
+- the reader switches between panels in one place: [Tabs](../components/tabs)
+
+</div>
+  </div>
 </section>
 
-<!-- Manual Markup -->
-<section id="tocManual" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Manual Markup</h2>
-            <p class="nds-section-description">Author the list yourself when the TOC doesn't mirror a page's headings (custom labels, filtered entries, non-heading anchors). Nest <code class="nds-inline-code lang-html">&lt;ul&gt;</code> inside an <code class="nds-inline-code lang-html">&lt;li&gt;</code> for any number of sub-levels.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Three-level TOC, written by hand</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <nav class="nds-toc" aria-label="Table of contents" style="width: 240px;">
-                                    <div class="nds-toc-head">
-                                        <span class="nds-label">On this page</span>
-                                        <h2 class="nds-toc-title nds-truncate">Page Title</h2>
-                                    </div>
-                                    <div class="nds-drawer nds-lined">
-                                        <ul class="nds-drawer-list">
-                                            <li>
-                                                <a href="#manual-section-1" class="nds-btn nds-subtle nds-indicator">
-                                                    <span class="nds-label nds-truncate">Section 1</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#manual-section-2" class="nds-btn nds-subtle nds-indicator">
-                                                    <span class="nds-label nds-truncate">Section 2</span>
-                                                </a>
-                                                <ul>
-                                                    <li>
-                                                        <a href="#manual-section-2a" class="nds-btn nds-subtle nds-indicator">
-                                                            <span class="nds-label nds-truncate">Sub A</span>
-                                                        </a>
-                                                        <ul>
-                                                            <li>
-                                                                <a href="#manual-section-2a1" class="nds-btn nds-subtle nds-indicator">
-                                                                    <span class="nds-label nds-truncate">Detail one</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#manual-section-2a2" class="nds-btn nds-subtle nds-indicator">
-                                                                    <span class="nds-label nds-truncate">Detail two</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#manual-section-2b" class="nds-btn nds-subtle nds-indicator">
-                                                            <span class="nds-label nds-truncate">Sub B</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#manual-section-3" class="nds-btn nds-subtle nds-indicator">
-                                                    <span class="nds-label nds-truncate">Section 3</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-toc-manual-1" id="tab-toc-manual-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-toc-manual-1"
-                                        aria-labelledby="tab-toc-manual-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;nav class="nds-toc" aria-label="Table of contents"&gt;
-  &lt;div class="nds-toc-head"&gt;
-    &lt;span class="nds-label"&gt;On this page&lt;/span&gt;
-    &lt;h2 class="nds-toc-title nds-truncate"&gt;Page Title&lt;/h2&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-drawer nds-lined"&gt;
-    &lt;ul class="nds-drawer-list"&gt;
-      &lt;li&gt;
-        &lt;a href="#manual-section-1" class="nds-btn nds-subtle nds-indicator"&gt;
-          &lt;span class="nds-label nds-truncate"&gt;Section 1&lt;/span&gt;
-        &lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;a href="#manual-section-2" class="nds-btn nds-subtle nds-indicator"&gt;
-          &lt;span class="nds-label nds-truncate"&gt;Section 2&lt;/span&gt;
-        &lt;/a&gt;
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;a href="#manual-section-2a" class="nds-btn nds-subtle nds-indicator"&gt;
-              &lt;span class="nds-label nds-truncate"&gt;Sub A&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;ul&gt;
-              &lt;li&gt;
-                &lt;a href="#manual-section-2a1" class="nds-btn nds-subtle nds-indicator"&gt;
-                  &lt;span class="nds-label nds-truncate"&gt;Detail one&lt;/span&gt;
-                &lt;/a&gt;
-              &lt;/li&gt;
-              &lt;li&gt;
-                &lt;a href="#manual-section-2a2" class="nds-btn nds-subtle nds-indicator"&gt;
-                  &lt;span class="nds-label nds-truncate"&gt;Detail two&lt;/span&gt;
-                &lt;/a&gt;
-              &lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a href="#manual-section-2b" class="nds-btn nds-subtle nds-indicator"&gt;
-              &lt;span class="nds-label nds-truncate"&gt;Sub B&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;a href="#manual-section-3" class="nds-btn nds-subtle nds-indicator"&gt;
-          &lt;span class="nds-label nds-truncate"&gt;Section 3&lt;/span&gt;
-        &lt;/a&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="tocMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Auto-built List
+{: .nds-block-title}
+
+The TOC sits in a sticky [Side Info](../ui-shell/sideinfo) column next to the article it lists. Preview opens it in a panel, where the article can scroll.
+
+<script type="text/html" id="toc-auto" data-canon data-preview="panel" data-preview-flush>
+<section id="policyPage" class="nds-content-section nds-sideinfo-section">
+  <div class="nds-section-body">
+    <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
+      <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 5"
+        data-toc-source="#policyPage article" data-toc-levels="h2,h3">
+        <div class="nds-toc-head">
+          <span class="nds-label">On this page</span>
+          <h2 class="nds-toc-title nds-truncate">Privacy Policy</h2>
+        </div>
+        <div class="nds-drawer nds-lined">
+          <ul class="nds-drawer-list"></ul>
+        </div>
+      </nav>
+    </aside>
+    <div class="nds-info-content">
+      <article class="nds-prose">
+        <h2 id="data-we-collect">Data we collect</h2>
+        <p>The portal stores your name, national ID and contact details when you create an account.</p>
+        <p>It also records the date and time of each sign-in, to protect your account.</p>
+        <h3 id="data-from-requests">Data from requests</h3>
+        <p>Each service request keeps the documents you upload and the status of the request.</p>
+        <p>Documents stay in your account for five years after the request closes.</p>
+        <h2 id="how-we-use-data">How we use your data</h2>
+        <p>The portal uses your data to process requests and to send you updates about them.</p>
+        <p>It never uses your data for advertising, and never sells it.</p>
+        <h2 id="data-sharing">Data sharing</h2>
+        <p>Your data is shared only with the government agency that handles your request.</p>
+        <p>An agency sees only the data that its service needs.</p>
+        <h3 id="your-rights">Your rights</h3>
+        <p>You can ask for a copy of your data, or ask the portal to correct it.</p>
+        <p>The portal answers each request within 30 days.</p>
+      </article>
+    </div>
+  </div>
+</section>
+</script>
+
+### Manual List
+{: .nds-block-title}
+
+You write the links. Nest a `<ul>` inside an `<li>` for each level.
+
+<script type="text/html" id="toc-manual" data-canon>
+<nav class="nds-toc" aria-label="Table of contents">
+  <div class="nds-toc-head">
+    <span class="nds-label">On this page</span>
+    <h2 class="nds-toc-title nds-truncate">Annual Report 2025</h2>
+  </div>
+  <div class="nds-drawer nds-lined">
+    <ul class="nds-drawer-list">
+      <li>
+        <a href="#summary" class="nds-btn nds-subtle nds-indicator">
+          <span class="nds-label nds-truncate">Summary</span>
+        </a>
+      </li>
+      <li>
+        <a href="#services" class="nds-btn nds-subtle nds-indicator">
+          <span class="nds-label nds-truncate">Services</span>
+        </a>
+        <ul>
+          <li data-state="active">
+            <a href="#licenses" class="nds-btn nds-subtle nds-indicator" data-state="active">
+              <span class="nds-label nds-truncate">Licenses</span>
+            </a>
+            <ul>
+              <li>
+                <a href="#new-licenses" class="nds-btn nds-subtle nds-indicator">
+                  <span class="nds-label nds-truncate">New licenses</span>
+                </a>
+              </li>
+              <li>
+                <a href="#renewals" class="nds-btn nds-subtle nds-indicator">
+                  <span class="nds-label nds-truncate">Renewals</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#appointments" class="nds-btn nds-subtle nds-indicator">
+              <span class="nds-label nds-truncate">Appointments</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#contact" class="nds-btn nds-subtle nds-indicator">
+          <span class="nds-label nds-truncate">Contact us</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</script>
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="tocFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates on any <code class="nds-inline-code lang-html">.nds-toc</code> element on the page. No manual wiring required.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-magic-wand-01"></i>
-                            <span class="nds-label">Heading-Driven List</span>
-                        </span>
-                        <p class="nds-item-desc">Scans the article you point it at and builds the full nested list, slugifying any heading that lacks an <code class="nds-inline-code lang-html">id</code>.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-list-view"></i>
-                            <span class="nds-label">Unlimited Depth</span>
-                        </span>
-                        <p class="nds-item-desc">Each sub-level picks up its own indent and side rail, so deeply nested sections read clearly without extra markup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-eye"></i>
-                            <span class="nds-label">Active-Section Tracking</span>
-                        </span>
-                        <p class="nds-item-desc">Highlights the section currently below the sticky nav as the reader scrolls, with the indicator following in real time.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-tap-01"></i>
-                            <span class="nds-label">Click-to-Scroll</span>
-                        </span>
-                        <p class="nds-item-desc">Clicking a TOC entry smooth-scrolls the target heading into view beneath the nav, updates the URL hash, and respects reduced-motion preferences.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Create a single instance or reinitialize all TOCs after injecting new content through the <code class="nds-inline-code lang-js">NDS.Toc</code> API.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="tocBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Auto-built List
+{: .nds-block-title}
+
+`data-toc-source` on `.nds-toc` names the container to read, as a CSS selector. At init, the script replaces the list with a link to each heading in it, nested by level. `data-toc-levels` picks the levels, such as `h2` for a flat list. The script builds the list once. After the headings change, call `NDS.Toc.destroy(toc)`, then `NDS.Toc.create(toc)`.
+
+### Manual List
+{: .nds-block-title}
+
+Without `data-toc-source`, the script reads the links you write. Pick it for some sections only, for anchors that are not headings, or for a shorter label when a heading is too long for the column. Each link's `href` must match an id on the page, or the link is left out of the tracking.
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="tocGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Live Example</h3>
-                <ul>
-                    <li><a class="nds-color" href="{{ 'templates/content-template' | relative_url }}">Content Template</a>: long-form article with an auto-populated TOC in a sticky <a class="nds-color" href="{{ 'ui-shell/sideinfo' | relative_url }}">sideinfo</a> column</li>
-                </ul>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use a <strong>TOC</strong> on long-form content (policy pages, documentation, guides) where readers benefit from skimming the structure and jumping around</li>
-                    <li>Use <strong>auto-populate</strong> (<code class="nds-inline-code lang-html">data-toc-source</code>) whenever the TOC should mirror the article one-to-one. It stays in sync automatically as headings are added, renamed, or removed</li>
-                    <li>Use <strong>manual markup</strong> only when you need labels that differ from the headings, a filtered subset, or anchors that aren't headings</li>
-                    <li>Do not place a TOC on short pages where every section is already visible. Use the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> for plain navigation or the <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> for linear multi-step flows instead</li>
-                    <li>Place the TOC inside a <a class="nds-color" href="{{ 'layout/section' | relative_url }}">sideinfo</a> column with <code class="nds-inline-code lang-html">nds-sticky</code> so it stays visible as the reader scrolls long content</li>
-                    <li>Pick <code class="nds-inline-code lang-html">nds-sm</code> or <code class="nds-inline-code lang-html">nds-md</code> on the surrounding <code class="nds-inline-code lang-html">.nds-sideinfo</code> for compact rails. The default width is tuned for richer sideinfo content, not link lists</li>
-                    <li>Keep the TOC to <strong>three levels or fewer</strong>. Deeper trees produce tight indents that are hard to scan and hint at a page that should be split</li>
-                    <li>Set <code class="nds-inline-code lang-html">data-toc-levels="h2,h3"</code> to skip h4s if the article uses them for inline emphasis rather than real sub-sections</li>
-                    <li>Give every heading a stable, human-readable <code class="nds-inline-code lang-html">id</code>. The auto-slugifier is a fallback, not a substitute for author-chosen anchors</li>
-                    <li>Author labels should match the heading text. Invent TOC-only names only when the heading is verbose and the rail cannot truncate cleanly</li>
-                    <li>Set <code class="nds-inline-code lang-css">--toc-skeleton-rows</code> on <code class="nds-inline-code lang-html">.nds-toc</code> to the page's link count — the still-empty list then reserves the exact height, so content below the TOC (the whole article on stacked mobile layouts) does not shift when the list fills in</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-toc-source</code></td><td>CSS selector for the container whose headings should populate the list. Omit for manual markup.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-toc-levels</code></td><td>Comma-separated heading tags to include (default: <code class="nds-inline-code lang-html">h2,h3,h4</code>). Use <code class="nds-inline-code lang-html">h2</code> for a flat TOC or <code class="nds-inline-code lang-html">h2,h3,h4,h5</code> for deeper docs.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-nds-toc-initialized</code></td><td>Stamped <code class="nds-inline-code lang-html">true</code> after a TOC instance is created — also when the source yields no headings, so the height reservation always releases. Checked by <code class="nds-inline-code lang-js">reinit()</code> to prevent double-initialization. Removed by <code class="nds-inline-code lang-js">destroy()</code>.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Applied to</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lined</code></td><td><code class="nds-inline-code lang-html">.nds-drawer</code></td><td>Required. Renders the vertical rail beside sub-lists. <code class="nds-inline-code lang-html">.nds-toc</code> sets <code class="nds-inline-code lang-css">--drawer-lined-block: 0px</code> internally so the rail extends flush to the block edges of each nested list.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--toc-skeleton-rows</code></td><td><code class="nds-inline-code lang-html">6</code></td><td>Expected link count for an auto-populated TOC. Until JS fills the list, the empty list reserves <code class="nds-inline-code lang-html">rows × 36px</code> so the content below does not shift when the list lands. Set it on <code class="nds-inline-code lang-html">.nds-toc</code> to the page's real link count for a shift-free load.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--drawer-lined-block</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Block-axis inset of the lined rail on the drawer. Set to <code class="nds-inline-code lang-html">0px</code> by <code class="nds-inline-code lang-html">.nds-toc</code> so the rail extends flush to the top and bottom of each nested list.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--drawer-lined-width</code></td><td><code class="nds-inline-code lang-html">2px</code></td><td>Thickness of the lined rail. Set to <code class="nds-inline-code lang-html">2px</code> by <code class="nds-inline-code lang-html">.nds-toc</code> for a slimmer rail than the drawer default.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--drawer-indicator-width</code></td><td><code class="nds-inline-code lang-html">3px</code></td><td>Width of the active-item side indicator. Set to <code class="nds-inline-code lang-html">3px</code> on <code class="nds-inline-code lang-html">.nds-toc .nds-drawer</code> for a bolder highlight than the base drawer default.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Loading and Skeleton State</h3>
-                <p>When explicitly set to loading (<code class="nds-inline-code lang-html">nds-loading</code> class or <code class="nds-inline-code lang-html">data-state="loading"</code>), item labels animate as skeleton bars — the same contract as tables, tabs, and accordion. Before JS initializes an auto-populated TOC, the still-empty list reserves its expected height, sized by <code class="nds-inline-code lang-css">--toc-skeleton-rows</code>, so the content below it does not shift when the list fills in.</p>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Toc</strong> API initializes, re-initializes, and creates TOC instances. Auto-init runs on <code class="nds-inline-code lang-js">DOMContentLoaded</code>; call <code class="nds-inline-code lang-js">NDS.Toc.reinit()</code> after injecting new TOC markup dynamically.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialize all TOCs on the page ─────────────────
-// Called automatically once. Re-run after injecting new TOC markup.
-NDS.Toc.init();
-NDS.Toc.reinit();
-
-// ── Create a single TOC instance ────────────────────
-// Returns the NDSToc instance (with .active, .entries, .destroy(), etc.)
-const toc = document.querySelector('.nds-toc');
-const instance = NDS.Toc.create(toc);
-
-// ── Read the currently-active entry ──────────────────
-instance.active;           // { link, li, target } | null
-instance.entries;          // Array of { link, li, target }
-
-// ── Manually tear down and re-wire ──────────────────
-instance.destroy();        // Remove click + scroll listeners, clear state
-NDS.Toc.destroy(toc);      // The same teardown from the namespace. NDS.Init.destroy()
-                           // calls this for every TOC in a container it releases.
-instance.update();         // Recompute active entry from current scroll
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<section id="tocFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-toc</code> on the page starts by itself, before the page shows.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-eye"></i>
+            <span class="nds-label">Active-Section Tracking</span>
+          </span>
+          <p class="nds-item-desc">As the reader scrolls, the link to the last section that passed under the main navigation shows as active. No link is active until the first section reaches the top. When the article scrolls in a panel or a modal, the TOC tracks and scrolls that box instead of the page.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-tap-01"></i>
+            <span class="nds-label">Click-to-Scroll</span>
+          </span>
+          <p class="nds-item-desc">A click scrolls the heading to just below the main navigation and updates the URL hash, with no new history entry. The scroll is instant when the reader asks for reduced motion.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-list-view"></i>
+            <span class="nds-label">Nested Levels</span>
+          </span>
+          <p class="nds-item-desc">Each nested list is indented, with a line along it, so the reader sees each section's level at a glance.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-anchor"></i>
+            <span class="nds-label">Heading Anchors</span>
+          </span>
+          <p class="nds-item-desc">In an auto-built list, a heading with no <code class="nds-inline-code lang-html">id</code> gets one made from its text, Arabic included, so its link works.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-ruler"></i>
+            <span class="nds-label">Reserved Height</span>
+          </span>
+          <p class="nds-item-desc">Until an auto-built list fills in, it keeps the height of <code class="nds-inline-code lang-css">--toc-skeleton-rows</code> links, so the content under it does not move.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-api"></i>
+            <span class="nds-label">JavaScript API</span>
+          </span>
+          <p class="nds-item-desc">Start or stop a TOC from code, and check the active link again after the layout changes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tocPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use a TOC on long pages: policies, guides and reports. On a short page that fits on the screen, leave it out.
+- Use the auto-built list when the links match the headings. It lists every heading at load, so a new section needs no TOC edit.
+- Give every heading its own short `id`. An id made from the text changes when the text changes, and breaks the links people shared.
+- Keep the list to three levels or fewer. A deeper list is hard to scan, and often means the page should be split. Set `data-toc-levels="h2,h3"` when the page uses `h4` for small labels, not sections.
+- Set `--toc-skeleton-rows` on `.nds-toc` to the number of links the page has. On a phone, the TOC sits above the article, so a wrong count moves the article when the list fills in.
+- Put the TOC in a sticky `.nds-sideinfo` with `nds-sm` (200px) or `nds-md` (300px), so it stays in view.
+- Give the `<nav>` an `aria-label`, so screen reader users can tell it from the page's other navigation.
+- Let the script mark the active link. It sets `data-state="active"` from the scroll position, and clears any the markup carries at init.
+
+</div>
+  </div>
+</section>
+
+<section id="tocApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-toc` | `<nav>` | The TOC. Holds the head and the drawer |
+| `nds-toc-head` | `<div>` | The head: a label and the title. Optional |
+| `nds-toc-title` | the heading in the head | The page title, in larger semibold type |
+| `nds-lined` | `.nds-drawer` | Required. The line along each nested list |
+| `nds-loading` | `.nds-toc` | The link labels show as pulsing bars. Use it while the page loads the content. `data-state="loading"` does the same |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-toc-source` | `.nds-toc` | A CSS selector for the container whose headings build the list. It replaces the list you write |
+| `data-toc-levels` | `.nds-toc` | The heading levels to list, comma-separated. Default `h2,h3,h4` |
+| `data-state="active"` | `<li>` and its link | Set by the script on the link to the current section |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--toc-skeleton-rows` | `6` | Links an auto-built list reserves height for before it fills in, at 36px each. Set it on `.nds-toc` |
+| `--drawer-lined-width` | `2px` | Width of the line along nested lists. The TOC sets it on `.nds-toc` |
+| `--drawer-lined-block` | `0px` | Space cut from the top and the bottom of that line. The TOC sets it on `.nds-toc` |
+| `--drawer-indicator-width` | `3px` | Width of the active link's line. The TOC sets it on its `.nds-drawer`, so set a new value there |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Toc.init()` | Starts every TOC on the page that has not started yet. `reinit()` is the same |
+| `NDS.Toc.create(toc)` | Starts one TOC and returns its instance |
+| `NDS.Toc.destroy(toc)` | Removes the listeners. The active link keeps its state. `NDS.Init.destroy()` calls it for every TOC in the container it releases |
+| `instance.update()` | Picks the active link again from the scroll position. Call it after the layout above the headings changes |
+{: .nds-table .nds-responsive}
+
+The TOC fires no events.
+
+<script type="text/html" id="toc-api-js" data-canon data-lang="js">
+var toc = document.querySelector('.nds-toc');
+// The article's headings changed: build the list again.
+NDS.Toc.destroy(toc);
+NDS.Toc.create(toc);
+</script>
+
+The full API is in the banner of `_js/nds-toc.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="tocRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Content Template](../templates/content-template): a long article with an auto-built TOC of three levels in a sticky side column.
+- [Faculty CV](../examples/faculty-cv): an auto-built TOC of `h2` headings only.
+- [Drawer](../components/drawer): the list inside the TOC, with its options.
+
+</div>
+  </div>
 </section>
