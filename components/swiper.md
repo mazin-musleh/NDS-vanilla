@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/09/2026 - 01:42 PM"
+last_edit: "29/09/2026 - 09:23 PM"
 ---
 
 <section id="swiperOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "29/09/2026 - 01:42 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A swiper is a `.nds-swiper-wrapper` of `.nds-swiper-slide` items, which scroll and snap with CSS. A slide holds any content, usually a [Card](../components/cards) or an image. The optional navigation row holds the previous and next buttons and the pagination bullets, which the script builds. A hero swiper fills a [Hero](../ui-shell/hero) section, and a deck adds a stack of image cards, one for each slide.
+A swiper is a `.nds-swiper-wrapper` of `.nds-swiper-slide` items, which scroll and snap with CSS. A slide holds any content, usually a [Card](../components/cards) or an image. The optional navigation row holds the previous and next buttons and the pagination bullets, which the script builds. A hero swiper fills a [Hero](../ui-shell/hero) section, and a spotlight keeps one slide in the middle with smaller slides at its sides.
 
 Pick another component when:
 
@@ -212,6 +212,37 @@ Pick another component when:
   </div>
 </section>
 </script>
+<script type="text/html" id="swiper-spotlight" data-canon>
+<div class="nds-swiper nds-spotlight">
+  <div class="nds-swiper-wrapper">
+    <div class="nds-swiper-slide">
+      <img src="../docs-assets/events/national_day_96/card_heritage.webp" width="491" height="491" alt="Heritage" fetchpriority="high">
+    </div>
+    <div class="nds-swiper-slide">
+      <img data-src="../docs-assets/events/national_day_96/card_courage.webp" width="491" height="491" alt="Courage">
+    </div>
+    <div class="nds-swiper-slide">
+      <img data-src="../docs-assets/events/national_day_96/card_ambition.webp" width="491" height="491" alt="Ambition">
+    </div>
+    <div class="nds-swiper-slide">
+      <img data-src="../docs-assets/events/national_day_96/card_generosity.webp" width="491" height="491" alt="Generosity">
+    </div>
+    <div class="nds-swiper-slide">
+      <img data-src="../docs-assets/events/national_day_96/card_kindness.webp" width="491" height="491" alt="Kindness">
+    </div>
+    <div class="nds-swiper-slide">
+      <img data-src="../docs-assets/events/national_day_96/card_vision.webp" width="491" height="491" alt="Vision">
+    </div>
+  </div>
+  <div class="nds-swiper-navigation" hidden>
+    <div class="nds-swiper-buttons">
+      <button type="button" class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" aria-label="Previous slide"></button>
+      <button type="button" class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" aria-label="Next slide"></button>
+    </div>
+    <div class="nds-swiper-pagination"></div>
+  </div>
+</div>
+</script>
     </div>
   </div>
 </section>
@@ -223,29 +254,31 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-A Per view choice has one row for each knob it changes: write them all in the swiper's `style`. The Hero structure always shows one slide, so Per view stays at 1 on them, and Peek and Skeleton are off.
+A Per view choice has one row for each knob it changes: write them all in the swiper's `style`. The Hero and Spotlight structures always show one slide, so Per view stays at 1 on them. Peek and Skeleton are off on a hero. Peek, Loop and Skeleton are off on a spotlight, which sizes and loops itself.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Cards (default) | — | — | A row of cards or images, several on a page. The usual swiper |
 | Structure | Max width | canon `#swiper-max` | — | A card row in a page section that runs past the content width to the edges of the page. `nds-max-width` on the section body, which comes after `.nds-section-wrapper` |
 | Structure | Hero (demo: + per-1) | canon `#swiper-hero` | — | Full-width slides with a background image, one at a time, at the top of a page |
-| Per view | 3 · 2 · 1 (default) | — | `.nds-swiper:not(.nds-hero)` | 3 slides on a desktop, 2 on a tablet, 1 on a phone |
-| Per view | 4 · 3 · 2 | `--max-slides: 4` | `.nds-swiper:not(.nds-hero)` | Smaller items, such as logos or short cards |
-| Per view | 4 · 3 · 2 | `--mid-slides: 3` | `.nds-swiper:not(.nds-hero)` | The same, on a tablet |
-| Per view | 4 · 3 · 2 | `--min-slides: 2` | `.nds-swiper:not(.nds-hero)` | The same, on a phone |
-| Per view | 1 (id: per-1) | `--max-slides: 1` | `.nds-swiper:not(.nds-hero)` | One slide at every width, such as an image gallery |
-| Per view | 1 (id: per-1) | `--mid-slides: 1` | `.nds-swiper:not(.nds-hero)` | The same, on a tablet |
+| Structure | Spotlight (demo: + per-1) | canon `#swiper-spotlight` | — | One slide in the middle at full size, with smaller slides at its sides. For a set of images or cards the user looks at one by one |
+| Per view | 3 · 2 · 1 (default) | — | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | 3 slides on a desktop, 2 on a tablet, 1 on a phone |
+| Per view | 4 · 3 · 2 | `--max-slides: 4` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Smaller items, such as logos or short cards |
+| Per view | 4 · 3 · 2 | `--mid-slides: 3` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a tablet |
+| Per view | 4 · 3 · 2 | `--min-slides: 2` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a phone |
+| Per view | 1 (id: per-1) | `--max-slides: 1` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | One slide at every width, such as an image gallery |
+| Per view | 1 (id: per-1) | `--mid-slides: 1` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a tablet |
 | Per view | 1 (id: per-1) | — | `.nds-swiper.nds-hero` | A hero always shows one slide. It needs no knob |
+| Per view | 1 (id: per-1) | — | `.nds-swiper.nds-spotlight` | A spotlight always shows one slide in the middle. It needs no knob |
 | Arrows | Beside bullets (default) | — | — | The arrows at the start of the navigation row and the bullets at its end |
 | Arrows | Split | `.nds-center` | `.nds-swiper-navigation` | The bullets in the middle of the row and one arrow at each end |
 | Arrows | Middle | `.nds-middle` | `.nds-swiper` | One arrow on each side of the slides, at their middle, and no bullets. Tablet and wider: a phone shows the navigation row |
 | Bullets | LG (default) | — | — | 16px bullets. It needs no class |
 | Bullets | MD | `.nds-md` | `.nds-swiper-pagination` | 12px bullets |
 | Bullets | SM | `.nds-sm` | `.nds-swiper-pagination` | 8px bullets |
-| Peek | Peek | `--peek: 40px` | `.nds-swiper:not(.nds-hero)` | Shows 40px of the next slide, so the user sees there is more. Any length works |
-| Loop | Loop | `[data-swiper-loop]` | `.nds-swiper` | An endless row: the first slide follows the last |
-| Skeleton | Skeleton | `.nds-loading` | `.nds-swiper:not(.nds-hero)` | Every card shows as a skeleton while its data loads. Remove the class when the data is in |
+| Peek | Peek | `--peek: 40px` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Shows 40px of the next slide, so the user sees there is more. Any length works |
+| Loop | Loop | `[data-swiper-loop]` | `.nds-swiper:not(.nds-spotlight)` | An endless row: the first slide follows the last |
+| Skeleton | Skeleton | `.nds-loading` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Every card shows as a skeleton while its data loads. Remove the class when the data is in |
 {: #swiperVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -283,6 +316,11 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 {: .nds-block-title}
 
 `nds-hero` shows one full-width slide at a time, with no gap, inside a [Hero](../ui-shell/hero) section. The navigation row sits over the bottom of the slides. Write `hidden` on every slide after the first. The script shows those slides when the hero first comes into view, so the browser does not decode their images before then.
+
+### Spotlight
+{: .nds-block-title}
+
+`nds-spotlight` keeps the open slide in the middle at full size. The slides at its sides are smaller and sit close to it, and they grow as they move to the middle. It always loops, and each arrow, bullet or swipe moves one slide. On a wide row a whole slide shows at each side. On a narrow row the open slide stays at least 240px wide, and less of the side slides shows. Content wider than that makes its slide wider, and the slide still stops in the middle. It needs three slides to loop. It ignores the slides per view, `--peek`, `--padding` and `data-swiper-loop`.
 
 </div>
   </div>
@@ -372,6 +410,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 - To run the row to the edges of the page, use the Max width structure: `nds-max-width` on the section body, after `.nds-section-wrapper`.
 - Add `--peek` when the slides do not fit on one page, so the user sees there is more.
 - Keep a hero to three slides or fewer. Few users reach the later ones.
+- Put one element in each spotlight slide, such as an image or a card. The spotlight shrinks and grows that one element.
 - With `nds-middle` on a hero, keep the slide text away from the sides, or center it. The arrows sit over the edges of the slide.
 - Give each arrow an `aria-label` that names its direction.
 
@@ -408,7 +447,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | `hidden` | `.nds-swiper-navigation`, hero slides after the first | Hides them until the script shows them |
 | `data-state` | `.nds-swiper` | The script writes `at-start` on the first page and `at-end` on the last, and both when there is one page. Use them to style the ends: `.nds-swiper[data-state~="at-end"]` |
 | `data-swiper-clone` | `.nds-swiper-clone` | The index of the real slide the copy repeats. Use it to update the copies of a slide you change at runtime |
-| `data-status` | `.nds-bullet` | The script writes `active` on the current bullet |
+| `data-status` | `.nds-bullet`, spotlight `.nds-swiper-slide` | The script writes `active` on the current bullet. In a spotlight it also writes `active` on the open slide and its loop copies, and `after` on the slides after it |
 | `data-swiper-peek` | `.nds-swiper` | The script writes it while the peek shows |
 {: .nds-table .nds-responsive}
 

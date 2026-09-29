@@ -935,7 +935,8 @@
                     // Inline knob first (CSS already sized the row from it), the
                     // deprecated bare attribute second — only JS can read that one.
                     const knob = (prop, attr) => parseInt(s.style.getPropertyValue(prop)) || parseInt(s.getAttribute(attr)) || 0;
-                    const per = knob(`--${tier}-slides`, 'slides-' + tier) || 1;
+                    // A spotlight is one per view, as nds-swiper.js reads it.
+                    const per = s.classList.contains('nds-spotlight') ? 1 : knob(`--${tier}-slides`, 'slides-' + tier) || 1;
                     const peek = knob('--peek', 'peek');
                     // Own slides only, as nds-swiper.js counts them: a swiper nested in a slide must not add pages.
                     const w = s.querySelector('.nds-swiper-wrapper');

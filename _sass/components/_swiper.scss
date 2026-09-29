@@ -431,6 +431,84 @@
     visibility: var(--nds-crit-reveal, hidden);
 }
 
+// ==============================================
+// SPOTLIGHT — .nds-spotlight
+// The open slide rests in the middle at full size; the ones beside it shrink.
+// ==============================================
+
+.nds-swiper.nds-spotlight {
+    // One slide in the middle, the same space at both ends so the index math
+    // (one step a move) is unchanged. A wide row shows three whole slides; a
+    // narrow one keeps the slide 240px wide and trims the side slides to what is
+    // left. --peek and the per-view knobs are not read here.
+    --swiper-slides: 1;
+    --swiper-peek: 0px;
+    --_fit: calc(100% - 2 * var(--swiper-gap));
+    --_w: max(min(240px, var(--_fit)), calc(var(--_fit) / 3));
+    --swiper-padding: calc((100% - var(--_w)) / 2);
+    --_scale: 0.85;
+    // A slide shrinks toward the open one (the shift keeps its near edge put, so
+    // the peek stays in view). --_dir makes the shift physical: RTL runs leftward.
+    --_dir: -1;
+    --_shift: calc(var(--_dir) * (1 - var(--_scale)) * 50%);
+
+    @include ltr {
+        --_dir: 1;
+    }
+
+    // Both ends are spacers (the end one is the base ::after), so every % above
+    // measures the row; start padding would take its % from the swiper instead.
+    .nds-swiper-wrapper {
+        padding-inline-start: 0;
+        // Centre snap needs no inset, and one would shrink the snap window below a
+        // grown slide, which then counts as snapped wherever it rests.
+        scroll-padding-inline: 0;
+
+        &::before {
+            content: "";
+            flex: 0 0 var(--swiper-padding);
+            margin-inline-end: calc(-1 * var(--swiper-gap));
+        }
+    }
+
+    // Before the open slide by default; JS marks the ones after it.
+    // Centre snap: content wider than --_w (a card's min width, a fixed image)
+    // grows its slide, and the slide still rests in the middle.
+    .nds-swiper-slide {
+        flex-basis: var(--_w);
+        scroll-snap-align: center;
+        --_spot: translateX(var(--_shift)) scale(var(--_scale));
+    }
+
+    .nds-swiper-slide[data-status~="after"] {
+        --_spot: translateX(calc(-1 * var(--_shift))) scale(var(--_scale));
+    }
+
+    // Before init the first slide is the open one, as JS then stamps it.
+    .nds-swiper-slide[data-status~="active"],
+    &:not([data-nds-swiper-initialized]) .nds-swiper-slide:first-child {
+        --_spot: none;
+    }
+
+    &:not([data-nds-swiper-initialized]) .nds-swiper-slide:first-child ~ .nds-swiper-slide {
+        --_spot: translateX(calc(-1 * var(--_shift))) scale(var(--_scale));
+    }
+
+    // The content scales, not the slide: a transform on the slide moves its snap
+    // area, and the row then rests off centre. ponytail: one child per slide (a
+    // card or an image); several would each scale on their own.
+    .nds-swiper-slide > * {
+        transform: var(--_spot);
+        // One duration at every width: the move's scroll runs ~0.25s on a narrow row
+        // and ~0.5s on a wide one, so this sits between them.
+        transition: transform calc(var(--nds-transition-speed) * 1.75s) var(--nds-transition-effect);
+    }
+}
+
+@include reduced-motion {
+    .nds-swiper.nds-spotlight .nds-swiper-slide > * { transition: none; }
+}
+
 // Loading shows the skeleton above, not the spinner.
 .nds-swiper.nds-loading {
     @include loading-skeleton-host;
