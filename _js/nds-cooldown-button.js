@@ -17,7 +17,10 @@
  * Gotchas:
  *   - data-cooldown is read ONCE, when the button is wired, and cached. Editing it
  *     later has no effect. The label attributes are re-read every cycle.
- *   - The button needs a <span class="nds-label"> for the countdown text to land in.
+ *   - The button needs a <span class="nds-label"> for the countdown text to land in;
+ *     without one it warns at wire time.
+ *   - The countdown follows the clock, so a tab hidden mid-cycle resumes at the true
+ *     remainder. The end of a cycle leaves a button the page had disabled disabled.
  *   - That label holds itself open at the widest of its three texts (first label,
  *     countdown, resend) from first paint, so the button never resizes mid-cycle.
  *     It looks wider than its text at rest — shorten the wording, not the CSS. The
@@ -183,6 +186,8 @@
         const ctx = {
             labelEl,
             originalLabel: labelEl ? labelEl.textContent : '',
+            // The end of the cycle must not enable a button the page had disabled.
+            wasDisabled: btn.disabled,
             tickTimer: null
         };
 
@@ -203,8 +208,13 @@
         render(ctx, template, remaining);
         fire(btn, 'nds:cooldown:tick', { remaining });
 
+        // Count against the clock, not the ticks: a hidden tab pauses or throttles
+        // timers (the user switching to the SMS app), and the server's limit keeps running.
+        const end = Date.now() + total * 1000;
         ctx.tickTimer = setInterval(() => {
-            remaining -= 1;
+            const next = Math.ceil((end - Date.now()) / 1000);
+            if (next === remaining) return; // an early fire: no second has passed
+            remaining = next;
             if (remaining <= 0) {
                 finish(btn);
             } else {
@@ -221,7 +231,7 @@
         // 'loading' is the page's to set and clear — the component never touches it,
         // so a request still in flight keeps its spinner past the countdown.
         NDS.State.remove(btn, 'cooldown');
-        btn.disabled = false;
+        if (!ctx.wasDisabled) btn.disabled = false;
         if (ctx.labelEl) {
             const resend = resendLabel(btn);
             ctx.labelEl.textContent = resend != null ? resend : ctx.originalLabel;
@@ -234,11 +244,14 @@
         if (btn && active.has(btn)) finish(btn);
     }
 
-    // An authored label with no token never counts down — it just sits there. Say so at
-    // wire time; the alternative is finding out on the first click in production, which
-    // is how %s went unnoticed in the field. search() ignores TOKEN's /g flag, so there
-    // is no lastIndex to carry between buttons.
-    function warnUnknownToken(btn) {
+    // A label with no token, or no .nds-label to write into, never counts down — it just
+    // sits there. Say so at wire time; the alternative is finding out on the first click
+    // in production, which is how %s went unnoticed in the field. search() ignores TOKEN's
+    // /g flag, so there is no lastIndex to carry between buttons.
+    function warnNoCountdown(btn) {
+        if (!btn.querySelector('.nds-label')) {
+            console.warn('NDS CooldownButton: the button has no <span class="nds-label">, so the countdown will not show.', btn);
+        }
         const label = btn.getAttribute('data-cooldown-label');
         if (label && label.search(TOKEN) === -1) {
             console.warn('NDS CooldownButton: data-cooldown-label has no {s} token, so the countdown will not show. Label: ' + JSON.stringify(label), btn);
@@ -249,7 +262,7 @@
         if (!btn || btn.hasAttribute(WIRED_ATTR)) return;
         btn.setAttribute(WIRED_ATTR, '');
         configFor(btn); // freeze cooldown durations at wire time
-        warnUnknownToken(btn);
+        warnNoCountdown(btn);
         stampSizers(btn); // reserve the label width before the first click
         btn._cooldownAC = new AbortController();
         btn.addEventListener('click', () => {
