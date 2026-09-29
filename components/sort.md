@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "29/09/2026 - 10:05 AM"
+last_edit: "29/09/2026 - 10:30 AM"
 ---
 
 <section id="sortOverview" class="nds-content-section nds-doc-overview">
@@ -41,15 +41,10 @@ Pick another component when:
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Each example is the markup, its `create()` call in the JS tab, and a working preview. The root holds both the triggers and the items, so the selector strings resolve inside it.
+The root holds both the triggers and the items, so the selector strings resolve inside it. The JS tab is the `create()` call that starts it.
 
-### Direct Mode
-{: .nds-block-title}
-
-A dropmenu of sort choices in a [Toolbar](../components/toolbar), over a card grid.
-
-<script type="text/html" id="sort-direct" data-canon data-js="sort-direct-js">
-<div id="sortDirectRoot">
+<script type="text/html" id="sort-direct" data-canon data-variants="sortVariantsTable" data-js="sort-js" data-preview="js">
+<div id="sortRoot">
   <div class="nds-toolbar">
     <div class="nds-bar-end">
       <div class="nds-dropmenu">
@@ -87,60 +82,69 @@ A dropmenu of sort choices in a [Toolbar](../components/toolbar), over a card gr
   <div class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:2;">
     <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
       <div class="nds-card-content">
-        <span class="nds-card-title">Zakat Payment</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">75</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Zakat Payment</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">75</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300">
       <div class="nds-card-content">
-        <span class="nds-card-title">Passport Renewal</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">300</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Passport Renewal</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">300</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25">
       <div class="nds-card-content">
-        <span class="nds-card-title">Birth Certificate</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">25</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Birth Certificate</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">25</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0">
       <div class="nds-card-content">
-        <span class="nds-card-title">Identity Verification</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR" data-free>Free</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Identity Verification</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR" data-free>Free</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150">
       <div class="nds-card-content">
-        <span class="nds-card-title">Driver License</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">150</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Driver License</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">150</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200">
       <div class="nds-card-content">
-        <span class="nds-card-title">Business Registration</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">1200</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Business Registration</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">1200</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 </script>
-
-<script type="text/html" id="sort-direct-js" data-canon data-lang="js">
-NDS.Sort.create(document.getElementById('sortDirectRoot'), {
-  items: '.nds-card',
-  triggers: '[data-sort]',
-  mode: 'direct',
-  types: { price: 'number' }
-});
-</script>
-
-### Cycle Mode
-{: .nds-block-title}
-
-Two buttons in a [Toolbar](../components/toolbar), each for one key. A click on a button steps that key through ascending, descending and the original order. `onChange` swaps the icons to show the state.
-
-<script type="text/html" id="sort-cycle" data-canon data-js="sort-cycle-js">
-<div id="sortCycleRoot">
+<script type="text/html" id="sort-cycle" data-canon>
+<div id="sortRoot">
   <div class="nds-toolbar">
     <div class="nds-bar-end">
       <div class="nds-btn-group">
@@ -158,94 +162,112 @@ Two buttons in a [Toolbar](../components/toolbar), each for one key. A click on 
   <div class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:2;">
     <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
       <div class="nds-card-content">
-        <span class="nds-card-title">Zakat Payment</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">75</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Zakat Payment</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">75</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300">
       <div class="nds-card-content">
-        <span class="nds-card-title">Passport Renewal</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">300</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Passport Renewal</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">300</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25">
       <div class="nds-card-content">
-        <span class="nds-card-title">Birth Certificate</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">25</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Birth Certificate</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">25</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0">
       <div class="nds-card-content">
-        <span class="nds-card-title">Identity Verification</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR" data-free>Free</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Identity Verification</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR" data-free>Free</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150">
       <div class="nds-card-content">
-        <span class="nds-card-title">Driver License</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">150</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Driver License</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">150</span>
+        </div>
       </div>
     </div>
     <div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200">
       <div class="nds-card-content">
-        <span class="nds-card-title">Business Registration</span>
-        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">1200</span></p>
+        <div class="nds-card-text">
+          <span class="nds-card-title">Business Registration</span>
+        </div>
+        <div class="nds-card-value">
+          <span class="nds-number-format" data-currency="SAR">1200</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 </script>
-
-<script type="text/html" id="sort-cycle-js" data-canon data-lang="js">
-const root = document.getElementById('sortCycleRoot');
-
-NDS.Sort.create(root, {
+<script type="text/html" id="sort-js" data-canon data-lang="js">
+NDS.Sort.create(document.getElementById('sortRoot'), {
   items: '.nds-card',
   triggers: '[data-sort]',
-  mode: 'cycle',
-  types: { price: 'number' },
-  onChange: ({ key, dir }) => {
-    root.querySelectorAll('[data-sort]').forEach((btn) => {
-      const active = btn.dataset.sort === key && dir;
-      btn.querySelector('i').className = !active
-        ? 'nds-icon nds-hgi-sorting-05'
-        : dir === 'asc'
-          ? 'nds-icon nds-hgi-sort-by-up-02'
-          : 'nds-icon nds-hgi-sort-by-down-02';
-    });
-  }
+  mode: 'direct',
+  types: { price: 'number' }
 });
+</script>
+<script type="text/html" id="sort-js-icons" data-canon data-lang="js">
+onChange: ({ key, dir }) => {
+  document.querySelectorAll('#sortRoot [data-sort]').forEach((btn) => {
+    const active = btn.dataset.sort === key && dir;
+    btn.querySelector('i').className = !active
+      ? 'nds-icon nds-hgi-sorting-05'
+      : dir === 'asc'
+        ? 'nds-icon nds-hgi-sort-by-up-02'
+        : 'nds-icon nds-hgi-sort-by-down-02';
+  });
+}
 </script>
 
 </div>
   </div>
 </section>
 
-<script>
-// Wires the two previews above: the same calls as the JS tabs.
-function initSortDemos() {
-  if (!window.NDS || !NDS.Sort) return;
-  var direct = document.getElementById('sortDirectRoot');
-  if (direct) NDS.Sort.create(direct, { items: '.nds-card', triggers: '[data-sort]', mode: 'direct', types: { price: 'number' } });
-  var cycle = document.getElementById('sortCycleRoot');
-  if (cycle) NDS.Sort.create(cycle, {
-    items: '.nds-card',
-    triggers: '[data-sort]',
-    mode: 'cycle',
-    types: { price: 'number' },
-    onChange: function (s) {
-      cycle.querySelectorAll('[data-sort]').forEach(function (btn) {
-        var active = btn.dataset.sort === s.key && s.dir;
-        btn.querySelector('i').className = !active
-          ? 'nds-icon nds-hgi-sorting-05'
-          : s.dir === 'asc' ? 'nds-icon nds-hgi-sort-by-up-02' : 'nds-icon nds-hgi-sort-by-down-02';
-      });
-    }
-  });
-}
-// Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSortDemos); else initSortDemos();
-</script>
+<section id="sortVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+`#sort-js` is the `create()` call that starts the markup (`data-js` on the base canon). A row whose On element is `create()` sets an option of that call. `create({ mode: 'cycle' })` means only a call with that option.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Direct (default) | — | — | A dropmenu of sort choices in a [Toolbar](../components/toolbar). Each item fixes one key and one direction |
+| Structure | Cycle (demo: + icons) | canon `#sort-cycle` | — | One button per key. Each click steps its key through ascending, descending and the original order |
+| Structure | Cycle (demo: + icons) | `mode: 'cycle'` | `create()` | The same, in JavaScript |
+| Direction icons | Direction icons (id: icons) | canon `#sort-js-icons` | `create({ mode: 'cycle' })` | `onChange` swaps each button's icon to show the key and direction in use |
+{: #sortVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
 
 <section id="sortBehavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">

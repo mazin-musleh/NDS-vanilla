@@ -66,13 +66,18 @@ def check(path):
         if s in src:
             errs.append(f'old demo markup left: {s}')
 
+    # A Structure canon replaces the base, so it may reuse the base's ids (the root a shared JS call names).
+    alts = {m for _, a, _ in canons if attr(a, 'data-variants')
+            for r in (table(src, attr(a, 'data-variants')) or []) if len(r) == 5 and r[0] in ('Structure', 'Example')
+            for m in re.findall(r'canon `?#([\w-]+)', r[2])}
+    base_ids = {i for _, a, b in canons if attr(a, 'data-variants') for i in re.findall(r'\sid="([^"]+)"', b)}
     ids = {}
     for cid, attrs, body in canons:
         # Canon bodies: plain HTML, no demo-only parts.
         for bad, why in (('{{', 'Liquid'), ('{%', 'Liquid'), ('&lt;', 'escaped markup'), ('<form', 'a <form>'), ('id="demo-', 'a demo- id')):
             if bad in body:
                 errs.append(f'canon #{cid}: {why}')
-        for i in [cid] + re.findall(r'\sid="([^"]+)"', body):
+        for i in [cid] + [i for i in re.findall(r'\sid="([^"]+)"', body) if cid not in alts or i not in base_ids]:
             ids[i] = ids.get(i, 0) + 1
     errs += [f'id "{i}" used {n} times across canons' for i, n in ids.items() if n > 1]
 

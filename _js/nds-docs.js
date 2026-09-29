@@ -15,6 +15,7 @@
  * while that option is set:  key: value  set an option · canon #id  add a part's options.
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
  * data-preview="run" on an HTML canon does the same for markup that leaves the card (a FAB), with Clear.
+ * data-preview="js" runs the JS tab after each render, for a component with no init (Sort).
  * data-harness="form" renders the preview inside a form with Validate and Reset buttons, outside the code.
  * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
  * stays in place, disabled, and its tooltip says why.
@@ -341,6 +342,8 @@
                 // A default choice is the canon as written, so it adds nothing.
                 order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'insert'); });
                 order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'markup'); });
+                // A JS part whose create({ k: v }) target a markup row just set lands on a second pass.
+                if (root === call) order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'insert'); });
             });
             showApplicable();
             // Dark: data-theme="dark" on the markup's outer element, so the copied code carries it.
@@ -390,6 +393,7 @@
                 preview.setAttribute('data-theme', 'dark');
             }
             NDS.Init.mount(slot);
+            if (script.getAttribute('data-preview') === 'js') new Function(js)();
             // The Validate and Reset buttons show only while the field has a rule that can fail.
             var acts = preview.querySelector('[data-demo-actions]');
             if (acts) acts.hidden = !slot.querySelector(RULES);
@@ -538,6 +542,11 @@
             box.hidden = !box.hidden;
             toggle.setAttribute('aria-expanded', String(!box.hidden));
         });
+    });
+
+    // data-preview="js": a component with no init (Sort) starts from its JS tab's call, the page's own canon.
+    document.querySelectorAll('script[data-canon][data-preview="js"]').forEach(function (s) {
+        new Function(dedent(document.getElementById(s.getAttribute('data-js')).textContent))();
     });
 
     // Each preview card's view toggles. Dark on a builder card goes through the builder, so the
