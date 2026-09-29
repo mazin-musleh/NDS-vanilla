@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/09/2026 - 09:23 PM"
+last_edit: "29/09/2026 - 10:35 PM"
 ---
 
 <section id="swiperOverview" class="nds-content-section nds-doc-overview">
@@ -97,108 +97,64 @@ Pick another component when:
   </div>
 </div>
 </script>
-<script type="text/html" id="swiper-max" data-canon>
-<section class="nds-content-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Related Services</h2>
-      <p class="nds-section-description">Other government services that may be relevant to you.</p>
-    </div>
-  </div>
-  <div class="nds-section-body nds-max-width">
-    <div class="nds-block">
-      <div class="nds-swiper" style="--max-slides: 3; --mid-slides: 2; --min-slides: 1">
-        <div class="nds-swiper-wrapper">
-          <div class="nds-swiper-slide">
-            <div class="nds-card nds-stroke">
-              <div class="nds-card-content">
-                <span class="nds-card-title">Passport Renewal</span>
-                <p class="nds-card-description">Renew a passport online and collect it from the nearest office.</p>
-              </div>
-            </div>
-          </div>
-          <div class="nds-swiper-slide">
-            <div class="nds-card nds-stroke">
-              <div class="nds-card-content">
-                <span class="nds-card-title">Vehicle Registration</span>
-                <p class="nds-card-description">Register a new vehicle or transfer its ownership.</p>
-              </div>
-            </div>
-          </div>
-          <div class="nds-swiper-slide">
-            <div class="nds-card nds-stroke">
-              <div class="nds-card-content">
-                <span class="nds-card-title">Business License</span>
-                <p class="nds-card-description">Apply for a commercial license and track the request.</p>
-              </div>
-            </div>
-          </div>
-          <div class="nds-swiper-slide">
-            <div class="nds-card nds-stroke">
-              <div class="nds-card-content">
-                <span class="nds-card-title">National Address</span>
-                <p class="nds-card-description">Register or update the national address of a home.</p>
-              </div>
-            </div>
-          </div>
-          <div class="nds-swiper-slide">
-            <div class="nds-card nds-stroke">
-              <div class="nds-card-content">
-                <span class="nds-card-title">Traffic Violations</span>
-                <p class="nds-card-description">View traffic violations and pay them in one step.</p>
-              </div>
-            </div>
-          </div>
-          <div class="nds-swiper-slide">
-            <div class="nds-card nds-stroke">
-              <div class="nds-card-content">
-                <span class="nds-card-title">Appointments</span>
-                <p class="nds-card-description">Book, change or cancel an appointment at a service center.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="nds-swiper-navigation" hidden>
-          <div class="nds-swiper-buttons">
-            <button type="button" class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" aria-label="Previous slide"></button>
-            <button type="button" class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" aria-label="Next slide"></button>
-          </div>
-          <div class="nds-swiper-pagination"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-</script>
 <script type="text/html" id="swiper-hero" data-canon>
 <section class="nds-hero-section">
   <div class="nds-swiper nds-hero nds-oncolor">
     <div class="nds-swiper-wrapper">
       <div class="nds-swiper-slide nds-content-wrapper">
-        <div class="nds-hero-image-wrapper">
+        <div class="nds-hero-image-wrapper" style="--overlay: 0.8;">
           <img src="../docs-assets/img/home_hero_bg_md.webp" class="nds-hero-image" alt="" fetchpriority="high">
         </div>
         <div class="nds-section-body">
           <h2 class="nds-section-title">Government Services</h2>
           <p class="nds-section-description">Find a service, apply online and track the request.</p>
+          <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary nds-oncolor nds-md">
+              <span class="nds-label">Learn More</span>
+            </a>
+          </div>
         </div>
       </div>
       <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-hero-image-wrapper">
-          <img data-src="../assets/img/riyadhcenter.webp" class="nds-hero-image" alt="">
+        <div class="nds-hero-image-wrapper" style="--overlay: 0.5;">
+          <img data-src="../docs-assets/events/foundation_day/Hero_bg.webp" class="nds-hero-image" alt="">
         </div>
         <div class="nds-section-body">
-          <h2 class="nds-section-title">Service Centers</h2>
-          <p class="nds-section-description">Book an appointment at the nearest service center.</p>
+          <h2 class="nds-section-title">Our Story</h2>
+          <p class="nds-section-description">A founding we cherish, a future we shape.</p>
+          <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary nds-oncolor nds-md">
+              <span class="nds-label">Learn More</span>
+            </a>
+          </div>
         </div>
       </div>
       <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-hero-image-wrapper">
-          <img data-src="../assets/img/riyadhcenter3s.webp" class="nds-hero-image" alt="">
+        <div class="nds-hero-image-wrapper" style="--overlay: 0;">
+          <img data-src="../docs-assets/events/Hajj/darkhero_ltr.webp" class="nds-hero-image" alt="">
         </div>
         <div class="nds-section-body">
-          <h2 class="nds-section-title">Open Data</h2>
-          <p class="nds-section-description">Download public data sets in open formats.</p>
+          <h2 class="nds-section-title">Creating a Lasting Spiritual Journey</h2>
+          <p class="nds-section-description">Our vision is to create a lasting spiritual journey that exceeds the expectations of the Guests of the Most Merciful.</p>
+          <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary nds-oncolor nds-md">
+              <span class="nds-label">Learn More</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="nds-swiper-slide nds-content-wrapper" hidden>
+        <div class="nds-hero-image-wrapper" style="--overlay: 0;">
+          <img data-src="../docs-assets/events/national_day_96/hero_bg.webp" class="nds-hero-image" alt="">
+        </div>
+        <div class="nds-section-body">
+          <h2 class="nds-section-title">Saudi National Day</h2>
+          <p class="nds-section-description">We celebrate the glory and pride of our nation.</p>
+          <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary nds-oncolor nds-md">
+              <span class="nds-label">Learn More</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -259,7 +215,6 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Cards (default) | — | — | A row of cards or images, several on a page. The usual swiper |
-| Structure | Max width | canon `#swiper-max` | — | A card row in a page section that runs past the content width to the edges of the page. `nds-max-width` on the section body, which comes after `.nds-section-wrapper` |
 | Structure | Hero (demo: + per-1) | canon `#swiper-hero` | — | Full-width slides with a background image, one at a time, at the top of a page |
 | Structure | Spotlight (demo: + per-1) | canon `#swiper-spotlight` | — | One slide in the middle at full size, with smaller slides at its sides. For a set of images or cards the user looks at one by one |
 | Per view | 3 · 2 · 1 (default) | — | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | 3 slides on a desktop, 2 on a tablet, 1 on a phone |
@@ -407,7 +362,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 - Give the slides in one swiper the same height. The tallest slide sets the height of the row.
 - Load the images of later slides with `data-src` and `data-srcset`, not `src`. Give the first image `fetchpriority="high"`.
 - Give a lazy image a width and a height, or an `aspect-ratio`. Before it loads it has no size of its own, so its skeleton does not show.
-- To run the row to the edges of the page, use the Max width structure: `nds-max-width` on the section body, after `.nds-section-wrapper`.
+- To run the row to the edges of the page, put the swiper in a section body with `nds-max-width`. See [Section](../layout/section#tier5).
 - Add `--peek` when the slides do not fit on one page, so the user sees there is more.
 - Keep a hero to three slides or fewer. Few users reach the later ones.
 - Put one element in each spotlight slide, such as an image or a card. The spotlight shrinks and grows that one element.
