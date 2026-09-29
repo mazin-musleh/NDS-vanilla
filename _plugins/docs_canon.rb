@@ -24,6 +24,7 @@ module DocsCanon
               '.nds-divider.nds-doc-divider{margin-block-start:0;--divider-line-start:24px}' \
               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px}' \
               '.nds-doc-preview>[data-demo-slot]{display:contents}' \
+              '.nds-doc-preview .nds-full-width{width:auto!important;margin-inline:calc(var(--_wrapper-padding,0px)*-1)}' \
               '.nds-doc-options{--panel-height:30svh}' \
               '@media (width < 600px){.nds-doc-options{--panel-height:35svh}}' \
               ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
