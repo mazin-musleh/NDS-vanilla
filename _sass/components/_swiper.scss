@@ -68,6 +68,9 @@
     // Per slide, not :first-child — a loop puts clones first. Capped at half a gap.
     --_b: min(var(--_bleed, 0px), var(--swiper-gap) / 2);
     --_gap: calc(var(--swiper-gap) - 2 * var(--_b));
+    // The end gutters give it back too, so a card rests where it did (no peek);
+    // with no gutter to take from, the card sits one bleed in instead.
+    --_pad: max(0px, var(--swiper-padding) - var(--_b));
 
     display: flex;
     height: 100%;
@@ -89,20 +92,27 @@
     // engine; its negative margin swallows the gap before it, so its width is
     // the whole space. Start padding stays padding, and the slide formula
     // subtracts the end space so a page still ends where the padding began.
-    padding-inline: var(--swiper-padding) 0;
+    padding-inline: var(--_pad) 0;
     // Snap padding = the gutter, so every slide rests where slide one does.
-    scroll-padding-inline: var(--swiper-padding);
+    scroll-padding-inline: var(--_pad);
     &::after {
         content: "";
-        flex: 0 0 var(--swiper-padding);
+        flex: 0 0 var(--_pad);
         margin-inline-start: calc(-1 * var(--_gap));
     }
 
+    // Scoped, not on every slide: a hero slide keeps its .nds-content-wrapper padding.
     .nds-swiper:not(.nds-hero, .nds-spotlight) > & {
         --_bleed: 2px;
+        > .nds-swiper-slide { padding-inline: var(--_b); }
     }
     .nds-swiper:not(.nds-hero, .nds-spotlight) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow) {
         --_bleed: var(--spacing-md);
+    }
+    // Inside .nds-max-width the next card starts at the screen edge and its shadow
+    // reaches in; clip one bleed in, which a card one gutter in never reaches.
+    .nds-max-width .nds-swiper:not(.nds-hero, .nds-spotlight) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow) {
+        clip-path: inset(0 var(--_b));
     }
 }
 
@@ -122,9 +132,8 @@
     // Width = (100% − end gutter − peek reserve − gap × (slides − 1)) / slides
     // 100% is the wrapper's content box, which carries only the start gutter;
     // the end gutter is the wrapper's ::after spacer, so a page subtracts it here.
-    flex: 0 0 calc((100% - var(--swiper-padding) - var(--swiper-peek) - (var(--_gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
+    flex: 0 0 calc((100% - var(--_pad) - var(--swiper-peek) - (var(--_gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
     position: relative;
-    padding-inline: var(--_b);
 
     scroll-snap-align: start;
 
