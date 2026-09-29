@@ -2,403 +2,221 @@
 layout: page
 title: Cooldown Button
 hero_title: Cooldown Button - National Design System
-hero_description: A button behavior that runs a live countdown before re-enabling, for rate-limiting resend, retry, and any action you do not want repeated rapidly.
+hero_description: A button that disables itself and counts down before it can be pressed again, for resend, retry and rate-limited actions
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/09/2026 - 09:25 PM"
+last_edit: "29/09/2026 - 08:01 AM"
 ---
 
-<!-- Resend with Loading State -->
-<section id="cooldownResend" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Resend with Loading State</h2>
-            <p class="nds-section-description">The full featured pattern for OTP, verification email, and password reset flows. The page stamps the loading state for as long as its request actually runs, while the button counts down underneath and comes back with a different label</p>
+<section id="cooldownOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A cooldown button disables itself after one click and counts down before it can be pressed again. Its label shows the countdown, then returns to its own label or to one you set. It is a `.nds-cooldown` modifier on [Button](../components/button), so every variant and size applies. The component owns only the cooldown and its countdown label.
+
+Pick another component when:
+
+- the action has no rate limit to respect: [Button](../components/button)
+
+</div>
+  </div>
+</section>
+
+<section id="cooldownMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
+    </div>
+    <div class="nds-section-body">
+<script type="text/html" id="cooldown-base" data-canon>
+<button type="button" class="nds-btn nds-secondary nds-cooldown" data-cooldown="15" data-cooldown-label="Resend in {s}s" data-resend-label="Resend">
+  <span class="nds-label">Send code</span>
+</button>
+</script>
+    </div>
+  </div>
+</section>
+
+<section id="cooldownFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-cooldown</code> on the page is wired at load, and any added later. No init call is needed.</p>
         </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Resend Code</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
-                                <button type="button" class="nds-btn nds-primary nds-cooldown"
-                                    id="cooldown-demo-resend"
-                                    data-cooldown="15"
-                                    data-cooldown-label="Resend in {s}s"
-                                    data-resend-label="Resend">
-                                    <span class="nds-label">Send code</span>
-                                </button>
-                            </div>
-                            <script>
-                            function initPage() {
-                                var btn = document.getElementById('cooldown-demo-resend');
-                                // The button owns the throttle and the countdown. The request, its
-                                // loading state and its confirmation are the page's, all from here.
-                                btn.addEventListener('nds:cooldown:triggered', function() {
-                                    NDS.State.add(btn, 'loading');
-                                    sendCode()
-                                        .then(function() {
-                                            NDS.Alert.create({
-                                                variant: 'success',
-                                                title: 'Verification code sent',
-                                                description: 'A new code has been sent to your mobile number.',
-                                                display: 'toast', position: 'top', duration: 4000
-                                            });
-                                        })
-                                        .finally(function() {
-                                            NDS.State.remove(btn, 'loading');
-                                        });
-                                });
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-clock-01"></i>
+            <span class="nds-label">Live Countdown Label</span>
+          </span>
+          <p class="nds-item-desc">The label shows the <code class="nds-inline-code lang-html">data-cooldown-label</code> text and updates every second, with each <code class="nds-inline-code lang-html">{s}</code> replaced by the seconds left.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Stable Width</span>
+          </span>
+          <p class="nds-item-desc">The label reserves its widest text from page load: the first label, the countdown at its longest, or the resend label. The button never resizes during the cooldown.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Your Loading State</span>
+          </span>
+          <p class="nds-item-desc">The component has no loading phase: a timer cannot know how long a response takes. Add <code class="nds-inline-code lang-html">data-state="loading"</code> from <code class="nds-inline-code lang-js">nds:cooldown:triggered</code>, and remove it when the response arrives. The state hides the label, so the countdown runs under the spinner.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-notification-square"></i>
+            <span class="nds-label">Your Confirmation</span>
+          </span>
+          <p class="nds-item-desc">The component shows no alert of its own. Show one with <a class="nds-color" href="../components/alert">Alert</a> when the response arrives, in the same <code class="nds-inline-code lang-js">nds:cooldown:triggered</code> listener. A failed send then never reports success.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-api"></i>
+            <span class="nds-label">Programmatic Control</span>
+          </span>
+          <p class="nds-item-desc">Start a cooldown from JavaScript, resume one after a page reload with the seconds left, or end one early.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                                // Stands in for the request this demo has no server for.
-                                function sendCode() {
-                                    return new Promise(function(resolve) { setTimeout(resolve, 1200); });
-                                }
-                            }
-                            // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
-                            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
-                            </script>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-cooldown-resend-1" id="tab-cooldown-resend-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-cooldown-resend-js" id="tab-cooldown-resend-js">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-cooldown-resend-1"
-                                        aria-labelledby="tab-cooldown-resend-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;button type="button" class="nds-btn nds-primary nds-cooldown"
-        id="cooldown-demo-resend"
-        data-cooldown="15"
-        data-cooldown-label="Resend in {s}s"
-        data-resend-label="Resend"&gt;
-  &lt;span class="nds-label"&gt;Send code&lt;/span&gt;
-&lt;/button&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-cooldown-resend-js"
-                                        aria-labelledby="tab-cooldown-resend-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-javascript code">// The button owns the throttle and the countdown. The request, its
-// loading state and its confirmation are yours, all from this event.
-// [data-state~="loading"] hides the label, so the countdown ticks under
-// the spinner and is already correct when the state comes off.
-var btn = document.getElementById('cooldown-demo-resend');
+<section id="cooldownPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-btn.addEventListener('nds:cooldown:triggered', function() {
-    NDS.State.add(btn, 'loading');
-    sendCode()
-        .then(function() {
-            NDS.Alert.create({
-                variant: 'success',
-                title: 'Verification code sent',
-                description: 'A new code has been sent to your mobile number.',
-                display: 'toast', position: 'top', duration: 4000
-            });
-        })
-        .finally(function() {
-            NDS.State.remove(btn, 'loading');
-        });
+- Use it for a resend action with a per-user rate limit, such as a one-time code (OTP), a verification email or a password reset. Set `data-cooldown` to the server's limit exactly.
+- Use it for a retry button after a failed request, so the user cannot send repeated requests to a server that is already failing.
+- Do not use it to block a double form submit. Disable the submit button while the form sends instead.
+- Do not use it for cooldowns over a few minutes. A long countdown reads as nagging and ties the user to the page. Show the time when the action is available again instead.
+- Put the button text in a `<span class="nds-label">`. The countdown writes into that span. A button without one never counts down and logs a console warning.
+- Omit `data-resend-label` when the action reads the same every time, such as "Try again". The button then returns to its first label.
+- Keep the countdown text short, such as "Resend in 30s". Stable Width holds the button at its longest text, so a long countdown makes it wide at rest too. Shorten the wording, not the CSS.
+- Call `NDS.CooldownButton.reset()` when the request fails. The user can then retry at once, instead of waiting out a cooldown for a send that failed.
+
+</div>
+  </div>
+</section>
+
+<section id="cooldownApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-cooldown` | `.nds-cooldown` | Seconds to hold the cooldown. Required, unless `start()` passes `seconds`. A value of 0 or less turns the cooldown off. Read once, when the button is wired. Editing it later has no effect |
+| `data-cooldown-label` | `.nds-cooldown` | Countdown text. Every `{s}` is replaced by the seconds left. Default `{s}`: the number alone. Only `{s}` counts down: `%s`, `%d` and `{seconds}` show as typed, and a label with no `{s}` logs a console warning when the button is wired. Read at the start of each cooldown |
+| `data-resend-label` | `.nds-cooldown` | Label shown when any cooldown ends, by the timer or by `reset()`. Omit it to restore the label the cooldown started with. Read at the start of each cooldown |
+| `data-state="cooldown"` | `.nds-cooldown` | Set by the component, together with `disabled`, during the cooldown. Read it to style or query a button during its cooldown. Do not set it yourself |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.CooldownButton.init()` | Wires every `.nds-cooldown` on the page, now and later. Runs once at load. Call it only if you disabled the loader |
+| `NDS.CooldownButton.start(btn, opts?)` | Starts a cooldown by hand. Does nothing while a cooldown is already running |
+| `NDS.CooldownButton.reset(btn)` | Ends the cooldown early and restores the button, as a finished cooldown does |
+{: .nds-table .nds-responsive}
+
+| Option | Default | Effect |
+|---|---|---|
+| `seconds` | `data-cooldown` | Seconds to run instead. With it, a button needs no `data-cooldown` and can run entirely from JavaScript |
+| `silent` | `false` | Skip `nds:cooldown:triggered`, for a send that already happened elsewhere. `tick` and `end` still fire |
+{: .nds-table .nds-responsive}
+
+All events bubble.
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:cooldown:triggered` | `.nds-cooldown`, when the cooldown starts. Skipped by `silent` | None. Issue the request here, and confirm from its response |
+| `nds:cooldown:tick` | `.nds-cooldown`, every second during the cooldown, starting at the full duration | `{ remaining }`: the seconds left |
+| `nds:cooldown:end` | `.nds-cooldown`, when the cooldown finishes or `reset()` is called | None. The button is enabled again and its label restored |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="cooldown-js" data-canon data-lang="js">
+const btn = document.querySelector('#resend-btn');
+
+// Add the listener before any start() call, so the first cooldown reaches it.
+btn.addEventListener('nds:cooldown:triggered', async () => {
+  NDS.State.add(btn, 'loading');
+  try {
+    // NDS.request throws on a non-OK status, so a failed send reaches
+    // the catch below. A plain fetch resolves on one, reporting a
+    // failed resend as though it had worked.
+    await NDS.request('/api/resend', { method: 'POST' });
+    NDS.Alert.create({
+      variant: 'success', title: 'Code sent',
+      display: 'toast', position: 'top', duration: 4000
+    });
+  } catch (err) {
+    NDS.Alert.create({
+      variant: 'error', title: 'Could not send the code',
+      display: 'toast', position: 'top', duration: 0
+    });
+    // Let the user retry at once, instead of waiting out a cooldown
+    // for a send that failed.
+    NDS.CooldownButton.reset(btn);
+  } finally {
+    NDS.State.remove(btn, 'loading');
+  }
 });
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Simple Cooldown -->
-<section id="cooldownSimple" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Simple Cooldown</h2>
-            <p class="nds-section-description">For rate-limited retry buttons where you just need to prevent rapid repeats without a confirmation step</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Retry</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
-                                <button type="button" class="nds-btn nds-secondary nds-cooldown"
-                                    data-cooldown="10"
-                                    data-cooldown-label="Try again in {s}s">
-                                    <span class="nds-label">Try again</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-cooldown-simple-1" id="tab-cooldown-simple-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-cooldown-simple-1"
-                                        aria-labelledby="tab-cooldown-simple-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;button type="button" class="nds-btn nds-secondary nds-cooldown"
-        data-cooldown="10"
-        data-cooldown-label="Try again in {s}s"&gt;
-  &lt;span class="nds-label"&gt;Try again&lt;/span&gt;
-&lt;/button&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Built-in Features -->
-<section id="cooldownFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates on every <code class="nds-inline-code lang-html">.nds-cooldown</code> on the page and on any element added later. No wiring code required.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-loading-03"></i>
-                            <span class="nds-label">Loading State Is Yours</span>
-                        </span>
-                        <p class="nds-item-desc">The component owns no loading phase, because a fixed timer cannot know how long a response takes. Stamp <code class="nds-inline-code lang-html">data-state="loading"</code> from <code class="nds-inline-code lang-js">nds:cooldown:triggered</code> and clear it when the response lands. The state hides the label, so the countdown ticks under the spinner.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-timer-02"></i>
-                            <span class="nds-label">Live Countdown Label</span>
-                        </span>
-                        <p class="nds-item-desc">Swaps the button label to your template every second, with every <code class="nds-inline-code lang-html">{s}</code> replaced by the seconds remaining, until the cooldown ends.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-notification-square"></i>
-                            <span class="nds-label">Confirmation You Control</span>
-                        </span>
-                        <p class="nds-item-desc">The component fires no toast of its own. Issue your request from <code class="nds-inline-code lang-js">nds:cooldown:triggered</code> and confirm from the response, so a failed send never reports success.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-reload"></i>
-                            <span class="nds-label">Post-send Label Swap</span>
-                        </span>
-                        <p class="nds-item-desc">After the first completed cycle the button can show a different label (for example "Send code" becomes "Resend").</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Trigger the cycle from JS, abort a cooldown in flight, and hook four lifecycle events to wire your own side effects around the built-in behavior.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Usage Guidelines -->
-<section id="cooldownGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use for <strong>resend flows</strong> where the backend imposes a per-user rate limit (OTP, verification email, password reset) and you want the UI to match that limit exactly</li>
-                    <li>Use for <strong>retry buttons</strong> after a failed request, to stop users from hammering an endpoint that is already struggling</li>
-                    <li>Show loading with the button's own <code class="nds-inline-code lang-html">data-state="loading"</code>: add it from <code class="nds-inline-code lang-js">nds:cooldown:triggered</code> and remove it when the response lands. Never model the wait with a fixed timer — it is wrong whichever way the real request goes</li>
-                    <li>Call <code class="nds-inline-code lang-js">NDS.CooldownButton.reset()</code> when the request fails, so the user can retry at once rather than serving out a cooldown for a call that never reached the server</li>
-                    <li>Do not use this component as a generic submit guard for forms. Use a regular disabled state tied to the form's submission lifecycle instead</li>
-                    <li>Do not use it for long cooldowns (over a few minutes). The countdown reads as nagging and ties the user to the page. Show a timestamp and refresh-on-load instead</li>
-                    <li>Set <code class="nds-inline-code lang-html">data-resend-label</code> when the first action and the repeat action read differently. "Send code" on first use and "Resend" on every cycle after is clearer than leaving "Resend" on a button that has never been clicked</li>
-                    <li>Keep countdown templates short. "Resend in 30s" fits; a full sentence does not. The label redraws every second</li>
-                    <li>Confirm the send from the response, not from the click. Listen for <code class="nds-inline-code lang-js">nds:cooldown:triggered</code>, issue the request there, and call <a class="nds-color" href="{{ 'components/alert' | relative_url }}">NDS.Alert</a>.create from its success path — with an error variant on the failure path. A confirmation tied to the click reports success even when the request failed</li>
-                    <li>Write a concrete confirmation message ("A new code has been sent to your mobile number.") rather than a generic "Success". Users need to know what succeeded</li>
-                    <li>Cooldowns under 5 seconds feel abrupt. Cooldowns over 60 seconds should trigger a dedicated "please wait" screen, not a button label</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-cooldown</code></td><td>Seconds to hold the cooldown. Required to opt in. Non-positive values skip the cooldown entirely. Read once at wire time; editing after page load has no effect</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-cooldown-label</code></td><td>Countdown text template. <code class="nds-inline-code lang-html">{s}</code> is replaced by the seconds remaining, every time it appears, so a bilingual label can name it once per language. Default <code class="nds-inline-code lang-html">{s}</code> (number only). This is not printf: a label using <code class="nds-inline-code lang-html">%s</code>, <code class="nds-inline-code lang-html">%d</code>, <code class="nds-inline-code lang-html">{seconds}</code> or a typo never counts down, and logs an <code class="nds-inline-code lang-js">NDS CooldownButton</code> console warning when the button is wired</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-resend-label</code></td><td>Label to restore after the first completed cycle. Omit to keep the initial label across cycles. A mid-loading <code class="nds-inline-code lang-js">reset()</code> always restores the initial label</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Events</h3>
-                <p>All events bubble and fire on the button element. Listen for them to wire the request, its confirmation, analytics, and any parallel UI updates around the countdown.</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Event</th><th>Fires</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:triggered</code></td><td>Loading ends and the cooldown starts. Issue your request here, and confirm from its response</td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:tick</code></td><td>Every second during the cooldown. <code class="nds-inline-code lang-js">event.detail.remaining</code> is the seconds left, including a first tick at the full duration</td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:end</code></td><td>Cooldown completed naturally or <code class="nds-inline-code lang-js">reset()</code> was called. Button is re-enabled and the label is restored</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.CooldownButton</strong> API provides programmatic control for dynamically added buttons and for aborting a cooldown in flight. Auto-initialization handles everything for static markup; no JS call is needed for the common case.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Auto-initialization ──────────────────────────────
-// Every .nds-cooldown on the page is wired on page load.
-// Elements added to the DOM later are wired automatically.
-// Call init() manually only if you disabled the loader.
-NDS.CooldownButton.init();
-
-// ── Trigger the cycle programmatically ───────────────
-// Useful when the cooldown should start from a flow other
-// than the button's own click (e.g. after a form submit).
-const btn = document.querySelector('#my-resend-btn');
+// Start a cooldown by hand, such as after a form submit elsewhere.
+// Use one of these forms. A call during a running cooldown does nothing.
 NDS.CooldownButton.start(btn);
 
-// The send already happened elsewhere — throttle the button
-// WITHOUT re-running the request handler on
-// nds:cooldown:triggered. tick and end still fire.
+// Or: the send already happened. Start the cooldown without firing
+// nds:cooldown:triggered again.
 NDS.CooldownButton.start(btn, { silent: true });
 
-// Resume a cooldown across a page load: the user has 20 of
-// the 30 seconds left. seconds is its own opt-in, so a button
-// with no data-cooldown can be driven entirely from JS.
+// Or: resume a cooldown after a page reload, with 20 of 30 seconds left.
 NDS.CooldownButton.start(btn, { seconds: 20, silent: true });
+</script>
 
-// ── Abort an in-flight cooldown ──────────────────────
-// Re-enables the button, clears the tick timer, and restores the
-// post-send (data-resend-label) label if set, otherwise the original.
-NDS.CooldownButton.reset(btn);
+The full API is in the banner of `_js/nds-cooldown-button.js`.
 
-// ── Listen for lifecycle events ──────────────────────
-btn.addEventListener('nds:cooldown:triggered', () =&gt; {
-    // The countdown just started. Issue the request here — see
-    // "Bind the cooldown to a real request" below for the full shape.
-});
+</div>
+  </div>
+</section>
 
-btn.addEventListener('nds:cooldown:tick', (e) =&gt; {
-    console.log('seconds remaining:', e.detail.remaining);
-});
-
-btn.addEventListener('nds:cooldown:end', () =&gt; {
-    // Button is re-enabled and restored.
-});
-
-// ── Bind the cooldown to a real request ──────────────
-// The component owns the throttle and the label. The request, its
-// loading state and its confirmation are yours — all from one event.
-//
-// The countdown starts on the click, because that is when the endpoint
-// was hit. There is no built-in loading phase: a fixed timer cannot know
-// how long a response takes. Stamp the button's own loading state and
-// clear it when the response lands, and the state is real.
-//
-// [data-state~="loading"] hides the label, so the countdown ticks under
-// the spinner and is already at the right number when the state comes off.
-btn.addEventListener('nds:cooldown:triggered', async () =&gt; {
-    NDS.State.add(btn, 'loading');
-    try {
-        // NDS.request throws on a non-OK status, so a 500 reaches the catch
-        // below. Plain fetch resolves on one, reporting a failed resend as
-        // though it had worked.
-        await NDS.request('/api/resend', { method: 'POST' });
-        NDS.Alert.create({
-            variant: 'success', title: 'Code sent',
-            display: 'toast', position: 'top', duration: 4000
-        });
-    } catch (err) {
-        NDS.Alert.create({
-            variant: 'error', title: 'Could not send the code',
-            display: 'toast', position: 'top', duration: 0
-        });
-        // Let the user retry immediately instead of serving out a cooldown
-        // for a request that never reached the server.
-        NDS.CooldownButton.reset(btn);
-    } finally {
-        // Always clear it — the component never touches 'loading'.
-        NDS.State.remove(btn, 'loading');
-    }
-});
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<section id="cooldownRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Registration](../examples/registration): a resend code button.
+- [Sign In](../examples/sign-in): a captcha refresh and an OTP resend.
+- [Form Template](../templates/form-template): an OTP resend button inside a form.
+
+</div>
+  </div>
 </section>
