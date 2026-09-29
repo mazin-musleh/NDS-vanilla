@@ -212,59 +212,6 @@ Pick another component when:
   </div>
 </section>
 </script>
-<script type="text/html" id="swiper-deck" data-canon>
-<section class="nds-hero-section">
-  <div class="nds-swiper nds-hero nds-oncolor nds-deck" style="--total: 4; --deck-card: 360px">
-    <div class="nds-swiper-wrapper">
-      <div class="nds-swiper-slide nds-content-wrapper">
-        <div class="nds-section-body">
-          <h2 class="nds-section-title">King Abdullah Financial District</h2>
-          <p class="nds-section-description">The open card is at the front. The other cards wait behind it as strips.</p>
-        </div>
-      </div>
-      <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-section-body">
-          <h2 class="nds-section-title">Digital Government</h2>
-          <p class="nds-section-description">Pick a strip, a bullet or an arrow. On a phone, drag the deck.</p>
-        </div>
-      </div>
-      <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-section-body">
-          <h2 class="nds-section-title">Smart Services</h2>
-          <p class="nds-section-description">The strips keep their order after the open card and wrap around.</p>
-        </div>
-      </div>
-      <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-section-body">
-          <h2 class="nds-section-title">National Design System</h2>
-          <p class="nds-section-description">Four slides and four cards, in the same order.</p>
-        </div>
-      </div>
-    </div>
-    <div class="nds-swiper-deck">
-      <button type="button" class="nds-swiper-card" aria-label="Go to slide 1: King Abdullah Financial District">
-        <img src="../assets/img/riyadhcenter.webp" alt="" fetchpriority="high">
-      </button>
-      <button type="button" class="nds-swiper-card" aria-label="Go to slide 2: Digital Government">
-        <img src="../assets/img/riyadhcenter_ai.webp" alt="" loading="lazy">
-      </button>
-      <button type="button" class="nds-swiper-card" aria-label="Go to slide 3: Smart Services">
-        <img src="../assets/img/riyadhcenter_IQ.webp" alt="" loading="lazy">
-      </button>
-      <button type="button" class="nds-swiper-card" aria-label="Go to slide 4: National Design System">
-        <img src="../assets/img/riyadhcenter3s.webp" alt="" loading="lazy">
-      </button>
-    </div>
-    <div class="nds-swiper-navigation" hidden>
-      <div class="nds-swiper-buttons">
-        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"></button>
-        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"></button>
-      </div>
-      <div class="nds-swiper-pagination"></div>
-    </div>
-  </div>
-</section>
-</script>
     </div>
   </div>
 </section>
@@ -276,14 +223,13 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-A Per view choice has one row for each knob it changes: write them all in the swiper's `style`. The Hero and Deck structures always show one slide, so Per view stays at 1 on them, and Peek and Skeleton are off.
+A Per view choice has one row for each knob it changes: write them all in the swiper's `style`. The Hero structure always shows one slide, so Per view stays at 1 on them, and Peek and Skeleton are off.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Cards (default) | — | — | A row of cards or images, several on a page. The usual swiper |
 | Structure | Max width | canon `#swiper-max` | — | A card row in a page section that runs past the content width to the edges of the page. `nds-max-width` on the section body, which comes after `.nds-section-wrapper` |
 | Structure | Hero (demo: + per-1) | canon `#swiper-hero` | — | Full-width slides with a background image, one at a time, at the top of a page |
-| Structure | Deck (demo: + split) (demo: + per-1) | canon `#swiper-deck` | — | A hero with a deck of image cards, one for each slide. For a set where each slide has its own artwork |
 | Per view | 3 · 2 · 1 (default) | — | `.nds-swiper:not(.nds-hero)` | 3 slides on a desktop, 2 on a tablet, 1 on a phone |
 | Per view | 4 · 3 · 2 | `--max-slides: 4` | `.nds-swiper:not(.nds-hero)` | Smaller items, such as logos or short cards |
 | Per view | 4 · 3 · 2 | `--mid-slides: 3` | `.nds-swiper:not(.nds-hero)` | The same, on a tablet |
@@ -292,15 +238,14 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | Per view | 1 (id: per-1) | `--mid-slides: 1` | `.nds-swiper:not(.nds-hero)` | The same, on a tablet |
 | Per view | 1 (id: per-1) | — | `.nds-swiper.nds-hero` | A hero always shows one slide. It needs no knob |
 | Arrows | Beside bullets (default) | — | — | The arrows at the start of the navigation row and the bullets at its end |
-| Arrows | Split (id: split) | `.nds-center` | `.nds-swiper-navigation` | The bullets in the middle of the row and one arrow at each end |
-| Arrows | Middle | `.nds-middle` | `.nds-swiper:not(.nds-deck)` | One arrow on each side of the slides, at their middle, and no bullets. Tablet and wider: a phone shows the navigation row |
+| Arrows | Split | `.nds-center` | `.nds-swiper-navigation` | The bullets in the middle of the row and one arrow at each end |
+| Arrows | Middle | `.nds-middle` | `.nds-swiper` | One arrow on each side of the slides, at their middle, and no bullets. Tablet and wider: a phone shows the navigation row |
 | Bullets | LG (default) | — | — | 16px bullets. It needs no class |
 | Bullets | MD | `.nds-md` | `.nds-swiper-pagination` | 12px bullets |
 | Bullets | SM | `.nds-sm` | `.nds-swiper-pagination` | 8px bullets |
 | Peek | Peek | `--peek: 40px` | `.nds-swiper:not(.nds-hero)` | Shows 40px of the next slide, so the user sees there is more. Any length works |
-| Loop | Loop | `[data-swiper-loop]` | `.nds-swiper:not(.nds-deck)` | An endless row: the first slide follows the last. A deck loops without it |
+| Loop | Loop | `[data-swiper-loop]` | `.nds-swiper` | An endless row: the first slide follows the last |
 | Skeleton | Skeleton | `.nds-loading` | `.nds-swiper:not(.nds-hero)` | Every card shows as a skeleton while its data loads. Remove the class when the data is in |
-| Stacked | Stacked | `.nds-stacked` | `.nds-swiper.nds-deck` | The deck sits above the text at every width, with the open card in the middle |
 {: #swiperVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -338,11 +283,6 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 {: .nds-block-title}
 
 `nds-hero` shows one full-width slide at a time, with no gap, inside a [Hero](../ui-shell/hero) section. The navigation row sits over the bottom of the slides. Write `hidden` on every slide after the first. The script shows those slides when the hero first comes into view, so the browser does not decode their images before then.
-
-### Deck
-{: .nds-block-title}
-
-`nds-deck` adds a `.nds-swiper-deck` of `.nds-swiper-card` buttons, one for each slide, in the same order. On a desktop the deck sits at the end of the hero: the open card is at the front and the others fan out behind it as strips. A tap on a card opens its slide, and a deck loops by default. Below the desktop width the deck moves above the text, with the open card in the middle and its two neighbors at the sides. There, the user can drag the deck to page it. `nds-stacked` keeps this layout at every width, and the hero grows to fit it.
 
 </div>
   </div>
@@ -433,8 +373,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 - Add `--peek` when the slides do not fit on one page, so the user sees there is more.
 - Keep a hero to three slides or fewer. Few users reach the later ones.
 - With `nds-middle` on a hero, keep the slide text away from the sides, or center it. The arrows sit over the edges of the slide.
-- Give each arrow an `aria-label` that names its direction, and each deck card an `aria-label` that names its slide.
-- Write the deck cards in slide order. The first card is the open one.
+- Give each arrow an `aria-label` that names its direction.
 
 </div>
   </div>
@@ -452,7 +391,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 
 | Class | Element | Effect |
 |---|---|---|
-| `nds-oncolor` | `.nds-swiper` | Light bullets, arrows and section text, for a dark or image background. The Hero and Deck structures have it. It reaches subtle arrows only: add `nds-oncolor` to a primary or neutral arrow yourself |
+| `nds-oncolor` | `.nds-swiper` | Light bullets, arrows and section text, for a dark or image background. The Hero structure has it. It reaches subtle arrows only: add `nds-oncolor` to a primary or neutral arrow yourself |
 | `nds-swiper-buttons` | `div` in `.nds-swiper-navigation` | Holds the previous and next buttons |
 | `nds-prev`, `nds-next` | `.nds-btn` | Makes the button move one page, and gives it its arrow icon. Style it as any button. The buttons can sit anywhere in the swiper |
 | `nds-bullet` | `button` | A bullet. The script makes them in `.nds-swiper-pagination` |
@@ -469,7 +408,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | `hidden` | `.nds-swiper-navigation`, hero slides after the first | Hides them until the script shows them |
 | `data-state` | `.nds-swiper` | The script writes `at-start` on the first page and `at-end` on the last, and both when there is one page. Use them to style the ends: `.nds-swiper[data-state~="at-end"]` |
 | `data-swiper-clone` | `.nds-swiper-clone` | The index of the real slide the copy repeats. Use it to update the copies of a slide you change at runtime |
-| `data-status` | `.nds-bullet`, `.nds-swiper-card` | The script writes `active` on the current bullet and the open card, and `near` on the two cards beside it |
+| `data-status` | `.nds-bullet` | The script writes `active` on the current bullet |
 | `data-swiper-peek` | `.nds-swiper` | The script writes it while the peek shows |
 {: .nds-table .nds-responsive}
 
@@ -488,12 +427,7 @@ Set these in the `style` of `.nds-swiper`. Set the bullet colors on the swiper o
 | `--peek` | unset | Length of the next slide left showing, such as `40px`. `0px` is no peek |
 | `--gap` | `var(--spacing-xl)` | Space between slides |
 | `--padding` | `0px` | Space at each end of the row. Inside `.nds-max-width` it is the gap, so the row runs to the screen edge |
-| `--total` | `1` | Number of slides. The script writes it. Write it yourself on a deck, which sizes itself from it before the script runs |
-| `--deck-card` | `300px` | Width of the open card. In a hero on a desktop, the default is the hero's height times `--deck-ratio` |
-| `--deck-ratio` | `1` | Shape of a card, as width divided by height. Above `1` is landscape. Write a number, not a fraction: `1.777`, not `16/9` |
-| `--deck-strip` | `var(--spacing-5xl)` | Width of a card behind the open one. The fan layout only: a stacked deck has no strips |
-| `--deck-step` | `0.918` | Stacked deck: distance of a neighbor from the open card, as a share of the card's width. `1` puts their edges together |
-| `--deck-scale` | `0.73` | Stacked deck: size of a neighbor, from `0` to `1` |
+| `--total` | `1` | Number of slides. The script writes it |
 | `--swiper-bullet-default` | `var(--swiper-bullet-background-default)` | Bullet color |
 | `--swiper-bullet-default-hovered` | `var(--swiper-bullet-background-hovered)` | Bullet color on hover |
 | `--swiper-bullet-active` | `var(--swiper-bullet-background-active)` | Color of the current bullet |

@@ -23,8 +23,8 @@
   }
 }
 
-// ── Type 2 hero — six slides on the swiper's deck mode. The mode owns the
-//    cards, the fan and the mobile stack (components/_swiper.scss); this block
+// ── Type 2 hero — six slides beside a deck of cards. The DECK block at the
+//    end of this file owns the cards, the fan and the mobile stack; this block
 //    adds only the campaign: its six colours and pattern, the Saudi-font title
 //    with the typed word in the slide's accent, and an instant text switch. The pack
 //    stamps nds-nd96 + the active slide's nds-nd96-<theme> on the section. ──
@@ -130,7 +130,7 @@
   // short body in place of the long one.
   @include tablet(max) {
     // The stacked deck sizes itself, card included — the campaign only turns
-    // the gradient (see the deck mode's --deck-card if it ever needs its own).
+    // the gradient (see the deck's --deck-card if it ever needs its own).
     --_nd96-angle: 180deg;
 
     .nds-section-body {
@@ -241,9 +241,8 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// DECK MODE — a copy of the DECK MODE section of _sass/components/_swiper.scss,
-// so the pack draws the deck on runtimes older than the mode (1.13); the pack
-// JS carries the matching driver. Keep the two in sync when the mode changes.
+// DECK — the pack's own card deck beside the swiper track. Core has no deck
+// mode; the pack JS (adoptDeck) drives it on any runtime.
 // ════════════════════════════════════════════════════════════════════════════
 
 // ==============================================
@@ -253,7 +252,7 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
 // front on top, each next one one strip further back and under it; the image
 // inside is shifted so the visible strip is its leading edge. A move is boxes
 // and images sliding, nothing else. JS writes --rel / --srel and data-status on each card
-// (nds-swiper.js updateDeck); until it runs, the cards read their own DOM order
+// (the pack's adoptDeck); until it runs, the cards read their own DOM order
 // (see the pre-init block below), so the markup is cards in order and nothing
 // else. While a finger holds the deck, --drag carries the cards with it.
 // ==============================================

@@ -20,7 +20,7 @@
 // removes all three. Token writes are attribute-only; persistence stays the switcher's job.
 //
 // Two hero types (data-type on the script tag):
-//   2 (default) the official six-slide campaign hero on the swiper's deck mode —
+//   2 (default) the official six-slide campaign hero with its deck of cards —
 //               the site's own slides step aside while the pack is on
 //   1           one plain slide, the standard hero markup with the event photo
 //
@@ -364,9 +364,9 @@
         if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
     }
 
-    // ── Type 2: six slides + the swiper's deck of cards ─────────────────────
-    // Slides are standard hero markup; the cards are the deck mode's own markup
-    // (components/swiper: .nds-deck). The section carries nds-nd96 + the active
+    // ── Type 2: six slides + the pack's deck of cards ───────────────────────
+    // Slides are standard hero markup; the cards are the pack's deck markup
+    // (.nds-deck, drawn by the pack's stylesheet). The section carries nds-nd96 + the active
     // slide's theme class, which is all the stylesheet keys on.
     var DECK_CLASS = 'nds-nd96';
     var _siteSlides = [], _siteTotal = '', _navHadCenter = false, _pageHadMd = false;
@@ -449,7 +449,7 @@
         });
         wrapper.parentNode.insertBefore(deck, wrapper.nextSibling);
         swiper.classList.add('nds-deck');
-        swiper.setAttribute('data-swiper-loop', '');   // deck mode loops on its own; older runtimes need the attribute
+        swiper.setAttribute('data-swiper-loop', '');   // the deck wraps, so the track does too
         swiper.style.setProperty('--total', String(SLIDES.length));
         var nav = swiper.querySelector('.nds-swiper-navigation'), page = swiper.querySelector('.nds-swiper-pagination');
         _navHadCenter = !!(nav && nav.classList.contains('nds-center'));
@@ -467,7 +467,7 @@
         var dirWatch = new MutationObserver(retext);
         dirWatch.observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
         sig.addEventListener('abort', function () { dirWatch.disconnect(); });
-        // Runtimes older than deck mode: adopt the swiper once it initializes
+        // Adopt the swiper once it initializes
         // (and again after every reinit — the attribute comes back each time).
         var initWatch = new MutationObserver(function () {
             if (swiper.hasAttribute('data-nds-swiper-initialized')) adoptDeck(swiper);
@@ -620,16 +620,16 @@
         if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
     }
 
-    // ── Older runtimes (before the swiper's deck mode, 1.13) ────────────────
-    // The pack's stylesheet already carries the deck CSS. This drives what the
-    // runtime lacks: card placement on every index change, the change event the
+    // ── The deck driver ──────────────────────────────────────────────────────
+    // The pack's stylesheet carries the deck CSS. This drives what the swiper
+    // lacks: card placement on every index change, the change event the
     // text follows, clone twins for syncClones (1.12 loops; earlier runtimes do
     // not, and there the arrows stop at the ends while auto-advance, drag and the
     // fan still wrap by index), the stacked-layout drag, and an instant text
-    // switch. A runtime with deck mode is left alone.
+    // switch.
     function adoptDeck(swiper) {
         var inst = swiper._ndsSwiper;
-        if (!inst || inst.updateDeck || inst._nd96Adopted) return;
+        if (!inst || inst._nd96Adopted) return;
         inst._nd96Adopted = true;
         var cards = Array.prototype.slice.call(swiper.querySelectorAll('.nds-swiper-card'));
         var n = cards.length;

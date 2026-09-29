@@ -123,7 +123,7 @@ hero_float_actions:
                     <li><strong>Type 2</strong> (default): the official campaign hero. Six slides, each with its own card, colour and typed word, moving on by themselves. Your own hero slides step aside while the pack is on and return when it is removed. The content is fixed.</li>
                     <li><strong>Type 1</strong>: one plain slide with the event photo, added in front of your own slides. The title, description, image and button attributes in the table below apply to it.</li>
                     <li><strong>Files</strong>: download the zip and copy its files into your own assets folder. The script finds its CSS and images next to itself, so the folder works at any path as long as it stays together. The paths above assume <code class="nds-inline-code lang-html">assets/events/national_day_96/</code>.</li>
-                    <li><strong>Older NDS</strong>: works on releases before deck mode too (tested on 1.9.0; the swiper hooks it uses exist since 1.4.0). Before 1.12.0 the swiper has no loop, so the arrows stop at the ends while the cards, auto-advance and drag still wrap.</li>
+                    <li><strong>Older NDS</strong>: works on older releases too (tested on 1.9.0; the swiper hooks it uses exist since 1.4.0). Before 1.12.0 the swiper has no loop, so the arrows stop at the ends while the cards, auto-advance and drag still wrap.</li>
                 </ul>
             </div>
         </div>
@@ -137,8 +137,8 @@ hero_float_actions:
             <h2 class="nds-section-title">Manual (no JavaScript)</h2>
             <p class="nds-section-description">Both hero types work without the script: link the stylesheet and paste the markup yourself. Add the CSS link in <code class="nds-inline-code lang-html">&lt;head&gt;</code>. Add the event mark to the footer's existing <code class="nds-inline-code lang-html">.nds-footer-logos</code> strip.</p>
             <p class="nds-section-description"><strong>Type 1</strong> adds one slide to your existing hero. Place it as the first child of <code class="nds-inline-code lang-html">.nds-swiper-wrapper</code> and raise the hero's <code class="nds-inline-code lang-css">--total</code> by one. It is the standard hero markup with the event photo, so it needs no extra styling.</p>
-            <p class="nds-section-description"><strong>Type 2</strong> replaces the hero with the card deck. Write the cards in slide order and the <a class="nds-color" href="{{ 'components/swiper' | relative_url }}#swiperDeck">deck mode</a> places them — no per-card attributes. Pick the campaign colour with one <code class="nds-inline-code lang-html">nds-nd96-&lt;name&gt;</code> class on the section: heritage, courage, ambition, generosity, kindness or vision.</p>
-            <p class="nds-section-description">The script is what adds the typed word, the colour change on every slide, and the automatic advance. Without it the hero keeps one colour and the word is plain text.</p>
+            <p class="nds-section-description"><strong>Type 2</strong> replaces the hero with the card deck. Write the cards in slide order and the pack's stylesheet places them — no per-card attributes. Pick the campaign colour with one <code class="nds-inline-code lang-html">nds-nd96-&lt;name&gt;</code> class on the section: heritage, courage, ambition, generosity, kindness or vision.</p>
+            <p class="nds-section-description">The script is what adds the typed word, the colour change on every slide, and the automatic advance. Without it the hero keeps one colour, the word is plain text, and the cards do not move.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -320,7 +320,7 @@ hero_float_actions:
                         <i class="hgi hgi-stroke hgi-image-01"></i>
                         <span class="nds-label">Official Six-Slide Hero</span>
                     </span>
-                    <p class="nds-item-desc">The campaign hero on the swiper's deck mode: six slides, each with its own card, colour and typed word, moving on by themselves. Type 1 keeps one plain slide with the event photo instead.</p>
+                    <p class="nds-item-desc">The campaign hero with a deck of cards: six slides, each with its own card, colour and typed word, moving on by themselves. Type 1 keeps one plain slide with the event photo instead.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
