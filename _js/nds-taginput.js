@@ -21,6 +21,7 @@
  *   - data-strict needs data-url: typed text never commits, only picked suggestions and
  *     addTag().
  *   - Backspace on an empty input pops the last tag BACK INTO the input for editing.
+ *   - data-state~="readonly" blocks chip removal and the Backspace pop; the methods still work.
  */
 /**
  * NDS TagInput — free-text tags committed as removable chips while typing.
@@ -122,7 +123,7 @@
                     if (this.strict) { this._strictReject(); return; }
                     this.addTag(this.input.value);
                     this.input.value = '';
-                } else if (e.key === 'Backspace' && this.input.value === '' && this.tags.length) {
+                } else if (e.key === 'Backspace' && this.input.value === '' && this.tags.length && !this.isReadonly()) {
                     // Pop the last tag back into the input for editing
                     // (Gmail-recipient behavior) rather than deleting it.
                     e.preventDefault();
@@ -188,6 +189,12 @@
 
         getValues() {
             return this.tags.slice();
+        }
+
+        // Readonly blocks the user only: chips are keyboard-reachable past the
+        // readonly CSS, while removeTag()/clear() stay callable from code.
+        isReadonly() {
+            return NDS.State.has(this.root, 'readonly');
         }
 
         // Strict-mode rejection of typed commits — same feedback shape as the
@@ -287,7 +294,7 @@
                 // consumer/e2e selectors — removal routes through the closure.
                 data: { taginputValue: value },
                 disabled: NDS.State.has(this.root, 'disabled'),
-                onRemove: () => this.removeTag(value),
+                onRemove: () => { if (!this.isReadonly()) this.removeTag(value); },
             });
         }
 
