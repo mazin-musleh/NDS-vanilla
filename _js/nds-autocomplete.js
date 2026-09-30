@@ -636,8 +636,9 @@
         }
 
         destroy() {
-            // Optional-chained: create() can hand back a half-constructed instance.
-            this.abortController?.abort();
+            // create() on a built or incomplete field hands back an instance that owns nothing.
+            if (!this.abortController) return;
+            this.abortController.abort();
             this.fetchAbortController?.abort();
             this._debouncedFetch?.cancel(); // a keystroke inside the 300ms window would still fetch
 
@@ -653,8 +654,12 @@
                 this.carrier.parentNode.removeChild(this.carrier);
             }
 
-            this.container.classList.remove('nds-dropmenu');
-            this.formControl.classList.remove('nds-dropmenu-trigger');
+            this.formControl.classList.remove('nds-dropmenu', 'nds-dropmenu-trigger');
+            this.formControl.removeAttribute('data-dropmenu-no-click');
+            // Restore the markup the focusin builder matches, so the field can build again.
+            this.input.setAttribute('autocomplete', 'on');
+            ['role', 'aria-expanded', 'aria-autocomplete', 'aria-controls', 'aria-activedescendant']
+                .forEach((a) => this.input.removeAttribute(a));
             this.container.removeAttribute('data-nds-autocomplete-initialized');
         }
     }
