@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/09/2026 - 09:47 PM"
+last_edit: "01/10/2026 - 12:31 AM"
 ---
 
 <section id="autocompleteOverview" class="nds-content-section nds-doc-overview">
@@ -73,8 +73,8 @@ The canon carries `data-fetch="once"` because the demo data is a static file. Fo
 | Min characters | 3 (default) | — | — | The search starts at the third character |
 | Min characters | 2 | `[data-min-chars="2"]` | `.nds-form-container` | For short names, such as people's names |
 | Min characters | 1 | `[data-min-chars="1"]` | `.nds-form-container` | For a short list loaded once, such as cities |
-| Strict | Strict | `[data-strict]` | `.nds-form-container` | The form accepts only text the user picked from the list. Not for a search field, where any text is a valid search |
-| Custom empty message | Custom empty message | `[data-empty-message="No matching services"]` | `.nds-form-container` | Replaces the "No results" text that shows when nothing matches |
+| Strict | Strict | `[data-strict]` | `.nds-form-container` | The form accepts only text the user picked from the list, and the menu shows "No results" when nothing matches. Not for a search field, where any text is a valid search |
+| Custom empty message | Custom empty message | `[data-empty-message="No matching services"]` | `.nds-form-container[data-strict]` | Replaces the "No results" text that a strict field shows when nothing matches |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #autocompleteVariantsTable .nds-table .nds-responsive}
 
@@ -98,6 +98,8 @@ With `data-fetch="each"`, the default, the script requests `data-url` with the t
 {: .nds-block-title}
 
 `data-strict` on the container makes the form accept only a picked result. At submit, the field shows "Choose from the suggestions" when its text is not the last pick. Typed text that matches a result exactly still fails until the user picks it. An empty field passes, so add `data-required` to the container when the field is required. Text that the server writes into the field passes until the user focuses the field.
+
+When nothing matches, a strict field's menu stays open and shows "No results", in Arabic on an Arabic page. A screen reader reads the message. Without `data-strict`, any typed text is valid, so the menu closes instead.
 
 ### Search Box
 {: .nds-block-title}
@@ -142,13 +144,6 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
             <span class="nds-label">Debounced Fetching</span>
           </span>
           <p class="nds-item-desc">A search starts 300 ms after the last keystroke. A new search cancels the request before it. A spinner replaces the clear button while a request runs.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-remove"></i>
-            <span class="nds-label">No Results Message</span>
-          </span>
-          <p class="nds-item-desc">When nothing matches, the menu stays open and shows "No results", in Arabic on an Arabic page. A screen reader reads the message.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -220,8 +215,8 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 | `data-min-chars` | `.nds-form-container` | The fewest characters that start a search. The default is `3`. Shorter text closes the menu |
 | `data-query-param` | `.nds-form-container` | The name of the query parameter that holds the typed text with `each`. The default is `q` |
 | `data-results-path` | `.nds-form-container` | A dot path to the results array in the response, such as `response.items`. Without it, the script reads an array, or the `results` or `data` key of an object |
-| `data-empty-message` | `.nds-form-container` | The text when nothing matches. The default is "No results", in Arabic on an Arabic page |
-| `data-empty-icon` | `.nds-form-container` | The icon classes when nothing matches. The default is `nds-icon nds-hgi-search-01` |
+| `data-empty-message` | `.nds-form-container` with `data-strict` | The text when nothing matches. The default is "No results", in Arabic on an Arabic page. See Strict Mode |
+| `data-empty-icon` | `.nds-form-container` with `data-strict` | The icon classes when nothing matches. The default is `nds-icon nds-hgi-search-01` |
 | `data-strict` | `.nds-form-container` | The form accepts only a picked result. See Strict Mode above |
 | `data-state~="loading"` | `.nds-form-container` | The script sets it when a request starts, and removes it when the latest request ends. The forms script shows a spinner in `.nds-form-action` |
 | `data-portal` | `.nds-form-control` | The menu moves to `<body>` on every open. Without it, the menu moves only when a scroll area would cut it off |

@@ -829,7 +829,7 @@ hideFeedback: true
                 <div class="nds-scroll-more-content nds-flex nds-col" style="--gap: var(--spacing-3xl);">
                 <div class="nds-form-container" data-required
                     data-url="{{ '/docs-assets/data/users-autocomplete.json' | relative_url }}"
-                    data-name="Name" data-fetch="once" data-min-chars="2"
+                    data-name="Name" data-fetch="once" data-min-chars="2" data-strict
                     data-empty-message="No matching people">
                     <div class="nds-form-header">
                         <label for="record-requester">

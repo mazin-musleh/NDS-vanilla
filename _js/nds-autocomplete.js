@@ -26,6 +26,7 @@
  *   - Only the first 20 results render; data-fetch="once" caches the list and filters it
  *     in the browser.
  *   - Inside a .nds-search-box, picking a suggestion clicks the .nds-search-btn.
+ *   - No results shows the empty state only under data-strict; otherwise the menu closes.
  */
 /**
  * NDS Autocomplete Component
@@ -161,8 +162,8 @@
             menu.id = menuId;
 
             // Scrollable container for items — an .nds-empty container so a
-            // query matching nothing shows a "no results" placeholder instead
-            // of silently closing (a dead-field read in taginput strict mode).
+            // strict query matching nothing shows a "no results" placeholder
+            // instead of silently closing (a dead-field read in strict mode).
             // data-empty-message / data-empty-icon on the [data-url] container
             // forward through, so consumers customize per field.
             var scroll = document.createElement('div');
@@ -401,7 +402,8 @@
             if (!data || data.length === 0) {
                 // Soft dependency — NDS.Empty ships in the main bundle; without
                 // it the menu closes silently as before.
-                if (!NDS.Empty) { this.close(); return; }
+                // Only strict needs "no results": elsewhere any typed text is valid.
+                if (!NDS.Empty || !this.strict) { this.close(); return; }
                 NDS.Empty.refresh(this.scroll);
                 NDS.announce(STRINGS[NDS.langKey].noResults);
                 this.open();
