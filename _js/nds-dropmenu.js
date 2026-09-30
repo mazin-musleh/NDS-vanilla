@@ -915,6 +915,14 @@
             // the menu mid-interaction otherwise. NDS.onResize is debounced
             // 150ms so the heavy applyPosition only runs once resize settles.
             this._unsubResize = NDS.onResize(() => this.applyPosition());
+            // Keep scroll momentum off the page (its scroll closes the menu), but only while
+            // the list scrolls: on a list that fits, `contain` swallows the page's wheel.
+            // Watched while open, since search, results and populate change its length.
+            const list = this._ownFirst('.nds-dropmenu-scroll');
+            if (list) this._offListSize = NDS.onElementResize(list, () => {
+                const value = list.scrollHeight > list.clientHeight ? 'contain' : '';
+                return () => { list.style.overscrollBehavior = value; };
+            });
 
             requestAnimationFrame(() => {
                 removeState(this.dropmenu, 'opening');
@@ -936,6 +944,7 @@
 
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
             if (this._unsubResize) { this._unsubResize(); this._unsubResize = null; }
+            if (this._offListSize) { this._offListSize(); this._offListSize = null; }
 
             // Stored so open() can call this._cancelClose() to abort the
             // in-flight close if the user re-opens before the transition

@@ -30,10 +30,8 @@
     // the hidden overflow-x and clipped. Thin shrinks it to a size where the
     // overflow is visually inconsequential.
     scrollbar-width: thin;
-    // Stop scroll momentum from chaining to the page when the inner
-    // scroll hits its end — otherwise the page-scroll listener closes
-    // the menu as soon as the user hits top or bottom.
-    overscroll-behavior: contain;
+    // overscroll-behavior is set by JS in open(): `contain` here would also
+    // block the page's wheel over a list too short to scroll.
   }
 
   // ==============================================
