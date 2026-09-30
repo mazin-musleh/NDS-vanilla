@@ -15,7 +15,7 @@ Two components, each with its own job (not the banned eager-shell/lazy-half spli
 
 **Loader entry** (`CookieConsent`, `universal` + `lazy` + `eager`): on every page, nothing in the HTML. `lazy` arms `[data-cookies-toggle]` clicks → the stub fetches the bundle and replays `open()`. `eager()` = no stored consent and no dismiss key, so a first visit loads it at idle and it opens at 6 s.
 
-CSS: the view slide only, in the main sheet. No paired sheet.
+CSS: the view column only, in the main sheet. No paired sheet.
 
 ## Markup
 
@@ -28,7 +28,7 @@ CSS: the view slide only, in the main sheet. No paired sheet.
 - Actions are `data-cookies-action` (accept · reject · save → the done view · manage · undo), not ids. Switches: `data-cookies-category`.
 - **Done view** (owner's mockup): after a choice the panel shows "Thank you… Undo" instead of a toast (Alert no longer rides). Undo returns to the notice view; the stored choice stays until the next one replaces it (reverting would mean un-sending the gtag signal).
 - Closing without a choice (×) = dismiss: hides the auto-open for 30 min. Handled on `nds:panel:closed`. The panel is `data-panel-static`, so an outside click does not close it.
-- Manage view (per the owner's mockup, 2026-09-30): icon + title + close, no Back; long description; full "… Cookies" labels; outlined Reject. `hidden` swap plus a slide-in keyframe from inline-end (off under reduced motion). The mockup's "click the category headings" sentence is dropped: nothing there is clickable. Switches show the stored choice, all off when there is none.
+- Manage view (per the owner's mockup, 2026-09-30): icon + title + close, no Back; long description; full "… Cookies" labels; outlined Reject. `hidden` swap, no slide (owner, 2026-09-30). The mockup's "click the category headings" sentence is dropped: nothing there is clickable. Switches show the stored choice, all off when there is none.
 
 ## Consent store
 
@@ -63,7 +63,7 @@ The next release is the major, so the old markup is removed, not aliased. Migrat
 1. `fix(cookies)`: Reject clears trackers set on parent domains (`_ga` on `.example.com` survives today on `www.`).
 2. `feat(panel)`: `open(ref, { focus: false })`.
 3. `feat(cookies)!`: core split, categories, lazy UI bundle, template markup, Manage view. Tested in `playground.md` first.
-4. `docs(cookies)`: the page rewrite. Canon = the template; a demo `[data-cookies-toggle]` button opens this page's own panel. No builder (no options left).
+4. `docs(cookies)`: the page rewrite. Structures Auto (default, no markup) and Manual (`<template class="nds-panel-template">`), each with an optional `[data-cookies-toggle]`.
 5. TODO: tracker tick; release-notes lines (Added: Manage view, categories, `allowed()`, `save()`, lazy bundle. Migration: the list above).
 
 ## Open
