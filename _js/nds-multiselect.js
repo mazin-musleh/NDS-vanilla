@@ -315,6 +315,7 @@
             if (this.resetBtn) {
                 this.resetBtn.addEventListener('click', (e) => {
                     e.preventDefault();
+                    if (this.isReadonly()) return;
                     this.reset();
                 }, { signal });
             }
@@ -347,6 +348,12 @@
 
         isOpen() {
             return NDS.State.has(this.dropmenu, 'open');
+        }
+
+        // Readonly blocks the user only: chips and Reset are keyboard-reachable
+        // past the readonly CSS, while removeValue()/reset() stay callable from code.
+        isReadonly() {
+            return NDS.State.has(this.root, 'readonly');
         }
 
         getSelected() {
@@ -437,6 +444,7 @@
                 disabled: NDS.State.has(this.root, 'disabled'),
                 onRemove: (e) => {
                     e.stopPropagation();
+                    if (this.isReadonly()) return;
                     this.removeValue(value);
                 },
             });
