@@ -17,6 +17,7 @@
     "targeting":            "Targeting Cookies",
     "confirm":              "Confirm My Choices",
     "reject_all":           "Reject All",
-    "done":                 "Thank you! Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.",
+    "done_title":           "Thank you!",
+    "done":                 "Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.",
     "undo":                 "Undo"
 }

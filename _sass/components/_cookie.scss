@@ -1,6 +1,6 @@
 /* ========================================
    COOKIE CONSENT
-   Rides Panel (the bottom sheet), Scroll More, Switch and Flex. Only the two views live here.
+   Rides Panel (the bottom sheet), Scroll More, Switch and Flex. Only the views live here.
    ======================================== */
 
 @use '../mixins' as *;
@@ -16,26 +16,5 @@
     // Panel's own rule reaches only its direct child.
     > .nds-scroll-more {
         flex: 1 1 auto;
-    }
-}
-
-// Manage slides in from the inline end. Only on the swap: the panel's own slide covers an open.
-.nds-cookies[data-cookies-swap] > .nds-cookies-view {
-    --_cookies-from: -2rem;
-    animation: nds-cookies-in var(--nds-transition);
-
-    @include ltr {
-        --_cookies-from: 2rem;
-    }
-
-    @include reduced-motion {
-        animation: none;
-    }
-}
-
-@keyframes nds-cookies-in {
-    from {
-        opacity: 0;
-        translate: var(--_cookies-from) 0;
     }
 }

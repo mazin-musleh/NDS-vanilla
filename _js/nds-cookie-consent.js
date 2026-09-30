@@ -53,7 +53,8 @@
         targeting: 'Targeting Cookies',
         confirm: 'Confirm My Choices',
         reject_all: 'Reject All',
-        done: 'Thank you! Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.',
+        done_title: 'Thank you!',
+        done: 'Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.',
         undo: 'Undo',
     };
 
@@ -122,8 +123,8 @@
   </div>
   <div class="nds-cookies-view" data-cookies-view="done" hidden>
     <div class="nds-panel-header">
-      <span class="nds-featured-icon nds-circle"><i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i></span>
-      <div class="nds-panel-text"><span class="nds-panel-title">${t('title')}</span></div>
+      <span class="nds-featured-icon nds-circle" data-status="success"><i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i></span>
+      <div class="nds-panel-text"><span class="nds-panel-title">${t('done_title')}</span></div>
       ${closeBtn()}
     </div>
     ${scrollBody(`
@@ -150,8 +151,7 @@
     let chose = false;
     let opener = null;
 
-    function showView(panel, name, swap) {
-        panel.toggleAttribute('data-cookies-swap', !!swap);
+    function showView(panel, name) {
         panel.querySelectorAll('[data-cookies-view]').forEach(v => { v.hidden = v.dataset.cookiesView !== name; });
         if (name === 'manage') {
             // A stored choice shows as it is; with none, every optional category starts off.
@@ -188,7 +188,7 @@
         if (action !== 'manage' && action !== 'undo') chose = true;
         // Undo goes back to the choice: the stored one stays until the next replaces it.
         const view = action === 'manage' ? 'manage' : action === 'undo' ? 'notice' : 'done';
-        showView(panel, view, true);
+        showView(panel, view);
         panel.querySelector('[data-cookies-view="' + view + '"] [data-panel-close]')?.focus();
     }
 
@@ -201,7 +201,6 @@
         });
         document.addEventListener('nds:panel:closed', (e) => {
             if (e.detail.panel.id !== PANEL_ID) return;
-            e.detail.panel.removeAttribute('data-cookies-swap');
             // Closed with no choice: ask again later, not on every page.
             if (!chose && !NDS.Cookies.getConsent()) NDS.Cookies.set(DISMISS_KEY, '1', 30 / 1440);
             if (opener && document.contains(opener)) opener.focus({ preventScroll: true });
