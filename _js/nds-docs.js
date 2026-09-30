@@ -290,6 +290,8 @@
         var byKey = {}, order = [], active = {}, defaults = {}, sizes = {}, combos = {}, picks = {};
         readTable(script.getAttribute('data-variants')).forEach(function (c) {
             byKey[c.key] = c;
+            // `Group (any)`: each chip is its own on/off group, so any mix of them stacks.
+            if (/ \(any\)$/.test(c.group)) c.group += '|' + c.option;
             sizes[c.group] = (sizes[c.group] || 0) + 1;
             if (order.indexOf(c.group) < 0) order.push(c.group);
             if (/\(default\)/.test(c.option)) defaults[c.group] = c;

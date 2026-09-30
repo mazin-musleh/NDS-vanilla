@@ -166,6 +166,7 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
   - **JS-started:** `data-preview="js"` with `data-js`, for a component with no `init()` (Sort). The preview runs the JS tab after each render. A Structure canon may reuse the base's root id, since the one call names it.
   - **Demo-only:** `data-code="none"`, a Behavior demo in a preview card with no code. Its wiring `<script>` sits after the canon, never in it.
 - **A canon never holds `</script>`.** Code with a `<script>` tag inside stays out of the canon format for now (see `ui-shell/head.md`).
+- **Preview width:** `data-demo-width="300px"` on the base canon fixes the preview's width, for a field that would otherwise shrink or stretch to its content. Preview only: the code never shows it.
 - **Form fields** whose validation is worth trying add `data-harness="form"` to the base canon: the preview sits in a real `form.nds-form`, with Validate and Reset buttons that show only while a rule can fail (required, min and max checked, pattern, length). A pass shows an inline success alert: fields carry errors only. The code never shows the form. Make rules that can combine (at least, at most) a combo row, not separate exclusive options. Skip it where a field can fail only one way that the builder already shows (radio: only when nothing is chosen).
 - **A form that is the component's own markup** (user feedback validates the form it sits in) stays in the canon: add `data-form` to the canon script, and `check-docs.py` allows the `<form>`. Never use it for a demo wrapper.
 - **Dark mode:** every preview card gets Dark mode and Grid lines toggles in its top corner, builder or not. On a builder card, Dark writes `data-theme="dark"` on the markup's outer element, so the copied code carries it; on a plain card it darkens the card only. Dark hides while the site itself is dark: NDS has no light area to switch to. Never add a Dark option to the Variants table. Grid lines changes only the card, never the code.
@@ -190,6 +191,7 @@ A short paragraph above the table explains any target that is not obvious (what 
 **Groups and options**
 - Rows that share a Group are one set of chips. `(default)` marks the one the canon already shows. A group whose default is `None` shows no None chip: a second tap on the chosen chip turns it off.
 - A Group with one row is an on/off chip in the "More" row.
+- `Group (any)` (Validation (any)) is a row of on/off chips: each turns on and off by itself, so any mix stacks with no combo rows. Use it for parts that add up (password rules). The row label drops `(any)`.
 - **Two rows with the same Group and Option are one choice** that makes both changes. Tell agents to write both.
 - `Structure` (or `Example` on a reference page) rows swap the whole markup: `canon #id` and `—` in On element.
 - **Option markers:** `(hint: text)` is the chip's tooltip. `(demo: + size-sm)` also turns on the row marked `(id: size-sm)`, for a demo that only shows with it. It goes by id, never by name, so a translated page keeps working. Mark every row of that choice with the id. A row can carry several `demo` markers. `A + B` is a combo row: its group becomes multi-select, and both chips on use the combo's markup.
@@ -272,7 +274,7 @@ Links to the examples and templates that use the component, each with what it sh
 
 ### No Docs CSS
 
-Build the page only from NDS components. If the page looks wrong, the gap is in a component: fix its SCSS. The only doc styling is what `_plugins/docs_canon.rb` writes: the features grid knobs, the Variants table width, the preview frame, the Preview divider, the prose column width, and the Dark mode toggle hidden on a dark site.
+Build the page only from NDS components. If the page looks wrong, the gap is in a component: fix its SCSS. The only doc styling is what `_plugins/docs_canon.rb` writes: the features grid knobs, the Variants table width, the preview frame, the Preview divider, the form harness's alert gap, the prose column width, and the Dark mode toggle hidden on a dark site.
 
 ### Registration (new pages only)
 

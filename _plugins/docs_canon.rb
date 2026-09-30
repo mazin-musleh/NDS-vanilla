@@ -23,7 +23,8 @@ module DocsCanon
               '.nds-doc-oncolor{--card-bg:var(--background-primary-strong)}' \
               '.nds-divider.nds-doc-divider{margin-block-start:0;--divider-line-start:24px}' \
               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px}' \
-              '.nds-doc-preview>[data-demo-slot]{display:contents}' \
+              '.nds-doc-preview>[data-demo-slot]:not(.nds-flex){display:contents}' \
+              '.nds-doc-preview .nds-form-actions+.nds-alert{margin-block-start:var(--spacing-2xl)}' \
               '.nds-doc-preview .nds-full-width{width:auto!important;margin-inline:calc(var(--_wrapper-padding,0px)*-1)}' \
               '.nds-doc-options{--panel-height:30svh}' \
               '@media (width < 600px){.nds-doc-options{--panel-height:35svh}}' \
@@ -193,11 +194,13 @@ module DocsCanon
   # The demo sits in a slot, so a re-render keeps the card's view toggles.
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
   # holds Run (or `data-run-label`) and Clear, as a toast's does. Runs mount in the held box (nds-docs.js).
-  def self.harness(src, kind, run = nil)
+  # `data-demo-width` on the canon fixes the slot's width, for a field that would stretch or shrink to its content.
+  def self.harness(src, kind, run = nil, width = nil)
     return %(<div class="nds-flex" data-demo-run><button type="button" class="nds-btn nds-primary nds-md" data-run><span class="nds-label">#{run}</span></button><button type="button" class="nds-btn nds-subtle nds-md" data-run-clear><span class="nds-label">Clear</span></button></div><div data-demo-held></div>) if run
-    return %(<div data-demo-slot>\n#{src}\n</div>) unless kind == 'form'
+    slot = width ? %(<div data-demo-slot class="nds-flex nds-col" style="width:#{width};max-width:100%">) : '<div data-demo-slot>'
+    return %(#{slot}\n#{src}\n</div>) unless kind == 'form'
 
-    %(<form class="nds-form" data-ajax><div data-demo-slot>\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
+    %(<form class="nds-form" data-ajax>#{slot}\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
   end
 
   # data-preview="panel": the markup needs a page around it (a TOC over a long article), so the card
@@ -244,7 +247,9 @@ module DocsCanon
   # Returns [html, panel?].
   def self.options(id, rows, src, js, canons, mode, side)
     groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
-    multi, single = groups.partition { |_, list| list.size > 1 }
+    # `Group (any)`: each chip turns on and off by itself, so parts that stack need no combo rows.
+    any, rest = groups.partition { |g, _| g.end_with?(' (any)') }
+    multi, single = rest.partition { |_, list| list.size > 1 }
     esc = ->(t) { CGI.escapeHTML(t.to_s) }
     # Primary chips pick one of a set that always has a value; neutral chips can be turned off.
     # A chip that can be off carries its reason as a hover tooltip; nds-docs.js opens it only while off.
@@ -266,6 +271,7 @@ module DocsCanon
       tone = none || list.any? { |r| label(r[:option]).include?(' + ') } ? 'neutral' : 'primary'
       row[group, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
     end
+    any.each { |group, list| body << row[group.delete_suffix(' (any)'), list.map { |r| chip[group, r, false] }] }
     body << row['More', single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
     panel = side || (mode ? mode == 'panel' : body.size > 3)
     return [%(<div id="#{id}-options" class="nds-builder-options" role="group" aria-label="Options" hidden>#{body.join}</div>\n), false] unless panel
@@ -340,7 +346,7 @@ module DocsCanon
       end
       if preview || (builder && live)
         out << %(<div class="nds-divider nds-xl nds-doc-divider">Preview</div>\n) if table
-        demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
+        demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
         # A builder's card names its builder, so Dark reaches the code too.
         card = preview ? %( nds-doc-preview"#{%( data-builder-card="#{id}") if builder}) : '"'
