@@ -258,6 +258,14 @@ In this order, each only when the source has it:
 
 The Effect, Controls, Holds, Detail and Use columns keep 320px on a phone: the build sets it from those header names, so use those names for a prose column.
 
+**The Data Attributes table needs its own pass: it drifts on almost every rewrite.** Build it from the JS, not the old page. Grep every read and write of each attribute (`getAttribute`, `setAttribute`, `removeAttribute`, `NDS.State.add` / `remove`, `dataset`, selectors in `querySelector`), and write each row from those hits:
+- **Group rows by element**, in the order a reader builds the markup: the owner or container, then its parts, then the items. The rows of one element sit together.
+- **One attribute on two kinds of element is two rows.** Each Element cell names its element so the two cannot be confused: "an `input.nds-check`" and "any element except a checkbox", never "the element" twice.
+- **A state row says who writes it and every way it goes:** "The script sets it when…, and removes it when…". Name each method that also writes it (`clear()` removes it). Say "Set it yourself" for the case the script leaves to the page.
+- **A value the page writes at load is stated exactly:** "Write the count at page load in it (usually `0`)", never "a starting number" or "so it reads right".
+- **Fact, not benefit.** No "so the line needs no X": say what the attribute does, and what another attribute does instead.
+- **No undefined term.** A word the page has not defined ("slot", "host") is replaced with the element it means.
+
 ### Related
 
 Links to the examples and templates that use the component, each with what it shows there.
@@ -303,6 +311,7 @@ Build the page only from NDS components. If the page looks wrong, the gap is in 
 **Checklist**
 - [ ] Every class, attribute, knob, method and event in the source is on the page.
 - [ ] Every claim was checked against the source.
+- [ ] The Data Attributes table was rebuilt from a grep of the JS, per its rules under API.
 - [ ] Sections in skeleton order, each with its class; Variants is `hidden`.
 - [ ] Canons: no Liquid, no escaping, no demo-only parts, unique ids, 2-space indent.
 - [ ] Every combination the component cannot style is disabled with `:not()`, or fixed in the SCSS.
