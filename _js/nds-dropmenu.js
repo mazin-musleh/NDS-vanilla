@@ -336,6 +336,18 @@
                     item.hidden = !match;
                     if (match) visible++;
                 }
+                // A group with no match hides, and so does a divider left with nothing on one side.
+                for (const group of this._ownItems('.nds-dropmenu-group')) {
+                    const rows = group.querySelectorAll(itemSelector);
+                    group.hidden = !!q && rows.length > 0 && Array.prototype.every.call(rows, r => r.hidden);
+                }
+                let prev = null;
+                for (const el of scroll.children) {
+                    if (el === emptyEl || (el.hidden && el.tagName !== 'HR')) continue;
+                    if (el.tagName === 'HR') el.hidden = !!q && (!prev || prev.tagName === 'HR');
+                    if (!el.hidden) prev = el;
+                }
+                if (q && prev && prev.tagName === 'HR') prev.hidden = true;
                 emptyEl.hidden = visible > 0 || !q;
             };
 
