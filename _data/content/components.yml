@@ -180,8 +180,8 @@
   scss: _sass/components/_content-switcher.scss
 
 - title: "Cookies"
-  description: "Privacy-compliant cookie management banner"
-  use_when: "A cookie consent banner, privacy notice, or GDPR-style acceptance bar."
+  description: "A consent panel that stores the visitor's cookie choice by category"
+  use_when: "A cookie consent notice, or a place for visitors to change their cookie choice."
   icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
   category: "Utilities"
   tags: ["JS", "CSS", "API"]
