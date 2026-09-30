@@ -216,8 +216,14 @@
             NDS.cache.clear(name);
             return;
         }
-        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+        const expired = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+        document.cookie = expired;
+        // Trackers set theirs on the root domain (_ga on .example.com), which a delete on
+        // www. alone misses. The browser ignores the bare public suffix.
+        const labels = window.location.hostname.split('.');
+        for (let i = 0; i < labels.length - 1; i++) {
+            document.cookie = expired + '; domain=' + labels.slice(i).join('.');
+        }
     }
 
     function ndsShowPopup() {
