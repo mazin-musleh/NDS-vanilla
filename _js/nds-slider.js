@@ -16,6 +16,8 @@
  * Gotchas:
  *   - The native <input type="range"> owns drag, keyboard, touch and screen-reader
  *     behaviour. Read input.value; there is no custom event and no getValue().
+ *   - A readonly input ignores the step keys (browsers ignore readonly on a range input);
+ *     data-state="readonly" on the container sets it through the forms script.
  *   - Range mode is the .nds-slider-range class on the container. The two thumbs are
  *     clamped so they can never cross.
  *   - Add .nds-number-format to the value element to opt into number formatting.
@@ -35,6 +37,7 @@
     if (!window.NDS) window.NDS = {};
 
     var SENTINEL = 'data-nds-slider-initialized';
+    var STEP_KEYS = /^(Arrow(Up|Down|Left|Right)|Home|End|Page(Up|Down))$/;
 
     function pct(input) {
         var min = parseFloat(input.min);
@@ -158,6 +161,11 @@
             if (!t || !t.matches || !t.matches('.nds-slider')) return;
             var c = t.closest('.nds-slider-container');
             if (c) paint(c);
+        });
+        // Browsers ignore readonly on a range input, so the keys would still move it.
+        document.addEventListener('keydown', function (e) {
+            var t = e.target;
+            if (t && t.readOnly && t.matches && t.matches('.nds-slider') && STEP_KEYS.test(e.key)) e.preventDefault();
         });
         // Toggling .nds-stacked (a class change) neither re-runs init nor fires a
         // resize — re-apply the reservation when a container's class changes.

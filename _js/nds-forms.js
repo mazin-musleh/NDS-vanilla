@@ -1574,7 +1574,8 @@
         formControls.forEach(function(formControl) {
             if (formControl.closest('code, .code-example')) return;
 
-            var inputElements = formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select');
+            // A slider's inputs sit in its track, one level down.
+            var inputElements = formControl.querySelectorAll(':scope > input, :scope > textarea, :scope > select, :scope > .nds-slider-track > input');
 
             inputElements.forEach(function(input) {
                 FormControls.initializeInput(input, formControl);

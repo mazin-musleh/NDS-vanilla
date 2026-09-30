@@ -180,12 +180,15 @@
 // ==============================================
 // Two inputs overlap, so their full bodies can't both receive pointer events
 // (only the topmost would). Disable the bodies and re-enable just the thumbs so
-// each thumb stays independently draggable.
+// each thumb stays independently draggable. A readonly or disabled thumb stays off:
+// its auto would override the locked container's pointer-events: none.
 
 .nds-slider-range .nds-slider {
     pointer-events: none;
-    &::-webkit-slider-thumb { pointer-events: auto; }
-    &::-moz-range-thumb     { pointer-events: auto; }
+    &:not([readonly], :disabled) {
+        &::-webkit-slider-thumb { pointer-events: auto; }
+        &::-moz-range-thumb     { pointer-events: auto; }
+    }
 }
 
 // ==============================================
