@@ -341,6 +341,9 @@
 
         destroy() {
             this.abortController?.abort();
+            // Chips hold their own remove listeners; create() rebuilds them.
+            this.chipsEl.replaceChildren();
+            NDS.State.remove(this.root, 'filled');
             NDS.aria.label(this.trigger, '');
             this.root.removeAttribute('data-nds-multiselect-initialized');
             delete this.root.ndsMultiselect;
