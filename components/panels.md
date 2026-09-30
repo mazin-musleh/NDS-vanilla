@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "28/09/2026 - 08:42 AM"
+last_edit: "30/09/2026 - 07:54 AM"
 lang: en
 direction: ltr
 ---
@@ -324,7 +324,7 @@ Each method takes the panel element or its `id`.
 
 | Method | Effect |
 |---|---|
-| `NDS.Panel.open(panel)` | Opens the panel. An open panel closes first. For a lazy panel, pass its `id`: the element is not in the page yet |
+| `NDS.Panel.open(panel, { focus })` | Opens the panel. An open panel closes first. For a lazy panel, pass its `id`: the element is not in the page yet. Pass `{ focus: false }` when the page opens it on its own, so focus stays where the user is |
 | `NDS.Panel.close(panel)` | Closes the panel |
 | `NDS.Panel.toggle(panel)` | Opens or closes the panel |
 | `NDS.Panel.isOpen(panel)` | Returns `true` while the panel is open and not closing |

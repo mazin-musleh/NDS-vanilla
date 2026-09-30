@@ -5,7 +5,8 @@
  *   NDS.Panel.init() / .reinit()   bind the delegated toggles; prepare every .nds-panel
  *   NDS.Panel.create(panel)        prepare one panel
  *   NDS.Panel.destroy(panel)       tear one down (closes it and releases the backdrop)
- *   NDS.Panel.open(idOrEl)         open it — closes whatever is open first
+ *   NDS.Panel.open(idOrEl, opts?)  open it — closes whatever is open first. { focus: false }
+ *                                  leaves focus where it is (a panel the page opens on its own)
  *   NDS.Panel.close(idOrEl)        close it
  *   NDS.Panel.toggle(idOrEl)       open or close it
  *   NDS.Panel.isOpen(idOrEl)       open and not closing?
@@ -152,20 +153,26 @@
 
         armTransition(panel, () => {
             removeState(panel, 'opening');
-            const target = panel.querySelector('[data-panel-close]') || panel;
-            if (target === panel && !panel.hasAttribute('tabindex')) panel.tabIndex = -1;
-            target.focus();
+            if (!panel._noFocus) {
+                // Skips a close inside a hidden view: focus() on it does nothing.
+                const target = [...panel.querySelectorAll('[data-panel-close]')].find(el => !el.closest('[hidden]')) || panel;
+                if (target === panel && !panel.hasAttribute('tabindex')) panel.tabIndex = -1;
+                target.focus();
+            }
+            delete panel._noFocus;
             panel.dispatchEvent(new CustomEvent('nds:panel:opened', {
                 detail: { panel }, bubbles: true,
             }));
         });
     }
 
-    function open(ref) {
+    function open(ref, { focus = true } = {}) {
         let panel = NDS.resolveEl(ref);
         // A string ref that missed may name a template-wrapped panel.
         if (!panel && typeof ref === 'string') panel = NDS.fromTemplate(ref.replace(/^#/, ''));
         if (!panel) return;
+        // On the panel, not a local: a swap opens it later from close()'s cleanup.
+        if (focus) delete panel._noFocus; else panel._noFocus = true;
 
         pendingOpen = null;              // supersede any swap already waiting
 
