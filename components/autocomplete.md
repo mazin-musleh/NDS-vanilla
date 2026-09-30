@@ -2,299 +2,317 @@
 layout: page
 title: Autocomplete
 hero_title: Autocomplete - National Design System
-hero_description: Remote typeahead search input with keyboard navigation, result highlighting, and debounced API fetching
+hero_description: A text field that shows matching results from a JSON source as the user types
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/09/2026 - 12:00 AM"
+last_edit: "30/09/2026 - 09:47 PM"
 ---
 
-<!-- Autocomplete Input -->
-<section id="autocompleteOverview" class="nds-content-section nds-demo-section">
+<section id="autocompleteOverview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Autocomplete Input</h2>
-      <p class="nds-section-description">Type-ahead search with remote data fetching and dropdown results</p>
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+An autocomplete is a text field with `autocomplete="on"` on its input and `data-url` on its container. The URL returns JSON. As the user types, a menu under the field lists the results that match, with the typed text marked. A pick writes the result's text into the field. The script builds the menu, so the markup is a plain form field.
+
+Pick another component when:
+
+- the user picks several values: [Multiselect](../components/multiselect)
+- the user types free values as chips: [Tag Input](../components/taginput)
+- the list is short and fixed: a select in [Forms](../components/forms)
+
+</div>
+  </div>
+</section>
+
+<section id="autocompleteMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["data-required", ".nds-form-container", "requiredToggle", "attr"]'>
-                <span class="nds-label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-form-container", "disabledToggle", "data-state"]'>
-                <span class="nds-label">Disabled</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container" id="autocomplete-demo" data-url="{{ '/docs-assets/data/services-autocomplete.json' | relative_url }}"
-                data-name="Title" data-query-param="q">
-                <div class="nds-form-header">
-                  <label for="demo-autocompleteInput">
-                    <span class="nds-label">Search services</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                  <input type="text" id="demo-autocompleteInput" autocomplete="on"
-                    placeholder="Type to search...">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided">
-            <div class="nds-tab-list-container nds-scroll-more">
-              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                  aria-controls="panel-autocomplete-1" id="tab-autocomplete-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-autocomplete-1"
-                aria-labelledby="tab-autocomplete-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                    <i class="nds-icon nds-hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
-&lt;div class="nds-form-container" data-url="/api/services" data-name="Title"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="autocomplete-1"&gt;
-  &lt;span class="nds-label"&gt;Search services&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-&lt;input type="text" id="autocomplete-1" autocomplete="on"
-  placeholder="Type to search..."&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button"
-    aria-label="Clear input" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-              </code>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
+<script type="text/html" id="autocomplete-field" data-canon data-variants="autocompleteVariantsTable" data-harness="form" data-demo-width="300px">
+<div class="nds-form-container" data-url="../docs-assets/data/services-autocomplete.json" data-name="Title" data-fetch="once">
+  <div class="nds-form-header">
+    <label for="service-search">
+      <span class="nds-label">Service</span>
+      <span class="nds-info">Type part of a service name, such as "visa"</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+    <input type="text" id="service-search" name="service" class="nds-input" autocomplete="on" placeholder="Search services">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
     </div>
   </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="autocompleteFeatures" class="nds-content-section nds-demo-section">
+<section id="autocompleteVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+The canon carries `data-fetch="once"` because the demo data is a static file. For a server that searches, use `each`: see Fetch Modes.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Min characters | 3 (default) | — | — | The search starts at the third character |
+| Min characters | 2 | `[data-min-chars="2"]` | `.nds-form-container` | For short names, such as people's names |
+| Min characters | 1 | `[data-min-chars="1"]` | `.nds-form-container` | For a short list loaded once, such as cities |
+| Strict | Strict | `[data-strict]` | `.nds-form-container` | The form accepts only text the user picked from the list. Not for a search field, where any text is a valid search |
+| Custom empty message | Custom empty message | `[data-empty-message="No matching services"]` | `.nds-form-container` | Replaces the "No results" text that shows when nothing matches |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+{: #autocompleteVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="autocompleteBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Fetch Modes
+{: .nds-block-title}
+
+With `data-fetch="each"`, the default, the script requests `data-url` with the typed text on each search, such as `services.json?q=visa`. The server filters the results. With `data-fetch="once"`, the script requests `data-url` once, with no query, and keeps the list. On each search, it shows the results whose `data-name` field holds the typed text, in any letter case.
+
+### Strict Mode
+{: .nds-block-title}
+
+`data-strict` on the container makes the form accept only a picked result. At submit, the field shows "Choose from the suggestions" when its text is not the last pick. Typed text that matches a result exactly still fails until the user picks it. An empty field passes, so add `data-required` to the container when the field is required. Text that the server writes into the field passes until the user focuses the field.
+
+### Search Box
+{: .nds-block-title}
+
+When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.nds-search-btn`. The search then runs with the picked text, and the user does not click Search again.
+
+</div>
+  </div>
+</section>
+
+<section id="autocompleteFeatures" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
-      <p class="nds-section-description">What you get out of the box with zero configuration</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+      <div class="nds-definition-list nds-divided nds-grid">
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Initializes automatically on any input with <code class="nds-inline-code lang-html">autocomplete="on"</code> inside a container with <code class="nds-inline-code lang-html">data-url</code>. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Autocomplete.reinit()</code>. The instance itself is built on the field's first focus, which covers every path a user takes but not a field that JS drives before anyone touches it: to write a value and fetch against a field that has never been focused, construct it first with <code class="nds-inline-code lang-js">NDS.Autocomplete.create(container)</code>.</p>
+          <p class="nds-item-desc">A field starts on its first focus, before the user types. A field added to the page later needs no init call.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-search-list-01"></i>
             <span class="nds-label">Result Highlighting</span>
           </span>
-          <p class="nds-item-desc">Matching characters in results are highlighted with <code class="nds-inline-code lang-html">&lt;mark&gt;</code> tags. Results display in a dropdown built on the NDS Dropmenu component.</p>
+          <p class="nds-item-desc">The typed text is marked in each result with <code class="nds-inline-code lang-html">&lt;mark&gt;</code>. The menu shows the first 20 results.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Keyboard Navigation</span>
           </span>
-          <p class="nds-item-desc">Arrow keys navigate results, Enter selects the active item, Escape closes the dropdown, Tab closes without selecting, Home jumps to the first item, End jumps to the last item. The active item scrolls into view automatically.</p>
+          <p class="nds-item-desc">The arrow keys move through the results and wrap at the ends. Home and End go to the first and the last result, and the result the keys reach scrolls into view. Enter picks it. Escape and Tab close the menu with no pick.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-loading-03"></i>
             <span class="nds-label">Debounced Fetching</span>
           </span>
-          <p class="nds-item-desc">API requests are debounced at 300ms. Previous in-flight requests are cancelled via AbortController. Loading state shows on the input during fetch.</p>
+          <p class="nds-item-desc">A search starts 300 ms after the last keystroke. A new search cancels the request before it. A spinner replaces the clear button while a request runs.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-globe-02"></i>
-            <span class="nds-label">Bilingual Support</span>
+            <i class="hgi hgi-stroke hgi-search-remove"></i>
+            <span class="nds-label">No Results Message</span>
           </span>
-          <p class="nds-item-desc">Works with Arabic and English content. Empty state message adapts to the page language. RTL and LTR layouts supported.</p>
+          <p class="nds-item-desc">When nothing matches, the menu stays open and shows "No results", in Arabic on an Arabic page. A screen reader reads the message.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-            <span class="nds-label">Form Integration</span>
+            <i class="hgi hgi-stroke hgi-access"></i>
+            <span class="nds-label">Screen Reader Support</span>
           </span>
-          <p class="nds-item-desc">Selected values sync to the input. Clear button resets the selection. Works with the forms validation and status API.</p>
+          <p class="nds-item-desc">The input is a combobox, and the menu is a listbox of options. A screen reader reads the result the arrow keys reach while focus stays in the input.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-list-01"></i>
-            <span class="nds-label">Search Box Auto-submit</span>
+            <i class="hgi hgi-stroke hgi-cancel-circle"></i>
+            <span class="nds-label">Clear Button</span>
           </span>
-          <p class="nds-item-desc">When the container also has class <code class="nds-inline-code lang-html">nds-search-box</code>, selecting a result automatically clicks the nearest <code class="nds-inline-code lang-html">.nds-search-btn</code> to submit the search without extra interaction. On a data screen the search box sits in a <a href="{{ 'components/toolbar' | relative_url }}" class="nds-color">Toolbar</a>, beside the filters and the result count.</p>
+          <p class="nds-item-desc">The clear button empties the field, drops the last pick and closes the menu. It fires <code class="nds-inline-code lang-js">nds:autocomplete:clear</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layers-01"></i>
+            <span class="nds-label">Menu Placement</span>
+          </span>
+          <p class="nds-item-desc">The menu is as wide as the field. In a drawer, a modal or another scroll area that would cut it off, the menu moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> while it is open.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="autocompleteGuidelines" class="nds-content-section nds-demo-section">
+<section id="autocompletePractices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Usage Guidelines</h2>
-      <p class="nds-section-description">When and how to use autocomplete inputs effectively</p>
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">When to Use</h3>
-        <ul>
-          <li>Search fields that query a remote API for suggestions as the user types</li>
-          <li>Large datasets where showing all options in a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">select dropdown</a> is impractical</li>
-          <li>Service search, city lookup, product search, or any entity search</li>
-          <li>Set <code class="nds-inline-code lang-html">data-min-chars</code> to control when fetching begins (default: 3 characters)</li>
-          <li>For static option lists, use a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">select dropdown</a> instead</li>
-        </ul>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">JavaScript API</h3>
-        <div class="nds-code nds-expandable">
-              <div class="nds-code-action">
-                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                  <i class="nds-icon nds-hgi-copy-01"></i>
-                </button>
-              </div>
-              <div class="nds-expandable-content">
-                <code class="lang-javascript code">
-// Auto-initializes on .nds-form-container[data-url] with autocomplete="on"
-// For dynamic content:
-NDS.Autocomplete.reinit();
+    <div class="nds-section-body nds-prose" markdown="1">
 
-// Create an instance programmatically (options are optional)
-var instance = NDS.Autocomplete.create(containerElement, {
-  // Override client-side filtering (used in both fetch modes)
-  filter: function(items, query) { return items.filter(/* … */); },
-  // Override per-row label rendering; developer owns escaping
-  renderItem: function(item, query) { return '&lt;strong&gt;' + item.Title + '&lt;/strong&gt;'; }
-});
+- Use `data-fetch="once"` for a list of a few hundred items or fewer, such as cities or departments. Use `each` for a large set that the server searches.
+- Lower `data-min-chars` only when a short query gives a useful list. With `each`, a lower number sends more requests.
+- Use `data-strict` when the server accepts only a known value, such as a city code. Leave it off a search field.
+- Write the placeholder or the info text as a hint of what to type, such as "Type part of a service name".
+- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
 
-// Destroy an instance
-instance.destroy();
-
-// Listen for selection
-container.addEventListener('nds:autocomplete:select', function(e) {
-  console.log('Selected item object:', e.detail.item);
-  console.log('Display text:', e.detail.text);
-});
-
-// Listen for results fetched
-container.addEventListener('nds:autocomplete:fetch', function(e) {
-  console.log('Query:', e.detail.query);
-  console.log('Results:', e.detail.results);
-});
-
-// Listen for clear
-container.addEventListener('nds:autocomplete:clear', function(e) {
-  console.log('Input cleared');
-});
-            </code>
-      </div>
-        </div>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Configuration Attributes</h3>
-        <ul>
-          <li><code class="nds-inline-code lang-html">data-url</code> on the container: API endpoint that returns JSON</li>
-          <li><code class="nds-inline-code lang-html">data-name</code>: JSON field name to display in results (default: "Title")</li>
-          <li><code class="nds-inline-code lang-html">data-min-chars</code>: minimum characters before fetching starts (default: 3)</li>
-          <li><code class="nds-inline-code lang-html">data-query-param</code>: query string parameter name sent to the API (default: "q")</li>
-          <li><code class="nds-inline-code lang-html">data-results-path</code>: dot notation path to the results array in the response (e.g. "response.items"). Without it, the component auto-detects flat arrays or objects with <code class="nds-inline-code lang-js">results</code> or <code class="nds-inline-code lang-js">data</code> keys</li>
-          <li><code class="nds-inline-code lang-html">data-fetch</code>: fetch mode, either <code class="nds-inline-code lang-js">"each"</code> (default) or <code class="nds-inline-code lang-js">"once"</code>. With <code class="nds-inline-code lang-js">"each"</code> the API is called on every keystroke and the server filters results. With <code class="nds-inline-code lang-js">"once"</code> the full list is fetched once on first input, cached, and filtered client-side on each keystroke. Use <code class="nds-inline-code lang-js">"once"</code> for small static datasets such as countries, currencies, or departments.</li>
-          <li><code class="nds-inline-code lang-html">data-empty-message</code>: custom text for the "no results" placeholder shown when a query matches nothing (default: localized "No results")</li>
-          <li><code class="nds-inline-code lang-html">data-empty-icon</code>: icon classes for the "no results" placeholder (default: <code class="nds-inline-code lang-html">nds-icon nds-hgi-search-01</code>)</li>
-          <li><code class="nds-inline-code lang-html">data-strict</code>: the typed text must match a picked suggestion. Form validation rejects other text at submit with "Choose from the suggestions". A pick fills a hidden carrier input; typing or the clear button empties it. The carrier has no <code class="nds-inline-code lang-html">name</code>, so the submitted form data does not change. Typing the exact text without picking it still rejects — the pick is what commits the value.</li>
-        </ul>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">API Response Format</h3>
-        <p>With the default <code class="nds-inline-code lang-js">data-fetch="each"</code> mode, the component sends a GET request per keystroke (e.g. <code class="nds-inline-code lang-html">/api/services?q=term</code>) and the server handles filtering. With <code class="nds-inline-code lang-js">data-fetch="once"</code>, the full URL is fetched once with no query parameter and filtering is done client-side. Both modes expect JSON in one of these formats:</p>
-    </div>
-    <div class="nds-block">
-        <div class="nds-code nds-expandable">
-              <div class="nds-code-action">
-                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                  <i class="nds-icon nds-hgi-copy-01"></i>
-                </button>
-              </div>
-              <div class="nds-expandable-content">
-                <code class="lang-javascript code">
-// Flat array
-[{ "Title": "Item one" }, { "Title": "Item two" }]
-
-// Object with "results" or "data" key
-{ "results": [{ "Title": "Item one" }] }
-{ "data": [{ "Title": "Item one" }] }
-
-// The display field matches data-name (default: "Title")
-// Extra fields are passed through in event detail on selection
-[{ "Id": 1, "Title": "Request a service", "Category": "Services" }]
-
-// Nested response: use data-results-path="response.items"
-{ "response": { "items": [{ "Title": "Item one" }], "total": 42 } }
-
-// The component renders up to 20 results
-// Filtering: server-side with data-fetch="each" (default), client-side with data-fetch="once"
-            </code>
-      </div>
-        </div>
-      </div>
-    </div>
+</div>
   </div>
 </section>
 
-<script>
-  function initPage() {
-    var container = document.getElementById('autocomplete-demo');
-    if (container && window.NDS && NDS.Forms) {
-      NDS.Forms.setStatus({ element: container, status: 'neutral', message: 'Try typing "request"', permanent: true });
-    }
-  }
-  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
+<section id="autocompleteApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `.nds-autocomplete-menu` | the menu | The script adds the menu, with `.nds-dropmenu-menu`, in the `.nds-form-control`. Style the menu through this class: it stays on the menu when the menu moves to `<body>` |
+| `.nds-autocomplete-value` | a hidden `<input>` | The script adds it with `data-strict`. It holds the picked text. It has no `name`, so the form data does not change |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-url` | `.nds-form-container` | The URL that returns the JSON results. Required. It may hold a query string: the script then adds the typed text after `&` |
+| `data-name` | `.nds-form-container` | The result field that each row shows and that a pick writes into the input. The default is `Title` |
+| `data-fetch` | `.nds-form-container` | `each` (the default) requests the URL on each search. `once` requests it once and filters in the browser |
+| `data-min-chars` | `.nds-form-container` | The fewest characters that start a search. The default is `3`. Shorter text closes the menu |
+| `data-query-param` | `.nds-form-container` | The name of the query parameter that holds the typed text with `each`. The default is `q` |
+| `data-results-path` | `.nds-form-container` | A dot path to the results array in the response, such as `response.items`. Without it, the script reads an array, or the `results` or `data` key of an object |
+| `data-empty-message` | `.nds-form-container` | The text when nothing matches. The default is "No results", in Arabic on an Arabic page |
+| `data-empty-icon` | `.nds-form-container` | The icon classes when nothing matches. The default is `nds-icon nds-hgi-search-01` |
+| `data-strict` | `.nds-form-container` | The form accepts only a picked result. See Strict Mode above |
+| `data-state~="loading"` | `.nds-form-container` | The script sets it when a request starts, and removes it when the latest request ends. The forms script shows a spinner in `.nds-form-action` |
+| `data-portal` | `.nds-form-control` | The menu moves to `<body>` on every open. Without it, the menu moves only when a scroll area would cut it off |
+| `autocomplete="on"` | the `<input>` | Marks the input. The script sets it to `off` when the field starts, so the browser shows no list of its own, and `destroy()` sets it back |
+| `data-state~="active"` | a result in the menu | The script sets it on the result that the arrow keys reach, and removes it when they move on |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--autocomplete-highlight` | `var(--colors-primary-100)` | Background of the marked text. A token: set it on `:root`. In dark mode it is `var(--colors-primary-alpha-50)` |
+{: .nds-table .nds-responsive}
+
+### Response Format
+{: .nds-block-title}
+
+The response is a JSON array of objects, or an object that holds the array. Each object needs the `data-name` field. Other fields reach the `select` event in `item`.
+
+<script type="text/html" id="autocomplete-response" data-canon data-lang="js">
+// GET services.json?q=visa
+[
+  { "Id": 7, "Title": "Visa Application", "Category": "Travel" },
+  { "Id": 21, "Title": "Visit Visa Extension", "Category": "Travel" }
+]
 </script>
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Autocomplete.init()` | Starts the page listener, once. The loader calls it |
+| `NDS.Autocomplete.reinit()` | The same as `init()` |
+| `NDS.Autocomplete.create(container, options)` | Starts one field now: pass its `.nds-form-container`. Use it to pass options, or for a field that code searches before the user focuses it. Call it before the first focus: on a field that has already started, it returns an instance that does nothing |
+| `instance.destroy()` | Removes the menu, the listeners and the hidden input. The field starts again on its next focus |
+{: .nds-table .nds-responsive}
+
+| Option | Default | Effect |
+|---|---|---|
+| `filter(items, query)` | a match in the `data-name` field | Returns the results to show. It runs in both fetch modes: with `each`, on the server's results |
+| `renderItem(item, query)` | the `data-name` field, with the match marked | Returns the HTML of one row. The script inserts it as HTML, so escape the text yourself. The match is not marked: add `<mark>` yourself if you need it |
+{: .nds-table .nds-responsive}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:autocomplete:fetch` | `.nds-form-container`, and it bubbles | `{ query, results }`, after each list renders. `results` holds every match, not only the first 20 |
+| `nds:autocomplete:select` | `.nds-form-container`, and it bubbles | `{ item, text }`, after a pick. `item` is the whole result object. `text` is its `data-name` value, now in the input |
+| `nds:autocomplete:clear` | `.nds-form-container`, and it bubbles | `{}`, after the clear button empties the field |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="autocomplete-js" data-canon data-lang="js">
+var field = document.querySelector('#service-search').closest('.nds-form-container');
+
+// Fill a hidden input with the picked service's id
+field.addEventListener('nds:autocomplete:select', function (e) {
+  document.querySelector('#service-id').value = e.detail.item.Id;
+});
+
+// Match the start of the name only, and show the category in each row
+NDS.Autocomplete.create(field, {
+  filter: function (items, query) {
+    return items.filter(function (item) {
+      return item.Title.toLowerCase().indexOf(query.toLowerCase()) === 0;
+    });
+  },
+  renderItem: function (item) {
+    return NDS.escapeHtml(item.Title) + ' · ' + NDS.escapeHtml(item.Category);
+  }
+});
+</script>
+
+The full API is in the banner of `_js/nds-autocomplete.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="autocompleteRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Services List](../examples/services-list): a search box with results that also filters the list.
+- [Manage Records](../examples/manage-records): a required requester field that loads the list once, in a modal.
+- [Form Template](../templates/form-template): a required city field on a request form.
+- [Saudi Cities](../utilities/saudi-cities): the city list, loaded once with a one-character start.
+
+</div>
+  </div>
+</section>

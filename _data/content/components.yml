@@ -58,7 +58,7 @@
 
 - title: "Autocomplete"
   description: "Type-ahead search with filtered suggestions"
-  use_when: "A type-ahead field: search suggestions, live search, combobox, async option loading, city or name lookup. Carries the search-box markup too. To pick several values use Multiselect; for free typed values use Tag Input."
+  use_when: "A type-ahead field: search suggestions, live search, combobox, async option loading, city or name lookup. Adds suggestions to a search box too. To pick several values use Multiselect; for free typed values use Tag Input."
   icon: '<i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
