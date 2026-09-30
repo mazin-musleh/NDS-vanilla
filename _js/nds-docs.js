@@ -52,7 +52,10 @@
             var tag = c.tagName.toLowerCase();
             out += '<' + tag;
             Array.prototype.forEach.call(c.attributes, function (a) {
-                out += a.value === '' ? ' ' + a.name : ' ' + a.name + '="' + a.value.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '"';
+                if (a.value === '') { out += ' ' + a.name; return; }
+                var v = a.value.replace(/&/g, '&amp;');
+                // A JSON value keeps its own quotes readable inside single quotes, as the canon writes it.
+                out += /"/.test(v) && !/'/.test(v) ? ' ' + a.name + "='" + v + "'" : ' ' + a.name + '="' + v.replace(/"/g, '&quot;') + '"';
             });
             out += '>';
             if (VOID.test(tag)) return;
