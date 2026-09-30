@@ -123,11 +123,9 @@
 
             if (digits.length === 1) {
                 var next = inputs[idx + 1];
-                if (next) {
-                    next.focus();
-                } else {
-                    focusAndComplete(group, inputs);
-                }
+                if (next) next.focus();
+                // Checked on every box, not only the last: the boxes can be filled out of order.
+                if (isAllFilled(group)) dispatch(group, 'nds:otpComplete');
             }
         }
 
