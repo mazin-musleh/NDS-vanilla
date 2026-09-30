@@ -189,7 +189,7 @@ module DocsCanon
   # validation can be tried. Preview only: the code block never shows the form.
   # The buttons show only while the field has a rule that can fail (nds-docs.js re-checks on
   # each choice), so they never sit there with nothing to test.
-  RULE_RE = /\s(data-required|data-min-checked|data-max-checked|required|pattern|minlength|min|max)[\s=>]|\stype="(email|url)"|nds-required/
+  RULE_RE = /\s(data-required|data-strict|data-min-checked|data-max-checked|required|pattern|minlength|min|max)[\s=>]|\stype="(email|url)"|nds-required/
 
   # The demo sits in a slot, so a re-render keeps the card's view toggles.
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
