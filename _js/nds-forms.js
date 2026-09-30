@@ -50,6 +50,8 @@
  *     through its hidden carrier; the error shows on the field that holds it.
  *   - An autocomplete with data-strict is checked at submit too: typed text must match a
  *     picked suggestion (mechanism and carve-outs in the autocomplete banner).
+ *   - A blank setCustomValidity(' ') blocks the submit and outlines the field with no message:
+ *     for a component that shows the cause itself (password's red chips). It beats native messages.
  *   - A readonly checkbox, radio or switch cannot change: Forms cancels the click that Space
  *     or an arrow key sends, since the browser ignores readOnly on those inputs.
  *   - syncState() dispatches nothing, so it cannot re-enter your own input handler. Setting
@@ -384,6 +386,9 @@
 
             var validity = input.validity;
             var isArabic = NDS.isArabic;
+
+            // A blank custom message: the component shows the cause itself (password's red chips).
+            if (validity.customError && !input.validationMessage.trim()) return '';
 
             if (validity.valueMissing) {
                 return isArabic ? 'هذا الحقل مطلوب' : 'This field is required';
