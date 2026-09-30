@@ -11,21 +11,16 @@
 // AUTOCOMPLETE MENU OVERRIDES
 // ==============================================
 
-.nds-form-container {
-
-    // Menu width tracks the form-control via the dropmenu's --dropmenu-min-width
-    // hook: the menu is in-place (position: absolute, no data-portal), so 100%
-    // resolves against the position:relative .nds-form-control — same approach
-    // as custom-select (.nds-select).
-    .nds-autocomplete-menu {
-        --dropmenu-min-width: 100%;
-    }
+// Rooted on the menu, not .nds-form-container: the menu may portal to <body>.
+.nds-autocomplete-menu {
+    // 100% of the .nds-form-control; the dropmenu converts it to px before a portal.
+    --dropmenu-min-width: 100%;
 
     // ==============================================
     // HIGHLIGHT & EMPTY STATE
     // ==============================================
 
-    .nds-autocomplete-menu .nds-dropmenu-item mark {
+    .nds-dropmenu-item mark {
         background-color: var(--autocomplete-highlight);
         color: inherit;
         padding: 0;
@@ -35,7 +30,7 @@
     // "No results" — the scroll area is an .nds-empty container (placeholder
     // auto-managed by NDS.Empty). Compact the placeholder's spacious default
     // to menu-row scale.
-    .nds-autocomplete-menu .nds-empty-placeholder {
+    .nds-empty-placeholder {
         padding: var(--spacing-xl) var(--spacing-md);
         gap: var(--spacing-sm);
 
@@ -48,10 +43,4 @@
             line-height: var(--typo-text-sm-LH);
         }
     }
-
 }
-
-// ==============================================
-// RESPONSIVE
-// ==============================================
-
