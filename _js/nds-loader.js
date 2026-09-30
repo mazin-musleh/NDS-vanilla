@@ -176,7 +176,7 @@
             // and REVERTED: NDS.Sort's accessor falls back to cell TEXT, so it always
             // has a value to sort by, and a server-sorted page (server ordered all
             // 500 rows, returned 20) would be silently re-ordered client-side by the
-            // rendered text. Selection and sub-rows read the DOM live, so scanning
+            // rendered text. Sub-rows read the DOM live, so scanning
             // for new tables via init() is all this needs. A client-side list that
             // wants late rows folded into an active sort calls NDS.Sort's own
             // refresh() — an explicit choice, not a default that corrupts servers.
@@ -327,8 +327,9 @@
         // would risk init() running before that sibling bundle has executed.
         {
             name: 'Selection',
+            // nds-tables starts it for a table's header select-all, which it stamps after detection.
             selector: '[data-selection-target]',
-            // NDS.Init.refresh hook: the counter wrappers live OUTSIDE the list
+            // NDS.Init.refresh hook: counters and select-all boxes live OUTSIDE the list
             // they count, so the mutated container never matches the selector.
             refresh: () => NDS.Selection?.refresh?.(),
             init: () => NDS.Selection?.init?.(),

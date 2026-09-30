@@ -1,12 +1,12 @@
 /* NDS.Tables — public surface
  * Rides: nds-sort (the sort engine — column cycling, reordering, aria-sort)
  *      · nds-dropmenu (column-visibility menu; a sub-row toggle authored inside a menu item)
- *      · nds-forms (the indeterminate select-all checkbox)
+ *      · nds-selection (the header select-all)
  *      · nds-pagination (refreshed after a sort re-orders a paged table; soft)
  * Methods:
  *   NDS.Tables.init() / .reinit()               scan .nds-table and [data-columns-target] menus
  *   NDS.Tables.recheckWidths()                  re-measure every table's responsive scroll state
- *   NDS.Tables.create(table)                    sort + selection controls for one table
+ *   NDS.Tables.create(table)                    sort controls for one table
  *   NDS.Tables.createResponsive(table)          the scroll wrapper only
  *   NDS.Tables.createColumnToggle(root)         one [data-columns-target] menu
  *   NDS.Tables.row(tr)                          per-row handle {el, sub}; the sub row itself
@@ -18,8 +18,6 @@
  *   NDS.Tables.getCellText(cell)                the cell-text reader sort and export use
  * Events (bubble from the <table>):
  *   nds:table:sort         detail {columnIndex, direction, table, button}
- *   nds:table:selection    detail {selectedCount, totalCount, selectedRows, selectedIndexes,
- *                          table}
  *   nds:table:columns      detail {table, index, hidden, restored} — restored:true is a saved
  *                          hide replayed at init, not a user action
  *   nds:table:sub-request  detail {row, sub, table, signal} — there is nothing to show yet.
@@ -37,8 +35,8 @@
  *     until a second click or your close().
  *   - A sub row is <tr class="nds-sub"> placed DIRECTLY AFTER its parent row — adjacency is
  *     the pairing, there is no id to keep in sync.
- *   - Select-all and nds:table:selection follow the FILTERED view; rows hidden by pagination
- *     still count, rows a filter removed do not.
+ *   - A header checkbox gets data-selection-target (and the <tbody> an id when it has none);
+ *     nds-selection.js owns the select-all and row selection from there.
  *   - Columns are addressed by cell index, so colspan/rowspan header cells are not supported.
  *   - Column hides persist in localStorage whenever the table has an id.
  *   - Hiding a column stamps data-export-skip on its <th> so exports match the view, and a
@@ -84,22 +82,12 @@
             this.tbody = tableElement.querySelector(':scope > tbody');
             this.sortButtons = Array.from(this.thead?.querySelectorAll('.nds-sort-btn') || []);
 
-            this.selectAllCheckbox = this.thead?.querySelector('th input[type="checkbox"].nds-check');
-
             if (!this.thead || !this.tbody) {
                 console.warn('NDS Tables: Invalid table structure found');
                 return;
             }
 
             this.isSortable = this.sortButtons.length > 0;
-            // Keyed on the header's select-all, not on today's row count: a table
-            // that starts empty and gains rows later must still wire selection up.
-            this.isSelectable = !!this.selectAllCheckbox;
-
-            // AbortController for the change-listeners attached in
-            // setupEventListeners — aborted in destroy() so the per-row
-            // bookkeeping detaches cleanly when the table is torn down.
-            this.abortController = new AbortController();
 
             this.valid = true;
             this.table.ndsTableControls = this;
@@ -110,12 +98,18 @@
             if (this.isSortable) {
                 this.setupSort();
             }
-            this.setupEventListeners();
+            this.setupSelectAll();
+        }
 
-            if (this.isSelectable) {
-                this.updateSelectAllState();
-                this.updateRowSelectedStates();
-            }
+        // The header checkbox selects this table's rows through nds-selection.js. Stamped
+        // here, after the loader's detection pass, so this table starts Selection itself.
+        setupSelectAll() {
+            const all = this.thead.querySelector('th input.nds-check');
+            if (!all || all.hasAttribute('data-selection-target')) return;
+            this.tbody.id ||= NDS.uniqueId('nds-rows-');
+            all.setAttribute('data-selection-target', this.tbody.id);
+            NDS.Selection?.init?.();
+            NDS.Selection?.recount?.(this.tbody);
         }
 
         // ── Sort (delegated to NDS.Sort) ─────────────────────────────────
@@ -181,42 +175,6 @@
             });
         }
 
-        setupEventListeners() {
-            // Selectable table listeners (sort listeners are owned by NDS.Sort)
-            if (this.isSelectable) {
-                const { signal } = this.abortController;
-
-                // Select all checkbox
-                this.selectAllCheckbox.addEventListener('change', (e) => {
-                    this.handleSelectAll(e.target.checked);
-                }, { signal });
-
-                // Individual row checkboxes — one delegated change listener on
-                // tbody instead of a per-row bind (O(1) wiring; change bubbles,
-                // and thead's select-all is handled above so it never reaches here).
-                this.tbody.addEventListener('change', (e) => {
-                    if (!e.target.matches('input[type="checkbox"].nds-check')) return;
-                    // Own, non-sub rows only — a sub row's nested table bubbles its
-                    // checkboxes up here, and this table's counts never move for them.
-                    const tr = e.target.closest('tr');
-                    if (!tr || tr.parentElement !== this.tbody || tr.classList.contains('nds-sub')) return;
-
-                    // Only the changed row's token moved; re-sweeping every row was
-                    // a third O(n) pass on the interaction tick.
-                    NDS.State[e.target.checked ? 'add' : 'remove'](tr, 'selected');
-                    this.updateSelectAllState();
-                    this.dispatchSelectionEvent();
-                }, { signal });
-
-                // Filter re-stamps data-filtered on rows without any checkbox
-                // event — recompute the header state so select-all stays honest
-                // when the filtered view changes under an existing selection.
-                this._offFilterWatch = NDS.onAttrChange('tr', ['data-filtered'], (els) => {
-                    if (els.some(el => this.tbody.contains(el))) this.updateSelectAllState();
-                });
-            }
-        }
-
         dispatchSortEvent(columnIndex, direction, button = null) {
             const event = new CustomEvent('nds:table:sort', {
                 detail: {
@@ -224,86 +182,6 @@
                     direction: direction,
                     table: this.table,
                     button
-                },
-                bubbles: true
-            });
-
-            this.table.dispatchEvent(event);
-        }
-
-        // Read live, never cached. Rows are created and deleted at runtime, and the
-        // change listener is delegated on tbody so a new row already fires — but a
-        // construction-time snapshot left it out of every count and out of
-        // selectedRows, so the page saw an empty selection for a row it had just
-        // ticked. reinit() cannot repair that: it skips an initialized table.
-        get rowCheckboxes() {
-            return Array.from(this.tbody?.querySelectorAll(':scope > tr:not(.nds-sub) td input[type="checkbox"].nds-check') || []);
-        }
-
-        // Select-all and the header state operate on the FILTERED view only:
-        // rows an active filter removed carry data-filtered and are excluded.
-        // Pagination-hidden rows (other pages) stay included, matching export.
-        // Selections already made on rows a filter later hides persist — the
-        // bulk-action truth export and the selection count also report.
-        eligibleCheckboxes() {
-            return this.rowCheckboxes.filter(checkbox => {
-                const tr = checkbox.closest('tr');
-                return !(tr && tr.hasAttribute('data-filtered'));
-            });
-        }
-
-        handleSelectAll(checked) {
-            this.eligibleCheckboxes().forEach(checkbox => {
-                checkbox.checked = checked;
-            });
-
-            // Clear indeterminate state via forms API
-            NDS.Forms.setIndeterminate(this.selectAllCheckbox, false);
-
-            this.updateRowSelectedStates();
-            this.dispatchSelectionEvent();
-        }
-
-        updateRowSelectedStates() {
-            this.rowCheckboxes.forEach(checkbox => {
-                const tr = checkbox.closest('tr');
-                if (!tr) return;
-
-                if (checkbox.checked) {
-                    NDS.State.add(tr, 'selected');
-                } else {
-                    NDS.State.remove(tr, 'selected');
-                }
-            });
-        }
-
-        updateSelectAllState() {
-            const eligible = this.eligibleCheckboxes();
-            const checkedCount = eligible.filter(cb => cb.checked).length;
-            const totalCount = eligible.length;
-
-            this.selectAllCheckbox.checked = totalCount > 0 && checkedCount === totalCount;
-
-            const isIndeterminate = checkedCount > 0 && checkedCount < totalCount;
-            NDS.Forms.setIndeterminate(this.selectAllCheckbox, isIndeterminate);
-        }
-
-        dispatchSelectionEvent() {
-            // Resolve each row from its own checkbox rather than by tbody position:
-            // sorting re-appends the <tr> nodes (nds-sort.js), and indexing tbody
-            // rows by position reported the wrong rows after the first sort.
-            const checkboxes = this.rowCheckboxes;
-            const selected = checkboxes
-                .map((checkbox, index) => ({ checkbox, index }))
-                .filter(item => item.checkbox.checked);
-
-            const event = new CustomEvent('nds:table:selection', {
-                detail: {
-                    selectedCount: selected.length,
-                    totalCount: checkboxes.length,
-                    selectedRows: selected.map(item => item.checkbox.closest('tr')),
-                    selectedIndexes: selected.map(item => item.index),
-                    table: this.table
                 },
                 bubbles: true
             });
@@ -327,8 +205,6 @@
 
         destroy() {
             this.sort?.destroy();
-            this.abortController?.abort();
-            if (this._offFilterWatch) { this._offFilterWatch(); this._offFilterWatch = null; }
             this.table.ndsTableControls = null;   // the table stays initialized; only its controls go
         }
     }

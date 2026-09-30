@@ -1220,8 +1220,8 @@ hideFeedback: true
     });
 
     // ── Selection ───────────────────────────────────────────────────────────
-    table.addEventListener('nds:table:selection', function (event) {
-      selectedRows = event.detail.selectedRows;
+    table.addEventListener('nds:selection:change', function (event) {
+      selectedRows = event.detail.items;
       bulkBtn.hidden = selectedRows.length === 0;
       bulkBtn.querySelector('.nds-label').textContent = 'Delete ' + selectedRows.length;
     });

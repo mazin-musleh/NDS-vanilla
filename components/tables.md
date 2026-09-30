@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/09/2026 - 01:35 AM"
+last_edit: "30/09/2026 - 09:11 PM"
 ---
 
 <!-- Basic Table Section -->
@@ -2104,17 +2104,13 @@ table.addEventListener('nds:table:sort', (e) =&gt; {
     e.detail.button;       // The active sort button (null on reset)
 });
 
-// Fires when row selection changes
-table.addEventListener('nds:table:selection', (e) =&gt; {
-    e.detail.selectedCount;    // Number of selected rows
-    e.detail.totalCount;       // Total number of selectable rows
-    e.detail.selectedRows;     // Array of selected &lt;tr&gt; elements
-    e.detail.selectedIndexes;  // Their positions in the current row order
-    e.detail.table;            // The &lt;table&gt; element
+// Fires when row selection changes (from Selection; bubbles from the &lt;tbody&gt;)
+table.addEventListener('nds:selection:change', (e) =&gt; {
+    e.detail.count;            // Number of selected rows
+    e.detail.total;            // Number of rows
+    e.detail.items;            // Array of selected &lt;tr&gt; elements, in page order
+    e.detail.list;             // The &lt;tbody&gt;
 });
-
-// Rows are read live, so rows you add or remove at runtime are counted
-// straight away — no reinit call is needed to keep selection in step.
 
 // Fires when a column is shown or hidden
 table.addEventListener('nds:table:columns', (e) =&gt; {

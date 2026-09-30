@@ -33,7 +33,7 @@
  *     NDS.i18n.load(component, scopes) fetch + apply a component's string table (en
  *                                      fallback; stamps data-i18n / data-i18n-attr in scope)
  *     NDS.triggerEvents(el)            dispatch input + change so forms and consumers sync
- *     NDS.badge(el, count) · NDS.buildChip(value, opts) · NDS.isRowSelected(row)
+ *     NDS.badge(el, count) · NDS.buildChip(value, opts)
  * Events:
  *   nds:template:ready    on the stamped root, bubbles — detail.id is the summoned id.
  *                         Fires after NDS.Init.refresh wires the arrivals, so page JS
@@ -369,15 +369,6 @@
     // (nds-numbers.js), the pagination records slots, and the selection
     // count all route here so they can never drift.
     NDS.formatNumber = (n, opts) => n.toLocaleString(undefined, opts);
-
-    // ── Selection rule ───────────────────────────────────────────────
-    // Canonical "is this row/card selected": data-state~=selected (the
-    // convention nds-tables.js stamps on rows) OR a checked input.nds-check
-    // inside (cards, definition lists, JS-less checkbox containers).
-    // Shared by nds-export.js (selected-scope export) and nds-selection.js
-    // (selection count widget) — keep the two readers in lockstep here.
-    NDS.isRowSelected = (row) =>
-        NDS.State.has(row, 'selected') || !!row.querySelector('input.nds-check:checked');
 
     // ── Run-When-Idle ────────────────────────────────────────────────
     // Defers work to a browser-idle slot via requestIdleCallback, with a

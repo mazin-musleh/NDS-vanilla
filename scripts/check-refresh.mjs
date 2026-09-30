@@ -87,7 +87,7 @@ report.push(...await recordsPage.evaluate(async () => {
     });
 
     const EVENTS = ['nds:filter:change', 'nds:sort:change', 'nds:table:sort',
-        'nds:table:selection', 'nds:pagination:change'];
+        'nds:selection:change', 'nds:pagination:change'];
     const events = {};
     EVENTS.forEach((e) => { events[e] = 0; document.addEventListener(e, () => { events[e]++; }, true); });
     const reset = () => {

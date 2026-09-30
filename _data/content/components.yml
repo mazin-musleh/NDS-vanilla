@@ -696,8 +696,8 @@
   scss: _sass/layout/_section.scss
 
 - title: "Selection"
-  description: "Selected-items counter for tables, card grids, and checkbox lists, with a records-line swap while a selection is active"
-  use_when: "Show how many items are selected: a 5-selected-of-48 counter, select-all state, or a bulk-action bar over tables, card grids, and any checkbox list."
+  description: "Lets users pick items in any list, so one action can apply to all of them"
+  use_when: "Users pick several items for one bulk action (export, delete, assign) in any list: table rows, cards, or a plain checkbox list. Covers select-all, a 5-selected-of-48 counter, and a bulk button that follows the selection."
   icon: '<i class="hgi hgi-stroke hgi-check-list"></i>'
   category: "Data"
   tags: ["JS", "API"]

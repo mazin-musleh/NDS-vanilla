@@ -2,6 +2,7 @@
  * Rides: nds-tables (the table adapter reads the header and body through getCellText;
  *        soft) · nds-pagination (a paged list still exports every page; soft)
  *      · nds-filter (rows the filter removed are left out; soft)
+ *      · nds-selection (NDS.Selection.isSelected decides the selected scope; init() loads it)
  * Methods:
  *   NDS.Export.init()                            wire the delegated [data-export] click
  *   NDS.Export.export(source, format, scope, opts)   collect and download.
@@ -56,8 +57,7 @@
 (function () {
     'use strict';
 
-    // Selection rule lives in nds-core.js (NDS.isRowSelected), shared with the
-    // selection-count widget — see the semantics comment there.
+    // The "is this row selected" rule is NDS.Selection.isSelected: init() loads it.
 
     // A row filtered OUT by NDS.Filter carries data-filtered (hidden via the
     // critical-layer rule [data-filtered]{display:none!important}). This is a
@@ -105,7 +105,7 @@
                 ? Array.from(tbody.querySelectorAll(':scope > tr.nds-page-item'))
                 : Array.from(tbody.rows))
                 .filter(row => !row.classList.contains('nds-sub') && !isRowFiltered(row));
-            if (scope === 'selected') return rows.filter(NDS.isRowSelected);
+            if (scope === 'selected') return rows.filter(NDS.Selection.isSelected);
             return rows;
         },
 
@@ -132,7 +132,7 @@
                 ? NDS.queryAll(source, sel)
                 : Array.from(source.children))
                 .filter(row => !isRowFiltered(row));
-            if (scope === 'selected') return rows.filter(NDS.isRowSelected);
+            if (scope === 'selected') return rows.filter(NDS.Selection.isSelected);
             return rows;
         },
 
@@ -186,7 +186,7 @@
     // getRows doesn't own (an unmarked <tr> in a paginated table), which flips
     // the scope to 'selected' and then exports nothing.
     function inferScope(source, adapter) {
-        return adapter.getRows(source, 'all').some(NDS.isRowSelected) ? 'selected' : 'all';
+        return adapter.getRows(source, 'all').some(NDS.Selection.isSelected) ? 'selected' : 'all';
     }
 
     function collect(source, scope) {
@@ -471,6 +471,8 @@
         if (_initDone) return;
         _initDone = true;
         document.addEventListener('click', onExportClick);
+        // Loads Selection's bundle now: isSelected is read synchronously per row, and a stub would answer with a Promise.
+        NDS.Selection.init();
     }
 
     NDS.Export = {
