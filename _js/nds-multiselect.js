@@ -102,8 +102,10 @@
             // during the critical pass), so this normally runs; the guard just keeps
             // the unbuilt-but-functional fallback if it's ever absent.
             if (NDS.Dropmenu && !this.dropmenu.ndsDropmenu) NDS.Dropmenu.create(this.dropmenu);
+            // An icon-only trigger names itself in aria-label: read it, and give it back on destroy().
+            this.triggerAriaOriginal = this.trigger?.getAttribute('aria-label') || '';
             this.triggerLabelOriginal = (
-                this.trigger?.querySelector('.nds-label')?.textContent || ''
+                this.trigger?.querySelector('.nds-label')?.textContent || this.triggerAriaOriginal
             ).trim();
             // Declarative population — JSON attributes win over any
             // hand-written rows in the menu.
@@ -344,7 +346,7 @@
             // Chips hold their own remove listeners; create() rebuilds them.
             this.chipsEl.replaceChildren();
             NDS.State.remove(this.root, 'filled');
-            NDS.aria.label(this.trigger, '');
+            NDS.aria.label(this.trigger, this.triggerAriaOriginal);
             this.root.removeAttribute('data-nds-multiselect-initialized');
             delete this.root.ndsMultiselect;
         }
