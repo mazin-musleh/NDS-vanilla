@@ -364,9 +364,23 @@
             critical: true,
         },
         {
-            name: 'Cookies',
-            selector: '#ndsCookiesAcceptBtn',
-            init: () => NDS.Cookies?.init?.(),
+            // Lazy like Accessibility, and on every page: the panel markup lives in the bundle,
+            // so a visitor with a stored choice fetches nothing. The consent itself is
+            // NDS.Cookies in main, applied at load.
+            name: 'CookieConsent',
+            selector: null,
+            universal: true,
+            init: () => NDS.CookieConsent?.init?.(),
+            // The stub fetches the bundle on the first press and replays open().
+            lazy: () => {
+                document.addEventListener('click', (e) => {
+                    const btn = e.target.closest('[data-cookies-toggle]');
+                    if (!btn) return;
+                    e.preventDefault();
+                    NDS.CookieConsent.open(btn.dataset.cookiesToggle || undefined, btn);
+                });
+            },
+            eager: () => !NDS.Cookies.getConsent() && !NDS.Cookies.get('cookieConsentDismissed'),
         },
         {
             // Deferred + self-contained: nothing consumes NDS.Rating and the stars

@@ -730,5 +730,4 @@ direction: ltr
 </main>
 
 {% include footer.html %}
-{% include cookie-popup.html %}
 {% include accessibility-panel.html %}

@@ -60,8 +60,7 @@ class JSProcessor
       # submit), every critical component, dropmenu (deferred, but a
       # critical-init dependency of multiselect), and deferred components
       # deliberately kept in main: mainnav (first-paint critical),
-      # cookies (pending refactor — eval-time consent enforcement must run
-      # before analytics), customselect (JS-derived label would flash if async),
+      # cookies (consent is applied at eval, before analytics), customselect (JS-derived label would flash if async),
       # otp (auto-advance/paste is first-interaction-critical on OTP/2FA pages).
       # They stay so they wire on the local idle pass, not after an injected
       # bundle. Reveal is gated on this bundle, so it's kept lean.
@@ -94,7 +93,10 @@ class JSProcessor
       # loader arms the FAB and the lazy stub pulls this on the first press.
       # No <script> tag: dropping this file is the opt-out, and loadBundle
       # resolves on error.
-      'nds-accessibility.min.js' => ['nds-accessibility.js']
+      'nds-accessibility.min.js' => ['nds-accessibility.js'],
+      # Cookie consent UI — lazy the same way: fetched for a visitor with no stored
+      # choice, or on the first [data-cookies-toggle] press. The consent store stays in main.
+      'nds-cookie-consent.min.js' => ['nds-cookie-consent.js']
     }
     # Sheets a bundle owns. nds-loader.js requests these in parallel with the
     # bundle's JS, so a lazily-loaded component's styles are not a second round

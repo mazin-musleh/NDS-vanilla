@@ -35,6 +35,7 @@ const SCOPE = [
     ['nds-chart.js', 'Chart'],
     ['nds-cityWeather.js', 'CityWeather'],
     ['nds-code.js', 'Code'],
+    ['nds-cookie-consent.js', 'CookieConsent'],
     ['nds-cookies.js', 'Cookies'],
     ['nds-cooldown-button.js', 'CooldownButton'],
     ['nds-copy.js', 'Copy'],
