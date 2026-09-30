@@ -292,6 +292,11 @@
                     });
                     delete feedbackOptions.element;
                     feedback = NDS.Feedback.create(feedbackOptions);
+                } else if (message === '') {
+                    // A blank message (Validator's blank custom error) drops the old one: the
+                    // component shows the cause itself. An omitted message keeps it.
+                    container.removeAttribute('data-message');
+                    NDS.Feedback.dismissAll(container);
                 }
 
                 // Accessibility
@@ -302,6 +307,8 @@
                     if (feedback) {
                         if (!feedback.id) feedback.id = NDS.uniqueId('nds-fb-');
                         describeBy(input, feedback.id);
+                    } else if (message === '') {
+                        describeBy(input, null);
                     }
                 }
             } else {
@@ -1031,25 +1038,29 @@
             if (c && c.input.getAttribute('inputmode') === 'numeric' && e.data && /\D/.test(e.data)) e.preventDefault();
         });
 
+        // Strip Arabic characters from password fields. Capture phase: runs before the field's own
+        // input listeners, so Password never counts a stripped letter as a symbol.
+        doc.addEventListener('input', function(e) {
+            var c = resolveControl(e.target);
+            if (!c || (c.input.type !== 'password' && c.input.dataset.type !== 'password')) return;
+            var input = c.input;
+            var cleaned = input.value.replace(/[\u0600-\u06FF]/g, '');
+            if (cleaned === input.value) return;
+            input.value = cleaned;
+            e._ndsArabicStripped = true;
+            var fc = c.formControl.closest('.nds-form-container');
+            if (fc) {
+                var msg = NDS.isArabic ? 'الأحرف العربية غير مسموح بها' : 'Arabic characters are not allowed';
+                StatusManager.set({ element: fc, status: 'error', message: msg });
+            }
+        }, true);
+
         // Input changes - clear errors but don't validate while typing
         doc.addEventListener('input', function(e) {
             var c = resolveControl(e.target);
-            if (!c) return;
+            // A stripped letter keeps its error message up.
+            if (!c || e._ndsArabicStripped) return;
             var input = c.input, formControl = c.formControl;
-
-            // Strip Arabic characters from password fields
-            if (input.type === 'password' || input.dataset.type === 'password') {
-                var cleaned = input.value.replace(/[\u0600-\u06FF]/g, '');
-                if (cleaned !== input.value) {
-                    input.value = cleaned;
-                    var fc = formControl.closest('.nds-form-container');
-                    if (fc) {
-                        var msg = NDS.isArabic ? 'الأحرف العربية غير مسموح بها' : 'Arabic characters are not allowed';
-                        StatusManager.set({ element: fc, status: 'error', message: msg });
-                    }
-                    return;
-                }
-            }
 
             // .nds-phone — local-format phone input paired with a separate
             // country-code prefix:
