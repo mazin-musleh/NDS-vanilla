@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.7.0"
-updated: "1.11.0"
-last_edit: "30/09/2026 - 01:05 PM"
+updated: "1.12.x"
+last_edit: "30/09/2026 - 03:47 PM"
 ---
 
 <section id="passwordOverview" class="nds-content-section nds-doc-overview">
@@ -35,7 +35,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="password-new" data-canon data-variants="passwordVariantsTable" data-harness="form">
+<script type="text/html" id="password-new" data-canon data-variants="passwordVariantsTable" data-harness="form" data-demo-width="300px">
 <div class="nds-form-container nds-password" data-required>
   <div class="nds-form-header">
     <label for="new-password">
@@ -59,22 +59,6 @@ Pick another component when:
       <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
         <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
         <span class="nds-feedback-message">At least 8 characters</span>
-      </span>
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
-        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-        <span class="nds-feedback-message">One capital letter (A-Z)</span>
-      </span>
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
-        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-        <span class="nds-feedback-message">One small letter (a-z)</span>
-      </span>
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
-        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-        <span class="nds-feedback-message">One number (0-9)</span>
-      </span>
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
-        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-        <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
       </span>
     </div>
     <span class="nds-password-status" role="status" aria-live="polite"></span>
@@ -105,14 +89,6 @@ Pick another component when:
       <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
         <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
         <span class="nds-feedback-message">At least 8 characters</span>
-      </span>
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
-        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-        <span class="nds-feedback-message">One capital letter (A-Z)</span>
-      </span>
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
-        <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-        <span class="nds-feedback-message">One number (0-9)</span>
       </span>
     </div>
     <span class="nds-password-status" role="status" aria-live="polite"></span>
@@ -147,6 +123,48 @@ Pick another component when:
   </div>
 </div>
 </script>
+<script type="text/html" id="password-length-10" data-canon>
+<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+  <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+  <span class="nds-feedback-message">At least 10 characters</span>
+</span>
+</script>
+<script type="text/html" id="password-length-6" data-canon>
+<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+  <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+  <span class="nds-feedback-message">At least 6 characters</span>
+</span>
+</script>
+<script type="text/html" id="password-length-4" data-canon>
+<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+  <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+  <span class="nds-feedback-message">At least 4 characters</span>
+</span>
+</script>
+<script type="text/html" id="password-rule-upper" data-canon>
+<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
+  <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+  <span class="nds-feedback-message">One capital letter (A-Z)</span>
+</span>
+</script>
+<script type="text/html" id="password-rule-lower" data-canon>
+<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
+  <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+  <span class="nds-feedback-message">One small letter (a-z)</span>
+</span>
+</script>
+<script type="text/html" id="password-rule-digit" data-canon>
+<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
+  <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+  <span class="nds-feedback-message">One number (0-9)</span>
+</span>
+</script>
+<script type="text/html" id="password-rule-special" data-canon>
+<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
+  <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+  <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
+</span>
+</script>
 <script type="text/html" id="password-rule-space" data-canon>
 <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="nospace" data-rule-pattern="^\S+$">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
@@ -164,14 +182,35 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-The Pattern rule row adds its chip to the first field's rules. On a page, add a pattern chip to the `.nds-password-rules` of any field.
+A Min length choice sets `minlength` on the input and swaps the length chip for one that names the new number. Each Validation row adds its rule chip to the first field's rules, and any mix of them can be on. On a page, add a rule chip to the `.nds-password-rules` of any field.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | New password (default) | — | — | One field with its rule chips, for sign-up or a password reset |
 | Structure | Confirm | canon `#password-confirm` | — | A new password and a retype field. The retype field's chip checks that the two values match |
-| Pattern rule | No spaces | canon `#password-rule-space` | `#new-password-rules` | A chip whose rule is the regular expression in `data-rule-pattern`. It needs no script |
-| Pattern rule | No spaces | canon `#password-rule-space` | `#first-password-rules` | The same, on the first field of Confirm |
+| Min length | 10 | `[minlength="10"]` | `#new-password` | A longer minimum, for an account that holds sensitive data |
+| Min length | 10 | `[minlength="10"]` | `#first-password` | The same, on the first field of Confirm |
+| Min length | 10 | canon `#password-length-10` | `[data-rule="length"]` (after) | The length chip with the new number |
+| Min length | 10 | remove | `[data-rule="length"]:first-child` | Removes the old length chip |
+| Min length | 8 (default) | — | — | The length rule's minimum, in `minlength` on the input and in the length chip's text |
+| Min length | 6 | `[minlength="6"]` | `#new-password` | A shorter minimum. Pair it with more rules |
+| Min length | 6 | `[minlength="6"]` | `#first-password` | The same, on the first field of Confirm |
+| Min length | 6 | canon `#password-length-6` | `[data-rule="length"]` (after) | The length chip with the new number |
+| Min length | 6 | remove | `[data-rule="length"]:first-child` | Removes the old length chip |
+| Min length | 4 | `[minlength="4"]` | `#new-password` | A very short minimum, such as a PIN-style password. Pair it with more rules |
+| Min length | 4 | `[minlength="4"]` | `#first-password` | The same, on the first field of Confirm |
+| Min length | 4 | canon `#password-length-4` | `[data-rule="length"]` (after) | The length chip with the new number |
+| Min length | 4 | remove | `[data-rule="length"]:first-child` | Removes the old length chip |
+| Validation (any) | Capital letter | canon `#password-rule-upper` | `#new-password-rules` | The password needs one letter from A to Z |
+| Validation (any) | Capital letter | canon `#password-rule-upper` | `#first-password-rules` | The same, on the first field of Confirm |
+| Validation (any) | Small letter | canon `#password-rule-lower` | `#new-password-rules` | The password needs one letter from a to z |
+| Validation (any) | Small letter | canon `#password-rule-lower` | `#first-password-rules` | The same, on the first field of Confirm |
+| Validation (any) | Number | canon `#password-rule-digit` | `#new-password-rules` | The password needs one number from 0 to 9 |
+| Validation (any) | Number | canon `#password-rule-digit` | `#first-password-rules` | The same, on the first field of Confirm |
+| Validation (any) | Symbol | canon `#password-rule-special` | `#new-password-rules` | The password needs one character that is not a letter or a number |
+| Validation (any) | Symbol | canon `#password-rule-special` | `#first-password-rules` | The same, on the first field of Confirm |
+| Validation (any) | No spaces | canon `#password-rule-space` | `#new-password-rules` | A chip whose rule is the regular expression in `data-rule-pattern`. It needs no `addRule()` call |
+| Validation (any) | No spaces | canon `#password-rule-space` | `#first-password-rules` | The same, on the first field of Confirm |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #passwordVariantsTable .nds-table .nds-responsive}
 
@@ -186,15 +225,17 @@ The Pattern rule row adds its chip to the first field's rules. On a page, add a 
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-### Confirm Match
-{: .nds-block-title}
-
-`data-password-match` on the retype field's container names the first input, as a CSS selector. The chip with `data-rule="match"` turns green when the two values are equal. It updates while the user types in either field, so use it when the retype field sits beside rule chips. A mismatch blocks the submit with the message "The two passwords do not match". When the match is the only check on the field, leave out `.nds-password-rules` and the input's `aria-describedby`. Keep the footer and the status region. The submit is still blocked, and the message shows at submit.
-
 ### Pattern Rules
 {: .nds-block-title}
 
 `data-rule-pattern` on a chip holds a regular expression that the value must match. The chip can use any `data-rule` name, and it counts and blocks the submit like a built-in rule. The expression matches anywhere in the value, so anchor it with `^` and `$` to test the whole value. The match is case-sensitive, and the chip takes no flags. For a "must not contain" rule, use a lookahead, such as `^(?!.*admin)`. An invalid expression logs a warning, and the chip stays neutral.
+
+### Confirm Match
+{: .nds-block-title}
+
+`data-password-match` on the retype field's container names the first input, as a CSS selector. The chip with `data-rule="match"` turns green when the two values are equal. It updates while the user types in either field. A mismatch turns the chip red and blocks the submit.
+
+The chip is optional. Without it, leave out `.nds-password-rules` and the input's `aria-describedby`, but keep the footer and the status region. The submit is still blocked, and the message "The two passwords do not match" shows at submit.
 
 </div>
   </div>
@@ -226,7 +267,7 @@ The Pattern rule row adds its chip to the first field's rules. On a page, add a 
             <i class="hgi hgi-stroke hgi-shield-01"></i>
             <span class="nds-label">Submit Gating</span>
           </span>
-          <p class="nds-item-desc">A failing rule or a mismatch blocks the submit through native constraint validation, and the message shows under the field. The chips stay neutral while the field is empty.</p>
+          <p class="nds-item-desc">A failing rule or a mismatch blocks the submit through native constraint validation. The field outline turns red, and the red chips name the cause, so no message is added. The chips stay neutral while the field is empty.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -247,7 +288,7 @@ The Pattern rule row adds its chip to the first field's rules. On a page, add a 
             <i class="hgi hgi-stroke hgi-access"></i>
             <span class="nds-label">Screen Reader Progress</span>
           </span>
-          <p class="nds-item-desc">A hidden live region reads "3 of 5 password rules met", or the error, half a second after the user stops typing. The chips are not read again on each keystroke.</p>
+          <p class="nds-item-desc">A hidden live region reads "3 of 5 password rules met", or the mismatch message, half a second after the user stops typing. The chips are not read again on each keystroke.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -302,12 +343,12 @@ The Pattern rule row adds its chip to the first field's rules. On a page, add a 
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-rule` | a chip | The rule the chip checks: `length`, `upper`, `lower`, `digit`, `special` or `match`. Another name needs `data-rule-pattern` or `addRule()`. Without one, the chip stays neutral and is not counted |
-| `data-rule-pattern` | a chip | A regular expression the value must match. It wins over a built-in rule with the same name |
-| `data-password-match` | `.nds-password` | A CSS selector for the first password input. It makes the field a retype field. The script reads it once at start, so a first field added later needs `NDS.Password.reinit()` |
+| `data-rule` | `.nds-password-rules > .nds-feedback` | The rule the chip checks: `length`, `upper`, `lower`, `digit`, `special` or `match`. Another name needs `data-rule-pattern` or `addRule()`. Without one, the chip stays neutral and is not counted |
+| `data-rule-pattern` | `.nds-password-rules > .nds-feedback` | A regular expression the value must match. It wins over a built-in rule with the same name |
+| `data-password-match` | `.nds-password` | A CSS selector for the first password input. It makes the field a retype field. The script reads it once at start. When the first field is added later, call `NDS.Password.destroy()` and then `NDS.Password.create()` on the retype field |
 | `minlength` | the `<input>` | The length rule's minimum. The default is 8 |
-| `data-status` | a chip | Write `neutral`. The script sets `success` or `error` on each keystroke |
-| `data-permanent` | a chip | A validation message hides the chip instead of removing it. The chip comes back when the message clears. Without it, the first error removes the chips for good |
+| `data-status` | `.nds-password-rules > .nds-feedback` | Write `neutral`. The script sets `success` or `error` on each keystroke |
+| `data-permanent` | `.nds-password-rules > .nds-feedback` | A validation message hides the chip instead of removing it. The chip comes back when the message clears. Without it, the first error removes the chips for good |
 | `data-password-strength` | `.nds-password` | Written by the script: the number of passing chips, 0 while the field is empty. Style a bar from it, such as `.nds-password[data-password-strength="5"] .my-bar { width: 100%; }` |
 {: .nds-table .nds-responsive}
 
@@ -327,7 +368,7 @@ The Pattern rule row adds its chip to the first field's rules. On a page, add a 
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:password:change` | `.nds-password`, and it bubbles | `{ strength, allPass, rules }` on each input. `strength` is the number of passing chips, `allPass` is `true` when every counted chip passes, and `false` while the field is empty, and `rules` maps each rule name to `true` or `false`. The detail holds no password: read the input when you need it |
+| `nds:password:change` | `.nds-password`, and it bubbles | `{ strength, allPass, rules }`. It fires at start and on each input. On a retype field, it also fires when the first field changes. `strength` is the number of passing chips. `allPass` is `true` when every counted chip passes and the two values match. It is `false` while the field is empty. `rules` maps each rule name to `true` or `false`. The detail holds no password: read the input when you need it |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="password-js" data-canon data-lang="js">
