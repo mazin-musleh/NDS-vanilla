@@ -2,628 +2,278 @@
 layout: page
 title: Slider
 hero_title: Slider - National Design System
-hero_description: A range input for selecting a single value or a continuous min–max range from a numeric scale, with proportional sizes and full keyboard control.
+hero_description: A slider lets the user pick a number, or a range between two numbers, by dragging a thumb along a bar
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "03/09/2026 - 01:42 AM"
+last_edit: "30/09/2026 - 04:40 PM"
 ---
 
-<!-- Single Slider -->
-<section id="sliderDefault" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Single Slider</h2>
-            <p class="nds-section-description">One thumb for selecting a single value along the track. Drag, arrow keys, Home, End, and Page Up/Down all adjust the value</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Small</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-sm", ".nds-slider-container", "sliderSize", "remove:nds-md"]'>
-                                                <span class="nds-label">Small</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-slider-container", "sliderSize", "remove:nds-sm"]'>
-                                                <span class="nds-label">Medium</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">State</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-form-container", "sliderState"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-required", ".nds-form-container", "sliderState", "attr"]'>
-                                                <span class="nds-label">Required</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["disabled", ".nds-form-container", "sliderState", "data-state"]'>
-                                                <span class="nds-label">Disabled</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["readonly", ".nds-form-container", "sliderState", "data-state"]'>
-                                                <span class="nds-label">Readonly</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-slider-container", "sliderLoading"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-stacked", ".nds-slider-container", "sliderStacked"]'>
-                                    <span class="nds-label">Stacked</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-slider-container nds-form-container">
-                                    <div class="nds-form-header">
-                                        <label for="slider-default-1">
-                                            <span class="nds-label">Volume</span>
-                                            <span class="nds-info">Drag the thumb or use the arrow keys</span>
-                                        </label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <div class="nds-slider-track">
-                                            <input type="range" id="slider-default-1" class="nds-slider" min="0" max="100" value="50">
-                                        </div>
-                                        <output for="slider-default-1" class="nds-slider-value">50</output>
-                                    </div>
-                                    <div class="nds-form-footer" data-feedback-target>
-                                        <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                            <span class="nds-feedback-message">Changes apply instantly</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-slider-default-1" id="tab-slider-default-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-default-1"
-                                        aria-labelledby="tab-slider-default-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-slider-container nds-form-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="slider-default-1"&gt;
-      &lt;span class="nds-label"&gt;Volume&lt;/span&gt;
-      &lt;span class="nds-info"&gt;Drag the thumb or use the arrow keys&lt;/span&gt;
-    &lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;div class="nds-slider-track"&gt;
-      &lt;input type="range" id="slider-default-1" class="nds-slider" min="0" max="100" value="50"&gt;
-    &lt;/div&gt;
-    &lt;output for="slider-default-1" class="nds-slider-value"&gt;50&lt;/output&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target&gt;
-    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
-      &lt;span class="nds-feedback-icon"&gt;
-        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/span&gt;
-      &lt;span class="nds-feedback-message"&gt;Changes apply instantly&lt;/span&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sliderOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A slider is a native `<input type="range">` in a form field. The field holds a label, a bar with a thumb, and an `<output>` that shows the value. The bar fills from the start up to the thumb. A range slider has two thumbs, and the bar fills between them.
+
+Pick another component when:
+
+- the user must type an exact number: a number field in [Forms](../components/forms)
+- the user picks one of a few fixed values: [Radio buttons](../components/radio)
+- the setting is on or off: [Switch](../components/switch)
+
+</div>
+  </div>
 </section>
 
-<!-- Range Slider -->
-<section id="sliderRange" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Range Slider</h2>
-            <p class="nds-section-description">Two thumbs for selecting a min and max value. Use when the user picks a continuous span, like a price or date range</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Small</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-sm", ".nds-slider-range", "rangeSize", "remove:nds-md"]'>
-                                                <span class="nds-label">Small</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-slider-range", "rangeSize", "remove:nds-sm"]'>
-                                                <span class="nds-label">Medium</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">State</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-form-container", "rangeState"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-required", ".nds-form-container", "rangeState", "attr"]'>
-                                                <span class="nds-label">Required</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["disabled", ".nds-form-container", "rangeState", "data-state"]'>
-                                                <span class="nds-label">Disabled</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["readonly", ".nds-form-container", "rangeState", "data-state"]'>
-                                                <span class="nds-label">Readonly</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-slider-container", "rangeLoading"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-stacked", ".nds-slider-container", "rangeStacked"]'>
-                                    <span class="nds-label">Stacked</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-slider-container nds-form-container nds-slider-range">
-                                    <div class="nds-form-header">
-                                        <label>
-                                            <span class="nds-label">Age range</span>
-                                            <span class="nds-info">Tab to either thumb and adjust independently</span>
-                                        </label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <output class="nds-slider-value nds-slider-value-min">25</output>
-                                        <div class="nds-slider-track">
-                                            <input type="range" class="nds-slider nds-slider-min" min="18" max="80" value="25" aria-label="Minimum age">
-                                            <input type="range" class="nds-slider nds-slider-max" min="18" max="80" value="55" aria-label="Maximum age">
-                                        </div>
-                                        <output class="nds-slider-value nds-slider-value-max">55</output>
-                                    </div>
-                                    <div class="nds-form-footer" data-feedback-target>
-                                        <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                            <span class="nds-feedback-message">Whole years only</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-slider-range-1" id="tab-slider-range-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-range-1"
-                                        aria-labelledby="tab-slider-range-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-slider-container nds-form-container nds-slider-range"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label&gt;
-      &lt;span class="nds-label"&gt;Age range&lt;/span&gt;
-      &lt;span class="nds-info"&gt;Tab to either thumb and adjust independently&lt;/span&gt;
-    &lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;output class="nds-slider-value nds-slider-value-min"&gt;25&lt;/output&gt;
-    &lt;div class="nds-slider-track"&gt;
-      &lt;input type="range" class="nds-slider nds-slider-min" min="18" max="80" value="25" aria-label="Minimum age"&gt;
-      &lt;input type="range" class="nds-slider nds-slider-max" min="18" max="80" value="55" aria-label="Maximum age"&gt;
-    &lt;/div&gt;
-    &lt;output class="nds-slider-value nds-slider-value-max"&gt;55&lt;/output&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target&gt;
-    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
-      &lt;span class="nds-feedback-icon"&gt;
-        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/span&gt;
-      &lt;span class="nds-feedback-message"&gt;Whole years only&lt;/span&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sliderMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="slider-single" data-canon data-variants="sliderVariantsTable" data-demo-width="360px">
+<div class="nds-form-container nds-slider-container">
+  <div class="nds-form-header">
+    <label for="slider-budget">
+      <span class="nds-label">Monthly budget</span>
+      <span class="nds-info">Drag the thumb or use the arrow keys</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-slider-track">
+      <input type="range" id="slider-budget" class="nds-slider" min="0" max="20000" step="500" value="5000">
+    </div>
+    <output for="slider-budget" class="nds-slider-value">5000</output>
+  </div>
+</div>
+</script>
+<script type="text/html" id="slider-range" data-canon>
+<div class="nds-form-container nds-slider-container nds-slider-range">
+  <div class="nds-form-header">
+    <label>
+      <span class="nds-label">Price range</span>
+      <span class="nds-info">Drag either thumb to set the lowest and highest price</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <output class="nds-slider-value nds-slider-value-min">20000</output>
+    <div class="nds-slider-track">
+      <input type="range" class="nds-slider nds-slider-min" min="0" max="100000" step="1000" value="20000" aria-label="Lowest price">
+      <input type="range" class="nds-slider nds-slider-max" min="0" max="100000" step="1000" value="60000" aria-label="Highest price">
+    </div>
+    <output class="nds-slider-value nds-slider-value-max">60000</output>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Price Range with SAR Currency -->
-<section id="sliderPriceRange" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Price Range with SAR Currency</h2>
-            <p class="nds-section-description">Combine a range slider with the <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> utility to show thousand-separated values and the official Saudi Riyal symbol next to each thumb. Add <code class="nds-inline-code lang-html">nds-number-format</code> and <code class="nds-inline-code lang-html">data-currency="SAR"</code> to each output — the slider applies <code class="nds-inline-code lang-js">toLocaleString()</code> automatically on every update and the currency icon is rendered as a CSS pseudo-element.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Small</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-sm", ".nds-slider-container", "priceSize", "remove:nds-md"]'>
-                                                <span class="nds-label">Small</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-slider-container", "priceSize", "remove:nds-sm"]'>
-                                                <span class="nds-label">Medium</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">State</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-form-container", "priceState"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-required", ".nds-form-container", "priceState", "attr"]'>
-                                                <span class="nds-label">Required</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["disabled", ".nds-form-container", "priceState", "data-state"]'>
-                                                <span class="nds-label">Disabled</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["readonly", ".nds-form-container", "priceState", "data-state"]'>
-                                                <span class="nds-label">Readonly</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-loading", ".nds-slider-container", "priceLoading"]'>
-                                    <span class="nds-label">Loading</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-stacked", ".nds-slider-container", "priceStacked"]'>
-                                    <span class="nds-label">Stacked</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-slider-container nds-form-container nds-slider-range nds-stacked" id="price-range-1">
-                                    <div class="nds-form-header">
-                                        <label>
-                                            <span class="nds-label">Budget</span>
-                                            <span class="nds-info">Drag either thumb to set the minimum and maximum spend</span>
-                                        </label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <output class="nds-slider-value nds-slider-value-min nds-number-format" data-currency="SAR">5000</output>
-                                        <div class="nds-slider-track">
-                                            <input type="range" class="nds-slider nds-slider-min" min="0" max="100000" step="500" value="5000" aria-label="Minimum price">
-                                            <input type="range" class="nds-slider nds-slider-max" min="0" max="100000" step="500" value="65000" aria-label="Maximum price">
-                                        </div>
-                                        <output class="nds-slider-value nds-slider-value-max nds-number-format" data-currency="SAR">65000</output>
-                                    </div>
-                                    <div class="nds-form-footer" data-feedback-target>
-                                        <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                            <span class="nds-feedback-message">Prices include VAT</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-slider-price-1" id="tab-slider-price-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-slider-price-1"
-                                        aria-labelledby="tab-slider-price-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-slider-container nds-form-container nds-slider-range nds-stacked" id="price-range-1"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label&gt;
-      &lt;span class="nds-label"&gt;Budget&lt;/span&gt;
-      &lt;span class="nds-info"&gt;Drag either thumb to set the minimum and maximum spend&lt;/span&gt;
-    &lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;output class="nds-slider-value nds-slider-value-min nds-number-format" data-currency="SAR"&gt;5000&lt;/output&gt;
-    &lt;div class="nds-slider-track"&gt;
-      &lt;input type="range" class="nds-slider nds-slider-min" min="0" max="100000" step="500" value="5000" aria-label="Minimum price"&gt;
-      &lt;input type="range" class="nds-slider nds-slider-max" min="0" max="100000" step="500" value="65000" aria-label="Maximum price"&gt;
-    &lt;/div&gt;
-    &lt;output class="nds-slider-value nds-slider-value-max nds-number-format" data-currency="SAR"&gt;65000&lt;/output&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target&gt;
-    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
-      &lt;span class="nds-feedback-icon"&gt;
-        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/span&gt;
-      &lt;span class="nds-feedback-message"&gt;Prices include VAT&lt;/span&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sliderVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Currency makes two changes on a `.nds-slider-value`: write both. A range slider has two values, so write them on each one.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Single (default) | — | — | One thumb for one value |
+| Structure | Range | canon `#slider-range` | — | Two thumbs for a lowest and a highest value, such as a price range. Give each input an `aria-label` |
+| Size | SM (default) | — | — | 12px thumb on a 4px bar. Most forms |
+| Size | MD | `.nds-md` | `.nds-slider-container` | 16px thumb on an 8px bar. Touch-first screens |
+| State | None (default) | — | — | The user can change the value |
+| State | Disabled | `[data-state~="disabled"]` | `.nds-slider-container` | The user cannot change the value now |
+| State | Read-only | `[data-state~="readonly"]` | `.nds-slider-container` | The user sees the value but cannot change it |
+| Stacked | Stacked | `.nds-stacked` | `.nds-slider-container` | The value moves above the bar, and the bar takes the full width. Use it for a wide value, such as a currency |
+| Currency | Currency | `.nds-number-format` | `.nds-slider-value` | Thousands separators and a currency symbol on the value |
+| Currency | Currency | `[data-currency="SAR"]` | `.nds-slider-value` | Thousands separators and a currency symbol on the value |
+| Loading | Loading | `.nds-loading` | `.nds-slider-container` | A skeleton while the script loads the bounds or the value |
+| Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
+{: #sliderVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="sliderFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-slider-container</code> appears on the page. A single delegated listener handles every slider, including those added later through DOM updates.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-circle-arrow-horizontal"></i>
-                            <span class="nds-label">Single and Range Modes</span>
-                        </span>
-                        <p class="nds-item-desc">One markup pattern for picking a value, a second for picking a min–max span. Add <code class="nds-inline-code lang-html">nds-slider-range</code> to switch from single to dual thumbs.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard"></i>
-                            <span class="nds-label">Keyboard Control</span>
-                        </span>
-                        <p class="nds-item-desc">Arrow keys step the value, Home and End jump to min and max, Page Up and Page Down move by larger increments. The focused thumb gets a visible bullseye ring on keyboard focus only.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-align-right"></i>
-                            <span class="nds-label">RTL-aware Fill</span>
-                        </span>
-                        <p class="nds-item-desc">The fill direction flips with the page direction: in Arabic the bar fills from the right toward the thumb, in English from the left. Thumb position, fill window, and value display all align without extra markup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-loading-03"></i>
-                            <span class="nds-label">Skeleton State</span>
-                        </span>
-                        <p class="nds-item-desc">The track paints as a shimmer placeholder until init lands and while the container carries <code class="nds-inline-code lang-html">nds-loading</code>, so a value pulled from an async source does not flash an incorrect fill.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Reinit, destroy, and create methods on <code class="nds-inline-code lang-js">NDS.Slider</code> let you wire sliders inside dynamically added containers without a full page rescan.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sliderBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Range
+{: .nds-block-title}
+
+The `nds-slider-range` class on the container turns on two thumbs. Each thumb is its own input, so the user can tab to it and move it with the keys. The thumbs cannot cross: a thumb dragged past the other stops at its value.
+
+### Stacked
+{: .nds-block-title}
+
+By default the value sits beside the bar, and the bar takes the rest of the row. A wide value leaves a short bar on a phone. The `nds-stacked` class moves the value above the bar, so the bar takes the full width.
+
+### Number Format
+{: .nds-block-title}
+
+The `nds-number-format` class on the value adds thousands separators. The `data-currency` attribute adds a currency symbol. The slider formats the value again on every move. The [Numbers](../utilities/numbers) page lists the currencies.
+
+### Read-only
+{: .nds-block-title}
+
+`data-state="readonly"` on the container blocks the mouse and the step keys. The thumb can still get the focus, so a screen reader can read the value. Browsers ignore `readonly` on a range input, so the slider script blocks the keys itself.
+
+### Loading
+{: .nds-block-title}
+
+The `nds-loading` class shows the bar and the value as a skeleton, and hides the thumb. Add it while your script loads the bounds or the value, and remove it once they are set. From a script, `NDS.State.add(container, 'loading')` also adds the class.
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="sliderGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
+<section id="sliderFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-slider-container</code> on the page starts on its own, and so does a slider added later. No call is needed.</p>
         </div>
-        <div class="nds-section-body">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Control</span>
+          </span>
+          <p class="nds-item-desc">The arrow keys move the thumb one step. Home and End move it to the lowest and highest value. Page Up and Page Down move it in larger steps. The focus ring shows on keyboard focus only.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-field"></i>
+            <span class="nds-label">Steady Bar</span>
+          </span>
+          <p class="nds-item-desc">The value keeps the width of the widest value the slider can show. The bar does not move as the number of digits changes.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-loading-03"></i>
+            <span class="nds-label">Skeleton State</span>
+          </span>
+          <p class="nds-item-desc">Until the slider script starts, the bar and the value show as a skeleton and the thumb is hidden. The bar never shows a fill that does not match the value.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-square-lock-02"></i>
+            <span class="nds-label">State Sync</span>
+          </span>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-html">disabled</code> or <code class="nds-inline-code lang-html">readonly</code> on the inputs and the same <code class="nds-inline-code lang-html">data-state</code> token on the container stay in sync, in both directions. Write one: the forms script sets the other.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use a <strong>single slider</strong> when the user picks one value from a continuous numeric range where the exact number is less important than the approximate position (volume, brightness, zoom, opacity)</li>
-                    <li>Use a <strong>range slider</strong> when the user filters a list or report by a min–max window (price range, age range, date range)</li>
-                    <li>Do not use a slider when the user needs an exact integer or when the valid set is short (under ten options). Use a <a class="nds-color" href="{{ 'components/forms' | relative_url }}">Number Input</a> for precise integers or a <a class="nds-color" href="{{ 'components/radio' | relative_url }}">Radio Button</a> group for a small discrete set</li>
-                    <li>Do not use a slider for binary on/off settings. Use a <a class="nds-color" href="{{ 'components/switch' | relative_url }}">Switch</a> instead</li>
-                    <li>Pair the slider with a visible value display so users can confirm the exact number. The <code class="nds-inline-code lang-html">&lt;output&gt;</code> element next to the input updates automatically as the thumb moves</li>
-                    <li>Choose <code class="nds-inline-code lang-html">nds-md</code> on touch-first surfaces where a 12 px thumb is hard to grab. The default 12 px reads cleanly on desktop and inside dense forms</li>
-                    <li>Set a meaningful <code class="nds-inline-code lang-html">step</code> attribute when the underlying value should snap (whole hours, increments of five). Without it, the input snaps to integer steps</li>
-                    <li>Add the <code class="nds-inline-code lang-html">nds-loading</code> class on the container while fetching bounds or an initial value from a remote source, so the skeleton holds the space and no incorrect fill flashes when the response lands. From JS, <code class="nds-inline-code lang-js">NDS.State.add(container, 'loading')</code> does the same</li>
-                    <li>Always provide an accessible name. A standard label is enough; for a range slider, add <code class="nds-inline-code lang-html">aria-label</code> to each input ("Minimum" and "Maximum") so screen readers can distinguish them</li>
-                </ul>
-            </div>
+<section id="sliderPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size on <code class="nds-inline-code lang-html">.nds-slider-container</code>: 16 px thumb and 8 px bar. Default is 12 px thumb and 4 px bar</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-slider-range</code></td><td>Switches the container from single to dual-thumb mode. Requires the range markup with <code class="nds-inline-code lang-html">.nds-slider-track</code>, two inputs (<code class="nds-inline-code lang-html">.nds-slider-min</code>, <code class="nds-inline-code lang-html">.nds-slider-max</code>), and two value outputs</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-stacked</code></td><td>Moves the value output(s) to a row above the bar so the bar spans the full width. Use for wide or formatted values (currency, large numbers) where the default beside-the-bar layout would crush the bar on narrow screens/containers</td></tr>
-                    </tbody>
-                </table>
-            </div>
+- Use a slider when the user picks an approximate value, such as a budget or a distance.
+- Use a range slider to filter a list by a lowest and a highest value, such as a price or an age.
+- Keep the `<output>` beside every input. The user reads the exact value there.
+- Set `step` to the unit the value snaps to, such as 500 for a budget. Without it, the value moves in steps of 1.
+- Give each input of a range slider an `aria-label`, such as "Lowest price" and "Highest price". The one label does not name the two thumbs.
+- Use MD on touch-first screens. The 12px thumb of SM is hard to grab with a finger.
+- Use Stacked with Currency, so a wide value does not shorten the bar.
+- After you set `input.value` from a script, fire an `input` event on the input. The bar and the value then update.
+- After you change `min` or `max` from a script, call `NDS.Slider.reinit(container)`. The value width is measured again for the new bounds.
+- For the label, info text and feedback, see [Forms](../components/forms). They work the same on every field.
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-slider-container</code> to force the skeleton state during an async value update. Remove when the new value is ready. The old <code class="nds-inline-code lang-html">data-loading</code> attribute still works but is deprecated</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">min</code>, <code class="nds-inline-code lang-html">max</code>, <code class="nds-inline-code lang-html">step</code>, <code class="nds-inline-code lang-html">value</code></td><td>Native <code class="nds-inline-code lang-html">&lt;input type="range"&gt;</code> attributes that control the numeric range, step granularity, and starting value. The component reads <code class="nds-inline-code lang-html">value</code> on init to paint the initial fill</td></tr>
-                    </tbody>
-                </table>
-            </div>
+</div>
+  </div>
+</section>
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--slider-track-bg</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-100</code> (dark: <code class="nds-inline-code lang-html">--colors-neutral-800</code>)</td><td>Background color of the unfilled portion of the track</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--slider-track-fill</code></td><td><code class="nds-inline-code lang-html">--background-primary</code></td><td>Color of the filled portion of the track</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--slider-thumb-bg</code></td><td><code class="nds-inline-code lang-html">--background-primary</code></td><td>Background color of the thumb at rest</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--slider-thumb-bg-hovered</code></td><td><code class="nds-inline-code lang-html">--controls-primary-hovered</code></td><td>Background color of the thumb on hover and focus</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--slider-fill-start</code>, <code class="nds-inline-code lang-html">--slider-fill-end</code></td><td><code class="nds-inline-code lang-html">0%</code>, <code class="nds-inline-code lang-html">100%</code></td><td>Track bar fill endpoints, set on <code class="nds-inline-code lang-html">.nds-slider-track</code> by the component on every input event. Single mode sets only <code class="nds-inline-code lang-html">--slider-fill-end</code> (start stays 0%); range sets both. Consumers should not set these directly</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<section id="sliderApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Slider</strong> API initializes sliders, repaints the fill after value changes, and tears down state. Auto-initialization activates on page load; call <strong>NDS.Slider.reinit()</strong> after dynamically inserting a slider or after writing to <code class="nds-inline-code lang-js">input.value</code> from script.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialize all sliders on the page ───────────────
-// Called automatically on DOM ready by the loader.
-// Idempotent: re-entry is a no-op.
-NDS.Slider.init();
+### Data Attributes
+{: .nds-block-title}
 
-// ── Repaint a single container or every container ────
-// Use after writing to input.value from script, or after
-// inserting a slider into the DOM.
-NDS.Slider.reinit(document.querySelector('#mySlider'));
-NDS.Slider.reinit();
+| Attribute | Element | Effect |
+|---|---|---|
+| `min`, `max`, `step`, `value` | `.nds-slider` | Native range attributes: the bounds, the step and the start value. Without them, the bounds are 0 and 100 and the step is 1 |
+| `data-currency` | `.nds-slider-value` | The currency symbol, with `nds-number-format`. See [Numbers](../utilities/numbers) |
+| `data-state` | `.nds-slider-container` | `disabled` or `readonly`. The forms script copies it to every input in the container |
+{: .nds-table .nds-responsive}
 
-// ── Initialize one container imperatively ────────────
-// Equivalent to reinit for a single element; returns the element.
-const slider = NDS.Slider.create(document.querySelector('#mySlider'));
+### CSS Custom Properties
+{: .nds-block-title}
 
-// ── Tear down init state ─────────────────────────────
-// Removes the init sentinel so a subsequent reinit re-runs
-// initial paint. The shared input listener stays bound for
-// the page lifetime.
-NDS.Slider.destroy(document.querySelector('#mySlider'));
-NDS.Slider.destroy();
+Set them on `:root` to change every slider.
 
-// ── Reading and writing the value ────────────────────
-// The native input is the source of truth. After writing,
-// dispatch an 'input' event OR call reinit to repaint the fill.
-const input = document.querySelector('#mySlider .nds-slider');
-input.value = 75;
+| Property | Default | Controls |
+|---|---|---|
+| `--slider-track-bg` | `--colors-neutral-100`, dark `--colors-alpha-white-10` | The empty part of the bar |
+| `--slider-track-fill` | `--background-primary` | The filled part of the bar |
+| `--slider-thumb-bg` | `--background-primary` | The thumb |
+| `--slider-thumb-bg-hovered` | `--controls-primary-hovered`, dark `--colors-primary-400` | The thumb on hover and on keyboard focus |
+| `--slider-thumb-border` | `--colors-alpha-black-10` | The ring around the thumb |
+{: .nds-table .nds-responsive}
+
+The script writes `--slider-fill-start` and `--slider-fill-end` on `.nds-slider-track` on every move. Do not set them.
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Slider.init()` | Starts every slider on the page. It runs once at page load, and a slider added later starts on its own |
+| `NDS.Slider.reinit(container)` | Starts one container again, or every container with no argument |
+| `NDS.Slider.create(container)` | Starts one container and returns it |
+| `NDS.Slider.destroy(container)` | Stops one container, or every container with no argument |
+{: .nds-table .nds-responsive}
+
+The slider fires no event of its own. Listen for the native `input` event on the input.
+
+<script type="text/html" id="slider-js" data-canon data-lang="js">
+var input = document.querySelector('#slider-budget');
+
+// Read the value on every move
+input.addEventListener('input', function () {
+  console.log(Number(input.value));
+});
+
+// Set the value from a script, then update the bar and the value
+input.value = 8000;
 input.dispatchEvent(new Event('input', { bubbles: true }));
 
-// ── Range mode ───────────────────────────────────────
-// Read both endpoints from the two inputs.
-const container = document.querySelector('.nds-slider-range');
-const min = +container.querySelector('.nds-slider-min').value;
-const max = +container.querySelector('.nds-slider-max').value;
-</code>
-                    </div>
-                </div>
-            </div>
+// A range slider: read each thumb from its own input
+var range = document.querySelector('.nds-slider-range');
+var lowest = Number(range.querySelector('.nds-slider-min').value);
+var highest = Number(range.querySelector('.nds-slider-max').value);
+</script>
 
-        </div>
-    </div>
+The full API is in the banner of `_js/nds-slider.js`.
+
+</div>
+  </div>
 </section>
