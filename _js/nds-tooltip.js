@@ -318,6 +318,9 @@
             // Portal first so subsequent measurement happens in <body>'s
             // containing block, free of any container-type/transform ancestor.
             NDS.portal(this.balloon);
+            // Lift to the trigger's layer (nav, panel, modal); under it, keep the CSS 998.
+            const z = NDS.stackingZ(this.trigger);
+            this.balloon.style.zIndex = z > 998 ? String(z) : '';
 
             if (!this._rootIsControl) addState(this.root, 'open');
             this.balloon.hidden = false;

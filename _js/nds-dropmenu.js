@@ -63,10 +63,11 @@
         '--dropmenu-slide',
     ];
 
-    // The layer a menu paints at by default (_dropmenu.scss) — the same value
-    // the sticky mainnav sits on (--_nav-z-base). A trigger stacked ABOVE this
-    // (a modal at 1101) puts its menu over the nav.
-    const BASE_Z = 1000;
+    // The layer a menu paints at by default (_dropmenu.scss): under the sticky
+    // mainnav (--_nav-z-base) and an open panel (--_panel-z, 999). A trigger
+    // stacked above it (a panel, the topbar, a modal) lifts its menu to its layer.
+    const BASE_Z = 998;
+    const NAV_Z = 1000;
 
     // Currently-open dropmenu wrappers, tracked module-locally so open() can
     // close peers without a DOM sweep by attribute selector. Maintained in
@@ -99,7 +100,7 @@
             if (dropmenuElement.hasAttribute('data-nds-dropmenu-initialized')) return;
 
             // Initial values only — open() decides both for real (see
-            // _decidePortal and the _stackingZ cache).
+            // _decidePortal and the _stackZ cache).
             this.shouldPortal = dropmenuElement.hasAttribute('data-portal');
             this._stackZ = 0;
 
@@ -840,7 +841,7 @@
             // so walk for it once here. The portal branch below and every
             // applyPosition() this cycle (resize, a picker changing mode) read
             // the cache instead of re-walking the ancestor chain.
-            this._stackZ = this._stackingZ();
+            this._stackZ = NDS.stackingZ(this.trigger);
             this._decidePortal();
             this.menu.style.position = this.shouldPortal ? 'fixed' : 'absolute';
             this.menu.style.left = '0px';
@@ -883,7 +884,7 @@
                 this.menu.setAttribute('data-portal', '');
                 NDS.portal(this.menu, { snapshotVars: PORTAL_VARS, force: true });
                 // Match the trigger's stacking layer. The portaled menu lives
-                // at <body> with the SCSS default (z-index: 1000), so a
+                // at <body> with the SCSS default (z-index: 998), so a
                 // trigger inside a higher-stacked ancestor (modal, topbar,
                 // sticky bar) would paint OVER the menu. Walk the trigger's
                 // ancestor chain, take the highest numeric z-index, and only
@@ -983,20 +984,6 @@
             this.menu.setAttribute('hidden', '');
             this.emitEvent('nds:dropmenu:closed');
             this._cancelClose = null;
-        }
-
-        /**
-         * Highest z-index on the trigger's ancestor chain — the layer the menu
-         * effectively paints at, whether it portals or not. Walks the chain, so
-         * open() calls it once per cycle and callers read `_stackZ`.
-         */
-        _stackingZ() {
-            let z = 0;
-            for (let n = this.trigger; n && n !== document.body; n = n.parentElement) {
-                const v = parseInt(getComputedStyle(n).zIndex, 10);
-                if (v > z) z = v;
-            }
-            return z;
         }
 
         /**
@@ -1120,7 +1107,7 @@
             // stays down, and runs off the viewport with real space going
             // unused above it.
             const p = NDS.flipPosition(this.trigger, this.menu, {
-                respectNav: this._stackZ <= BASE_Z
+                respectNav: this._stackZ <= NAV_Z
             });
             const topEdge = Math.max(pad, p.topEdge);
             const spaceBelow = p.spaceBelow - gap - pad;

@@ -23,6 +23,7 @@
  *     NDS.portal(el) / .unportal(el) / .needsPortal(el)
  *     NDS.closest(el, sel) · NDS.queryAll(root, sel) · NDS.querySelector(root, sel)
  *     NDS.resolveEl(idOrElOrSel) · NDS.fromTemplate(id) · NDS.flipPosition(trigger, menu) · NDS.placeFixed(el, t, l)
+ *     NDS.stackingZ(el)                highest z-index on el's ancestors: the layer a portaled popup matches
  *     NDS.stickyHeaderBottom() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.gridLastRow(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *   data + text
@@ -1394,6 +1395,18 @@
     // The transform back-out handles in-flight slide animations on the
     // element itself (e.g. dropmenu's opening translateY).
     // Usage: NDS.placeFixed(menu, top, leftPx);
+    // Highest z-index on el's ancestor chain: the layer a popup portaled to <body>
+    // must match, or a trigger in the nav, a panel or a modal paints over it.
+    // Usage: const z = NDS.stackingZ(trigger);
+    NDS.stackingZ = (el) => {
+        let z = 0;
+        for (let n = el; n && n !== document.body; n = n.parentElement) {
+            const v = parseInt(getComputedStyle(n).zIndex, 10);
+            if (v > z) z = v;
+        }
+        return z;
+    };
+
     NDS.placeFixed = (el, top, left) => {
         el.style.top = top + 'px';
         el.style.left = left + 'px';

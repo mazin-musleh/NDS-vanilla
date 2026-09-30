@@ -107,7 +107,7 @@
   gap: var(--_tooltip-gap);
   align-items: flex-start;
   position: fixed;
-  z-index: 1000;
+  z-index: 998; // under the mainnav and an open panel; JS lifts it to its trigger's layer
   width: max-content;
   max-width: var(--_tooltip-max-width);
   // Built inside its trigger, so a nowrap host (.nds-tag) would otherwise leak in.
