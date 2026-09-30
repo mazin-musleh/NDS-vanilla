@@ -2,586 +2,286 @@
 layout: page
 title: Tag Input
 hero_title: Tag Input - National Design System
-hero_description: A free-text field that turns typed values into removable chip tags, committing on Enter or comma and submitting natively as an array.
+hero_description: A form field that turns typed text into removable chips and submits them as an array
 breadcrumb: [["Components", "/components"]]
-since: "1.4.0"
-updated: "1.5.0"
-last_edit: "17/08/2026 - 02:14 AM"
 lang: en
 direction: ltr
+since: "1.4.0"
+updated: "1.12.x"
+last_edit: "01/10/2026 - 12:45 AM"
 ---
 
-<!-- Tag Entry -->
-<section id="taginputDefault" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tag Entry</h2>
-            <p class="nds-section-description">Type a value and press Enter or comma to commit it as a chip. Chips share the row with the input and wrap onto new rows as they accumulate.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card" data-code-rebuild>
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">State</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-form-container.nds-taginput", "tagState"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["disabled", ".nds-form-container.nds-taginput", "tagState", "data-state"]'>
-                                                <span class="nds-label">Disabled</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["readonly", ".nds-form-container.nds-taginput", "tagState", "data-state"]'>
-                                                <span class="nds-label">Readonly</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-taginput" data-taginput-name="skills">
-                                    <div class="nds-form-header">
-                                        <label for="taginput-default-input"><span class="nds-label">Skills</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="text" id="taginput-default-input" placeholder="Add a skill&hellip;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-taginput-default-1" id="tab-taginput-default-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-taginput-default-1"
-                                        aria-labelledby="tab-taginput-default-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-taginput" data-taginput-name="skills"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="taginput-default-input"&gt;&lt;span class="nds-label"&gt;Skills&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;input type="text" id="taginput-default-input" placeholder="Add a skill&amp;hellip;"&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="taginputOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A tag input is a text field that holds its values as [Chips](../components/chips). The user types a value and presses Enter or a comma, and the value becomes a chip before the text box. The script keeps one hidden input per tag, so the form submits the tags as an array.
+
+Pick another component when:
+
+- the user picks from a fixed list: [Multiselect](../components/multiselect)
+- the user types one value: a text field in [Forms](../components/forms)
+- the user picks one value from suggestions: [Autocomplete](../components/autocomplete)
+
+</div>
+  </div>
 </section>
 
-<!-- Server-Rendered Restore -->
-<section id="taginputRestore" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Server-Rendered Restore</h2>
-            <p class="nds-section-description">Emit one hidden input per saved tag and the field renders their chips on load. The field name is adopted from the hidden inputs, so no wrapper attribute is needed. This demo also shows the neutral chip variant via <code class="nds-inline-code lang-html">data-chip-class</code>.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Restored from a previous submit</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-taginput" data-chip-class="nds-neutral nds-sm">
-                                    <div class="nds-form-header">
-                                        <label for="taginput-restore-input"><span class="nds-label">Interests</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="hidden" name="interests[]" value="Design">
-                                        <input type="hidden" name="interests[]" value="Development">
-                                        <input type="text" id="taginput-restore-input" placeholder="Add an interest&hellip;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-taginput-restore-1" id="tab-taginput-restore-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-taginput-restore-1"
-                                        aria-labelledby="tab-taginput-restore-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-taginput" data-chip-class="nds-neutral nds-sm"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="taginput-restore-input"&gt;&lt;span class="nds-label"&gt;Interests&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;!-- One hidden input per saved tag: seeds the chips and donates the field name --&gt;
-    &lt;input type="hidden" name="interests[]" value="Design"&gt;
-    &lt;input type="hidden" name="interests[]" value="Development"&gt;
-    &lt;input type="text" id="taginput-restore-input" placeholder="Add an interest&amp;hellip;"&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="taginputMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="taginput-field" data-canon data-variants="taginputVariantsTable" data-harness="form" data-demo-width="100%">
+<div class="nds-form-container nds-taginput" data-taginput-name="skills">
+  <div class="nds-form-header">
+    <label for="taginput-skills"><span class="nds-label">Skills</span></label>
+  </div>
+  <div class="nds-form-control">
+    <input type="text" id="taginput-skills" placeholder="Add a skill">
+  </div>
+</div>
+</script>
+<script type="text/html" id="taginput-assist" data-canon>
+<div class="nds-form-container nds-taginput" data-taginput-name="services" data-url="../docs-assets/data/services-autocomplete.json" data-fetch="once" data-min-chars="2">
+  <div class="nds-form-header">
+    <label for="taginput-services">
+      <span class="nds-label">Services</span>
+      <span class="nds-info">Type part of a service name, such as "visa"</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <input type="text" id="taginput-services" autocomplete="on" placeholder="Search services">
+  </div>
+</div>
+</script>
+<script type="text/html" id="taginput-prefilled" data-canon>
+<input type="hidden" name="skills[]" value="Data analysis">
+<input type="hidden" name="skills[]" value="Project management">
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Tag Limit -->
-<section id="taginputMax" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tag Limit</h2>
-            <p class="nds-section-description">Cap the number of tags with a wrapper attribute. Adds past the limit are rejected with an error in the field footer, clearing as soon as a tag is removed.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Maximum 3 tags</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-taginput" data-taginput-name="topics" data-max-tags="3">
-                                    <div class="nds-form-header">
-                                        <label for="taginput-max-input"><span class="nds-label">Topics</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="text" id="taginput-max-input" placeholder="Add up to 3 topics&hellip;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-taginput-max-1" id="tab-taginput-max-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-taginput-max-1"
-                                        aria-labelledby="tab-taginput-max-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-taginput" data-taginput-name="topics" data-max-tags="3"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="taginput-max-input"&gt;&lt;span class="nds-label"&gt;Topics&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;input type="text" id="taginput-max-input" placeholder="Add up to 3 topics&amp;hellip;"&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="taginputVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Prefilled tags inserts two hidden inputs right after the text box `#taginput-skills`. Write one hidden input per tag, with the field's name and `[]`.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Free text (default) | — | — | The user types each tag. Use it for values the user makes up, such as skills or keywords |
+| Structure | Suggestions | canon `#taginput-assist` | — | A menu suggests tags from `data-url` as the user types. Typed text still becomes a tag. See Suggestions |
+| Strict | Strict (hint: Only picked suggestions become tags) | `[data-strict]` | `.nds-taginput[data-url]` | Only a picked suggestion becomes a tag. Use it for a known list, such as people or categories. See Strict Mode |
+| Prefilled tags | Prefilled tags (id: prefilled) (hint: Tags the field shows at load) | canon `#taginput-prefilled` | `#taginput-skills` (after) | The field shows these tags as chips at load. Use it on a form that edits saved data. See Prefilled Tags |
+| Tag limit | Max 3 tags | `[data-max-tags="3"]` | `.nds-taginput` | The field takes 3 tags at most. Use the limit that the server uses. See Tag Limit |
+| Chip color | Primary (default) | — | — | Chips in the primary color |
+| Chip color | Neutral | `[data-chip-class="nds-neutral nds-sm"]` | `.nds-taginput` | Chips in the neutral color, for tags that are not a brand action |
+| State (any) | Disabled (demo: + prefilled) | `[data-state~="disabled"]` | `.nds-taginput:not([data-state~="readonly"])` | The user cannot type or remove a chip, and the tags do not post. Not with Read-only |
+| State (any) | Read-only (demo: + prefilled) | `[data-state~="readonly"]` | `.nds-taginput:not([data-state~="disabled"])` | The user sees the tags but cannot change them. The tags post. Not with Disabled |
+| State (any) | Required (hint: Press Validate with no tags) | `[data-required]` | `.nds-taginput` | The form needs at least one tag. See Validation |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+{: #taginputVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Autocomplete Assist -->
-<section id="taginputAssist" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Autocomplete Assist</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-url</code> to the wrapper and the field surfaces server-backed suggestions as the user types. Picked suggestions commit as tags, free typing still works, so existing tags get reused instead of retyped. The inert spinner in the action slot shows while suggestions fetch. Add <code class="nds-inline-code lang-html">data-strict</code> and only suggestions commit: the right shape for bounded vocabularies like assigning people or categories.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Type 2+ characters to search services</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-taginput" data-taginput-name="services"
-                                    data-url="{{ '/docs-assets/data/services-autocomplete.json' | relative_url }}"
-                                    data-fetch="once" data-min-chars="2">
-                                    <div class="nds-form-header">
-                                        <label for="taginput-assist-input"><span class="nds-label">Services</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="text" id="taginput-assist-input" autocomplete="on" placeholder="Search services&hellip;">
-                                        <div class="nds-form-action">
-                                            <span class="nds-btn nds-subtle nds-icon-only nds-loading" hidden aria-hidden="true"></span>
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-footer" data-feedback-target>
-                                        <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                            <span class="nds-feedback-message">Try "request", "license", or "permit"</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-taginput-assist-1" id="tab-taginput-assist-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-taginput-assist-1"
-                                        aria-labelledby="tab-taginput-assist-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-form-container nds-taginput" data-taginput-name="services"
-     data-url="/api/services" data-fetch="once" data-min-chars="2"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="taginput-assist-input"&gt;&lt;span class="nds-label"&gt;Services&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;input type="text" id="taginput-assist-input" autocomplete="on" placeholder="Search services&amp;hellip;"&gt;
-    &lt;div class="nds-form-action"&gt;
-      &lt;!-- Inert fetch spinner: shown by Autocomplete while suggestions load --&gt;
-      &lt;span class="nds-btn nds-subtle nds-icon-only nds-loading" hidden aria-hidden="true"&gt;&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;!-- Permanent hint: hidden while a rejection shows, restored after --&gt;
-  &lt;div class="nds-form-footer" data-feedback-target&gt;
-    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
-      &lt;span class="nds-feedback-icon"&gt;
-        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/span&gt;
-      &lt;span class="nds-feedback-message"&gt;Try "request", "license", or "permit"&lt;/span&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Strict: only suggestions commit</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-taginput" data-taginput-name="assignees"
-                                    data-url="{{ '/docs-assets/data/users-autocomplete.json' | relative_url }}"
-                                    data-name="Name" data-fetch="once" data-min-chars="2" data-strict
-                                    data-empty-message="No matching people">
-                                    <div class="nds-form-header">
-                                        <label for="taginput-strict-input"><span class="nds-label">Assignees</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <input type="text" id="taginput-strict-input" autocomplete="on" placeholder="Search the directory&hellip;">
-                                        <div class="nds-form-action">
-                                            <span class="nds-btn nds-subtle nds-icon-only nds-loading" hidden aria-hidden="true"></span>
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-footer" data-feedback-target>
-                                        <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                                            <span class="nds-feedback-icon">
-                                                <i class="nds-icon" aria-hidden="true"></i>
-                                            </span>
-                                            <span class="nds-feedback-message">Try "Ahmed" or "Sara"</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-taginput-strict-1" id="tab-taginput-strict-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-taginput-strict-1"
-                                        aria-labelledby="tab-taginput-strict-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-form-container nds-taginput" data-taginput-name="assignees"
-     data-url="/api/users" data-name="Name" data-min-chars="2" data-strict
-     data-empty-message="No matching people"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="taginput-strict-input"&gt;&lt;span class="nds-label"&gt;Assignees&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;input type="text" id="taginput-strict-input" autocomplete="on" placeholder="Search the directory&amp;hellip;"&gt;
-    &lt;div class="nds-form-action"&gt;
-      &lt;span class="nds-btn nds-subtle nds-icon-only nds-loading" hidden aria-hidden="true"&gt;&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target&gt;
-    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
-      &lt;span class="nds-feedback-icon"&gt;
-        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/span&gt;
-      &lt;span class="nds-feedback-message"&gt;Try "Ahmed" or "Sara"&lt;/span&gt;
-    &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="taginputBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Suggestions
+{: .nds-block-title}
+
+`data-url` on `.nds-taginput` and `autocomplete="on"` on the text box add an [Autocomplete](../components/autocomplete) menu to the field. A picked suggestion becomes a tag, and typed text still becomes a tag on Enter or a comma. The menu opens only when a suggestion matches. When the user leaves the field while the menu is open, the typed text stays in the box. Set the fetch with the Autocomplete attributes, such as `data-fetch`, `data-min-chars` and `data-name`.
+
+### Strict Mode
+{: .nds-block-title}
+
+`data-strict` on a field with `data-url` makes only picked suggestions become tags. On Enter, a comma or a paste, the field shows "Choose from the suggestions" and keeps the text in the box. Leaving the field keeps the text there too. When nothing matches, the menu shows "No results". Without `data-url`, `data-strict` does nothing. `addTag()` still adds any value.
+
+### Prefilled Tags
+{: .nds-block-title}
+
+A form that edits saved data shows the tags the user saved before. For each tag, write one hidden input in `.nds-form-control`, such as `<input type="hidden" name="skills[]" value="Data analysis">`. The field turns each one into a chip when it starts, with no script on the page. Without `data-taginput-name`, the field takes its name from these inputs.
+
+### Tag Limit
+{: .nds-block-title}
+
+`data-max-tags` on `.nds-taginput` sets how many tags the field takes at most. A tag past the limit is not added, and the field shows "Maximum limit 3". The message clears at the next change.
+
+### Disabled and Read-only
+{: .nds-block-title}
+
+`data-state~="disabled"` on `.nds-taginput` disables the text box, every chip and the hidden inputs, so the tags do not post. With `data-state~="readonly"`, the user cannot type, remove a chip or edit the last tag with Backspace. The tags still post. Code can still change the tags with `addTag()`, `removeTag()` and `clear()`.
+
+### Validation
+{: .nds-block-title}
+
+`data-required` on `.nds-taginput` makes the form need at least one tag. The class `nds-required` does the same. At submit, an empty field shows "Please add at least one tag". The error clears at the next change. The form does not check the tag limit at submit: the field blocks extra tags as the user adds them.
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="taginputFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Any <code class="nds-inline-code lang-html">.nds-taginput</code> on the page wires up on load. Clicking anywhere on the field puts the caret in the input.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard"></i>
-                            <span class="nds-label">Flexible Commit Keys</span>
-                        </span>
-                        <p class="nds-item-desc">Enter or a comma commits the typed text, including the Arabic comma from Arabic keyboard layouts. Pasted text splits on separators into multiple tags, and leaving the field commits pending text instead of losing it.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-edit-02"></i>
-                            <span class="nds-label">Backspace to Edit</span>
-                        </span>
-                        <p class="nds-item-desc">Backspace on an empty input pops the last tag back into the input as editable text rather than deleting it, so a typo never means retyping the whole value.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-file-validation"></i>
-                            <span class="nds-label">Form Submission and Restore</span>
-                        </span>
-                        <p class="nds-item-desc">Each tag ships as an <code class="nds-inline-code lang-html">&lt;input type="hidden" name="field[]"&gt;</code>, so a wrapping <code class="nds-inline-code lang-html">&lt;form&gt;</code> posts the tags as an array. The same hidden inputs, server-rendered, restore a saved submission on load with no inline JS.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-search-01"></i>
-                            <span class="nds-label">Autocomplete Assist</span>
-                        </span>
-                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-url</code> to the wrapper and typing surfaces server-backed suggestions: picking one commits it as a tag, while free typing keeps working. Add <code class="nds-inline-code lang-html">data-strict</code> to accept only suggestions, turning the field into a searchable picker for bounded vocabularies.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-alert-circle"></i>
-                            <span class="nds-label">Rejection Feedback</span>
-                        </span>
-                        <p class="nds-item-desc">Duplicates (case-insensitive) and adds past <code class="nds-inline-code lang-html">data-max-tags</code> are rejected with an error in the field footer, clearing on the next successful commit or removal.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-voice"></i>
-                            <span class="nds-label">Screen-Reader Updates</span>
-                        </span>
-                        <p class="nds-item-desc">Every add, removal, edit, and rejection announces through the shared NDS live region in both English and Arabic, and removing a chip hands keyboard focus to the next chip instead of dropping it.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Every field exposes an instance on the DOM node with <code class="nds-inline-code lang-js">getValues()</code>, <code class="nds-inline-code lang-js">addTag()</code>, <code class="nds-inline-code lang-js">removeTag()</code>, and <code class="nds-inline-code lang-js">clear()</code>. Listen for <code class="nds-inline-code lang-js">nds:taginput:change</code> to react to changes.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="taginputFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-taginput</code> on the page starts on load. A click anywhere on the field, except on a chip, puts the cursor in the text box.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Flexible Commit Keys</span>
+          </span>
+          <p class="nds-item-desc">Enter, a comma or the Arabic comma (،) adds the typed text as a tag. Pasted text splits into one tag per comma or line. Leaving the field adds the typed text. Enter in an empty box submits the form.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-edit-02"></i>
+            <span class="nds-label">Backspace to Edit</span>
+          </span>
+          <p class="nds-item-desc">Backspace in an empty box moves the last tag back into the box as text. The user fixes a typo and presses Enter again.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-file-validation"></i>
+            <span class="nds-label">Form Submission</span>
+          </span>
+          <p class="nds-item-desc">The script keeps one <code class="nds-inline-code lang-html">&lt;input type="hidden" name="skills[]"&gt;</code> per tag, named from <code class="nds-inline-code lang-html">data-taginput-name</code>. The form submits the tags as an array, in the order the user added them.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            <span class="nds-label">Rejection Feedback</span>
+          </span>
+          <p class="nds-item-desc">A tag the field already holds, in any letter case, is not added. The field shows "Already added", and the message clears at the next change.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-voice"></i>
+            <span class="nds-label">Screen Reader Support</span>
+          </span>
+          <p class="nds-item-desc">A screen reader reads each change and each rejected tag, such as "Added Data analysis" or "Already added", in English or Arabic.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-tag-01"></i>
+            <span class="nds-label">Removable Chips</span>
+          </span>
+          <p class="nds-item-desc">Each chip is a button: a click, Enter or Space removes its tag. Focus moves to the chip in its place, or to the text box after the last one.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-api"></i>
+            <span class="nds-label">Programmatic Control</span>
+          </span>
+          <p class="nds-item-desc">Each field has an instance with <code class="nds-inline-code lang-js">getValues()</code>, <code class="nds-inline-code lang-js">addTag()</code>, <code class="nds-inline-code lang-js">removeTag()</code> and <code class="nds-inline-code lang-js">clear()</code>. The <code class="nds-inline-code lang-js">nds:taginput:change</code> event fires after each change.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="taginputGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
+<section id="taginputPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use tag input for open-ended, user-defined values: skills, keywords, topics, reference numbers. The vocabulary belongs to the user, not to a predefined list</li>
-                    <li>When the options are a fixed set the user picks from, use <a class="nds-color" href="{{ 'components/multiselect' | relative_url }}">Multiselect</a> instead: it validates against known values and supports grouped options</li>
-                    <li>For a single free-text value, use a plain <a class="nds-color" href="{{ 'components/forms' | relative_url }}">text input</a>. The chip ceremony adds friction when only one value is expected</li>
-                    <li>Name the field with <code class="nds-inline-code lang-html">data-taginput-name</code>, or let server-rendered hidden inputs donate the name. An unnamed field is UI-only and posts nothing</li>
-                    <li>Set <code class="nds-inline-code lang-html">data-max-tags</code> when the backend caps the list. The limit is enforced at entry with visible feedback, so users never lose work at submit time</li>
-                    <li>Keep expected tags short, one to three words. Long values wrap awkwardly as chips and are usually a sign the field should be a textarea</li>
-                    <li>Duplicates are rejected case-insensitively at entry. Normalize casing server-side if the stored values must be canonical</li>
-                    <li>When tag consistency matters, enable autocomplete assist with <code class="nds-inline-code lang-html">data-url</code>: suggestions steer users to existing tags instead of coining variants. See <a class="nds-color" href="{{ 'components/autocomplete' | relative_url }}">Autocomplete</a> for the fetch options (<code class="nds-inline-code lang-html">data-fetch</code>, <code class="nds-inline-code lang-html">data-min-chars</code>, <code class="nds-inline-code lang-html">data-name</code>)</li>
-                    <li>When the tag count carries meaning (quota, pricing), listen for <code class="nds-inline-code lang-js">nds:taginput:change</code> and show a counter outside the field rather than overloading the placeholder</li>
-                </ul>
-            </div>
+- Use a tag input for values the user makes up, such as skills, keywords or reference numbers.
+- Give the field a `data-taginput-name`. With no name and no prefilled tags, the tags do not post.
+- Set `data-max-tags` to the limit that the server uses. The user then sees the limit as they type, not after submit.
+- Keep tags to one to three words. For longer text, use a textarea.
+- The field rejects a repeat in any letter case, but keeps the case the user typed. Change the case on the server if the stored values must match.
+- Add Suggestions when tags must match a shared list. The user then picks an existing tag instead of typing a new spelling.
+- Say a limit in the label, such as "Topics (up to 3)", not in the placeholder.
+- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-taginput-name</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code>. Names the hidden carriers, posted as <code class="nds-inline-code lang-html">name[]</code>. When omitted, the name is adopted from server-rendered hidden inputs; with neither, the selection does not post</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-max-tags</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code>. Caps the tag count; adds past the limit are rejected with footer feedback naming the limit</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-chip-class</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code>. Classes applied to generated chips: color variants <code class="nds-inline-code lang-html">nds-primary</code> / <code class="nds-inline-code lang-html">nds-neutral</code>, sizes <code class="nds-inline-code lang-html">nds-sm</code> / <code class="nds-inline-code lang-html">nds-md</code> / <code class="nds-inline-code lang-html">nds-lg</code>, plus <code class="nds-inline-code lang-html">nds-rounded</code>. Defaults to <code class="nds-inline-code lang-html">nds-primary nds-sm</code>. See <a class="nds-color" href="{{ 'components/chips' | relative_url }}">Chips</a></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-url</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code> to enable autocomplete assist (the input also needs <code class="nds-inline-code lang-html">autocomplete="on"</code>). Picked suggestions commit as tags. The fetch behavior is configured with <a class="nds-color" href="{{ 'components/autocomplete' | relative_url }}">Autocomplete</a>'s own attributes</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-strict</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code> alongside <code class="nds-inline-code lang-html">data-url</code>. Typed text never commits: Enter and comma show "choose from the suggestions" feedback, and only picked suggestions become tags. The programmatic <code class="nds-inline-code lang-js">addTag()</code> API is not restricted</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-taginput-value</code></td><td>Stamped on each chip by JS with the tag's value. Use it to target specific chips from consumer code or end-to-end tests</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state~="filled"</code></td><td>Stamped on <code class="nds-inline-code lang-html">.nds-taginput</code> by JS when at least one tag exists. A styling hook for consumers; removed when the last tag is cleared</td></tr>
-                    </tbody>
-                </table>
-            </div>
+</div>
+  </div>
+</section>
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.TagInput</strong> namespace initializes all <code class="nds-inline-code lang-html">.nds-taginput</code> fields on load. Each instance lives on its DOM node as <code class="nds-inline-code lang-js">element.ndsTagInput</code> and exposes methods for programmatic control.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialize (auto-runs on load) ─────────────────────
-// Call again after injecting taginput HTML dynamically.
-NDS.TagInput.init();
+<section id="taginputApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-// ── Re-initialize (alias of init) ──────────────────────
-// Picks up .nds-taginput elements added since the last pass.
-NDS.TagInput.reinit();
+### Data Attributes
+{: .nds-block-title}
 
-// ── Create an instance manually ────────────────────────
-const field = document.querySelector('.nds-taginput');
-NDS.TagInput.create(field);
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-taginput-name` | `.nds-taginput` | The field name. The script names each hidden input with it and `[]`. Without it, the script takes the name from the first prefilled hidden input. It is also `name` in the change event |
+| `data-max-tags` | `.nds-taginput` | How many tags the field takes at most. See Tag Limit |
+| `data-chip-class` | `.nds-taginput` | The classes on each chip. The default is `nds-primary nds-sm`. See [Chips](../components/chips) |
+| `data-url` | `.nds-taginput` | The URL of the suggestions. Needs `autocomplete="on"` on the text box. See Suggestions |
+| `data-strict` | `.nds-taginput` with `data-url` | Only picked suggestions become tags. See Strict Mode |
+| `data-required` | `.nds-taginput` | The form needs at least one tag. See Validation |
+| `data-state~="filled"` | `.nds-taginput` | The script sets it when the field holds a tag, and removes it when the last tag goes. No NDS style reads it: it is for your CSS |
+| `data-state~="disabled"`, `data-state~="readonly"` | `.nds-taginput` | Set it yourself. See Disabled and Read-only |
+| `data-taginput-value` | each chip | The script writes the tag's text on each chip it builds. Use it to select one chip in your code or tests |
+{: .nds-table .nds-responsive}
 
-// ── Access the instance on a live field ────────────────
-const instance = field.ndsTagInput;
+### JavaScript
+{: .nds-block-title}
 
-// ── Read the current tags ──────────────────────────────
-instance.getValues();  // ['Design', 'Development']
+| Method | Effect |
+|---|---|
+| `NDS.TagInput.init()` | Starts every `.nds-taginput` that has not started. The loader calls it on load. Call it again after you add a field to the page |
+| `NDS.TagInput.reinit()` | The same as `init()` |
+| `NDS.TagInput.create(el)` | Starts one field, and returns its instance. On a field that has started, it returns the same instance. It returns `null` when the field has no `.nds-form-control` or no text box in it |
+| `NDS.TagInput.destroy(el)` | Removes the listeners. The chips and the hidden inputs stay, and `init()` can start the field again. Call it before you remove the field from the page |
+| `el.ndsTagInput` | The instance of a field that has started |
+| `instance.getValues()` | Returns the tags, in the order they were added |
+| `instance.addTag(value)` | Adds one tag. It trims spaces and commas, and rejects a repeat or a tag past the limit with the same message as typing |
+| `instance.removeTag(value)` | Removes the tag with this exact text |
+| `instance.clear()` | Removes every tag |
+{: .nds-table .nds-responsive}
 
-// ── Add, remove, or clear programmatically ─────────────
-// addTag trims separators and whitespace, rejects duplicates
-// and over-limit adds with the same feedback typing gets.
-instance.addTag('Accessibility');
-instance.removeTag('Design');
-instance.clear();               // remove every tag, emit change
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:taginput:change` | `.nds-taginput`, and it bubbles | `{ name, values }`, after each tag the field adds or removes, the Backspace edit included, and after `clear()`. `name` is `data-taginput-name`, or `''` for a field with no name. `values` is the tags, in order |
+{: .nds-table .nds-responsive}
 
-// ── Tear down an instance ──────────────────────────────
-// Releases listeners and unlocks the field for a fresh init.
-NDS.TagInput.destroy(field);
+<script type="text/html" id="taginput-js" data-canon data-lang="js">
+var field = document.querySelector('.nds-taginput[data-taginput-name="skills"]');
 
-// ── Listen for tag changes ─────────────────────────────
-// Fires on every add, removal, backspace-edit, and clear.
-field.addEventListener('nds:taginput:change', (e) => {
-    const { name, values } = e.detail;
-    // name:   field name ('' when the field is UI-only)
-    // values: array of current tag strings
+// Show the count next to the field
+field.addEventListener('nds:taginput:change', function (e) {
+  document.querySelector('#skill-count').textContent = e.detail.values.length + ' skills';
 });
 
-// ── Keyboard interactions (built in) ───────────────────
-// Enter / comma  commit the typed text as a tag
-// Backspace      on an empty input pops the last tag for editing
-// Tab + Enter    chips are buttons; Enter on a chip removes it
-</code>
-                    </div>
-                </div>
-            </div>
+// Add a tag from code
+field.ndsTagInput.addTag('Accessibility');
+</script>
 
-        </div>
-    </div>
+The full API is in the banner of `_js/nds-taginput.js`.
+
+</div>
+  </div>
 </section>

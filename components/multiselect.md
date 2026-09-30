@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 12:05 AM"
+last_edit: "01/10/2026 - 12:38 AM"
 ---
 
 <section id="multiselectOverview" class="nds-content-section nds-doc-overview">
@@ -212,6 +212,7 @@ A row on `.nds-check-container` changes every option row. A Reset or Apply row i
 | Menu options | Reset + Apply + Search | `[data-search-item]` | `.nds-check-container` | The same |
 | Chip color | Primary (default) | — | — | Chips in the primary color |
 | Chip color | Neutral | `[data-chip-class="nds-neutral nds-sm"]` | `.nds-multiselect` | Chips in the neutral color, for a choice that is not a brand action |
+| State | None (default) | — | — | The user can change the options |
 | State | Disabled | `[data-state~="disabled"]` | `.nds-multiselect` | The user cannot open the menu or remove a chip |
 | State | Read-only | `[data-state~="readonly"]` | `.nds-multiselect` | The menu opens and shows the options, but the user cannot change them or remove a chip |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
