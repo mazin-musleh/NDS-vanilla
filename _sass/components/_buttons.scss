@@ -655,10 +655,13 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     width: var(--btn-size);
     --btn-padding: 0;
 
-    &.nds-menu-btn {
+    // A built-in icon is a second icon: widen to fit both, inset like the square's
+    // one. Minus the 1px border, so an arrow-only button stays square.
+    &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down) {
       width: fit-content;
+      --btn-padding: calc((var(--_btn-size) - var(--_btn-icon-size)) / 2 - 1px);
     }
-    
+
   }
 
   &.nds-circle {
