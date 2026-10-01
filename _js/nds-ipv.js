@@ -1,7 +1,8 @@
 /* NDS.Ipv — public surface
  * Rides: nds-backdrop (dims the page behind the overlay; soft)
  * Methods:
- *   NDS.Ipv.init() / .reinit()   wire the thumbnails (the overlay builds on first open)
+ *   NDS.Ipv.init() / .reinit()   wire the thumbnails (the overlay builds on first open);
+ *                                a repeat call gives later thumbnails tabindex + role
  *   NDS.Ipv.create()             build it and return the instance (window.ndsIPV)
  *   instance.open(thumb)         open the viewer on a thumbnail element
  *   instance.close()
@@ -392,6 +393,7 @@
 
             // First open (not gallery prev/next): start a fresh modal session.
             if (!skipIndexUpdate) {
+                this.state.thumbnails = this.collectThumbnails();
                 this.state.currentIndex = this.state.thumbnails.indexOf(thumb);
                 this._containerRect = null; // recompute against the now-visible overlay
 
@@ -433,24 +435,31 @@
         }
 
         // ── Event attachment ─────────────────────────────────────────────
-        attachThumbnailEvents() {
-            // Known thumbnails drive prev/next; exclude any inside code examples.
-            this.state.thumbnails = Array.from(document.querySelectorAll('.nds-ipv-thumbnail'))
+        // Thumbnails on the page now, minus any inside code examples. Read at open,
+        // so a thumbnail added after init joins the gallery with no reinit.
+        collectThumbnails() {
+            return Array.from(document.querySelectorAll('.nds-ipv-thumbnail'))
                 .filter(thumb => !thumb.closest('code, .code-example'));
+        }
 
-            // Make each thumbnail keyboard-operable without changing authored markup.
-            // Deferred: thumbnails already paint correctly without JS (this is an
-            // a11y-only enhancement), so a gallery page with many images doesn't
-            // pay this as one blocking task.
+        // Make each thumbnail keyboard-operable without changing authored markup.
+        // Deferred: thumbnails already paint correctly without JS (this is an
+        // a11y-only enhancement), so a gallery page with many images doesn't
+        // pay this as one blocking task.
+        enhanceThumbnails() {
             NDS.onIdle(() => {
-                this.state.thumbnails.forEach(thumb => {
+                this.collectThumbnails().forEach(thumb => {
                     if (!thumb.hasAttribute('tabindex')) thumb.tabIndex = 0;
                     if (!thumb.hasAttribute('role')) thumb.setAttribute('role', 'button');
                 });
             });
+        }
+
+        attachThumbnailEvents() {
+            this.enhanceThumbnails();
 
             const { signal } = this.abortController;
-            const isKnownThumb = (el) => el && this.state.thumbnails.includes(el);
+            const isKnownThumb = (el) => el && !el.closest('code, .code-example');
 
             // One delegated handler each for click and Enter/Space (O(1) wiring).
             document.addEventListener('click', (e) => {
@@ -571,8 +580,10 @@
 
     // Initialization (called by nds-loader.js). The overlay builds lazily in
     // the instance's first open, so the singleton guard is the instance itself.
+    // A repeat call gives thumbnails added since then keyboard access.
     function initializeIPV() {
-        if (!window.ndsIPV) window.ndsIPV = new NDSImagePopupViewer();
+        if (window.ndsIPV) window.ndsIPV.enhanceThumbnails();
+        else window.ndsIPV = new NDSImagePopupViewer();
     }
 
     // Public API for the unified init system
