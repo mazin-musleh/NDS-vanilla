@@ -57,6 +57,8 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 
 - **Release notes, Image Popup Viewer — Fixed:** a thumbnail added after page load opens the viewer, and `NDS.Ipv.reinit()` gives it keyboard access; before, it never opened. In Arabic, the Left key moves to the next image and Right to the previous, matching the arrows on screen. **Removed from the docs:** `nds-ipv-gallery` and `nds-ipv-image-item`, which had no styles and no script; markup that uses them renders the same. **Changed:** the viewer's buttons are NDS buttons in a dark area: 40px on every screen (they were 50px on desktop), with the button hover and focus styles. `viewer.destroy()` also removes the viewer and frees `window.ndsIPV`, so `NDS.Ipv.init()` can start a new one. Right-click on the full image opens the browser menu again (Save image, Open in new tab). The viewer no longer blurs what is behind it, the same as Backdrop.
 
+- **Release notes, File Upload — Fixed:** a long file name stays on one line: the name ends in an ellipsis and the extension stays, and hovering shows the whole name. It wrapped over several lines.
+
 - **Release notes, Persona — Changed:** every element after the divider takes its own full row, so a definition list after it needs no inline `flex`.
 
 - **Release notes, Link — Changed:** a link is primary by default everywhere, not only inside a content section; `nds-neutral` makes it neutral anywhere. Breadcrumb, footer and alert keep neutral links, and a link that is an avatar keeps its own look. A plain `<a>` outside a section that relied on the neutral default turns primary: add `nds-neutral` to keep it neutral.

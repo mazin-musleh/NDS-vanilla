@@ -1,5 +1,5 @@
 /* NDS.Upload — public surface
- * Rides: (none — base component)
+ * Rides: nds-tooltip (the full file name on hover; soft)
  * Methods:
  *   NDS.Upload.init() / .reinit()                scan + initialize .nds-file-upload
  *   NDS.Upload.create(el, options)               instance one uploader; options override the
@@ -660,7 +660,26 @@
             const removeBtn = fileItem.querySelector('.nds-remove-file');
             const errorMsg = fileItem.querySelector('.nds-error-message');
 
-            if (fileName) fileName.textContent = sanitizeFileName(fileData.file.name);
+            if (fileName) {
+                // The base truncates and the extension stays; a hover tooltip shows the whole name.
+                const name = sanitizeFileName(fileData.file.name);
+                const dot = name.lastIndexOf('.');
+                const base = document.createElement('span');
+                base.className = 'nds-file-base';
+                base.textContent = dot > 0 ? name.slice(0, dot) : name;
+                fileName.replaceChildren(base);
+                if (dot > 0) {
+                    const ext = document.createElement('span');
+                    ext.className = 'nds-file-ext';
+                    ext.textContent = name.slice(dot);
+                    fileName.append(ext);
+                }
+                // title is the tooltip's message source; plain browser title without NDS.Tooltip.
+                fileName.title = name;
+                fileName.classList.add('nds-tooltip');
+                fileName.setAttribute('data-tooltip-hover', '500');
+                NDS.Tooltip?.create?.(fileName);
+            }
             if (removeBtn) removeBtn.setAttribute('data-file-id', fileData.id);
             if (errorMsg && fileData.error) errorMsg.textContent = fileData.error;
 
