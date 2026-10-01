@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 12:16 AM"
+last_edit: "02/10/2026 - 01:12 AM"
 ---
 
 <section id="stepperOverview" class="nds-content-section nds-doc-overview">
@@ -223,7 +223,7 @@ When something can refuse the move, such as validation or a request, call `NDS.S
 ### Completion
 {: .nds-block-title}
 
-`next()` on the last step marks it completed and writes `completed` in the stepper's `data-state`. `previous()` then makes the last step current again. To show a finished flow at page load, write a `data-current` one past the last step. A radial stepper has no completed state: it stops on its last step.
+`next()` on the last step marks it completed and writes `completed` in the stepper's `data-state`. `previous()` then makes the last step current again. To show a finished flow at page load, write a `data-current` one past the last step. In the radial layout, the last step stays in view with a full ring.
 
 ### Radial
 {: .nds-block-title}
@@ -312,7 +312,7 @@ In a vertical stepper, a [Divider](../utilities/divider) at the start of a step'
 - Move a form step with `NDS.Stepper.next()`, not `data-stepper-control`. Validation or a request can refuse the move.
 - Give every control button `type="button"`. Inside a form, a button with no type is a submit button, and the stepper leaves it to the form.
 - Write `.nds-stepper-next` in every radial step except the last.
-- To change the layout after load, call `NDS.Stepper.setFallback()`. The script sets `nds-vertical` and `nds-radial` again when the screen width changes, so a class you add yourself does not last.
+- To change the layout after load, change the class on the stepper. CSS alone sets the layout, so the change shows at once.
 - Name the current step in the page as well, such as in the form heading. The stepper shows the step to the eye only, and a screen reader does not announce it.
 
 </div>
@@ -343,9 +343,9 @@ In a vertical stepper, a [Divider](../utilities/divider) at the start of a step'
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-current` | `.nds-stepper` | The current step, from 1. Write it at page load: without it, step 1 is current. The script watches it, so code that holds the step number, such as a framework view, can write it: write a new number and the steps change, and `nds:stepper:change` fires. A number one past the last step shows every step completed. A radial stepper stops on its last step |
+| `data-current` | `.nds-stepper` | The current step, from 1. Write it at page load: without it, step 1 is current. The script watches it, so code that holds the step number, such as a framework view, can write it: write a new number and the steps change, and `nds:stepper:change` fires. A number one past the last step shows every step completed |
 | `data-total` | `.nds-stepper` | The number of steps. The script writes it when it starts. After you add or remove steps, write the new count in it, and the script reads the steps again |
-| `data-state` | `.nds-stepper` | The script writes `completed` when `next()` runs on the last step, or when `data-current` is past it. It removes it when the stepper moves back. Never on a radial stepper. Write `loading` yourself to show the skeleton: it works the same as `nds-loading` |
+| `data-state` | `.nds-stepper` | The script writes `completed` when `next()` runs on the last step, or when `data-current` is past it. It removes it when the stepper moves back. Write `loading` yourself to show the skeleton: it works the same as `nds-loading` |
 | `data-state` | `.nds-stepper-step` | The script writes `completed`, `current` or `upcoming` on each step from `data-current`. Do not write it yourself |
 | `data-step-text` | `.nds-stepper-circle` | Text in place of the step number, such as a letter. A completed step shows its check mark, and a dot shows no text |
 | `data-stepper-control` | `button` | `next`, `previous` or `goto`. The click moves the stepper. See Step Controls under Behavior |
@@ -387,8 +387,6 @@ A stepper in the page starts by itself. The instance is on the element as `el.nd
 | `NDS.Stepper.next(id)`, `NDS.Stepper.previous(id)` | Moves one step. On the last step, `next()` marks it completed |
 | `NDS.Stepper.goTo(id, step)` | Moves to a step number. Returns `false` for a number outside the steps |
 | `NDS.Stepper.control(id, action, value)` | What a control button calls. `action` is `next`, `previous` or `goto`, and `value` is the step for `goto` |
-| `NDS.Stepper.setFallback(id, layout)` | Sets the layout where no breakpoint class matches: `horizontal`, `vertical` or `radial` |
-| `NDS.Stepper.getFallback(id)` | Returns that layout |
 | `instance.next()`, `instance.previous()`, `instance.goTo(step)` | The same moves on one instance |
 | `instance.current`, `instance.total`, `instance.progress` | The current step, the number of steps, and the percent done |
 | `instance.destroy()` | Removes the instance and its start marks, so `init()` can start the stepper again |

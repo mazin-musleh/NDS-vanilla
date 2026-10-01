@@ -1,17 +1,13 @@
 /* NDS.Stepper — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Stepper.init() / .reinit()        stamp the steps, apply the responsive variant,
- *                                         wire the delegated control listener
+ *   NDS.Stepper.init() / .reinit()        stamp the steps, wire the delegated control listener
  *   NDS.Stepper.create(el)                instance one stepper
  *   NDS.Stepper.get(id)                   the instance for that stepper id
  *   NDS.Stepper.next(id) / .previous(id)  move one step
  *   NDS.Stepper.goTo(id, step)            move to a step number
  *   NDS.Stepper.control(id, action, val)  the same entry point the buttons use
  *                                         (action: next | previous | goto)
- *   NDS.Stepper.setFallback(id, variant)  layout to use when no breakpoint class matches:
- *                                         horizontal | vertical | radial
- *   NDS.Stepper.getFallback(id)           read it back
  * Events (bubble from the .nds-stepper):
  *   nds:stepper:change   detail {currentStep, totalSteps, progressPercentage}
  * Hooks:
@@ -23,16 +19,17 @@
  * Gotchas:
  *   - Give the stepper an id. A control resolves its target from data-stepper-target, then
  *     the closest .nds-stepper, then the first one on the page.
- *   - Per-breakpoint layout comes from marker classes nds-{horizontal|vertical|radial}-{sm
- *     |md|lg}; the component toggles the canonical nds-vertical / nds-radial to match.
+ *   - The layout is CSS alone: nds-vertical / nds-radial, overridden per breakpoint by
+ *     nds-{horizontal|vertical|radial}-{sm|md|lg}. The script never reads or writes them,
+ *     so completion behaves the same in every layout.
  *   - data-stepper-control is an UNCONDITIONAL mover: click, move, no question asked.
  *     Right for Back, demos and walkthroughs. For a move something can refuse —
  *     validation, a request, a server check — call NDS.Stepper.next() from whatever
  *     knows the answer. Forms are always that case.
  *   - A submit-typed control inside a form is HANDED OFF: no preventDefault, no move.
  *     The form owns that click. NDS.Init.audit() reports the shape.
- *   - Radial mode HIDES every step but the current one in CSS, so a stepper with no JS
- *     would paint EMPTY. _stepper.scss carries a pre-init skeleton keyed on the stepper's
+ *   - Radial HIDES every step but the current one (or the last, once completed), so a
+ *     stepper with no JS would paint EMPTY. _stepper.scss carries a pre-init skeleton keyed on the stepper's
  *     own data-nds-stepper-initialized stamp, which force-shows the first step until init
  *     lands. Do not remove that stamp or the guard rules that read it.
  */
@@ -44,9 +41,6 @@
  * states in place. All of its work is cold (no layout reads):
  *   - data-state stamping on every .nds-stepper-step (radial CSS hides any
  *     non-current step via display:none — without this, radial paints EMPTY).
- *   - Responsive variant translation: toggles canonical nds-vertical /
- *     nds-radial to match the current breakpoint, sourced from the authored
- *     marker classes (nds-{variant}-{sm|md|lg}).
  *   - Progress display: --current-step / --total-steps style props +
  *     .nds-progress-number + .nds-progress-steps text — so the radial arc +
  *     percentage + "1 / 4" label paint complete on first frame.
@@ -61,20 +55,6 @@
     let _globalsWired = false;
     const steppers = new Map();
     let _offDataAttrChange;
-
-    // Per-element BP-class snapshot — class observer dedupes on this so the
-    // shell's own canonical-class toggles in _applyResponsiveLayout don't
-    // re-trigger reapply (canonical classes aren't in the BP snapshot).
-    const _bpSnapshots = new WeakMap();
-
-    // Pre-compiled bp-variant regexes — _applyResponsiveLayout fires per
-    // resize event per stepper, so hoist out of the call path.
-    const _BP_RES = {
-        sm: /\bnds-(horizontal|vertical|radial)-sm\b/,
-        md: /\bnds-(horizontal|vertical|radial)-md\b/,
-        lg: /\bnds-(horizontal|vertical|radial)-lg\b/,
-    };
-    const _BP_CLASS_RE = /^nds-(?:horizontal|vertical|radial)-(?:sm|md|lg)$/;
 
     function _stampSteps(el) {
         const current = parseInt(el.dataset.current) || 1;
@@ -91,7 +71,7 @@
     // by first-paint _stampProgress (queries the targets fresh) and the instance
     // updateProgressDisplay (passes its cached refs) so both stay in lockstep.
     function _writeProgress(el, current, total, number, text) {
-        el.style.setProperty('--current-step', current);
+        el.style.setProperty('--current-step', Math.min(current, total));
         el.style.setProperty('--total-steps', total);
         if (number) number.textContent = Math.min(100, Math.round((current / total) * 100));
         if (text) text.textContent = `${Math.min(current, total)} / ${total}`;
@@ -106,41 +86,10 @@
             el.querySelector('.nds-progress-steps'));
     }
 
-    function _resolveFallback(el) {
-        if (el.classList.contains('nds-radial')) return 'radial';
-        if (el.classList.contains('nds-vertical')) return 'vertical';
-        return 'horizontal';
-    }
-
-    function _resolveBpVariant(el, bp) {
-        const m = el.className.match(_BP_RES[bp]);
-        return m ? m[1] : null;
-    }
-
-    function _applyResponsiveLayout(el) {
-        const fallback = el._ndsStepperFallback || 'horizontal';
-        let pick = fallback;
-        if (window.matchMedia(NDS.breakpoints.mobile).matches) pick = _resolveBpVariant(el, 'sm') || fallback;
-        else if (window.matchMedia(NDS.breakpoints['tablet-max']).matches) pick = _resolveBpVariant(el, 'md') || fallback;
-        else pick = _resolveBpVariant(el, 'lg') || fallback;
-
-        el.classList.toggle('nds-vertical', pick === 'vertical');
-        el.classList.toggle('nds-radial', pick === 'radial');
-    }
-
-    function _snapshotBp(el) {
-        return [...el.classList].filter(c => _BP_CLASS_RE.test(c)).sort().join(' ');
-    }
-
     // Stamp every first-paint visual on `el`. Used by init() at page load
     // AND by create(el) so dynamically-injected steppers get the same
     // treatment as authored ones. Idempotent; safe to re-run.
     function _stamp(el) {
-        if (el._ndsStepperFallback === undefined) {
-            el._ndsStepperFallback = _resolveFallback(el);
-        }
-        _applyResponsiveLayout(el);
-        _bpSnapshots.set(el, _snapshotBp(el));
         _stampSteps(el);
         _stampProgress(el);
         el.setAttribute('data-nds-stepper-stamped', '');
@@ -170,24 +119,6 @@
             if (!stepperId) return;
             control(stepperId, btn.dataset.stepperControl, btn.dataset.stepperValue);
         });
-
-        NDS.onResize(() => {
-            document.querySelectorAll('.nds-stepper[data-nds-stepper-stamped]').forEach(_applyResponsiveLayout);
-        });
-
-        // External BP-class mutations (showcase Simplify re-adding
-        // nds-radial-sm etc.) change the snapshot → trigger reapply.
-        // Our own canonical toggles in _applyResponsiveLayout don't change
-        // the BP snapshot, so they don't loop.
-        NDS.onAttrChange('.nds-stepper', ['class'], els => {
-            els.forEach(el => {
-                const current = _snapshotBp(el);
-                if (current !== _bpSnapshots.get(el)) {
-                    _bpSnapshots.set(el, current);
-                    _applyResponsiveLayout(el);
-                }
-            });
-        });
     }
 
     class NDSStepper {
@@ -203,12 +134,6 @@
             // observer below — flipped true during updateProgress() writes,
             // reset on the next microtask.
             this.isInternalUpdate = false;
-            // Authored fallback — _stamp captured it on el._ndsStepperFallback
-            // BEFORE _applyResponsiveLayout toggled the canonical class (so the
-            // read is the AUTHORED intent, not the breakpoint-resolved paint).
-            // Fall back to the class-state read for elements created dynamically
-            // via NDS.Stepper.create(el) on un-stamped markup.
-            this._fallback = element._ndsStepperFallback || _resolveFallback(element);
 
             // Reconcile state with the first-paint stamping. Idempotent when
             // already stamped correctly; needed when authors mutate data-current
@@ -218,16 +143,6 @@
             this.syncStepStates();
         }
 
-        // Live getter — reads the always-on canonical class (authored intent),
-        // not the breakpoint-resolved paint. CSS @media rules drive the
-        // breakpoint variant in _sass/components/_stepper.scss. For combos
-        // like nds-radial + nds-vertical-lg, isRadial returns true at every
-        // viewport even though desktop paints vertical — consumers either
-        // tolerate that or guard explicitly (see templates/form-template.md).
-        get isRadial() {
-            return this.element.classList.contains('nds-radial');
-        }
-
         isValidStep(stepNumber) {
             return stepNumber >= 1 && stepNumber <= this.totalSteps;
         }
@@ -235,11 +150,7 @@
         destroy() {
             const el = this.element;
             if (el.id) steppers.delete(el.id);
-            // Put the authored layout class back: the next init reads it as the fallback.
-            el.classList.toggle('nds-vertical', this._fallback === 'vertical');
-            el.classList.toggle('nds-radial', this._fallback === 'radial');
             delete el.ndsStepper;
-            delete el._ndsStepperFallback;
             el.removeAttribute('data-nds-stepper-initialized');
             el.removeAttribute('data-nds-stepper-stamped');
             // Shared module-level data-current observer stays — it serves
@@ -247,25 +158,10 @@
             // next call (reinit / SPA navigation).
         }
 
-        // Change the authored fallback at runtime. Used by the showcase
-        // Fallback dropmenu + Simplify button. Updates the cached fallback
-        // (instance field + element JS prop _stamp reads), then re-resolves the
-        // canonical class for the current viewport via _applyResponsiveLayout
-        // (the breakpoint translation owner).
-        setFallback(variant) {
-            if (!['horizontal', 'vertical', 'radial'].includes(variant)) return;
-            this._fallback = variant;
-            this.element._ndsStepperFallback = variant;
-            _applyResponsiveLayout(this.element);
-        }
-
         getCurrentStep() {
             const dataStep = parseInt(this.element.dataset.current);
-            if (dataStep >= 1) {
-                // Radial steppers clamp to totalSteps; linear steppers allow
-                // exceeding for completion state.
-                return this.isRadial ? Math.min(dataStep, this.steps.length) : dataStep;
-            }
+            // One past the last step is the completed flow.
+            if (dataStep >= 1) return Math.min(dataStep, this.steps.length + 1);
             const currentIndex = Array.from(this.steps).findIndex(step => NDS.State.has(step, 'current'));
             return currentIndex >= 0 ? currentIndex + 1 : 1;
         }
@@ -280,7 +176,7 @@
 
         updateProgressDisplay() {
             // Past the last step only: arriving on it leaves it current. next() marks it done.
-            if (!this.isRadial && this.currentStep > this.totalSteps) {
+            if (this.currentStep > this.totalSteps) {
                 NDS.State.add(this.element, 'completed');
             } else {
                 NDS.State.remove(this.element, 'completed');
@@ -291,7 +187,7 @@
         }
 
         syncStepStates() {
-            const allCompleted = !this.isRadial && this.currentStep > this.totalSteps;
+            const allCompleted = this.currentStep > this.totalSteps;
 
             this.steps.forEach((step, index) => {
                 const stepNumber = index + 1;
@@ -318,8 +214,8 @@
         next() {
             const isLastStep = this.currentStep === this.totalSteps;
 
-            // Mark last step as completed (linear steppers only)
-            if (isLastStep && !this.isRadial) {
+            // On the last step, next() completes the flow
+            if (isLastStep) {
                 const lastStep = this.steps[this.totalSteps - 1];
                 if (!NDS.State.has(lastStep, 'completed')) {
                     NDS.State.set(lastStep, 'completed');
@@ -334,8 +230,8 @@
         previous() {
             const isLastStep = this.currentStep === this.totalSteps;
 
-            // Un-complete last step instead of going back (linear steppers only)
-            if (isLastStep && !this.isRadial) {
+            // Un-complete last step instead of going back
+            if (isLastStep) {
                 const lastStep = this.steps[this.totalSteps - 1];
                 if (lastStep && NDS.State.has(lastStep, 'completed')) {
                     NDS.State.set(lastStep, 'current');
@@ -352,7 +248,7 @@
                 detail: {
                     currentStep: this.currentStep,
                     totalSteps: this.totalSteps,
-                    progressPercentage: Math.round((this.currentStep / this.totalSteps) * 100)
+                    progressPercentage: this.progress
                 },
                 bubbles: true
             }));
@@ -361,7 +257,7 @@
         // Simple getters
         get current() { return this.currentStep; }
         get total() { return this.totalSteps; }
-        get progress() { return Math.round((this.currentStep / this.totalSteps) * 100); }
+        get progress() { return Math.min(100, Math.round((this.currentStep / this.totalSteps) * 100)); }
     }
 
     // Walk every .nds-stepper not yet wired to a class instance, construct,
@@ -399,7 +295,7 @@
                 }
 
                 if (newCurrent >= 1 && newCurrent !== stepper.currentStep) {
-                    stepper.currentStep = stepper.isRadial ? Math.min(newCurrent, stepper.totalSteps) : newCurrent;
+                    stepper.currentStep = Math.min(newCurrent, stepper.totalSteps + 1);
                     changed = true;
                 }
 
@@ -416,11 +312,6 @@
         return steppers.get(id);
     }
 
-    function getFallback(id) {
-        const s = get(id);
-        return s ? s._fallback : null;
-    }
-
     function control(id, action, value) {
         const stepper = get(id);
         if (!stepper) return false;
@@ -434,9 +325,8 @@
     }
 
     // Construct a per-element instance, route through the first-paint stamper
-    // so dynamically-injected steppers get responsive translation + data-state
-    // + progress-display in one call. Registers on the element + id-keyed Map
-    // so subsequent get(id)/control(id, …) work.
+    // so dynamically-injected steppers get data-state + progress-display in one call.
+    // Registers on the element + id-keyed Map so subsequent get(id)/control(id, …) work.
     function create(el) {
         _stamp(el);
         const stepper = new NDSStepper(el);
@@ -463,19 +353,9 @@
         reinit:      init,
         create,
         get,
-        getFallback,
         next:        (id) => control(id, 'next'),
         previous:    (id) => control(id, 'previous'),
         goTo:        (id, step) => control(id, 'goto', step),
         control,
-        setFallback: (id, variant) => {
-            const s = get(id);
-            if (s) s.setFallback(variant);
-        },
-
-        // Kept on the public surface for back-compat with any consumer that
-        // reached the shell-private stamping helpers.
-        _applyLayout: _applyResponsiveLayout,
-        _stamp,
     };
 })();

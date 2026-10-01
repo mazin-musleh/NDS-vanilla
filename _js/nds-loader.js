@@ -199,8 +199,7 @@
             // circle fills; radial force-shows its first step, which would
             // otherwise paint EMPTY without JS data-state stamping). Init
             // landing after the reveal swaps placeholders for the stamped
-            // states in place. Showcase's setFallback/getFallback calls are
-            // interaction-time — the delegated bundle is long loaded by then.
+            // states in place. The layout is CSS alone, so it never waits on init.
             name: 'Stepper',
             selector: '.nds-stepper',
             init: () => NDS.Stepper?.init?.(),
