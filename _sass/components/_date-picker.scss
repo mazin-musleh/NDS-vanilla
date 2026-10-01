@@ -17,20 +17,6 @@
 
 .nds-date-picker {
     position: relative;
-    // Arrow styling for date picker input (same as select)
-    .nds-form-control {
-        &>input,
-        &>i {
-            cursor: pointer;
-        }
-        &::after {
-            // Same caret as .nds-select — see %select-caret-after in _mixins.scss
-            @extend %select-caret-after;
-        }
-    }
-    &[data-state~="open"] {
-        --_caret-flip: 180deg;
-    }
 
     // Month/year mode (data-format has no D token) — the day grid is replaced
     // with a month/year picker grid, and the header controls that overlap the

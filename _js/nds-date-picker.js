@@ -16,6 +16,8 @@
  *                                day/month/year mode) · data-clearable (automatic
  *                                in range mode) · .dateRange · .nds-hijri (a prefilled
  *                                value's year overrides it: 1400-1500 reads as Hijri)
+ *   .date-picker-toggle:         the button that opens the calendar (none: a click on the
+ *                                input opens it)
  *   on the .nds-date-input:      data-min-date · data-max-date · data-lang
  *                                data-year-before · data-year-after
  *   written by the picker:       data-picker-mode (container) · data-converted-date (input)
@@ -669,9 +671,8 @@
 
             // Handler to ensure dropdown exists before toggling
             var ensureDropdownAndToggle = function (e) {
-                // Forms' readonly state sets only input.readOnly; the toggle button stays live.
-                var input = self.elements.input;
-                if (input.disabled || input.readOnly) return;
+                // The field's state, not input.readOnly: a readonly input still opens a pick-only field.
+                if (self.elements.input.disabled || NDS.State.has(self.elements.container, 'readonly')) return;
                 if (!self.isDropdownCreated) {
                     // Create dropdown DOM
                     self.removeDropdownDOM();
@@ -715,13 +716,9 @@
 
             var signal = this.instanceAbortController.signal;
 
-            // Bind to input click only (focus will trigger click anyway)
-            this.elements.input.addEventListener('click', ensureDropdownAndToggle, { signal: signal });
-
-            // Bind to toggle button if it exists
-            if (this.elements.toggleBtn) {
-                this.elements.toggleBtn.addEventListener('click', ensureDropdownAndToggle, { signal: signal });
-            }
+            // The button opens the calendar, so a click in the input only places the cursor.
+            // Markup with no button keeps the input as the trigger.
+            (this.elements.toggleBtn || this.elements.input).addEventListener('click', ensureDropdownAndToggle, { signal: signal });
 
             // Fires for hand-typed edits AND picker commits (updateInput
             // dispatches 'change'). Attached on the input (target) so the
