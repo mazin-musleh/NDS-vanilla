@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 01:12 AM"
+last_edit: "02/10/2026 - 02:16 AM"
 ---
 
 <section id="stepperOverview" class="nds-content-section nds-doc-overview">
@@ -38,54 +38,6 @@ Pick another component when:
     <div class="nds-section-body">
 <script type="text/html" id="stepper-steps" data-canon data-variants="stepperVariantsTable" data-harness="stepper">
 <div class="nds-stepper" id="application-stepper" data-current="2">
-  <div class="nds-stepper-step">
-    <div class="nds-stepper-base">
-      <div class="nds-stepper-circle"></div>
-    </div>
-    <div class="nds-stepper-content">
-      <div class="nds-stepper-text">
-        <span class="nds-stepper-title">Personal Information</span>
-        <span class="nds-stepper-description">Identity details and contact information</span>
-      </div>
-    </div>
-  </div>
-  <div class="nds-stepper-step">
-    <div class="nds-stepper-base">
-      <div class="nds-stepper-circle"></div>
-    </div>
-    <div class="nds-stepper-content">
-      <div class="nds-stepper-text">
-        <span class="nds-stepper-title">Document Upload</span>
-        <span class="nds-stepper-description">Upload the required documents</span>
-      </div>
-    </div>
-  </div>
-  <div class="nds-stepper-step">
-    <div class="nds-stepper-base">
-      <div class="nds-stepper-circle"></div>
-    </div>
-    <div class="nds-stepper-content">
-      <div class="nds-stepper-text">
-        <span class="nds-stepper-title">Review</span>
-        <span class="nds-stepper-description">Check the details before you submit</span>
-      </div>
-    </div>
-  </div>
-  <div class="nds-stepper-step">
-    <div class="nds-stepper-base">
-      <div class="nds-stepper-circle"></div>
-    </div>
-    <div class="nds-stepper-content">
-      <div class="nds-stepper-text">
-        <span class="nds-stepper-title">Submission</span>
-        <span class="nds-stepper-description">Confirmation and next steps</span>
-      </div>
-    </div>
-  </div>
-</div>
-</script>
-<script type="text/html" id="stepper-radial" data-canon>
-<div class="nds-stepper nds-radial" id="application-stepper" data-current="2">
   <div class="nds-progress-circle">
     <svg width="64" height="64" viewBox="0 0 24 24">
       <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
@@ -168,33 +120,68 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Every class goes on `.nds-stepper`. A Divider choice has one row for each step: write a divider at the start of every step's content. A size class gives a different size on the Radial structure, as its Use cell says. Card view has one row for each layout it works in.
+Every class goes on `.nds-stepper`. The ring and the `.nds-stepper-next` lines show only in the radial layout: leave them out of a stepper that is never radial. Phone, Tablet and Desktop add a breakpoint class, which wins over the Layout class on that screen size. A choice that needs a layout has one row for each class that can give that layout. A Divider choice has one row for each step: write a divider at the start of every step's content. A size class gives a different size in the radial layout, as its Use cell says.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Steps (default) | — | — | Every step in a row or a column, each with a numbered circle. For a form or a service request |
-| Structure | Radial | canon `#stepper-radial` | — | The current step only, beside a progress ring. For a narrow space, such as a phone or a side column |
-| Layout | Horizontal (default) | — | `.nds-stepper:not(.nds-radial)` | The steps in a row, start to end. Every title must fit its column |
-| Layout | Vertical | `.nds-vertical` | `.nds-stepper:not(.nds-radial):not(.nds-center)` | The steps in a column. For a step with long content or buttons, or a narrow column |
+| Layout | Horizontal (default) | — | — | The steps in a row, start to end. Every title must fit its column |
+| Layout | Vertical | `.nds-vertical` | `.nds-stepper` | The steps in a column. For a step with long content or buttons, or a narrow column |
+| Layout | Radial | `.nds-radial` | `.nds-stepper` | The current step only, beside the ring. For a narrow space, such as a side column |
+| Phone | Same (default) | — | — | The Layout choice on phones: narrower than 600px |
+| Phone | Horizontal | `.nds-horizontal-sm` | `.nds-stepper.nds-vertical` | A row on phones: narrower than 600px |
+| Phone | Horizontal | `.nds-horizontal-sm` | `.nds-stepper.nds-radial` | A row on phones: narrower than 600px |
+| Phone | Vertical | `.nds-vertical-sm` | `.nds-stepper:not(.nds-vertical)` | A column on phones: narrower than 600px |
+| Phone | Radial | `.nds-radial-sm` | `.nds-stepper:not(.nds-radial)` | The ring on phones: narrower than 600px |
+| Tablet | Same (default) | — | — | The Layout choice on tablets: 600px to 959px |
+| Tablet | Horizontal | `.nds-horizontal-md` | `.nds-stepper.nds-vertical` | A row on tablets: 600px to 959px |
+| Tablet | Horizontal | `.nds-horizontal-md` | `.nds-stepper.nds-radial` | A row on tablets: 600px to 959px |
+| Tablet | Vertical | `.nds-vertical-md` | `.nds-stepper:not(.nds-vertical)` | A column on tablets: 600px to 959px |
+| Tablet | Radial | `.nds-radial-md` | `.nds-stepper:not(.nds-radial)` | The ring on tablets: 600px to 959px |
+| Desktop | Same (default) | — | — | The Layout choice on desktops: 960px and wider |
+| Desktop | Horizontal | `.nds-horizontal-lg` | `.nds-stepper.nds-vertical` | A row on desktops: 960px and wider |
+| Desktop | Horizontal | `.nds-horizontal-lg` | `.nds-stepper.nds-radial` | A row on desktops: 960px and wider |
+| Desktop | Vertical | `.nds-vertical-lg` | `.nds-stepper:not(.nds-vertical)` | A column on desktops: 960px and wider |
+| Desktop | Radial | `.nds-radial-lg` | `.nds-stepper:not(.nds-radial)` | The ring on desktops: 960px and wider |
 | Size | XS | `.nds-xs` | `.nds-stepper.nds-radial` | A 40px ring with smaller text. Radial only |
+| Size | XS | `.nds-xs` | `.nds-stepper.nds-radial-sm` | A 40px ring with smaller text. Radial only |
+| Size | XS | `.nds-xs` | `.nds-stepper.nds-radial-md` | A 40px ring with smaller text. Radial only |
+| Size | XS | `.nds-xs` | `.nds-stepper.nds-radial-lg` | A 40px ring with smaller text. Radial only |
 | Size | SM | `.nds-sm` | `.nds-stepper.nds-radial` | A 48px ring with smaller text. Radial only |
-| Size | MD (default) | — | — | 32px circles, or a 64px ring on Radial |
+| Size | SM | `.nds-sm` | `.nds-stepper.nds-radial-sm` | A 48px ring with smaller text. Radial only |
+| Size | SM | `.nds-sm` | `.nds-stepper.nds-radial-md` | A 48px ring with smaller text. Radial only |
+| Size | SM | `.nds-sm` | `.nds-stepper.nds-radial-lg` | A 48px ring with smaller text. Radial only |
+| Size | MD (default) | — | — | 32px circles, or a 64px ring in the radial layout |
 | Size | LG | `.nds-lg` | `.nds-stepper:not(.nds-dot)` | 40px circles, or an 80px ring |
 | Size | XL | `.nds-xl` | `.nds-stepper:not(.nds-dot)` | 48px circles, or a 120px ring with a larger title |
-| Desktop | Radial (default) | — | `.nds-stepper.nds-radial` | Radial on every screen size |
-| Desktop | Horizontal | `.nds-horizontal-lg` | `.nds-stepper.nds-radial` | Radial on phones and tablets, horizontal on a desktop. See Responsive Layout under Behavior |
-| Desktop | Vertical | `.nds-vertical-lg` | `.nds-stepper.nds-radial` | Radial on phones and tablets, vertical on a desktop |
-| Dot | Dot | `.nds-dot` | `.nds-stepper:not(.nds-radial):not(.nds-lg):not(.nds-xl)` | 16px dots with no numbers. For a timeline, or a short flow where the order is plain. A dot has one size |
+| Dot | Dot | `.nds-dot` | `.nds-stepper:not(.nds-lg):not(.nds-xl)` | 16px dots with no numbers. For a timeline, or a short flow where the order is plain. A dot has one size, and the radial layout shows no dots |
 | Divider | Divider (hint: A divider label in each step) | — | `.nds-stepper.nds-vertical` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. With Dot and Reverse it makes a timeline. See Divider Labels under Behavior |
-| Divider | Divider (hint: A divider label in each step) | canon `#stepper-label-1` | `.nds-stepper-step:nth-child(1) > .nds-stepper-content` (start) | The label of step 1 |
-| Divider | Divider (hint: A divider label in each step) | canon `#stepper-label-2` | `.nds-stepper-step:nth-child(2) > .nds-stepper-content` (start) | The label of step 2 |
-| Divider | Divider (hint: A divider label in each step) | canon `#stepper-label-3` | `.nds-stepper-step:nth-child(3) > .nds-stepper-content` (start) | The label of step 3 |
-| Divider | Divider (hint: A divider label in each step) | canon `#stepper-label-4` | `.nds-stepper-step:nth-child(4) > .nds-stepper-content` (start) | The label of step 4 |
-| Center | Center | `.nds-center` | `.nds-stepper:not(.nds-vertical):not(.nds-radial)` | Centers each title under its circle |
-| Reverse | Reverse | `.nds-reverse` | `.nds-stepper.nds-vertical` | The last step at the top. Write the steps oldest first |
-| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-vertical` | Each step's content in a card. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
-| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-radial` | The whole stepper in one card |
-| Neutral | Neutral | `.nds-neutral` | `.nds-stepper.nds-radial` | A gray ring in place of the primary color |
+| Divider | Divider (hint: A divider label in each step) | — | `.nds-stepper.nds-vertical-sm` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. With Dot and Reverse it makes a timeline. See Divider Labels under Behavior |
+| Divider | Divider (hint: A divider label in each step) | — | `.nds-stepper.nds-vertical-md` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. With Dot and Reverse it makes a timeline. See Divider Labels under Behavior |
+| Divider | Divider (hint: A divider label in each step) | — | `.nds-stepper.nds-vertical-lg` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. With Dot and Reverse it makes a timeline. See Divider Labels under Behavior |
+| Divider | Divider (hint: A divider label in each step) | canon `#stepper-label-1` | `.nds-stepper-step:nth-child(2) > .nds-stepper-content` (start) | The label of step 1 |
+| Divider | Divider (hint: A divider label in each step) | canon `#stepper-label-2` | `.nds-stepper-step:nth-child(3) > .nds-stepper-content` (start) | The label of step 2 |
+| Divider | Divider (hint: A divider label in each step) | canon `#stepper-label-3` | `.nds-stepper-step:nth-child(4) > .nds-stepper-content` (start) | The label of step 3 |
+| Divider | Divider (hint: A divider label in each step) | canon `#stepper-label-4` | `.nds-stepper-step:nth-child(5) > .nds-stepper-content` (start) | The label of step 4 |
+| Center | Center | `.nds-center` | `.nds-stepper:not(.nds-vertical):not(.nds-radial)` | Centers each title under its circle. Horizontal only |
+| Center | Center | `.nds-center` | `.nds-stepper.nds-horizontal-sm` | Centers each title under its circle. Horizontal only |
+| Center | Center | `.nds-center` | `.nds-stepper.nds-horizontal-md` | Centers each title under its circle. Horizontal only |
+| Center | Center | `.nds-center` | `.nds-stepper.nds-horizontal-lg` | Centers each title under its circle. Horizontal only |
+| Reverse | Reverse | `.nds-reverse` | `.nds-stepper.nds-vertical` | The last step at the top. Write the steps oldest first. Vertical only |
+| Reverse | Reverse | `.nds-reverse` | `.nds-stepper.nds-vertical-sm` | The last step at the top. Write the steps oldest first. Vertical only |
+| Reverse | Reverse | `.nds-reverse` | `.nds-stepper.nds-vertical-md` | The last step at the top. Write the steps oldest first. Vertical only |
+| Reverse | Reverse | `.nds-reverse` | `.nds-stepper.nds-vertical-lg` | The last step at the top. Write the steps oldest first. Vertical only |
+| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-vertical` | Each step's content in a card in the vertical layout, and the whole stepper in one card in the radial layout. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
+| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-vertical-sm` | Each step's content in a card in the vertical layout, and the whole stepper in one card in the radial layout. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
+| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-vertical-md` | Each step's content in a card in the vertical layout, and the whole stepper in one card in the radial layout. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
+| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-vertical-lg` | Each step's content in a card in the vertical layout, and the whole stepper in one card in the radial layout. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
+| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-radial` | Each step's content in a card in the vertical layout, and the whole stepper in one card in the radial layout. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
+| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-radial-sm` | Each step's content in a card in the vertical layout, and the whole stepper in one card in the radial layout. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
+| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-radial-md` | Each step's content in a card in the vertical layout, and the whole stepper in one card in the radial layout. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
+| Card view | Card view | `.nds-cardView` | `.nds-stepper.nds-radial-lg` | Each step's content in a card in the vertical layout, and the whole stepper in one card in the radial layout. With On color, the card is the translucent white of a card on a colored background. Do not put a [Card](../components/cards) in the step as well |
+| Neutral | Neutral | `.nds-neutral` | `.nds-stepper.nds-radial` | A gray ring in place of the primary color. Radial only |
+| Neutral | Neutral | `.nds-neutral` | `.nds-stepper.nds-radial-sm` | A gray ring in place of the primary color. Radial only |
+| Neutral | Neutral | `.nds-neutral` | `.nds-stepper.nds-radial-md` | A gray ring in place of the primary color. Radial only |
+| Neutral | Neutral | `.nds-neutral` | `.nds-stepper.nds-radial-lg` | A gray ring in place of the primary color. Radial only |
 | On color | On color | `.nds-oncolor` | `.nds-stepper` | Light circles, lines and text, for a dark or brand background |
 | Loading | Loading (hint: Skeleton placeholders) | `.nds-loading` | `.nds-stepper` | Every step shows as a skeleton while its data loads. Remove the class when the data is in |
 {: #stepperVariantsTable .nds-table .nds-responsive}
@@ -233,7 +220,7 @@ The radial layout shows the current step only, beside a ring. The script fills t
 ### Responsive Layout
 {: .nds-block-title}
 
-A breakpoint class picks the layout on one screen size: `nds-radial-sm` on a phone, `nds-vertical-md` on a tablet, `nds-horizontal-lg` on a desktop. Where no breakpoint class matches, the stepper uses its layout class: `nds-vertical`, `nds-radial`, or none for horizontal. `nds-radial nds-vertical-lg` is radial on phones and tablets, and vertical on a desktop. Pick Desktop on the Radial structure, then make the window narrower to see the change. A stepper that is radial on any size needs the ring markup.
+A breakpoint class picks the layout on one screen size: `nds-radial-sm` on a phone, `nds-vertical-md` on a tablet, `nds-horizontal-lg` on a desktop. Where no breakpoint class matches, the stepper uses its layout class: `nds-vertical`, `nds-radial`, or none for horizontal. `nds-radial nds-vertical-lg` is radial on phones and tablets, and vertical on a desktop. `nds-vertical nds-horizontal-lg` is a column on phones and tablets, and a row on a desktop. CSS picks the layout, so it changes as soon as the window crosses a breakpoint. The Phone and Tablet buttons on the preview show it at that width. A stepper that is radial on any size needs the ring markup.
 
 ### Divider Labels
 {: .nds-block-title}
