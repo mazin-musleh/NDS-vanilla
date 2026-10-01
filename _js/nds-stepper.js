@@ -276,8 +276,8 @@
         }
 
         updateProgressDisplay() {
-            // Only mark as completed if not radial
-            if (!this.isRadial && this.currentStep >= this.totalSteps) {
+            // Past the last step only: arriving on it leaves it current. next() marks it done.
+            if (!this.isRadial && this.currentStep > this.totalSteps) {
                 NDS.State.add(this.element, 'completed');
             } else {
                 NDS.State.remove(this.element, 'completed');
