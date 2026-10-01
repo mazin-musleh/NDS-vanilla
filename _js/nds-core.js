@@ -729,6 +729,8 @@
     const MIRROR_SEL = Object.keys(MIRRORS).map(t => `[data-state~="${t}"]`).join(',');
     const scanTokens = () => document.querySelectorAll(MIRROR_SEL).forEach(mirrorTokens);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scanTokens, { once: true }); else scanTokens();
+    // Markup added later with the token already written fires no attribute change.
+    NDS.onDOMAdd(MIRROR_SEL, (els) => els.forEach(mirrorTokens));
 
     // ── Status Management (data-status) ─────────────────────────────
     // Single-value management for data-status attribute
