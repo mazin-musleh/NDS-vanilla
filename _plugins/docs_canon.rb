@@ -83,9 +83,9 @@ module DocsCanon
   end
 
   # ponytail: `tag.a.b[x]:not(.c):not([y])` needs both classes and x, and neither c nor y, on one
-  # element of that tag; an attribute counts by name only, a descendant part as present.
+  # element of that tag; x counts by name only, y by its `="v"` or `~="v"` too, a descendant part as present.
   # `:has(> tag)` needs that tag anywhere in the markup, `:has(.cls)` an element with that class.
-  # Upgrade to a real parser if a table needs values or descendants.
+  # Upgrade to a real parser if a table needs x's value or descendants.
   def self.matches?(src, sel, js = nil)
     return true if sel == '—'
     # A `create()` row changes the JS form; `create({ k: v })` only one with that option,
@@ -98,7 +98,7 @@ module DocsCanon
 
     tag = sel[/\A([a-z][\w-]*)\./, 1]
     excluded = sel.scan(/:not\(\.([\w-]+)\)/).flatten
-    no_attrs = sel.scan(/:not\(\[([\w-]+)/).flatten
+    no_attrs = sel.scan(/:not\(\[([\w-]+)(?:(~?=)"([^"]*)")?/)
     has_tags = sel.scan(/:has\(>?\s*([a-z][\w-]*)\)/).flatten
     return false unless has_tags.all? { |t| src.include?("<#{t}") }
     has_classes = sel.scan(/:has\(>?\s*\.([\w-]+)\)/).flatten
@@ -110,9 +110,10 @@ module DocsCanon
 
     src.scan(/<([a-z][\w-]*)([^>]*)>/).any? do |t, a|
       cls = (a[/\sclass="([^"]*)"/, 1] || '').split
-      names = a.gsub(/"[^"]*"/, '').scan(/\s([\w-]+)/).flatten
+      vals = a.scan(/\s([\w-]+)(?:="([^"]*)")?/).to_h
+      no = no_attrs.any? { |n, op, v| vals.key?(n) && (op.nil? || (op == '=' ? vals[n] == v : vals[n].to_s.split.include?(v))) }
       (tag.nil? || t == tag) && (classes - cls).empty? && (excluded & cls).empty? &&
-        (attrs - names).empty? && (no_attrs & names).empty?
+        (attrs - vals.keys).empty? && !no
     end
   end
 
