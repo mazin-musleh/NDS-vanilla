@@ -12,9 +12,10 @@
  * Events:
  *   (none — a pick writes the input and dispatches a native `change`; listen on the input)
  * Hooks:
- *   on the .nds-form-container:  data-format (YYYY YY MM M DD D — also picks the calendar
- *                                and the day/month/year mode) · data-clearable (automatic
- *                                in range mode)
+ *   on the .nds-form-container:  data-format (YYYY YY MM M DD D — also picks the
+ *                                day/month/year mode) · data-clearable (automatic
+ *                                in range mode) · .dateRange · .nds-hijri (a prefilled
+ *                                value's year overrides it: 1400-1500 reads as Hijri)
  *   on the .nds-date-input:      data-min-date · data-max-date · data-lang
  *                                data-year-before · data-year-after
  *   written by the picker:       data-picker-mode (container) · data-converted-date (input)
@@ -668,6 +669,9 @@
 
             // Handler to ensure dropdown exists before toggling
             var ensureDropdownAndToggle = function (e) {
+                // Forms' readonly state sets only input.readOnly; the toggle button stays live.
+                var input = self.elements.input;
+                if (input.disabled || input.readOnly) return;
                 if (!self.isDropdownCreated) {
                     // Create dropdown DOM
                     self.removeDropdownDOM();
