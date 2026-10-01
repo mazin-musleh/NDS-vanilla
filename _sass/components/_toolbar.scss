@@ -106,7 +106,6 @@
 // .nds-results-count is the original name and stays a permanent alias.
 :is(.nds-bar-text, .nds-results-count) {
     display: block;   // span-rooted; block so standalone counters sit on their own line
-    align-self: end;  // sits on the bar's bottom edge next to taller controls; inert outside flex/grid
     color: var(--text-primary-paragraph);
 
     b {
