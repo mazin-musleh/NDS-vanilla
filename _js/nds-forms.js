@@ -48,6 +48,7 @@
  *     never constraint-validated, so required on it does nothing.
  *   - A required .nds-file-upload counts its file rows (rows the checks rejected excluded):
  *     the upload script empties the file input after each pick, so it never carries required.
+ *     A row still uploading blocks the submit on any upload, required or not.
  *   - A dropmenu picker (data-select-name) with data-required is checked the same way,
  *     through its hidden carrier; the error shows on the field that holds it.
  *   - An autocomplete with data-strict is checked at submit too: typed text must match a
@@ -564,13 +565,19 @@
 
         // Upload: the script empties the file input after each pick, so required
         // counts the staged rows instead. A row the checks rejected does not count.
+        // A row still uploading blocks every upload field, required or not: the
+        // submit would go without that file.
         validateUpload: function(upElement, options) {
             options = options || { showMessage: true };
             var up = upElement.closest('.nds-file-upload') || upElement;
+            var hasRequired = up.hasAttribute('data-required') || up.classList.contains('nds-required');
             var count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
-            var isValid = count > 0;
-            var message = isValid ? '' : (NDS.isArabic ? 'يرجى إرفاق ملف' : 'Please add a file');
-            return this._finishGroupValidation(up, options, isValid, message, { count: count });
+            var pending = !!up.querySelector('.nds-file-list .nds-file-item:is([data-state~="uploading"], [data-state~="processing"])');
+            var isValid = !pending && (!hasRequired || count > 0);
+            var message = isValid ? '' : pending
+                ? (NDS.isArabic ? 'يرجى الانتظار حتى يكتمل الرفع' : 'Please wait for the upload to finish')
+                : (NDS.isArabic ? 'يرجى إرفاق ملف' : 'Please add a file');
+            return this._finishGroupValidation(up, options, isValid, message, { count: count, pending: pending });
         },
 
         // Custom select: the visible .nds-select-input is readonly — barred
@@ -743,8 +750,9 @@
                 }
             });
 
-            // Uploads: same pattern. Anchor is the Browse button (the file input is invisible).
-            form.querySelectorAll('.nds-file-upload[data-required], .nds-file-upload.nds-required').forEach(function(up) {
+            // Uploads: same pattern, on every upload (a pending row blocks any of them).
+            // Anchor is the Browse button (the file input is invisible).
+            form.querySelectorAll('.nds-file-upload').forEach(function(up) {
                 if (!isFieldVisible(up, form)) return;
                 var result = Validator.validateUpload(up, { showMessage: options.showMessages });
                 if (!result.valid) {
@@ -1146,8 +1154,11 @@
             var group = e.target.closest && e.target.closest('.nds-form-group');
             if (group && NDS.Status.get(group) !== '') StatusManager.clear(group);
         });
-        doc.addEventListener('nds:upload:selected', function(e) {
-            if (NDS.Status.get(e.target) !== '') StatusManager.clear(e.target);
+        // A pick answers "add a file"; a finished upload answers "wait".
+        ['nds:upload:selected', 'nds:upload:success', 'nds:upload:error'].forEach(function(name) {
+            doc.addEventListener(name, function(e) {
+                if (NDS.Status.get(e.target) !== '') StatusManager.clear(e.target);
+            });
         });
     }
 
