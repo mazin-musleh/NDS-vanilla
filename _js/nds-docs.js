@@ -45,8 +45,10 @@
     // innerHTML writes bare attributes as attr="" — keep them bare, keep text verbatim.
     function serialize(node) {
         var out = '';
+        // A textarea, script or style holds its text raw: an escaped <h2> there shows as &lt;h2>.
+        var raw = /^(TEXTAREA|SCRIPT|STYLE)$/.test(node.nodeName);
         node.childNodes.forEach(function (c) {
-            if (c.nodeType === 3) { out += c.textContent.replace(/&/g, '&amp;').replace(/</g, '&lt;'); return; }
+            if (c.nodeType === 3) { out += raw ? c.textContent : c.textContent.replace(/&/g, '&amp;').replace(/</g, '&lt;'); return; }
             if (c.nodeType === 8) { out += '<!--' + c.data + '-->'; return; }
             if (c.nodeType !== 1) return;
             var tag = c.tagName.toLowerCase();

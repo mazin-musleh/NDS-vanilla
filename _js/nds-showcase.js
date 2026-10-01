@@ -1628,12 +1628,25 @@
                     const shouldSucceed = Math.random() > 0.1;
                     if (shouldSucceed) {
                         api.setFileStatus(fileId, 'complete');
+                        succeed(api, fileId);
                     } else {
                         api.setFileStatus(fileId, 'error', { error: 'Demo upload failed' });
                     }
                 }, 2000); // 2 second processing delay
             }
         }, interval);
+    }
+
+    // A real upload ends in nds:upload:success with the server's reply. The fake
+    // server stores nothing, so an image replies with a sample image's URL (doc
+    // pages sit one folder deep): the editor's image popover then gets a src.
+    function succeed(api, fileId) {
+        const fileData = api.getFile(fileId);
+        if (!fileData) return;
+        const reply = fileData.file.type.startsWith('image/') ? { url: '../assets/img/riyadhcenter3s.webp' } : {};
+        api.container.dispatchEvent(new CustomEvent('nds:upload:success', {
+            detail: { fileData, response: JSON.stringify(reply) }, bubbles: true
+        }));
     }
 
     // Simulated server search for autocomplete demo

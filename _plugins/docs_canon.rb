@@ -58,7 +58,8 @@ module DocsCanon
     lines.map { |l| l[n..] || '' }.join("\n")
   end
 
-  def self.text(cell) = CGI.unescapeHTML(cell.gsub(/<[^>]+>/, '')).strip
+  # kramdown keeps the backslash of a cell's `\|` inside a code span
+  def self.text(cell) = CGI.unescapeHTML(cell.gsub(/<[^>]+>/, '')).gsub('\|', '|').strip
 
   # Rows sharing Group + Option are one choice with several ops.
   def self.rows(html, id)

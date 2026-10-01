@@ -33,7 +33,8 @@ def table(src, tid):
         return None
     rows, i = [], end - 1
     while i >= 0 and lines[i].startswith('|'):
-        rows.insert(0, [c.strip() for c in lines[i].strip().strip('|').split('|')])
+        # \| is a literal pipe inside a cell (kramdown), never a cell edge
+        rows.insert(0, [c.strip().replace('\\|', '|') for c in re.split(r'(?<!\\)\|', lines[i].strip().strip('|'))])
         i -= 1
     return rows[2:]
 
