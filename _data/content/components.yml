@@ -944,8 +944,8 @@
   scss: _sass/components/_user-feedback.scss
 
 - title: "Voice Input"
-  description: "Voice-to-text button that dictates into a text field, with Arabic/English auto-detection"
-  use_when: "A microphone button that dictates speech into a text field, detecting Arabic or English automatically."
+  description: "A microphone button that types what the user says into a text field, in the page language"
+  use_when: "A microphone button that types speech into a text field. Recognition uses the page language."
   icon: '<i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>'
   category: "Forms"
   tags: ["JS", "API"]
