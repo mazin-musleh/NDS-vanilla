@@ -369,8 +369,9 @@
                 '0': () => this.resetTransform(),
                 'h': () => this.toggleUI(),
                 'H': () => this.toggleUI(),
-                'ArrowLeft': () => this.showPrev(),
-                'ArrowRight': () => this.showNext()
+                // Arrows follow the screen: prev sits at inline-start, which is right in RTL.
+                'ArrowLeft': () => (NDS.isRTL ? this.showNext() : this.showPrev()),
+                'ArrowRight': () => (NDS.isRTL ? this.showPrev() : this.showNext())
             };
 
             const action = actions[e.key];
