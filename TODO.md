@@ -29,6 +29,8 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 
 - **`showZoom` breaks the class naming — v2.0.0 candidate.** It is the only camelCase class without `nds-` (`_sass/components/_ipv.scss`, on `.nds-ipv-image-card`). Fix: rename to `nds-show-zoom`, keep `showZoom` as an alias until the major removes it. Migration: `showZoom` → `nds-show-zoom`. Decide build or drop with the owner. Found in the IPV doc rewrite (2026-10-01).
 
+- **Stepper modifiers jump at init on a responsive stepper.** Before init, `nds-reverse`, `nds-cardView` and `nds-center` key on the authored `nds-vertical` / `nds-radial`, not the breakpoint-resolved layout (`_sass/components/_stepper.scss`). `nds-vertical nds-reverse nds-horizontal-lg` paints a reversed column on a desktop, then a row; `nds-vertical-sm nds-reverse` paints unreversed on a phone, then flips. Fix: resolve those rules per breakpoint, as the layout mixins do. Found in the stepper responsive review (2026-10-02).
+
 - **Swiper bullet label names a slide, but a bullet is a page.** `_js/nds-swiper.js` `setupPagination` labels bullet `i` "Go to slide i+1"; with 3 per view, bullet 2 opens slide 4. Fix: "Go to page N" (or name the slide range). English-only too, so it lands with the localization sweep. Found in the swiper doc rewrite (2026-09-29).
 
 - **Docs rewrite for people and AI agents — IN PROGRESS; plan in `plans/docs-rewrite.md`, page tracker below.** Every doc page gets rewritten one by one, as a long task, to read better for people and for agents (fewer tokens, more accurate copies). Plan it first: page structure, where the canon lives, how agents find it, and which NDS IQ sentences change with it, then one eval gate for the whole change.

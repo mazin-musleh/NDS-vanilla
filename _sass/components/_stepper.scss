@@ -585,6 +585,11 @@
         display: none;
     }
 
+    // A flow finished in a linear layout has no current step, so show the last one.
+    &[data-state~="completed"] .nds-stepper-step:last-child {
+        display: flex;
+    }
+
     // Hide regular stepper base
     .nds-stepper-base {
         display: none;
@@ -943,7 +948,7 @@
 // breakpoint-gated radial resolution arm carries higher specificity (its
 // :is() selector) and re-hides non-current steps pre-init — it would
 // out-rank this otherwise. Inert post-init via :not([init]).
-.nds-stepper.nds-radial:not([data-nds-stepper-initialized]) .nds-stepper-step:not(.nds-stepper-step ~ .nds-stepper-step) {
+.nds-stepper:is(.nds-radial, .nds-radial-sm, .nds-radial-md, .nds-radial-lg):not([data-nds-stepper-initialized]) .nds-stepper-step:not(.nds-stepper-step ~ .nds-stepper-step) {
     display: flex !important;
 }
 

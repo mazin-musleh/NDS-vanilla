@@ -235,6 +235,9 @@
         destroy() {
             const el = this.element;
             if (el.id) steppers.delete(el.id);
+            // Put the authored layout class back: the next init reads it as the fallback.
+            el.classList.toggle('nds-vertical', this._fallback === 'vertical');
+            el.classList.toggle('nds-radial', this._fallback === 'radial');
             delete el.ndsStepper;
             delete el._ndsStepperFallback;
             el.removeAttribute('data-nds-stepper-initialized');
