@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 09:35 AM"
+last_edit: "01/10/2026 - 10:20 AM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -192,7 +192,7 @@ The picker checks the field at each `change`, typed text included. A date that d
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>
-            <span class="nds-label">Smart Positioning</span>
+            <span class="nds-label">Calendar Position</span>
           </span>
           <p class="nds-item-desc">The calendar opens below the field, or above it when the space below is too small. It lines up with the field and stays inside the screen. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
         </div>

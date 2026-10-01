@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/09/2026 - 12:36 PM"
+last_edit: "01/10/2026 - 10:19 AM"
 ---
 
 <section id="tooltipOverview" class="nds-content-section nds-doc-overview">
@@ -149,7 +149,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-location-star-01"></i>
-            <span class="nds-label">Smart Positioning</span>
+            <span class="nds-label">Balloon Position</span>
           </span>
           <p class="nds-item-desc">While open, the balloon moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so no container cuts it off. It opens below the trigger, and above it when there is more room there. It never runs past the side of the screen, and the arrow points at the trigger.</p>
         </div>
