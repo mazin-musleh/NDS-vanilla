@@ -197,8 +197,8 @@
         // The bar is fit-content, so space-between would center it between a
         // leading icon and the chevron — auto margin keeps it at the start.
         .nds-accordion-title {
-            @include skeleton-bar;
             margin-inline-end: auto;
+            @include skeleton-bar;
         }
 
         // Leading icons skeleton too — mask:none so
