@@ -38,7 +38,7 @@
  *   - Options passed to create() WIN over the data-* attributes.
  *   - data-allowed-types is mirrored onto the file input's `accept` — never hand-author it.
  *   - Status flow is ready → uploading → processing → complete, or error. retry() only
- *     accepts a file sitting at 'error'.
+ *     accepts a file at 'error' after a failed upload, never one the checks rejected.
  *   - There is no stall detection: a dead connection leaves a file at 'uploading' forever,
  *     and retry() refuses it. Time out long uploads yourself and call abort(id).
  *   - With no upload URL the component only stages files (it warns once).
@@ -264,6 +264,7 @@
                 status: errors.length ? 'error' : (options.status || 'ready'),
                 progress: options.progress || 0,
                 error: errors.length ? errors.join(', ') : (options.error || null),
+                _rejected: errors.length > 0,
                 _xhr: null
             };
 
@@ -339,7 +340,8 @@
 
         retry(fileId) {
             const fileData = this._files.find(f => f.id === fileId);
-            if (!fileData || fileData.status !== 'error') return false;
+            // A file the checks rejected stays rejected: re-sending it would skip them.
+            if (!fileData || fileData.status !== 'error' || fileData._rejected) return false;
             fileData.status = 'ready';
             fileData.progress = 0;
             fileData.error = null;
@@ -491,6 +493,7 @@
                     status: errors.length === 0 ? 'ready' : 'error',
                     progress: 0,
                     error: errors.length > 0 ? errors.join(', ') : null,
+                    _rejected: errors.length > 0,
                     _xhr: null
                 };
                 if (errors.length === 0) {
@@ -510,6 +513,7 @@
                     status: 'error',
                     progress: 0,
                     error: msg('maxFilesReached') + ' (' + config.maxFiles + ')',
+                    _rejected: true,
                     _xhr: null
                 });
             });
@@ -815,7 +819,7 @@
 
         _initDragAndDrop() {
             if (!this._dropZone || !this._uploadZone) return;
-            if (!NDS.State.has(this.container, 'dropbox')) return;
+            if (!this._dropActive()) return;
             if (this._dragListenersActive) return;
 
             // Per-cycle controller — the dropbox state can toggle these off and
@@ -838,8 +842,13 @@
             this._dragListenersActive = false;
         }
 
+        // Disabled from markup or a bare data-state write must close the drop zone too, not just setDisabled().
+        _dropActive() {
+            return NDS.State.has(this.container, 'dropbox') && !NDS.State.has(this.container, 'disabled');
+        }
+
         _setupMutationObserver() {
-            let lastDropboxState = NDS.State.has(this.container, 'dropbox');
+            let lastDropboxState = this._dropActive();
 
             // Store the unsubscribe handle so destroy() can release the
             // pooled subscriber. Without this, every NDSUpload instance
@@ -848,7 +857,7 @@
             // that compounds with each created/destroyed upload.
             this._offAttrChange = NDS.onAttrChange('.nds-file-upload', ['data-state'], (hits) => {
                 if (!hits.includes(this.container)) return;
-                const currentDropboxState = NDS.State.has(this.container, 'dropbox');
+                const currentDropboxState = this._dropActive();
                 if (currentDropboxState !== lastDropboxState) {
                     this._removeDragAndDrop();
                     this._initDragAndDrop();
