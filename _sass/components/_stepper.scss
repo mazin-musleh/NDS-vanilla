@@ -627,7 +627,6 @@
     }
 
     .nds-stepper-content {
-        --content-gap: 0;
         width: 100%;
 
         --_stepper-title-FS: var(--stepper-title-FS, var(--_stepper-title-FS-base));
@@ -892,9 +891,9 @@
         }
     }
 
-    // The radial look-ahead line sets its colour deeper than the bar's
-    // `> * { color: transparent }`, so it reads through the fill.
-    .nds-stepper-next {
+    // The text parts set their colour deeper than the bar's `> * { color: transparent }`
+    // (on-color current and completed steps, radial on-color), so they read through the fill.
+    :is(.nds-stepper-title, .nds-stepper-description, .nds-stepper-next) {
         color: transparent !important;
     }
 
