@@ -3,13 +3,14 @@
  * Methods:
  *   NDS.Upload.init() / .reinit()                scan + initialize .nds-file-upload
  *   NDS.Upload.create(el, options)               instance one uploader; options override the
- *                                                data-* config. Selector string accepted
+ *                                                data-* config, and merge into a started one.
+ *                                                Selector string accepted
  *   NDS.Upload.getInstance(el)                   the existing instance, or null
  *   NDS.Upload.whenReady(el, cb)                 run cb with the instance, now or on ready
  *   instance.addFile(file, options)              stage a File — returns its id, null when full.
  *                                                options {validate, status, progress, error}
  *   instance.removeFile(id) / .clearAllFiles()   drop one / all (aborts any upload in flight)
- *   instance.getFile(id) / .getAllFiles()        {file, id, status, progress, error}
+ *   instance.getFile(id) / .getAllFiles()        {file, id, status, progress, error, response}
  *   instance.getFilesByStatus(status)            same shape, filtered
  *   instance.startUpload(id)                     upload one, or every 'ready' file with no id
  *   instance.retry(id) / .abort(id)              re-send an errored file / cancel a live one
@@ -29,9 +30,11 @@
  *   nds:upload:progress          detail {fileData, progress}
  *   nds:upload:success           detail {fileData, response}
  *   nds:upload:error             detail {fileData, error, status, response}
- *   nds:upload:removed           detail {fileData, fileId}
+ *   nds:upload:removed           detail {fileData, fileId} — every way a file leaves: remove,
+ *                                clear, form reset, Single replacing it
  * Hooks:
- *   data-upload-url · data-auto-upload · data-max-file-size (bytes) · data-max-files
+ *   data-upload-url · data-auto-upload · data-field-name (default 'file') · data-upload-timeout (seconds)
+ *   data-max-file-size (bytes) · data-max-files
  *   data-allowed-types (extensions) · data-allowed-mime-types (image/* accepted)
  *   data-file-id (stamped on each rendered row and its remove button)
  * Gotchas:
@@ -39,8 +42,9 @@
  *   - data-allowed-types is mirrored onto the file input's `accept` — never hand-author it.
  *   - Status flow is ready → uploading → processing → complete, or error. retry() only
  *     accepts a file at 'error' after a failed upload, never one the checks rejected.
- *   - There is no stall detection: a dead connection leaves a file at 'uploading' forever,
- *     and retry() refuses it. Time out long uploads yourself and call abort(id).
+ *   - XHR, not NDS.request: only xhr.upload reports progress. data-upload-timeout ends an
+ *     upload as an error after that many seconds; without it (the default, 0) a dead
+ *     connection leaves a file at 'uploading' and retry() refuses it — call abort(id).
  *   - With no upload URL the component only stages files (it warns once).
  *   - A row is cloned from .nds-file-item-template when you ship one; otherwise from the
  *     component's own canonical markup.
@@ -77,18 +81,18 @@
         en: {
             sizeExceeds: 'File size exceeds',
             typeNotAllowed: 'File type not allowed',
-            mimeNotAllowed: 'File type not allowed',
             maxFilesReached: 'Maximum number of files reached',
             networkError: 'Network error',
+            uploadTimedOut: 'Upload timed out',
             uploadCancelled: 'Upload cancelled',
             uploadFailed: 'Upload failed'
         },
         ar: {
             sizeExceeds: 'حجم الملف يتجاوز',
             typeNotAllowed: 'نوع الملف غير مسموح',
-            mimeNotAllowed: 'نوع الملف غير مسموح',
             maxFilesReached: 'تم الوصول للحد الأقصى لعدد الملفات',
             networkError: 'خطأ في الشبكة',
+            uploadTimedOut: 'انتهت مهلة الرفع',
             uploadCancelled: 'تم إلغاء الرفع',
             uploadFailed: 'فشل الرفع'
         }
@@ -147,7 +151,6 @@
             this.container = container;
             this._options = this._normalizeOptions(options);
             this._files = [];
-            this._dragListenersActive = false;
 
             // Cache DOM references
             this._fileInput = container.querySelector('input[type="file"]');
@@ -158,29 +161,25 @@
 
             if (!this._fileInput || !this._dropZone || !this._fileList) return;
 
-            // data-allowed-types is the source of truth for the picker filter:
-            // mirror it onto the input's accept so authors never hand-write it
-            // (and it can't drift from what's actually enforced).
-            const { allowedTypes } = this._readConfig();
-            if (allowedTypes) {
-                this._fileInput.setAttribute('accept', allowedTypes.map(t => '.' + t).join(','));
-            }
+            this._syncAccept();
 
-            // Two lifetimes, two controllers: this one spans the instance, while
-            // dragAbortController below is re-armed per dropbox cycle (the drag
-            // listeners come and go with the `dropbox` state, independently of destroy).
             this.abortController = new AbortController();
             const { signal } = this.abortController;
 
             this._fileInput.addEventListener('change', this._handleFileInput.bind(this), { signal });
             this._fileList.addEventListener('click', this._handleFileListClick.bind(this), { signal });
-            if (this._browseBtn) {
-                this._browseBtn.addEventListener('click', this._handleBrowseClick.bind(this), { signal });
-            }
+            // A native reset never touches the list: clear it with the form.
+            container.closest('form')?.addEventListener('reset', () => this.clearAllFiles(), { signal });
+            const openPicker = this._openPicker.bind(this);
+            if (this._browseBtn) this._browseBtn.addEventListener('click', openPicker, { signal });
 
-            // Drag and drop
-            this._initDragAndDrop();
-            this._setupMutationObserver();
+            // Drag and drop: wired once, gated per event, so dropbox/disabled can flip at any time.
+            this._dropZone.addEventListener('dragover', this._handleDragOver.bind(this), { signal });
+            this._dropZone.addEventListener('dragleave', this._handleDragLeave.bind(this), { signal });
+            this._dropZone.addEventListener('drop', this._handleDrop.bind(this), { signal });
+            if (this._uploadZone) {
+                this._uploadZone.addEventListener('click', (e) => { if (this._dropActive()) openPicker(e); }, { signal });
+            }
 
             // Mark initialized and store instance
             container.setAttribute('data-nds-upload-initialized', '');
@@ -203,7 +202,9 @@
                 maxFileSize: parseInt(ds.maxFileSize) || 10 * 1024 * 1024,
                 allowedTypes: ds.allowedTypes ? ds.allowedTypes.split(',').map(t => t.trim().toLowerCase()) : null,
                 allowedMimeTypes: ds.allowedMimeTypes ? ds.allowedMimeTypes.split(',').map(t => t.trim().toLowerCase()) : null,
-                maxFiles: parseInt(ds.maxFiles) || Infinity
+                maxFiles: parseInt(ds.maxFiles) || Infinity,
+                fieldName: ds.fieldName || 'file',
+                uploadTimeout: parseFloat(ds.uploadTimeout) || 0
             };
             // JS options (passed to NDS.Upload.create / the constructor) override the
             // declarative data-* attributes; _options only holds keys the caller set.
@@ -224,11 +225,26 @@
             if (options.maxFiles != null) out.maxFiles = options.maxFiles === Infinity ? Infinity : parseInt(options.maxFiles, 10);
             if (options.allowedTypes != null) out.allowedTypes = list(options.allowedTypes);
             if (options.allowedMimeTypes != null) out.allowedMimeTypes = list(options.allowedMimeTypes);
+            if (options.fieldName != null) out.fieldName = String(options.fieldName);
+            if (options.uploadTimeout != null) out.uploadTimeout = parseFloat(options.uploadTimeout) || 0;
             return out;
         }
 
         getConfig() {
             return Object.freeze({ ...this._readConfig() });
+        }
+
+        // create() on a started field merges its options here, so they never go missing.
+        _setOptions(options) {
+            Object.assign(this._options, this._normalizeOptions(options));
+            this._syncAccept();
+        }
+
+        // data-allowed-types is the source of truth for the picker filter: mirror it onto
+        // the input's accept so authors never hand-write it and it can't drift.
+        _syncAccept() {
+            const { allowedTypes } = this._readConfig();
+            if (allowedTypes) this._fileInput.setAttribute('accept', allowedTypes.map(t => '.' + t).join(','));
         }
 
         // Public: run size/extension/MIME checks against the live config
@@ -244,9 +260,9 @@
         // ==============================================
 
         addFile(file, options = {}) {
-            // Check max files
             const config = this._readConfig();
-            if (this._files.length >= config.maxFiles) {
+            const isSingle = NDS.State.has(this.container, 'single');
+            if (!isSingle && this._files.length >= config.maxFiles) {
                 this._dispatchEvent('nds:upload:maxFilesReached', {
                     maxFiles: config.maxFiles,
                     currentCount: this._files.length
@@ -255,57 +271,19 @@
             }
 
             // Opt-in: run the same size/type/MIME checks dragged/selected files get.
-            const errors = options.validate ? this._validateFile(file, config) : [];
-
-            const isSingle = NDS.State.has(this.container, 'single');
-            const fileData = {
-                file: file,
-                id: NDS.uniqueId('file-'),
-                status: errors.length ? 'error' : (options.status || 'ready'),
-                progress: options.progress || 0,
-                error: errors.length ? errors.join(', ') : (options.error || null),
-                _rejected: errors.length > 0,
-                _xhr: null
-            };
-
-            if (isSingle) {
-                this._files = [fileData];
-            } else {
-                this._files.push(fileData);
-            }
-
-            this._updateFileList();
+            const fileData = this._entry(file, options.validate ? this._validateFile(file, config) : [], options);
+            this._setFiles(isSingle ? [fileData] : this._files.concat(fileData));
             return fileData.id;
         }
 
         removeFile(fileId) {
-            const index = this._files.findIndex(f => f.id === fileId);
-            if (index === -1) return false;
-
-            const fileData = this._files[index];
-
-            // Abort in-progress upload
-            if (fileData._xhr) fileData._xhr.abort();
-
-            this._files.splice(index, 1);
-
-            // Remove DOM element directly
-            const el = this._fileList.querySelector(`[data-file-id="${fileId}"]`);
-            if (el) el.remove();
-
-            this._dispatchEvent('nds:upload:removed', {
-                fileData: this._toPublic(fileData),
-                fileId: fileId
-            });
-
+            if (!this._files.some(f => f.id === fileId)) return false;
+            this._setFiles(this._files.filter(f => f.id !== fileId));
             return true;
         }
 
         clearAllFiles() {
-            // Abort all in-progress uploads
-            this._files.forEach(f => { if (f._xhr) f._xhr.abort(); });
-            this._files = [];
-            this._fileList.innerHTML = '';
+            this._setFiles([]);
         }
 
         getFile(fileId) {
@@ -321,8 +299,32 @@
             return this._files.filter(f => f.status === status).map(f => this._toPublic(f));
         }
 
+        // One shape for every staged file. A file the checks failed is _rejected and never uploads.
+        _entry(file, errors, extra = {}) {
+            return {
+                file: file,
+                id: NDS.uniqueId('file-'),
+                status: errors.length ? 'error' : (extra.status || 'ready'),
+                progress: extra.progress || 0,
+                error: errors.length ? errors.join(', ') : (extra.error || null),
+                response: null,
+                _rejected: errors.length > 0,
+                _xhr: null
+            };
+        }
+
+        // Every way a file leaves the list (remove, clear, reset, Single replacing it)
+        // stops its upload and fires removed, so a page that tracks server copies stays in step.
+        _setFiles(files) {
+            const dropped = this._files.filter(f => !files.includes(f));
+            dropped.forEach(f => { if (f._xhr) f._xhr.abort(); });
+            this._files = files;
+            this._updateFileList();
+            dropped.forEach(f => this._dispatchEvent('nds:upload:removed', { fileData: this._toPublic(f), fileId: f.id }));
+        }
+
         _toPublic(f) {
-            return { file: f.file, id: f.id, status: f.status, progress: f.progress, error: f.error };
+            return { file: f.file, id: f.id, status: f.status, progress: f.progress, error: f.error, response: f.response };
         }
 
         // ==============================================
@@ -345,6 +347,7 @@
             fileData.status = 'ready';
             fileData.progress = 0;
             fileData.error = null;
+            fileData.response = null;
             fileData._xhr = null;
             this._updateFileItem(fileId);
             this._uploadFile(fileData);
@@ -404,14 +407,9 @@
         // COMPONENT CONTROL
         // ==============================================
 
+        // Forms disables the input and buttons on the token; the drop handlers read it per event.
         setDisabled(disabled) {
-            if (disabled) {
-                NDS.State.add(this.container, 'disabled');
-                this._removeDragAndDrop();
-            } else {
-                NDS.State.remove(this.container, 'disabled');
-                this._initDragAndDrop();
-            }
+            NDS.State[disabled ? 'add' : 'remove'](this.container, 'disabled');
         }
 
         refreshUI() {
@@ -420,10 +418,7 @@
 
         destroy() {
             this.abortController?.abort();
-
-            // Tear down drag and observer
-            this._removeDragAndDrop();
-            if (this._offAttrChange) { this._offAttrChange(); this._offAttrChange = null; }
+            NDS.State.remove(this._dropZone, 'drag-over');
 
             // Abort in-progress uploads
             this._files.forEach(f => { if (f._xhr) f._xhr.abort(); });
@@ -462,7 +457,7 @@
                     return mime === t;
                 });
                 if (!allowed) {
-                    errors.push(msg('mimeNotAllowed'));
+                    errors.push(msg('typeNotAllowed'));
                 }
             }
 
@@ -487,15 +482,7 @@
 
             filesToProcess.forEach(file => {
                 const errors = this._validateFile(file, config);
-                const fileData = {
-                    file: file,
-                    id: NDS.uniqueId('file-'),
-                    status: errors.length === 0 ? 'ready' : 'error',
-                    progress: 0,
-                    error: errors.length > 0 ? errors.join(', ') : null,
-                    _rejected: errors.length > 0,
-                    _xhr: null
-                };
+                const fileData = this._entry(file, errors);
                 if (errors.length === 0) {
                     validFiles.push(fileData);
                 } else {
@@ -504,19 +491,8 @@
             });
 
             // Collect all rejected files (validation errors + excess)
-            const rejectedFiles = validationErrors.map(e => e.fileData);
-
-            excessFiles.forEach(file => {
-                rejectedFiles.push({
-                    file: file,
-                    id: NDS.uniqueId('file-'),
-                    status: 'error',
-                    progress: 0,
-                    error: msg('maxFilesReached') + ' (' + config.maxFiles + ')',
-                    _rejected: true,
-                    _xhr: null
-                });
-            });
+            const rejectedFiles = validationErrors.map(e => e.fileData)
+                .concat(excessFiles.map(file => this._entry(file, [msg('maxFilesReached') + ' (' + config.maxFiles + ')'])));
 
             if (excessFiles.length > 0) {
                 this._dispatchEvent('nds:upload:maxFilesReached', {
@@ -525,13 +501,7 @@
                 });
             }
 
-            if (isSingle) {
-                this._files = validFiles.concat(rejectedFiles).slice(0, 1);
-            } else {
-                this._files = this._files.concat(validFiles, rejectedFiles);
-            }
-
-            this._updateFileList();
+            this._setFiles(isSingle ? validFiles.concat(rejectedFiles).slice(0, 1) : this._files.concat(validFiles, rejectedFiles));
 
             // Dispatch events
             if (validFiles.length > 0) {
@@ -572,7 +542,7 @@
             }
 
             const formData = new FormData();
-            formData.append('file', fileData.file, sanitizeFileName(fileData.file.name));
+            formData.append(config.fieldName, fileData.file, sanitizeFileName(fileData.file.name));
 
             const xhr = new XMLHttpRequest();
 
@@ -595,6 +565,11 @@
                     const progress = (e.loaded / e.total) * 100;
                     fileData.progress = progress;
 
+                    // Every byte sent: the server works on it now.
+                    if (progress >= 100 && fileData.status === 'uploading') {
+                        fileData.status = 'processing';
+                        this._updateFileItem(fileData.id);
+                    }
                     const fileItem = this._fileList.querySelector(`[data-file-id="${fileData.id}"]`);
                     if (fileItem) this._setProgress(fileItem, progress);
 
@@ -607,9 +582,9 @@
 
             xhr.addEventListener('load', () => {
                 fileData._xhr = null;
+                fileData.response = xhr.response;
                 if (xhr.status >= 200 && xhr.status < 300) {
                     fileData.status = 'complete';
-                    fileData.response = xhr.response;
                     this._dispatchEvent('nds:upload:success', {
                         fileData: this._toPublic(fileData),
                         response: xhr.response
@@ -631,18 +606,22 @@
                 this._updateFileItem(fileData.id);
             });
 
-            xhr.addEventListener('error', () => {
+            // No HTTP answer: a network failure, or the opt-in time limit ran out.
+            const fail = (key) => {
                 fileData._xhr = null;
                 fileData.status = 'error';
-                fileData.error = msg('networkError');
+                fileData.error = msg(key);
                 this._dispatchEvent('nds:upload:error', {
                     fileData: this._toPublic(fileData),
-                    error: msg('networkError')
+                    error: fileData.error
                 });
                 this._updateFileItem(fileData.id);
-            });
+            };
+            xhr.addEventListener('error', () => fail('networkError'));
+            xhr.addEventListener('timeout', () => fail('uploadTimedOut'));
 
             xhr.open('POST', config.uploadUrl);
+            xhr.timeout = config.uploadTimeout * 1000;
             xhr.send(formData);
         }
 
@@ -652,10 +631,7 @@
 
         _updateFileList() {
             this._fileList.innerHTML = '';
-            this._files.forEach((fileData, index) => {
-                const el = this._createFileItem(fileData, index);
-                this._fileList.appendChild(el);
-            });
+            this._files.forEach(fileData => this._fileList.appendChild(this._createFileItem(fileData)));
         }
 
         // Returns the .nds-file-item node to clone for a row. A consumer-supplied
@@ -672,12 +648,11 @@
             return this._fallbackTemplate.content.querySelector('.nds-file-item');
         }
 
-        _createFileItem(fileData, index) {
+        _createFileItem(fileData) {
             const source = this._getFileItemSource();
             if (!source) return document.createElement('div');
 
             const fileItem = source.cloneNode(true);
-            fileItem.dataset.index = index;
             fileItem.dataset.fileId = fileData.id;
 
             // Populate content
@@ -781,89 +756,36 @@
             this.removeFile(removeBtn.getAttribute('data-file-id'));
         }
 
-        _handleBrowseClick(e) {
+        _openPicker(e) {
             e.preventDefault();
             e.stopPropagation();
             this._fileInput.click();
         }
 
+        // The drop zone works only with the dropbox token, its zone markup, and not disabled.
+        _dropActive() {
+            return !!this._uploadZone && NDS.State.has(this.container, 'dropbox') && !NDS.State.has(this.container, 'disabled');
+        }
+
         _handleDragOver(e) {
+            if (!this._dropActive()) return;
             e.preventDefault();
             NDS.State.add(this._dropZone, 'drag-over');
         }
 
         _handleDragLeave(e) {
-            e.preventDefault();
             if (!this._dropZone.contains(e.relatedTarget)) {
                 NDS.State.remove(this._dropZone, 'drag-over');
             }
         }
 
         _handleDrop(e) {
-            e.preventDefault();
             NDS.State.remove(this._dropZone, 'drag-over');
+            if (!this._dropActive()) return;
+            e.preventDefault();
             if (e.dataTransfer.files.length > 0) {
                 this._handleFiles(e.dataTransfer.files);
             }
-        }
-
-        _handleUploadZoneClick(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this._fileInput.click();
-        }
-
-        // ==============================================
-        // INTERNAL: Drag and drop
-        // ==============================================
-
-        _initDragAndDrop() {
-            if (!this._dropZone || !this._uploadZone) return;
-            if (!this._dropActive()) return;
-            if (this._dragListenersActive) return;
-
-            // Per-cycle controller — the dropbox state can toggle these off and
-            // on many times over one instance's life.
-            this.dragAbortController = new AbortController();
-            const { signal } = this.dragAbortController;
-            this._dropZone.addEventListener('dragover', this._handleDragOver.bind(this), { signal });
-            this._dropZone.addEventListener('dragleave', this._handleDragLeave.bind(this), { signal });
-            this._dropZone.addEventListener('drop', this._handleDrop.bind(this), { signal });
-            this._uploadZone.addEventListener('click', this._handleUploadZoneClick.bind(this), { signal });
-            this._dragListenersActive = true;
-        }
-
-        _removeDragAndDrop() {
-            if (!this._dragListenersActive) return;
-
-            this.dragAbortController.abort();
-            this.dragAbortController = null;
-            NDS.State.remove(this._dropZone, 'drag-over');
-            this._dragListenersActive = false;
-        }
-
-        // Disabled from markup or a bare data-state write must close the drop zone too, not just setDisabled().
-        _dropActive() {
-            return NDS.State.has(this.container, 'dropbox') && !NDS.State.has(this.container, 'disabled');
-        }
-
-        _setupMutationObserver() {
-            let lastDropboxState = this._dropActive();
-
-            // Store the unsubscribe handle so destroy() can release the
-            // pooled subscriber. Without this, every NDSUpload instance
-            // would stack a fresh closure on attrSubs that captures
-            // this.container and lastDropboxState — a per-instance leak
-            // that compounds with each created/destroyed upload.
-            this._offAttrChange = NDS.onAttrChange('.nds-file-upload', ['data-state'], (hits) => {
-                if (!hits.includes(this.container)) return;
-                const currentDropboxState = this._dropActive();
-                if (currentDropboxState !== lastDropboxState) {
-                    this._removeDragAndDrop();
-                    this._initDragAndDrop();
-                    lastDropboxState = currentDropboxState;
-                }
-            });
         }
 
         // ==============================================
@@ -902,7 +824,10 @@
         create: (container, options) => {
             container = resolve(container);
             if (!container) { warn('create: container not found'); return null; }
-            if (container.ndsUpload) return container.ndsUpload;  // already built → return it
+            if (container.ndsUpload) {                              // already built → merge, return it
+                if (options) container.ndsUpload._setOptions(options);
+                return container.ndsUpload;
+            }
             const instance = new NDSUpload(container, options);
             return instance._initialized ? instance : null;       // null if the constructor bailed
         },

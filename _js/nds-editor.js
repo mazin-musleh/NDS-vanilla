@@ -2577,6 +2577,9 @@
             const menu = this._menuOf(dropmenu);
             const urlInput = menu.querySelector('[data-editor-image-url]');
             const altInput = menu.querySelector('[data-editor-image-alt]');
+            // Fresh staging per open, BEFORE the prefill: clearing fires nds:upload:removed,
+            // which resets a data: URL. A committed/abandoned chip never lingers.
+            menu.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
             // A clicked (selected) image edits in place — url/alt prefill.
             const existing = this._selectedImage();
             if (urlInput) urlInput.value = existing?.getAttribute('src') || 'https://';
@@ -2585,10 +2588,6 @@
             const hInput = menu.querySelector('[data-editor-image-height]');
             if (wInput) wInput.value = existing?.getAttribute('width') || '';
             if (hInput) hInput.value = existing?.getAttribute('height') || '';
-            // Fresh staging per open — a committed/abandoned chip never
-            // lingers, stale field errors clear, and the upload affordance
-            // reflects the CURRENT config.
-            menu.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
             // Soft dependency — a stale field error just lingers if NDS.Forms isn't bundled.
             if (urlInput) NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
             menu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
