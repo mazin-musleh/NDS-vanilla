@@ -9,12 +9,15 @@
 // ==============================================
 // LAYOUT RESOLUTION
 // ==============================================
-// CSS alone picks the layout at each breakpoint, before and after init: a
-// breakpoint class (nds-{layout}-{sm|md|lg}) wins, else the layout class
-// (nds-vertical, nds-radial, or none for horizontal). Every rule that belongs to
+// CSS alone picks the layout at each breakpoint, before and after init: on a
+// phone or tablet a breakpoint class (nds-{layout}-{sm|md}) wins, else the layout
+// class (nds-vertical, nds-radial, or none for horizontal), which is the desktop layout. Every rule that belongs to
 // one layout sits in a stepper-layout() block, so it follows the resolved layout.
 
 @function stepper-is($layout, $bp) {
+    @if $bp == lg {
+        @return if($layout == horizontal, ':not(.nds-vertical, .nds-radial)', '.nds-#{$layout}');
+    }
     @if $layout == horizontal {
         @return ':is(:not(.nds-vertical, .nds-radial, .nds-vertical-#{$bp}, .nds-radial-#{$bp}), .nds-horizontal-#{$bp})';
     }
@@ -916,7 +919,7 @@
 // breakpoint-gated radial resolution arm carries higher specificity (its
 // :is() selector) and re-hides non-current steps pre-init — it would
 // out-rank this otherwise. Inert post-init via :not([init]).
-.nds-stepper:is(.nds-radial, .nds-radial-sm, .nds-radial-md, .nds-radial-lg):not([data-nds-stepper-initialized]) .nds-stepper-step:not(.nds-stepper-step ~ .nds-stepper-step) {
+.nds-stepper:is(.nds-radial, .nds-radial-sm, .nds-radial-md):not([data-nds-stepper-initialized]) .nds-stepper-step:not(.nds-stepper-step ~ .nds-stepper-step) {
     display: flex !important;
 }
 

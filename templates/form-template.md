@@ -357,9 +357,9 @@ sidemenu_mode: false
         </div>
 
         <aside class="nds-sideinfo nds-sticky nds-sticky-md nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
-            <!-- Vertical fallback (tablet + desktop) with a radial override on
-                 mobile so the 4-step flow stays compact on small screens. -->
-            <div class="nds-stepper nds-radial nds-vertical-lg nds-card nds-stroke nds-shadow"
+            <!-- Vertical on desktops, radial on phones and tablets, so the 4-step
+                 flow stays compact on small screens. -->
+            <div class="nds-stepper nds-vertical nds-radial-sm nds-radial-md nds-card nds-stroke nds-shadow"
                 id="formStepper"
                 data-current="1" data-total="4">
                 <!-- Radial-only progress ring; hidden on non-radial variants by base CSS. -->

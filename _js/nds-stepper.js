@@ -19,8 +19,8 @@
  * Gotchas:
  *   - Give the stepper an id. A control resolves its target from data-stepper-target, then
  *     the closest .nds-stepper, then the first one on the page.
- *   - The layout is CSS alone: nds-vertical / nds-radial, overridden per breakpoint by
- *     nds-{horizontal|vertical|radial}-{sm|md|lg}. The script never reads or writes them,
+ *   - The layout is CSS alone: nds-vertical / nds-radial (the desktop layout), overridden on
+ *     phones and tablets by nds-{horizontal|vertical|radial}-{sm|md}. The script never reads or writes them,
  *     so completion behaves the same in every layout.
  *   - data-stepper-control is an UNCONDITIONAL mover: click, move, no question asked.
  *     Right for Back, demos and walkthroughs. For a move something can refuse —
