@@ -460,7 +460,7 @@
   url: "/components/icons.html"
 
 - title: "Image Popup Viewer"
-  description: "IPV fullscreen image preview with zoom and navigation"
+  description: "Opens a thumbnail full screen, with zoom, pan and gallery navigation"
   use_when: "Click an image to open it fullscreen: lightbox, image preview, gallery viewer, with zoom and next and previous navigation."
   icon: '<i class="hgi hgi-stroke hgi-zoom-in-area"></i>'
   category: "UI"

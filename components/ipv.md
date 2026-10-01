@@ -2,367 +2,254 @@
 layout: page
 title: Image Popup Viewer
 hero_title: Image Popup Viewer - National Design System
-hero_description: A full-screen image viewer for inspecting photos and illustrations with zoom, pan, and gallery navigation
+hero_description: The image popup viewer opens a thumbnail full screen, with zoom, pan and gallery navigation
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/09/2026 - 09:56 PM"
+last_edit: "01/10/2026 - 08:48 PM"
 ---
 
-<!-- Gallery -->
-<section id="ipvGallery" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Image Gallery</h2>
-            <p class="nds-section-description">Click any thumbnail to open the full-screen viewer with zoom and navigation controls</p>
+<section id="ipvOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The image popup viewer (IPV) shows a large image over the page. Any image with `nds-ipv-thumbnail` opens it on a click. The page holds only the thumbnails, with an optional card frame and caption. The script builds the viewer itself the first time a thumbnail opens: the image, the zoom and close buttons, the arrows, a counter and a list of controls.
+
+Pick another component when:
+
+- the image needs text, a form or buttons next to it: [Modal](../components/modal)
+- the images slide inside the page: [Swiper](../components/swiper)
+
+</div>
+  </div>
+</section>
+
+<section id="ipvMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
+    </div>
+    <div class="nds-section-body">
+<script type="text/html" id="ipv-gallery" data-canon data-variants="ipvVariantsTable" data-demo-width="100%">
+<div class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:1;">
+  <div>
+    <div class="nds-ipv-image-card">
+      <img src="../docs-assets/img/home_hero_bg_sm.webp" data-ipv-full="../docs-assets/img/home_hero_bg.webp" alt="Mud-brick palace reflected in rainwater" class="nds-ipv-thumbnail">
+    </div>
+    <div class="nds-ipv-image-title">Heritage Palace</div>
+  </div>
+  <div>
+    <div class="nds-ipv-image-card">
+      <img src="../assets/img/riyadhcenter.webp" data-ipv-full="../assets/img/riyadhcenter.webp" alt="Riyadh skyline at night" class="nds-ipv-thumbnail">
+    </div>
+    <div class="nds-ipv-image-title">Riyadh at Night</div>
+  </div>
+  <div>
+    <div class="nds-ipv-image-card">
+      <img src="../docs-assets/events/foundation_day/Hero_thumb.webp" data-ipv-full="../docs-assets/events/foundation_day/Hero_bg.webp" alt="A man in traditional dress among old stone walls" class="nds-ipv-thumbnail">
+    </div>
+    <div class="nds-ipv-image-title">Foundation Day</div>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
+</section>
+
+<section id="ipvVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+The zoom badge goes on every `.nds-ipv-image-card` in the markup.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Zoom badge | Zoom badge | `.showZoom` | `.nds-ipv-image-card` | A magnifier in the corner of the image. Add it when nothing else shows that the image opens |
+{: #ipvVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="ipvFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">The viewer starts on any page that has an <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code>. A thumbnail added later opens on a click with no call, and <code class="nds-inline-code lang-js">NDS.Ipv.reinit()</code> lets Tab reach it. The viewer itself is built on the first open, so a page where nobody opens an image carries none of it.</p>
         </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["showZoom", ".nds-ipv-image-card", "ipvZoom"]'>
-                                    <span class="nds-label">Zoom badge</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-ipv-gallery nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;">
-                                    <div class="nds-ipv-image-item">
-                                        <div class="nds-ipv-image-card showZoom">
-                                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400"
-                                                data-ipv-full="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000"
-                                                alt="Mountain Landscape" class="nds-ipv-thumbnail">
-                                        </div>
-                                        <div class="nds-ipv-image-title">Mountain Landscape</div>
-                                    </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-zoom-in-area"></i>
+            <span class="nds-label">Multi-input Zoom</span>
+          </span>
+          <p class="nds-item-desc">The mouse wheel zooms toward the pointer, and a pinch zooms toward the middle of the two fingers. The zoom buttons and the + and - keys zoom by 1.5×. Zoom runs from 10% to 1000%, and a label shows the current value.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-move"></i>
+            <span class="nds-label">Drag to Pan</span>
+          </span>
+          <p class="nds-item-desc">Drag the image with the mouse or one finger to move it. A double-click, the reset button or the 0 key returns it to 100% in the center.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
+            <span class="nds-label">Gallery Navigation</span>
+          </span>
+          <p class="nds-item-desc">The arrow buttons and the Left and Right keys move to the previous and next thumbnail on the page, and a counter shows the position. With one thumbnail on the page, the arrows and the counter are hidden.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Controls</span>
+          </span>
+          <p class="nds-item-desc">The script adds <code class="nds-inline-code lang-html">tabindex="0"</code> and <code class="nds-inline-code lang-html">role="button"</code> to each thumbnail that has none. Tab reaches a thumbnail, and Enter or Space opens it. The keys inside the viewer are in the API.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-eye"></i>
+            <span class="nds-label">Distraction-free Mode</span>
+          </span>
+          <p class="nds-item-desc">The H key or the eye button hides the controls, the arrows, the counter, the zoom label and the control list. The eye button stays, to bring them back.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-image-02"></i>
+            <span class="nds-label">Adaptive Image Loading</span>
+          </span>
+          <p class="nds-item-desc">The page loads the small thumbnail. The viewer loads the full image from <code class="nds-inline-code lang-html">data-ipv-full</code> only when it opens, and shows a spinner until the image arrives.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-focus-point"></i>
+            <span class="nds-label">Accessible Dialog</span>
+          </span>
+          <p class="nds-item-desc">The viewer is a modal dialog. Focus moves to its close button and stays inside it. On close, focus returns to the thumbnail that opened it.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-translate"></i>
+            <span class="nds-label">Localized Controls</span>
+          </span>
+          <p class="nds-item-desc">The button labels and the control list follow the page language. Arabic and English ship in <code class="nds-inline-code">assets/i18n/ipv/</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
+            <span class="nds-label">Phone Layout</span>
+          </span>
+          <p class="nds-item-desc">On phones the buttons sit closer to the edge, and the control list is hidden.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                                    <div class="nds-ipv-image-item">
-                                        <div class="nds-ipv-image-card showZoom">
-                                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400"
-                                                data-ipv-full="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000"
-                                                alt="Forest Road" class="nds-ipv-thumbnail">
-                                        </div>
-                                        <div class="nds-ipv-image-title">Forest Road</div>
-                                    </div>
+<section id="ipvPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-                                    <div class="nds-ipv-image-item">
-                                        <div class="nds-ipv-image-card showZoom">
-                                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400"
-                                                data-ipv-full="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=2000"
-                                                alt="Ocean View" class="nds-ipv-thumbnail">
-                                        </div>
-                                        <div class="nds-ipv-image-title">Ocean View</div>
-                                    </div>
+- Use the viewer for images people inspect: photos, maps, plans and scans. Do not use it for decorative images.
+- Put `data-ipv-full` on every thumbnail, with the URL of a large image. Without it, the viewer shows the thumbnail, which blurs when zoomed.
+- Keep thumbnails small, about 400px wide. The full image loads only when the viewer opens.
+- Write `alt` on every thumbnail. The viewer copies it to the full image, and it names the thumbnail for screen readers.
+- In a gallery, put a `nds-ipv-image-title` under each image, so people know what it shows before they open it.
+- Every thumbnail on the page is in one gallery, in page order. Leave `nds-ipv-thumbnail` off an image that does not belong in it.
+- Do not add your own click handler to a thumbnail. The viewer already opens on a click, Enter and Space.
+- Do not open a modal while the viewer is open. The modal opens on top of the viewer.
 
-                                    <div class="nds-ipv-image-item">
-                                        <div class="nds-ipv-image-card showZoom">
-                                            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400"
-                                                data-ipv-full="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=2000"
-                                                alt="Valley Sunrise" class="nds-ipv-thumbnail">
-                                        </div>
-                                        <div class="nds-ipv-image-title">Valley Sunrise</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-ipv-gallery-1" id="tab-ipv-gallery-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-ipv-gallery-js" id="tab-ipv-gallery-js">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-ipv-gallery-1"
-                                        aria-labelledby="tab-ipv-gallery-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-ipv-gallery nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;"&gt;
-    &lt;div class="nds-ipv-image-item"&gt;
-        &lt;div class="nds-ipv-image-card showZoom"&gt;
-            &lt;img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400"
-                data-ipv-full="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000"
-                alt="Mountain Landscape" class="nds-ipv-thumbnail"&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-ipv-image-title"&gt;Mountain Landscape&lt;/div&gt;
-    &lt;/div&gt;
+</div>
+  </div>
+</section>
 
-    &lt;div class="nds-ipv-image-item"&gt;
-        &lt;div class="nds-ipv-image-card showZoom"&gt;
-            &lt;img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400"
-                data-ipv-full="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000"
-                alt="Forest Road" class="nds-ipv-thumbnail"&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-ipv-image-title"&gt;Forest Road&lt;/div&gt;
-    &lt;/div&gt;
+<section id="ipvApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-    &lt;div class="nds-ipv-image-item"&gt;
-        &lt;div class="nds-ipv-image-card showZoom"&gt;
-            &lt;img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400"
-                data-ipv-full="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=2000"
-                alt="Ocean View" class="nds-ipv-thumbnail"&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-ipv-image-title"&gt;Ocean View&lt;/div&gt;
-    &lt;/div&gt;
+### Classes
+{: .nds-block-title}
 
-    &lt;div class="nds-ipv-image-item"&gt;
-        &lt;div class="nds-ipv-image-card showZoom"&gt;
-            &lt;img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400"
-                data-ipv-full="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=2000"
-                alt="Valley Sunrise" class="nds-ipv-thumbnail"&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-ipv-image-title"&gt;Valley Sunrise&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-ipv-gallery-js"
-                                        aria-labelledby="tab-ipv-gallery-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-javascript code">// Auto-initializes on page load; call again after dynamic thumbnail injection
-NDS.Ipv.init();
+| Class | Element | Effect |
+|---|---|---|
+| `nds-ipv-thumbnail` | `<img>` | Opens the viewer on a click. A block image 200px tall that fills its width and crops to fit. Required |
+| `nds-ipv-image-card` | the thumbnail's parent | Holds the zoom badge. Optional: a thumbnail without it looks and works the same |
+| `showZoom` | `.nds-ipv-image-card` | Shows a magnifier in the bottom start corner |
+| `nds-ipv-image-title` | an element after the card | A caption under the image. Optional |
+{: .nds-table .nds-responsive}
 
-// Re-scan for new thumbnails added at runtime
-NDS.Ipv.reinit();
+### Data Attributes
+{: .nds-block-title}
 
-// Initialize and get the viewer instance
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-ipv-full` | `img.nds-ipv-thumbnail` | The URL of the image the viewer loads |
+| `data-src` | `img.nds-ipv-thumbnail` | The viewer loads this URL when the image has no `data-ipv-full`. With neither, it loads the image's `src` |
+{: .nds-table .nds-responsive}
+
+### Keyboard
+{: .nds-block-title}
+
+| Key | Effect |
+|---|---|
+| Enter, Space | Opens the viewer on the focused thumbnail |
+| Escape | Closes the viewer |
+| `+` or `=`, `-` | Zooms in or out by 1.5× |
+| `0` | Resets the zoom and the position |
+| H | Hides or shows the controls |
+| Left, Right | Moves to the image on that side of the screen |
+| Tab | Moves between the viewer's buttons. Focus stays in the viewer |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+One viewer serves the whole page. The viewer fires no events.
+
+| Method | Effect |
+|---|---|
+| `NDS.Ipv.init()` | Starts the viewer. The loader calls it when the page has a thumbnail |
+| `NDS.Ipv.reinit()` | Gives thumbnails added since the last call `tabindex` and `role`. Call it after you add thumbnails |
+| `NDS.Ipv.create()` | Starts the viewer and returns it. `window.ndsIPV` holds the same viewer |
+| `viewer.open(img)` | Opens the viewer on that thumbnail |
+| `viewer.close()` | Closes the viewer and returns focus to the thumbnail |
+| `viewer.showPrev()`, `viewer.showNext()` | Moves to the previous or the next thumbnail |
+| `viewer.resetTransform()` | Resets the zoom and the position |
+| `viewer.toggleUI()` | Hides or shows the controls |
+| `viewer.destroy()` | Removes the viewer and every listener it added. `NDS.Ipv.init()` starts a new one |
+{: .nds-table .nds-responsive}
+
+The full API is in the banner of `_js/nds-ipv.js`.
+
+<script type="text/html" id="ipv-js" data-canon data-lang="js">
 var viewer = NDS.Ipv.create();
-
-// Open programmatically, close, and tear down
 viewer.open(document.querySelector('.nds-ipv-thumbnail'));
-viewer.close();
-viewer.destroy();</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Built-in Features -->
-<section id="ipvFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-            <p class="nds-section-description">What you get out of the box with zero configuration</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Any image with the <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code> class becomes clickable and opens in the full-screen viewer. No extra markup or JS calls needed. For dynamically added images, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code>.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-zoom"></i>
-                            <span class="nds-label">Multi-input Zoom</span>
-                        </span>
-                        <p class="nds-item-desc">Zoom into images using mouse wheel (centered on cursor position), keyboard shortcuts (+/-), pinch-to-zoom on touch devices, or the on-screen zoom buttons. Supports 0.1x to 10x magnification.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-move"></i>
-                            <span class="nds-label">Drag to Pan</span>
-                        </span>
-                        <p class="nds-item-desc">Click and drag on desktop or swipe on touch devices to pan around zoomed images. Double-click or double-tap resets the view to the original position and zoom level.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
-                            <span class="nds-label">Gallery Navigation</span>
-                        </span>
-                        <p class="nds-item-desc">Every thumbnail on the page joins one navigable gallery. Arrow buttons and the left/right keys move between images, and a counter shows the current position. Controls hide automatically when a page has only one image.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard"></i>
-                            <span class="nds-label">Keyboard Controls</span>
-                        </span>
-                        <p class="nds-item-desc">Thumbnails are reachable with Tab and open with Enter or Space. Inside the viewer, Escape closes, +/- adjusts zoom, 0 resets the view, H toggles the controls, and arrow keys move between images.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-touch-interaction-01"></i>
-                            <span class="nds-label">Touch Gestures</span>
-                        </span>
-                        <p class="nds-item-desc">Pinch-to-zoom with two fingers centers on the gesture midpoint. Single-finger drag pans the image. All gestures work alongside on-screen controls on mobile.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-eye"></i>
-                            <span class="nds-label">Distraction-free Mode</span>
-                        </span>
-                        <p class="nds-item-desc">Press H or tap the toggle button to hide all controls, navigation, and overlays for a clean viewing experience. Toggle again to restore the full UI.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-image-02"></i>
-                            <span class="nds-label">Adaptive Image Loading</span>
-                        </span>
-                        <p class="nds-item-desc">Thumbnails load at a small size for fast page rendering, then the full-resolution image loads on demand when opened. A loading spinner displays while the full image is fetched.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-focus-point"></i>
-                            <span class="nds-label">Accessible Dialog</span>
-                        </span>
-                        <p class="nds-item-desc">The viewer opens as a focus-trapped dialog: keyboard focus stays within it while open, and returns to the thumbnail you opened it from when it closes.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-translate"></i>
-                            <span class="nds-label">Localized Controls</span>
-                        </span>
-                        <p class="nds-item-desc">Control labels and on-screen instructions follow the page language automatically, with Arabic and English provided out of the box.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Usage Guidelines -->
-<section id="ipvGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-            <p class="nds-section-description">When and how to use the image popup viewer effectively</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use the image popup viewer for any content where users need to inspect image details: product photos, maps, infographics, architectural plans, or document scans. The zoom and pan controls let users explore at their own pace.</li>
-                    <li>Every <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code> on a page joins one shared gallery: opening any image lets users move through the rest with the arrow keys or on-screen buttons. Keep related images on the same page so navigation feels coherent.</li>
-                    <li>Navigation controls appear only when a page has more than one thumbnail. For a single standalone image, the viewer opens with zoom and pan but no prev/next controls.</li>
-                    <li>Do not use the image popup viewer for decorative or background images that don't benefit from close inspection. Only apply it to images where zoom and detail matter to the user.</li>
-                    <li>Do not use this component for modal dialogs with mixed content. Use <a class="nds-color" href="{{ 'components/modal' | relative_url }}">Modal</a> instead when you need text, forms, or actions alongside an image.</li>
-                    <li>Always provide a <code class="nds-inline-code lang-html">data-ipv-full</code> attribute pointing to a high-resolution version of the image. Without it, the viewer falls back to the thumbnail src, which may look blurry when zoomed.</li>
-                    <li>Keep thumbnail images small (400px wide) for fast page load. The full-resolution image loads on demand only when the user opens the viewer.</li>
-                    <li>Write descriptive <code class="nds-inline-code lang-html">alt</code> text on every thumbnail. The viewer reuses it for the full-size image, and it doubles as the accessible name when users reach the thumbnail by keyboard.</li>
-                    <li>Thumbnails are keyboard-operable out of the box: Tab focuses them, Enter or Space opens the viewer, and focus returns to the thumbnail on close. Avoid adding custom click-only handlers that bypass this.</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-ipv-image-title</code> below thumbnails in galleries to give users context before they open the viewer.</li>
-                </ul>
-            </div>
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-ipv-thumbnail</code></td><td>Required on the <code class="nds-inline-code lang-html">&lt;img&gt;</code> that opens the viewer.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-ipv-gallery</code></td><td>Optional grid wrapper for image items. Combine with <code class="nds-inline-code lang-html">nds-grid</code> and the <code class="nds-inline-code lang-html">--max-col</code> / <code class="nds-inline-code lang-html">--mid-col</code> / <code class="nds-inline-code lang-html">--min-col</code> variables to set columns.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-ipv-image-item</code></td><td>Optional grid cell grouping an image card with its caption below.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-ipv-image-card</code></td><td>Optional frame around the thumbnail; hosts the <code class="nds-inline-code lang-html">showZoom</code> badge.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-ipv-image-title</code></td><td>Optional caption placed below the image card.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">showZoom</code></td><td>Add to <code class="nds-inline-code lang-html">nds-ipv-image-card</code> to display a zoom-affordance badge in the corner of the thumbnail.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-ipv-full</code></td><td>Set on the thumbnail <code class="nds-inline-code lang-html">&lt;img&gt;</code> to specify the full-resolution image URL loaded when the viewer opens.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-src</code></td><td>Fallback full-size source used when <code class="nds-inline-code lang-html">data-ipv-full</code> is absent (supports lazy-loading setups). The thumbnail's own <code class="nds-inline-code lang-html">src</code> is the final fallback.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Ipv</strong> API controls initialization and programmatic access. The viewer auto-initializes on page load. For dynamically added thumbnails, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code> or <code class="nds-inline-code lang-js">NDS.Ipv.reinit()</code> to re-scan the page.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript code">
-// ── Initialization ──────────────────────────────────
-// All thumbnails auto-initialize on page load
-NDS.Ipv.init();
-
-// Re-initialize after dynamically adding thumbnails
+// After you add thumbnails to the page
 NDS.Ipv.reinit();
+</script>
 
-// Create and get the viewer instance
-var viewer = NDS.Ipv.create();
-
-// Access the existing instance directly
-var viewer = window.ndsIPV;
-
-// ── Instance Methods ────────────────────────────────
-// Open the viewer for a specific thumbnail element
-viewer.open(thumbnailElement);
-
-// Close the viewer
-viewer.close();
-
-// Navigate between images in a gallery
-viewer.showPrev();
-viewer.showNext();
-
-// Reset zoom and pan to defaults
-viewer.resetTransform();
-
-// Toggle UI controls visibility (distraction-free mode)
-viewer.toggleUI();
-
-// Tear down all listeners, resize observer, and focus trap
-viewer.destroy();
-
-// ── Keyboard Shortcuts ──────────────────────────────
-// Tab          Move focus to a thumbnail, then Enter or Space opens it
-// Escape       Close the viewer (focus returns to the thumbnail)
-// + or =       Zoom in (1.5x per press)
-// -            Zoom out (1.5x per press)
-// 0            Reset zoom and position
-// H            Toggle UI visibility
-// ArrowLeft    Previous image in gallery
-// ArrowRight   Next image in gallery
-// Tab is trapped within the viewer while it is open
-                        </code>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+  </div>
 </section>
