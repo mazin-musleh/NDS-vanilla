@@ -6,6 +6,7 @@
  *   NDS.Ipv.create()             build it and return the instance (window.ndsIPV)
  *   instance.open(thumb)         open the viewer on a thumbnail element
  *   instance.close()
+ *   instance.destroy()           detach every listener and remove the overlay; init() builds anew
  * Events:
  *   (none)
  * Hooks:
@@ -53,7 +54,6 @@
             // Overlay elements are cached by ensureOverlay() on the first open —
             // until then the page carries no overlay DOM at all.
             this.el = {};
-            this.uiEls = [];
 
             // The live full-size <img>, cached so the transform hot path never
             // re-queries the DOM. Set in loadImage(), cleared in removeImage().
@@ -98,22 +98,12 @@
                 container: document.querySelector('.nds-ipv-popup-container'),
                 zoomInfo: document.getElementById('ndsIpvZoomInfo'),
                 controls: document.querySelector('.nds-ipv-popup-controls'),
-                instructions: document.querySelector('.nds-ipv-instructions'),
                 navControls: document.querySelector('.nds-ipv-navigation-controls'),
                 imageCounter: document.getElementById('ndsIpvImageCounter'),
                 closeBtn: document.querySelector('.nds-ipv-close-btn'),
                 prevBtn: document.querySelector('.nds-ipv-prev-btn'),
                 nextBtn: document.querySelector('.nds-ipv-next-btn')
             };
-
-            // UI chrome toggled together by setUIHidden().
-            this.uiEls = [
-                this.el.controls,
-                this.el.instructions,
-                this.el.zoomInfo,
-                this.el.navControls,
-                this.el.imageCounter
-            ];
 
             this.el.overlay.setAttribute('data-nds-ipv-initialized', 'true');
 
@@ -210,8 +200,7 @@
         // ── UI chrome ────────────────────────────────────────────────────
         setUIHidden(hidden) {
             this.state.isUIHidden = hidden;
-            const method = hidden ? 'add' : 'remove';
-            this.uiEls.forEach(el => el && el.classList[method]('nds-ipv-ui-hidden'));
+            this.el.overlay.classList.toggle('nds-ipv-ui-hidden', hidden);
         }
 
         toggleUI() {
@@ -241,12 +230,10 @@
             if (this.el.nextBtn) this.el.nextBtn.disabled = currentIndex === total - 1;
 
             // Hide nav + counter when there's only one image.
-            if (this.el.navControls) {
-                this.el.navControls.style.display = total <= 1 ? 'none' : 'flex';
-            }
+            if (this.el.navControls) this.el.navControls.hidden = total <= 1;
             if (this.el.imageCounter) {
                 this.el.imageCounter.textContent = `${currentIndex + 1} / ${total}`;
-                this.el.imageCounter.style.display = total <= 1 ? 'none' : 'block';
+                this.el.imageCounter.hidden = total <= 1;
             }
         }
 
@@ -281,7 +268,6 @@
             img.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
             img.addEventListener('touchend', () => this.handleTouchEnd());
             img.addEventListener('dblclick', () => this.resetTransform());
-            img.addEventListener('contextmenu', (e) => e.preventDefault());
         }
 
         handleMouseDown(e) {
@@ -386,7 +372,7 @@
             this.ensureOverlay();
 
             // Prefer the lazy-load / full-resolution source, fall back to the src.
-            const src = thumb.dataset.ipvFull || thumb.dataset.src || thumb.getAttribute('data-src') || thumb.src;
+            const src = thumb.dataset.ipvFull || thumb.dataset.src || thumb.src;
 
             if (this.el.overlay) {
                 this.el.overlay.classList.add('nds-ipv-active');
@@ -512,9 +498,14 @@
         }
 
         destroy() {
-            if (this.abortController) this.abortController.abort();
-            if (this._offResize) this._offResize();
+            if (this.el.overlay && this.el.overlay.classList.contains('nds-ipv-active')) this.close();
+            this.abortController.abort();
+            this._offResize();
             document.removeEventListener('keydown', this.trapFocus);
+            if (this.el.overlay) this.el.overlay.remove();
+            this.el = {};
+            // Free the singleton slot so init() can build a fresh viewer.
+            if (window.ndsIPV === this) window.ndsIPV = null;
         }
 
         // Static factory method
@@ -530,38 +521,38 @@
         if (document.getElementById('ndsIpvPopupOverlay')) return;
 
         const overlayHTML = `
-            <div class="nds-ipv-popup-overlay" id="ndsIpvPopupOverlay" role="dialog" aria-modal="true" aria-label="Image viewer">
+            <div class="nds-ipv-popup-overlay" id="ndsIpvPopupOverlay" data-theme="dark" role="dialog" aria-modal="true" aria-label="Image viewer">
                 <div class="nds-ipv-popup-container">
                     <div class="nds-ipv-popup-controls">
-                        <button class="nds-ipv-control-btn nds-ipv-zoom-in-btn" title="Zoom In" aria-label="Zoom in" data-i18n-attr="aria-label:zoomIn,title:zoomIn">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-ipv-control-btn nds-ipv-zoom-in-btn" title="Zoom In" aria-label="Zoom in" data-i18n-attr="aria-label:zoomIn,title:zoomIn">
                             <i class="nds-icon nds-hgi-zoom-in-area" aria-hidden="true"></i>
                         </button>
-                        <button class="nds-ipv-control-btn nds-ipv-zoom-out-btn" title="Zoom Out" aria-label="Zoom out" data-i18n-attr="aria-label:zoomOut,title:zoomOut">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-ipv-control-btn nds-ipv-zoom-out-btn" title="Zoom Out" aria-label="Zoom out" data-i18n-attr="aria-label:zoomOut,title:zoomOut">
                             <i class="nds-icon nds-hgi-zoom-out-area" aria-hidden="true"></i>
                         </button>
-                        <button class="nds-ipv-control-btn nds-ipv-reset-zoom-btn" title="Reset Zoom" aria-label="Reset zoom" data-i18n-attr="aria-label:resetZoom,title:resetZoom">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-ipv-control-btn nds-ipv-reset-zoom-btn" title="Reset Zoom" aria-label="Reset zoom" data-i18n-attr="aria-label:resetZoom,title:resetZoom">
                             <i class="nds-icon nds-hgi-square-arrow-shrink-01" aria-hidden="true"></i>
                         </button>
-                        <button class="nds-ipv-control-btn nds-ipv-ui-toggle-btn" title="Hide UI" aria-label="Toggle controls" data-i18n-attr="aria-label:toggleUI,title:toggleUI">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-ipv-control-btn nds-ipv-ui-toggle-btn" title="Hide UI" aria-label="Toggle controls" data-i18n-attr="aria-label:toggleUI,title:toggleUI">
                             <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
                         </button>
-                        <button class="nds-ipv-control-btn nds-ipv-close-btn" title="Close" aria-label="Close" data-i18n-attr="aria-label:close,title:close">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-ipv-control-btn nds-ipv-close-btn" title="Close" aria-label="Close" data-i18n-attr="aria-label:close,title:close">
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         </button>
                     </div>
 
                     <div class="nds-ipv-navigation-controls">
-                        <button class="nds-ipv-control-btn nds-ipv-prev-btn" title="Previous Image" aria-label="Previous image" data-i18n-attr="aria-label:prevImage,title:prevImage">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-ipv-control-btn nds-ipv-prev-btn" title="Previous Image" aria-label="Previous image" data-i18n-attr="aria-label:prevImage,title:prevImage">
                             <i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i>
                         </button>
-                        <button class="nds-ipv-control-btn nds-ipv-next-btn" title="Next Image" aria-label="Next image" data-i18n-attr="aria-label:nextImage,title:nextImage">
+                        <button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-ipv-control-btn nds-ipv-next-btn" title="Next Image" aria-label="Next image" data-i18n-attr="aria-label:nextImage,title:nextImage">
                             <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                         </button>
                     </div>
 
                     <div class="nds-ipv-image-counter" id="ndsIpvImageCounter">1 / 1</div>
 
-                    <div class="nds-ipv-instructions">
+                    <div class="nds-ipv-instructions" data-hidden="sm">
                         <strong data-i18n="instructionsTitle">Controls:</strong><br>
                         <span data-i18n="instructionsScroll">• Scroll to zoom</span><br>
                         <span data-i18n="instructionsDrag">• Drag to pan</span><br>
