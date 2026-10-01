@@ -14,6 +14,12 @@
  *   data-editor-toolbar   which commands the generated toolbar carries: space-separated
  *                         tokens, "|" starts a new group, "source" renders at the end,
  *                         "none" opts out. Leave it off for the full default set
+ *   data-editor-upload-*  the image popover's file picker, read at init: url (a server
+ *                         endpoint, or "embed" for data: URLs), auto-upload, max-file-size,
+ *                         allowed-types, allowed-mime-types — setImageUpload() in markup
+ *   data-dropmenu-portal  the popovers portal to <body>
+ * Instance:
+ *   setImageUpload(config)   File Upload options for the image popover; chainable
  * Gotchas:
  *   - BETA: the API and the markup contract may still change.
  *   - Author a STANDARD NDS textarea field and put .nds-editor on its container. Nothing
@@ -708,6 +714,8 @@
         attrs:    { en: 'Attributes', ar: 'الخصائص' },
         invalidImageUrl: { en: 'Enter a valid image URL', ar: 'أدخل رابط صورة صالحًا' },
         invalidUrl:      { en: 'Enter a valid URL', ar: 'أدخل رابطًا صالحًا' },
+        uploadPending:   { en: 'Wait for the upload to finish', ar: 'انتظر حتى يكتمل الرفع' },
+        uploadFailed:    { en: 'The file was not uploaded. Choose another file or enter a link', ar: 'لم يتم رفع الملف. اختر ملفًا آخر أو أدخل رابطًا' },
         pasteBlocked:    { en: 'Pasting images is not available — use the image dialog', ar: 'لصق الصور غير متاح — استخدم نافذة إدراج الصورة' },
         pasteClipsShell: { en: 'Selection crosses a component — adjust it before pasting', ar: 'التحديد يتجاوز حدود مكون — عدّل التحديد قبل اللصق' },
         alt:      { en: 'Alt text', ar: 'النص البديل' },
@@ -912,6 +920,7 @@
             this._bindLinkMenu(signal);
             this._bindImageMenu(signal);
             this._bindRemoveMenu(signal);
+            this._readUploadAttrs();
 
             // Server-shipped data-state="disabled|readonly" applies at init;
             // later toggles arrive through the NDS.State hooks above.
@@ -1660,9 +1669,15 @@
 
         _saveSelection() {
             const sel = window.getSelection();
-            this._savedRange = (sel.rangeCount && this.editable.contains(sel.anchorNode))
-                ? sel.getRangeAt(0).cloneRange()
-                : null;
+            if (sel.rangeCount && this.editable.contains(sel.anchorNode)) {
+                this._savedRange = sel.getRangeAt(0).cloneRange();
+                return;
+            }
+            // No caret in the text yet: a popover inserts at the end, never nowhere.
+            const end = document.createRange();
+            end.selectNodeContents(this.editable.lastElementChild || this.editable);
+            end.collapse(false);
+            this._savedRange = end;
         }
 
         _restoreSelection() {
@@ -2531,6 +2546,17 @@
             return this;
         }
 
+        // Markup twin of setImageUpload: data-editor-upload-{option} on the root,
+        // the option in kebab case; `url` is uploadUrl.
+        _readUploadAttrs() {
+            const config = {};
+            for (const { name, value } of this.root.attributes) {
+                const m = /^data-editor-upload-(.+)$/.exec(name);
+                if (m) config[m[1] === 'url' ? 'uploadUrl' : m[1].replace(/-(\w)/g, (_, c) => c.toUpperCase())] = value;
+            }
+            if (Object.keys(config).length) this.setImageUpload(config);
+        }
+
         // Transient author-facing notice through the field's native forms
         // feedback (the editor root IS a form container). Soft dependency —
         // the notice is silently dropped if NDS.Forms isn't bundled.
@@ -2610,7 +2636,11 @@
             // srcs are embed-mode only.
             if (!url || url === 'https://' || !safeSrc(url)
                 || (url.startsWith('data:') && !this._imageEmbedAllowed())) {
-                this._fieldError(menu?.querySelector('[data-editor-image-url]'), uiLabel(TOOLBAR_STRINGS.invalidImageUrl));
+                // A picked file that gave no URL is the problem, not the link field.
+                const file = this._imageUploadHost()?.ndsUpload?.getAllFiles?.()[0];
+                const msg = !file || file.status === 'complete' ? TOOLBAR_STRINGS.invalidImageUrl
+                    : file.status === 'error' ? TOOLBAR_STRINGS.uploadFailed : TOOLBAR_STRINGS.uploadPending;
+                this._fieldError(menu?.querySelector('[data-editor-image-url]'), uiLabel(msg));
                 return;
             }
             dropmenu?.ndsDropmenu?.close?.();

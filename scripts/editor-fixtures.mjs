@@ -2388,6 +2388,67 @@ try {
         console.log('PASS image-default-policy-e2e');
     }
 
+    // E2E: data-editor-upload-* configures the picker in markup; Insert with no
+    // caret in the text lands at the end; a picked file that gave no URL names
+    // the upload (pending/failed), not the link field.
+    const markupOut = await page.evaluate(async () => {
+        const host = document.createElement('div');
+        host.innerHTML = `
+          <div class="nds-form-container nds-textarea nds-editor" data-editor-upload-url="/api/images" data-editor-upload-max-file-size="1048576">
+            <div class="nds-form-header"><label for="markupcfg"><span class="nds-label">حقل</span></label></div>
+            <div class="nds-form-control"><textarea class="nds-textarea" id="markupcfg"><p>نص</p></textarea></div>
+          </div>`;
+        document.body.appendChild(host);
+        const root = host.querySelector('.nds-editor');
+        NDS.Editor.create(root);
+        const editable = root.querySelector('.nds-editor-editable');
+        const menu = root.querySelector('[data-editor-image-dropmenu] .nds-dropmenu-menu');
+        const up = menu.querySelector('[data-editor-image-upload]');
+        const attrsRead = up.dataset.uploadUrl === '/api/images' && up.dataset.maxFileSize === '1048576'
+            && up.style.display !== 'none';
+        document.activeElement?.blur();
+        getSelection().removeAllRanges();
+        const open = async () => {
+            const btn = root.querySelector('[data-cmd="image"]');
+            btn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+            btn.click();
+            await new Promise(requestAnimationFrame);
+        };
+        await open();
+        const urlInput = menu.querySelector('[data-editor-image-url]');
+        urlInput.value = 'https://example.com/end.png';
+        menu.querySelector('[data-editor-image-confirm]').click();
+        // After the existing text (a trailing empty <p> may follow the image).
+        const img = editable.querySelector('img[src="https://example.com/end.png"]');
+        const noCaretInserts = !!img && !!(editable.querySelector('p').compareDocumentPosition(img) & Node.DOCUMENT_POSITION_FOLLOWING);        await new Promise(r => setTimeout(r, 250));
+        const messageOf = async (status) => {
+            await open();
+            const id = up.ndsUpload.addFile(new File([new Uint8Array([71, 73, 70])], 'a.gif', { type: 'image/gif' }), { validate: false, status });
+            urlInput.value = 'https://';
+            menu.querySelector('[data-editor-image-confirm]').click();
+            const text = urlInput.closest('.nds-form-container').querySelector('[data-feedback-target]')?.textContent || '';
+            up.ndsUpload.removeFile(id);
+            NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
+            menu.querySelector('[data-editor-image-cancel]').click();
+            await new Promise(r => setTimeout(r, 250));
+            return text;
+        };
+        const ar = NDS.lang === 'ar';
+        const pendingNamed = (await messageOf('uploading')).includes(ar ? 'انتظر' : 'Wait');
+        const failedNamed = (await messageOf('error')).includes(ar ? 'لم يتم رفع' : 'not uploaded');
+        NDS.Editor.destroy(root);
+        host.remove();
+        return { attrsRead, noCaretInserts, pendingNamed, failedNamed };
+    });
+    const markupProblems = Object.entries(markupOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (markupProblems.length) {
+        failures++;
+        console.log('FAIL image-markup-config-e2e');
+        markupProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS image-markup-config-e2e');
+    }
+
     console.log(failures ? `\n${failures} fixture(s) failed` : '\nAll fixtures passed');
     process.exitCode = failures ? 1 : 0;
 } finally {
