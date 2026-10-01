@@ -2,509 +2,441 @@
 layout: page
 title: File Upload
 hero_title: File Upload - National Design System
-hero_description: A file uploader with drag-and-drop or compact browse modes that validates and lists selected files, then sends them to your server or with a form submit
+hero_description: A file upload lets the user pick or drop files, checks each one, and sends them to your server or with a form
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.8.1"
-last_edit: "16/08/2026 - 03:36 PM"
+updated: "1.12.x"
+last_edit: "01/10/2026 - 12:47 PM"
 ---
 
-<!-- File Upload -->
-<section id="fileUploadComponent" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">File Upload</h2>
-            <p class="nds-section-description">Two modes for collecting files: a drag-and-drop zone for prominent upload areas, or a compact browse button for inline forms</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">State</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                                                <span class="nds-label">Required</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                                                <span class="nds-label">Disabled</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Drop Zone</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["single", ".nds-form-container", "uploadType", "data-state"], ["multiple", ".nds-file-input", "uploadType", "attr"]]'>
-                                                <span class="nds-label">Single File</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["dropbox", ".nds-form-container", "uploadType", "data-state"]'>
-                                                <span class="nds-label">Drop Zone</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-action-btn" data-action="populate-demo-files">
-                                    <span class="nds-label">Demo Files</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                    <span class="nds-label">Remove bg</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-file-upload" data-state="dropbox">
-                                    <div class="nds-form-header">
-                                        <label for="fileUploadInput">
-                                            <span class="nds-label">Upload files</span>
-                                            <span class="nds-info">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</span>
-                                        </label>
-                                    </div>
-
-                                    <div class="nds-form-control">
-                                        <input type="file" id="fileUploadInput" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt" class="nds-file-input" />
-                                        <div class="nds-upload-zone">
-                                            <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon"></i>
-                                            <div class="nds-upload-text">
-                                                <span class="nds-drop-hint">Drag and drop files here to upload</span>
-                                            </div>
-                                            <div class="nds-upload-hint">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</div>
-                                        </div>
-
-                                        <div class="nds-form-action">
-                                            <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
-                                                <i class="hgi hgi-stroke hgi-folder-01"></i>
-                                                <span class="nds-label">Browse Files</span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="nds-file-list"></div>
-                                    <div class="nds-form-footer"></div>
-
-                                    <!-- Hidden template for file items -->
-                                    <div class="nds-file-item-template" style="display: none;">
-                                        <div class="nds-file-item">
-                                            <span class="nds-feedback">
-                                                <span class="nds-feedback-icon">
-                                                    <i class="nds-icon" aria-hidden="true"></i>
-                                                </span>
-                                            </span>
-
-                                            <div class="nds-progress-circle">
-                                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                                    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-                                                    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
-                                                        stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-                                                </svg>
-                                                <div class="nds-progress-info">
-                                                    <span class="nds-progress-percentage">
-                                                        <span class="nds-progress-number"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <div class="nds-file-info">
-                                                <div class="nds-file-name nds-truncate"></div>
-                                                <div class="nds-file-error">
-                                                    <span class="nds-error-message"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="nds-file-actions">
-                                                <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only nds-remove-file" aria-label="Remove file">
-                                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-upload-default-1" id="tab-upload-default-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-upload-default-1"
-                                        aria-labelledby="tab-upload-default-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-form-container nds-file-upload" data-state="dropbox"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="fileUploadInput"&gt;
-      &lt;span class="nds-label"&gt;Upload files&lt;/span&gt;
-      &lt;span class="nds-info"&gt;Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.&lt;/span&gt;
-    &lt;/label&gt;
-  &lt;/div&gt;
-
-  &lt;div class="nds-form-control"&gt;
-    &lt;input type="file" id="fileUploadInput" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt" class="nds-file-input" /&gt;
-    &lt;div class="nds-upload-zone"&gt;
-      &lt;i class="hgi hgi-stroke hgi-file-upload nds-upload-icon"&gt;&lt;/i&gt;
-      &lt;div class="nds-upload-text"&gt;
-        &lt;span class="nds-drop-hint"&gt;Drag and drop files here to upload&lt;/span&gt;
-      &lt;/div&gt;
-      &lt;div class="nds-upload-hint"&gt;Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.&lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="nds-form-action"&gt;
-      &lt;button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn"&gt;
-        &lt;i class="hgi hgi-stroke hgi-folder-01"&gt;&lt;/i&gt;
-        &lt;span class="nds-label"&gt;Browse Files&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;div class="nds-file-list"&gt;&lt;/div&gt;
-  &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
-
-  &lt;!-- Hidden template for file items --&gt;
-  &lt;div class="nds-file-item-template" style="display: none;"&gt;
-    &lt;div class="nds-file-item"&gt;
-      &lt;span class="nds-feedback"&gt;
-        &lt;span class="nds-feedback-icon"&gt;
-          &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/span&gt;
-      &lt;/span&gt;
-
-      &lt;div class="nds-progress-circle"&gt;
-        &lt;svg width="24" height="24" viewBox="0 0 24 24"&gt;
-          &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" /&gt;
-          &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
-            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" /&gt;
-        &lt;/svg&gt;
-        &lt;div class="nds-progress-info"&gt;
-          &lt;span class="nds-progress-percentage"&gt;
-            &lt;span class="nds-progress-number"&gt;&lt;/span&gt;
-          &lt;/span&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div class="nds-file-info"&gt;
-        &lt;div class="nds-file-name nds-truncate"&gt;&lt;/div&gt;
-        &lt;div class="nds-file-error"&gt;
-          &lt;span class="nds-error-message"&gt;&lt;/span&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div class="nds-file-actions"&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-md nds-icon-only nds-remove-file" aria-label="Remove file"&gt;
-          &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="uploadOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A file upload is a form field for files. The user picks files with a Browse button, or drops them on a drop zone. The script checks each file and lists it in a row with its name, its status and a remove button. The files then go to your server one by one, or with the rest of the form.
+
+Pick another component when:
+
+- the image goes inside formatted text: [Editor](../components/editor), which has its own image upload
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="uploadFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-file-upload</code> is on the page. Dynamic elements added later are picked up automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-drag-drop"></i>
-                            <span class="nds-label">Drag and Drop</span>
-                        </span>
-                        <p class="nds-item-desc">Files can be dragged onto the drop zone with visual feedback on hover. Toggled on and off with <code class="nds-inline-code lang-html">data-state="dropbox"</code>.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-file-validation"></i>
-                            <span class="nds-label">Client-side Validation</span>
-                        </span>
-                        <p class="nds-item-desc">Validates file size, extension, and MIME type before upload. Rejected files appear in the list with an error message in Arabic or English.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-shield-01"></i>
-                            <span class="nds-label">Security</span>
-                        </span>
-                        <p class="nds-item-desc">File names are sanitized to strip path traversal sequences, null bytes, and control characters before display and upload.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-refresh"></i>
-                            <span class="nds-label">Upload Lifecycle</span>
-                        </span>
-                        <p class="nds-item-desc">Five status stages (ready, uploading, processing, complete, error) with progress tracking, retry for failures, and abort for in-progress uploads.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Full JavaScript API to add, remove, upload, retry, and abort files. Intercept uploads via the cancelable <code class="nds-inline-code lang-js">beforeUpload</code> event to set custom headers.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-translation"></i>
-                            <span class="nds-label">Bilingual Messages</span>
-                        </span>
-                        <p class="nds-item-desc">Error and validation messages display in Arabic or English based on the page language setting.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-code"></i>
-                            <span class="nds-label">Event-driven Integration</span>
-                        </span>
-                        <p class="nds-item-desc">Nine custom events cover the full upload lifecycle, letting you hook into file selection, progress updates, success, and error handling.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="uploadMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="upload-field" data-canon data-variants="uploadVariantsTable" data-harness="form" data-demo-width="400px">
+<div class="nds-form-container nds-file-upload" data-state="dropbox" data-max-file-size="2097152" data-allowed-types="jpg,jpeg,png,pdf">
+  <div class="nds-form-header">
+    <label for="upload-files">
+      <span class="nds-label">Supporting documents</span>
+      <span class="nds-info">Up to 2 MB each, in JPG, PNG or PDF</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <input type="file" id="upload-files" multiple class="nds-file-input">
+    <div class="nds-upload-zone">
+      <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon" aria-hidden="true"></i>
+      <div class="nds-upload-text">
+        <span class="nds-drop-hint">Drag and drop files here to upload</span>
+      </div>
+      <div class="nds-upload-hint">Up to 2 MB each, in JPG, PNG or PDF</div>
+    </div>
+    <div class="nds-form-action">
+      <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
+        <i class="hgi hgi-stroke hgi-folder-01" aria-hidden="true"></i>
+        <span class="nds-label">Browse Files</span>
+      </button>
+    </div>
+  </div>
+  <div class="nds-file-list" aria-live="polite"></div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Sending Files -->
-<section id="uploadSending" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Sending Files to Your Server</h2>
-            <p class="nds-section-description">The component owns the file picker, validation, and the on-screen list; your code decides where the files go. Two patterns cover almost every case, chosen by file size and whether you want per-file progress.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr><th>Pattern</th><th>How it works</th><th>Best for</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>Bundle on submit</strong></td><td>No <code class="nds-inline-code lang-html">data-upload-url</code>. Files stay in the component until you read them on submit and POST them with the rest of the form to a single endpoint.</td><td>Forms and small attachments, atomic submit, simplest backend</td></tr>
-                        <tr><td><strong>Upload as you go</strong></td><td>Set <code class="nds-inline-code lang-html">data-upload-url</code> with <code class="nds-inline-code lang-html">data-auto-upload="true"</code> (or a manual button calling <code class="nds-inline-code lang-js">startUpload()</code>). Each file uploads on its own with a progress ring, then a success check or a retry. The submit then references the uploaded files.</td><td>Large files and media, when you want per-file progress and retry</td></tr>
-                    </tbody>
-                </table>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Pattern 1: Bundle on submit (no data-upload-url) ──
-// Send the files WITH the form fields, in a single request.
-form.addEventListener('nds:formValid', (e) =&gt; {
-    e.preventDefault();                            // you are sending it yourself
-    const api  = NDS.Upload.getInstance('.nds-file-upload');
-    const data = new FormData(form);               // your text fields
-    api.getAllFiles().forEach(f =&gt; data.append('attachments[]', f.file));
-    fetch(form.action, { method: 'POST', body: data });
-});
-
-// ── Pattern 2: Upload as you go (set data-upload-url) ──
-// Auto-upload each file the moment it is picked:
-//   &lt;div class="nds-file-upload" data-upload-url="/api/files" data-auto-upload="true"&gt;...&lt;/div&gt;
-// Or trigger from your own button instead of data-auto-upload:
-uploadButton.addEventListener('click', () =&gt; {
-    NDS.Upload.getInstance('.nds-file-upload').startUpload();
-});
-</code>
-                    </div>
-                </div>
-                <p>Three things to know with either pattern:</p>
-                <ul>
-                    <li>Files never ride a native form submit. The component clears the native <code class="nds-inline-code lang-html">&lt;input&gt;</code> after selection, so always send them with <code class="nds-inline-code lang-js">getAllFiles()</code> or <code class="nds-inline-code lang-html">data-upload-url</code>.</li>
-                    <li><code class="nds-inline-code lang-html">data-upload-url</code> receives <strong>one file per request</strong>, not all of them at once, so the endpoint should accept a single <code class="nds-inline-code lang-js">file</code> field per POST.</li>
-                    <li>On a failed upload, the file row shows the server's message when the response body is JSON with an <code class="nds-inline-code lang-js">error</code> field (e.g. <code class="nds-inline-code lang-js">{"error": "Quota exceeded"}</code>), falling back to the HTTP status text, then a localized generic message. Override manually anytime with <code class="nds-inline-code lang-js">setFileStatus(fileId, 'error', { error })</code>.</li>
-                    <li>The input's <code class="nds-inline-code lang-html">accept</code> attribute only hints the OS picker and is advisory. Just set <code class="nds-inline-code lang-html">data-allowed-types</code> (which actually enforces extensions) and the component fills <code class="nds-inline-code lang-html">accept</code> from it automatically, so you never hand-write the picker filter or risk it drifting from what is enforced.</li>
-                </ul>
-            </div>
-        </div>
+<section id="uploadVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Button mode removes `.nds-upload-zone` and the `dropbox` token. Single adds the `single` token and removes `multiple` from the file input. Write both changes.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Mode | Drop zone (default) | `[data-state~="dropbox"]` | `.nds-file-upload` | A large dashed area that takes dropped files. Use it when the upload is the main task of the page. See Drop Zone |
+| Mode | Button | `remove` | `.nds-upload-zone` | A Browse button only. Use it when the upload is one field in a longer form |
+| Files | Many (default) | `[multiple]` | `.nds-file-input` | The user can add many files |
+| Files | Single | `[data-state~="single"]` | `.nds-file-upload` | The list holds one file, and a new file replaces it. See Single File |
+| State (any) | Disabled | `[data-state~="disabled"]` | `.nds-file-upload` | The user cannot add or remove files. See Disabled |
+| State (any) | Required (hint: Press Validate with no file) | `[data-required]` | `.nds-file-upload` | The form needs at least one file that passed the checks. See File Checks |
+| Max files | Max files | `[data-max-files="3"]` | `.nds-file-upload:not([data-state~="single"])` | The list takes 3 files at most. Not with Single. See File Checks |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+{: #uploadVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="uploadGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use the <strong>drop zone mode</strong> (<code class="nds-inline-code lang-html">data-state="dropbox"</code>) for dedicated upload areas where file selection is the primary action on the page</li>
-                    <li>Use the <strong>browse button mode</strong> (no dropbox state) when file upload is one field among many in a form</li>
-                    <li>Use <strong>single file mode</strong> (<code class="nds-inline-code lang-html">data-state="single"</code>) for profile photos, document replacements, or anywhere only one file is expected</li>
-                    <li>Always set <code class="nds-inline-code lang-html">data-max-file-size</code> and <code class="nds-inline-code lang-html">data-allowed-types</code> to give users immediate validation feedback rather than waiting for server rejection</li>
-                    <li>Set <code class="nds-inline-code lang-html">data-max-files</code> when the server has a file count limit. Excess files appear in the list with an error so users understand why they were rejected</li>
-                    <li>Use the <code class="nds-inline-code lang-js">nds:upload:beforeUpload</code> event to add authorization headers, CSRF tokens, or extra form fields. The component does not handle authentication.</li>
-                    <li>Do not use this component for large file transfers (500MB+) that need chunked upload or resumable protocols. Build a custom solution with the events API as a starting point</li>
-                    <li>Server-side validation must duplicate all client-side checks. Client validation improves UX but cannot be trusted for security</li>
-                    <li>Combine <code class="nds-inline-code lang-html">data-allowed-types</code> (extension) with <code class="nds-inline-code lang-html">data-allowed-mime-types</code> for defense in depth: extensions can be spoofed, MIME types add a second check</li>
-                    <li>Add <code class="nds-inline-code lang-html">aria-live="polite"</code> to the <code class="nds-inline-code lang-html">.nds-file-list</code> so newly added rows and per-file validation errors are announced to screen-reader users.</li>
-                    <li>The hidden <code class="nds-inline-code lang-html">.nds-file-item-template</code> is optional: when omitted, the component renders rows from its built-in markup. Supply your own template only to customize the per-file row.</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr><th>Attribute</th><th>Description</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="dropbox"</code></td><td>Enables the drag-and-drop zone UI with dashed border and upload icon</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="single"</code></td><td>Single file mode: new selection replaces the current file</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-upload-url</code></td><td>Server endpoint for XHR file uploads (POST)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-auto-upload="true"</code></td><td>Automatically upload files on selection instead of waiting for <code class="nds-inline-code lang-js">startUpload()</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-max-file-size</code></td><td>Maximum file size in bytes. Default: 10485760 (10 MB)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-max-files</code></td><td>Maximum number of files allowed. Default: unlimited</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-allowed-types</code></td><td>Comma-separated file extensions: <code class="nds-inline-code lang-html">jpg,png,pdf</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-allowed-mime-types</code></td><td>Comma-separated MIME types, supports wildcards: <code class="nds-inline-code lang-html">image/*,application/pdf</code></td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Events</h3>
-                <p>Every <code class="nds-inline-code lang-js">fileData</code> payload is the consistent shape <code class="nds-inline-code lang-js">{ file, id, status, progress, error }</code>. For <code class="nds-inline-code lang-js">selected</code> it is an array of these, and for <code class="nds-inline-code lang-js">validationError</code> each <code class="nds-inline-code lang-js">errors[]</code> entry carries one as its <code class="nds-inline-code lang-js">fileData</code>.</p>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr><th>Event</th><th>Detail</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:ready</code></td><td><code class="nds-inline-code lang-js">{ instance }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:selected</code></td><td><code class="nds-inline-code lang-js">{ files, allFiles, fileData }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:validationError</code></td><td><code class="nds-inline-code lang-js">{ errors }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:beforeUpload</code> (cancelable)</td><td><code class="nds-inline-code lang-js">{ fileData, formData, xhr }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:progress</code></td><td><code class="nds-inline-code lang-js">{ fileData, progress }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:success</code></td><td><code class="nds-inline-code lang-js">{ fileData, response }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:error</code></td><td><code class="nds-inline-code lang-js">{ fileData, error, status?, response? }</code>: <code class="nds-inline-code lang-js">status</code> (HTTP status code) and <code class="nds-inline-code lang-js">response</code> (raw response body) are present for HTTP errors only; network-level errors omit them</td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:removed</code></td><td><code class="nds-inline-code lang-js">{ fileData, fileId }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:maxFilesReached</code></td><td><code class="nds-inline-code lang-js">{ maxFiles, currentCount }</code></td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Upload</strong> API provides static methods to access instances and instance methods to manage files, trigger uploads, and control the component state.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Static methods ──────────────────────────────────
-NDS.Upload.init();                             // Initialize all .nds-file-upload on page
-NDS.Upload.reinit();                           // Re-scan DOM after dynamic changes
-NDS.Upload.create(element, options);           // Create instance; returns it (or the existing one), null if it can't init
-NDS.Upload.getInstance('.nds-file-upload');     // Get instance by selector or element
-NDS.Upload.whenReady('.nds-file-upload', fn);  // Call fn(instance) when ready
-
-// ── Configure in JS (options override the data-* attributes) ──
-NDS.Upload.create('.nds-file-upload', {
-    uploadUrl: '/api/upload',
-    autoUpload: true,
-    maxFileSize: 2 * 1024 * 1024,               // bytes
-    maxFiles: 3,
-    allowedTypes: ['jpg', 'png', 'pdf'],        // or the 'jpg,png,pdf' string
-    allowedMimeTypes: ['image/*', 'application/pdf']
-});
-
-// ── File management ─────────────────────────────────
-const upload = NDS.Upload.getInstance('.nds-file-upload');
-
-const fileId = upload.addFile(file, {   // Add file to queue
-    status: 'ready',                    // 'ready' | 'uploading' | 'processing' | 'complete' | 'error'
-    progress: 0,                        // 0-100
-    error: null,                        // Error message string
-    validate: false                     // true → run size/type/MIME checks (sets 'error' on failure)
-});                                     // Returns fileId or null if max files reached
-
-upload.removeFile(fileId);              // Remove file, abort if uploading
-upload.clearAllFiles();                 // Remove all files, abort all uploads
-upload.getFile(fileId);                 // Returns { file, id, status, progress, error }
-upload.getAllFiles();                    // Returns array of all file objects
-upload.getFilesByStatus('error');       // Filter by status
-
-// ── Upload control ──────────────────────────────────
-upload.startUpload(fileId);             // Upload specific file
-upload.startUpload();                   // Upload all 'ready' files
-upload.retry(fileId);                   // Reset error file and re-upload
-upload.abort(fileId);                   // Cancel in-progress upload
-
-// ── Status and progress ─────────────────────────────
-upload.setFileStatus(fileId, 'error', { error: 'Server rejected file' });
-upload.setFileProgress(fileId, 75);     // Auto-transitions to 'processing' at 100%
-
-// ── Component control ───────────────────────────────
-upload.setDisabled(true);               // Disable input, drag-and-drop, and buttons
-upload.refreshUI();                     // Force full UI rebuild
-upload.getConfig();                     // Returns frozen copy of current config
-upload.validateFile(file);              // Size/type/MIME checks against live config, nothing staged — [] on pass, [messages] on fail
-upload.destroy();                       // Remove listeners, abort uploads, clean DOM
-
-// ── Intercept uploads for custom headers ────────────
-const el = document.querySelector('.nds-file-upload');
-el.addEventListener('nds:upload:beforeUpload', (e) =&gt; {
-    e.detail.xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-    e.detail.formData.append('folder', 'documents');
-    // e.preventDefault() cancels the upload
-});
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<section id="uploadBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Drop Zone
+{: .nds-block-title}
+
+The token `dropbox` in `data-state` on `.nds-file-upload` turns the field into a dashed drop zone. The zone shows `.nds-upload-zone` in place of the label: an icon, the drop text and the hint. A click on the zone opens the file picker, and a file dragged over it colors the zone in the success color. Without `dropbox`, the zone is hidden and the field takes no dropped files. You can add or remove the token after the page loads.
+
+### Single File
+{: .nds-block-title}
+
+The token `single` in `data-state` on `.nds-file-upload` keeps one file in the list. A new pick or drop replaces it and stops its upload. When the user picks several files, only the first is kept. Remove `multiple` from the file input, so the picker lets the user choose one file. `data-max-files` does nothing with `single`.
+
+### File Checks
+{: .nds-block-title}
+
+The script checks each file when the user adds it. `data-max-file-size` sets the largest size in bytes, and the default is 10 MB. `data-allowed-types` lists the file extensions, and `data-allowed-mime-types` lists the MIME types, such as `image/png`. A file that fails shows in the list with the reason, in Arabic or English. It is never uploaded, and `retry()` refuses it.
+
+`data-max-files` sets how many files the list holds. The files past the limit show in the list with an error too. `data-required` on `.nds-file-upload` makes the form need at least one file that passed the checks. The error clears when the user adds a file. A form reset empties the list.
+
+### Send with the Form
+{: .nds-block-title}
+
+With no `data-upload-url`, the files stay in the field until the form is sent. This fits small attachments that go in one request with the other fields. The script empties the file input after each pick, so a native form submit sends no files. Add `data-ajax` to the form, so Forms stops the native submit. Then, at `nds:formValid`, add the files from `getAllFiles()` to the form data and send it yourself. The JavaScript example below does this.
+
+### Upload as You Go
+{: .nds-block-title}
+
+`data-upload-url` on `.nds-file-upload` makes the script send each file to that address in its own POST request. The file goes in the field that `data-field-name` names, and the default is `file`. This fits large files, where the user needs the progress and a retry for each file. With `data-auto-upload="true"`, each file goes as soon as it passes the checks. Without it, call `startUpload()`. On a failure, the row shows the `error` text of a JSON response, then the HTTP status text, then a general message. The server's reply goes in the file's `response`, so the form can send what the server returned, such as an id.
+
+The script sends no login or CSRF header. Set them on the `xhr` of `nds:upload:beforeUpload`, and add extra fields to its `formData`. To send the file yourself, cancel that event.
+
+While a file uploads, the form does not submit, whether the field is required or not. `data-upload-timeout` sets a time limit in seconds for each upload. When it runs out, the file goes to `error` with the message "Upload timed out", and `retry()` can send it again. Without it, a dead connection leaves the file uploading until your code calls `abort()`.
+
+### File Rows
+{: .nds-block-title}
+
+Each file gets a row. A file the user just added is `ready`. During an upload, the row shows a progress ring. When every byte is sent, the row goes to `processing` and pulses until the server answers. Then it shows a check mark when the upload is `complete`, or a cross and the reason on an `error`. Pick a file in the demo to see a full upload.
+
+<script type="text/html" id="upload-rows" data-canon data-code="none" data-demo-width="400px">
+<div class="nds-form-container nds-file-upload" id="upload-rows-demo" data-upload-url="/demo/upload" data-auto-upload="true">
+  <div class="nds-form-header">
+    <label for="upload-rows-input">
+      <span class="nds-label">Attachments</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <input type="file" id="upload-rows-input" multiple class="nds-file-input">
+    <div class="nds-form-action">
+      <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
+        <i class="hgi hgi-stroke hgi-folder-01" aria-hidden="true"></i>
+        <span class="nds-label">Browse Files</span>
+      </button>
+    </div>
+  </div>
+  <div class="nds-file-list" aria-live="polite"></div>
+</div>
+</script>
+<script>
+// A fake server for this demo only: each upload runs to 100%, then processes for a moment.
+document.addEventListener('nds:upload:ready', function (e) {
+  if (e.target.id !== 'upload-rows-demo') return;
+  var up = e.detail.instance;
+  e.target.addEventListener('nds:upload:beforeUpload', function (ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    var id = ev.detail.fileData.id, progress = 0;
+    up.setFileStatus(id, 'uploading', { progress: 0 });
+    var timer = setInterval(function () {
+      progress += 10;
+      if (!up.setFileProgress(id, progress)) return clearInterval(timer);
+      if (progress < 100) return;
+      clearInterval(timer);
+      setTimeout(function () { up.setFileStatus(id, 'complete'); }, 1500);
+    }, 300);
+  });
+  var file = function (name) { return new File(['x'], name); };
+  up.addFile(file('national-id.pdf'));
+  up.addFile(file('salary-certificate.pdf'), { status: 'complete' });
+  up.addFile(file('bank-statement.pdf'), { status: 'error', error: 'File size exceeds 2 MB' });
+  up.startUpload(up.addFile(file('lease-contract.pdf')));
+});
+</script>
+
+The script draws each row from the built-in row. To customize the row, put a hidden `.nds-file-item-template` inside `.nds-file-upload`: the script copies its `.nds-file-item` for each file. Keep the class names of the parts, because the script fills and shows them by class. This template is the built-in row:
+
+<script type="text/html" id="upload-row-template" data-canon data-preview="none">
+<div class="nds-file-item-template" hidden>
+  <div class="nds-file-item">
+    <span class="nds-feedback">
+      <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+    </span>
+    <div class="nds-progress-circle">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
+        <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
+      </svg>
+      <div class="nds-progress-info">
+        <span class="nds-progress-percentage"><span class="nds-progress-number"></span></span>
+      </div>
+    </div>
+    <div class="nds-file-info">
+      <div class="nds-file-name nds-truncate"></div>
+      <div class="nds-file-error"><span class="nds-error-message"></span></div>
+    </div>
+    <div class="nds-file-actions">
+      <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file" aria-label="Remove file">
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+
+### Saved Files
+{: .nds-block-title}
+
+To show the files the server already holds, such as in an edit form, add each one as a complete file: `instance.addFile(new File([], 'lease-contract.pdf'), { status: 'complete' })`. The row shows the name and a check mark, and the script never uploads it. To delete the server copy when the user removes the row, listen for `nds:upload:removed`.
+
+### Disabled
+{: .nds-block-title}
+
+The token `disabled` in `data-state` on `.nds-file-upload` stops the user from adding or removing files. Forms disables the file input and the buttons, and the drop zone ignores clicks and dropped files. `setDisabled(true)` and `setDisabled(false)` add and remove the token.
+
+</div>
+  </div>
+</section>
+
+<section id="uploadFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-file-upload</code> starts on load, and so does one added to the page later. A field removed from the page stops its uploads and its listeners.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-file-validation"></i>
+            <span class="nds-label">Client-side Validation</span>
+          </span>
+          <p class="nds-item-desc">Each file is checked for size, extension and type before it is listed. A file that fails stays in the list with the reason, and it is never uploaded.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-shield-01"></i>
+            <span class="nds-label">Security</span>
+          </span>
+          <p class="nds-item-desc">The script removes path parts, control characters and leading dots from each file name before it shows or sends it. It cuts the name to 255 characters.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-refresh"></i>
+            <span class="nds-label">Upload Lifecycle</span>
+          </span>
+          <p class="nds-item-desc">Each file has a status: ready, uploading, processing, complete or error. Its row shows the status with a progress ring, a check mark or a cross.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-api"></i>
+            <span class="nds-label">Programmatic Control</span>
+          </span>
+          <p class="nds-item-desc">Methods add, remove, upload, retry and stop files. Your code can also set a file's status and progress, for an upload it sends itself.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-translation"></i>
+            <span class="nds-label">Bilingual Messages</span>
+          </span>
+          <p class="nds-item-desc">The check and upload errors show in Arabic or English, from the page language.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-code"></i>
+            <span class="nds-label">Event-driven Integration</span>
+          </span>
+          <p class="nds-item-desc">Nine events report each step: the field started, a file added, a file rejected, the list full, an upload started, its progress, its success or error, and a file removed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="uploadPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Set `data-max-file-size` and `data-allowed-types`, and state the same limits in the info and hint text. The user then sees why a file fails before any upload.
+- Check every file again on the server. A user can get past the checks in the browser.
+- Add `data-allowed-mime-types` too. A renamed file passes the extension check, but not the type check.
+- Do not write `accept` on the file input. The script writes it from `data-allowed-types`.
+- Keep the Browse button in the drop zone. The zone takes no keyboard focus, so keyboard users need the button.
+- Keep `aria-live="polite"` on `.nds-file-list`, so a screen reader announces each new row and its error.
+- Do not use the upload for files that need a resumable or a chunked upload. It sends each file in one request.
+- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+
+</div>
+  </div>
+</section>
+
+<section id="uploadApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-state~="dropbox"` | `.nds-file-upload` | Set it yourself. Turns on the drop zone. See Drop Zone |
+| `data-state~="single"` | `.nds-file-upload` | Set it yourself. The list holds one file. See Single File |
+| `data-state~="disabled"` | `.nds-file-upload` | Set it yourself, or call `setDisabled()`. See Disabled |
+| `data-required` | `.nds-file-upload` | The form needs at least one file that passed the checks |
+| `data-max-file-size` | `.nds-file-upload` | The largest file, in bytes. The default is `10485760` (10 MB) |
+| `data-allowed-types` | `.nds-file-upload` | The allowed extensions, with commas and no dots: `jpg,png,pdf`. The script writes the matching `accept` on the file input when it starts |
+| `data-allowed-mime-types` | `.nds-file-upload` | The allowed file types, with commas: `image/*,application/pdf`. `image/*` takes every image type. A file whose type the browser does not report passes this check |
+| `data-max-files` | `.nds-file-upload` | How many files the list holds. The default is no limit. Ignored with `single` |
+| `data-upload-url` | `.nds-file-upload` | The address each file is sent to, one POST request per file. See Upload as You Go |
+| `data-field-name` | `.nds-file-upload` | The name of the form field that holds the file in each upload request. The default is `file` |
+| `data-upload-timeout` | `.nds-file-upload` | The time limit for each upload, in seconds. The default is `0`, no limit. See Upload as You Go |
+| `data-auto-upload="true"` | `.nds-file-upload` | Sends each file as soon as it passes the checks. Needs `data-upload-url` |
+| `data-state~="drag-over"` | `.nds-form-control` | The script sets it while a file is dragged over the drop zone. It removes it when the file leaves, on the drop, and on `destroy()` |
+| `accept` | `.nds-file-input` | The script writes it from `data-allowed-types`. Do not write it yourself |
+| `data-file-id` | `.nds-file-item` | The script writes the file's id when it draws the row. The row's `.nds-remove-file` gets the same id |
+| `data-state~="uploading"`, `data-state~="processing"` | `.nds-file-item` | The script sets the token that matches the file's status, and removes it when the status changes. Both show the progress ring |
+| `data-status="success"`, `data-status="error"` | `.nds-file-item` and its `.nds-feedback` | The script sets `success` when the file is complete and `error` when it fails. It removes it when the status changes. `error` also shows the reason |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--progress-size` | `24px` | The size of the progress ring in a row. Set it on `.nds-file-upload` |
+| `--upload-background-dropbox-default` | `var(--colors-neutral-100)` | The background of the drop zone |
+| `--upload-background-dropbox-active` | `var(--background-success-faint)` | The background of the drop zone while a file is dragged over it |
+| `--upload-background-file-item` | `var(--colors-neutral-100)` | The background of a file row |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+A file is an object `{ file, id, status, progress, error, response }`. `file` is the browser's `File`, and `status` is `ready`, `uploading`, `processing`, `complete` or `error`. `response` is the server's reply once an upload ends, and `null` before.
+
+| Method | Effect |
+|---|---|
+| `NDS.Upload.init()` | Starts every `.nds-file-upload` that has not started. The loader calls it on load |
+| `NDS.Upload.reinit()` | The same as `init()` |
+| `NDS.Upload.create(el, options)` | Starts one field and returns its instance. `el` is the element or a selector. On a field that has started, it adds `options` to it and returns the same instance. It returns `null` when the field has no file input, `.nds-form-control` or `.nds-file-list` |
+| `NDS.Upload.getInstance(el)` | Returns the instance of the field, or `null` |
+| `NDS.Upload.whenReady(el, callback)` | Calls `callback(instance)` now, or when the field starts |
+| `instance.addFile(file, options)` | Adds a `File` to the list and returns its id, or `null` when the list is full. Options: `validate` (`true` runs the checks, default `false`), `status` (default `ready`), `progress` (default `0`) and `error` |
+| `instance.removeFile(id)` | Removes one file and stops its upload |
+| `instance.clearAllFiles()` | Removes every file and stops every upload |
+| `instance.getFile(id)`, `instance.getAllFiles()` | Returns one file, or an array of every file |
+| `instance.getFilesByStatus(status)` | Returns an array of the files at that status |
+| `instance.startUpload(id)` | Uploads one `ready` file. With no id, it uploads every `ready` file |
+| `instance.retry(id)` | Sends a file again after its upload failed. It returns `false` for a file the checks rejected |
+| `instance.abort(id)` | Stops an upload. The file goes to `error`, with the message "Upload cancelled" |
+| `instance.setFileStatus(id, status, options)` | Sets the status of a file. Options: `progress` and `error` |
+| `instance.setFileProgress(id, percent)` | Sets the progress ring. At `100`, an uploading file goes to `processing` |
+| `instance.validateFile(file)` | Runs the checks on a `File` without adding it. Returns `[]` when it passes, or an array of messages |
+| `instance.getConfig()` | Returns the settings in use, from the attributes and the `create()` options, as a frozen object |
+| `instance.setDisabled(disabled)` | `true` disables the field, and `false` enables it |
+| `instance.refreshUI()` | Draws every row again |
+| `instance.destroy()` | Removes the listeners, stops the uploads and empties the list |
+{: .nds-table .nds-responsive}
+
+The `create()` options override the attributes of the same name.
+
+| Option | Default | Effect |
+|---|---|---|
+| `uploadUrl` | `data-upload-url` | The address each file is sent to |
+| `autoUpload` | `data-auto-upload` | `true` sends each file as soon as it passes the checks |
+| `maxFileSize` | `data-max-file-size` | The largest file, in bytes |
+| `maxFiles` | `data-max-files` | How many files the list holds |
+| `allowedTypes` | `data-allowed-types` | An array of extensions, or a string with commas |
+| `allowedMimeTypes` | `data-allowed-mime-types` | An array of file types, or a string with commas |
+| `fieldName` | `data-field-name` | The name of the form field that holds the file |
+| `uploadTimeout` | `data-upload-timeout` | The time limit for each upload, in seconds |
+{: .nds-table .nds-responsive}
+
+Every event fires on `.nds-file-upload` and bubbles.
+
+| Event | Fires when | Detail |
+|---|---|---|
+| `nds:upload:ready` | the field starts | `{ instance }` |
+| `nds:upload:selected` | the user adds files that pass the checks | `{ files, allFiles, fileData }`: the new `File`s, every `File` in the list, and the new files |
+| `nds:upload:validationError` | the user adds files that fail the checks | `{ errors }`: an array of `{ file, errors, fileData }` |
+| `nds:upload:maxFilesReached` | a file does not fit in the list | `{ maxFiles, currentCount }` |
+| `nds:upload:beforeUpload` | before each upload. Cancelable | `{ fileData, formData, xhr }`. Set headers on `xhr`, add fields to `formData`, or call `preventDefault()` and send the file yourself |
+| `nds:upload:progress` | during an upload | `{ fileData, progress }` |
+| `nds:upload:success` | the server answers with a 2xx status | `{ fileData, response }` |
+| `nds:upload:error` | the upload fails | `{ fileData, error, status, response }`. A network error or a timeout has no `status` and no `response` |
+| `nds:upload:removed` | a file leaves the list: `removeFile()`, `clearAllFiles()`, a form reset, or a new file in Single | `{ fileData, fileId }` |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="upload-js" data-canon data-lang="js">
+// Send the files with the form, in one request. The form carries data-ajax.
+var form = document.querySelector('#request-form');
+form.addEventListener('nds:formValid', function () {
+  var data = new FormData(form);
+  NDS.Upload.getInstance('#request-form .nds-file-upload').getAllFiles().forEach(function (f) {
+    data.append('attachments[]', f.file);
+  });
+  fetch(form.action, { method: 'POST', body: data });
+});
+
+// Or upload each file on its own. The field carries data-upload-url and data-auto-upload="true".
+var accessToken = 'your-access-token';
+document.querySelector('#documents-upload').addEventListener('nds:upload:beforeUpload', function (e) {
+  e.detail.xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+});
+</script>
+
+The full API is in the banner of `_js/nds-upload.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="uploadRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Contact Us Template](../templates/contact-us-template): an optional upload in Button mode. The page marks each file complete when the user adds it, because the field has no upload address.
+- [Editor](../components/editor): the image form holds a Single upload with no drop zone.
+
+</div>
+  </div>
 </section>

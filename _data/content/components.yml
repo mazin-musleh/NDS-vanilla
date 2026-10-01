@@ -360,8 +360,8 @@
   scss: _sass/components/_feedback-icons.scss
 
 - title: "File Upload"
-  description: "Drag-and-drop file input with preview and validation"
-  use_when: "Any file input: drag-and-drop upload, attachment field, document upload, image picker, with preview and validation."
+  description: "File field with a drop zone, file checks and upload status"
+  use_when: "Any file input: attachment field, document upload, drag-and-drop area, with file checks and per-file upload status."
   icon: '<i class="hgi hgi-stroke hgi-upload-04"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
