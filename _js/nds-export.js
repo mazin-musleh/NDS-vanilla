@@ -19,16 +19,19 @@
  *   (none)
  * Hooks:
  *   on the button:      data-export="csv|xls|pdf" · data-export-target (selector)
- *                       data-export-name (filename) · data-export-scope
- *   on any source:      data-export-rows (row selector — this is what picks the generic
- *                       adapter over the table one)
+ *                       data-export-scope
+ *   on any source:      data-export-name (filename) · data-export-rows (row selector; a
+ *                       source that is not a table reads its direct children without it)
+ *                       · data-export-skip (space-separated field keys, non-table only)
  *   on a cell or field: data-export-field (its key) · data-export-value (the exact value)
  *   on a <th>:          data-export-label (column header override) · data-export-skip
  * Gotchas:
  *   - scope "auto" means: the selected rows if any row is selected, otherwise all of them.
  *   - Rows hidden by PAGINATION are exported (every page); rows hidden by a FILTER are not.
- *   - Cell value order: data-export-value, then data-sort-value (tables only), then the
- *     cell's text.
+ *   - Cell value order: data-export-value, then the cell's text. data-sort-value is never read.
+ *   - data-export-skip works on a <th> or a field, never on a single <td>.
+ *   - A cell starting = + - @ TAB CR gets a leading ' (formula guard); a plain negative
+ *     number is left alone.
  *   - The row-selection checkbox column is detected and dropped automatically.
  *   - "pdf" opens a print window — the user saves as PDF. No PDF file is generated.
  */
@@ -52,7 +55,7 @@
  *                    from [data-export-field="key"] descendants per row.
  *
  * Cell value precedence (both adapters):
- *   data-export-value > data-sort-value (tables only) > NDS.Tables.getCellText / textContent
+ *   data-export-value > NDS.Tables.getCellText / textContent
  */
 (function () {
     'use strict';
@@ -217,6 +220,8 @@
     function spreadsheetSafe(value) {
         const s = value == null ? '' : String(value);
         if (!s) return s;
+        // A plain negative number is no formula: keep it a number so the column still sums.
+        if (/^-(\d+\.?\d*|\.\d+)$/.test(s)) return s;
         const c = s.charCodeAt(0);
         // = + - @ \t \r
         if (c === 0x3D || c === 0x2B || c === 0x2D || c === 0x40 || c === 0x09 || c === 0x0D) {
