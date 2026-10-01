@@ -17,6 +17,8 @@
  *   on the .nds-form-container:  data-format (HH H hh h mm ss A a — sets the display AND
  *                                which unit pickers the panel holds) · data-step (minute
  *                                step)
+ *   .time-picker-toggle:         the button that opens the panel (none: a click on the
+ *                                input opens it)
  *   on the .nds-time-input:      data-min-time · data-max-time (24h HH:mm[:ss], always)
  * Gotchas:
  *   - The visible input is DISPLAY ("02:30 م") and is typeable; the hidden .nds-time-value
@@ -265,6 +267,8 @@
         bindInitEvents() {
             const signal = this.instanceAbortController.signal;
             const openFrom = (e) => {
+                // Forms copies a readonly input to the field's state; the toggle button stays live.
+                if (this.elements.input.disabled || NDS.State.has(this.elements.container, 'readonly')) return;
                 if (!this.isPanelCreated) {
                     this.createPanelDOM();
                     if (!this.elements.panel) {
@@ -277,12 +281,9 @@
                 this.dropmenuInstance.toggle();
             };
 
-            // The toggle button opens; a click on the input opens too, but typing
-            // must keep working, so the caret is never stolen.
-            if (this.elements.toggleBtn) {
-                this.elements.toggleBtn.addEventListener('click', openFrom, { signal });
-            }
-            this.elements.input.addEventListener('click', openFrom, { signal });
+            // The button opens the panel, so a click in the input only places the cursor.
+            // Markup with no button keeps the input as the trigger.
+            (this.elements.toggleBtn || this.elements.input).addEventListener('click', openFrom, { signal });
 
             // Fires for hand-typed edits AND our own commits. Attached on the
             // input so the validity stamp lands before forms' document-level

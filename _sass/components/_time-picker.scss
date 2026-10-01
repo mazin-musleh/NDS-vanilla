@@ -4,20 +4,12 @@
 // to an NDSDropmenu wrapper) and carries both `.nds-time-picker-menu` and
 // `.nds-dropmenu-menu`, so dropmenu's own surface, width and positioning apply.
 // The unit pickers inside it are stock `.nds-select`s — _forms.scss styles those.
-// Only the field caret and the row that holds the units belong here.
+// Only the panel width and the row that holds the units belong here.
 
 .nds-time-picker {
     position: relative;
 
     .nds-form-control {
-        > input,
-        > i {
-            cursor: pointer;
-        }
-        &::after {
-            // Same caret as .nds-select — see %select-caret-after in _mixins.scss
-            @extend %select-caret-after;
-        }
         // Size the panel by its content, not by the field — a full-width field
         // otherwise stretched it across the page. Dropmenu's own default gets
         // this right on desktop but floors at `max-content`, and min-width beats
@@ -26,21 +18,9 @@
         --dropmenu-width: fit-content;
         --dropmenu-min-width: 0;
     }
-
-    &[data-state~="open"] {
-        --_caret-flip: 180deg;
-    }
 }
 
 .nds-time-picker-menu {
-    // Stop the field's open-caret flip at the panel boundary. --_caret-flip
-    // INHERITS, so without this every unit select inside an open panel renders
-    // its own caret upside-down while its menu is still closed. Reset here on the
-    // panel, not on the units: a declaration on the element itself always beats an
-    // inherited value, so each unit's `.nds-select[data-state~="open"]` rule still
-    // wins without depending on @use order.
-    --_caret-flip: 0deg;
-
     .nds-time-picker-units {
         display: flex;
         gap: var(--spacing-sm);
