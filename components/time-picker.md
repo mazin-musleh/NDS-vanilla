@@ -2,672 +2,293 @@
 layout: page
 title: Time Picker
 hero_title: Time Picker - National Design System
-hero_description: A time field that accepts a typed value or a picked one, with hour, minute and second selectors in a dropdown panel
+hero_description: A time field with lists of hours, minutes and seconds in a panel under it
 breadcrumb: [["Components", "/components"]]
-since: "1.12.x"
-updated: "1.12.x"
-last_edit: "21/09/2026 - 05:58 PM"
 lang: en
 direction: ltr
+since: "1.12.x"
+updated: "1.12.x"
+last_edit: "01/10/2026 - 10:16 AM"
 ---
 
-<!-- Overview -->
-<section id="timePickerOverview" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Time Picker</h2>
-            <p class="nds-section-description">The default field takes a 24-hour value in five minute steps. Type into it directly, or open the panel and pick each part.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["data-required", ".nds-time-picker", "timeRequired", "attr"]'>
-                                    <span class="nds-label">Required</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["disabled", ".nds-time-picker", "timeDisabled", "data-state"]'>
-                                    <span class="nds-label">Disabled</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-time-picker">
-                                    <div class="nds-form-header">
-                                        <label for="demo-timePicker">
-                                            <span class="nds-label">Appointment time</span>
-                                        </label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <div class="nds-form-action">
-                                            <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-                                                aria-label="Time Toggler">
-                                                <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" id="demo-timePicker" class="nds-input nds-time-input" placeholder="HH:mm">
-                                        <input type="hidden" class="nds-time-value" name="appointmentTime">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-time-picker-default-1" id="tab-time-picker-default-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-time-picker-default-1"
-                                        aria-labelledby="tab-time-picker-default-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-form-container nds-time-picker"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="appointment-time"&gt;
-      &lt;span class="nds-label"&gt;Appointment time&lt;/span&gt;
-    &lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;div class="nds-form-action"&gt;
-      &lt;button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-        aria-label="Time Toggler"&gt;
-        &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-    &lt;input type="text" id="appointment-time" class="nds-input nds-time-input" placeholder="HH:mm"&gt;
-    &lt;input type="hidden" class="nds-time-value" name="appointmentTime"&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                            </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="timePickerOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A time picker is a text field with a panel under it. The user types a time, or opens the panel with the clock button and picks the hour and the minute from two lists. The format can add a list for the second and a list for AM or PM.
+
+Pick another component when:
+
+- the user picks a day: [Date Picker](../components/date-picker)
+- the user enters a duration, such as 2 hours 30 minutes: number fields in [Forms](../components/forms)
+
+</div>
+  </div>
 </section>
 
-<!-- Time Formats -->
-<section id="timePickerFormats" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Time Formats</h2>
-            <p class="nds-section-description">One format string sets the display and the selectors the panel shows. Pick 12-hour for public-facing forms and 24-hour for operational tools.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Formats set by data-format</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
-                                    <div class="nds-form-container nds-time-picker" data-format="HH:mm">
-                                        <div class="nds-form-header">
-                                            <label for="demo-timePicker24">
-                                                <span class="nds-label">24-hour (HH:mm)</span>
-                                            </label>
-                                        </div>
-                                        <div class="nds-form-control">
-                                            <div class="nds-form-action">
-                                                <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-                                                    aria-label="Time Toggler">
-                                                    <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" id="demo-timePicker24" class="nds-input nds-time-input" placeholder="HH:mm">
-                                            <input type="hidden" class="nds-time-value" name="time24">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-time-picker" data-format="hh:mm A">
-                                        <div class="nds-form-header">
-                                            <label for="demo-timePicker12">
-                                                <span class="nds-label">12-hour with meridiem (hh:mm A)</span>
-                                            </label>
-                                        </div>
-                                        <div class="nds-form-control">
-                                            <div class="nds-form-action">
-                                                <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-                                                    aria-label="Time Toggler">
-                                                    <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" id="demo-timePicker12" class="nds-input nds-time-input" placeholder="hh:mm A">
-                                            <input type="hidden" class="nds-time-value" name="time12">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-time-picker" data-format="HH:mm:ss">
-                                        <div class="nds-form-header">
-                                            <label for="demo-timePickerSeconds">
-                                                <span class="nds-label">With seconds (HH:mm:ss)</span>
-                                            </label>
-                                        </div>
-                                        <div class="nds-form-control">
-                                            <div class="nds-form-action">
-                                                <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-                                                    aria-label="Time Toggler">
-                                                    <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" id="demo-timePickerSeconds" class="nds-input nds-time-input" placeholder="HH:mm:ss">
-                                            <input type="hidden" class="nds-time-value" name="timeSeconds">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-time-picker-formats-1" id="tab-time-picker-formats-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-time-picker-formats-1"
-                                        aria-labelledby="tab-time-picker-formats-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;form class="nds-form nds-grid" style="--max-col:1"&gt;
-
-  &lt;!-- 24-hour: hour and minute selectors --&gt;
-  &lt;div class="nds-form-container nds-time-picker" data-format="HH:mm"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="time-24"&gt;
-        &lt;span class="nds-label"&gt;24-hour (HH:mm)&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;div class="nds-form-action"&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-          aria-label="Time Toggler"&gt;
-          &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-      &lt;input type="text" id="time-24" class="nds-input nds-time-input" placeholder="HH:mm"&gt;
-      &lt;input type="hidden" class="nds-time-value" name="time24"&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;!-- 12-hour: adds a meridiem selector --&gt;
-  &lt;div class="nds-form-container nds-time-picker" data-format="hh:mm A"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="time-12"&gt;
-        &lt;span class="nds-label"&gt;12-hour with meridiem (hh:mm A)&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;div class="nds-form-action"&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-          aria-label="Time Toggler"&gt;
-          &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-      &lt;input type="text" id="time-12" class="nds-input nds-time-input" placeholder="hh:mm A"&gt;
-      &lt;input type="hidden" class="nds-time-value" name="time12"&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;!-- 24-hour: adds a second selector --&gt;
-  &lt;div class="nds-form-container nds-time-picker" data-format="HH:mm:ss"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="time-seconds"&gt;
-        &lt;span class="nds-label"&gt;With seconds (HH:mm:ss)&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;div class="nds-form-action"&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-          aria-label="Time Toggler"&gt;
-          &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-      &lt;input type="text" id="time-seconds" class="nds-input nds-time-input" placeholder="HH:mm:ss"&gt;
-      &lt;input type="hidden" class="nds-time-value" name="timeSeconds"&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-&lt;/form&gt;
-                                            </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="timePickerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="time-picker-field" data-canon data-variants="timePickerVariantsTable" data-harness="form" data-demo-width="300px">
+<div class="nds-form-container nds-time-picker">
+  <div class="nds-form-header">
+    <label for="time-picker-visit">
+      <span class="nds-label">Visit time</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-form-action">
+      <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle" aria-label="Pick a time">
+        <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
+      </button>
+    </div>
+    <input type="text" id="time-picker-visit" class="nds-input nds-time-input" placeholder="HH:mm">
+    <input type="hidden" class="nds-time-value" name="visit-time">
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Minute Steps -->
-<section id="timePickerSteps" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Minute Steps</h2>
-            <p class="nds-section-description">Set the minute list to the slots the service actually offers. The default step is five minutes.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Steps set by data-step</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
-                                    <div class="nds-form-container nds-time-picker" data-format="hh:mm A" data-step="15">
-                                        <div class="nds-form-header">
-                                            <label for="demo-timePickerStep15">
-                                                <span class="nds-label">Quarter hour slots</span>
-                                            </label>
-                                        </div>
-                                        <div class="nds-form-control">
-                                            <div class="nds-form-action">
-                                                <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-                                                    aria-label="Time Toggler">
-                                                    <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" id="demo-timePickerStep15" class="nds-input nds-time-input" placeholder="hh:mm A">
-                                            <input type="hidden" class="nds-time-value" name="slot15">
-                                        </div>
-                                    </div>
-                                    <div class="nds-form-container nds-time-picker" data-format="hh:mm A" data-step="30">
-                                        <div class="nds-form-header">
-                                            <label for="demo-timePickerStep30">
-                                                <span class="nds-label">Half hour slots</span>
-                                            </label>
-                                        </div>
-                                        <div class="nds-form-control">
-                                            <div class="nds-form-action">
-                                                <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-                                                    aria-label="Time Toggler">
-                                                    <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" id="demo-timePickerStep30" class="nds-input nds-time-input" placeholder="hh:mm A">
-                                            <input type="hidden" class="nds-time-value" name="slot30">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-time-picker-steps-1" id="tab-time-picker-steps-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-time-picker-steps-1"
-                                        aria-labelledby="tab-time-picker-steps-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;form class="nds-form nds-grid" style="--max-col:1"&gt;
-
-  &lt;!-- Minute list renders 00, 15, 30, 45 --&gt;
-  &lt;div class="nds-form-container nds-time-picker" data-format="hh:mm A" data-step="15"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="slot-15"&gt;
-        &lt;span class="nds-label"&gt;Quarter hour slots&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;div class="nds-form-action"&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-          aria-label="Time Toggler"&gt;
-          &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-      &lt;input type="text" id="slot-15" class="nds-input nds-time-input" placeholder="hh:mm A"&gt;
-      &lt;input type="hidden" class="nds-time-value" name="slot15"&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;!-- Minute list renders 00, 30 --&gt;
-  &lt;div class="nds-form-container nds-time-picker" data-format="hh:mm A" data-step="30"&gt;
-    &lt;div class="nds-form-header"&gt;
-      &lt;label for="slot-30"&gt;
-        &lt;span class="nds-label"&gt;Half hour slots&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;div class="nds-form-action"&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-          aria-label="Time Toggler"&gt;
-          &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-      &lt;input type="text" id="slot-30" class="nds-input nds-time-input" placeholder="hh:mm A"&gt;
-      &lt;input type="hidden" class="nds-time-value" name="slot30"&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-&lt;/form&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="timePickerVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+A Format or Seconds choice changes two elements: write `data-format` on `.nds-time-picker` and the same format as the placeholder of `.nds-time-input`. Seconds adds `:ss` to the chosen format: `HH:mm:ss` for 24-hour, `hh:mm:ss A` for 12-hour. A Bounds choice writes both `data-min-time` and `data-max-time` on `.nds-time-input`. Set another format, step or bound by hand: see the Data Attributes table.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Format | 24-hour (default) | — | — | The field shows `14:30`. The panel has an Hour and a Minute list |
+| Format | 12-hour | `[data-format="hh:mm A"]` | `.nds-time-picker` | The field shows `02:30 PM`, and the panel adds an AM/PM list. See Time Format |
+| Format | 12-hour | `[placeholder="hh:mm A"]` | `.nds-time-input` | |
+| Seconds | Seconds | `[data-format="HH:mm:ss"]` | `.nds-time-picker:not([data-format="hh:mm A"])` | The field shows the second too, such as `14:30:15`, and the panel adds a Second list. See Time Format |
+| Seconds | Seconds | `[placeholder="HH:mm:ss"]` | `.nds-time-input:not([placeholder="hh:mm A"])` | |
+| Seconds | Seconds | `[data-format="hh:mm:ss A"]` | `.nds-time-picker[data-format="hh:mm A"]` | |
+| Seconds | Seconds | `[placeholder="hh:mm:ss A"]` | `.nds-time-input[placeholder="hh:mm A"]` | |
+| Minute step | 5 minutes (default) | — | — | The Minute list shows 00, 05, 10 and on to 55 |
+| Minute step | 15 minutes | `[data-step="15"]` | `.nds-time-picker` | The Minute list shows 00, 15, 30 and 45. See Minute Step |
+| Minute step | 30 minutes | `[data-step="30"]` | `.nds-time-picker` | The Minute list shows 00 and 30. See Minute Step |
+| Bounds | None (default) | — | — | The user can pick any time |
+| Bounds | Working hours | `[data-min-time="09:00"]` | `.nds-time-input` | The user can pick a time from 09:00 to 17:30 only. See Time Bounds |
+| Bounds | Working hours | `[data-max-time="17:30"]` | `.nds-time-input` | |
+| State (any) | Disabled | `[data-state~="disabled"]` | `.nds-time-picker:not([data-state~="readonly"])` | The user cannot type or open the panel, and the time does not post. Not with Read-only |
+| State (any) | Read-only | `[data-state~="readonly"]` | `.nds-time-picker:not([data-state~="disabled"])` | The user sees the time but cannot change it. The time posts. Not with Disabled |
+| State (any) | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-time-picker` | The form needs a time. It does not submit while the field is empty |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+{: #timePickerVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Time Bounds -->
-<section id="timePickerBounds" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Time Bounds and Validation</h2>
-            <p class="nds-section-description">Limit the field to a working window. Options outside it are disabled, and a typed value outside it blocks the submit.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Required, limited to 09:00 through 17:30</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
-                                    <div class="nds-form-container nds-time-picker" data-format="hh:mm A" data-step="30" data-required>
-                                        <div class="nds-form-header">
-                                            <label for="demo-timePickerBounds">
-                                                <span class="nds-label">Visit time</span>
-                                            </label>
-                                        </div>
-                                        <div class="nds-form-control">
-                                            <div class="nds-form-action">
-                                                <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-                                                    aria-label="Time Toggler">
-                                                    <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" id="demo-timePickerBounds" class="nds-input nds-time-input"
-                                                placeholder="hh:mm A" data-min-time="09:00" data-max-time="17:30">
-                                            <input type="hidden" class="nds-time-value" name="visitTime">
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="nds-btn nds-primary">
-                                        <span class="nds-label">Book visit</span>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-time-picker-bounds-1" id="tab-time-picker-bounds-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-time-picker-bounds-1"
-                                        aria-labelledby="tab-time-picker-bounds-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;div class="nds-form-container nds-time-picker" data-format="hh:mm A" data-step="30" data-required&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="visit-time"&gt;
-      &lt;span class="nds-label"&gt;Visit time&lt;/span&gt;
-    &lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;div class="nds-form-action"&gt;
-      &lt;button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle"
-        aria-label="Time Toggler"&gt;
-        &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-    &lt;input type="text" id="visit-time" class="nds-input nds-time-input"
-      placeholder="hh:mm A" data-min-time="09:00" data-max-time="17:30"&gt;
-    &lt;input type="hidden" class="nds-time-value" name="visitTime"&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                            </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="timePickerBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Panel
+{: .nds-block-title}
+
+The clock button, `.time-picker-toggle`, opens the panel. A click in the text box only places the cursor, so the user can type. Without the button, a click in the text box opens the panel.
+
+The field fills when every list has a value, and each later pick changes it at once. The panel has no Save button. Escape or a click outside the panel closes it.
+
+### Time Format
+{: .nds-block-title}
+
+`data-format` on `.nds-time-picker` sets how the field shows a time, and which lists the panel holds. The default is `HH:mm`. Write the same format as the placeholder. The tokens are:
+
+- `HH` and `H`: the hour from 0 to 23, with and without a leading zero
+- `hh` and `h`: the hour from 1 to 12, with and without a leading zero
+- `mm` and `ss`: the minute and the second
+- `A` and `a`: AM or PM, in capitals or in lowercase
+
+Any other character stays as written. `ss` adds a Second list, and `A` or `a` adds an AM/PM list. With `data-format="hh:mm A"`, the field shows `02:30 PM`, and `.nds-time-value` holds `14:30`.
+
+### Minute Step
+{: .nds-block-title}
+
+`data-step` on `.nds-time-picker` sets the gap between the minutes in the Minute list, from 1 to 60. The default is 5. The Second list always shows every second. A saved time off the step, such as `09:07` with a step of 15, gets its own option in the list.
+
+### Time Bounds
+{: .nds-block-title}
+
+`data-min-time` and `data-max-time` on `.nds-time-input` set the first and the last time the user can pick. Write them in 24-hour form, `HH:mm` or `HH:mm:ss`, whatever the format. Options outside the bounds are off. A picked hour turns off the minutes outside the bounds in that hour. When a pick moves another list's value outside the bounds, that list moves to the nearest allowed option.
+
+### Disabled and Read-only
+{: .nds-block-title}
+
+`data-state~="disabled"` on `.nds-time-picker` disables the text box, the hidden input and the clock button, so the time does not post. With `data-state~="readonly"`, the user cannot type, and the panel does not open. The time still posts. A `readonly` attribute on `.nds-time-input` does the same: Forms copies it to the field.
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="timePickerFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-magic-wand-01"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates on any page carrying a <code class="nds-inline-code lang-html">.nds-time-input</code>. The panel builds on first open, so a page of time fields costs nothing until one is used.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard"></i>
-                            <span class="nds-label">Type or Pick</span>
-                        </span>
-                        <p class="nds-item-desc">The field stays typeable. Entries such as <code class="nds-inline-code lang-html">9:30</code> or <code class="nds-inline-code lang-html">2:30 PM</code> are accepted and padded on commit.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-clock-01"></i>
-                            <span class="nds-label">12 or 24-Hour Display</span>
-                        </span>
-                        <p class="nds-item-desc">One format string sets both the visible text and which selectors the panel shows, so there is no separate mode flag to keep in sync.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-time-quarter"></i>
-                            <span class="nds-label">Minute Steps</span>
-                        </span>
-                        <p class="nds-item-desc">Set the minute list to your real booking interval. A value that sits off the step grid keeps its own option rather than being rounded away.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-filter"></i>
-                            <span class="nds-label">Time Bounds</span>
-                        </span>
-                        <p class="nds-item-desc">Out-of-range options are disabled as you narrow the time, and a pick that falls out of range moves to the nearest allowed option instead of clearing.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-shield-01"></i>
-                            <span class="nds-label">Native Validation</span>
-                        </span>
-                        <p class="nds-item-desc">A typed value is checked on change, so an unreadable or out-of-range time blocks the submit through the browser's own constraint validation.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-translate"></i>
-                            <span class="nds-label">Bilingual Labels</span>
-                        </span>
-                        <p class="nds-item-desc">Selector labels and the meridiem follow the page language and switch with it at runtime, while the submitted value stays unchanged.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-source-code"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Read and write the field from JavaScript with <code class="nds-inline-code lang-js">getValue</code>, <code class="nds-inline-code lang-js">setValue</code> and <code class="nds-inline-code lang-js">clear</code>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="timePickerFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-magic-wand-01"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-time-input</code> starts on load. The script builds the panel the first time the user opens it.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Type or Pick</span>
+          </span>
+          <p class="nds-item-desc">The user can type the time. The picker reads it when the user leaves the field, and writes it back in the format: <code class="nds-inline-code lang-html">9:30</code> becomes <code class="nds-inline-code lang-html">09:30</code>. AM and PM are read in Arabic or English.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-clock-01"></i>
+            <span class="nds-label">24-Hour Value</span>
+          </span>
+          <p class="nds-item-desc">The hidden <code class="nds-inline-code lang-html">.nds-time-value</code> holds the time as <code class="nds-inline-code lang-html">HH:mm</code>, or <code class="nds-inline-code lang-html">HH:mm:ss</code> when the format has seconds. It is the same in every format and page language.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-shield-01"></i>
+            <span class="nds-label">Native Validation</span>
+          </span>
+          <p class="nds-item-desc">The picker checks the field at each <code class="nds-inline-code lang-js">change</code>. A time that does not match the format, or falls outside the bounds, shows an error under the field and blocks the submit.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-translate"></i>
+            <span class="nds-label">Bilingual Labels</span>
+          </span>
+          <p class="nds-item-desc">List names, AM and PM, and error messages show in Arabic or English from the page language. They change when the page language changes.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>
+            <span class="nds-label">Panel Position</span>
+          </span>
+          <p class="nds-item-desc">The panel opens below the field, lined up with its start edge, or above it when the space below is too small. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="timePickerGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use for any <strong>time of day</strong>: appointment slots, opening hours, shift starts, submission cut-offs</li>
-                    <li>For a date and a time together, place a <a class="nds-color" href="{{ 'components/date-picker' | relative_url }}">Date Picker</a> and a Time Picker as two fields. One field holding both is harder to correct when only the time is wrong</li>
-                    <li>Do not use for a <strong>duration</strong> such as two hours thirty minutes. A duration is a quantity, so use <a class="nds-color" href="{{ 'components/forms' | relative_url }}">Text Inputs</a> with number fields instead</li>
-                    <li>Choose <code class="nds-inline-code lang-html">hh:mm A</code> for public-facing forms and <code class="nds-inline-code lang-html">HH:mm</code> for operational or internal tools</li>
-                    <li>Add seconds only when the value needs them. Most appointment and opening-hour fields do not</li>
-                    <li>Set <code class="nds-inline-code lang-html">data-step</code> to the interval the service offers. The default of five minutes already shortens the list, and a step of one renders sixty options</li>
-                    <li>Read the value from the hidden <code class="nds-inline-code lang-html">.nds-time-value</code> field, or from <code class="nds-inline-code lang-js">getValue</code>. The visible field holds localized display text</li>
-                    <li>Write <code class="nds-inline-code lang-html">data-min-time</code> and <code class="nds-inline-code lang-html">data-max-time</code> in 24-hour form whatever the display format is</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-darker</code> or <code class="nds-inline-code lang-html">nds-lighter</code> to the container for a filled field on a plain background</li>
-                </ul>
-            </div>
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-format</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-form-container</code>. Tokens <code class="nds-inline-code lang-html">HH</code>, <code class="nds-inline-code lang-html">H</code>, <code class="nds-inline-code lang-html">hh</code>, <code class="nds-inline-code lang-html">h</code>, <code class="nds-inline-code lang-html">mm</code>, <code class="nds-inline-code lang-html">ss</code>, <code class="nds-inline-code lang-html">A</code>, <code class="nds-inline-code lang-html">a</code>. Any other character passes through as text. Lowercase hour tokens select 12-hour, and token presence decides which selectors the panel shows. Defaults to <code class="nds-inline-code lang-html">HH:mm</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-step</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-form-container</code>. Minute interval for the minute list, from 1 to 60. Defaults to 5. Seconds always step by one</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-form-container</code>. Marks the field required and blocks the submit while it is empty</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-min-time</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-time-input</code>. Earliest allowed time, always 24-hour <code class="nds-inline-code lang-html">HH:mm</code> or <code class="nds-inline-code lang-html">HH:mm:ss</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-max-time</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-time-input</code>. Latest allowed time, same 24-hour form</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Value and Submission</h3>
-                <p>The field has two inputs. The visible <code class="nds-inline-code lang-html">.nds-time-input</code> is display text and carries no <code class="nds-inline-code lang-html">name</code>, so it never submits. The hidden <code class="nds-inline-code lang-html">.nds-time-value</code> carries the <code class="nds-inline-code lang-html">name</code> and always holds a 24-hour value.</p>
-                <p>A 12-hour field showing <code class="nds-inline-code lang-html">02:30 PM</code> submits <code class="nds-inline-code lang-html">14:30</code>. The meridiem is a display choice and is never stored on its own, so the server reads the same value whatever language the page was in.</p>
-                <p>Both inputs dispatch native <code class="nds-inline-code lang-js">input</code> and <code class="nds-inline-code lang-js">change</code> events on every commit. The component dispatches no custom events, so listen on either input.</p>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Keyboard</h3>
-                <p>Type straight into the field. <code class="nds-inline-code lang-js">Alt</code> plus <code class="nds-inline-code lang-js">ArrowDown</code> opens the panel, where each selector behaves as a standard <a class="nds-color" href="{{ 'components/forms' | relative_url }}">form select</a>: <code class="nds-inline-code lang-js">Tab</code> moves between them, <code class="nds-inline-code lang-js">Enter</code> or <code class="nds-inline-code lang-js">Space</code> opens a list, the arrow keys move through it, and <code class="nds-inline-code lang-js">Escape</code> closes.</p>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.TimePicker</strong> API reads and writes the field in 24-hour form. Fields present at load initialize on their own. Call <strong>NDS.TimePicker.init()</strong> after injecting a field into the page.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialize ───────────────────────────────────────
-// Attaches a picker to every .nds-time-input. Safe to call again
-// after injecting new fields: existing fields are left alone.
-NDS.TimePicker.init();
-NDS.TimePicker.reinit();               // same function
+<section id="timePickerPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-// Build one field now. Returns the instance, or null on bad markup.
-const picker = NDS.TimePicker.create(document.getElementById('visit-time'));
+- Use a time picker for a time of day, such as an appointment, an opening time or a deadline.
+- For a date and a time, use a Date Picker and a Time Picker as two fields. The user can then correct one without the other.
+- Use `hh:mm A` on public forms, and `HH:mm` in tools for staff.
+- Write `A` or `a` with `hh` or `h`. Without AM/PM, the picker reads every time as AM.
+- Add seconds only when the task needs them.
+- Set `data-step` to the gap between the slots the service offers. A step of 1 lists 60 minutes.
+- Put the `name` on `.nds-time-value` only. The text box holds display text, such as `02:30 م`, and does not post.
+- Read the time from `.nds-time-value`, or with `NDS.TimePicker.getValue()`.
+- To show a saved time, write it in the `value` of `.nds-time-value`, in 24-hour form.
+- Give the clock button an `aria-label`, such as "Pick a time". It shows only an icon.
+- Do not put a time picker inside another dropmenu. The panel is a dropmenu itself.
+- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
 
-// ── Read and write ──────────────────────────────────
-// Every method accepts the input, the .nds-form-control,
-// or the .nds-form-container.
-const field = document.getElementById('visit-time');
+</div>
+  </div>
+</section>
 
-// Always 24-hour, with seconds only when the format asks for them.
-// Returns '' until every selector has a value.
-NDS.TimePicker.getValue(field);        // → '14:30'
+<section id="timePickerApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-// Takes a 24-hour string. Returns false when it cannot be read or
-// falls outside data-min-time / data-max-time, and writes nothing
-// in that case, so the field never holds a partial value.
-NDS.TimePicker.setValue(field, '14:30');   // → true
-NDS.TimePicker.setValue(field, '25:00');   // → false
-NDS.TimePicker.setValue(field, '18:00');   // → false when max is 17:30
+### Other Classes
+{: .nds-block-title}
 
-// Empty the field and every selector.
-NDS.TimePicker.clear(field);           // → true
+| Class | Element | Effect |
+|---|---|---|
+| `.nds-time-picker-menu` | the panel | The script puts it on the panel, beside `.nds-dropmenu-menu`. Style the panel with it: it stays on the panel when the panel moves to `<body>` |
+{: .nds-table .nds-responsive}
 
-// ── Observe changes ─────────────────────────────────
-// No custom events. Both inputs fire native input and change,
-// so listen on whichever one you need.
-field.addEventListener('change', () =&gt; {
-    console.log(NDS.TimePicker.getValue(field));
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-format` | `.nds-time-picker` | How the field shows a time, and which lists the panel holds. The default is `HH:mm`. See Time Format |
+| `data-step` | `.nds-time-picker` | The gap between the minutes in the Minute list, from `1` to `60`. The default is `5`. See Minute Step |
+| `data-required` | `.nds-time-picker` | The form needs a time. It does not submit while the field is empty |
+| `data-state~="disabled"`, `data-state~="readonly"` | `.nds-time-picker` | Set it yourself. See Disabled and Read-only |
+| `data-state~="open"` | `.nds-time-picker` | The script sets it when the panel opens, and removes it when the panel closes. No NDS style reads it: it is for your CSS |
+| `data-min-time`, `data-max-time` | `.nds-time-input` | The first and the last time the user can pick, in 24-hour form. See Time Bounds |
+{: .nds-table .nds-responsive}
+
+### Keyboard
+{: .nds-block-title}
+
+| Key | Where | Effect |
+|---|---|---|
+| Enter, Space | clock button | Opens or closes the panel |
+| Tab, Shift + Tab | panel | Moves between the lists |
+| Enter, Space, arrow keys | a list | Opens the list and moves through its options, as in any select in [Forms](../components/forms) |
+| Escape | an open list | Closes the list. The panel stays open |
+| Escape | text box or panel | Closes the panel |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+`el` can be the `.nds-time-input`, its `.nds-form-control` or its `.nds-form-container`.
+
+| Method | Effect |
+|---|---|
+| `NDS.TimePicker.init()` | Starts every `.nds-time-input` that has not started. The loader calls it on load. Call it again after you add a field to the page |
+| `NDS.TimePicker.reinit()` | The same as `init()` |
+| `NDS.TimePicker.create(input, formControl)` | Starts one field, and returns its instance. `formControl` is optional: the default is the input's `.nds-form-control`. On a field that has started, it returns the same instance. It returns `null` when the input has no `.nds-form-control` or no `.nds-form-container` |
+| `NDS.TimePicker.getValue(el)` | Returns the time in 24-hour form, such as `'14:30'`, with seconds when the format has them. It returns `''` until every list has a value |
+| `NDS.TimePicker.setValue(el, '14:30')` | Writes a 24-hour time, and returns `true`. It returns `false`, and changes nothing, when it cannot read the time or the time is outside the bounds |
+| `NDS.TimePicker.clear(el)` | Empties the field and every list, and returns `true` |
+| `instance.destroy()` | Removes the panel and its listeners. `create()` can start the field again. Call it before you remove the field from the page. The instance is on the input as `input._ndsTimePicker` |
+{: .nds-table .nds-responsive}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `input`, `change` | `.nds-time-input` and `.nds-time-value`, and they bubble | Native events, with no detail. Each input fires them when a pick, a typed time, `setValue()` or `clear()` changes its value. Read the time with `getValue()` |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="time-picker-js" data-canon data-lang="js">
+var input = document.querySelector('#time-picker-visit');
+
+// Log the 24-hour time at each change
+input.addEventListener('change', function () {
+  console.log(NDS.TimePicker.getValue(input));
 });
 
-// ── Teardown ────────────────────────────────────────
-// Releases listeners and removes the panel. Call before discarding
-// the markup; NDS.TimePicker.create() can rebuild on it afterwards.
-field._ndsTimePicker.destroy();
-</code>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+// Show a saved time
+NDS.TimePicker.setValue(input, '14:30');
+</script>
+
+The full API is in the banner of `_js/nds-time-picker.js`.
+
+</div>
+  </div>
 </section>
