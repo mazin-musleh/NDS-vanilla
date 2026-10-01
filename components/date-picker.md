@@ -2,582 +2,324 @@
 layout: page
 title: Date Picker
 hero_title: Date Picker - National Design System
-hero_description: Interactive calendar component for selecting dates with support for both Gregorian and Hijri calendars
+hero_description: A date field with a calendar for one day or a range, in the Gregorian or the Hijri calendar
 breadcrumb: [["Components", "/components"]]
-since: "1.0.0"
-updated: "1.9.0"
-last_edit: "22/08/2026 - 01:19 PM"
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.12.x"
+last_edit: "01/10/2026 - 09:35 AM"
 ---
 
-<!-- Date Picker -->
-<section id="datePickerOverview" class="nds-content-section nds-demo-section">
+<section id="datePickerOverview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Date Picker Input</h2>
-      <p class="nds-section-description">Text input with calendar dropdown for single date or date range selection</p>
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A date picker is a text field with a calendar under it. The user types a date, or opens the calendar with the calendar button, picks a day and presses Save. The calendar has a month menu, a year menu, arrows to the previous and the next month, and Today, Close and Save buttons.
+
+Pick another component when:
+
+- the user picks a time of day: [Time Picker](../components/time-picker)
+- the user types a date they know by heart, such as a birth date, and a calendar does not help: a text field in [Forms](../components/forms)
+
+</div>
+  </div>
+</section>
+
+<section id="datePickerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["dateRange", ".nds-date-picker", "rangeToggle"]'>
-                <span class="nds-label">Date Range</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-hijri", ".nds-date-picker", "hijriToggle"]'>
-                <span class="nds-label">Hijri Calendar</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["data-required", ".nds-date-picker", "requiredToggle", "attr"]'>
-                <span class="nds-label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-date-picker", "disabledToggle", "data-state"]'>
-                <span class="nds-label">Disabled</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
-                <div class="nds-form-container nds-date-picker">
-                  <div class="nds-form-header">
-                    <label for="demo-datePickerInput">
-                      <span class="nds-label">Select date</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <div class="nds-form-action">
-                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                        aria-label="Calendar Toggler">
-                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <input type="text" id="demo-datePickerInput" class="nds-input nds-date-input" placeholder="DD/MM/YYYY"
-                      data-year-before="40" data-year-after="5">
-                  </div>
-                </div>
-                <div class="nds-flex">
-                  <button class="nds-btn nds-primary nds-sm" type="submit">
-                    <span class="nds-label">Submit</span>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided">
-            <div class="nds-tab-list-container nds-scroll-more">
-              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                  aria-controls="panel-date-picker-1" id="tab-date-picker-1">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-date-picker-1"
-                aria-labelledby="tab-date-picker-1">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                    <i class="nds-icon nds-hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
-&lt;div class="nds-form-container nds-date-picker"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="date-picker-1"&gt;
-  &lt;span class="nds-label"&gt;Select date&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-    aria-label="Calendar Toggler"&gt;
-    &lt;i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-&lt;input type="text" id="date-picker-1" class="nds-input nds-date-input"
-  placeholder="DD/MM/YYYY" data-year-before="40" data-year-after="5"&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-              </code>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
+<script type="text/html" id="date-picker-field" data-canon data-variants="datePickerVariantsTable" data-harness="form" data-demo-width="350px">
+<div class="nds-form-container nds-date-picker">
+  <div class="nds-form-header">
+    <label for="date-picker-visit">
+      <span class="nds-label">Visit date</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-form-action">
+      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle" aria-label="Open calendar">
+        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
+      </button>
+    </div>
+    <input type="text" id="date-picker-visit" name="visit-date" class="nds-input nds-date-input" placeholder="DD/MM/YYYY">
+  </div>
+</div>
+</script>
     </div>
   </div>
 </section>
 
-<!-- Custom Date Format -->
-<section id="datePickerFormat" class="nds-content-section nds-demo-section">
+<section id="datePickerVariants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Custom Date Format</h2>
-      <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-format</code> to the container to override the default <code class="nds-inline-code">DD/MM/YYYY</code>. Tokens: <code class="nds-inline-code">YYYY</code>, <code class="nds-inline-code">YY</code>, <code class="nds-inline-code">MM</code>, <code class="nds-inline-code">M</code>, <code class="nds-inline-code">DD</code>, <code class="nds-inline-code">D</code>. Any other character passes through literally. Applies to both Gregorian and Hijri, and both endpoints of a range. Token presence also drives the picker UI — omit the day tokens (<code class="nds-inline-code">MM/YYYY</code>) for a month-only picker, use only year tokens (<code class="nds-inline-code">YYYY</code>) for a year-only picker.</p>
+      <h2 class="nds-section-title">Variants</h2>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-container">
-            <div class="state-demo">
-              <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
-                <div class="nds-form-container nds-date-picker" data-format="YYYY-MM-DD">
-                  <div class="nds-form-header">
-                    <label for="demo-datePickerIso">
-                      <span class="nds-label">ISO format (YYYY-MM-DD)</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <div class="nds-form-action">
-                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                        aria-label="Calendar Toggler">
-                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <input type="text" id="demo-datePickerIso" class="nds-input nds-date-input" placeholder="YYYY-MM-DD">
-                  </div>
-                </div>
-                <div class="nds-form-container nds-date-picker" data-format="D.M.YY">
-                  <div class="nds-form-header">
-                    <label for="demo-datePickerShort">
-                      <span class="nds-label">Short format (D.M.YY)</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <div class="nds-form-action">
-                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                        aria-label="Calendar Toggler">
-                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <input type="text" id="demo-datePickerShort" class="nds-input nds-date-input" placeholder="D.M.YY">
-                  </div>
-                </div>
-                <div class="nds-form-container nds-date-picker" data-format="MM/YYYY">
-                  <div class="nds-form-header">
-                    <label for="demo-datePickerMonth">
-                      <span class="nds-label">Month only (MM/YYYY)</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <div class="nds-form-action">
-                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                        aria-label="Calendar Toggler">
-                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <input type="text" id="demo-datePickerMonth" class="nds-input nds-date-input" placeholder="MM/YYYY">
-                  </div>
-                </div>
-                <div class="nds-form-container nds-date-picker" data-format="YYYY">
-                  <div class="nds-form-header">
-                    <label for="demo-datePickerYear">
-                      <span class="nds-label">Year only (YYYY)</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <div class="nds-form-action">
-                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                        aria-label="Calendar Toggler">
-                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <input type="text" id="demo-datePickerYear" class="nds-input nds-date-input" placeholder="YYYY">
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided">
-            <div class="nds-tab-list-container nds-scroll-more">
-              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                  aria-controls="panel-date-picker-format" id="tab-date-picker-format">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-date-picker-format"
-                aria-labelledby="tab-date-picker-format">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                    <i class="nds-icon nds-hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
-&lt;div class="nds-form-container nds-date-picker" data-format="YYYY-MM-DD"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="date-picker-iso"&gt;
-  &lt;span class="nds-label"&gt;ISO format&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-    aria-label="Calendar Toggler"&gt;
-    &lt;i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-&lt;input type="text" id="date-picker-iso" class="nds-input nds-date-input"
-  placeholder="YYYY-MM-DD"&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-              </code>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="nds-section-body" markdown="1">
+
+A Picker choice changes two elements: write `data-format` on `.nds-date-picker` and the same format as the placeholder of `.nds-date-input`. Bounds, the year list, another format and the calendar language are set by hand: see the Data Attributes table.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Selection | Single date (default) | — | — | The user picks one day |
+| Selection | Range | `.dateRange` | `.nds-date-picker:not([data-format="MM/YYYY"]):not([data-format="YYYY"])` | The user picks a start day and an end day. Not with the Month or Year picker. See Date Range |
+| Calendar | Gregorian (default) | — | — | The calendar shows Gregorian months |
+| Calendar | Hijri | `.nds-hijri` | `.nds-date-picker` | The calendar shows Hijri months, and the field holds a Hijri date. See Hijri Calendar |
+| Picker | Day (default) | — | — | The calendar shows a grid of days. The field holds `DD/MM/YYYY` |
+| Picker | Month | `[data-format="MM/YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of months, for a month such as a card expiry. Not with Range. See Date Format |
+| Picker | Month | `[placeholder="MM/YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
+| Picker | Year | `[data-format="YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of years, for a year such as a graduation year. Not with Range. See Date Format |
+| Picker | Year | `[placeholder="YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
+| Clear button | Clear button | `[data-clearable]` | `.nds-date-picker:not(.dateRange)` | Adds Clear to the calendar. Range has it already. See Clear Button |
+| State (any) | Disabled | `[data-state~="disabled"]` | `.nds-date-picker:not([data-state~="readonly"])` | The user cannot type or open the calendar, and the date does not post. Not with Read-only |
+| State (any) | Read-only | `[data-state~="readonly"]` | `.nds-date-picker:not([data-state~="disabled"])` | The user sees the date but cannot change it. The date posts. Not with Disabled |
+| State (any) | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-date-picker` | The form needs a date. See Validation |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+{: #datePickerVariantsTable .nds-table .nds-responsive}
+
+</div>
   </div>
 </section>
 
-<!-- Date Bounds -->
-<section id="datePickerBounds" class="nds-content-section nds-demo-section">
+<section id="datePickerBehavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Date Bounds (Min / Max)</h2>
-      <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-min-date</code> and/or <code class="nds-inline-code lang-html">data-max-date</code> to the input — values parsed with the picker's own <code class="nds-inline-code lang-html">data-format</code>. Out-of-range day cells, month cells, and years render disabled; prev/next arrows and the Today button also disable at the boundary. Coexists with <code class="nds-inline-code lang-html">data-year-before</code> / <code class="nds-inline-code lang-html">data-year-after</code> — the tighter side wins. Hand-typed values are validated too: a badly formatted, out-of-range, or reversed-range value shows a localized field error on commit and blocks form submit through the standard forms validation (<code class="nds-inline-code">setCustomValidity</code>), so the bounds can't be bypassed by editing the input directly.</p>
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-container">
-            <div class="state-demo">
-              <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
-                <div class="nds-form-container nds-date-picker">
-                  <div class="nds-form-header">
-                    <label for="demo-datePickerNoFuture">
-                      <span class="nds-label">No future dates (max = today)</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <div class="nds-form-action">
-                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                        aria-label="Calendar Toggler">
-                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <input type="text" id="demo-datePickerNoFuture" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-max-date="{{ site.time | date: '%d/%m/%Y' }}">
-                  </div>
-                </div>
-                <div class="nds-form-container nds-date-picker">
-                  <div class="nds-form-header">
-                    <label for="demo-datePickerWindow">
-                      <span class="nds-label">Fixed window (min = 01/01/2024, max = 31/12/2025)</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <div class="nds-form-action">
-                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                        aria-label="Calendar Toggler">
-                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <input type="text" id="demo-datePickerWindow" class="nds-input nds-date-input" placeholder="DD/MM/YYYY" data-min-date="01/01/2024" data-max-date="31/12/2025">
-                  </div>
-                </div>
-                <div class="nds-form-container nds-date-picker" data-format="MM/YYYY">
-                  <div class="nds-form-header">
-                    <label for="demo-datePickerMonthBounds">
-                      <span class="nds-label">Month picker with bounds (06/2024 → 12/2025)</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <div class="nds-form-action">
-                      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-                        aria-label="Calendar Toggler">
-                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <input type="text" id="demo-datePickerMonthBounds" class="nds-input nds-date-input" placeholder="MM/YYYY" data-min-date="06/2024" data-max-date="12/2025">
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided">
-            <div class="nds-tab-list-container nds-scroll-more">
-              <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                  aria-controls="panel-date-picker-bounds" id="tab-date-picker-bounds">
-                  <span class="nds-tab-label">HTML</span>
-                </button>
-              </nav>
-              <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="nds-tab-content">
-              <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-date-picker-bounds"
-                aria-labelledby="tab-date-picker-bounds">
-                <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                    <i class="nds-icon nds-hgi-copy-01"></i>
-                  </button>
-                </div>
-                <div class="nds-expandable-content">
-                  <code class="lang-html code">
-&lt;!-- No future dates --&gt;
-&lt;div class="nds-form-container nds-date-picker"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="date-picker-no-future"&gt;
-  &lt;span class="nds-label"&gt;Birth date&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-    aria-label="Calendar Toggler"&gt;
-    &lt;i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-&lt;input type="text" id="date-picker-no-future" class="nds-input nds-date-input"
-  placeholder="DD/MM/YYYY" data-max-date="31/12/2025"&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-              </code>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Save and Close
+{: .nds-block-title}
+
+The calendar button, `.date-picker-toggle`, opens the calendar. A click in the text box only places the cursor, so the user can type.
+
+A pick shows in the calendar, but the field does not change until the user presses Save. Save writes the date in the field and fires a native `change` event on it. Close, Escape or a click outside the calendar closes it and drops the pick. Today moves the calendar to this month and picks today. In Range, Today only moves the calendar. The Today button is off when today is outside the bounds.
+
+### Date Range
+{: .nds-block-title}
+
+The class `dateRange` on `.nds-date-picker` makes the user pick two days. The first click picks the start, and the second picks the end. A second day before the start becomes the new start. The field holds both days, such as `01/03/2026 - 15/03/2026`. Save after one day writes it as the start and the end.
+
+### Hijri Calendar
+{: .nds-block-title}
+
+The class `nds-hijri` on `.nds-date-picker` shows Hijri months and years, and the field holds the Hijri date. A date already in the field picks the calendar too: a year from 1400 to 1500 opens the Hijri calendar, and a year from 1900 to 2100 opens the Gregorian one, whatever the class. The picker takes today's Hijri date from `NDS.TimeDate`, and uses the browser's Islamic calendar until it answers.
+
+### Date Format
+{: .nds-block-title}
+
+`data-format` on `.nds-date-picker` sets how the field writes and reads a date. The default is `DD/MM/YYYY`. Write the same format as the placeholder: with `data-format="YYYY-MM-DD"` and `placeholder="YYYY-MM-DD"`, the field holds `2026-03-15`. The tokens are `YYYY`, `YY`, `MM`, `M`, `DD` and `D`, and any other character stays as written. `YY` reads as a year from 2000 to 2099. One format applies to both calendars and to both days of a range.
+
+A format with no day token shows a grid of months, and a format with only year tokens shows a grid of years. The picker then takes the first day of the month, or the first month of the year, as the date.
+
+### Date Bounds
+{: .nds-block-title}
+
+`data-min-date` and `data-max-date` on `.nds-date-input` set the first and the last day the user can pick. Write them in the field's format and calendar. In a `DD/MM/YYYY` field, `data-min-date="01/01/2026" data-max-date="31/12/2026"` allows only 2026. A Month picker takes a bound such as `01/2026`, and a Hijri field takes a Hijri date such as `29/12/1448`. Days, months and years outside the bounds are off, and the arrows stop at them. When today is outside the bounds, the calendar opens on the nearest bound.
+
+### Year List
+{: .nds-block-title}
+
+`data-year-before` and `data-year-after` on `.nds-date-input` set how many years before and after this year the year menu lists. The defaults are 5 before and none after. For example, `data-year-before="100"` fits a birth date, and `data-year-before="0" data-year-after="2"` fits a booking. The month arrows and the year grid stop at the same years. With bounds too, the narrower limit wins: the bounds never widen the year list. For a bound more than 5 years back, set `data-year-before` too.
+
+### Clear Button
+{: .nds-block-title}
+
+`data-clearable` on `.nds-date-picker` adds a Clear button to the calendar. Clear empties the field, fires `change` and closes the calendar, with no Save. Range always has the Clear button.
+
+### Validation
+{: .nds-block-title}
+
+The picker checks the field at each `change`, typed text included. A date that does not match the format or falls outside the bounds shows an error under the field, and so does a range that ends before it starts. The form then does not submit. A wrong date in the field at page load also blocks the submit, but shows no error until the user changes it or submits. `data-required` on `.nds-date-picker` makes the form need a date.
+
+### Disabled and Read-only
+{: .nds-block-title}
+
+`data-state~="disabled"` on `.nds-date-picker` disables the text box and the calendar button, so the date does not post. With `data-state~="readonly"`, the user cannot type, and the calendar does not open. The date still posts. A `readonly` attribute on the input does the same: Forms copies it to the field.
+
+</div>
   </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="datePickerFeatures" class="nds-content-section nds-demo-section">
+<section id="datePickerFeatures" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
-      <p class="nds-section-description">What you get out of the box with zero configuration</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+      <div class="nds-definition-list nds-divided nds-grid">
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Loaded from <code class="nds-inline-code lang-html">nds-extras.min.js</code> and registered as <code class="nds-inline-code lang-js">NDS.DatePicker</code> by the loader. Scans for <code class="nds-inline-code lang-html">.nds-date-input</code> inside <code class="nds-inline-code lang-html">.nds-form-control</code>. Calendar dropdown is created lazily on first click. For dynamic content, call <code class="nds-inline-code lang-js">NDS.DatePicker.reinit()</code>.</p>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-date-input</code> in a <code class="nds-inline-code lang-html">.nds-form-control</code> and a <code class="nds-inline-code lang-html">.nds-form-container</code> starts on load. The script builds the calendar the first time the user opens it.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-exchange-01"></i>
             <span class="nds-label">Dual Calendar System</span>
           </span>
-          <p class="nds-item-desc">Supports both Gregorian and Hijri (Islamic lunar) calendars. Add the <code class="nds-inline-code lang-html">nds-hijri</code> class to the container to switch. Conversion uses an accurate API reference with browser Intl and mathematical fallbacks.</p>
+          <p class="nds-item-desc">The script writes the same date in the other calendar to <code class="nds-inline-code lang-html">data-converted-date</code> on the input. A Gregorian field holds the Hijri date there, and a Hijri field holds the Gregorian date.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calendar-check-in-01"></i>
-            <span class="nds-label">Date Range Selection</span>
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Keyboard Navigation</span>
           </span>
-          <p class="nds-item-desc">Add the <code class="nds-inline-code lang-html">dateRange</code> class to enable start/end date selection. Visual indicators highlight the range with connected cells between start and end dates.</p>
+          <p class="nds-item-desc">Tab moves into the day grid on the chosen day, today, or the first day of the month. The arrow keys move a day or a week, and Page Up and Page Down change the month.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calendar-setting-01"></i>
-            <span class="nds-label">Flexible Year Range</span>
+            <i class="hgi hgi-stroke hgi-time-zone"></i>
+            <span class="nds-label">Saudi Time</span>
           </span>
-          <p class="nds-item-desc">Control the year dropdown range with <code class="nds-inline-code lang-html">data-year-before</code> and <code class="nds-inline-code lang-html">data-year-after</code> attributes on the input. Defaults work for most use cases.</p>
+          <p class="nds-item-desc">Today, and the ring that marks it, follow Riyadh time (GMT+3), not the visitor's clock.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-globe-02"></i>
             <span class="nds-label">Bilingual Support</span>
           </span>
-          <p class="nds-item-desc">Month names, weekday labels, and button text render in Arabic or English based on the page language. Add <code class="nds-inline-code lang-html">data-lang="ar"</code> on the input to override. Supports RTL and LTR layouts with correct dropdown positioning.</p>
+          <p class="nds-item-desc">Month names, weekdays, buttons and error messages show in Arabic or English from the page language. They change when the page language changes.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>
             <span class="nds-label">Smart Positioning</span>
           </span>
-          <p class="nds-item-desc">Calendar dropdown automatically flips above the input when there is not enough space below. On mobile, the dropdown centers horizontally for better visibility.</p>
+          <p class="nds-item-desc">The calendar opens below the field, or above it when the space below is too small. It lines up with the field and stays inside the screen. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="datePickerGuidelines" class="nds-content-section nds-demo-section">
+<section id="datePickerPractices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Usage Guidelines</h2>
-      <p class="nds-section-description">When and how to use the date picker effectively</p>
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">When to Use</h3>
-        <ul>
-          <li>Date selection in forms where the user needs a calendar view to pick a date</li>
-          <li>Booking, scheduling, and event planning interfaces</li>
-          <li>Use date range mode for report filters, travel dates, or any start/end date pair</li>
-          <li>Use Hijri mode for government forms and services that require Islamic calendar dates</li>
-          <li>For simple known dates (birth date, ID expiry), a plain <a href="{{ 'components/forms' | relative_url }}" class="nds-color">text input</a> with a date mask may be simpler</li>
-          <li>Pre-populate the input with a value in DD/MM/YYYY format to set an initial date</li>
-        </ul>
-      </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Best Practices</h3>
-        <ul>
-          <li>Always pair the date input with a visible label using <code class="nds-inline-code lang-html">&lt;label for&gt;</code> so the field is accessible</li>
-          <li>Set <code class="nds-inline-code lang-html">data-year-before</code> and <code class="nds-inline-code lang-html">data-year-after</code> to meaningful ranges for the context (a birth date picker needs a wide past range, a booking picker needs a wider future range)</li>
-          <li>Use <code class="nds-inline-code lang-html">data-year-after="0"</code> on input fields where future dates are not allowed: the year dropdown will stop at the current year</li>
-          <li>Listen on the <code class="nds-inline-code lang-html">change</code> event of the input to react to selection and clear actions, both fire a native bubbling change event</li>
-          <li>For server-rendered forms that may be re-inserted into the DOM after a route change, call <code class="nds-inline-code lang-js">NDS.DatePicker.reinit()</code> to wire new inputs</li>
-          <li>To remove a calendar from a specific input (for example in a dynamic list row), call <code class="nds-inline-code lang-js">instance.destroy()</code> on the value returned by <code class="nds-inline-code lang-js">NDS.DatePicker.create()</code></li>
-          <li>Do not nest a date picker inside another dropmenu: the calendar dropdown uses the dropmenu positioning system and expects to anchor to its own <code class="nds-inline-code lang-html">.nds-form-control</code> parent</li>
-          <li>The picker works inside a modal, a drawer, or a scrolling box with no extra markup. The calendar detects the container on open and moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> so it is not clipped, and it flips above the field when the space below is too small. When neither side fits, the calendar scrolls inside the viewport</li>
-        </ul>
-      </div>
+- Use a date picker when the user needs to see a calendar, such as for a booking, a report period or a visit date.
+- Give the calendar button an `aria-label`, such as "Open calendar". It shows only an icon.
+- To show a saved date, write it in the input's `value`, in the field's format and calendar.
+- Set the year list for the task. With the defaults, the user cannot pick a future year.
+- Use Range for a start and an end date, not two separate pickers. The calendar then shows the days between them.
+- Listen for `change` on the input. A pick fires nothing until the user presses Save.
+- Read `data-converted-date` when the server needs the date in both calendars.
+- Do not put a date picker inside another dropmenu. The calendar is a dropmenu itself.
+- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Keyboard Navigation</h3>
-        <p>The calendar grid follows the WAI-ARIA Date Picker Dialog pattern with roving tabindex. Tab moves into the grid and lands on the selected day, today, or the first day of the month.</p>
+</div>
+  </div>
+</section>
+
+<section id="datePickerApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
     </div>
-    <div class="nds-block">
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Key</th><th>Action</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code">Arrow keys</code></td><td>Move focus one day at a time within the calendar grid. Wraps to the adjacent month when crossing a boundary</td></tr>
-            <tr><td><code class="nds-inline-code">Home</code></td><td>Move focus to the first day of the current week (Sunday)</td></tr>
-            <tr><td><code class="nds-inline-code">End</code></td><td>Move focus to the last day of the current week (Saturday)</td></tr>
-            <tr><td><code class="nds-inline-code">PageUp</code></td><td>Navigate to the previous month and focus the first day of that month</td></tr>
-            <tr><td><code class="nds-inline-code">PageDown</code></td><td>Navigate to the next month and focus the first day of that month</td></tr>
-            <tr><td><code class="nds-inline-code">Shift + PageUp</code></td><td>Navigate back one year (12 months) and focus the first day</td></tr>
-            <tr><td><code class="nds-inline-code">Shift + PageDown</code></td><td>Navigate forward one year (12 months) and focus the first day</td></tr>
-            <tr><td><code class="nds-inline-code">Enter / Space</code></td><td>Select the focused day</td></tr>
-            <tr><td><code class="nds-inline-code">Escape</code></td><td>Close the calendar dropdown (handled by the dropmenu system)</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Data Attributes</h3>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">data-year-before</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Number of years before today to include in the year dropdown. Default: <code class="nds-inline-code">5</code></td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-year-after</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Number of years after today to include in the year dropdown. Default: <code class="nds-inline-code">0</code> — omitted (or set to <code class="nds-inline-code">0</code>), the year list caps at the current year, preventing future year selection</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-lang</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Override the calendar language. Values: <code class="nds-inline-code">ar</code>, <code class="nds-inline-code">en</code>. Defaults to the <code class="nds-inline-code lang-html">&lt;html lang&gt;</code> attribute</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-format</code></td><td><code class="nds-inline-code lang-html">.nds-form-container.nds-date-picker</code></td><td>Custom date format. Tokens: <code class="nds-inline-code">YYYY</code>, <code class="nds-inline-code">YY</code>, <code class="nds-inline-code">MM</code>, <code class="nds-inline-code">M</code>, <code class="nds-inline-code">DD</code>, <code class="nds-inline-code">D</code>. Any other character passes through literally. Default: <code class="nds-inline-code">DD/MM/YYYY</code>. Applies to both Gregorian and Hijri; both endpoints of a range use the same format. Token presence also selects the picker UI — omit day tokens for a month picker (day defaults to <code class="nds-inline-code">1</code>), use only year tokens for a year picker (day+month default to <code class="nds-inline-code">1</code>)</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-min-date</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Earliest selectable date. Parsed with the picker's <code class="nds-inline-code lang-html">data-format</code>. Coexists with <code class="nds-inline-code lang-html">data-year-before</code> — the tighter side wins. Typed values before it fail form validation</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-max-date</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Latest selectable date. Parsed with the picker's <code class="nds-inline-code lang-html">data-format</code>. Coexists with <code class="nds-inline-code lang-html">data-year-after</code> — the tighter side wins. Typed values after it fail form validation</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-clearable</code></td><td><code class="nds-inline-code lang-html">.nds-form-container.nds-date-picker</code></td><td>Shows a Clear button in the footer that wipes the input value + state and closes the picker. Auto-enabled in range mode. Boolean (presence-only)</td></tr>
-          </tbody>
-        </table>
-      </div>
+### Data Attributes
+{: .nds-block-title}
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Events</h3>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Event</th><th>Target</th><th>When</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-js">change</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Fires on every day selection (bubbling, native). Also fires when the user clicks Clear, setting the input value to an empty string</td></tr>
-          </tbody>
-        </table>
-      </div>
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-format` | `.nds-date-picker` | How the field writes and reads a date. The default is `DD/MM/YYYY`. See Date Format |
+| `data-clearable` | `.nds-date-picker` | Adds a Clear button to the calendar. See Clear Button |
+| `data-required` | `.nds-date-picker` | The form needs a date. See Validation |
+| `data-state~="disabled"`, `data-state~="readonly"` | `.nds-date-picker` | Set it yourself. See Disabled and Read-only |
+| `data-state~="open"` | `.nds-date-picker` | The script sets it when the calendar opens, and removes it when the calendar closes. No NDS style reads it: it is for your CSS |
+| `data-picker-mode` | `.nds-date-picker` | The script writes `day`, `month` or `year` from `data-format` when the field starts. The CSS reads it to show the month or the year grid |
+| `data-min-date`, `data-max-date` | `.nds-date-input` | The first and the last day the user can pick, in the field's format and calendar. See Date Bounds |
+| `data-year-before`, `data-year-after` | `.nds-date-input` | How many years before and after this year the year menu lists. The defaults are `5` and `0`. See Year List |
+| `data-lang` | `.nds-date-input` | `ar` or `en`: the language of the calendar text. Without it, the picker reads the input's `lang`, then the page language |
+| `data-converted-date` | `.nds-date-input` | The script writes the date in the other calendar, in the field's format, when the user presses Save, and when the calendar opens on a field that holds a date. Clear, and Save with no date, remove it. A typed date does not update it |
+{: .nds-table .nds-responsive}
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">CSS Custom Properties</h3>
-        <p>Set on <code class="nds-inline-code lang-html">.nds-date-picker-dropdown</code> to control the calendar panel dimensions.</p>
-    </div>
-    <div class="nds-block">
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">--dropmenu-width</code></td><td><code class="nds-inline-code">100%</code></td><td>Calendar panel width relative to the form control</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--dropmenu-min-width</code></td><td><code class="nds-inline-code">350px</code></td><td>Minimum width of the calendar panel</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--dropmenu-max-width</code></td><td><code class="nds-inline-code">500px</code></td><td>Maximum width of the calendar panel</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--menu-padding</code></td><td><code class="nds-inline-code">0</code></td><td>Padding override for the dropmenu container. Internal calendar sections supply their own padding</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--btn-size</code></td><td><code class="nds-inline-code">40px</code> (<code class="nds-inline-code">32px</code> mobile)</td><td>Size of each day cell button in the calendar grid</td></tr>
-          </tbody>
-        </table>
-      </div>
+### CSS Custom Properties
+{: .nds-block-title}
 
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">JavaScript API</h3>
-        <p>Exposed as <strong>window.NDS.DatePicker</strong> by <code class="nds-inline-code lang-html">nds-extras.min.js</code>. Use <code class="nds-inline-code lang-js">NDS.DatePicker.create()</code> to attach a calendar instance to an existing input, and call <code class="nds-inline-code lang-js">instance.destroy()</code> to tear it down cleanly.</p>
-    </div>
-    <div class="nds-block">
-        <div class="nds-code nds-expandable">
-              <div class="nds-code-action">
-                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                  <i class="nds-icon nds-hgi-copy-01"></i>
-                </button>
-              </div>
-              <div class="nds-expandable-content">
-                <code class="lang-javascript code">
-// Auto-initialized by nds-loader.js (NDS.DatePicker namespace, nds-extras.min.js bundle).
-// No manual init needed. For dynamic content:
-NDS.DatePicker.reinit();
+Set them in a rule on `.nds-date-picker-dropdown`, the calendar.
 
-// Attach a calendar to a specific input and its .nds-form-control parent.
-// Returns the DatePickerCalendar instance (or the existing one if already wired).
-var instance = NDS.DatePicker.create(input, formControl);
+| Property | Default | Controls |
+|---|---|---|
+| `--dropmenu-width` | `100%` | The width of the calendar, as a share of the field |
+| `--dropmenu-min-width` | `350px` | The smallest width of the calendar |
+| `--dropmenu-max-width` | `500px` | The largest width of the calendar |
+{: .nds-table .nds-responsive}
 
-// Tear down a specific calendar instance (removes listeners, DOM, dropmenu).
-instance.destroy();
+### Keyboard
+{: .nds-block-title}
 
-// Listen for date selection and clear events on the input.
-input.addEventListener('change', function (e) {
-console.log('Selected value:', e.target.value); // 'DD/MM/YYYY' or ''
+| Key | Where | Effect |
+|---|---|---|
+| Arrow Left, Arrow Right | day grid | Moves one day back or forward, in the order on the screen. Past the grid, it shows the previous or the next month |
+| Arrow Up, Arrow Down | day grid | Moves one week back or forward |
+| Home, End | day grid | Moves to the first or the last day of the week |
+| Page Up, Page Down | day grid | Shows the previous or the next month, and focuses its first day |
+| Shift + Page Up, Shift + Page Down | day grid | Shows the same month a year before or after, and focuses its first day |
+| Enter, Space | a day | Picks the day |
+| Escape | calendar | Closes the calendar and drops the pick |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.DatePicker.init()` | Starts every `.nds-date-input` that has not started. The loader calls it on load. Call it again after you add a field to the page |
+| `NDS.DatePicker.reinit()` | The same as `init()` |
+| `NDS.DatePicker.create(input, formControl)` | Starts one field, and returns its instance. `formControl` is optional: the default is the input's `.nds-form-control`. On a field that has started, it returns the same instance. It returns `null` when the input has no `.nds-form-control` or no `.nds-form-container` |
+| `instance.destroy()` | Removes the calendar and its listeners. `create()` can start the field again. Call it before you remove the field from the page |
+| `NDS.DatePicker.CalendarConfig.gregorian`, `.hijri` | The two calendars. Each has `formatDate(date, format)` and `parseDate(text, format)` |
+| `NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri(date)` | Returns the Hijri date of a `Date`, as `{ day, month, year }` |
+| `NDS.DatePicker.CalendarConfig.hijri.hijriToGregorian(year, month, day)` | Returns the `Date` of a Hijri date |
+| `NDS.DatePicker.createHijriDate(day, month, year)` | Returns a `{ day, month, year }` Hijri date |
+{: .nds-table .nds-responsive}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `change` | `.nds-date-input`, and it bubbles | A native event, with no detail. It fires when the user presses Save or Clear, and when the user types a date and leaves the field. Read the date from `input.value` |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="date-picker-js" data-canon data-lang="js">
+var input = document.querySelector('#date-picker-visit');
+
+// Log the date in both calendars
+input.addEventListener('change', function () {
+  console.log(input.value, input.dataset.convertedDate);
 });
 
-// Format a Gregorian date as DD/MM/YYYY
-NDS.DatePicker.CalendarConfig.gregorian.formatDate(new Date());
+// The Hijri date of 15 March 2026
+NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri(new Date(2026, 2, 15));
+</script>
 
-// Convert between Gregorian and Hijri
-NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri(new Date());
-// Returns: { day, month, year }
+The full API is in the banner of `_js/nds-date-picker.js`.
 
-NDS.DatePicker.CalendarConfig.hijri.hijriToGregorian(1447, 9, 1);
-// Returns: Date object
+</div>
+  </div>
+</section>
 
-// Create a Hijri date object
-NDS.DatePicker.createHijriDate(1, 9, 1447);
-
-// Read the converted date (opposite calendar) from the input
-var input = document.querySelector('.nds-date-input');
-var converted = input.dataset.convertedDate;
-
-// Disable or require the date picker programmatically
-NDS.Forms.setState(input, 'disabled', true);
-NDS.Forms.setState(input, 'required', true);
-            </code>
-      </div>
-        </div>
-      </div>
+<section id="datePickerRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Form Template](../templates/form-template): a required Date of Birth field with a 100-year list.
+- [Manage Records](../examples/manage-records): a required Submitted date in the record form.
+
+</div>
   </div>
 </section>
