@@ -2,7 +2,7 @@
 layout: page
 title: Editor
 hero_title: Editor - National Design System
-hero_description: A rich text editor with a WYSIWYG editing surface that upgrades a standard textarea, adding a generated, localized toolbar and converting pasted Word, Google Docs, and web content into clean NDS markup while keeping pasted NDS components intact.
+hero_description: A rich text field that turns a textarea into an editing surface with a toolbar, and submits clean NDS markup
 hero_tags:
   - label: Beta
     style: nds-yellow
@@ -11,742 +11,349 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "17/08/2026 - 02:14 AM"
+last_edit: "01/10/2026 - 11:50 PM"
 ---
 
-<!-- Beta notice -->
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
-                    <span class="nds-feedback nds-alert-icon">
-                        <span class="nds-feedback-icon">
-                            <i class="nds-icon" aria-hidden="true"></i>
-                        </span>
-                    </span>
-                    <div class="nds-alert-content">
-                        <div class="nds-alert-text">
-                            <span class="nds-alert-title">Beta</span>
-                            <p class="nds-alert-description">The editor ships as beta in v1.4.0 and is still going through heavy testing and real-project use. Its API and markup contract may change before it is declared stable.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="editorOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The editor is a standard textarea field with one more class, `nds-editor`, on its container. When the page loads, the script adds a toolbar and an editing surface in front of the textarea. The textarea stays the form value: it holds the HTML that the user writes, and it submits with the form.
+
+The editor is in beta. Its API and its markup can change before it is stable.
+
+Pick another component when:
+
+- the value is plain text: a textarea in [Forms](../components/forms)
+- the value is one line: a text field in [Forms](../components/forms)
+- the value is a list of words: [Tag Input](../components/taginput)
+
+</div>
+  </div>
 </section>
 
-<!-- Overview -->
-<section id="editorOverview" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Rich Text Editor</h2>
-            <p class="nds-section-description">A rich text editor with a WYSIWYG surface — the markup contract is a standard textarea field wearing one extra class: the editing surface, toolbar, and popovers are generated at load, and the textarea stays the form value</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Default toolbar, generated from a plain textarea field</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-textarea nds-editor">
-                                    <div class="nds-form-header">
-                                        <label for="editor-standard-field"><span class="nds-label">Content</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <textarea class="nds-textarea" name="editor-standard" id="editor-standard-field" placeholder="Write here"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-editor-standard-1" id="tab-editor-standard-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-editor-standard-1"
-                                        aria-labelledby="tab-editor-standard-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-textarea nds-editor"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="editor-standard-field"&gt;&lt;span class="nds-label"&gt;Content&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;textarea class="nds-textarea" name="editor-standard" id="editor-standard-field" placeholder="Write here"&gt;&lt;/textarea&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="editorMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="editor-field" data-canon data-variants="editorVariantsTable" data-harness="form" data-demo-width="100%">
+<div class="nds-form-container nds-textarea nds-editor">
+  <div class="nds-form-header">
+    <label for="editor-content"><span class="nds-label">Content</span></label>
+  </div>
+  <div class="nds-form-control">
+    <textarea class="nds-textarea" name="content" id="editor-content" placeholder="Write here"></textarea>
+  </div>
+</div>
+</script>
+<script type="text/html" id="editor-upload" data-canon>
+<div class="nds-form-container nds-textarea nds-editor" data-editor-upload-url="/api/images" data-editor-upload-auto-upload="true" data-editor-upload-max-file-size="2097152" data-editor-upload-allowed-types="jpg,jpeg,png,gif,webp">
+  <div class="nds-form-header">
+    <label for="editor-article"><span class="nds-label">Article</span></label>
+  </div>
+  <div class="nds-form-control">
+    <textarea class="nds-textarea" name="article" id="editor-article" placeholder="Write here"></textarea>
+  </div>
+</div>
+</script>
+<script type="text/html" id="editor-embed" data-canon>
+<div class="nds-form-container nds-textarea nds-editor" data-editor-upload-url="embed">
+  <div class="nds-form-header">
+    <label for="editor-note"><span class="nds-label">Note</span></label>
+  </div>
+  <div class="nds-form-control">
+    <textarea class="nds-textarea" name="note" id="editor-note" placeholder="Write here"></textarea>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Toolbar Composition -->
-<section id="editorToolbar" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Toolbar Composition</h2>
-            <p class="nds-section-description">One attribute picks the commands for the field: a comment box might ship only inline formatting while a CMS field ships everything. Server-rendered values hydrate from the textarea</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Custom command set, hydrated value</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-textarea nds-editor" data-editor-toolbar="bold italic underline | link | ul ol | source">
-                                    <div class="nds-form-header">
-                                        <label for="editor-composed-field"><span class="nds-label">Announcement</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <textarea class="nds-textarea" name="editor-composed" id="editor-composed-field" placeholder="Write here">
-<h2>Portal update</h2>
-<p>The new services portal launches <strong>next quarter</strong>. Read the <a href="https://nds.gov.sa" rel="noopener noreferrer">full announcement</a> for details.</p>
-<ul>
-<li>Unified sign-on across services</li>
-<li>Faster request tracking</li>
-</ul>
-                                    </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-editor-composed-1" id="tab-editor-composed-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-editor-composed-1"
-                                        aria-labelledby="tab-editor-composed-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-textarea nds-editor" data-editor-toolbar="bold italic underline | link | ul ol | source"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="editor-composed-field"&gt;&lt;span class="nds-label"&gt;Announcement&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;textarea class="nds-textarea" name="editor-composed" id="editor-composed-field" placeholder="Write here"&gt;
-&lt;h2&gt;Portal update&lt;/h2&gt;
-&lt;p&gt;The new services portal launches &lt;strong&gt;next quarter&lt;/strong&gt;. Read the &lt;a href="https://nds.gov.sa" rel="noopener noreferrer"&gt;full announcement&lt;/a&gt; for details.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Unified sign-on across services&lt;/li&gt;
-&lt;li&gt;Faster request tracking&lt;/li&gt;
-&lt;/ul&gt;
-    &lt;/textarea&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="editorVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Every state row goes on the field's `<textarea>`. The editor reads it from there when it starts.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Standard (default) | — | — | Images from a URL only. Uploads nothing |
+| Structure | Image upload | canon `#editor-upload` | — | The image button also takes a file, and sends it to your server. See Image Upload |
+| Structure | Embedded images (hint: Uploaded files are saved inside the text, not on a server) | canon `#editor-embed` | — | The image button also takes a file, and puts it in the value as a `data:` URL. Only for a field with no upload server. See Embedded Images |
+| Toolbar | Full (default) | — | — | Every command except `h1`. Use it for long articles and page content |
+| Toolbar | Short | `[data-editor-toolbar="bold italic underline \| link \| ul ol \| source"]` | `.nds-editor` | A short set for comments and notes. See Toolbar |
+| Toolbar | None | `[data-editor-toolbar="none"]` | `.nds-editor` | No toolbar. The keyboard shortcuts and paste still work |
+| State (any) | Read-only | `[readonly]` | `textarea:not([disabled])` | The user can read and copy the text, and open the source view, but cannot change it. The value submits. Not with Disabled |
+| State (any) | Disabled | `[disabled]` | `textarea:not([readonly])` | The field is off and its value does not submit. Not with Read-only |
+| State (any) | Required (hint: Press Validate with the field empty) | `[required]` | `textarea` | The form needs text in the field. The forms script adds the required mark |
+| Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
+{: #editorVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- NDS Components by Paste -->
-<section id="editorComponents" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">NDS Components by Paste</h2>
-            <p class="nds-section-description">Copy component markup from any doc page and paste it in: it stays a styled, protected component. Deletion stops at component boundaries, Enter adds a line break inside instead of splitting the structure, and the toolbar's remove button lists the component levels at the caret</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Protected component shells: try deleting at the edges, Enter inside, and the remove button</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-textarea nds-editor">
-                                    <div class="nds-form-header">
-                                        <label for="editor-components-field"><span class="nds-label">Composed document</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <textarea class="nds-textarea" name="editor-components" id="editor-components-field" placeholder="Paste component markup here">
+<section id="editorBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Toolbar
+{: .nds-block-title}
+
+`data-editor-toolbar` on `.nds-editor` picks the toolbar buttons. Write the command names with spaces between them, and `|` to start a new button group. Without the attribute, the toolbar has the full set. The command names are in the API.
+
+### Pasted Components
+{: .nds-block-title}
+
+NDS component markup pasted or typed in the source view stays a styled component. It keeps its `nds-` classes, `data-status`, `data-state`, ARIA attributes and knobs such as `--card-width`. The user edits the text inside it, but cannot break it apart. Backspace and Delete work inside each part of it, and stop at the part's edge. A selection that covers the whole component deletes it. Enter adds a line break inside a card or an alert, and moves the caret out of a tag, a chip or a button. The Remove button (`remove`) lists the component at the caret and each one around it, and removes the one the user picks.
+
+<script type="text/html" id="editor-components" data-canon data-code="none">
+<div class="nds-form-container nds-textarea nds-editor">
+  <div class="nds-form-header">
+    <label for="editor-notice"><span class="nds-label">Service notice</span></label>
+  </div>
+  <div class="nds-form-control">
+    <textarea class="nds-textarea" name="notice" id="editor-notice" placeholder="Write here">
 <p>Service status: <span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span> checked daily.</p>
-<div class="nds-alert nds-card" data-status="info" role="alert"><span class="nds-feedback nds-alert-icon nds-outline"><span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span></span><div class="nds-alert-content"><div class="nds-alert-text"><span class="nds-alert-title">Heads up</span><p class="nds-alert-description">This alert was pasted as markup and stays an editable, protected component.</p></div></div></div>
-<p>Text before and after components stays freely editable.</p>
-                                    </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-editor-components-1" id="tab-editor-components-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-editor-components-1"
-                                        aria-labelledby="tab-editor-components-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-textarea nds-editor"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="editor-components-field"&gt;&lt;span class="nds-label"&gt;Composed document&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;textarea class="nds-textarea" name="editor-components" id="editor-components-field" placeholder="Paste component markup here"&gt;
-&lt;p&gt;Service status: &lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt; checked daily.&lt;/p&gt;
-&lt;div class="nds-alert nds-card" data-status="info" role="alert"&gt;&lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;&lt;span class="nds-feedback-icon"&gt;&lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/span&gt;&lt;/span&gt;&lt;div class="nds-alert-content"&gt;&lt;div class="nds-alert-text"&gt;&lt;span class="nds-alert-title"&gt;Heads up&lt;/span&gt;&lt;p class="nds-alert-description"&gt;This alert was pasted as markup and stays an editable, protected component.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Text before and after components stays freely editable.&lt;/p&gt;
-    &lt;/textarea&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="nds-alert nds-card" data-status="info" role="alert"><span class="nds-feedback nds-alert-icon nds-outline"><span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span></span><div class="nds-alert-content"><div class="nds-alert-text"><span class="nds-alert-title">Planned maintenance</span><p class="nds-alert-description">The service is closed on Friday from 1 AM to 4 AM.</p></div></div></div>
+<p>Text before and after a component stays free to edit.</p>
+    </textarea>
+  </div>
+</div>
+</script>
+
+### Images
+{: .nds-block-title}
+
+The image button inserts an image from a URL, with alt text, a width and a height. Pasted images keep a safe `src`, their alt text, and their width and height when these are numbers. A click on an image selects it. The image button then edits it, and the link button links it. By default the editor uploads nothing and embeds nothing: a pasted screenshot shows a message on the field.
+
+### Image Upload
+{: .nds-block-title}
+
+`data-editor-upload-url` with your server's URL adds a file picker to the image popover. With `data-editor-upload-auto-upload="true"`, the picker sends each file to the server, the way [File Upload](../components/upload) does. It then inserts the URL that the server returns. A file that fails a check shows its message in the picker.
+
+### Embedded Images
+{: .nds-block-title}
+
+`data-editor-upload-url="embed"` adds a file picker that sends nothing. The file goes in the value as a `data:` URL, and a pasted screenshot does too. A screenshot that fails a check shows its message on the field. Use it only for a field with no upload server: see Best Practices.
+
+
+### Read-only and Disabled
+{: .nds-block-title}
+
+`readonly` on the textarea keeps the text selectable, and the source view still opens. The commands are off, and the value submits. `disabled` turns the whole field off, and its value does not submit. To change the state after load, call `NDS.State.add(el, 'disabled')` or `NDS.State.remove(el, 'disabled')`, where `el` is `.nds-editor`. The same goes for `'readonly'`. The editor updates the textarea to match.
+
+</div>
+  </div>
 </section>
 
-<!-- Images -->
-<section id="editorImages" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Images</h2>
-            <p class="nds-section-description">The image popover inserts by URL, and pasted content keeps its images with safe sources, alt text, and numeric dimensions. Click an image to select it: the popover then edits it in place, the link popover wraps it in a link, and the remove button targets its component. By default no base64 enters the value — uploads appear only when a server endpoint is configured, and embedding is a per-field opt-in</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Embed opt-in: try uploading, pasting a screenshot, or clicking the image</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-textarea nds-editor" id="editor-images-container">
-                                    <div class="nds-form-header">
-                                        <label for="editor-images-field"><span class="nds-label">Illustrated article</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <textarea class="nds-textarea" name="editor-images" id="editor-images-field" placeholder="Write here">
-<p>Click the image to select it, then use the toolbar's image button to edit it in place.</p>
-<img src="{{ 'assets/img/riyadhcenter3s.webp' | relative_url }}" alt="Riyadh center" width="480">
-<p>Paste a screenshot here, upload a file, or insert one from a link.</p>
-                                    </textarea>
-                                    </div>
-                                </div>
-                                <script>
-                                document.getElementById('editor-images-container')
-                                    .addEventListener('nds:editor:ready', (e) => {
-                                        e.detail.instance.setImageUpload({
-                                            uploadUrl: 'embed',
-                                            maxFileSize: 2 * 1024 * 1024,
-                                            allowedTypes: 'jpg,png,webp',
-                                            allowedMimeTypes: 'image/*',
-                                        });
-                                    });
-                            </script>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-editor-images-1" id="tab-editor-images-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-editor-images-js" id="tab-editor-images-js">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-editor-images-1"
-                                        aria-labelledby="tab-editor-images-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-textarea nds-editor" id="editor-images-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="editor-images-field"&gt;&lt;span class="nds-label"&gt;Illustrated article&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;textarea class="nds-textarea" name="editor-images" id="editor-images-field" placeholder="Write here"&gt;
-&lt;p&gt;Click the image to select it, then use the toolbar's image button to edit it in place.&lt;/p&gt;
-&lt;img src="assets/img/riyadhcenter3s.webp" alt="Riyadh center" width="480"&gt;
-&lt;p&gt;Paste a screenshot here, upload a file, or insert one from a link.&lt;/p&gt;
-    &lt;/textarea&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                        </div>
-                                    </div>
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-editor-images-js"
-                                        aria-labelledby="tab-editor-images-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                        <code class="lang-javascript code">// Editors auto-initialize; hook into the ready event to configure the
-// image popover. 'embed' inlines files as data:image URLs — swap for a
-// real endpoint (uploadUrl: '/api/images', autoUpload: true) in production.
-// Size/type validation is the same either way (NDS Upload gates before insert).
-document.getElementById('editor-images-container')
-    .addEventListener('nds:editor:ready', (e) =&gt; {
-        e.detail.instance.setImageUpload({
-            uploadUrl: 'embed',
-            maxFileSize: 2 * 1024 * 1024,   // bytes (2MB — also the default)
-            allowedTypes: 'jpg,png,webp',   // extensions; default jpg,jpeg,png,gif,webp,svg
-            allowedMimeTypes: 'image/*',    // optional second check
-        });
-    });
-                                    </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="editorFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Automatic Setup</span>
+          </span>
+          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-editor</code> field starts when the page loads. The script makes the toolbar, the editing surface and the popovers, so you write only the textarea field.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-check"></i>
+            <span class="nds-label">Form Integration</span>
+          </span>
+          <p class="nds-item-desc">The textarea holds the value as formatted HTML. Saved HTML written in the textarea shows formatted when the editor starts. Its label and placeholder become the editing surface's name and placeholder. It submits with the form, takes <code class="nds-inline-code lang-html">required</code>, and fires <code class="nds-inline-code lang-js">input</code> on each edit and <code class="nds-inline-code lang-js">change</code> when the user leaves a changed field.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-clipboard"></i>
+            <span class="nds-label">Paste Conversion</span>
+          </span>
+          <p class="nds-item-desc">Text from Word and Google Docs keeps its lists, bold, italic and underline. A pasted table becomes an NDS table. HTML source pasted as text becomes formatted content.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-shield-01"></i>
+            <span class="nds-label">Safe Value</span>
+          </span>
+          <p class="nds-item-desc">The editor cleans every paste and every source edit. It removes scripts, styles, event attributes and unsafe URLs such as <code class="nds-inline-code lang-html">javascript:</code>. A link that opens a new tab always gets <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-link-01"></i>
+            <span class="nds-label">Link Popover</span>
+          </span>
+          <p class="nds-item-desc">The link button opens a form for the text and the URL, with Open in new tab, Hide external badge and Colored link options. On a link, it also shows Unlink.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-source-code"></i>
+            <span class="nds-label">HTML Source View</span>
+          </span>
+          <p class="nds-item-desc">The source button shows the formatted HTML for direct edits. The text that the user selected stays selected in the source.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-turn-backward"></i>
+            <span class="nds-label">Undo History</span>
+          </span>
+          <p class="nds-item-desc">The editor keeps its own undo history, so undo also reverses a removed component and a popover edit.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-translation"></i>
+            <span class="nds-label">Arabic and English Labels</span>
+          </span>
+          <p class="nds-item-desc">The toolbar labels, tooltips and popover text follow the page language.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-view-off"></i>
+            <span class="nds-label">Loading Placeholder</span>
+          </span>
+          <p class="nds-item-desc">Until the script starts, the field shows a pulsing bar for the toolbar and a pulsing box for the text, at the editor's size.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- States -->
-<section id="editorStates" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">States</h2>
-            <p class="nds-section-description">Native textarea attributes drive the initial state: readonly keeps content selectable with the source view available, disabled makes the field inert and excludes it from submission. Runtime toggles go through NDS.State</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Readonly</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-textarea nds-editor" data-editor-toolbar="bold italic underline | source">
-                                    <div class="nds-form-header">
-                                        <label for="editor-readonly-field"><span class="nds-label">Review notes</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <textarea class="nds-textarea" name="editor-readonly" id="editor-readonly-field" readonly>
-<p>These notes are <strong>read only</strong>: content stays selectable and the source view still opens.</p>
-                                    </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-editor-readonly-1" id="tab-editor-readonly-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-editor-readonly-1"
-                                        aria-labelledby="tab-editor-readonly-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-textarea nds-editor" data-editor-toolbar="bold italic underline | source"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="editor-readonly-field"&gt;&lt;span class="nds-label"&gt;Review notes&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;textarea class="nds-textarea" name="editor-readonly" id="editor-readonly-field" readonly&gt;
-&lt;p&gt;These notes are &lt;strong&gt;read only&lt;/strong&gt;: content stays selectable and the source view still opens.&lt;/p&gt;
-    &lt;/textarea&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Disabled</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-textarea nds-editor" data-editor-toolbar="bold italic underline | source">
-                                    <div class="nds-form-header">
-                                        <label for="editor-disabled-field"><span class="nds-label">Archived entry</span></label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <textarea class="nds-textarea" name="editor-disabled" id="editor-disabled-field" disabled>
-<p>This entry is archived and its value does not submit.</p>
-                                    </textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-editor-disabled-1" id="tab-editor-disabled-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-editor-disabled-1"
-                                        aria-labelledby="tab-editor-disabled-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-textarea nds-editor" data-editor-toolbar="bold italic underline | source"&gt;
-  &lt;div class="nds-form-header"&gt;
-    &lt;label for="editor-disabled-field"&gt;&lt;span class="nds-label"&gt;Archived entry&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;textarea class="nds-textarea" name="editor-disabled" id="editor-disabled-field" disabled&gt;
-&lt;p&gt;This entry is archived and its value does not submit.&lt;/p&gt;
-    &lt;/textarea&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="editorPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use the editor for text that a user writes for a page: announcements, articles, service descriptions.
+- Give each field only the commands it needs. A comment field needs `bold italic | ul ol`, not the full set.
+- Leave `h1` out unless the field writes a whole page. The page already has its `<h1>`.
+- Read and write the value on the textarea, never on the editing surface.
+- Do not use the editor to write code. The source view is for small markup fixes.
+- Clean the value on your server too. The editor cleans what the user enters, but a request can skip it.
+- Send image uploads to your server with `data-editor-upload-url`. Use `embed` only when there is no upload server: a `data:` URL makes the value about a third larger than the file, and the browser cannot cache it.
+- Set `--editor-max-size` on a tall field. The text then scrolls inside the field, and the toolbar stays in view.
+- For the label, info text, feedback and the required mark, see [Forms](../components/forms). They work the same on every field.
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="editorFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Add nds-editor to a standard textarea field. The editing surface, toolbar, popovers, and form wiring are generated at load.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-magic-wand-01"></i>
-                            <span class="nds-label">Generated Localized Toolbar</span>
-                        </span>
-                        <p class="nds-item-desc">Commands are composed per field with one attribute, and button labels and tooltips ship in Arabic and English automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-clipboard"></i>
-                            <span class="nds-label">Foreign Paste Conversion</span>
-                        </span>
-                        <p class="nds-item-desc">Word and Google Docs content converts on paste: real lists, semantic bold and italic, tables restyled as NDS tables, junk stripped.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-package"></i>
-                            <span class="nds-label">NDS Components by Paste</span>
-                        </span>
-                        <p class="nds-item-desc">Component markup pasted from any doc page stays a styled, editable component: classes, status attributes, and sizing knobs survive while unsafe markup is stripped.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-shield-01"></i>
-                            <span class="nds-label">Component Shell Protection</span>
-                        </span>
-                        <p class="nds-item-desc">Deletes stop at component boundaries, Enter adds a line break inside a component instead of splitting it, and removal is always an explicit action.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-image-add-01"></i>
-                            <span class="nds-label">Image Insertion</span>
-                        </span>
-                        <p class="nds-item-desc">Insert from a link, upload to your server through the embedded NDS Upload, or opt in to data:image embedding. Click any image to edit it in place, link it, or remove it.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-check"></i>
-                            <span class="nds-label">Native Form Integration</span>
-                        </span>
-                        <p class="nds-item-desc">The value lives in your textarea: it submits with the form, supports required validation, and fires input and change events like any field.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-align-center"></i>
-                            <span class="nds-label">Direction-aware Alignment</span>
-                        </span>
-                        <p class="nds-item-desc">Start, center, end, and justify follow text direction, so aligned content reads correctly in both RTL and LTR pages.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-source-code"></i>
-                            <span class="nds-label">HTML Source View</span>
-                        </span>
-                        <p class="nds-item-desc">A toolbar toggle swaps to the pretty-printed markup for direct editing, carrying your text selection over so you land where you meant to edit.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-keyboard"></i>
-                            <span class="nds-label">Keyboard Shortcuts</span>
-                        </span>
-                        <p class="nds-item-desc">Ctrl or Cmd with B, I, and U for inline formatting, Tab nests list items, and native undo and redo work throughout.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Initialize, create, and destroy instances, and react to the ready event through the JS API. Destroy returns the plain textarea field.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="editorApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
     </div>
-</section>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-<!-- Usage Guidelines -->
-<section id="editorGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
+### Data Attributes
+{: .nds-block-title}
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use the editor for <strong>user-authored rich content</strong> destined for NDS pages: announcements, article bodies, service descriptions, review notes</li>
-                    <li>Use it for <strong>paste-heavy workflows</strong> where authors draft in Word or Google Docs: the paste pipeline converts their formatting instead of losing it or letting junk through</li>
-                    <li>Do not use it for short single-line values or plain text. Use <a class="nds-color" href="{{ 'components/forms' | relative_url }}">Text Fields</a> instead</li>
-                    <li>Do not use it as a code editor. The source view exists for occasional markup fixes, not as a primary authoring surface</li>
-                    <li><strong>Compose the toolbar to the use case</strong> with <code class="nds-inline-code lang-html">data-editor-toolbar</code>: a comment field might ship <code class="nds-inline-code lang-html">bold italic | ul ol</code> while a CMS field ships the full default set</li>
-                    <li>The default heading commands are <code class="nds-inline-code lang-html">h2 h3 h4</code> because the page already owns its h1. Add the <code class="nds-inline-code lang-html">h1</code> token only for fields that author complete pages</li>
-                    <li>Add <code class="nds-inline-code lang-html">required</code> to the textarea (and <code class="nds-inline-code lang-html">data-required</code> on the container) for mandatory fields: validation works natively because the value is a real form field</li>
-                    <li>Links marked "Open in new tab" get <code class="nds-inline-code lang-html">target="_blank"</code> with <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code> paired automatically, and only that target survives sanitization</li>
-                    <li><strong>Wire image uploads to your server</strong> with <code class="nds-inline-code lang-js">setImageUpload({ uploadUrl: '/api/…' })</code>: files POST through the embedded <a class="nds-color" href="{{ 'components/upload' | relative_url }}">NDS Upload</a> (progress, retry, and error feedback included) and the returned URL is inserted. Without an endpoint the popover is URL-only, and pasted screenshots show a field notice instead of silently embedding</li>
-                    <li>Reserve <code class="nds-inline-code lang-js">setImageUpload({ uploadUrl: 'embed' })</code> for fields without an upload backend: base64 bloats the stored value (~37% over the file size) and embedded images can't be cached or served optimized</li>
-                    <li>To remove a pasted component, use the toolbar's remove button (it lists the component levels at the caret) or select the whole component and delete. Boundary deletes never break a component apart</li>
-                    <li>Cap tall fields with <code class="nds-inline-code lang-html">--editor-max-size</code>: past the cap the surface scrolls internally and the toolbar stays in reach</li>
-                    <li>The whole component is <strong>beta</strong>: expect refinements while it hardens through real-project use</li>
-                </ul>
-            </div>
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-editor-toolbar` | `.nds-editor` | The toolbar commands, from the Toolbar Commands table. `none` removes the toolbar |
+| `data-editor-upload-url` | `.nds-editor` | Adds a file picker to the image popover. Your server's URL, or `embed` to put the file in the value as a `data:` URL. The server returns `{ "url": "…" }` or the URL as text |
+| `data-editor-upload-auto-upload` | `.nds-editor` | `true` sends the file as soon as the user picks it. Set it with a server URL. Ignored with `embed` |
+| `data-editor-upload-max-file-size` | `.nds-editor` | The largest file in bytes. Default `2097152` (2 MB). With `embed`, it also limits a pasted screenshot |
+| `data-editor-upload-allowed-types` | `.nds-editor` | The file extensions the picker takes. Default `jpg,jpeg,png,gif,webp,svg`. List `jpg` and `jpeg` both to take either |
+| `data-editor-upload-allowed-mime-types` | `.nds-editor` | The MIME types the picker takes, such as `image/*`. A second check after the extension |
+| `data-dropmenu-portal` | `.nds-editor` | Moves the link, image and remove popovers to `<body>` when they open, so a parent with `overflow: hidden` does not cut them off |
+| `data-state~="readonly"` | `.nds-editor` | Set by the script at load when the textarea has `readonly`. Add or remove it with `NDS.State` after load. See Read-only and Disabled |
+| `data-state~="disabled"` | `.nds-editor` | Set by the script at load when the textarea has `disabled`. Add or remove it with `NDS.State` after load. See Read-only and Disabled |
+{: .nds-table .nds-responsive}
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Keyboard Interactions</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Keys</th><th>Action</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">Ctrl/Cmd + B / I / U</code></td><td>Bold, italic, underline</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">Enter</code></td><td>New paragraph. Inside a pasted component: a line break instead, so the component structure never splits</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">Backspace / Delete</code></td><td>Normal editing in text and inside component parts. At a component boundary the delete stops instead of merging content through it</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">Tab / Shift+Tab</code></td><td>In a list item: nest or un-nest the item. In source view: indent or outdent the line or selection</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">Escape, then Tab</code></td><td>In source view: release the tab trap and move focus out of the field</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">Ctrl/Cmd + Z / Y</code></td><td>Native undo and redo</td></tr>
-                    </tbody>
-                </table>
-            </div>
+### Toolbar Commands
+{: .nds-block-title}
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Toolbar Commands</h3>
-                <p>Tokens for <code class="nds-inline-code lang-html">data-editor-toolbar</code>. Space-separated, <code class="nds-inline-code lang-html">|</code> starts a new button group, <code class="nds-inline-code lang-html">source</code> renders at the bar's end, <code class="nds-inline-code lang-html">none</code> opts out of the whole bar. Omit the attribute for the full default set.</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Token</th><th>Command</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">undo</code> / <code class="nds-inline-code lang-html">redo</code></td><td>Native history steps</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">bold</code> / <code class="nds-inline-code lang-html">italic</code> / <code class="nds-inline-code lang-html">underline</code> / <code class="nds-inline-code lang-html">strike</code></td><td>Inline formatting toggles</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">clear</code></td><td>Remove inline formatting from the selection</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">link</code></td><td>Link popover: link text, URL, an "Open in new tab" option, and unlink for existing links</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">image</code></td><td>Image popover: insert from a link with alt text and width/height, edit a clicked image in place. An upload section appears when a server endpoint is configured or embedding is opted in</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">h2</code> / <code class="nds-inline-code lang-html">h3</code> / <code class="nds-inline-code lang-html">h4</code></td><td>Heading toggles for the current block</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">h1</code></td><td>Available but not in the default set: add it only for full-page authoring fields</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">align-start</code> / <code class="nds-inline-code lang-html">align-center</code> / <code class="nds-inline-code lang-html">align-end</code> / <code class="nds-inline-code lang-html">align-justify</code></td><td>Logical block alignment that follows text direction</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">ul</code> / <code class="nds-inline-code lang-html">ol</code></td><td>Bulleted and numbered lists</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">remove</code></td><td>Destructive component removal with a confirm popover listing the component levels at the caret</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">source</code></td><td>HTML source view toggle, rendered at the end of the bar</td></tr>
-                    </tbody>
-                </table>
-            </div>
+| Command | Effect |
+|---|---|
+| `undo`, `redo` | Steps back or forward in the editor's history |
+| `bold`, `italic`, `underline`, `strike` | Turns the format on or off for the selection |
+| `clear` | Removes the formats from the selection |
+| `link` | Opens the link popover |
+| `image` | Opens the image popover. See Images |
+| `h1`, `h2`, `h3`, `h4` | Turns the line into that heading, or back into a paragraph. `h1` is not in the full set |
+| `align-left`, `align-center`, `align-right`, `align-justify` | Aligns the line. Left and right stay on that side in both languages. A second click removes the alignment |
+| `dir-ltr`, `dir-rtl` | Sets the text direction of the line. A second click removes it, and the line follows the page again |
+| `ul`, `ol` | Turns the line into a bulleted or a numbered list |
+| `remove` | Removes a pasted component. It is on only while the caret is in one. See Pasted Components |
+| `source` | Opens the HTML source view. It always sits at the end of the bar |
+{: .nds-table .nds-responsive}
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <p>Configuration rides the native textarea attributes: <code class="nds-inline-code lang-html">placeholder</code>, <code class="nds-inline-code lang-html">required</code>, <code class="nds-inline-code lang-html">readonly</code>, and <code class="nds-inline-code lang-html">disabled</code> all carry over to the editing surface. The editor adds these attributes of its own:</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-editor-toolbar</code></td><td>Set on the container to pick the toolbar commands. See the Toolbar Commands table for tokens and the grouping syntax</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Managed on the container at runtime: <code class="nds-inline-code lang-html">readonly</code> and <code class="nds-inline-code lang-html">disabled</code> toggled through <code class="nds-inline-code lang-js">NDS.State</code>. Initial state comes from the textarea's native attributes</td></tr>
-                    </tbody>
-                </table>
-            </div>
+The full set is `undo redo | bold italic underline strike clear | link image | h2 h3 h4 | align-left align-center align-right align-justify | dir-ltr dir-rtl | ul ol | remove | source`.
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--editor-min-size</code></td><td><code class="nds-inline-code lang-html">12rem</code></td><td>Minimum height of the editing surface and the source view</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--editor-max-size</code></td><td><code class="nds-inline-code lang-html">70vh</code></td><td>Height cap: past it the surface scrolls internally so the toolbar stays visible</td></tr>
-                    </tbody>
-                </table>
-            </div>
+### Keyboard
+{: .nds-block-title}
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Editor</strong> API adopts textarea fields and creates and destroys instances. The submitted value is always the textarea, so reading and listening work like any form field.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialization ───────────────────────────────────
-// Auto-initializes every .nds-editor on page load, adopting the field's textarea.
-NDS.Editor.init();                    // scan for new editors (also NDS.Editor.reinit())
-const inst = NDS.Editor.create(el);   // adopt one field; returns the instance, or null when no textarea is found
-NDS.Editor.destroy(el);               // tear down: generated UI is removed, the plain textarea field remains
-el.ndsEditor;                         // instance backref on the root element
+| Key | Effect |
+|---|---|
+| Ctrl or Cmd + B, I, U | Bold, italic, underline |
+| Ctrl or Cmd + Z | Undo |
+| Ctrl or Cmd + Y, or Ctrl or Cmd + Shift + Z | Redo |
+| Enter | Starts a new paragraph. See Pasted Components for Enter in a component |
+| Tab, Shift + Tab | In a list item: nests the item, or moves it out one level. Elsewhere, Tab moves the focus out of the field |
+| Tab, Shift + Tab in the source view | Indents or outdents the line or the selected lines |
+| Escape, then Tab in the source view | Moves the focus out of the field |
+{: .nds-table .nds-responsive}
 
-// ── Ready event ──────────────────────────────────────
-el.addEventListener('nds:editor:ready', (e) =&gt; {
-    e.detail.instance;                // the editor instance
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on `.nds-editor`.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--editor-min-size` | `12rem` | Minimum height of the editing surface and the source view |
+| `--editor-max-size` | `70vh` | Maximum height. Past it, the text scrolls inside the field |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Editor.init()` | Starts every `.nds-editor` on the page that has not started. `reinit()` does the same |
+| `NDS.Editor.create(el)` | Starts one editor and returns it. Returns the running editor when `el` already has one, and `null` when the field has no textarea |
+| `NDS.Editor.destroy(el)` | Removes the toolbar and the editing surface. The plain textarea field stays, with its value |
+| `instance.setImageUpload(config)` | Sets the image popover's file picker from code. `config` takes the `data-editor-upload-*` options in camel case: `uploadUrl`, `autoUpload`, `maxFileSize`, `allowedTypes`, `allowedMimeTypes`. `null` or `false` removes an option. Returns the instance |
+{: .nds-table .nds-responsive}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:editor:ready` | `.nds-editor` (bubbles) | `{ instance }`. Fires when the editor has started |
+{: .nds-table .nds-responsive}
+
+The running editor is also `el.ndsEditor`. File Upload events, such as `nds:upload:error`, bubble from the image popover.
+
+<script type="text/html" id="editor-js" data-canon data-lang="js">
+document.addEventListener('nds:editor:ready', function (e) {
+  e.detail.instance.setImageUpload({ maxFileSize: 5 * 1024 * 1024 });
 });
 
-// ── Value access ─────────────────────────────────────
-// The textarea IS the form field: sanitized, pretty-printed markup.
-const value = textarea.value;
-textarea.addEventListener('input', onEdit);    // fires on every edit
-textarea.addEventListener('change', onCommit); // fires on blur when changed
-
-// ── Image upload configuration ───────────────────────
-// The popover's upload section is a standard NDS Upload; setImageUpload
-// forwards ANY of its config keys to that container (they map 1:1 to the
-// data-* attributes on the File Upload page). Without setImageUpload the
-// popover is URL-only. Two modes for the uploadUrl:
-//   - a real endpoint: files POST one per request ("file" field), and the
-//     response's { url } (or a bare URL body) is inserted — no base64.
-//   - 'embed' (reserved sentinel): files embed as data:image URLs. No POST
-//     is sent; for demos and back-office fields without an upload backend.
-el.addEventListener('nds:editor:ready', (e) =&gt; {
-    e.detail.instance.setImageUpload({
-        uploadUrl: '/api/images',            // server endpoint, or 'embed' for base64 (data-upload-url)
-        autoUpload: true,                    // upload on selection; ignored for 'embed' (data-auto-upload)
-        maxFileSize: 5 * 1024 * 1024,        // bytes; generated default: 2MB (data-max-file-size)
-        allowedTypes: 'jpg,png,webp',        // generated default: jpg,jpeg,png,gif,webp,svg (data-allowed-types)
-        allowedMimeTypes: 'image/*',         // optional second check (data-allowed-mime-types)
-    });
+var textarea = document.querySelector('#editor-content');
+textarea.addEventListener('change', function () {
+  console.log(textarea.value);
 });
-// The same 2MB default cap also gates screenshot paste in embed mode —
-// raising maxFileSize raises both. Size/type violations render in the file
-// chip; paste violations use the field's feedback message.
-// NDS Upload events (nds:upload:success, nds:upload:error…) bubble from the
-// container for custom handling — see the File Upload component page.
+</script>
 
-// ── Runtime states ───────────────────────────────────
-// Initial state comes from the textarea's readonly / disabled attributes.
-NDS.State.add(el, 'readonly');        // or 'disabled'
-NDS.State.remove(el, 'readonly');
+The full API is in the banner of `_js/nds-editor.js`.
 
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+</div>
+  </div>
 </section>

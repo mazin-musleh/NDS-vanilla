@@ -303,7 +303,7 @@
   scss: _sass/components/_dropmenu.scss
 
 - title: "Editor"
-  description: "Rich text field that submits clean NDS markup, converting Word, Google Docs, and web pastes and inserting NDS components as blocks"
+  description: "Rich text field that submits clean NDS markup, converting Word, Google Docs, and web pastes and keeping pasted NDS components"
   use_when: "A rich text editor or WYSIWYG field. Submits clean NDS markup and converts pastes from Word, Google Docs, and web pages. Use it to replace TinyMCE, CKEditor, Quill, or similar."
   icon: '<i class="hgi hgi-stroke hgi-quill-write-02"></i>'
   category: "Forms"
