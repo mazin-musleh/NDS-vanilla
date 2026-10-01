@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "30/09/2026 - 09:11 PM"
+last_edit: "01/10/2026 - 08:29 PM"
 ---
 
 <section id="selectionOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "30/09/2026 - 09:11 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Selection works on any list: table rows, cards or a plain list. Users pick items, and one action (export, delete, assign) applies to all of them. Each item holds a checkbox. A select-all checkbox picks every item, and a counter shows how many are picked: "2 selected of 48 requests". The select-all and the counter name the list through `data-selection-target`. Your code reads the selection through `NDS.Selection` and the `nds:selection:change` event.
+Selection works on any list: table rows, cards or a plain list. Users pick items, and one action (export, delete, assign) applies to all of them. Each item holds a checkbox. A select-all checkbox picks every item on the current page, and a counter shows how many are picked: "2 selected of 48 requests". The select-all and the counter name the list through `data-selection-target`. Your code reads the selection through `NDS.Selection` and the `nds:selection:change` event.
 
 Pick another component when:
 
@@ -52,6 +52,8 @@ Pick another component when:
       </div>
       <span class="nds-bar-text" data-selection-target="selection-services">
         <b data-selection-count>0</b> selected of <b data-selection-total>3</b> services
+        <button type="button" data-selection-all hidden>(<b>Select all</b>)</button>
+        <button type="button" data-selection-clear hidden>(<b>Clear all</b>)</button>
       </span>
     </div>
   </div>
@@ -111,6 +113,8 @@ Pick another component when:
       <span class="nds-bar-text" data-paged-target="selection-requests" data-selection-target="selection-requests">
         <span class="nds-records-view">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>4</b> of <b data-paged-count>6</b> requests</span>
         <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>6</b> requests</span>
+        <button type="button" data-selection-all hidden>(<b>Select all</b>)</button>
+        <button type="button" data-selection-clear hidden>(<b>Clear all</b>)</button>
       </span>
     </div>
   </div>
@@ -214,7 +218,7 @@ Pick another component when:
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Cards (default) | — | — | Any list whose items hold a checkbox: cards, a plain checkbox list. A select-all checkbox and a counter sit in a toolbar above it |
-| Structure | Table | canon `#selection-table` | — | A paged table. The header checkbox is the select-all. The counter shares its line with the Pagination records line and takes its place while anything is selected |
+| Structure | Table | canon `#selection-table` | — | A paged table. The header checkbox is the select-all. The counter shares its line with the Pagination records line and takes its place while anything is selected. A Select all link selects every page, and a Clear all link clears every page |
 {: #selectionVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -231,7 +235,14 @@ Pick another component when:
 ### Select All
 {: .nds-block-title}
 
-A checkbox with `data-selection-target` selects every item in that list, or clears them all. It shows a half-checked state when only some items are selected. While a filter hides items, it selects only the items the filter shows. Put it outside the list, so it does not count as an item.
+A checkbox with `data-selection-target` selects every item on the current page, or clears them all. It shows a half-checked state when only some items on the page are selected, and it updates when the user turns the page. Items selected on other pages stay selected, so each page the user selects adds to the selection. While a filter hides items, it selects only the items the filter shows. Put it outside the list, so it does not count as an item.
+
+### Select All and Clear All Links
+{: .nds-block-title}
+
+Put a button with `data-selection-all` in the counter, after the `nds-selection-view`. A click selects every item the filter shows, on every page. Ship it with `hidden`: the script shows it only while some of those items are selected, but not all.
+
+A button with `data-selection-clear` after it clears every item, on every page. Ship it with `hidden` too: the script shows it once every item the filter shows is selected. So the two links never show together: Select all takes its place until everything is selected.
 
 ### Records Swap
 {: .nds-block-title}
@@ -347,10 +358,12 @@ The list is the element with the id that `data-selection-target` names. Its item
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-selection-target="id"` | any element except a checkbox | Makes the element a counter for the list |
+| `data-selection-all` | a `button` in a counter | A click selects every item the filter shows, on every page. The script removes `hidden` from it while some of those items are selected, but not all, and sets it otherwise. Write `hidden` on it at page load |
+| `data-selection-clear` | a `button` in a counter | A click runs `clear()`. The script removes `hidden` from it while every item the filter shows is selected, and sets it otherwise. Write `hidden` on it at page load |
 | `data-selection-count` | an element in a counter | The script writes the number of selected items into it. Write the count at page load in it (usually `0`), so the line shows a number before the script runs |
 | `data-selection-total` | an element in a counter | The script writes the number of items in the list into it. On a paged list, `data-paged-count` from [Pagination](../components/pagination) can take its place: it counts only the items that match the filter |
 | `data-state~="has-selection"` | a counter | The script sets it while anything is selected |
-| `data-selection-target="id"` | an `input.nds-check` | Makes the checkbox the list's select-all. [Tables](../components/tables) add it to the header checkbox, and give the `<tbody>` an id if it has none |
+| `data-selection-target="id"` | an `input.nds-check` | Makes the checkbox the list's select-all. It acts on the current page only. [Tables](../components/tables) add it to the header checkbox, and give the `<tbody>` an id if it has none |
 | `data-state~="selected"` | an item | The script sets it when the item's checkbox is checked, and removes it when the box is cleared. Set it yourself on an item with no checkbox. `clear()` removes it from every item |
 {: .nds-table .nds-responsive}
 
@@ -362,7 +375,7 @@ The script starts on its own. Call `recount()` or `reinit()` after a change that
 | Method | Effect |
 |---|---|
 | `NDS.Selection.init()` | Adds the document listeners. The loader calls it |
-| `NDS.Selection.selectAll(list, on)` | Selects every item the filter shows, or clears them when `on` is `false`. `on` defaults to `true` |
+| `NDS.Selection.selectAll(list, on, scope)` | Selects every item the filter shows, or clears them when `on` is `false`. `on` defaults to `true`. With `scope` set to `'page'`, it acts only on the items on the current page |
 | `NDS.Selection.clear(list)` | Clears every item, including items a filter hides and items with no checkbox. Call it after a bulk action |
 | `NDS.Selection.selected(list)` | Returns the selected items, in page order |
 | `NDS.Selection.isSelected(item)` | Returns `true` when the item is selected. [Export](../components/export) uses it to pick the selected rows |
