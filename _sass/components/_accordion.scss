@@ -194,11 +194,14 @@
 
     .nds-accordion-item {
 
+        // The bar is fit-content, so space-between would center it between a
+        // leading icon and the chevron — auto margin keeps it at the start.
         .nds-accordion-title {
             @include skeleton-bar;
+            margin-inline-end: auto;
         }
 
-        // Button icons (leading icon and chevron) skeleton too — mask:none so
+        // Leading icons skeleton too — mask:none so
         // masked icons paint their whole box as a block (a masked gradient
         // would reveal the icon's shape); font glyphs die via the transparent
         // color from skeleton-fill.
@@ -206,6 +209,15 @@
             mask: none;
             border-radius: var(--nds-skeleton-radius);
             @include skeleton-fill;
+        }
+
+        // The chevron is the button's ::after — skeleton-fill's fit-content
+        // would collapse the empty pseudo, so it gets the fill alone.
+        .nds-accordion-btn::after {
+            mask: none;
+            background: var(--nds-skeleton-fill);
+            border-radius: var(--nds-skeleton-radius);
+            opacity: 1;
         }
 
         // Open items: one bar block over the body, inset to its padding (the

@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "28/09/2026 - 12:25 AM"
+updated: "1.12.x"
+last_edit: "01/10/2026 - 08:39 PM"
 ---
 
 <section id="accordionOverview" class="nds-content-section nds-doc-overview">
