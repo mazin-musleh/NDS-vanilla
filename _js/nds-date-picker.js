@@ -671,7 +671,7 @@
 
             // Handler to ensure dropdown exists before toggling
             var ensureDropdownAndToggle = function (e) {
-                // The field's state, not input.readOnly: a readonly input still opens a pick-only field.
+                // Forms copies a readonly input to the field's state; the calendar button stays live.
                 if (self.elements.input.disabled || NDS.State.has(self.elements.container, 'readonly')) return;
                 if (!self.isDropdownCreated) {
                     // Create dropdown DOM
