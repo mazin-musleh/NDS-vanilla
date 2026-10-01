@@ -326,9 +326,15 @@
                 var off = !applies(byKey[btn.getAttribute('data-builder-option')]);
                 NDS.State[off ? 'add' : 'remove'](btn, 'disabled');
                 off ? btn.setAttribute('aria-disabled', 'true') : btn.removeAttribute('aria-disabled');
-                if (!off && btn.ndsTooltip) btn.ndsTooltip.close();                // The hint's native title would show beside the reason tooltip: park it while off.
-                if (off && btn.title) { btn.setAttribute('data-hint', btn.title); btn.removeAttribute('title'); }
-                else if (!off && btn.hasAttribute('data-hint')) btn.title = btn.getAttribute('data-hint');
+                if (!off && btn.ndsTooltip) btn.ndsTooltip.close();
+                // One balloon serves both texts: the hint while on, the reason while off.
+                var msg = btn.getAttribute(off ? 'data-reason' : 'data-hint');
+                var p = msg && btn.ndsTooltip && btn.ndsTooltip.balloon && btn.ndsTooltip.balloon.querySelector('.nds-tooltip-message');
+                if (p) p.textContent = msg;
+                // A reason shows at once, a hint after a pause.
+                // ponytail: Tooltip reads the delay only at init, so the instance field is set too; drop it once Tooltip reads the attribute per hover.
+                if (btn.hasAttribute('data-tooltip-hover')) btn.setAttribute('data-tooltip-hover', off ? '0' : '500');
+                if (btn.ndsTooltip) btn.ndsTooltip._hoverDelay = off ? 0 : 500;
             });
         }
 
@@ -507,9 +513,10 @@
         if (slot) dropAlert(e.target);
     });
 
-    // A chip's reason tooltip shows only while the chip is off.
+    // A chip's tooltip shows only when it has text for the chip's state: a hint while on, a reason while off.
     document.addEventListener('nds:tooltip:opened', function (e) {
-        if (e.target.matches('[data-builder-option]:not([aria-disabled])')) e.target.ndsTooltip.close();
+        var btn = e.target;
+        if (btn.matches('[data-builder-option]') && !btn.hasAttribute(btn.hasAttribute('aria-disabled') ? 'data-reason' : 'data-hint')) btn.ndsTooltip.close();
     });
 
     // A link in a preview stays on the doc page: the component still gets the click, the browser

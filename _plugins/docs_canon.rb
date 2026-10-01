@@ -103,6 +103,8 @@ module DocsCanon
     return false unless has_tags.all? { |t| src.include?("<#{t}") }
     has_classes = sel.scan(/:has\(>?\s*\.([\w-]+)\)/).flatten
     return false unless has_classes.all? { |c| src.scan(/\sclass="([^"]*)"/).flatten.any? { |v| v.split.include?(c) } }
+    has_attrs = sel.scan(/:has\(>?\s*\[([\w-]+)(?:="([^"]*)")?\]\)/)
+    return false unless has_attrs.all? { |n, v| src.match?(v ? /\s#{n}="#{Regexp.escape(v)}"/ : /\s#{n}[\s=>]/) }
     own = sel.gsub(/:(?:not|has)\([^)]*\)/, '')
     classes = own.gsub(/\[[^\]]*\]/, '').scan(/\.([\w-]+)/).flatten
     attrs = own.scan(/\[([\w-]+)/).flatten
@@ -261,14 +263,16 @@ module DocsCanon
     multi, single = rest.partition { |_, list| list.size > 1 }
     esc = ->(t) { CGI.escapeHTML(t.to_s) }
     # Primary chips pick one of a set that always has a value; neutral chips can be turned off.
-    # A chip that can be off carries its reason as a hover tooltip; nds-docs.js opens it only while off.
+    # One hover tooltip per chip: its hint while on, its reason while off; nds-docs.js swaps the text.
     # aria-disabled, not disabled: a disabled button gets no hover, focus or tap.
     chip = lambda do |group, r, sel, tone = 'neutral'|
-      tip = hint(r[:option]) ? %( title="#{esc[hint(r[:option])]}") : ''
+      tip = hint(r[:option]).to_s
       need = needs(r, rows, canons, src)
-      state = [('selected' if sel), ('disabled' unless applies?(r, src, js))].compact.join(' ')
-      tooltip = need.empty? ? '' : %( data-tooltip-hover data-tooltip-message="#{esc[need]}")
-      %(<button type="button" class="nds-chip nds-#{tone} nds-rounded#{' nds-tooltip' unless need.empty?}" aria-pressed="#{sel}"#{%( data-state="#{state}") unless state.empty?}#{' aria-disabled="true"' if state.include?('disabled')}#{tip}#{tooltip} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
+      off = !applies?(r, src, js)
+      state = [('selected' if sel), ('disabled' if off)].compact.join(' ')
+      msg = off && !need.empty? ? need : (tip.empty? ? need : tip)
+      tooltip = msg.empty? ? '' : %( data-tooltip-hover="#{off ? 0 : 500}" data-tooltip-message="#{esc[msg]}"#{%( data-hint="#{esc[tip]}") unless tip.empty?}#{%( data-reason="#{esc[need]}") unless need.empty?})
+      %(<button type="button" class="nds-chip nds-#{tone} nds-rounded#{' nds-tooltip' unless msg.empty?}" aria-pressed="#{sel}"#{%( data-state="#{state}") unless state.empty?}#{' aria-disabled="true"' if off}#{tooltip} data-builder-option="#{esc["#{group}|#{r[:option]}"]}"><span class="nds-label">#{esc[label(r[:option])]}</span></button>)
     end
     row = lambda do |name, chips|
       %(<div class="nds-divider nds-4xl" data-builder-group="#{esc[name]}">#{esc[name]}</div><div class="nds-chips">#{chips.join}</div>)
