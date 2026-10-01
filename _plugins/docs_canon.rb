@@ -83,7 +83,7 @@ module DocsCanon
   end
 
   # ponytail: `tag.a.b[x]:not(.c):not([y])` needs both classes and x, and neither c nor y, on one
-  # element of that tag; x counts by name only, y by its `="v"` or `~="v"` too, a descendant part as present.
+  # element of that tag (and that `#id`, when named); x counts by name only, y by its `="v"` or `~="v"` too, a descendant part as present.
   # `:has(> tag)` needs that tag anywhere in the markup, `:has(.cls)` an element with that class.
   # Upgrade to a real parser if a table needs x's value or descendants.
   def self.matches?(src, sel, js = nil)
@@ -108,13 +108,14 @@ module DocsCanon
     own = sel.gsub(/:(?:not|has)\([^)]*\)/, '')
     classes = own.gsub(/\[[^\]]*\]/, '').scan(/\.([\w-]+)/).flatten
     attrs = own.scan(/\[([\w-]+)/).flatten
-    return true if classes.empty? && attrs.empty?
+    id = own.gsub(/\[[^\]]*\]/, '')[/#([\w-]+)/, 1]
+    return true if classes.empty? && attrs.empty? && id.nil?
 
     src.scan(/<([a-z][\w-]*)([^>]*)>/).any? do |t, a|
       cls = (a[/\sclass="([^"]*)"/, 1] || '').split
       vals = a.scan(/\s([\w-]+)(?:="([^"]*)")?/).to_h
       no = no_attrs.any? { |n, op, v| vals.key?(n) && (op.nil? || (op == '=' ? vals[n] == v : vals[n].to_s.split.include?(v))) }
-      (tag.nil? || t == tag) && (classes - cls).empty? && (excluded & cls).empty? &&
+      (tag.nil? || t == tag) && (id.nil? || vals['id'] == id) && (classes - cls).empty? && (excluded & cls).empty? &&
         (attrs - vals.keys).empty? && !no
     end
   end
