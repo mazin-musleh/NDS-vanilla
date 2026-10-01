@@ -397,7 +397,8 @@
             var slot = preview.querySelector('[data-demo-slot]') || preview;
             NDS.Init.destroy(slot);
             preview.style.removeProperty('--card-bg');
-            if (!html) return runButton(slot, js);
+            // A JS-only structure (a toast) runs on the page: back to Desktop.
+            if (!html) { var desk = preview.querySelector('[data-preview-screen=""]'); if (desk && preview.hasAttribute('data-screen')) desk.click(); return runButton(slot, js); }
             slot.innerHTML = out;
             order.forEach(function (g) { if (active[g]) apply(slot, active[g], 'prop'); });
             // On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
@@ -415,6 +416,8 @@
             var acts = preview.querySelector('[data-demo-actions]');
             if (acts) acts.hidden = !slot.querySelector(RULES);
             dropAlert(slot.closest('form'));
+            preview.ndsOut = out;
+            frame(preview);
         }
 
         // The live copy is rebuilt from its clean clone, then gets the same choices as the code.
@@ -504,7 +507,7 @@
         return {
             dark: function (btn) {
                 dark = darkWins = !dark;
-                btn.setAttribute('aria-pressed', String(dark));
+                pressed(btn, dark);
                 btn.querySelector('.nds-icon').className = 'nds-icon ' + (dark ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
                 render();
             }
@@ -567,6 +570,12 @@
         new Function(dedent(document.getElementById(s.getAttribute('data-js')).textContent))();
     });
 
+    // A view toggle's on state: pressed for screen readers, the selected look for the eye.
+    function pressed(btn, on) {
+        btn.setAttribute('aria-pressed', String(on));
+        NDS.State[on ? 'add' : 'remove'](btn, 'selected');
+    }
+
     // Each preview card's view toggles. Dark on a builder card goes through the builder, so the
     // code carries it; on a plain card it darkens the card only. Grid lines is a class on the card,
     // which a re-render keeps (only the slot is replaced).
@@ -578,15 +587,97 @@
             // Read the button, not the card: an on-color card is dark from the start.
             var on = dark.getAttribute('aria-pressed') !== 'true';
             on || card.querySelector('.nds-oncolor') ? card.setAttribute('data-theme', 'dark') : card.removeAttribute('data-theme');
-            dark.setAttribute('aria-pressed', String(on));
+            frame(card);
+            pressed(dark, on);
             dark.querySelector('.nds-icon').className = 'nds-icon ' + (on ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
         });
         grid.addEventListener('click', function () {
             var on = card.classList.toggle('nds-doc-grid');
-            grid.setAttribute('aria-pressed', String(on));
+            pressed(grid, on);
             grid.querySelector('i').className = 'hgi hgi-stroke ' + (on ? 'hgi-grid-off' : 'hgi-grid');
         });
+        // Desktop, Tablet, Phone: the frame takes the code last shown (a builder's render keeps it current),
+        // so the hidden card preview is not rebuilt.
+        var screens = view.querySelectorAll('[data-preview-screen]');
+        Array.prototype.forEach.call(screens, function (b) {
+            b.addEventListener('click', function () {
+                Array.prototype.forEach.call(screens, function (x) { pressed(x, x === b); });
+                var w = b.getAttribute('data-preview-screen');
+                // The card keeps its height while a new frame loads, so the page does not jump.
+                if (w) card.style.minHeight = card.offsetHeight + 'px';
+                w ? card.setAttribute('data-screen', w) : card.removeAttribute('data-screen');
+                frame(card);
+            });
+        });
     });
+
+    // Desktop, Tablet, Phone: at a tablet or phone width the preview shows in a frame that wide, so
+    // the media queries behind breakpoint classes fire on a desktop too. The frame loads the page's
+    // own head and runtime scripts, gets the code shown in its slot, and keeps the card's other parts (a harness).
+    var GUTTER = 24;
+    function frame(card) {
+        var w = card.getAttribute('data-screen'), f = card.querySelector('.nds-doc-screen');
+        if (!w) { if (f) f.remove(); card.style.minHeight = ''; return; }
+        // A plain card shows its canon as written; a builder's render keeps ndsOut current.
+        if (card.ndsOut == null) card.ndsOut = dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
+        // The card's dark goes on the frame's body, so the harness around the markup goes dark too.
+        var theme = function (d) { var t = card.getAttribute('data-theme'); t ? d.body.setAttribute('data-theme', t) : d.body.removeAttribute('data-theme'); };
+        var win = f && f.ndsWidth === w && f.contentWindow, slot = win && win.NDS && f.contentDocument.querySelector('[data-demo-slot]');
+        // The frame is up: re-render its slot in place, with no reload.
+        if (slot) {
+            win.NDS.Init.destroy(slot);
+            slot.innerHTML = card.ndsOut;
+            win.NDS.Init.mount(slot);
+            theme(f.contentDocument);
+            return;
+        }
+        if (!f) {
+            f = document.createElement('iframe');
+            f.className = 'nds-doc-screen';
+            f.title = 'Preview';
+            card.appendChild(f);
+        }
+        f.ndsWidth = w;
+        // A gutter inside the frame keeps a shadow or focus ring from being cut at its edge; the
+        // negative margin puts the demo back where the card shows it. The viewport stays in range.
+        f.style.width = (+w + 2 * GUTTER) + 'px';
+        f.style.margin = -GUTTER + 'px';
+        f.style.maxWidth = 'calc(100% + ' + 2 * GUTTER + 'px)';
+        // Hidden until it has sized itself to its content, so it never shows the 150px default.
+        f.style.visibility = 'hidden';
+        var parts = Array.prototype.filter.call(card.children, function (el) { return !el.matches('.nds-doc-view, .nds-doc-screen'); }).map(function (el) {
+            var copy = el.cloneNode(true);
+            // The slot is the child itself, or sits in a form harness.
+            var slot = copy.matches('[data-demo-slot]') ? copy : copy.querySelector('[data-demo-slot]');
+            if (slot) slot.innerHTML = card.ndsOut;
+            // Run stamps would stop the frame's own init.
+            [copy].concat(Array.prototype.slice.call(copy.querySelectorAll('*'))).forEach(function (x) {
+                Array.prototype.slice.call(x.attributes).forEach(function (a) { if (/^data-nds-/.test(a.name)) x.removeAttribute(a.name); });
+            });
+            return copy.outerHTML;
+        }).join('');
+        // The NDS runtime: the page's own deferred scripts from assets/js (not docs-assets).
+        var runtime = Array.prototype.filter.call(document.querySelectorAll('script[defer][src]'), function (x) { return /\/assets\/js\//.test(x.src); })
+            .map(function (x) { return '<script defer src="' + x.src + '"></' + 'script>'; }).join('');
+        var root = Array.prototype.filter.call(document.documentElement.attributes, function (a) { return !/^data-nds-/.test(a.name); })
+            .map(function (a) { return a.name + '="' + a.value.replace(/"/g, '&quot;') + '"'; }).join(' ');
+        f.onload = function () {
+            var d = f.contentDocument;
+            theme(d);
+            // The body's own box: the root's scroll height never drops below the frame's height.
+            new f.contentWindow.ResizeObserver(function () {
+                f.style.height = Math.ceil(d.body.getBoundingClientRect().height) + 'px';
+                f.style.visibility = '';
+                card.style.minHeight = '';
+            }).observe(d.body);
+        };
+        // The body lays the demo out as the card does, so a part that fills the card fills the frame.
+        var cs = getComputedStyle(card), lay = ['display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap']
+            .map(function (k) { return k + ':' + cs.getPropertyValue(k); }).join(';');
+        f.srcdoc = '<!doctype html><html ' + root + '><head>' + document.head.innerHTML +
+            '<style>:root{color-scheme:normal!important}html,body{background:transparent!important;min-height:0!important;overflow:hidden!important}body{margin:0;padding:' + GUTTER + 'px;' + lay + '}</style>' +
+            '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
+    }
 
     // data-preview="run": Run mounts a copy of the code shown in the card's held box, where it can
     // leave the card (a FAB docks at the screen edge). Each copy's ids get its own suffix, so each

@@ -22,13 +22,13 @@ module DocsCanon
               '.nds-card.nds-doc-preview{padding-block:56px;--card-gap:0}' \
               '.nds-doc-oncolor{--card-bg:var(--background-primary-strong)}' \
               '.nds-divider.nds-doc-divider{margin-block-start:0;--divider-line-start:24px}' \
-              '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px}' \
+              '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px;display:flex;gap:var(--spacing-md)}' \
               '.nds-doc-preview>[data-demo-slot]:not(.nds-flex){display:contents}' \
               '.nds-doc-preview .nds-form-actions+.nds-alert{margin-block-start:var(--spacing-2xl)}' \
               '.nds-doc-preview .nds-full-width{width:auto!important;margin-inline:calc(var(--_wrapper-padding,0px)*-1)}' \
               '.nds-doc-options{--panel-height:30svh}' \
               '@media (width < 600px){.nds-doc-options{--panel-height:35svh}}' \
-              ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
+              '.nds-doc-preview[data-screen]>:not(.nds-doc-view,.nds-doc-screen){display:none!important}'               '.nds-doc-screen{border:0;display:block;max-width:100%;color-scheme:normal}'               ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
 
   PLAIN_CODE_RE = %r{<code class="language-plaintext highlighter-rouge">(.*?)</code>}m
   TABLE_LANG = { 'Method' => 'js', 'Option' => 'js', 'Event' => 'js', 'Action key' => 'js', 'Property' => 'css' }.freeze
@@ -237,11 +237,17 @@ module DocsCanon
   def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
-  # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner.
-  def self.view
-    dark = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-sm" data-preview-dark aria-pressed="false" aria-label="Dark mode"><i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i></button>)
-    grid = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-sm" data-preview-grid aria-pressed="true" aria-label="Grid lines"><i class="hgi hgi-stroke hgi-grid-off" aria-hidden="true"></i></button>)
-    %(<div class="nds-btn-group nds-doc-view">#{dark}#{grid}</div>)
+  # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner, and
+  # Desktop, Tablet and Phone: nds-docs.js shows the preview in a frame that wide, so a breakpoint
+  # class (`nds-vertical-sm`) shows on a desktop too. A Run card has no screens: its demo leaves the card.
+  def self.view(screens = false)
+    # A toggle shows its name in a tooltip after 500ms, and the selected look while on.
+    btn = lambda do |attr, label, icon, on|
+      %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md nds-tooltip" #{attr} aria-pressed="#{on}"#{' data-state="selected"' if on} aria-label="#{label}" data-tooltip-message="#{label}" data-tooltip-hover="500"><i class="#{icon}" aria-hidden="true"></i></button>)
+    end
+    view = btn['data-preview-dark', 'Dark mode', 'nds-icon nds-hgi-moon-02', false] + btn['data-preview-grid', 'Grid lines', 'hgi hgi-stroke hgi-grid-off', true]
+    sizes = [['', 'Desktop', 'computer'], ['768', 'Tablet', 'tablet-01'], ['390', 'Phone', 'smart-phone-01']].map { |w, label, icon| btn[%(data-preview-screen="#{w}"), label, "hgi hgi-stroke hgi-#{icon}", w.empty?] }.join
+    %(<div class="nds-doc-view">#{%(<div class="nds-btn-group">#{sizes}</div>) if screens}<div class="nds-btn-group">#{view}</div></div>)
   end
 
   # The Options button floats beside the section title (layout/section.md), icon-only on a phone,
@@ -369,10 +375,10 @@ module DocsCanon
         demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
         # A builder's card names its builder, so Dark reaches the code too.
-        card = preview ? %( nds-doc-preview"#{%( data-builder-card="#{id}") if builder}) : '"'
+        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = preview && src.include?('nds-oncolor')
-        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view if preview && !stage_panel}#{demo}\n</div>\n)
+        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(!%w[run js].include?(attr(attrs, 'data-preview'))) if preview && !stage_panel}#{demo}\n</div>\n)
         out << "#{stage_panel}\n" if stage_panel
       end
       # data-code="none": a behavior demo, shown with no code.
