@@ -237,7 +237,8 @@
         var byKey = {}, choices = [];
         Array.prototype.forEach.call(table.tBodies[0].rows, function (tr) {
             var c = tr.cells, group = c[0].textContent.trim(), option = c[1].textContent.trim();
-            var key = group + '|' + option, op = parseOp(c[2].textContent);
+            // kramdown keeps the backslash of a cell's `\|` inside a code span.
+            var key = group + '|' + option, op = parseOp(c[2].textContent.replace(/\\\|/g, '|'));
             if (!op && c[2].textContent.trim() !== '—') console.warn('[NDS Docs] unparsed Markup cell:', c[2].textContent.trim());
             // `canon #id` swaps the markup in the Structure (or Example) group; anywhere else it inserts a part block.
             if (op && op.kind === 'structure' && !STRUCT.test(group)) op.kind = 'insert';
