@@ -94,7 +94,9 @@ def check(path):
         if rows is None:
             errs.append(f'canon #{cid}: Variants table #{tid} not found')
             continue
-        html = '\n'.join(b for _, a, b in canons if (attr(a, 'data-lang') or 'html') == 'html')
+        # Only the markup this builder renders: its base and the canons its rows name, not a Behavior demo.
+        named = {cid} | {m for r in rows if len(r) == 5 for m in re.findall(r'canon `?#([\w-]+)', r[2])}
+        html = '\n'.join(b for c, a, b in canons if c in named and (attr(a, 'data-lang') or 'html') == 'html')
         # `(demo: + x)` turns on the row marked `(id: x)`: by id, so a translated page keeps working.
         row_ids = {m for r in rows if len(r) == 5 for m in re.findall(r'\(id:\s*([\w-]+)\)', r[1])}
         for r in rows:

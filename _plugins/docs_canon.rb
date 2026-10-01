@@ -211,6 +211,11 @@ module DocsCanon
   def self.harness(src, kind, run = nil, width = nil)
     return %(<div class="nds-flex" data-demo-run><button type="button" class="nds-btn nds-primary nds-md" data-run><span class="nds-label">#{run}</span></button><button type="button" class="nds-btn nds-subtle nds-md" data-run-clear><span class="nds-label">Clear</span></button></div><div data-demo-held></div>) if run
     slot = width ? %(<div data-demo-slot class="nds-flex nds-col" style="width:#{width};max-width:100%">) : '<div data-demo-slot>'
+    # data-harness="stepper": Back and Next under the preview move the canon's root id. Preview only.
+    if kind == 'stepper'
+      ctl = ->(act, cls, label) { %(<button type="button" class="nds-btn #{cls} nds-md" data-stepper-control="#{act}" data-stepper-target="#{src[/\sid="([^"]+)"/, 1]}"><span class="nds-label">#{label}</span></button>) }
+      return %(#{slot}\n#{src}\n</div><div class="nds-form-actions">#{ctl['previous', 'nds-secondary-outline', 'Back']}#{ctl['next', 'nds-primary', 'Next']}</div>)
+    end
     return %(#{slot}\n#{src}\n</div>) unless kind == 'form'
 
     %(<form class="nds-form" data-ajax>#{slot}\n#{src}\n</div><div class="nds-form-actions" data-demo-actions#{' hidden' unless src.match?(RULE_RE)}><button type="submit" class="nds-btn nds-primary nds-md"><span class="nds-label">Validate</span></button><button type="reset" class="nds-btn nds-subtle nds-md"><span class="nds-label">Reset</span></button></div></form>)
