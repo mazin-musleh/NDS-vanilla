@@ -143,7 +143,7 @@ module DocsCanon
     names = lambda do |list|
       list.group_by { |r| r[:group] }.map do |group, rs|
         opts = rs.map { |r| label(r[:option]) }
-        sizes[group] == 1 ? opts.first : "#{group}: #{opts.size > 1 ? "#{opts[0..-2].join(', ')} or #{opts.last}" : opts.first}"
+        sizes[group] == 1 ? opts.first : "#{group.sub(' (any)', '')}: #{opts.size > 1 ? "#{opts[0..-2].join(', ')} or #{opts.last}" : opts.first}"
       end
     end
     # Most structures hold it: name the few that do not ("Not on Structure: Link card").
@@ -151,14 +151,22 @@ module DocsCanon
     return "Not on #{names[missing].join(' or ')}" if providers.all? { |r| structure?(r[:group]) } && missing.size < providers.size
 
     list = names[providers]
-    list.empty? ? '' : "Needs #{list.join(' or ')}"
+    return "Needs #{list.join(' or ')}" unless list.empty?
+
+    # Options a target's `:not()` names turn this one off ("Range" is not with Format: Month).
+    blockers = rows.reject { |r| r.equal?(choice) }.select { |r| adds?(r, choice, negated: true) }
+    blockers.empty? ? '' : "Not with #{names[blockers].join(' or ')}"
   end
 
-  # An option that adds the class or attribute a choice's target asks for ("Stroke" needs Card).
-  def self.adds?(r, choice)
+  # An option that adds the class or attribute a choice's target asks for ("Stroke" needs Card),
+  # or with `negated`, one its `:not()` excludes. A bare `[attr]` there excludes any value.
+  def self.adds?(r, choice, negated: false)
     (r[:adds] || []).any? do |m|
       choice[:targets].any? do |t|
-        m.start_with?('.') ? t.gsub(/:(?:not|has)\([^)]*\)/, '').scan(/\.([\w-]+)/).flatten.include?(m[1..]) : t.include?(m)
+        part = negated ? t.scan(/:not\((.*?)\)(?=:|\s|\z)/).flatten.join(' ') : t.gsub(/:(?:not|has)\([^)]*\)/, '')
+        next part.scan(/\.([\w-]+)/).flatten.include?(m[1..]) if m.start_with?('.')
+
+        part.include?(m) || (negated && part.include?("[#{m[/\[([\w-]+)/, 1]}]"))
       end
     end
   end
@@ -189,7 +197,7 @@ module DocsCanon
   # validation can be tried. Preview only: the code block never shows the form.
   # The buttons show only while the field has a rule that can fail (nds-docs.js re-checks on
   # each choice), so they never sit there with nothing to test.
-  RULE_RE = /\s(data-required|data-strict|data-min-checked|data-max-checked|required|pattern|minlength|min|max)[\s=>]|\stype="(email|url)"|nds-required/
+  RULE_RE = /\s(data-required|data-strict|data-min-checked|data-max-checked|required|pattern|minlength|min|max)[\s=>]|\stype="(email|url)"|nds-required|nds-date-input/
 
   # The demo sits in a slot, so a re-render keeps the card's view toggles.
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
