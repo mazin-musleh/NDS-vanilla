@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 08:48 PM"
+last_edit: "01/10/2026 - 09:46 PM"
 ---
 
 <section id="ipvOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "01/10/2026 - 08:48 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-The image popup viewer (IPV) shows a large image over the page. Any image with `nds-ipv-thumbnail` opens it on a click. The page holds only the thumbnails, with an optional card frame and caption. The script builds the viewer itself the first time a thumbnail opens: the image, the zoom and close buttons, the arrows, a counter and a list of controls.
+The image popup viewer (IPV) shows the full image of a thumbnail over the page. A click on any image with `nds-ipv-thumbnail` opens the viewer. The page holds only the thumbnails, each with an optional card and caption. The script builds the viewer: the full image, the zoom and close buttons, the arrows, a counter and a control list.
 
 Pick another component when:
 
@@ -98,35 +98,35 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
             <i class="hgi hgi-stroke hgi-zoom-in-area"></i>
             <span class="nds-label">Multi-input Zoom</span>
           </span>
-          <p class="nds-item-desc">The mouse wheel zooms toward the pointer, and a pinch zooms toward the middle of the two fingers. The zoom buttons and the + and - keys zoom by 1.5×. Zoom runs from 10% to 1000%, and a label shows the current value.</p>
+          <p class="nds-item-desc">The mouse wheel zooms toward the pointer, and a pinch zooms toward the middle of the two fingers. The zoom buttons zoom by 1.5×. Zoom runs from 10% to 1000%, and a label shows the current value.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-move"></i>
             <span class="nds-label">Drag to Pan</span>
           </span>
-          <p class="nds-item-desc">Drag the image with the mouse or one finger to move it. A double-click, the reset button or the 0 key returns it to 100% in the center.</p>
+          <p class="nds-item-desc">Drag the image with the mouse or one finger to move it. A double-click or the reset button returns it to 100% in the center.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
             <span class="nds-label">Gallery Navigation</span>
           </span>
-          <p class="nds-item-desc">The arrow buttons and the Left and Right keys move to the previous and next thumbnail on the page, and a counter shows the position. With one thumbnail on the page, the arrows and the counter are hidden.</p>
+          <p class="nds-item-desc">The arrow buttons show the image of the previous or next thumbnail on the page, and a counter shows the position. With one thumbnail on the page, the arrows and the counter are hidden.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Keyboard Controls</span>
           </span>
-          <p class="nds-item-desc">The script adds <code class="nds-inline-code lang-html">tabindex="0"</code> and <code class="nds-inline-code lang-html">role="button"</code> to each thumbnail that has none. Tab reaches a thumbnail, and Enter or Space opens it. The keys inside the viewer are in the API.</p>
+          <p class="nds-item-desc">The script adds <code class="nds-inline-code lang-html">tabindex="0"</code> and <code class="nds-inline-code lang-html">role="button"</code> to each thumbnail that has none. Tab reaches a thumbnail, and Enter or Space opens it. The viewer's keys are in the Keyboard table of the API.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-eye"></i>
             <span class="nds-label">Distraction-free Mode</span>
           </span>
-          <p class="nds-item-desc">The H key or the eye button hides the controls, the arrows, the counter, the zoom label and the control list. The eye button stays, to bring them back.</p>
+          <p class="nds-item-desc">The eye button hides the other buttons, the arrows, the counter, the zoom label and the control list. The eye button stays, to bring them back.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -140,7 +140,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
             <i class="hgi hgi-stroke hgi-focus-point"></i>
             <span class="nds-label">Accessible Dialog</span>
           </span>
-          <p class="nds-item-desc">The viewer is a modal dialog. Focus moves to its close button and stays inside it. On close, focus returns to the thumbnail that opened it.</p>
+          <p class="nds-item-desc">The viewer is a modal dialog. Focus moves to its close button and stays inside the viewer. On close, focus returns to the thumbnail that opened it.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -170,7 +170,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 
 - Use the viewer for images people inspect: photos, maps, plans and scans. Do not use it for decorative images.
 - Put `data-ipv-full` on every thumbnail, with the URL of a large image. Without it, the viewer shows the thumbnail, which blurs when zoomed.
-- Keep thumbnails small, about 400px wide. The full image loads only when the viewer opens.
+- Keep thumbnails small, about 400px wide.
 - Write `alt` on every thumbnail. The viewer copies it to the full image, and it names the thumbnail for screen readers.
 - In a gallery, put a `nds-ipv-image-title` under each image, so people know what it shows before they open it.
 - Every thumbnail on the page is in one gallery, in page order. Leave `nds-ipv-thumbnail` off an image that does not belong in it.
@@ -217,9 +217,9 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 | Escape | Closes the viewer |
 | `+` or `=`, `-` | Zooms in or out by 1.5× |
 | `0` | Resets the zoom and the position |
-| H | Hides or shows the controls |
+| H | Does what the eye button does |
 | Left, Right | Moves to the image on that side of the screen |
-| Tab | Moves between the viewer's buttons. Focus stays in the viewer |
+| Tab | Moves between the viewer's buttons |
 {: .nds-table .nds-responsive}
 
 ### JavaScript
@@ -236,7 +236,7 @@ One viewer serves the whole page. The viewer fires no events.
 | `viewer.close()` | Closes the viewer and returns focus to the thumbnail |
 | `viewer.showPrev()`, `viewer.showNext()` | Moves to the previous or the next thumbnail |
 | `viewer.resetTransform()` | Resets the zoom and the position |
-| `viewer.toggleUI()` | Hides or shows the controls |
+| `viewer.toggleUI()` | Does what the eye button does |
 | `viewer.destroy()` | Removes the viewer and every listener it added. `NDS.Ipv.init()` starts a new one |
 {: .nds-table .nds-responsive}
 
