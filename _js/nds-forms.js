@@ -46,6 +46,8 @@
  *   - A required custom select is validated through its hidden .nds-select-value carrier:
  *     author data-required on the .nds-select container. The readonly display input is
  *     never constraint-validated, so required on it does nothing.
+ *   - A required .nds-file-upload counts its file rows (rows the checks rejected excluded):
+ *     the upload script empties the file input after each pick, so it never carries required.
  *   - A dropmenu picker (data-select-name) with data-required is checked the same way,
  *     through its hidden carrier; the error shows on the field that holds it.
  *   - An autocomplete with data-strict is checked at submit too: typed text must match a
@@ -79,6 +81,8 @@
     // ==============================================
 
     var FORM_SCOPE = '.nds-form-container, .nds-form-group';
+    // Fields whose visible input never holds the value: required is checked on the wrapper, never stamped on the input.
+    var NO_REQUIRED_STAMP = '.nds-taginput, .nds-file-upload';
 
     NDS.State.onAdd('disabled', FORM_SCOPE, function(el) {
         el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.disabled = true; });
@@ -558,6 +562,17 @@
             return this._finishGroupValidation(ti, options, isValid, message, { count: count });
         },
 
+        // Upload: the script empties the file input after each pick, so required
+        // counts the staged rows instead. A row the checks rejected does not count.
+        validateUpload: function(upElement, options) {
+            options = options || { showMessage: true };
+            var up = upElement.closest('.nds-file-upload') || upElement;
+            var count = up.querySelectorAll('.nds-file-list .nds-file-item:not([data-status="error"])').length;
+            var isValid = count > 0;
+            var message = isValid ? '' : (NDS.isArabic ? 'يرجى إرفاق ملف' : 'Please add a file');
+            return this._finishGroupValidation(up, options, isValid, message, { count: count });
+        },
+
         // Custom select: the visible .nds-select-input is readonly — barred
         // from constraint validation, so checkValidity() always passes it.
         // The hidden .nds-select-value is the carrier that submits; required
@@ -631,7 +646,7 @@
                 if (container.closest('.nds-form-group')) return;
                 // Composite wrappers own their own validators — taginput's
                 // typing field isn't the carrier, checkValidity would false-fail.
-                if (container.classList.contains('nds-taginput')) return;
+                if (container.matches(NO_REQUIRED_STAMP)) return;
                 // Custom selects too: the readonly display input false-PASSES
                 // checkValidity, so the carrier block in _validateGroups reads
                 // the hidden .nds-select-value instead. Keyed on the carrier —
@@ -724,6 +739,18 @@
                     var anchor = ti.querySelector('.nds-form-control > input:not([type="hidden"])');
                     acc.invalidFields.push(ti);
                     acc.errors.push({ field: ti, input: anchor, message: result.message });
+                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
+                }
+            });
+
+            // Uploads: same pattern. Anchor is the Browse button (the file input is invisible).
+            form.querySelectorAll('.nds-file-upload[data-required], .nds-file-upload.nds-required').forEach(function(up) {
+                if (!isFieldVisible(up, form)) return;
+                var result = Validator.validateUpload(up, { showMessage: options.showMessages });
+                if (!result.valid) {
+                    var anchor = up.querySelector('.nds-browse-btn') || up.querySelector('input[type="file"]');
+                    acc.invalidFields.push(up);
+                    acc.errors.push({ field: up, input: anchor, message: result.message });
                     if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
                 }
             });
@@ -830,11 +857,11 @@
                     input.readOnly ? NDS.State.add(formContainer, 'readonly') : NDS.State.remove(formContainer, 'readonly');
                 }
                 // Skip required propagation for radios/checkboxes — managed at group level.
-                // Skip for taginput too: the wrapper's data-required is authoritative,
-                // the typing input's required attr isn't (and mustn't be — see initializeInput).
+                // Skip for taginput and upload too: the wrapper's data-required is authoritative,
+                // the input's required attr isn't (and mustn't be — see NO_REQUIRED_STAMP).
                 // Same for custom selects: the readonly display input never carries
                 // required — syncing from it would strip the container's authored attr.
-                if (input.type !== 'radio' && input.type !== 'checkbox' && !formContainer.classList.contains('nds-taginput')
+                if (input.type !== 'radio' && input.type !== 'checkbox' && !formContainer.matches(NO_REQUIRED_STAMP)
                     && !input.classList.contains('nds-select-input')) {
                     formContainer.toggleAttribute('data-required', input.required);
                 }
@@ -1119,6 +1146,9 @@
             var group = e.target.closest && e.target.closest('.nds-form-group');
             if (group && NDS.Status.get(group) !== '') StatusManager.clear(group);
         });
+        doc.addEventListener('nds:upload:selected', function(e) {
+            if (NDS.Status.get(e.target) !== '') StatusManager.clear(e.target);
+        });
     }
 
     // ==============================================
@@ -1138,7 +1168,7 @@
             // announces requiredness on the interactive input.
             var formContainer = formControl.closest('.nds-form-container');
             if (formContainer && (formContainer.hasAttribute('data-required') || formContainer.classList.contains('nds-required'))) {
-                if (!formContainer.classList.contains('nds-taginput') && !input.hasAttribute('required')) {
+                if (!formContainer.matches(NO_REQUIRED_STAMP) && !input.hasAttribute('required')) {
                     input.setAttribute('required', '');
                 }
                 input.setAttribute('aria-required', 'true');
@@ -1669,7 +1699,7 @@
                 if (add) container.setAttribute('data-required', '');
                 else container.removeAttribute('data-required');
                 // Propagate to inputs, skip radios (always in groups, validated at group level)
-                container.querySelectorAll('input, textarea, select').forEach(function(input) {
+                if (!container.matches(NO_REQUIRED_STAMP)) container.querySelectorAll('input, textarea, select').forEach(function(input) {
                     if (input.type !== 'radio') input.required = add;
                 });
             } else {
