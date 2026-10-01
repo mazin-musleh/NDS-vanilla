@@ -1246,8 +1246,16 @@
             var self = this;
             NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
                 self.storeAccurateHijriData(hijriData);
-                if (self.state.selectedDate || self.state.rangeStart) {
-                    self.updateInput();
+                // Re-stamp the committed value only: updateInput() here fired a stray
+                // change and could commit a pick made before Save.
+                var calendar = self.getCurrentCalendar();
+                var raw = self.elements.input.value.trim();
+                var converted = raw ? raw.split(' - ').map(function (part) {
+                    var date = calendar.parseDate(part.trim(), self.state.format);
+                    return date && self.getConvertedDate(date);
+                }) : [];
+                if (converted.length && converted.every(Boolean)) {
+                    self.elements.input.dataset.convertedDate = converted.join(' - ');
                 }
             }).catch(function() {});
         },
@@ -2250,6 +2258,7 @@
             this.state.rangeStart = null;
             this.state.rangeEnd = null;
             this.elements.input.value = '';
+            delete this.elements.input.dataset.convertedDate;
             this.elements.input.dispatchEvent(new Event('change', { bubbles: true }));
             this.renderCalendarDates();
             if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
