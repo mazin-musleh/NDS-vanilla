@@ -36,6 +36,12 @@
         margin-block-end: var(--spacing-xl);
     }
 
+    // Editors wrap quote, list-item and cell text in <p>: its gap would pad
+    // the box below the text.
+    :where(blockquote, li, td, th) > :where(:last-child) {
+        margin-block-end: 0;
+    }
+
     // A bare image straight from an editor. Direct children only: <figure>
     // already carries the gap, and an image inside one must not push its
     // caption away — same for an <img> an editor wrapped in a <p>.
@@ -74,6 +80,8 @@
     // out at the 1200px viewport the typo clamps top out at.
     :where(h2) { margin-top: clamp(var(--spacing-6xl), 5.33vw, var(--spacing-7xl)); }
     :where(h3) { margin-top: clamp(var(--spacing-4xl), 3.33vw, var(--spacing-5xl)); }
+    // The reset's 12–15px sits under the 16px sibling gap; 1.5x reads as a break.
+    :where(h4, h5, h6) { margin-top: var(--spacing-3xl); }
 
     > :where(*:first-child) {
         margin-block-start: 0;
@@ -85,6 +93,10 @@
 }
 
 .nds-prose {
+    // A long URL from a CMS breaks instead of widening the page; `anywhere`
+    // (not break-word) also lets a table cell holding one shrink.
+    overflow-wrap: anywhere;
+
     @include prose-flow;
 
     // Flowing-citation tier; the featured pull-quote card is .nds-quote
