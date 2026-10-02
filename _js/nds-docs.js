@@ -32,8 +32,8 @@
     // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
     var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input';
 
-    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name).
-    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/g, ''); }
+    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name), (height: px).
+    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|height:[^)]*)\)/g, ''); }
 
     function dedent(s) {
         s = s.replace(/^\s*\n/, '').replace(/\s+$/, '');
@@ -417,9 +417,10 @@
             if (acts) acts.hidden = !slot.querySelector(RULES);
             dropAlert(slot.closest('form'));
             preview.ndsOut = out;
-            // The structure shown sets the popup room, so only a structure that opens a popup pays for it.
-            var room = srcEl.getAttribute('data-popup-room');
-            room ? preview.setAttribute('data-popup-room', room) : preview.removeAttribute('data-popup-room');
+            // A chip's (height: N) sets the card's height while it is on; else the canon's data-preview-height.
+            var tall = order.map(function (g) { var m = active[g] && active[g].option.match(/\(height:\s*(\d+)\)/); return m && m[1]; }).filter(Boolean).pop() || script.getAttribute('data-preview-height');
+            tall ? preview.setAttribute('data-preview-height', tall) : preview.removeAttribute('data-preview-height');
+            tall ? preview.style.setProperty('--doc-preview-height', tall + 'px') : preview.style.removeProperty('--doc-preview-height');
             frame(preview);
         }
 
@@ -618,6 +619,16 @@
     // the media queries behind breakpoint classes fire on a desktop too. The frame loads the page's
     // own head and runtime scripts, gets the code shown in its slot, and keeps the card's other parts (a harness).
     var GUTTER = 24;
+    // A popup cannot leave the frame, so the frame's body keeps the card's preset height
+    // (--doc-preview-height, less its padding and border) and the card does not jump on a switch.
+    function hold(f) {
+        var card = f.parentNode, cs = getComputedStyle(card), h = parseFloat(cs.getPropertyValue('--doc-preview-height'));
+        if (h) h -= parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + card.offsetHeight - card.clientHeight - 2 * GUTTER;
+        var body = f.contentDocument.body;
+        h > 0 ? body.style.setProperty('min-height', h + 'px', 'important') : body.style.removeProperty('min-height');
+        body.style.alignItems = cs.alignItems;
+        body.style.justifyContent = cs.justifyContent;
+    }
     function frame(card) {
         var w = card.getAttribute('data-screen'), f = card.querySelector('.nds-doc-screen');
         if (!w) { if (f) f.remove(); card.style.minHeight = ''; return; }
@@ -632,6 +643,7 @@
             slot.innerHTML = card.ndsOut;
             win.NDS.Init.mount(slot);
             theme(f.contentDocument);
+            hold(f);
             return;
         }
         if (!f) {
@@ -667,11 +679,9 @@
         f.onload = function () {
             var d = f.contentDocument;
             theme(d);
+            hold(f);
             // The body's own box: the root's scroll height never drops below the frame's height.
             new f.contentWindow.ResizeObserver(function () {
-                // A popup opens in the frame's own viewport and cannot leave it: data-popup-room on the canon shown reserves px below.
-                var room = +card.getAttribute('data-popup-room');
-                d.body.style.paddingBottom = room ? GUTTER + room + 'px' : '';
                 f.style.height = Math.ceil(d.body.getBoundingClientRect().height) + 'px';
                 f.style.visibility = '';
                 card.style.minHeight = '';
@@ -680,8 +690,9 @@
         // The body lays the demo out as the card does, so a part that fills the card fills the frame.
         var cs = getComputedStyle(card), lay = ['display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap']
             .map(function (k) { return k + ':' + cs.getPropertyValue(k); }).join(';');
-        f.srcdoc = '<!doctype html><html ' + root + '><head>' + document.head.innerHTML +
-            '<style>:root{color-scheme:normal!important}html,body{background:transparent!important;min-height:0!important;overflow:hidden!important}body{margin:0;padding:' + GUTTER + 'px;' + lay + '}</style>' +
+        // base target: a link opens its page in the window, not in the frame.
+        f.srcdoc = '<!doctype html><html ' + root + '><head><base target="_top">' + document.head.innerHTML +
+            '<style>:root{color-scheme:normal!important}html,body{background:transparent!important;min-height:0!important}html{overflow:hidden!important}body{overflow:visible!important;margin:0;padding:' + GUTTER + 'px;' + lay + '}</style>' +
             '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
     }
 

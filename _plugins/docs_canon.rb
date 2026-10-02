@@ -19,7 +19,8 @@ module DocsCanon
               '.nds-builder-options>.nds-divider:first-child{margin-block-start:0}' \
               '.nds-builder-options{margin-block-end:var(--spacing-4xl)}' \
               '.nds-card.nds-doc-frame{--card-width:100%;--card-radius:var(--radius-md);min-height:200px;display:flex;justify-content:center;align-items:center}' \
-              '.nds-card.nds-doc-preview{padding-block:56px;--card-gap:0}' \
+              '.nds-card.nds-doc-preview{padding-block:56px;--card-gap:0;min-height:var(--doc-preview-height,200px)}' \
+              '.nds-doc-preview[data-preview-height]{align-items:center;justify-content:flex-start}' \
               '.nds-doc-oncolor{--card-bg:var(--background-primary-strong)}' \
               '.nds-divider.nds-doc-divider{margin-block-start:0;--divider-line-start:24px}' \
               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px;display:flex;gap:var(--spacing-md)}' \
@@ -214,7 +215,9 @@ module DocsCanon
   # The demo sits in a slot, so a re-render keeps the card's view toggles.
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
   # holds Run (or `data-run-label`) and Clear, as a toast's does. Runs mount in the held box (nds-docs.js).
-  # `data-popup-room="200"` on the base canon, or on a Structure canon (nds-docs.js swaps it per render), keeps that many px free below the demo in a Tablet or Phone frame, for a popup that opens in it.
+  # `data-preview-height="360"` on the canon fixes the preview card's height in every screen, so a
+  # popup has room in a Tablet or Phone frame and the card does not jump on a switch. The demo sits
+  # at the start. Preview only.
   # `data-screens="none"` on the canon drops the Desktop, Tablet and Phone buttons, for a part that has no layout of its own.
   # `data-demo-width` on the canon fixes the slot's width, for a field that would stretch or shrink to its content.
   def self.harness(src, kind, run = nil, width = nil)
@@ -242,8 +245,9 @@ module DocsCanon
   end
 
   # Option markers: `(default)` pre-selects; `(demo: + x)` also turns on the row marked `(id: x)`
-  # (demo aid only); `(hint: text)` is a short description shown under the option in the sheet.
-  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/, '')
+  # (demo aid only); `(hint: text)` is a short description shown under the option in the sheet;
+  # `(height: 360)` sets the preview card's height while the option is on (a dropmenu that opens).
+  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|height:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
   # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner, and
@@ -384,7 +388,8 @@ module DocsCanon
         demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
         # A builder's card names its builder, so Dark reaches the code too.
-        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}#{%( data-popup-room="#{attr(attrs, 'data-popup-room').to_i}") if attr(attrs, 'data-popup-room')}) : '"'
+        tall = attr(attrs, 'data-preview-height').to_i
+        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}#{%( data-preview-height="#{tall}" style="--doc-preview-height:#{tall}px") if tall > 0}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = preview && src.include?('nds-oncolor')
         out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(!%w[run js].include?(attr(attrs, 'data-preview')) && attr(attrs, 'data-screens') != 'none') if preview && !stage_panel}#{demo}\n</div>\n)
