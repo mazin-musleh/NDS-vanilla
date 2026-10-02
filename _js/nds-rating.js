@@ -205,6 +205,7 @@
         this.hidePreview();
       } else {
         removeState(this.rating, 'disabled');
+        if (this.stars[0]?.tagName === 'BUTTON') addState(this.rating, 'interactive');
         this.init();
       }
     }
