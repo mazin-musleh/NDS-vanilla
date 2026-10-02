@@ -429,7 +429,7 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <div class="nds-section-action">
-                <div class="nds-progress-circle nds-lg" data-num="100" data-max="100">
+                <div class="nds-progress-circle nds-lg" data-num="100" data-max="100" role="progressbar" aria-labelledby="home-performance-text">
                     <svg width="120" height="120" viewBox="0 0 24 24">
                         <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
                         <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -440,7 +440,7 @@ bundle_sizes:
                             <span class="nds-progress-number"></span>
                             <span class="nds-progress-of"></span>
                         </span>
-                        <span class="nds-progress-text">Performance</span>
+                        <span class="nds-progress-text" id="home-performance-text">Performance</span>
                     </div>
                 </div>
             </div>
