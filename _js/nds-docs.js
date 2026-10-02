@@ -417,6 +417,9 @@
             if (acts) acts.hidden = !slot.querySelector(RULES);
             dropAlert(slot.closest('form'));
             preview.ndsOut = out;
+            // The structure shown sets the popup room, so only a structure that opens a popup pays for it.
+            var room = srcEl.getAttribute('data-popup-room');
+            room ? preview.setAttribute('data-popup-room', room) : preview.removeAttribute('data-popup-room');
             frame(preview);
         }
 
@@ -666,6 +669,9 @@
             theme(d);
             // The body's own box: the root's scroll height never drops below the frame's height.
             new f.contentWindow.ResizeObserver(function () {
+                // A popup opens in the frame's own viewport and cannot leave it: data-popup-room on the canon shown reserves px below.
+                var room = +card.getAttribute('data-popup-room');
+                d.body.style.paddingBottom = room ? GUTTER + room + 'px' : '';
                 f.style.height = Math.ceil(d.body.getBoundingClientRect().height) + 'px';
                 f.style.visibility = '';
                 card.style.minHeight = '';

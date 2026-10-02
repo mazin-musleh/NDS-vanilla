@@ -85,6 +85,7 @@ module DocsCanon
 
   # ponytail: `tag.a.b[x]:not(.c):not([y])` needs both classes and x, and neither c nor y, on one
   # element of that tag (and that `#id`, when named); x counts by name only, y by its `="v"` or `~="v"` too, a descendant part as present.
+  # `:not(.anc .x)` skips an element inside `.anc`.
   # `:has(> tag)` needs that tag anywhere in the markup, `:has(.cls)` an element with that class.
   # Upgrade to a real parser if a table needs x's value or descendants.
   def self.matches?(src, sel, js = nil)
@@ -112,12 +113,18 @@ module DocsCanon
     id = own.gsub(/\[[^\]]*\]/, '')[/#([\w-]+)/, 1]
     return true if classes.empty? && attrs.empty? && id.nil?
 
-    src.scan(/<([a-z][\w-]*)([^>]*)>/).any? do |t, a|
+    # `:not(.anc .x)` leaves out an element inside `.anc`: the open elements' classes are tracked.
+    outside = sel.scan(/:not\(\.([\w-]+)\s[^)]*\)/).flatten
+    open = []
+    src.scan(%r{<(/?)([a-z][\w-]*)([^>]*)>}).any? do |close, t, a|
+      (open.pop; next false) if close == '/'
       cls = (a[/\sclass="([^"]*)"/, 1] || '').split
       vals = a.scan(/\s([\w-]+)(?:="([^"]*)")?/).to_h
       no = no_attrs.any? { |n, op, v| vals.key?(n) && (op.nil? || (op == '=' ? vals[n] == v : vals[n].to_s.split.include?(v))) }
-      (tag.nil? || t == tag) && (id.nil? || vals['id'] == id) && (classes - cls).empty? && (excluded & cls).empty? &&
-        (attrs - vals.keys).empty? && !no
+      hit = (tag.nil? || t == tag) && (id.nil? || vals['id'] == id) && (classes - cls).empty? && (excluded & cls).empty? &&
+            (attrs - vals.keys).empty? && !no && (outside & open.flatten).empty?
+      open.push(cls) unless %w[br hr img input meta link].include?(t) || a.end_with?('/')
+      hit
     end
   end
 
@@ -207,6 +214,8 @@ module DocsCanon
   # The demo sits in a slot, so a re-render keeps the card's view toggles.
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
   # holds Run (or `data-run-label`) and Clear, as a toast's does. Runs mount in the held box (nds-docs.js).
+  # `data-popup-room="200"` on the base canon, or on a Structure canon (nds-docs.js swaps it per render), keeps that many px free below the demo in a Tablet or Phone frame, for a popup that opens in it.
+  # `data-screens="none"` on the canon drops the Desktop, Tablet and Phone buttons, for a part that has no layout of its own.
   # `data-demo-width` on the canon fixes the slot's width, for a field that would stretch or shrink to its content.
   def self.harness(src, kind, run = nil, width = nil)
     return %(<div class="nds-flex" data-demo-run><button type="button" class="nds-btn nds-primary nds-md" data-run><span class="nds-label">#{run}</span></button><button type="button" class="nds-btn nds-subtle nds-md" data-run-clear><span class="nds-label">Clear</span></button></div><div data-demo-held></div>) if run
@@ -375,10 +384,10 @@ module DocsCanon
         demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
         # A builder's card names its builder, so Dark reaches the code too.
-        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}) : '"'
+        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}#{%( data-popup-room="#{attr(attrs, 'data-popup-room').to_i}") if attr(attrs, 'data-popup-room')}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = preview && src.include?('nds-oncolor')
-        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(!%w[run js].include?(attr(attrs, 'data-preview'))) if preview && !stage_panel}#{demo}\n</div>\n)
+        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(!%w[run js].include?(attr(attrs, 'data-preview')) && attr(attrs, 'data-screens') != 'none') if preview && !stage_panel}#{demo}\n</div>\n)
         out << "#{stage_panel}\n" if stage_panel
       end
       # data-code="none": a behavior demo, shown with no code.
