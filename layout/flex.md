@@ -2,392 +2,215 @@
 layout: page
 title: Flex
 hero_title: Flex - National Design System
-hero_description: A lightweight CSS-only utility for quick alignment, direction, and wrapping fixes on ad-hoc elements, with inline custom-property overrides for gap, justify-content, and align-items.
+hero_description: A flex container lays out its children in one row or one column, with the alignment and gap you set
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 01:53 PM"
+last_edit: "02/10/2026 - 11:11 PM"
 ---
 
-<!-- Basic Alignment -->
-<section id="flexBasic" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Basic Alignment</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-flex</code> to any element to turn it into a flex container with sensible defaults. Override <code class="nds-inline-code lang-html">--justify</code>, <code class="nds-inline-code lang-html">--align</code>, and <code class="nds-inline-code lang-html">--gap</code> inline to tune the layout.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Start</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["--justify:flex-start", ".nds-flex", "flexJustify", "style"]'>
-                                            <span class="nds-label">Start</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["--justify:center", ".nds-flex", "flexJustify", "style"]'>
-                                            <span class="nds-label">Center</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["--justify:flex-end", ".nds-flex", "flexJustify", "style"]'>
-                                            <span class="nds-label">End</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["--justify:space-between", ".nds-flex", "flexJustify", "style"]'>
-                                            <span class="nds-label">Space Between</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-flex" style="width: 100%; --justify: flex-start;">
-                                <span class="nds-tag nds-sm"><span class="nds-label">First</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Second</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Third</span></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-flex-basic-1" id="tab-flex-basic-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-flex-basic-1"
-                                    aria-labelledby="tab-flex-basic-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;div class="nds-flex" style="--justify: flex-start; width: 100%;"&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;First&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Second&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Third&lt;/span&gt;&lt;/span&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="flexOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A flex container is one class, `nds-flex`, on the element that holds the children. It lays them out in one row. Classes change the direction, the order and the wrapping. CSS custom properties in its `style` set the alignment and the gap. Flex needs no JavaScript.
+
+Pick another component when:
+
+- the children sit in columns that change with the screen width: [Grid](../layout/grid)
+- the parts stack down the page, each with space below it: [Block](../layout/block)
+
+</div>
+  </div>
 </section>
 
-<!-- Direction Control -->
-<section id="flexDirection" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Direction Control</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-row</code> or <code class="nds-inline-code lang-html">nds-col</code> to flip the main axis. Add <code class="nds-inline-code lang-html">nds-reverse</code> to invert child order — <code class="nds-inline-code lang-html">row-reverse</code> on a row, <code class="nds-inline-code lang-html">column-reverse</code> with <code class="nds-inline-code lang-html">nds-col</code> — handy for RTL action-flip patterns.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Row</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-row", ".nds-flex", "flexDirection"]'>
-                                            <span class="nds-label">Row</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-col", ".nds-flex", "flexDirection"]'>
-                                            <span class="nds-label">Column</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-reverse", ".nds-flex", "flexReverse"]'>
-                                <span class="nds-label">Reverse</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-flex nds-row">
-                                <button class="nds-btn nds-primary nds-sm">
-                                    <span class="nds-label">Accept</span>
-                                </button>
-                                <button class="nds-btn nds-secondary-outline nds-sm">
-                                    <span class="nds-label">Review</span>
-                                </button>
-                                <button class="nds-btn nds-subtle nds-sm">
-                                    <span class="nds-label">Dismiss</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-flex-direction-1" id="tab-flex-direction-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-flex-direction-1"
-                                    aria-labelledby="tab-flex-direction-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;div class="nds-flex nds-row"&gt;
-    &lt;button class="nds-btn nds-primary nds-sm"&gt;
-        &lt;span class="nds-label"&gt;Accept&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-btn nds-secondary-outline nds-sm"&gt;
-        &lt;span class="nds-label"&gt;Review&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-sm"&gt;
-        &lt;span class="nds-label"&gt;Dismiss&lt;/span&gt;
-    &lt;/button&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="flexMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="flex-row" data-canon data-variants="flexVariantsTable" data-demo-width="100%">
+<div class="nds-flex">
+  <button type="button" class="nds-btn nds-primary">
+    <span class="nds-label">Submit</span>
+  </button>
+  <button type="button" class="nds-btn nds-secondary-outline">
+    <span class="nds-label">Save Draft</span>
+  </button>
+  <button type="button" class="nds-btn nds-secondary-outline">
+    <span class="nds-label">Preview</span>
+  </button>
+  <button type="button" class="nds-btn nds-secondary-outline">
+    <span class="nds-label">Cancel</span>
+  </button>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Wrapping -->
-<section id="flexWrapping" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Wrapping</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-wrap</code> to let children flow onto multiple lines when the container is too narrow. Use <code class="nds-inline-code lang-html">nds-nowrap</code> to force a single line even when content overflows.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Wrap</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["nds-wrap", ".nds-flex", "flexWrap"]'>
-                                            <span class="nds-label">Wrap</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-nowrap", ".nds-flex", "flexWrap"]'>
-                                            <span class="nds-label">No Wrap</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="justify-content: stretch;">
-                            <div class="nds-flex nds-wrap" style="--gap: var(--spacing-sm); width: 300px;">
-                                <span class="nds-tag nds-sm"><span class="nds-label">Government</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Digital Transformation</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Accessibility</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Design System</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Standards</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Services</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Compliance</span></span>
-                                <span class="nds-tag nds-sm"><span class="nds-label">Open Data</span></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-flex-wrap-1" id="tab-flex-wrap-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-flex-wrap-1"
-                                    aria-labelledby="tab-flex-wrap-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;div class="nds-flex nds-wrap" style="--gap: var(--spacing-sm); width: 300px;"&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Government&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Digital Transformation&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Accessibility&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Design System&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Standards&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Services&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Compliance&lt;/span&gt;&lt;/span&gt;
-    &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Open Data&lt;/span&gt;&lt;/span&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="flexVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Each Justify, Align and Gap option sets one custom property in the `style` of `.nds-flex`. Any value that the CSS property accepts works: see CSS Custom Properties in the API. Justify is off in a column: the column is only as tall as its children, so they have no room to move.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Direction | Row (default) | — | — | The children sit side by side at their own widths, such as a set of buttons |
+| Direction | Column | `.nds-col` | `.nds-flex` | The children stack, such as cards or form steps. A child with no width of its own, such as a card, fills the column |
+| Justify | Start (default) | — | — | The children sit at the start edge |
+| Justify | Center | `--justify: center` | `.nds-flex:not(.nds-col)` | The children sit in the middle of the row. In a column, use Align: Center |
+| Justify | End | `--justify: flex-end` | `.nds-flex:not(.nds-col)` | The children sit at the end edge, such as the actions under a form |
+| Justify | Space between | `--justify: space-between` | `.nds-flex:not(.nds-col)` | The first child sits at the start and the last at the end. The rest of the space is shared between them. For a title and an action on one line |
+| Align | Stretch (default) | — | — | Each child fills the row height, or the column width. A button keeps its own size |
+| Align | Center | `--align: center` | `.nds-flex` | Children of different heights line up on their middles. In a column, each child keeps its own width and sits in the middle |
+| Align | Start | `--align: flex-start` | `.nds-flex` | Each child keeps its own size and sits at the top, or at the start edge in a column |
+| Align | End | `--align: flex-end` | `.nds-flex` | Each child keeps its own size and sits at the bottom, or at the end edge in a column |
+| Gap | XS | `--gap: var(--spacing-xs)` | `.nds-flex` | 4px. Small children close together, such as icon buttons in a table cell |
+| Gap | MD | `--gap: var(--spacing-md)` | `.nds-flex` | 8px. Tags and chips |
+| Gap | XL (default) | — | — | 16px |
+| Gap | 3XL | `--gap: var(--spacing-3xl)` | `.nds-flex` | 24px. Larger children, such as cards in a column |
+| Wrap | Wrap | `.nds-wrap` | `.nds-flex` | The children flow onto a new line when the row is full |
+| Reverse | Reverse | `.nds-reverse` | `.nds-flex` | Shows the children in the opposite order. They also move to the other edge: with Justify Start they sit at the end. The keyboard order stays the markup order |
+{: #flexVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="flexFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-code"></i>
-                            <span class="nds-label">CSS-Only</span>
-                        </span>
-                        <p class="nds-item-desc">Works with a single class and zero JavaScript. No initialization, no event listeners, no cleanup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
-                            <span class="nds-label">Sensible Defaults</span>
-                        </span>
-                        <p class="nds-item-desc">Items stretch across the cross-axis, start along the main axis, and separate by <code class="nds-inline-code lang-html">--spacing-xl</code> gap out of the box.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
-                            <span class="nds-label">Custom Property API</span>
-                        </span>
-                        <p class="nds-item-desc">Override <code class="nds-inline-code lang-html">--justify</code>, <code class="nds-inline-code lang-html">--align</code>, and <code class="nds-inline-code lang-html">--gap</code> inline or in a parent style without writing a single new class.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-exchange-01"></i>
-                            <span class="nds-label">Unscoped Direction</span>
-                        </span>
-                        <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-row</code> and <code class="nds-inline-code lang-html">nds-col</code> flip direction on any flex element, including components that declare their own <code class="nds-inline-code lang-html">display: flex</code> like card actions.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-wrap"></i>
-                            <span class="nds-label">Wrap Control</span>
-                        </span>
-                        <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-wrap</code> enables multi-line flow; <code class="nds-inline-code lang-html">nds-nowrap</code> forces a single line. Combine with child <code class="nds-inline-code lang-html">min-width</code> for container-responsive stacking.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="flexFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-code"></i>
+            <span class="nds-label">CSS-Only</span>
+          </span>
+          <p class="nds-item-desc">One class makes the layout. There is no script to load or start.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
+            <span class="nds-label">Default Layout</span>
+          </span>
+          <p class="nds-item-desc">The children sit at the start edge, 16px apart. They stretch to the tallest child in a row, and to the full width in a column, unless a child has its own size, as a button does.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
+            <span class="nds-label">Custom Property API</span>
+          </span>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--justify</code>, <code class="nds-inline-code lang-css">--align</code> and <code class="nds-inline-code lang-css">--gap</code> change the layout from the <code class="nds-inline-code lang-html">style</code> attribute, with no new class.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-exchange-01"></i>
+            <span class="nds-label">Direction on Any Flex Element</span>
+          </span>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-row</code> and <code class="nds-inline-code lang-html">nds-col</code> work without <code class="nds-inline-code lang-html">nds-flex</code>, on a component that is already a flex container, such as card actions.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
+            <span class="nds-label">Scoped Reverse</span>
+          </span>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-reverse</code> reverses only a flex container. A component that has its own <code class="nds-inline-code lang-html">nds-reverse</code>, such as the stepper, keeps its own meaning.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-wrap"></i>
+            <span class="nds-label">Wrap Control</span>
+          </span>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-wrap</code> lets the children flow onto new lines. A <code class="nds-inline-code lang-css">min-width</code> on each child makes them stack when the container gets narrow, whatever the screen width.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="flexGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <code class="nds-inline-code lang-html">nds-flex</code> for quick one-off alignment or direction fixes on ad-hoc elements where a component does not already handle the layout</li>
-                    <li>Use <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">Grid</a> instead for page-level or section-level layout composition. Grid handles responsive column counts and gap halving in a single rule through its tier-based custom properties</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-row</code> or <code class="nds-inline-code lang-html">nds-col</code> standalone (without <code class="nds-inline-code lang-html">nds-flex</code>) when the parent already declares <code class="nds-inline-code lang-html">display: flex</code> in its own component SCSS, such as the <code class="nds-inline-code lang-html">nds-card-actions nds-row</code> action-flip pattern</li>
-                    <li>Override defaults with inline <code class="nds-inline-code lang-html">--justify</code>, <code class="nds-inline-code lang-html">--align</code>, and <code class="nds-inline-code lang-html">--gap</code> CSS variables rather than extending the utility with new modifier classes. This keeps the CSS output small and the API predictable</li>
-                    <li>For container-responsive stacking (items stack when the container gets narrow, not when the viewport changes), add <code class="nds-inline-code lang-html">nds-wrap</code> with a <code class="nds-inline-code lang-html">min-width</code> on children. More resilient than breakpoint-based direction swaps</li>
-                    <li>Do not add <code class="nds-inline-code lang-html">nds-flex</code> to elements inside components that already ship their own flex logic (cards, forms, main navigation). The component handles alignment more precisely than a generic utility</li>
-                    <li>Do not use <code class="nds-inline-code lang-html">nds-flex</code> for multi-breakpoint layout composition. If you need a row that becomes a column on mobile, use Grid with <code class="nds-inline-code lang-html">--max-col: 2; --min-col: 1;</code> instead. Flex direction swaps rarely come alone and usually trigger other responsive adjustments</li>
-                    <li>The flex container is block-level by default (fills parent inline direction, respects parent padding). When it must shrink to its content's width, use inline <code class="nds-inline-code lang-html">width: fit-content</code> or switch to <code class="nds-inline-code lang-html">display: inline-flex</code></li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-flex</code></td><td>Declares the element as a flex container with default gap, stretch cross-axis alignment, and start main-axis alignment</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-row</code></td><td>Sets <code class="nds-inline-code lang-html">flex-direction: row</code>. Unscoped: works with or without <code class="nds-inline-code lang-html">nds-flex</code> on the same element</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-col</code></td><td>Sets <code class="nds-inline-code lang-html">flex-direction: column</code>. Unscoped: works with or without <code class="nds-inline-code lang-html">nds-flex</code> on the same element</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-reverse</code></td><td>Reverses visual child order: <code class="nds-inline-code lang-html">row-reverse</code> on a flex or <code class="nds-inline-code lang-html">nds-row</code> container, <code class="nds-inline-code lang-html">column-reverse</code> when combined with <code class="nds-inline-code lang-html">nds-col</code>. Scoped to the flex utility, so it never overrides a component's own <code class="nds-inline-code lang-html">nds-reverse</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Centers the children along the row, the same as <code class="nds-inline-code lang-css">--justify: center</code>. With <code class="nds-inline-code lang-html">nds-col</code> it also centers them across, so a single card sits in the middle</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>Enables <code class="nds-inline-code lang-html">flex-wrap: wrap</code> so children flow onto multiple lines when the container is too narrow</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-nowrap</code></td><td>Forces <code class="nds-inline-code lang-html">flex-wrap: nowrap</code> so children stay on one line, potentially overflowing</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--justify</code></td><td><code class="nds-inline-code lang-html">flex-start</code></td><td>Value for <code class="nds-inline-code lang-html">justify-content</code>. Accepts any valid CSS keyword such as <code class="nds-inline-code lang-html">center</code>, <code class="nds-inline-code lang-html">flex-end</code>, <code class="nds-inline-code lang-html">space-between</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--align</code></td><td><code class="nds-inline-code lang-html">stretch</code></td><td>Value for <code class="nds-inline-code lang-html">align-items</code>. Accepts keywords such as <code class="nds-inline-code lang-html">center</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">baseline</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between children. Accepts any CSS length or spacing token such as <code class="nds-inline-code lang-html">var(--spacing-md)</code> or <code class="nds-inline-code lang-html">0</code></td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="flexPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use flex to lay out a few elements in one line, such as buttons, tags or icons. Use [Grid](../layout/grid) for columns of content, and [Section](../layout/section) for page regions.
+- For a row that becomes a column on phones, use a grid with `--max-col: 2; --min-col: 1;`. Flex has no values for each screen size.
+- Set `--gap` with a spacing token, such as `var(--spacing-sm)`.
+- Add `--align: center` when a row mixes children of different heights, such as a heading and a button.
+- Add `nds-row` or `nds-col` alone to a component that is already a flex container, such as `nds-card-actions nds-row`. Do not add `nds-flex` to it as well.
+- Do not use `nds-reverse` to fix the order of content people read. A keyboard and a screen reader still follow the markup order. Use it only where the order on screen differs on purpose.
+- A flex container inside another flex container or a grid gets the outer `--gap`, `--justify` and `--align`. Set them again on the inner one when it needs its own.
+- In normal page flow, a flex container is as wide as its parent. In a parent that centers it, it shrinks to its content: add `width: 100%` to its `style` to fill the parent.
+- To make a flex container as wide as its content, add `width: fit-content` to its `style`.
+
+</div>
+  </div>
+</section>
+
+<section id="flexApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-flex` | The element that holds the children | Makes it a flex container, in a row |
+| `nds-row` | Any flex container, with or without `nds-flex` | Lays the children out in a row |
+| `nds-col` | Any flex container, with or without `nds-flex` | Lays the children out in a column |
+| `nds-reverse` | `.nds-flex`, `.nds-row` or `.nds-col` | Shows the children in the opposite order. It also swaps the start and end edges, so `--justify: flex-start` puts them at the end |
+| `nds-center` | `.nds-flex` | Centers the children along the row, the same as `--justify: center`. With `nds-col` it also centers them across. It centers the text inside too |
+| `nds-wrap` | Any flex container | Lets the children flow onto new lines |
+| `nds-nowrap` | Any flex container | Keeps the children on one line. Children that do not fit overflow |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these in the `style` of `.nds-flex`.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--justify` | `flex-start` | `justify-content`: where the children sit along the row or the column, such as `center`, `flex-end` or `space-between`. `flex-start` and `flex-end` follow the text direction |
+| `--align` | `stretch` | `align-items`: how the children sit across the row or the column, such as `center`, `flex-start` or `baseline` |
+| `--gap` | `var(--spacing-xl)` | Space between the children |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="flexRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Manage Records](../examples/manage-records): a tight row of icon buttons in each table row.
+- [Faculty CV](../examples/faculty-cv): a wrapping row of tags and a column of cards.
+- [Form Template](../templates/form-template): each form step is a column.
+
+</div>
+  </div>
 </section>

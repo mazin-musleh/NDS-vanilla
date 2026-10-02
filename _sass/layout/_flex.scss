@@ -6,10 +6,7 @@
 .nds-flex {
   display: flex;
   justify-content: var(--justify, flex-start);
-  // Default `stretch` matches CSS default. Column layouts get full-width
-  // children (common for forms/lists); row layouts with same-height children
-  // (buttons, icons+text) look identical to `center`. Override with
-  // `--align: center` when a row mixes children of differing heights.
+  // stretch, so a column's children fill its width
   align-items: var(--align, stretch);
   gap: var(--gap, var(--spacing-xl));
 }
