@@ -32,8 +32,8 @@
     // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
     var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input';
 
-    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name), (height: px).
-    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|height:[^)]*)\)/g, ''); }
+    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name).
+    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/g, ''); }
 
     function dedent(s) {
         s = s.replace(/^\s*\n/, '').replace(/\s+$/, '');
@@ -417,10 +417,6 @@
             if (acts) acts.hidden = !slot.querySelector(RULES);
             dropAlert(slot.closest('form'));
             preview.ndsOut = out;
-            // A chip's (height: N) sets the card's height while it is on; else the canon's data-preview-height.
-            var tall = order.map(function (g) { var m = active[g] && active[g].option.match(/\(height:\s*(\d+)\)/); return m && m[1]; }).filter(Boolean).pop() || script.getAttribute('data-preview-height');
-            tall ? preview.setAttribute('data-preview-height', tall) : preview.removeAttribute('data-preview-height');
-            tall ? preview.style.setProperty('--doc-preview-height', tall + 'px') : preview.style.removeProperty('--doc-preview-height');
             frame(preview);
         }
 
@@ -607,60 +603,75 @@
             b.addEventListener('click', function () {
                 Array.prototype.forEach.call(screens, function (x) { pressed(x, x === b); });
                 var w = b.getAttribute('data-preview-screen');
-                // The card keeps its height while a new frame loads, so the page does not jump.
-                if (w) card.style.minHeight = card.offsetHeight + 'px';
                 w ? card.setAttribute('data-screen', w) : card.removeAttribute('data-screen');
                 frame(card);
             });
         });
+        // A device shows only at full size: one wider than the card hides its button (a tablet on a
+        // phone), and the card goes back to Desktop. With no device left, the buttons hide too.
+        // Desktop names the device the reader is on: on a tablet it takes the Tablet button's name and
+        // icon, and the Tablet button hides.
+        var desk = screens.length && [screens[0].getAttribute('aria-label'), screens[0].querySelector('i').className];
+        if (screens.length) NDS.onElementResize(card, function () {
+            if (!card.clientWidth) return;
+            var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * BEZEL;
+            var tier = matchMedia(NDS.breakpoints.desktop).matches ? null : screens[matchMedia(NDS.breakpoints.tablet).matches ? 1 : 2];
+            return function () {
+                var left = 0;
+                Array.prototype.forEach.call(screens, function (b) {
+                    var w = b.getAttribute('data-preview-screen'), off = !!w && (+w.split('x')[0] > room || b === tier);
+                    b.hidden = off;
+                    if (w && !off) left++;
+                    if (off && card.getAttribute('data-screen') === w) screens[0].click();
+                });
+                screens[0].parentNode.hidden = !left;
+                var name = tier ? [tier.getAttribute('aria-label'), tier.querySelector('i').className] : desk, d = screens[0];
+                d.setAttribute('aria-label', name[0]);
+                d.setAttribute('data-tooltip-message', name[0]);
+                d.querySelector('i').className = name[1];
+                var tip = d.ndsTooltip && d.ndsTooltip.balloon && d.ndsTooltip.balloon.querySelector('.nds-tooltip-message');
+                if (tip) tip.textContent = name[0];
+            };
+        });
     });
 
-    // Desktop, Tablet, Phone: at a tablet or phone width the preview shows in a frame that wide, so
-    // the media queries behind breakpoint classes fire on a desktop too. The frame loads the page's
-    // own head and runtime scripts, gets the code shown in its slot, and keeps the card's other parts (a harness).
-    var GUTTER = 24;
-    // A popup cannot leave the frame, so the frame's body keeps the card's preset height
-    // (--doc-preview-height, less its padding and border) and the card does not jump on a switch.
-    function hold(f) {
-        var card = f.parentNode, cs = getComputedStyle(card), h = parseFloat(cs.getPropertyValue('--doc-preview-height'));
-        if (h) h -= parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + card.offsetHeight - card.clientHeight - 2 * GUTTER;
-        var body = f.contentDocument.body;
-        h > 0 ? body.style.setProperty('min-height', h + 'px', 'important') : body.style.removeProperty('min-height');
-        body.style.alignItems = cs.alignItems;
-        body.style.justifyContent = cs.justifyContent;
-    }
+    // Desktop, Tablet, Phone: at a tablet or phone size the preview shows in a device screen that big,
+    // so the media queries behind breakpoint classes fire on a desktop too, and a popup has a real
+    // screen to open in. The screen loads the page's own head and runtime scripts, gets the code
+    // shown in its slot, and keeps the card's other parts (a harness).
+    var GUTTER = 24, BEZEL = 12, RADIUS = 36;
     function frame(card) {
-        var w = card.getAttribute('data-screen'), f = card.querySelector('.nds-doc-screen');
-        if (!w) { if (f) f.remove(); card.style.minHeight = ''; return; }
+        var w = card.getAttribute('data-screen'), dev = card.querySelector('.nds-doc-device'), f = dev && dev.firstChild;
+        if (!w) { if (dev) dev.remove(); return; }
         // A plain card shows its canon as written; a builder's render keeps ndsOut current.
         if (card.ndsOut == null) card.ndsOut = dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
         // The card's dark goes on the frame's body, so the harness around the markup goes dark too.
         var theme = function (d) { var t = card.getAttribute('data-theme'); t ? d.body.setAttribute('data-theme', t) : d.body.removeAttribute('data-theme'); };
-        var win = f && f.ndsWidth === w && f.contentWindow, slot = win && win.NDS && f.contentDocument.querySelector('[data-demo-slot]');
-        // The frame is up: re-render its slot in place, with no reload.
+        var win = f && f.ndsSize === w && f.contentWindow, slot = win && win.NDS && f.contentDocument.querySelector('[data-demo-slot]');
+        // The screen is up: re-render its slot in place, with no reload.
         if (slot) {
             win.NDS.Init.destroy(slot);
             slot.innerHTML = card.ndsOut;
             win.NDS.Init.mount(slot);
             theme(f.contentDocument);
-            hold(f);
             return;
         }
-        if (!f) {
+        if (!dev) {
+            dev = document.createElement('div');
+            dev.className = 'nds-doc-device';
             f = document.createElement('iframe');
             f.className = 'nds-doc-screen';
             f.title = 'Preview';
-            card.appendChild(f);
+            dev.appendChild(f);
+            card.appendChild(dev);
         }
-        f.ndsWidth = w;
-        // A gutter inside the frame keeps a shadow or focus ring from being cut at its edge; the
-        // negative margin puts the demo back where the card shows it. The viewport stays in range.
-        f.style.width = (+w + 2 * GUTTER) + 'px';
-        f.style.margin = -GUTTER + 'px';
-        f.style.maxWidth = 'calc(100% + ' + 2 * GUTTER + 'px)';
-        // Hidden until it has sized itself to its content, so it never shows the 150px default.
+        f.ndsSize = w;
+        var size = w.split('x');
+        dev.style.cssText = 'width:' + (+size[0] + 2 * BEZEL) + 'px;height:' + (+size[1] + 2 * BEZEL) + 'px;border-radius:' + RADIUS + 'px';
+        f.style.cssText = 'top:' + BEZEL + 'px;left:' + BEZEL + 'px;width:' + size[0] + 'px;height:' + size[1] + 'px;border-radius:' + (RADIUS - BEZEL) + 'px';
+        // Hidden until it loads, so it never shows a blank screen.
         f.style.visibility = 'hidden';
-        var parts = Array.prototype.filter.call(card.children, function (el) { return !el.matches('.nds-doc-view, .nds-doc-screen'); }).map(function (el) {
+        var parts = Array.prototype.filter.call(card.children, function (el) { return !el.matches('.nds-doc-view, .nds-doc-device'); }).map(function (el) {
             var copy = el.cloneNode(true);
             // The slot is the child itself, or sits in a form harness.
             var slot = copy.matches('[data-demo-slot]') ? copy : copy.querySelector('[data-demo-slot]');
@@ -677,22 +688,15 @@
         var root = Array.prototype.filter.call(document.documentElement.attributes, function (a) { return !/^data-nds-/.test(a.name); })
             .map(function (a) { return a.name + '="' + a.value.replace(/"/g, '&quot;') + '"'; }).join(' ');
         f.onload = function () {
-            var d = f.contentDocument;
-            theme(d);
-            hold(f);
-            // The body's own box: the root's scroll height never drops below the frame's height.
-            new f.contentWindow.ResizeObserver(function () {
-                f.style.height = Math.ceil(d.body.getBoundingClientRect().height) + 'px';
-                f.style.visibility = '';
-                card.style.minHeight = '';
-            }).observe(d.body);
+            theme(f.contentDocument);
+            f.style.visibility = '';
         };
-        // The body lays the demo out as the card does, so a part that fills the card fills the frame.
+        // The body lays the demo out as the card does, over the whole screen: a longer demo scrolls in it.
         var cs = getComputedStyle(card), lay = ['display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap']
             .map(function (k) { return k + ':' + cs.getPropertyValue(k); }).join(';');
         // base target: a link opens its page in the window, not in the frame.
         f.srcdoc = '<!doctype html><html ' + root + '><head><base target="_top">' + document.head.innerHTML +
-            '<style>:root{color-scheme:normal!important}html,body{background:transparent!important;min-height:0!important}html{overflow:hidden!important}body{overflow:visible!important;margin:0;padding:' + GUTTER + 'px;' + lay + '}</style>' +
+            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + GUTTER + 'px;' + lay + '}</style>' +
             '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
     }
 

@@ -19,8 +19,7 @@ module DocsCanon
               '.nds-builder-options>.nds-divider:first-child{margin-block-start:0}' \
               '.nds-builder-options{margin-block-end:var(--spacing-4xl)}' \
               '.nds-card.nds-doc-frame{--card-width:100%;--card-radius:var(--radius-md);min-height:200px;display:flex;justify-content:center;align-items:center}' \
-              '.nds-card.nds-doc-preview{padding-block:56px;--card-gap:0;min-height:var(--doc-preview-height,200px)}' \
-              '.nds-doc-preview[data-preview-height]{align-items:center;justify-content:flex-start}' \
+              '.nds-card.nds-doc-preview{padding-block:56px;--card-gap:0}' \
               '.nds-doc-oncolor{--card-bg:var(--background-primary-strong)}' \
               '.nds-divider.nds-doc-divider{margin-block-start:0;--divider-line-start:24px}' \
               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px;display:flex;gap:var(--spacing-md)}' \
@@ -29,7 +28,7 @@ module DocsCanon
               '.nds-doc-preview .nds-full-width{width:auto!important;margin-inline:calc(var(--_wrapper-padding,0px)*-1)}' \
               '.nds-doc-options{--panel-height:30svh}' \
               '@media (width < 600px){.nds-doc-options{--panel-height:35svh}}' \
-              '.nds-doc-preview[data-screen]>:not(.nds-doc-view,.nds-doc-screen){display:none!important}'               '.nds-doc-screen{border:0;display:block;max-width:100%;color-scheme:normal}'               ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
+              '.nds-doc-preview[data-screen]>:not(.nds-doc-view,.nds-doc-device){display:none!important}'               '.nds-doc-device{position:relative;flex:none;background:var(--background-surface-sunken);box-shadow:0 0 0 1px var(--border-neutral-secondary)}' '.nds-doc-screen{position:absolute;border:0;display:block;color-scheme:normal;background:var(--card-bg,var(--background-card))}'               ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
 
   PLAIN_CODE_RE = %r{<code class="language-plaintext highlighter-rouge">(.*?)</code>}m
   TABLE_LANG = { 'Method' => 'js', 'Option' => 'js', 'Event' => 'js', 'Action key' => 'js', 'Property' => 'css' }.freeze
@@ -215,9 +214,6 @@ module DocsCanon
   # The demo sits in a slot, so a re-render keeps the card's view toggles.
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
   # holds Run (or `data-run-label`) and Clear, as a toast's does. Runs mount in the held box (nds-docs.js).
-  # `data-preview-height="360"` on the canon fixes the preview card's height in every screen, so a
-  # popup has room in a Tablet or Phone frame and the card does not jump on a switch. The demo sits
-  # at the start. Preview only.
   # `data-screens="none"` on the canon drops the Desktop, Tablet and Phone buttons, for a part that has no layout of its own.
   # `data-demo-width` on the canon fixes the slot's width, for a field that would stretch or shrink to its content.
   def self.harness(src, kind, run = nil, width = nil)
@@ -245,13 +241,12 @@ module DocsCanon
   end
 
   # Option markers: `(default)` pre-selects; `(demo: + x)` also turns on the row marked `(id: x)`
-  # (demo aid only); `(hint: text)` is a short description shown under the option in the sheet;
-  # `(height: 360)` sets the preview card's height while the option is on (a dropmenu that opens).
-  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|height:[^)]*)\)/, '')
+  # (demo aid only); `(hint: text)` is a short description shown under the option in the sheet.
+  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
   # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner, and
-  # Desktop, Tablet and Phone: nds-docs.js shows the preview in a frame that wide, so a breakpoint
+  # Desktop, Tablet and Phone: nds-docs.js shows the preview in a device screen that size, so a breakpoint
   # class (`nds-vertical-sm`) shows on a desktop too. A Run card has no screens: its demo leaves the card.
   def self.view(screens = false)
     # A toggle shows its name in a tooltip after 500ms, and the selected look while on.
@@ -259,7 +254,7 @@ module DocsCanon
       %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md nds-tooltip" #{attr} aria-pressed="#{on}"#{' data-state="selected"' if on} aria-label="#{label}" data-tooltip-message="#{label}" data-tooltip-hover="500"><i class="#{icon}" aria-hidden="true"></i></button>)
     end
     view = btn['data-preview-dark', 'Dark mode', 'nds-icon nds-hgi-moon-02', false] + btn['data-preview-grid', 'Grid lines', 'hgi hgi-stroke hgi-grid-off', true]
-    sizes = [['', 'Desktop', 'computer'], ['768', 'Tablet', 'tablet-01'], ['390', 'Phone', 'smart-phone-01']].map { |w, label, icon| btn[%(data-preview-screen="#{w}"), label, "hgi hgi-stroke hgi-#{icon}", w.empty?] }.join
+    sizes = [['', 'Desktop', 'computer'], ['768x720', 'Tablet', 'tablet-01'], ['390x720', 'Phone', 'smart-phone-01']].map { |w, label, icon| btn[%(data-preview-screen="#{w}"), label, "hgi hgi-stroke hgi-#{icon}", w.empty?] }.join
     %(<div class="nds-doc-view">#{%(<div class="nds-btn-group">#{sizes}</div>) if screens}<div class="nds-btn-group">#{view}</div></div>)
   end
 
@@ -388,8 +383,7 @@ module DocsCanon
         demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
         # A builder's card names its builder, so Dark reaches the code too.
-        tall = attr(attrs, 'data-preview-height').to_i
-        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}#{%( data-preview-height="#{tall}" style="--doc-preview-height:#{tall}px") if tall > 0}) : '"'
+        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = preview && src.include?('nds-oncolor')
         out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(!%w[run js].include?(attr(attrs, 'data-preview')) && attr(attrs, 'data-screens') != 'none') if preview && !stage_panel}#{demo}\n</div>\n)
