@@ -193,6 +193,12 @@
     --card-width: 100%;
   }
 
+  // Flow content: the block or prose margins space the children, so the flex gap would double them.
+  &:is(.nds-block, .nds-prose) {
+    --card-width: 100%;
+    --_card-gap-base: 0;
+  }
+
   // Centers the content only: the global .nds-center utility would also center the
   // card in its parent, which is the container's job. A modal keeps its own margin.
   &.nds-center:not(.nds-modal) {
