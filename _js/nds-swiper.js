@@ -36,7 +36,9 @@
  *                             .nds-swiper-clone slides (aria-hidden, focusables dropped from
  *                             the tab order, data-swiper-clone = the real twin's index) when
  *                             looping; data-status on each spotlight slide: "active" on the
- *                             open one and every loop clone of it, "after" on those after it
+ *                             open one and every loop clone of it, "after" on those after it;
+ *                             data-swiper-moving on the wrapper while it scrolls, inside
+ *                             .nds-max-width (lifts the shadow clip)
  *   written by the loader pre-reveal: the same --slides and peek state, plus
  *                                     data-swiper-preset (skeleton row = final row) and
  *                                     data-swiper-single when the slides fit one page
@@ -673,10 +675,21 @@
         // ==============================================
 
         setupScrollSync() {
-            this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => {
+            const { signal } = this.abortController;
+            const w = this.wrapper;
+            w.addEventListener('scroll', NDS.rafThrottle(() => {
                 this.detectCurrentSlide();
                 this.updateState();
-            }), { passive: true, signal: this.abortController.signal });
+            }), { passive: true, signal });
+
+            // The shadow clip cuts cards short of the screen edge; CSS lifts it while the row moves.
+            if (this.isHero || this._spotlight || !this.container.closest('.nds-max-width')) return;
+            const rest = () => w.removeAttribute('data-swiper-moving');
+            w.addEventListener('scroll', () => {
+                if (!w.hasAttribute('data-swiper-moving')) w.setAttribute('data-swiper-moving', '');
+            }, { passive: true, signal });
+            if ('onscrollend' in w) w.addEventListener('scrollend', rest, { signal });
+            else w.addEventListener('scroll', NDS.debounce(rest, 150), { passive: true, signal });
         }
 
         detectCurrentSlide() {
@@ -931,7 +944,7 @@
             ['--total', '--slides'].forEach(p => this.container.style.removeProperty(p));
             if (this._ownsPeek) this.container.style.removeProperty('--peek');
             if (this._spotlight) this.slides.forEach(s => NDS.Status.clear(s));
-            if (this.wrapper) this.wrapper.style.removeProperty('overflow');
+            if (this.wrapper) { this.wrapper.style.removeProperty('overflow'); this.wrapper.removeAttribute('data-swiper-moving'); }
             if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }
             if (this.navigation) this.navigation.toggleAttribute('hidden', this._navHadHidden);
             if (this.prevBtn) this.prevBtn.style.removeProperty('display');

@@ -109,10 +109,23 @@
     .nds-swiper:not(.nds-hero, .nds-spotlight) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow) {
         --_bleed: var(--spacing-md);
     }
-    // Inside .nds-max-width the next card starts at the screen edge and its shadow
-    // reaches in; clip one bleed in, which a card one gutter in never reaches.
+    // Inside .nds-max-width the card past each screen edge reaches in with its shadow;
+    // clip one bleed in, which a card one gutter in never reaches.
+    // Not while the row moves: the clip would cut the passing cards short of the edge.
+    // Off is inset(0), not none: only inset to inset transitions.
     .nds-max-width .nds-swiper:not(.nds-hero, .nds-spotlight) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow) {
+        clip-path: inset(0);
+        transition: clip-path calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
+        @include reduced-motion { transition: none; }
+    }
+    .nds-max-width .nds-swiper:not(.nds-hero, .nds-spotlight, [data-swiper-peek]) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow):not([data-swiper-moving]) {
         clip-path: inset(0 var(--_b));
+    }
+    // A peek card runs to the end edge, so only the start side clips. On the last
+    // page of a row that stops, the peek sits at the start and nothing lies past the end.
+    .nds-max-width .nds-swiper[data-swiper-peek]:not(.nds-hero, .nds-spotlight, [data-state~="at-end"]) > &:has(> .nds-swiper-slide > .nds-card.nds-shadow):not([data-swiper-moving]) {
+        clip-path: inset(0 var(--_b) 0 0);
+        @include ltr { clip-path: inset(0 0 0 var(--_b)); }
     }
 }
 
