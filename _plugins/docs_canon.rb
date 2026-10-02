@@ -214,7 +214,6 @@ module DocsCanon
   # The demo sits in a slot, so a re-render keeps the card's view toggles.
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
   # holds Run (or `data-run-label`) and Clear, as a toast's does. Runs mount in the held box (nds-docs.js).
-  # `data-screens="none"` on the canon drops the Desktop, Tablet and Phone buttons, for a part that has no layout of its own.
   # `data-demo-width` on the canon fixes the slot's width, for a field that would stretch or shrink to its content.
   def self.harness(src, kind, run = nil, width = nil)
     return %(<div class="nds-flex" data-demo-run><button type="button" class="nds-btn nds-primary nds-md" data-run><span class="nds-label">#{run}</span></button><button type="button" class="nds-btn nds-subtle nds-md" data-run-clear><span class="nds-label">Clear</span></button></div><div data-demo-held></div>) if run
@@ -386,7 +385,7 @@ module DocsCanon
         card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = preview && src.include?('nds-oncolor')
-        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(!%w[run js].include?(attr(attrs, 'data-preview')) && attr(attrs, 'data-screens') != 'none') if preview && !stage_panel}#{demo}\n</div>\n)
+        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(!%w[run js].include?(attr(attrs, 'data-preview'))) if preview && !stage_panel}#{demo}\n</div>\n)
         out << "#{stage_panel}\n" if stage_panel
       end
       # data-code="none": a behavior demo, shown with no code.

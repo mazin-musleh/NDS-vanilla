@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 01:11 PM"
+last_edit: "02/10/2026 - 09:39 PM"
 ---
 
 <section id="ratingOverview" class="nds-content-section nds-doc-overview">
@@ -36,7 +36,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="rating-display" data-canon data-screens="none" data-variants="ratingVariantsTable">
+<script type="text/html" id="rating-display" data-canon data-variants="ratingVariantsTable">
 <div class="nds-rating" data-rating="3.5">
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
