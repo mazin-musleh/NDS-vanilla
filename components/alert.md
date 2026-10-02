@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "28/09/2026 - 12:33 AM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="alertOverview" class="nds-content-section nds-doc-overview">
@@ -174,8 +174,8 @@ actions: [
 | No close | No close | `closable: false` | `create():not({ display: 'toast' })` | The same, in JavaScript. A toast with a `duration` keeps its close button, which shows the countdown |
 | Shadow | Shadow | `.nds-shadow` | `.nds-alert` | An elevation shadow |
 | Shadow | Shadow | `shadow: true` | `create():not({ display: 'toast' })` | The same, in JavaScript. A toast has a shadow by default |
-| Color | Color | `.nds-color` | `.nds-alert:not(.nds-inline)` | Tints the background with the status color. Use it in dense layouts, where the stripe alone does not stand out. No effect on inline, which is always tinted |
-| Color | Color | `color: true` | `create():not({ display: 'inline' })` | The same, in JavaScript |
+| Color | Color (hint: Tints the background with the status color) | `.nds-color` | `.nds-alert:not(.nds-inline)` | Tints the background with the status color. Use it in dense layouts, where the stripe alone does not stand out. No effect on inline, which is always tinted |
+| Color | Color (hint: Tints the background with the status color) | `color: true` | `create():not({ display: 'inline' })` | The same, in JavaScript |
 | Position | Top (default) | — | `create({ display: 'toast' })` | At the top, on the end side, below the sticky header |
 | Position | Top start | `position: 'top-start'` | `create({ display: 'toast' })` | Top, on the start side. `-start` and `-end` follow the text direction |
 | Position | Top end | `position: 'top-end'` | `create({ display: 'toast' })` | The same as Top |

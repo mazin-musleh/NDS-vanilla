@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/09/2026 - 11:24 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="swiperOverview" class="nds-content-section nds-doc-overview">
@@ -216,7 +216,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 |---|---|---|---|---|
 | Structure | Cards (default) | — | — | A row of cards or images, several on a page. The usual swiper |
 | Structure | Hero (demo: + per-1) | canon `#swiper-hero` | — | Full-width slides with a background image, one at a time, at the top of a page |
-| Structure | Spotlight (demo: + per-1) | canon `#swiper-spotlight` | — | One slide in the middle at full size, with smaller slides at its sides. For a set of images or cards the user looks at one by one |
+| Structure | Spotlight (demo: + per-1) (hint: One slide at full size, smaller ones at its sides) | canon `#swiper-spotlight` | — | One slide in the middle at full size, with smaller slides at its sides. For a set of images or cards the user looks at one by one |
 | Per view | 3 · 2 · 1 (default) | — | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | 3 slides on a desktop, 2 on a tablet, 1 on a phone |
 | Per view | 4 · 3 · 2 | `--max-slides: 4` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Smaller items, such as logos or short cards |
 | Per view | 4 · 3 · 2 | `--mid-slides: 3` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a tablet |
@@ -226,12 +226,12 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | Per view | 1 (id: per-1) | — | `.nds-swiper.nds-hero` | A hero always shows one slide. It needs no knob |
 | Per view | 1 (id: per-1) | — | `.nds-swiper.nds-spotlight` | A spotlight always shows one slide in the middle. It needs no knob |
 | Arrows | Beside bullets (default) | — | — | The arrows at the start of the navigation row and the bullets at its end |
-| Arrows | Split | `.nds-center` | `.nds-swiper-navigation` | The bullets in the middle of the row and one arrow at each end |
-| Arrows | Middle | `.nds-middle` | `.nds-swiper` | One arrow on each side of the slides, at their middle, and no bullets. Tablet and wider: a phone shows the navigation row |
+| Arrows | Split (hint: Bullets in the middle, an arrow at each end) | `.nds-center` | `.nds-swiper-navigation` | The bullets in the middle of the row and one arrow at each end |
+| Arrows | Middle (hint: An arrow on each side of the slides, no bullets) | `.nds-middle` | `.nds-swiper` | One arrow on each side of the slides, at their middle, and no bullets. Tablet and wider: a phone shows the navigation row |
 | Bullets | LG (default) | — | — | 16px bullets. It needs no class |
 | Bullets | MD | `.nds-md` | `.nds-swiper-pagination` | 12px bullets |
 | Bullets | SM | `.nds-sm` | `.nds-swiper-pagination` | 8px bullets |
-| Peek | Peek | `--peek: 40px` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Shows 40px of the next slide, so the user sees there is more. Any length works |
+| Peek | Peek (hint: Shows the edge of the next slide) | `--peek: 40px` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Shows 40px of the next slide, so the user sees there is more. Any length works |
 | Loop | Loop | `[data-swiper-loop]` | `.nds-swiper:not(.nds-spotlight)` | An endless row: the first slide follows the last |
 | Loading | Loading (hint: Skeleton placeholders) | `.nds-loading` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Every card shows as a skeleton while its data loads. Remove the class when the data is in |
 {: #swiperVariantsTable .nds-table .nds-responsive}

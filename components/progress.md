@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/09/2026 - 11:25 AM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="progressOverview" class="nds-content-section nds-doc-overview">
@@ -99,7 +99,7 @@ Color and Status have one row for the circle and one for the bar. Write the row 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Circle (default) | — | — | A value that is the focus of the view: a dashboard figure or a completion rate |
-| Structure | Out of | canon `#progress-out-of` | — | A score read as a fraction: a GPA, a rating. `data-num` and `data-max` replace `data-value` |
+| Structure | Out of (hint: A score read as a fraction, such as a GPA) | canon `#progress-out-of` | — | A score read as a fraction: a GPA, a rating. `data-num` and `data-max` replace `data-value` |
 | Structure | Bar | canon `#progress-bar` | — | A task the user waits for: an upload or a form to complete |
 | Circle size | SM | — | `.nds-progress-circle` | 64px, a circle with no size class. The text under the number does not show |
 | Circle size | MD | `.nds-md` | `.nds-progress-circle` | 80px. The text under the number does not show |

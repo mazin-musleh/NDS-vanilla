@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/09/2026 - 11:47 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="paginationOverview" class="nds-content-section nds-doc-overview">
@@ -318,7 +318,7 @@ Every option goes on the `nds-pagination` nav. Pages and Page links work only on
 |---|---|---|---|---|
 | Structure | Buttons (default) | — | — | You write one `<button>` per page, and your script loads the page's items on `nds:pagination:change`. More than 5 written pages fold into a menu only when the script starts, so the nav changes width once. For a long range, use Data-driven |
 | Structure | Links | canon `#pg-links` | — | Each page is its own URL. The server marks the current page with `aria-current="page"`. It works with no JavaScript |
-| Structure | Data-driven | canon `#pg-data` | — | An empty nav with a page count. The script builds the buttons. For results from a server, where you know the count |
+| Structure | Data-driven (hint: The script builds the buttons from a page count) | canon `#pg-data` | — | An empty nav with a page count. The script builds the buttons. For results from a server, where you know the count |
 | Structure | Card grid | canon `#pg-grid` | — | The script shows one page of the items that are already in the HTML. `--per-page` sets the page size |
 | Structure | Table | canon `#pg-table` | — | The same for table rows. `nds-paged-content` goes on the `<tbody>`, and `nds-page-item` on each `<tr>` |
 | Structure | Grid with toolbar | canon `#pg-toolbar` | — | A card grid with a records counter and a per-page picker above it |
@@ -328,9 +328,9 @@ Every option goes on the `nds-pagination` nav. Pages and Page links work only on
 | Pages | 12 (default) | `[data-total-pages="12"]` | `.nds-pagination[data-total-pages]` | The page count. The script builds the buttons from it |
 | Pages | 2000 | `[data-total-pages="2000"]` | `.nds-pagination[data-total-pages]` | A large count, with page 1000 current. The menu of hidden pages gets a jump box |
 | Pages | 2000 | `[data-active-page="1000"]` | `.nds-pagination[data-total-pages]` | |
-| Page links | Page links | `[data-page-url="?page={page}"]` | `.nds-pagination[data-total-pages]` | The script builds `<a href>` links in place of buttons, for a server that renders each page. `{page}` becomes the page number |
-| URL sync | URL sync | `[data-page-param]` | `.nds-pagination` | Keeps the current page in the address as `?page=N`, so a reload or a shared link opens the same page |
-| No scroll | No scroll | `[data-pagination-no-scroll]` | `.nds-pagination` | A page change does not scroll back to the content. Your script calls `NDS.Pagination.scrollToContent()` when it wants the scroll |
+| Page links | Page links (hint: Links in place of buttons, one URL per page) | `[data-page-url="?page={page}"]` | `.nds-pagination[data-total-pages]` | The script builds `<a href>` links in place of buttons, for a server that renders each page. `{page}` becomes the page number |
+| URL sync | URL sync (hint: Keeps the page number in the address) | `[data-page-param]` | `.nds-pagination` | Keeps the current page in the address as `?page=N`, so a reload or a shared link opens the same page |
+| No scroll | No scroll (hint: A page change does not scroll back to the content) | `[data-pagination-no-scroll]` | `.nds-pagination` | A page change does not scroll back to the content. Your script calls `NDS.Pagination.scrollToContent()` when it wants the scroll |
 {: #paginationVariantsTable .nds-table .nds-responsive}
 
 </div>

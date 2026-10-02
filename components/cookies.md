@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/09/2026 - 11:16 AM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="cookiesOverview" class="nds-content-section nds-doc-overview">
@@ -184,7 +184,7 @@ Both structures end with an optional trigger button. The Manual template holds t
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Auto (default) | — | — | Add nothing. The script builds the panel on every page, with the text of the page's language |
-| Structure | Manual | canon `#cookies-manual` | — | Your own text, links or categories. A `#ndsCookiesPanel` in a `<template class="nds-panel-template">` replaces the built one. Keep `data-cookies-view`, `data-cookies-action` and `data-cookies-category` |
+| Structure | Manual (hint: Your own text, links or categories) | canon `#cookies-manual` | — | Your own text, links or categories. A `#ndsCookiesPanel` in a `<template class="nds-panel-template">` replaces the built one. Keep `data-cookies-view`, `data-cookies-action` and `data-cookies-category` |
 {: #cookiesVariantsTable .nds-table .nds-responsive}
 
 </div>

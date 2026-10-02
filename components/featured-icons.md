@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 03:26 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="featuredIconOverview" class="nds-content-section nds-doc-overview">
@@ -70,7 +70,7 @@ Every row goes on the `.nds-featured-icon` element. Pick one option from each gr
 | Style | Light (default) | — | — | A light fill in the icon's color |
 | Style | Outline | `.nds-outline` | `.nds-featured-icon` | No fill and a border in the icon's color, for a lighter look |
 | Style | Dark | `.nds-dark` | `.nds-featured-icon` | A solid fill and a white icon, for the strongest emphasis |
-| Style | Subtle | `.nds-subtle` | `.nds-featured-icon` | No container: the icon alone, drawn at the full size |
+| Style | Subtle (hint: The icon alone, with no container) | `.nds-subtle` | `.nds-featured-icon` | No container: the icon alone, drawn at the full size |
 {: #featuredIconVariantsTable .nds-table .nds-responsive}
 
 </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 08:15 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="dropmenuOverview" class="nds-content-section nds-doc-overview">
@@ -248,14 +248,14 @@ Every option goes on the `nds-dropmenu` wrapper, except Center items, which goes
 | Anchor | Center (default) | — | — | The menu centers under the trigger |
 | Anchor | Start | `[data-anchor="start"]` | `.nds-dropmenu` | The menu lines up with the trigger's start edge. For a wide trigger |
 | Anchor | End | `[data-anchor="end"]` | `.nds-dropmenu` | The menu lines up with the trigger's end edge |
-| Anchor | Cursor | `[data-anchor-cursor]` | `.nds-dropmenu` | The menu opens under the pointer, like a context menu. A keyboard or script open centers it |
+| Anchor | Cursor (hint: Opens under the pointer, like a context menu) | `[data-anchor-cursor]` | `.nds-dropmenu` | The menu opens under the pointer, like a context menu. A keyboard or script open centers it |
 | Portal | Auto (default) | — | — | The menu moves to `<body>` only when an ancestor would clip it |
-| Portal | Always | `[data-portal]` | `.nds-dropmenu` | The menu always moves to `<body>` when it opens |
-| Portal | Never | `[data-no-portal]` | `.nds-dropmenu` | The menu stays in the wrapper, even where an ancestor clips it. It wins over `data-portal`. Only for CSS or a script that needs the menu inside the wrapper |
+| Portal | Always (hint: The menu moves to the page body when it opens) | `[data-portal]` | `.nds-dropmenu` | The menu always moves to `<body>` when it opens |
+| Portal | Never (hint: The menu stays in its wrapper, even where it is clipped) | `[data-no-portal]` | `.nds-dropmenu` | The menu stays in the wrapper, even where an ancestor clips it. It wins over `data-portal`. Only for CSS or a script that needs the menu inside the wrapper |
 | Search | Search | `[data-search]` | `.nds-dropmenu[data-select-name]` | A search box at the top of the menu. For a long list |
 | Required | Required | `[data-required]` | `.nds-dropmenu[data-select-name]` | The form does not submit until a value is picked |
 | Center items | Center items (hint: For short labels) | `.nds-center` | `.nds-dropmenu-menu` | Centers each item's label. For short values, such as numbers |
-| Delay | Delayed open | `[data-delay="800"]` | `.nds-dropmenu` | The first open waits 800 ms, with a spinner on the trigger, while your script fills the menu |
+| Delay | Delayed open (hint: Waits with a spinner while your script fills the menu) | `[data-delay="800"]` | `.nds-dropmenu` | The first open waits 800 ms, with a spinner on the trigger, while your script fills the menu |
 {: #dmVariantsTable .nds-table .nds-responsive}
 
 </div>

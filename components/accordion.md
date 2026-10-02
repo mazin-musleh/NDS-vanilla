@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 08:39 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="accordionOverview" class="nds-content-section nds-doc-overview">
@@ -154,7 +154,7 @@ The first item is open in the markup: its button has `aria-expanded="true"` and 
 | Card | Card | `.nds-card` | `.nds-accordion` | A card background and rounded corners around the whole list. The first item loses its top line |
 | Stroke | Stroke | `.nds-stroke` | `.nds-accordion.nds-card` | A border around the card |
 | Shadow | Shadow | `.nds-shadow` | `.nds-accordion.nds-card` | A shadow under the card, to lift it off a colored background |
-| Always open | Always open | `[data-state~="always-open"]` | `.nds-accordion` | Several items stay open at once. Without it, opening one item closes the others |
+| Always open | Always open (hint: Several items stay open at once) | `[data-state~="always-open"]` | `.nds-accordion` | Several items stay open at once. Without it, opening one item closes the others |
 | Loading | Loading | `.nds-loading` | `.nds-accordion` | Gray bars in place of the titles, the icons and the open panel while the content loads |
 {: #accordionVariantsTable .nds-table .nds-responsive}
 

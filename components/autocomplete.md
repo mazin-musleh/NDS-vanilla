@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 12:31 AM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="autocompleteOverview" class="nds-content-section nds-doc-overview">
@@ -73,7 +73,7 @@ The canon carries `data-fetch="once"` because the demo data is a static file. Fo
 | Min characters | 3 (default) | — | — | The search starts at the third character |
 | Min characters | 2 | `[data-min-chars="2"]` | `.nds-form-container` | For short names, such as people's names |
 | Min characters | 1 | `[data-min-chars="1"]` | `.nds-form-container` | For a short list loaded once, such as cities |
-| Strict | Strict | `[data-strict]` | `.nds-form-container` | The form accepts only text the user picked from the list, and the menu shows "No results" when nothing matches. Not for a search field, where any text is a valid search |
+| Strict | Strict (hint: Accepts only a value picked from the list) | `[data-strict]` | `.nds-form-container` | The form accepts only text the user picked from the list, and the menu shows "No results" when nothing matches. Not for a search field, where any text is a valid search |
 | Custom empty message | Custom empty message | `[data-empty-message="No matching services"]` | `.nds-form-container[data-strict]` | Replaces the "No results" text that a strict field shows when nothing matches |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #autocompleteVariantsTable .nds-table .nds-responsive}

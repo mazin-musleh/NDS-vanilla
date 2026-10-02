@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/09/2026 - 09:49 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="breadcrumbOverview" class="nds-content-section nds-doc-overview">
@@ -86,7 +86,7 @@ Pick another component when:
 | Structure | Standard (default) | — | — | Three levels: Home, a parent page and the current page |
 | Structure | Short trail | `canon #breadcrumb-two-levels` | — | Two levels: Home and the current page, for a page one step below Home |
 | Structure | Deep trail | `canon #breadcrumb-deep` | — | Seven levels. The script shows the first level, a More button and the last two |
-| Truncate | Truncate | `.nds-truncate` | `li:last-child` | Cuts a long current page title with an ellipsis, so the trail stays on one line |
+| Truncate | Truncate (hint: Cuts a long page title with an ellipsis) | `.nds-truncate` | `li:last-child` | Cuts a long current page title with an ellipsis, so the trail stays on one line |
 | Loading | Loading | `.nds-loading` | `.nds-breadcrumb-nav` | Shows each label as a pulsing skeleton bar while the trail content loads. Remove it when the content is ready |
 {: #breadcrumbVariantsTable .nds-table .nds-responsive}
 

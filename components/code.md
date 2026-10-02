@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 07:41 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="codeOverview" class="nds-content-section nds-doc-overview">
@@ -150,7 +150,7 @@ The language of every structure comes from the `lang-*` class on its `<code>`. T
 | Structure | Tabs | canon `#code-tabs` | — | Several files or languages for one example, one tab each. Each panel has its own action bar |
 | Structure | Markdown | canon `#code-markdown` | — | Markdown or a prompt for an AI agent (`lang-markdown`, `lang-prompt`). The lines wrap and have no line numbers |
 | Structure | Inline | canon `#code-inline` | — | A short code reference in a sentence: a class name, a method, a value |
-| Tag strip | Tag strip | canon `#code-tags` | `.nds-code.nds-expandable` (start) | Extra tags beside the language tag, such as a version |
+| Tag strip | Tag strip (hint: More tags beside the language tag, such as a version) | canon `#code-tags` | `.nds-code.nds-expandable` (start) | Extra tags beside the language tag, such as a version |
 {: #codeVariantsTable .nds-table .nds-responsive}
 
 </div>

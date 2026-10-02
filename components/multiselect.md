@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 12:38 AM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="multiselectOverview" class="nds-content-section nds-doc-overview">
@@ -187,7 +187,7 @@ A row on `.nds-check-container` changes every option row. A Reset or Apply row i
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Manual (default) | — | — | You write one checkbox per option in the menu, in fieldsets with a legend. Use it when the server writes the options |
-| Structure | Data-driven | canon `#multiselect-json` | — | An empty menu with the options as JSON in `data-multiselect-options`. The script builds the checkboxes. Use it for options that come from data |
+| Structure | Data-driven (hint: The script builds the options from JSON) | canon `#multiselect-json` | — | An empty menu with the options as JSON in `data-multiselect-options`. The script builds the checkboxes. Use it for options that come from data |
 | Menu button (any) | Icon only | `[aria-label="Select"]` | `.nds-dropmenu-trigger:has(.nds-icon)` | A narrow button, for a narrow field. The `aria-label` names the button, and the script adds the chosen options to it. Not with Label only |
 | Menu button (any) | Icon only | remove | `.nds-dropmenu-trigger:has(.nds-icon) > .nds-label` | Removes the visible word |
 | Menu button (any) | Label only | `[type="button"]` | `.nds-dropmenu-trigger:has(.nds-label)` | The word with no icon. Not with Icon only |

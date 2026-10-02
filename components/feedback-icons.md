@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 10:22 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="feedbackOverview" class="nds-content-section nds-doc-overview">
@@ -98,8 +98,8 @@ NDS.Feedback.create({
 | Style | Outline (default) | `.nds-outline` | `.nds-feedback` | The icon drawn as a line in the status color |
 | Style | Solid | — | — | A filled disc in the status color, with a white symbol. It is the look with no style class, and it is stronger than outline |
 | Style | Solid | `style: ''` | `create()` | The same, in JavaScript |
-| Style | Ring | `.nds-ring` | `.nds-feedback` | A solid disc with a light halo around it, for a status that must stand out |
-| Style | Ring | `style: 'ring'` | `create()` | The same, in JavaScript |
+| Style | Ring (hint: A light halo around the disc) | `.nds-ring` | `.nds-feedback` | A solid disc with a light halo around it, for a status that must stand out |
+| Style | Ring (hint: A light halo around the disc) | `style: 'ring'` | `create()` | The same, in JavaScript |
 {: #fbVariantsTable .nds-table .nds-responsive}
 
 </div>

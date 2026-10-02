@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/09/2026 - 10:23 AM"
+last_edit: "02/10/2026 - 09:34 PM"
 ---
 
 <section id="modalOverview" class="nds-content-section nds-doc-overview">
@@ -166,7 +166,7 @@ Every option goes on the `nds-modal` element. On a lazy modal, write it on the `
 | Status | Info | `[data-status="info"]` | `.nds-modal.nds-center` | Neutral news about the action |
 | Status | Info | remove | `.nds-featured-icon.nds-xl > .nds-hgi-checkmark-circle-02` | Neutral news about the action |
 | Status | Info | canon `#modal-icon-info` | `.nds-featured-icon.nds-xl` | Neutral news about the action |
-| Static | Static | `[data-modal-static]` | `.nds-modal` | Escape and a click on the overlay do not close the modal. For a choice the user must make |
+| Static | Static (hint: Escape and an overlay click do not close it) | `[data-modal-static]` | `.nds-modal` | Escape and a click on the overlay do not close the modal. For a choice the user must make |
 {: #modalVariantsTable .nds-table .nds-responsive}
 
 </div>

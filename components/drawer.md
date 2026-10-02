@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/09/2026 - 12:38 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="drawerOverview" class="nds-content-section nds-doc-overview">
@@ -282,10 +282,10 @@ The current page's `<li>` carries `data-state="active"`. To open a submenu at lo
 | Size | MD (default) | — | — | For most lists |
 | Size | LG | `.nds-lg` | `.nds-drawer` | Taller items and a deeper submenu indent, for a menu that is the page's main content |
 | Divided | Divided | `.nds-divided` | `.nds-drawer` | A line between the top-level items. Use it when rows have two lines, such as a description or a date |
-| Lined | Lined | `.nds-lined` | `.nds-drawer:has(.nds-menu-btn)` | A vertical line along each submenu, which shows the depth of a long tree |
+| Lined | Lined (hint: A line along each submenu shows its depth) | `.nds-lined` | `.nds-drawer:has(.nds-menu-btn)` | A vertical line along each submenu, which shows the depth of a long tree |
 | Card | Card | `.nds-card` | `.nds-drawer` | A card background and rounded corners, so the drawer sits in a grid of cards |
 | Stroke | Stroke | `.nds-stroke` | `.nds-drawer.nds-card` | A border around the card |
-| Always open | Always open | `[data-state~="always-open"]` | `.nds-drawer:has(.nds-menu-btn)` | Several submenus stay open at once. Without it, opening a submenu closes the open one next to it |
+| Always open | Always open (hint: Several submenus stay open at once) | `[data-state~="always-open"]` | `.nds-drawer:has(.nds-menu-btn)` | Several submenus stay open at once. Without it, opening a submenu closes the open one next to it |
 {: #drawerVariantsTable .nds-table .nds-responsive}
 
 </div>

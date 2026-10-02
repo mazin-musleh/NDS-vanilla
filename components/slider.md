@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "30/09/2026 - 04:40 PM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="sliderOverview" class="nds-content-section nds-doc-overview">
@@ -92,7 +92,7 @@ Currency makes two changes on a `.nds-slider-value`: write both. A range slider 
 | State | None (default) | — | — | The user can change the value |
 | State | Disabled | `[data-state~="disabled"]` | `.nds-slider-container` | The user cannot change the value now |
 | State | Read-only | `[data-state~="readonly"]` | `.nds-slider-container` | The user sees the value but cannot change it |
-| Stacked | Stacked | `.nds-stacked` | `.nds-slider-container` | The value moves above the bar, and the bar takes the full width. Use it for a wide value, such as a currency |
+| Stacked | Stacked (hint: The value sits above a full-width bar) | `.nds-stacked` | `.nds-slider-container` | The value moves above the bar, and the bar takes the full width. Use it for a wide value, such as a currency |
 | Currency | Currency | `.nds-number-format` | `.nds-slider-value` | Thousands separators and a currency symbol on the value |
 | Currency | Currency | `[data-currency="SAR"]` | `.nds-slider-value` | Thousands separators and a currency symbol on the value |
 | Loading | Loading | `.nds-loading` | `.nds-slider-container` | A skeleton while the script loads the bounds or the value |

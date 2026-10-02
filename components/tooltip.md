@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 10:19 AM"
+last_edit: "02/10/2026 - 09:37 PM"
 ---
 
 <section id="tooltipOverview" class="nds-content-section nds-doc-overview">
@@ -84,8 +84,8 @@ Pick another component when:
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Manual (default) | — | — | A help icon next to a field label or a heading. You write every part |
-| Structure | Auto | canon `#tooltip-auto` | — | The same help icon from two attributes. The script builds the trigger and the balloon |
-| Structure | Term | canon `#tooltip-term` | — | A word in a sentence is the trigger, with a dotted underline |
+| Structure | Auto (hint: The script builds the trigger and the balloon) | canon `#tooltip-auto` | — | The same help icon from two attributes. The script builds the trigger and the balloon |
+| Structure | Term (hint: A word in a sentence is the trigger) | canon `#tooltip-term` | — | A word in a sentence is the trigger, with a dotted underline |
 | Structure | Button (demo: + hover-500) | canon `#tooltip-button` | — | An icon-only button whose `title` becomes the message. Add `data-tooltip-hover="500"`: a button needs hover, so its own click still works. An `<a>` link takes the same classes and attributes |
 | Open on | Click (default) | — | `.nds-tooltip:not(.nds-btn)` | A click, a tap, or Enter on the trigger opens and closes the balloon |
 | Open on | Hover | `[data-tooltip-hover]` | `.nds-tooltip` | The balloon opens 120ms after the mouse enters, and on keyboard focus. Use it on a link or a button |

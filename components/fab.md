@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "29/09/2026 - 12:56 AM"
+last_edit: "02/10/2026 - 09:37 PM"
 lang: en
 direction: ltr
 ---
@@ -131,7 +131,7 @@ Variant and Size have two rows. On a single FAB, the class goes on the FAB butto
 | Shape | Square | — | `.nds-btn.nds-fab` | A button with rounded corners |
 | Direction | Vertical (default) (id: vertical) | `.nds-vertical` | `.nds-btn-group` | The buttons stack in a column along a side edge |
 | Direction | Horizontal (id: horizontal) | — | `.nds-btn-group` | The buttons sit in a row. For the bottom edge |
-| Thumb | Thumb | `.nds-fab-thumb` | `.nds-fab` | The FAB sits against the screen edge, with square corners on that side. It moves aside when its panel opens from the same edge |
+| Thumb | Thumb (hint: Sits against the screen edge, square on that side) | `.nds-fab-thumb` | `.nds-fab` | The FAB sits against the screen edge, with square corners on that side. It moves aside when its panel opens from the same edge |
 | Gap | None (default) | — | — | The dock's own gap between FABs |
 | Gap | SM | `[data-fab-gap="sm"]` | `.nds-fab` | 8px of extra space between the FAB and the one before it |
 | Gap | MD | `[data-fab-gap="md"]` | `.nds-fab` | 16px of extra space, to start a new set of FABs |
