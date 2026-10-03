@@ -308,8 +308,12 @@
     flex: 1;
   }
 
-  .nds-card-title {
+  // Block beat nds-truncate's zero-specificity -webkit-box and killed its clamp.
+  .nds-card-title:not(.nds-truncate) {
     display: block;
+  }
+
+  .nds-card-title {
     font-size: var(--typo-text-lg-FS);
     line-height: var(--typo-text-lg-LH);
     font-weight: var(--font-weight-bold);
