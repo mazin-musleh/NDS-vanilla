@@ -2,255 +2,164 @@
 layout: page
 title: Truncate Text
 hero_title: Truncate Text - National Design System
-hero_description: A single-class CSS utility that clips overflowing text with an ellipsis, supporting both single-line and configurable multi-line truncation on any element
+hero_description: A CSS class that clips long text to a set number of lines and ends it with an ellipsis
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.2.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "03/10/2026 - 06:08 PM"
 ---
 
-<!-- Single-Line Truncation -->
-<section id="truncateSingleLine" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Single-Line Truncation</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-truncate</code> to any text element to clip it to one line with an ellipsis. The element respects its parent's width.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Default Truncation</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-card nds-stroke" style="max-width: 360px;">
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title nds-truncate">National Digital Transformation Strategy Overview and Implementation Roadmap</span>
-                                        <p class="nds-card-description nds-truncate">Complete documentation and guidelines for all ministry digital services including API references, implementation guides, best practices for developers, and integration specifications for government applications.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-truncate-single-1" id="tab-truncate-single-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-truncate-single-1"
-                                aria-labelledby="tab-truncate-single-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;div class="nds-card nds-stroke" style="max-width: 360px;"&gt;
-    &lt;div class="nds-card-content"&gt;
-        &lt;div class="nds-card-text"&gt;
-            &lt;span class="nds-card-title nds-truncate"&gt;National Digital Transformation Strategy Overview and Implementation Roadmap&lt;/span&gt;
-            &lt;p class="nds-card-description nds-truncate"&gt;Complete documentation and guidelines for all ministry digital services including API references, implementation guides, best practices for developers, and integration specifications for government applications.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                            </code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="truncateOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Truncate Text is one class, `nds-truncate`, and one custom property, `--truncate`, which sets how many lines show.
+
+Pick another component when:
+
+- the user must be able to open the full text on the page: [Expandable Content](../utilities/expandable-content)
+
+</div>
+  </div>
 </section>
 
-<!-- Multi-Line Truncation -->
-<section id="truncateMultiLine" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Multi-Line Truncation</h2>
-            <p class="nds-section-description">Set <code class="nds-inline-code lang-html">--truncate</code> to control how many lines are visible before the ellipsis. Useful for card descriptions and content previews where more than one line adds context.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">2 Lines</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["--truncate:1", ".nds-card-description", "lineCount", "style"]'>
-                                            <span class="nds-label">1 Line</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["--truncate:2", ".nds-card-description", "lineCount", "style"]'>
-                                            <span class="nds-label">2 Lines</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["--truncate:3", ".nds-card-description", "lineCount", "style"]'>
-                                            <span class="nds-label">3 Lines</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["--truncate:4", ".nds-card-description", "lineCount", "style"]'>
-                                            <span class="nds-label">4 Lines</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-card nds-stroke" style="max-width: 400px;">
-                                <div class="nds-card-content">
-                                    <div class="nds-card-text">
-                                        <span class="nds-card-title">Citizen Services Portal</span>
-                                        <p class="nds-card-description nds-truncate" style="--truncate: 2;">The unified portal provides access to over 200 government services across 35 ministries. Citizens can submit applications, track requests, schedule appointments, and receive notifications about their active transactions. The platform supports biometric authentication, digital signatures, and secure document uploads for a seamless end-to-end experience.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-truncate-multi-1" id="tab-truncate-multi-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-truncate-multi-1"
-                                aria-labelledby="tab-truncate-multi-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;div class="nds-card nds-stroke" style="max-width: 400px;"&gt;
-    &lt;div class="nds-card-content"&gt;
-        &lt;div class="nds-card-text"&gt;
-            &lt;span class="nds-card-title"&gt;Citizen Services Portal&lt;/span&gt;
-            &lt;p class="nds-card-description nds-truncate" style="--truncate: 2;"&gt;The unified portal provides access to over 200 government services across 35 ministries. Citizens can submit applications, track requests, schedule appointments, and receive notifications about their active transactions. The platform supports biometric authentication, digital signatures, and secure document uploads for a seamless end-to-end experience.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                            </code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="truncateMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="truncate-card" data-canon data-variants="truncateVariantsTable" data-demo-width="360px">
+<div class="nds-card nds-stroke">
+  <div class="nds-card-content">
+    <div class="nds-card-text">
+      <span class="nds-card-title nds-truncate">National Digital Transformation Strategy and Implementation Roadmap</span>
+      <p class="nds-card-description nds-truncate">The unified portal gives access to more than 200 government services from 35 ministries. Citizens can submit applications, track requests, book appointments and get notices about their open requests. The portal supports biometric sign-in, digital signatures and secure document uploads.</p>
+    </div>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="truncateFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-code"></i>
-                            <span class="nds-label">CSS-Only</span>
-                        </span>
-                        <p class="nds-item-desc">Works with a single class and zero JavaScript. No initialization, no event listeners, no cleanup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-wrap"></i>
-                            <span class="nds-label">Configurable Line Count</span>
-                        </span>
-                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--truncate</code> to any number to control how many lines remain visible before the ellipsis.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-font"></i>
-                            <span class="nds-label">Any Text Element</span>
-                        </span>
-                        <p class="nds-item-desc">Apply to headings, paragraphs, spans, divs, or any element that contains text content.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-horizontal-resize"></i>
-                            <span class="nds-label">Width-Responsive</span>
-                        </span>
-                        <p class="nds-item-desc">Truncation recalculates automatically when the parent container resizes, with no additional code required.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="truncateVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The card title stays at one line. A Lines option sets `--truncate` in the `style` attribute of the description.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Lines | 1 (default) | — | — | Titles, labels and list items |
+| Lines | 2 | `--truncate: 2` | `.nds-card-description` | Short descriptions, where one line cuts too much |
+| Lines | 3 | `--truncate: 3` | `.nds-card-description` | Previews where the first sentence matters |
+| Lines | 4 | `--truncate: 4` | `.nds-card-description` | Longer previews |
+{: #truncateVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="truncateGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <code class="nds-inline-code lang-html">nds-truncate</code> for text that may overflow in constrained layouts such as <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a>, table cells, navigation labels, and list items</li>
-                    <li>Use multi-line truncation (<code class="nds-inline-code lang-html">--truncate: 2</code> or <code class="nds-inline-code lang-html">--truncate: 3</code>) for descriptions and summaries where a single line removes too much context</li>
-                    <li>Pair with a <code class="nds-inline-code lang-html">title</code> attribute or a tooltip so users can access the full text on hover</li>
-                    <li>Do not truncate text that the user must read in full to complete a task, such as form labels, error messages, or legal disclaimers. Show the full text or use <a class="nds-color" href="{{ 'utilities/expandable-content' | relative_url }}">Expandable Content</a> instead</li>
-                    <li>Do not use truncation as a substitute for writing concise content. If every card description is being clipped, the content itself is too long</li>
-                    <li>Choose the line count based on the content type: 1 line for titles and labels, 2 lines for short descriptions, 3 lines for content previews where the opening sentence matters</li>
-                    <li>When truncating inside flex or grid children, ensure the element has a constrained width (from the parent or an explicit <code class="nds-inline-code lang-html">max-width</code>). Without a width boundary, the text will not overflow and truncation will not activate</li>
-                    <li>Test truncated content with screen readers to verify the full text is still announced. The <code class="nds-inline-code lang-html">nds-truncate</code> class only clips visually; the DOM text remains intact</li>
-                    <li>Prefer <a class="nds-color" href="{{ 'utilities/expandable-content' | relative_url }}">Expandable Content</a> over truncation when users need on-page access to the full text. Truncation hides content permanently unless the user navigates elsewhere; expandable content reveals it in place</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--truncate</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Number of visible lines before the text is clipped with an ellipsis. Set to any positive integer.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="truncateFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-code"></i>
+            <span class="nds-label">CSS Only</span>
+          </span>
+          <p class="nds-item-desc">One class and no JavaScript. There is nothing to start, and nothing to clean up.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-font"></i>
+            <span class="nds-label">Any Text Element</span>
+          </span>
+          <p class="nds-item-desc">Works on a heading, a paragraph, a <code class="nds-inline-code lang-html">&lt;span&gt;</code> or a <code class="nds-inline-code lang-html">&lt;div&gt;</code>. A <code class="nds-inline-code lang-html">&lt;span&gt;</code> becomes a block, so it takes its own line.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-horizontal-resize"></i>
+            <span class="nds-label">Container Width</span>
+          </span>
+          <p class="nds-item-desc">When the container gets wider or narrower, the text clips at the new width.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-accessibility"></i>
+            <span class="nds-label">Full Text for Screen Readers</span>
+          </span>
+          <p class="nds-item-desc">The class clips only what shows. The full text stays in the page, so a screen reader reads all of it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="truncatePractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use it for text that can be too long for its space: card titles and descriptions, table cells, menu labels and list items.
+- Use 1 line for titles and labels, 2 for short descriptions and 3 for previews.
+- Give the user another way to read the full text: a `title` attribute, a [Tooltip](../components/tooltip), or a link to the full page.
+- Do not clip text the user must read to finish a task, such as form labels, error messages or legal text.
+- If every card description is clipped, the text is too long. Shorten the text first.
+- The text clips only when it needs more lines than `--truncate` allows. To clip a short text, give its element a `max-width`.
+- The class has zero specificity, so a component rule that sets `display` on the same element wins, and the text does not clip. When you add it to a part of another component, check that the ellipsis shows.
+
+</div>
+  </div>
+</section>
+
+<section id="truncateApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set it in the `style` attribute of the element with `nds-truncate`: `style="--truncate: 3"`. On a parent, it changes every `nds-truncate` element inside it.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--truncate` | `1` | How many lines show before the ellipsis. A whole number above 0 |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="truncateRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Services List](../examples/services-list): one-line titles and descriptions on service cards.
+- [Home Template](../templates/home-template): three-line descriptions on news cards.
+- [Faculty CV](../examples/faculty-cv): a one-line name at the top of the table of contents.
+
+</div>
+  </div>
 </section>

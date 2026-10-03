@@ -926,8 +926,8 @@
   scss: _sass/components/_topbar.scss
 
 - title: "Truncate Text"
-  description: "Line-clamped overflow with expand/collapse toggle"
-  use_when: "Clamp long text to a fixed number of lines, with an expand and collapse toggle."
+  description: "Clips long text to a set number of lines"
+  use_when: "Clip long text to a set number of lines with an ellipsis, such as a card title or description."
   icon: '<i class="hgi hgi-stroke hgi-text-wrap"></i>'
   category: "Utilities"
   tags: ["CSS"]
