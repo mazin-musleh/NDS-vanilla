@@ -1,612 +1,246 @@
 ---
 layout: page
 title: Numbers
-hero_title: Numbers Formatting & Counter - National Design System
-hero_description: Utilities for formatting large numbers with locale-aware separators, animating counters on scroll, and appending currency symbols or text units automatically.
+hero_title: Numbers - National Design System
+hero_description: Classes that format a number with separators, add a currency symbol or a unit, and count up to a number when it scrolls into view
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.7.2"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.12.x"
+last_edit: "03/10/2026 - 07:01 PM"
 ---
 
-<!-- Number Formatting -->
-<section id="numberFormatting" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Number Formatting</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-number-format</code> to any element containing a number. The formatter applies locale-appropriate thousand separators on page load, preserving surrounding text, signs, and decimals.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Thousand Separators</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap; align-items: baseline;">
-                            <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">3240000</span>
-                            <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">1850</span>
-                            <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">42850.75</span>
-                            <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">+2500</span>
-                            <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">-340</span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-numbers-format-1" id="tab-numbers-format-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-format-1"
-                                aria-labelledby="tab-numbers-format-1">
-                                <div class="nds-code-action">
-                                    <button type="button" class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;span class="nds-number-format"&gt;3240000&lt;/span&gt;
-&lt;!-- Renders: 3,240,000 --&gt;
-
-&lt;span class="nds-number-format"&gt;1850&lt;/span&gt;
-&lt;!-- Renders: 1,850 --&gt;
-
-&lt;span class="nds-number-format"&gt;42850.75&lt;/span&gt;
-&lt;!-- Renders: 42,850.75 --&gt;
-
-&lt;!-- Signs are preserved --&gt;
-&lt;span class="nds-number-format"&gt;+2500&lt;/span&gt;
-&lt;!-- Renders: +2,500 --&gt;
-
-&lt;span class="nds-number-format"&gt;-340&lt;/span&gt;
-&lt;!-- Renders: -340 --&gt;</code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="numbersOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Numbers is two classes. `nds-number-format` formats the number in an element's text, and can add a currency symbol or a unit. `nds-counter-value` counts up to a number.
+
+Pick another component when:
+
+- the user types a number: [Number Input](../components/forms#numberInput)
+- the user picks a number in a range: [Slider](../components/slider)
+
+</div>
+  </div>
 </section>
 
-<!-- Counter Animation -->
-<section id="counterAnimation" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Counter Animation</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-counter-value</code> and set <code class="nds-inline-code lang-html">data-target</code> to the final value. The counter animates from zero when the element scrolls into view. Combine with <code class="nds-inline-code lang-html">nds-number-format</code> to apply thousand separators to the final value.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Basic Counter</div>
-                        <div class="demo-action">
-                            <button type="button" class="nds-btn nds-sm nds-subtle demo-counter-restart" aria-label="Restart counter animation">
-                                <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
-                                <span class="nds-label">Restart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap;">
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-target="1850" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Government Services</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-target="3240000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Citizens Served</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-target="98.5%" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Satisfaction Rate</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-numbers-counter-1" id="tab-numbers-counter-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-counter-1"
-                                aria-labelledby="tab-numbers-counter-1">
-                                <div class="nds-code-action">
-                                    <button type="button" class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;span class="nds-counter-value nds-number-format"
-    data-target="1850"&gt;0&lt;/span&gt;
-
-&lt;span class="nds-counter-value nds-number-format"
-    data-target="3240000"&gt;0&lt;/span&gt;
-
-&lt;!-- Suffix in data-target is preserved --&gt;
-&lt;span class="nds-counter-value nds-number-format"
-    data-target="98.5%"&gt;0&lt;/span&gt;</code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Counter Options</div>
-                        <div class="demo-action">
-                            <button type="button" class="nds-btn nds-sm nds-subtle demo-counter-restart" aria-label="Restart counter animation">
-                                <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
-                                <span class="nds-label">Restart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap;">
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-target="8500" data-start="5000" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Custom start: <code class="nds-inline-code lang-html">data-start="5000"</code></p>
-                            </div>
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-target="3240000" data-duration="3000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Custom duration: <code class="nds-inline-code lang-html">data-duration="3000"</code></p>
-                            </div>
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-target="42850.75" data-decimals="0" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">No decimals: <code class="nds-inline-code lang-html">data-decimals="0"</code></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-numbers-options-1" id="tab-numbers-options-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-options-1"
-                                aria-labelledby="tab-numbers-options-1">
-                                <div class="nds-code-action">
-                                    <button type="button" class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;!-- Custom start value --&gt;
-&lt;span class="nds-counter-value nds-number-format"
-    data-target="8500" data-start="5000"
-    data-duration="2000"&gt;0&lt;/span&gt;
-
-&lt;!-- Custom duration (3 seconds) --&gt;
-&lt;span class="nds-counter-value nds-number-format"
-    data-target="3240000" data-duration="3000"&gt;0&lt;/span&gt;
-
-&lt;!-- Force no decimal places --&gt;
-&lt;span class="nds-counter-value nds-number-format"
-    data-target="42850.75" data-decimals="0"&gt;0&lt;/span&gt;</code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-
-            </div>
-        </div>
+<section id="numbersMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="numbers-number" data-canon data-variants="numbersVariantsTable">
+<span class="nds-number-format">3240000</span>
+</script>
+
+<script type="text/html" id="numbers-counter" data-canon>
+<span class="nds-counter-value nds-number-format" data-target="42850.75">0</span>
+</script>
+
+    </div>
+  </div>
 </section>
 
-<!-- Currency -->
-<section id="currencyFormat" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Currency</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-currency</code> to any <code class="nds-inline-code lang-html">nds-number-format</code> element to append the currency symbol automatically. SAR renders as the official Saudi Riyal SVG icon; other currencies use their Unicode symbols.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Static Amounts</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap; align-items: baseline;">
-                            <span class="nds-number-format" data-currency="SAR" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">450000</span>
-                            <span class="nds-number-format" data-currency="USD" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">99999.99</span>
-                            <span class="nds-number-format" data-currency="EUR" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">75000</span>
-                            <span class="nds-number-format" data-currency="SAR" data-free style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">Free</span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-numbers-currency-1" id="tab-numbers-currency-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-currency-1"
-                                aria-labelledby="tab-numbers-currency-1">
-                                <div class="nds-code-action">
-                                    <button type="button" class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;!-- SAR: official Saudi Riyal SVG icon via CSS mask --&gt;
-&lt;span class="nds-number-format" data-currency="SAR"&gt;450000&lt;/span&gt;
-
-&lt;span class="nds-number-format" data-currency="USD"&gt;99999.99&lt;/span&gt;
-
-&lt;span class="nds-number-format" data-currency="EUR"&gt;75000&lt;/span&gt;
-
-&lt;!-- data-free: hides the currency icon for zero-price items --&gt;
-&lt;span class="nds-number-format" data-currency="SAR" data-free&gt;Free&lt;/span&gt;</code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Animated Amounts</div>
-                        <div class="demo-action">
-                            <button type="button" class="nds-btn nds-sm nds-subtle demo-counter-restart" aria-label="Restart counter animation">
-                                <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
-                                <span class="nds-label">Restart</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap;">
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="450000" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Annual Budget</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="128750" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Revenue</p>
-                            </div>
-                            <div style="text-align: center;">
-                                <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="43200" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
-                                <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Savings</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-numbers-currency-2" id="tab-numbers-currency-2">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-currency-2"
-                                aria-labelledby="tab-numbers-currency-2">
-                                <div class="nds-code-action">
-                                    <button type="button" class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;span class="nds-counter-value nds-number-format"
-    data-currency="SAR" data-target="450000"
-    data-duration="2000"&gt;0&lt;/span&gt;
-
-&lt;span class="nds-counter-value nds-number-format"
-    data-currency="SAR" data-target="128750"
-    data-duration="2000"&gt;0&lt;/span&gt;
-
-&lt;span class="nds-counter-value nds-number-format"
-    data-currency="SAR" data-target="43200"
-    data-duration="2000"&gt;0&lt;/span&gt;</code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-
-            </div>
-        </div>
+<section id="numbersVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Currency and Unit go on `.nds-number-format`. Start and Duration go on `.nds-counter-value`, so they need the Counter structure. A currency and a unit do not combine: use one.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Number (default) | — | — | Any number on the page: totals, counts, prices |
+| Structure | Counter (hint: Counts up when it scrolls into view) | canon `#numbers-counter` | — | A headline figure that counts up once. Use it for a few key figures, never for live data |
+| Currency | None (default) | — | — | A number with no currency |
+| Currency | SAR | `[data-currency="SAR"]` | `.nds-number-format` | Saudi riyals. Draws the Riyal sign as an icon |
+| Currency | USD | `[data-currency="USD"]` | `.nds-number-format` | US dollars ($) |
+| Currency | EUR | `[data-currency="EUR"]` | `.nds-number-format` | Euros (€) |
+| Currency | GBP | `[data-currency="GBP"]` | `.nds-number-format` | Pounds sterling (£) |
+| Currency | JPY | `[data-currency="JPY"]` | `.nds-number-format` | Japanese yen (¥) |
+| Currency | CNY | `[data-currency="CNY"]` | `.nds-number-format` | Chinese yuan (¥) |
+| Currency | INR | `[data-currency="INR"]` | `.nds-number-format` | Indian rupees (₹) |
+| Currency | KRW | `[data-currency="KRW"]` | `.nds-number-format` | Korean won (₩) |
+| Currency | TRY | `[data-currency="TRY"]` | `.nds-number-format` | Turkish lira (₺) |
+| Unit | Unit (hint: Any text after the number) | `[data-unit="km"]` | `.nds-number-format:not([data-currency])` | A unit such as km, kg, MB or years. Not with a currency |
+| Start | Start From (hint: Counts from 40,000, not from 0) | `[data-start="40000"]` | `.nds-counter-value` | For a large number: the count shows only its last part |
+| Duration | 1000 ms (default) | — | `.nds-counter-value` | One second. Fits most numbers |
+| Duration | 2000 ms | `[data-duration="2000"]` | `.nds-counter-value` | A slower count, for a large number |
+{: #numbersVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Units -->
-<section id="unitFormat" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Units</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-unit</code> with any text (km, kg, %, years) to append a unit after the number. It is the non-currency counterpart of <code class="nds-inline-code lang-html">data-currency</code>: the unit reads after the value, and because it renders via CSS it stays correct when the number updates live, such as a slider output.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Text Units</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap; align-items: baseline;">
-                            <span class="nds-number-format" data-unit="km" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">1500</span>
-                            <span class="nds-number-format" data-unit="kg" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">2480</span>
-                            <span class="nds-number-format" data-unit="MB" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">512</span>
-                            <span class="nds-number-format" data-unit="years" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">25</span>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-numbers-units-1" id="tab-numbers-units-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-units-1"
-                                aria-labelledby="tab-numbers-units-1">
-                                <div class="nds-code-action">
-                                    <button type="button" class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;span class="nds-number-format" data-unit="km"&gt;1500&lt;/span&gt;
-&lt;!-- Renders: 1,500 km --&gt;
-
-&lt;span class="nds-number-format" data-unit="kg"&gt;2480&lt;/span&gt;
-&lt;!-- Renders: 2,480 kg --&gt;
-
-&lt;span class="nds-number-format" data-unit="MB"&gt;512&lt;/span&gt;
-&lt;!-- Renders: 512 MB --&gt;
-
-&lt;span class="nds-number-format" data-unit="years"&gt;25&lt;/span&gt;
-&lt;!-- Renders: 25 years --&gt;</code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="numbersBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Counter Animation
+{: #counterAnimation}
+
+A counter counts from `data-start` to `data-target` when half of it is in view. It runs once, and then the script sets `data-animated` on it. A user who asks the system for reduced motion sees the end value at once. The counter adds separators itself, so it needs `nds-number-format` only for a currency or a unit.
+
+### Currency Symbol
+{: #currencyFormat}
+
+`data-currency` adds the currency symbol beside the number. The symbol sits before the number in English and after it in Arabic. `SAR` draws the Riyal sign as an icon in the text color. The other codes add their Unicode symbol.
+
+### Unit
+
+`data-unit` adds its text after the number, in English and in Arabic. CSS draws the unit, so it stays when a script changes the number, as the [Slider](../components/slider) does. After the change, call `NDS.Numbers.format(el)` to add the separators.
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="numberFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Both number formatting and counter animations activate automatically on page load with no extra JavaScript required.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-calculator-01"></i>
-                            <span class="nds-label">Locale-aware Formatting</span>
-                        </span>
-                        <p class="nds-item-desc">Numbers are formatted with thousand separators based on the user's browser locale, preserving any surrounding text, signs, or suffixes.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-coins-dollar"></i>
-                            <span class="nds-label">Currency and Units</span>
-                        </span>
-                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-currency</code> for automatic currency symbols (SAR Saudi Riyal icon, plus USD, EUR, GBP, JPY, CNY, INR, KRW, TRY), or <code class="nds-inline-code lang-html">data-unit</code> to append any text unit such as km, kg, or %.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-chart-increase"></i>
-                            <span class="nds-label">Scroll-triggered Counters</span>
-                        </span>
-                        <p class="nds-item-desc">Counter animations begin when the element scrolls into view, with configurable start value, target, duration, and decimal precision.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-pause"></i>
-                            <span class="nds-label">Reduced Motion Support</span>
-                        </span>
-                        <p class="nds-item-desc">Users who prefer reduced motion see the final counter value immediately with no animation, respecting the <code class="nds-inline-code lang-html">prefers-reduced-motion</code> media query.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.Numbers.reinit()</code> after dynamically adding numbers to format and animate new elements.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="numbersFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Automatic Start</span>
+          </span>
+          <p class="nds-item-desc">The loader starts Numbers on any page that has <code class="nds-inline-code lang-html">nds-number-format</code> or <code class="nds-inline-code lang-html">nds-counter-value</code>. You write no script.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-calculator-01"></i>
+            <span class="nds-label">Locale Separators</span>
+          </span>
+          <p class="nds-item-desc">Separators follow the <code class="nds-inline-code lang-html">lang</code> of the page, and digits are always Latin (0 to 9), whatever the language of the browser. Text before and after the number, the sign and the decimals stay.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layers-01"></i>
+            <span class="nds-label">Child Elements Kept</span>
+          </span>
+          <p class="nds-item-desc">Only the first text in the element that holds a digit changes. Icons and other child elements stay in place.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-repeat"></i>
+            <span class="nds-label">Safe to Run Again</span>
+          </span>
+          <p class="nds-item-desc">The script remembers the text it wrote and reads the original number again. A number formatted twice reads the same as one formatted once, in every language.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-code"></i>
+            <span class="nds-label">Code Blocks Skipped</span>
+          </span>
+          <p class="nds-item-desc">A number inside <code class="nds-inline-code lang-html">&lt;code&gt;</code> or <code class="nds-inline-code lang-html">.code-example</code> stays as written.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="numberGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
+<section id="numbersPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <code class="nds-inline-code lang-html">nds-number-format</code> on any element displaying a large number (thousands or more) to improve readability with locale-appropriate separators</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-counter-value</code> for hero statistics, KPI dashboards, and landing page metrics where counting animation draws attention to key figures</li>
-                    <li>Combine both classes (<code class="nds-inline-code lang-html">nds-counter-value nds-number-format</code>) so that the final counter value also receives thousand separators</li>
-                    <li>Do not use counter animations for frequently updated live data or values that change on user interaction: counters are designed to play once on scroll</li>
-                    <li>Prefer <code class="nds-inline-code lang-html">data-currency</code> over manually adding currency symbols; the attribute handles RTL/LTR symbol placement automatically</li>
-                    <li>Use <code class="nds-inline-code lang-html">data-unit</code> for non-currency units (km, kg, %, years): it keeps the unit declarative and separate from the value, so it stays correct when the number updates live. For a one-off baked-in suffix, put it directly in the text (e.g. <code class="nds-inline-code lang-html">98.5%</code>)</li>
-                    <li>Set <code class="nds-inline-code lang-html">data-duration</code> between 800 and 2000 ms: shorter durations feel abrupt, longer ones delay comprehension</li>
-                    <li>Use <code class="nds-inline-code lang-html">data-decimals</code> to control precision; omit it to auto-detect from the target value, or set it to <code class="nds-inline-code lang-html">0</code> for whole numbers</li>
-                    <li>Place the raw number as the element's text content: the formatter parses it on load, so the number remains visible even before JavaScript runs</li>
-                    <li>Pair counters with <a class="nds-color" href="{{ 'components/cards' | relative_url }}">statistic cards</a> for a polished dashboard layout</li>
-                </ul>
-            </div>
+- Write the number in plain digits, with commas or no separators. It shows before the script runs. The script cannot read other separators, such as `3.240.000`.
+- Write `0` as a counter's text. It shows until the count starts.
+- Write the number with the decimals you want shown. `1250.50` shows as `1,250.50`, and a counter with `data-target="98.6"` counts with one decimal.
+- Use `data-currency`, not a symbol in the text. See [Currency Symbol](#currencyFormat).
+- A screen reader does not read the SAR icon. Where the currency matters, add it as hidden text after the number: `<span class="nds-number-format" data-currency="SAR">1250 <span class="nds-sr-only">riyals</span></span>`.
+- Use `data-unit` for a unit on a number that a script changes. For a fixed suffix, write it in the text, such as `98.5%`.
+- Use a counter for a few headline figures, such as the statistics on a home page or KPI cards. Do not use it for live data or for a value the user changes: it runs once.
+- Keep `data-duration` between 800 and 2000 ms. A shorter count is too fast to see, and a longer one delays the figure.
+- For a free price, write the label, such as "Free" or "مجاني", with no `data-currency`.
+- Put a counter in a [Statistic card](../components/cards) for a headline number with a label.
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-currency</code></td>
-                            <td>none</td>
-                            <td>Set on <code class="nds-inline-code lang-html">.nds-number-format</code>. Supported values: <code class="nds-inline-code lang-html">SAR</code>, <code class="nds-inline-code lang-html">USD</code>, <code class="nds-inline-code lang-html">EUR</code>, <code class="nds-inline-code lang-html">GBP</code>, <code class="nds-inline-code lang-html">JPY</code>, <code class="nds-inline-code lang-html">CNY</code>, <code class="nds-inline-code lang-html">INR</code>, <code class="nds-inline-code lang-html">KRW</code>, <code class="nds-inline-code lang-html">TRY</code></td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-free</code></td>
-                            <td>absent</td>
-                            <td>Set on <code class="nds-inline-code lang-html">.nds-number-format</code> to suppress the currency symbol. Pair with a text label such as "Free" or "مجاني" for zero-price items.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-unit</code></td>
-                            <td>none</td>
-                            <td>Set on <code class="nds-inline-code lang-html">.nds-number-format</code>. Any text to append after the number as a unit (e.g. <code class="nds-inline-code lang-html">km</code>, <code class="nds-inline-code lang-html">kg</code>, <code class="nds-inline-code lang-html">%</code>, <code class="nds-inline-code lang-html">years</code>). Renders after the value, unlike <code class="nds-inline-code lang-html">data-currency</code> which renders before it.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-target</code></td>
-                            <td>Element text</td>
-                            <td>Set on <code class="nds-inline-code lang-html">.nds-counter-value</code>. Target number to count to. A suffix in the value (e.g. "98.5%") is preserved and appended to the animated number.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-start</code></td>
-                            <td>0</td>
-                            <td>Starting number for the counter animation</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-duration</code></td>
-                            <td>1000</td>
-                            <td>Animation duration in milliseconds</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-decimals</code></td>
-                            <td>auto</td>
-                            <td>Force specific decimal places. When not set, matches decimals in <code class="nds-inline-code lang-html">data-target</code>. Set to <code class="nds-inline-code lang-html">0</code> to display whole numbers only.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+</div>
+  </div>
+</section>
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--number-icon-size</code></td>
-                            <td>1em</td>
-                            <td>Size of currency icons and child <code class="nds-inline-code lang-html">.nds-icon</code> elements inside a formatted number</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<section id="numbersApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <code class="nds-inline-code lang-js">NDS.Numbers</code> module initializes automatically on page load. Call <code class="nds-inline-code lang-js">NDS.Numbers.reinit()</code> after dynamically adding elements to the page.</p>
-                <div class="nds-code">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <code class="lang-javascript">
-// ── Format a single element ─────────────────────────
-// Apply separators (and keep any data-currency / data-unit)
-// to one .nds-number-format element. Idempotent.
-NDS.Numbers.format(element);
+### Data Attributes
+{: .nds-block-title}
 
-// ── Format numbers on the page ──────────────────────
-// Finds all .nds-number-format elements and applies
-// locale-appropriate thousand separators
-NDS.Numbers.formatNumbers();
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-currency` | `.nds-number-format` | Adds the currency symbol: `SAR`, `USD`, `EUR`, `GBP`, `JPY`, `CNY`, `INR`, `KRW` or `TRY`. Any other value adds nothing |
+| `data-unit` | `.nds-number-format` | Adds its text after the number as a unit. Do not combine it with `data-currency` |
+| `data-target` | `.nds-counter-value` | The end value. Text before and after the number stays: `$75,000`, `98.6%`, `1.5M`. Without it, the counter counts to the number in its own text |
+| `data-start` | `.nds-counter-value` | The start value. Default `0` |
+| `data-duration` | `.nds-counter-value` | The length of the count in milliseconds. Default `1000` |
+| `data-animated` | `.nds-counter-value` | The script sets it to `true` when the count ends, and never removes it. A counter with it does not run. To run a counter again, remove it, then call `NDS.Numbers.reinit()`. The counter starts from `data-start` again |
+{: .nds-table .nds-responsive}
 
-// ── Start counter animations ─────────────────────────
-// Observes all .nds-counter-value elements and animates
-// them when they scroll into view
-NDS.Numbers.setupCounterAnimations();
+### CSS Custom Properties
+{: .nds-block-title}
 
-// ── Re-initialize everything ─────────────────────────
-// Runs both formatNumbers() and setupCounterAnimations()
-// Call after dynamically adding new number elements
+| Property | Default | Controls |
+|---|---|---|
+| `--number-icon-size` | `1em` | The size of the SAR icon and of an `.nds-icon` child. Set it on `.nds-number-format` or on a parent |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Numbers.init()` | Formats every number and gets every counter ready to count when it scrolls into view. The loader calls it |
+| `NDS.Numbers.reinit()` | The same as `init()`. Call it after you add numbers or counters to the page |
+| `NDS.Numbers.format(el)` | Formats one `.nds-number-format` element |
+| `NDS.Numbers.formatNumbers()` | Formats every `.nds-number-format` on the page |
+| `NDS.Numbers.setupCounterAnimations()` | Gets every counter ready to count when it scrolls into view. It skips a counter with `data-animated` |
+{: .nds-table .nds-responsive}
+
+Numbers fires no events. To format a number in your own script, use `NDS.formatNumber(n, options)`: it uses the `lang` of the page and Latin digits. The full API is in the banner of `_js/nds-numbers.js`.
+
+<script type="text/html" id="numbers-api-js" data-canon data-lang="js">
+var total = document.querySelector('#order-total');
+total.textContent = '18450';
+NDS.Numbers.format(total);
+
+// After you add counters to the page
 NDS.Numbers.reinit();
-</code>
-                </div>
-            </div>
+</script>
 
-        </div>
+</div>
+  </div>
+</section>
+
+<section id="numbersRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [KPIs Template](../templates/kpis-template): counters in KPI cards.
+- [Home Template](../templates/home-template): counters with a suffix in `data-target`, such as `1.5M`.
+- [Console Demo](../examples/console-demo): counters in statistic cards on a dashboard.
+- [Manage Records](../examples/manage-records): amounts in riyals with `data-currency="SAR"` in a filtered list.
+
+</div>
+  </div>
 </section>
