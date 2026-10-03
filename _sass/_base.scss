@@ -49,11 +49,12 @@ mark {
 :where(hr) {
     --_divider: var(--divider, var(--spacing-xs));
     --_divider-size: var(--divider-size, 1px);
+    --_divider-color: var(--divider-color);
 
     margin-block: var(--_divider);
     flex-shrink: 0;
     border: 0;
-    border-block-start: var(--_divider-size) solid var(--divider-color);
+    border-block-start: var(--_divider-size) solid var(--_divider-color);
 
     // Reset hr-specific defaults when the class is used on <hr>.
     width: auto;
@@ -77,7 +78,7 @@ mark {
         &::after {
             content: '';
             flex: 1;
-            border-block-start: var(--_divider-size) solid var(--divider-color);
+            border-block-start: var(--_divider-size) solid var(--_divider-color);
         }
 
         // Both lines grow evenly, so the label centres on its own. Giving one a length
@@ -97,6 +98,16 @@ mark {
     &.nds-start::before,
     &.nds-end::after { display: none; }
 
+    &.nds-primary { --_divider-color: var(--border-primary); }
+
+    &.nds-oncolor {
+        --_divider-color: var(--border-oncolor);
+        color: var(--text-oncolor-secondary);
+
+        // currentColor: a primary line on color takes the label's white.
+        &.nds-primary { --_divider-color: currentColor; }
+    }
+
     &.nds-md { --divider: var(--spacing-md); }
     &.nds-lg { --divider: var(--spacing-lg); }
     &.nds-xl { --divider: var(--spacing-xl); }
@@ -109,8 +120,8 @@ mark {
     &.nds-vertical {
         writing-mode: vertical-rl;
         align-self: stretch;
-        margin-block: 0;
-        margin-inline: var(--_divider);
+        // Its own writing mode is vertical, so the base margin-block already spaces it sideways.
+        margin-inline: 0;
 
         &:not(:empty)::before,
         &:not(:empty)::after {
