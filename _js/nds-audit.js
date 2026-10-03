@@ -109,12 +109,12 @@
         if (mainEl && mainEl.parentElement !== document.body && !mainEl.closest('code, .code-example')) {
             for (let n = mainEl.parentElement; n && n !== document.body; n = n.parentElement) {
                 const cs = getComputedStyle(n);
-                // The two treatments layout/page-shell.md prescribes: vanish from
+                // The two treatments layout/page-layout.md prescribes: vanish from
                 // the layout, or become the growing column yourself.
                 if (cs.display === 'contents') continue;
                 if (cs.display === 'flex' && cs.flexDirection === 'column' && parseFloat(cs.flexGrow) > 0) continue;
                 const label = n.tagName.toLowerCase() + (n.id ? `#${n.id}` : '');
-                console.warn(`[NDS.Audit] <${label}> sits between <body> and <main> with display:${cs.display} — main no longer grows, so the footer rides up the viewport instead of sitting at the bottom. Give it "display: contents", or "flex: 1; display: flex; flex-direction: column" when the app styles the mount root itself. See layout/page-shell.md.`, n);
+                console.warn(`[NDS.Audit] <${label}> sits between <body> and <main> with display:${cs.display} — main no longer grows, so the footer rides up the viewport instead of sitting at the bottom. Give it "display: contents", or "flex: 1; display: flex; flex-direction: column" when the app styles the mount root itself. See layout/page-layout.md.`, n);
                 break; // one warning per page: the outermost break is the one to fix
             }
         }
@@ -127,7 +127,7 @@
             Array.from(layout.children).forEach(child => {
                 if (child.matches('.nds-main-content, .nds-sidemenu')) return;
                 if (getComputedStyle(child).display === 'contents') return;
-                console.warn(`[NDS.Audit] <${child.tagName.toLowerCase()}> is a direct child of .nds-content-layout but is neither .nds-main-content nor .nds-sidemenu — it takes a grid column and shifts the layout. Return a fragment from the component instead of a wrapper, or give the wrapper "display: contents". See layout/page-shell.md.`, child);
+                console.warn(`[NDS.Audit] <${child.tagName.toLowerCase()}> is a direct child of .nds-content-layout but is neither .nds-main-content nor .nds-sidemenu — it takes a grid column and shifts the layout. Return a fragment from the component instead of a wrapper, or give the wrapper "display: contents". See layout/page-layout.md.`, child);
             });
         });
     }

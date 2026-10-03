@@ -266,7 +266,7 @@ section.nds-content-section.nds-status-section   [data-status]
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Put a whole-page status section inside the standard <a class="nds-color" href="{{ 'layout/page-shell' | relative_url }}">page shell</a>. The shell fills the page height for you, and it holds the region until the styles land, so the message never paints unstyled</li>
+                    <li>Put a whole-page status section inside the standard <a class="nds-color" href="{{ 'layout/page-layout' | relative_url }}">page layout</a>. The shell fills the page height for you, and it holds the region until the styles land, so the message never paints unstyled</li>
                     <li>Give the page one <strong>action</strong>, and make it the way out — back to home, back to the service, or retry. A dead end with no link is the one thing every error page must avoid</li>
                     <li>Use the <strong>section title</strong> for the outcome and the description for what happens next. Keep both short: people read this page in a hurry</li>
                     <li>On a standalone page the title is the page heading, so use <code class="nds-inline-code lang-html">h1</code>. Inside a longer page it is one heading among others, so follow the page's own heading order</li>

@@ -201,7 +201,7 @@ People never see `components.yml`, so the overview is written on the page. The c
 
 ### Shell page
 
-This covers header, mainnav, footer, topbar, sidemenu, hero and page-shell.
+This covers header, mainnav, footer, topbar, sidemenu and hero. Page Layout (`layout/page-layout`, renamed from Page Shell) is a reference page with a page preview.
 - **Overview.**
 - **Markup:** one full code-only canon, replacing the ASCII trees.
 - **Live pointer:** "the live copy is this page's own footer", plus links to the example pages.
