@@ -2,444 +2,294 @@
 layout: page
 title: Expandable Content
 hero_title: Expandable Content - National Design System
-hero_description: Height-constrained containers that reveal additional content on demand, with automatic overflow detection and a toggle button that appears only when content exceeds the limit
+hero_description: A box that limits long content to a set height, with a Show More button that appears only when the content is taller
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/07/2026 - 02:31 AM"
+last_edit: "03/10/2026 - 07:51 PM"
 ---
 
-<!-- Expandable Content Overview -->
-<section id="expandableOverview" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Standard Expandable Content</h2>
-            <p class="nds-section-description">Wraps any block of content in a height-constrained container. A "Show More" button appears automatically when the content overflows.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-
-                <!-- Basic Expandable Example -->
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Basic Expandable Content</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-expandable" style="--max-height: 200px;">
-                                <div class="nds-expandable-content">
-                                    <p>The National Digital Transformation Strategy outlines a comprehensive framework for modernizing government services across all sectors. The initiative focuses on three core pillars: citizen experience, operational efficiency, and data-driven decision making.</p>
-                                    <p>All government entities are required to adopt the unified design system for public-facing digital platforms. This ensures a consistent and accessible experience for citizens regardless of which ministry or agency they interact with. The system supports both Arabic and English interfaces with full right-to-left layout compliance.</p>
-                                    <p>Integration with the national identity platform enables single sign-on across all digital services. Citizens authenticate once and gain access to their complete service portfolio, including document requests, permit applications, appointment scheduling, and payment processing.</p>
-                                    <p>Accessibility standards follow international WCAG 2.1 AA guidelines adapted for the Arabic language context. All components are tested for screen reader compatibility, keyboard navigation, color contrast compliance, and support for reduced motion preferences.</p>
-                                    <p>Performance benchmarks require all pages to achieve a Lighthouse score of 90 or above. This includes optimized asset delivery, lazy loading for below-the-fold content, and efficient caching strategies for frequently accessed service endpoints.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-expandable-basic-1" id="tab-expandable-basic-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-expandable-basic-1"
-                                aria-labelledby="tab-expandable-basic-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
-&lt;div class="nds-expandable" style="--max-height: 200px;"&gt;
-    &lt;div class="nds-expandable-content"&gt;
-        &lt;p&gt;The National Digital Transformation Strategy outlines a comprehensive framework for modernizing government services across all sectors. The initiative focuses on three core pillars: citizen experience, operational efficiency, and data-driven decision making.&lt;/p&gt;
-        &lt;p&gt;All government entities are required to adopt the unified design system for public-facing digital platforms. This ensures a consistent and accessible experience for citizens regardless of which ministry or agency they interact with. The system supports both Arabic and English interfaces with full right-to-left layout compliance.&lt;/p&gt;
-        &lt;p&gt;Integration with the national identity platform enables single sign-on across all digital services. Citizens authenticate once and gain access to their complete service portfolio, including document requests, permit applications, appointment scheduling, and payment processing.&lt;/p&gt;
-        &lt;p&gt;Accessibility standards follow international WCAG 2.1 AA guidelines adapted for the Arabic language context. All components are tested for screen reader compatibility, keyboard navigation, color contrast compliance, and support for reduced motion preferences.&lt;/p&gt;
-        &lt;p&gt;Performance benchmarks require all pages to achieve a Lighthouse score of 90 or above. This includes optimized asset delivery, lazy loading for below-the-fold content, and efficient caching strategies for frequently accessed service endpoints.&lt;/p&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="expandableOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Expandable Content is a box, `nds-expandable`, around the content, `nds-expandable-content`. The script measures the content. When it is taller than the max height, the script adds a Show More button.
+
+Pick another component when:
+
+- the content is a set of sections with headings: [Accordion](../components/accordion)
+- one line or a few lines of text must fit: [Truncate Text](../utilities/truncate-text)
+
+</div>
+  </div>
 </section>
 
-<!-- Expandable Card -->
-<section id="expandableCard" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Expandable Card</h2>
-            <p class="nds-section-description">Apply expandable behavior directly to a card component to constrain long descriptions or detail blocks within a defined height</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
-                                <span class="nds-label">Shadow</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
-                                data-toggler='["nds-stroke", ".nds-card", "cardStroke"]'>
-                                <span class="nds-label">Stroke</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='[["nds-truncate", ".nds-card-title"],["nds-truncate", ".nds-card-description"], "truncation"]'>
-                                <span class="nds-label">Truncate</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-full", ".nds-card", "cardSize"]'>
-                                <span class="nds-label">full</span>
-                            </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-card nds-stroke nds-expandable">
-                                <div class="nds-expandable-content" style="--max-height:200px">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text">
-                                            <span class="nds-card-title">Ministry Services Documentation</span>
-                                            <p class="nds-card-description">Complete documentation and guidelines for
-                                                all ministry digital services including API references, implementation
-                                                guides, best practices for developers, integration specifications,
-                                                security protocols, and compliance requirements for government
-                                                applications. This comprehensive resource covers everything from basic
-                                                setup to advanced configurations.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-expandable-card-1" id="tab-expandable-card-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-expandable-card-1"
-                                aria-labelledby="tab-expandable-card-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
-&lt;div class="nds-card nds-stroke nds-expandable"&gt;
-    &lt;div class="nds-expandable-content" style="--max-height:200px"&gt;
-        &lt;div class="nds-card-content"&gt;
-            &lt;div class="nds-card-text"&gt;
-                &lt;span class="nds-card-title"&gt;Ministry Services Documentation&lt;/span&gt;
-                &lt;p class="nds-card-description"&gt;Complete documentation and guidelines for
-                    all ministry digital services including API references, implementation
-                    guides, best practices for developers, integration specifications,
-                    security protocols, and compliance requirements for government
-                    applications. This comprehensive resource covers everything from basic
-                    setup to advanced configurations.&lt;/p&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="expandableMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="expandable-block" data-canon data-variants="expandableVariantsTable">
+<div class="nds-expandable">
+  <div class="nds-expandable-content nds-prose">
+    <p>The National Digital Transformation Strategy sets a framework to modernize government services in all sectors. It has three pillars: the citizen experience, efficient operations, and decisions based on data.</p>
+    <p>Each ministry publishes a yearly plan. The plan lists the services that move online, the target dates, and the teams that own each service. Progress is reviewed every quarter.</p>
+    <p>Citizens sign in once with their national digital identity. The same account opens every government service, so a citizen does not register again for each portal.</p>
+    <p>Service owners measure completion rates, waiting times, and satisfaction scores. They publish the results on a public dashboard that any citizen can read.</p>
+    <p>The strategy also sets common standards for accessibility, security, and Arabic content. Every new service must meet them before it goes live.</p>
+  </div>
+</div>
+</script>
+
+<script type="text/html" id="expandable-card" data-canon>
+<div class="nds-card nds-stroke nds-expandable">
+  <div class="nds-expandable-content">
+    <div class="nds-card-content">
+      <div class="nds-card-text">
+        <span class="nds-card-title">Ministry Services Guide</span>
+        <p class="nds-card-description">This guide lists every online service of the ministry, with the documents each one needs. Most services take less than ten minutes to complete. You sign in with your national digital identity, fill in the form, and upload the documents. You can follow the status of each request from your dashboard. For help, call the unified number or open a ticket from the support page. Requests that need a site visit are booked from the same dashboard, and you get a reminder by text message one day before the visit.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+
+<script type="text/html" id="expandable-group" data-canon>
+<div class="nds-expand-all nds-grid" style="--max-col: 2;">
+  <div class="nds-card nds-stroke nds-expandable">
+    <div class="nds-expandable-content">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">Digital Identity Standards</span>
+          <p class="nds-card-description">Rules for identity checks on government platforms: biometric sign-in, single sign-on, and two-factor sign-in for every public service. Each platform passes a security review before launch, and again every year. The rules also cover how long a session stays open, how a user recovers a lost account, and how a platform reports a breach. A platform that fails a review gets thirty days to fix the issues before it goes offline.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nds-card nds-stroke nds-expandable">
+    <div class="nds-expandable-content">
+      <div class="nds-card-content">
+        <div class="nds-card-text">
+          <span class="nds-card-title">Data Sharing Policy</span>
+          <p class="nds-card-description">Rules for sharing data between government bodies: what data can be shared, who approves a request, and how long the data is kept. Every exchange is logged, and the logs are audited every quarter. Personal data is shared only with the consent of its owner, or when a law requires it. Each body names a data officer who answers requests within ten working days and keeps a public record of every agreement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+
+    </div>
+  </div>
 </section>
 
-<!-- Sibling Sync -->
-<section id="expandableSiblingSync" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Sibling Sync</h2>
-            <p class="nds-section-description">Wrap multiple expandable containers in an <code class="nds-inline-code lang-html">nds-expand-all</code> parent so expanding or collapsing one toggles all siblings in sync</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Synchronized Expandable Containers</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-expand-all nds-grid" style="--max-col:2;">
-                                <div class="nds-card nds-stroke nds-expandable">
-                                    <div class="nds-expandable-content" style="--max-height: 80px;">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-title">Digital Identity Standards</span>
-                                                <p class="nds-card-description">Comprehensive guidelines for implementing digital identity verification across government platforms, including biometric authentication protocols, single sign-on integration, and multi-factor authentication requirements for all public-facing services.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke nds-expandable">
-                                    <div class="nds-expandable-content" style="--max-height: 80px;">
-                                        <div class="nds-card-content">
-                                            <div class="nds-card-text">
-                                                <span class="nds-card-title">Data Classification Policy</span>
-                                                <p class="nds-card-description">Standards for categorizing, handling, and protecting government data assets including classification levels, access control matrices, encryption requirements, and retention schedules for sensitive and public information.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                    aria-controls="panel-expandable-sync-1" id="tab-expandable-sync-1">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-expandable-sync-1"
-                                aria-labelledby="tab-expandable-sync-1">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
-&lt;div class="nds-expand-all nds-grid" style="--max-col:2;"&gt;
-    &lt;div class="nds-card nds-stroke nds-expandable"&gt;
-        &lt;div class="nds-expandable-content" style="--max-height: 80px;"&gt;
-            &lt;div class="nds-card-content"&gt;
-                &lt;div class="nds-card-text"&gt;
-                    &lt;span class="nds-card-title"&gt;Digital Identity Standards&lt;/span&gt;
-                    &lt;p class="nds-card-description"&gt;Comprehensive guidelines for implementing digital identity verification across government platforms, including biometric authentication protocols, single sign-on integration, and multi-factor authentication requirements for all public-facing services.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-card nds-stroke nds-expandable"&gt;
-        &lt;div class="nds-expandable-content" style="--max-height: 80px;"&gt;
-            &lt;div class="nds-card-content"&gt;
-                &lt;div class="nds-card-text"&gt;
-                    &lt;span class="nds-card-title"&gt;Data Classification Policy&lt;/span&gt;
-                    &lt;p class="nds-card-description"&gt;Standards for categorizing, handling, and protecting government data assets including classification levels, access control matrices, encryption requirements, and retention schedules for sensitive and public information.&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
+<section id="expandableVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Max Height goes on `.nds-expandable-content`, and Fade on `.nds-expandable`, each in a `style` attribute. In a group, write them on every box.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Block (default) | — | — | Long text in a page section: a description, legal text, a specification |
+| Structure | Card (demo: + h150) | canon `#expandable-card` | — | A card with a long description. `nds-expandable` goes on the card itself |
+| Structure | Group (hint: Show More on one card opens both) (demo: + h150) | canon `#expandable-group` | — | Related items that a user compares side by side, such as policy summaries |
+| Max Height | 300px (default) | — | `.nds-expandable-content` | A text block in a page section |
+| Max Height | 150px (id: h150) | `--max-height: 150px` | `.nds-expandable-content` | A short preview, for cards |
+| Fade | 35% (default) | — | `.nds-expandable` | The fade is 35% of the max height, and ends above the button |
+| Fade | 60% | `--mask-fade-percentage: 60%` | `.nds-expandable` | A longer fade |
+{: #expandableVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="expandableFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates on every <code class="nds-inline-code lang-html">.nds-expandable</code> element at page load. The toggle button is added only when the content actually overflows.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-resize-01"></i>
-                            <span class="nds-label">Responsive Height Detection</span>
-                        </span>
-                        <p class="nds-item-desc">Continuously monitors content size and shows or hides the toggle button when the viewport or container dimensions change.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-transition-bottom"></i>
-                            <span class="nds-label">Gradient Fade Indicator</span>
-                        </span>
-                        <p class="nds-item-desc">A configurable gradient mask fades the bottom of truncated content, signaling that more content is available below.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-translate"></i>
-                            <span class="nds-label">Bilingual Labels</span>
-                        </span>
-                        <p class="nds-item-desc">The toggle button label switches between English ("Show More" / "Show Less") and Arabic automatically based on the page language.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-link-backward"></i>
-                            <span class="nds-label">Sibling Sync</span>
-                        </span>
-                        <p class="nds-item-desc">Wrap multiple expandable containers in an <code class="nds-inline-code lang-html">nds-expand-all</code> parent and expanding one will expand all siblings together.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Expand, collapse, toggle, and query state through instance methods on <code class="nds-inline-code lang-js">element.ndsExpandable</code>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="expandableBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Group
+{: #expandableGroup}
+
+Put `nds-expand-all` on the parent of several expandable boxes. Show More on one box then opens every box in the group, and Show Less closes them all. Only the boxes in the group itself follow: an expandable box inside a box's content opens and closes by itself.
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="expandableGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
+<section id="expandableFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Automatic Start</span>
+          </span>
+          <p class="nds-item-desc">The loader starts the script on every <code class="nds-inline-code lang-html">.nds-expandable</code>. You write no script.</p>
         </div>
-        <div class="nds-section-body">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-ruler"></i>
+            <span class="nds-label">No Layout Shift</span>
+          </span>
+          <p class="nds-item-desc">CSS limits the content to the max height before the script runs. The page does not jump when the script starts.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Height Check</span>
+          </span>
+          <p class="nds-item-desc">The script measures the content again when its size changes. When the content fits, the script removes the limit and hides the button.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-transition-bottom"></i>
+            <span class="nds-label">Fade</span>
+          </span>
+          <p class="nds-item-desc">Limited content fades out above the button. No text shows behind the button.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-translate"></i>
+            <span class="nds-label">Bilingual Labels</span>
+          </span>
+          <p class="nds-item-desc">The button reads "Show More" and "Show Less" in English, and «عرض المزيد» and «عرض أقل» in Arabic, from the <code class="nds-inline-code lang-html">lang</code> of the page.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-view"></i>
+            <span class="nds-label">Hidden Panels</span>
+          </span>
+          <p class="nds-item-desc">A box in a hidden panel stays limited until the panel shows. Tabs measures it again when its panel opens.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use expandable content to keep pages scannable when a section contains long descriptions, legal text, detailed specifications, or extended lists that most users will not need to read in full</li>
-                    <li>Use inside <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a> to constrain card body height while still exposing a preview of the full content</li>
-                    <li>Use the <code class="nds-inline-code lang-html">nds-expand-all</code> wrapper when multiple related items should reveal their content together, such as a comparison grid or a set of policy summaries</li>
-                    <li>Do not use expandable content for short text that fits within the default 300px limit. The toggle button will not appear, but the extra wrapper adds unnecessary DOM weight</li>
-                    <li>Do not use expandable content to hide primary actions or critical information the user must see. Use an <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> for structured show/hide sections with headings</li>
-                    <li>Set <code class="nds-inline-code lang-html">--max-height</code> to a value that shows enough content for the user to judge whether they want to read more. Avoid values below 80px as they may obscure the first paragraph entirely</li>
-                    <li>When adding expandable content to dynamically loaded elements, call <code class="nds-inline-code lang-js">NDS.Expandable.reinit()</code> after inserting the new HTML to initialize the new containers</li>
-                    <li>Place <code class="nds-inline-code lang-html">--max-height</code> on the <code class="nds-inline-code lang-html">.nds-expandable-content</code> element (not the outer wrapper) when the expandable container has its own padding or borders that should remain visible</li>
-                    <li>Use <code class="nds-inline-code lang-js">recheckHeight()</code> or <code class="nds-inline-code lang-js">NDS.Expandable.recheckHeights()</code> after content changes (AJAX loads, tab switches) to re-evaluate whether the toggle button is still needed</li>
-                </ul>
-            </div>
+<section id="expandablePractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--max-height</code></td><td><code class="nds-inline-code lang-html">300px</code></td><td>Maximum visible height before the content is clipped and the toggle button appears. Set on <code class="nds-inline-code lang-html">.nds-expandable</code> or <code class="nds-inline-code lang-html">.nds-expandable-content</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--mask-fade-percentage</code></td><td><code class="nds-inline-code lang-html">35%</code></td><td>Percentage of the content height that fades to transparent when collapsed. Higher values create a longer gradient</td></tr>
-                    </tbody>
-                </table>
-            </div>
+- Use it for long text that most users do not read in full: descriptions, legal text, specifications, long lists.
+- Do not hide main actions or information that the user must read.
+- Do not write the button. The script builds it.
+- Write `--max-height` in px. The script cannot read other units, such as `rem`, and shows the button on content that fits.
+- Set a max height that shows enough text for the user to decide whether to read more. Below 80px, the first paragraph can be hidden.
+- Use a group for related items that the user compares, such as a comparison grid or a set of policy summaries.
+- After you add expandable boxes to the page, call `NDS.Expandable.reinit()`.
+- After your own script shows a hidden box, call `NDS.Expandable.recheckHeights()`.
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Expandable</strong> API provides methods to initialize containers, control expand/collapse state, and listen for state change events. Instances are accessible via <code class="nds-inline-code lang-js">element.ndsExpandable</code>.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialize manually ─────────────────────────────
-// Useful for content added after page load
-const container = document.querySelector('#myExpandable');
-const instance = NDS.Expandable.create(container);
+</div>
+  </div>
+</section>
 
-// Re-scan the page for new .nds-expandable elements
-NDS.Expandable.reinit();
+<section id="expandableApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-// Recheck all initialized containers (after AJAX, tab switch, etc.)
-NDS.Expandable.recheckHeights();
+### Other Classes
+{: .nds-block-title}
 
-// ── Instance methods ────────────────────────────────
-// Access the instance from the DOM element
-const expandable = document.querySelector('.nds-expandable').ndsExpandable;
+| Class | Element | Effect |
+|---|---|---|
+| `nds-expand-btn` | the button the script builds | Places the button at the bottom end of the box. Use it to style the button |
+| `nds-expandable-clip` | an element between `.nds-expandable` and `.nds-expandable-content` | The script adds it, and CSS clips the element while the content is limited. Do not write it |
+{: .nds-table .nds-responsive}
 
-expandable.expandContent();    // Expand to full height
-expandable.collapseContent();  // Collapse back to --max-height
-expandable.toggleContent();    // Toggle between expanded and collapsed
-expandable.recheckHeight();    // Re-evaluate whether the button is needed
-expandable.destroy();          // Remove button, states, and observers
+### Data Attributes
+{: .nds-block-title}
 
-// ── Query state ─────────────────────────────────────
-const state = expandable.getState();
-// state.isExpanded   — true when content is fully visible
-// state.hasButton    — true when the toggle button is present
-// state.maxHeight    — the resolved --max-height value in pixels
-// state.actualHeight — the current scrollHeight of the content
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-state~="expandable"` | `.nds-expandable` | The script sets it when the content is taller than the max height, and removes it when the content fits. `destroy()` removes it. CSS adds the fade and places the button while it is set |
+| `data-state~="expanded"` | `.nds-expandable` | The script sets it when the box opens, and removes it when the box closes or the content fits. `destroy()` removes it |
+{: .nds-table .nds-responsive}
 
-// ── Events ──────────────────────────────────────────
-// Both events bubble and carry the same detail shape
-document.addEventListener('nds:expandable:expanded', (e) =&gt; {
-    // e.detail.container  — the .nds-expandable element
-    // e.detail.content    — the .nds-expandable-content element
-    // e.detail.button     — the toggle button element
-    // e.detail.isExpanded — true
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--max-height` | `300px` | The height of the content while it is limited. Set it on `.nds-expandable-content` or on a parent, in px only. After you change it, call `recheckHeight()` |
+| `--mask-fade-percentage` | `35%` | The length of the fade, as a share of the max height. The fade ends above the button. Set it on `.nds-expandable` |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+The instance is on the box as `el.ndsExpandable`.
+
+| Method | Effect |
+|---|---|
+| `NDS.Expandable.init()` | Starts every `.nds-expandable` on the page that has no instance. The loader calls it |
+| `NDS.Expandable.reinit()` | The same as `init()`. Call it after you add boxes to the page |
+| `NDS.Expandable.recheckHeights()` | Measures every box again |
+| `NDS.Expandable.create(el)` | Starts one box, or returns its instance |
+| `instance.expandContent()` | Opens the box |
+| `instance.collapseContent()` | Closes the box |
+| `instance.toggleContent()` | Opens a closed box and closes an open one |
+| `instance.recheckHeight()` | Reads `--max-height` and measures the box again |
+| `instance.getState()` | Returns `isExpanded`, `hasButton` (the script built the button, shown or hidden), `maxHeight` (px) and `actualHeight` (the full content height in px) |
+| `instance.destroy()` | Removes the button, the states and the size watch |
+{: .nds-table .nds-responsive}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:expandable:expanded` | `.nds-expandable`, after it opens | `container`, `content`, `button`, `isExpanded` |
+| `nds:expandable:collapsed` | `.nds-expandable`, after it closes | `container`, `content`, `button`, `isExpanded` |
+{: .nds-table .nds-responsive}
+
+Both events bubble. In a group, each box fires its own event.
+
+<script type="text/html" id="expandable-api-js" data-canon data-lang="js">
+var box = document.querySelector('#policy-summary');
+var expandable = NDS.Expandable.create(box);
+expandable.expandContent();
+
+box.addEventListener('nds:expandable:collapsed', function (e) {
+  console.log('Closed:', e.detail.content);
 });
+</script>
 
-document.addEventListener('nds:expandable:collapsed', (e) =&gt; {
-    // e.detail.container  — the .nds-expandable element
-    // e.detail.content    — the .nds-expandable-content element
-    // e.detail.button     — the toggle button element
-    // e.detail.isExpanded — false
-});
-</code>
-                    </div>
-                </div>
-            </div>
+The full API is in the banner of `_js/nds-expandable.js`.
 
-        </div>
+</div>
+  </div>
+</section>
+
+<section id="expandableRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Program](../examples/program): a long program description in a page section.
+- [Code](../components/code): a long code block with a Show More button.
+
+</div>
+  </div>
 </section>
