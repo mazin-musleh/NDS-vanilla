@@ -126,6 +126,7 @@ def check(path):
                 continue
             want = set(re.findall(r'\.([\w-]+)', re.sub(r':not\([^)]*\)', '', target)))
             skip = set(re.findall(r':not\(\.([\w-]+)\)', target))
+            ids = re.findall(r'#([\w-]+)', re.sub(r':not\([^)]*\)', '', target))
             tag = re.match(r'([a-z][\w-]*)', target)
             def has(cls, attrs):
                 if op.group(1):
@@ -137,7 +138,7 @@ def check(path):
             nots = set(re.findall(r'[\w-]+', (re.search(r'\(not:([^)]*)\)', option) or [None, ''])[1]))
             scope = '\n'.join(b for c, a, b in canons if c in named and struct_of.get(c) not in nots and (attr(a, 'data-lang') or 'html') == 'html') if nots else html
             for t, cls, attrs in tags(scope):
-                if want <= cls and not (skip & cls) and (not tag or t == tag.group(1)) and has(cls, attrs):
+                if want <= cls and not (skip & cls) and (not tag or t == tag.group(1)) and (not ids or attrs.get('id') in ids) and has(cls, attrs):
                     errs.append(f'#{tid}: {group} / {option}: a canon already has {markup} on {target}')
                     break
     return errs
