@@ -2,618 +2,213 @@
 layout: page
 title: Divider
 hero_title: Divider - National Design System
-hero_description: A utility for separating sections of content with a horizontal or vertical rule, optionally framing a label, and adapting to the parent's writing direction.
+hero_description: A line that separates content, horizontal or vertical, with an optional label between two lines
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "14/09/2026 - 10:49 PM"
+last_edit: "03/10/2026 - 02:41 PM"
 ---
 
-<!-- Plain Divider -->
-<section id="dividerPlain" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Plain Divider</h2>
-            <p class="nds-section-description">A single line between blocks of content. The spacing above and below scales through size modifiers so the separator breathes with the content around it.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Spacing: ">
-                                        <span class="nds-label">Spacing: Default</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-divider", "dividerSize"]'
-                                                data-trigger-label="Default">
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-divider", "dividerSize"]'
-                                                data-trigger-label="Medium">
-                                                <span class="nds-label">Medium</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-lg", ".nds-divider", "dividerSize"]'
-                                                data-trigger-label="Large">
-                                                <span class="nds-label">Large</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-xl", ".nds-divider", "dividerSize"]'
-                                                data-trigger-label="Extra Large">
-                                                <span class="nds-label">Extra Large</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-2xl", ".nds-divider", "dividerSize"]'
-                                                data-trigger-label="2X Large">
-                                                <span class="nds-label">2X Large</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-3xl", ".nds-divider", "dividerSize"]'
-                                                data-trigger-label="3X Large">
-                                                <span class="nds-label">3X Large</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-4xl", ".nds-divider", "dividerSize"]'
-                                                data-trigger-label="4X Large">
-                                                <span class="nds-label">4X Large</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-content-wrapper">
-                                    <p>Content above the divider.</p>
-                                    <div class="nds-divider"></div>
-                                    <p>Content below the divider.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-divider-plain-1" id="tab-divider-plain-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-plain-1"
-                                        aria-labelledby="tab-divider-plain-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;p&gt;Content above the divider.&lt;/p&gt;
-&lt;div class="nds-divider"&gt;&lt;/div&gt;
-&lt;p&gt;Content below the divider.&lt;/p&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dividerOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A divider is a line between two blocks of content. An empty divider draws one line. A divider with text draws the text between two lines, such as "or" between two sign-in options. `nds-vertical` turns it into a vertical line between items in a row.
+
+Pick another component when:
+
+- each row of a list needs a line under it: [Definition List](../components/definition-list) with `nds-divided`
+- related buttons sit in one joined strip: [Button group](../components/button)
+
+</div>
+  </div>
 </section>
 
-<!-- With HR Element -->
-<section id="dividerHr" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Inside a Dropmenu</h2>
-            <p class="nds-section-description">A common case for <code class="nds-inline-code lang-html">&lt;hr class="nds-divider"&gt;</code> is separating groups of actions inside a menu (for example, routine actions from destructive ones).</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Separator between action groups</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-dropmenu">
-                                    <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-                                        <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
-                                        <span class="nds-label">Actions</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <i class="hgi hgi-stroke hgi-edit-02"></i>
-                                                <span class="nds-label">Edit</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                                <span class="nds-label">Duplicate</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                                <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-                                                <span class="nds-label">Share</span>
-                                            </button>
-                                            <hr class="nds-divider">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
-                                                <i class="hgi hgi-stroke hgi-delete-02"></i>
-                                                <span class="nds-label">Delete</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-divider-hr-1" id="tab-divider-hr-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-hr-1"
-                                        aria-labelledby="tab-divider-hr-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-dropmenu"&gt;
-  &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"&gt;
-    &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;span class="nds-label"&gt;Actions&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" hidden&gt;
-    &lt;div class="nds-dropmenu-scroll"&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
-        &lt;i class="hgi hgi-stroke hgi-edit-02"&gt;&lt;/i&gt;
-        &lt;span class="nds-label"&gt;Edit&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
-        &lt;i class="nds-icon nds-hgi-copy-01"&gt;&lt;/i&gt;
-        &lt;span class="nds-label"&gt;Duplicate&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
-        &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;span class="nds-label"&gt;Share&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;hr class="nds-divider"&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive"&gt;
-        &lt;i class="hgi hgi-stroke hgi-delete-02"&gt;&lt;/i&gt;
-        &lt;span class="nds-label"&gt;Delete&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dividerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="divider-line" data-canon data-variants="dividerVariantsTable" data-demo-width="400px">
+<div>
+  <p>Your request was received on 12 March 2026.</p>
+  <hr class="nds-divider">
+  <p>The ministry replies by email within three working days.</p>
+</div>
+</script>
+<script type="text/html" id="divider-label" data-canon>
+<div>
+  <a href="#" class="nds-btn nds-primary nds-full">
+    <span class="nds-label">Continue with Nafath</span>
+  </a>
+  <div class="nds-divider">or</div>
+  <button type="button" class="nds-btn nds-secondary-outline nds-full">
+    <span class="nds-label">Sign in with National ID</span>
+  </button>
+</div>
+</script>
+<script type="text/html" id="divider-vertical" data-canon>
+<div class="nds-flex nds-row">
+  <div>
+    <strong>125K</strong>
+    <span>Services</span>
+  </div>
+  <div class="nds-divider nds-vertical"></div>
+  <div>
+    <strong>4.8</strong>
+    <span>Rating</span>
+  </div>
+  <div class="nds-divider nds-vertical"></div>
+  <div>
+    <strong>23K</strong>
+    <span>Reviews</span>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Vertical Divider -->
-<section id="dividerVertical" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Vertical Divider</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-vertical</code> and the same class renders as a vertical rule stretched to the parent's cross axis. Useful between inline stats, meta groups, or button clusters.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Inline stats with vertical separators</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-flex nds-row" style="--gap: var(--spacing-md); --justify: center;">
-                                    <div>
-                                        <strong>125K</strong>
-                                        <span>Services</span>
-                                    </div>
-                                    <div class="nds-divider nds-vertical" style="--divider-size: 3px;"></div>
-                                    <div>
-                                        <strong>4.8</strong>
-                                        <span>Rating</span>
-                                    </div>
-                                    <div class="nds-divider nds-vertical" style="--divider-size: 3px;"></div>
-                                    <div>
-                                        <strong>23K</strong>
-                                        <span>Reviews</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-divider-vertical-1" id="tab-divider-vertical-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-vertical-1"
-                                        aria-labelledby="tab-divider-vertical-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-flex nds-row" style="--gap: var(--spacing-md); --justify: center;"&gt;
-  &lt;div&gt;
-    &lt;strong&gt;125K&lt;/strong&gt;
-    &lt;span&gt;Services&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-divider nds-vertical" style="--divider-size: 3px;"&gt;&lt;/div&gt;
-  &lt;div&gt;
-    &lt;strong&gt;4.8&lt;/strong&gt;
-    &lt;span&gt;Rating&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-divider nds-vertical" style="--divider-size: 3px;"&gt;&lt;/div&gt;
-  &lt;div&gt;
-    &lt;strong&gt;23K&lt;/strong&gt;
-    &lt;span&gt;Reviews&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dividerVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+A Spacing class sets the space above and below a line, or before and after a vertical line. In the Vertical structure, put it on each divider.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Line (default) | — | — | A line between two blocks of content. Use `hr` when the content changes topic, and an empty `div` when the line is only visual |
+| Structure | Label | canon `#divider-label` | — | Text between two lines. Keep the text to one word or a short phrase, such as "or" |
+| Structure | Vertical | canon `#divider-vertical` | — | A vertical line between items in a flex row. It stretches to the height of the row |
+| Spacing | XS (default) | — | — | Tight space. Most uses |
+| Spacing | MD | `.nds-md` | `.nds-divider` | A little more space |
+| Spacing | LG | `.nds-lg` | `.nds-divider` | Space between groups in a form or a card |
+| Spacing | XL | `.nds-xl` | `.nds-divider` | Space between parts of a page section |
+| Spacing | 2XL | `.nds-2xl` | `.nds-divider` | Space between page sections |
+| Spacing | 3XL | `.nds-3xl` | `.nds-divider` | A major break. Not between paragraphs |
+| Spacing | 4XL | `.nds-4xl` | `.nds-divider` | The largest break. Not between paragraphs |
+| Label position | Center (default) | — | `div.nds-divider:not(.nds-vertical)` | The two lines share the space equally |
+| Label position | Start | `.nds-start` | `div.nds-divider:not(.nds-vertical)` | No line before the label. The label sits at the start edge |
+| Label position | End | `.nds-end` | `div.nds-divider:not(.nds-vertical)` | No line after the label. The label sits at the end edge |
+| Label position | Custom | `--divider-line-start: 24px` | `div.nds-divider:not(.nds-vertical)` | The line before the label is at most 24px long, and the other line takes the rest. Set any length or percentage in the `style` attribute. `--divider-line-end` does the same from the end |
+| Color | Default (default) | — | — | A faint gray line. Dark mode makes it a faint white line |
+| Color | Primary | `.nds-primary` | `.nds-divider` | A brand primary line |
+| On color | On color | `.nds-oncolor` | `.nds-divider` | For a divider on a deep primary or dark background: a faint white line and a white label. With Primary, the line is the same white as the label |
+| Thick | Thick | `--divider-size: 2px` | `.nds-divider` | A 2px line instead of 1px. Set it in the `style` attribute: there is no class for it |
+{: #dividerVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Divider with Text -->
-<section id="dividerWithText" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Divider with Text</h2>
-            <p class="nds-section-description">Adding any child content flips the divider into a flex row with two flanking lines. Useful for labeling sections or introducing alternative paths like "or continue with".</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Label between two lines</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-card nds-shadow nds-stroke" style="--card-width: 400px;">
-                                    <div class="nds-card-content">
-                                        <div class="nds-card-text nds-center">
-                                            <span class="nds-card-title">Sign in with National Single Sign-On</span>
-                                            <p class="nds-card-description">Use the credentials from your Nafath account to access the services provided by the university.</p>
-                                        </div>
-                                    </div>
-                                    <div class="nds-card-actions nds-row">
-                                        <a href="#" class="nds-btn nds-primary nds-lg nds-full">
-                                            <span class="nds-label">Continue with Nafath</span>
-                                        </a>
-                                    </div>
-                                    <div class="nds-divider">or</div>
-                                    <div class="nds-card-actions nds-row">
-                                        <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full">
-                                            <span class="nds-label">Sign in with University ID</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-divider-text-1" id="tab-divider-text-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-text-1"
-                                        aria-labelledby="tab-divider-text-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-card nds-shadow nds-stroke" style="--card-width: 400px;"&gt;
-  &lt;div class="nds-card-content"&gt;
-    &lt;div class="nds-card-text nds-center"&gt;
-      &lt;span class="nds-card-title"&gt;Sign in with National Single Sign-On&lt;/span&gt;
-      &lt;p class="nds-card-description"&gt;Use the credentials from your Nafath account to access the services provided by the university.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-card-actions nds-row"&gt;
-    &lt;a href="#" class="nds-btn nds-primary nds-lg nds-full"&gt;
-      &lt;span class="nds-label"&gt;Continue with Nafath&lt;/span&gt;
-    &lt;/a&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-divider"&gt;or&lt;/div&gt;
-  &lt;div class="nds-card-actions nds-row"&gt;
-    &lt;button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full"&gt;
-      &lt;span class="nds-label"&gt;Sign in with University ID&lt;/span&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dividerFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-align-center"></i>
+            <span class="nds-label">Text Annotation</span>
+          </span>
+          <p class="nds-item-desc">Any content inside the divider turns it into a label between two lines. No extra class is needed.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-html-5"></i>
+            <span class="nds-label">Works on Any Element</span>
+          </span>
+          <p class="nds-item-desc">The class works on <code class="nds-inline-code lang-html">&lt;hr&gt;</code>, <code class="nds-inline-code lang-html">&lt;div&gt;</code> and <code class="nds-inline-code lang-html">&lt;span&gt;</code>. The browser's own <code class="nds-inline-code lang-html">&lt;hr&gt;</code> look is reset. A plain <code class="nds-inline-code lang-html">&lt;hr&gt;</code> with no class gets the divider look too, so CMS content matches.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layers-01"></i>
+            <span class="nds-label">Context Spacing</span>
+          </span>
+          <p class="nds-item-desc">Inside a dropmenu, the space around a divider matches the menu padding. Inside <code class="nds-inline-code lang-html">nds-prose</code>, an <code class="nds-inline-code lang-html">&lt;hr&gt;</code> gets 3XL space. A Spacing class still wins in both.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal"></i>
+            <span class="nds-label">Writing-mode Aware</span>
+          </span>
+          <p class="nds-item-desc">Margins and lines use logical properties. In a parent with a vertical writing mode, the divider draws a vertical line with no extra class.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Label Position -->
-<section id="dividerLabelPosition" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Label Position</h2>
-            <p class="nds-section-description">The two lines share the space evenly, which centres the label. Add <code class="nds-inline-code lang-html">nds-start</code> or <code class="nds-inline-code lang-html">nds-end</code> to remove one line, so the label sits flush against that edge. For finer control, cap either line with <code class="nds-inline-code lang-html">--divider-line-start</code> or <code class="nds-inline-code lang-html">--divider-line-end</code> and the other takes the rest. Any length or percentage works. A cap of <code class="nds-inline-code lang-html">0</code> keeps the gap between the line and the label, which is the difference from the classes. The values follow writing direction, so start is the right-hand line in RTL.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Position: ">
-                                        <span class="nds-label">Position: Centered</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-divider", "dividerLabelPosition"]'
-                                                data-trigger-label="Centered">
-                                                <span class="nds-label">Centered</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-start", ".nds-divider", "dividerLabelPosition"]'
-                                                data-trigger-label="Start">
-                                                <span class="nds-label">Start</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-end", ".nds-divider", "dividerLabelPosition"]'
-                                                data-trigger-label="End">
-                                                <span class="nds-label">End</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-content-wrapper">
-                                    <div class="nds-divider">Label</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-divider-position-1" id="tab-divider-position-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-position-1"
-                                        aria-labelledby="tab-divider-position-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-divider"&gt;Label&lt;/div&gt;
-</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Each label names its own cap</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-content-wrapper">
-                                    <div class="nds-divider" style="--divider-line-start: 0;">Start line at zero width</div>
-                                    <div class="nds-divider" style="--divider-line-end: 0;">End line at zero width</div>
-                                    <div class="nds-divider" style="--divider-line-start: 24px;">Short start line</div>
-                                    <div class="nds-divider" style="--divider-line-end: 25%;">End line capped at 25%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-divider-position-2" id="tab-divider-position-2">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-position-2"
-                                        aria-labelledby="tab-divider-position-2">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-divider" style="--divider-line-start: 0;"&gt;Start line at zero width&lt;/div&gt;
-&lt;div class="nds-divider" style="--divider-line-end: 0;"&gt;End line at zero width&lt;/div&gt;
-&lt;div class="nds-divider" style="--divider-line-start: 24px;"&gt;Short start line&lt;/div&gt;
-&lt;div class="nds-divider" style="--divider-line-end: 25%;"&gt;End line capped at 25%&lt;/div&gt;
-</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dividerPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use a divider when white space alone does not show where one part ends.
+- Do not put a divider between a card and the text around it. The card border already separates them.
+- Use a label divider for a second path ("or", "continue with") or to name a group of form fields.
+- Keep the label short. A long sentence competes with the lines.
+- To make the label flush with an edge, use `nds-start` or `nds-end`. A `--divider-line-start` of `0` still leaves a gap before the label.
+- Pick the smallest spacing that gives enough room. Keep `nds-3xl` and `nds-4xl` for major breaks.
+- Put a vertical divider only in a flex row. Outside one it has no height to stretch to.
+- Use the default color for most dividers. Use `nds-primary` only where the line is an accent.
+- On a deep primary or dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`. See [Dark Areas](../components/themes#themesDarkArea).
+- To change the line color on a tinted surface, set `--divider-color` on that surface, not on `:root`.
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="dividerFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-align-center"></i>
-                            <span class="nds-label">Text Annotation</span>
-                        </span>
-                        <p class="nds-item-desc">Any child content automatically turns the divider into a label flanked by two lines, no extra markup needed. The label centres by default, and capping either line moves it anywhere along the rule.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-ruler"></i>
-                            <span class="nds-label">Spacing and Size</span>
-                        </span>
-                        <p class="nds-item-desc">Six spacing modifiers from <code class="nds-inline-code lang-html">nds-md</code> through <code class="nds-inline-code lang-html">nds-4xl</code> control the margin around the rule, and the <code class="nds-inline-code lang-html">--divider-size</code> token controls line thickness.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal"></i>
-                            <span class="nds-label">Writing-mode Aware</span>
-                        </span>
-                        <p class="nds-item-desc">Uses logical properties, so a parent in vertical writing-mode renders the divider as a vertical line without extra rules.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-html-5"></i>
-                            <span class="nds-label">Works on Any Element</span>
-                        </span>
-                        <p class="nds-item-desc">Apply to <code class="nds-inline-code lang-html">&lt;div&gt;</code>, <code class="nds-inline-code lang-html">&lt;span&gt;</code>, or <code class="nds-inline-code lang-html">&lt;hr&gt;</code>. Browser defaults on <code class="nds-inline-code lang-html">&lt;hr&gt;</code> are reset so the result is consistent.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="dividerApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on `.nds-divider`, or on a parent to change every divider inside it. A Spacing class sets `--divider` on the divider itself, so it wins over a parent value.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--divider` | `var(--spacing-xs)` | Space above and below the line. On `nds-vertical`, the space before and after it |
+| `--divider-size` | `1px` | Line thickness, for the line and for both lines around a label |
+| `--divider-line-start` | `none` | The longest the line before a label may be. Any length or percentage. The other line takes the rest of the width. It shrinks in a narrow container. Start follows the text direction: in Arabic it is the right-hand line |
+| `--divider-line-end` | `none` | The same, for the line after a label |
+| `--divider-color` | `var(--colors-alpha-black-10)` | Line color. A semantic token: dark mode sets it to `var(--colors-alpha-white-10)`. `nds-primary` uses `var(--border-primary)` instead, and `nds-oncolor` uses `var(--border-oncolor)`. With both, the line takes the label color |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="dividerGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use a plain divider to break up a long section of content when white space alone is not enough to signal a transition</li>
-                    <li>Use a divider with text to introduce an alternative path (for example "or", "continue with", or section labels between form groups)</li>
-                    <li>Use <code class="nds-inline-code lang-html">&lt;hr class="nds-divider"&gt;</code> when the separation marks a thematic break in the content, and <code class="nds-inline-code lang-html">&lt;div class="nds-divider"&gt;</code> when it is purely visual</li>
-                    <li>Do not use a divider to separate items inside a list. Add <code class="nds-inline-code lang-html">nds-divided</code> to the list itself so the rule aligns with each row</li>
-                    <li>Do not use a divider between a card and its surrounding text. Cards already carry their own boundary and an extra rule adds visual noise</li>
-                    <li>Pick the smallest size that gives enough breathing room. Oversized variants (<code class="nds-inline-code lang-html">nds-3xl</code>, <code class="nds-inline-code lang-html">nds-4xl</code>) are for major section breaks, not paragraphs</li>
-                    <li>Keep text inside a divider short: a single word or short phrase reads cleanly, longer sentences compete with the rules themselves</li>
-                    <li>Override <code class="nds-inline-code lang-html">--divider-color</code> locally to match surrounding surfaces (dark panels, tinted cards) rather than changing the global token</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-vertical</code></td><td>Flips the rule to a vertical line. Stretches to the flex parent's cross axis. Spacing modifiers apply inline instead of block</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-start</code></td><td>Removes the line before the label, so the label sits flush at the start and one full line follows it. Text variant only</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-end</code></td><td>Removes the line after the label, so the label sits flush at the end and one full line precedes it. Text variant only</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium spacing around the rule</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Large spacing around the rule</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Extra-large spacing around the rule</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-2xl</code></td><td>2X-large spacing around the rule</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-3xl</code></td><td>3X-large spacing around the rule</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-4xl</code></td><td>4X-large spacing around the rule</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--divider</code></td><td><code class="nds-inline-code lang-html">--spacing-xs</code></td><td>Block margin applied above and below the divider. Size modifiers override this value</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--divider-size</code></td><td><code class="nds-inline-code lang-html">2px</code></td><td>Thickness of the rule. Applies to the element border and the pseudo-element lines in the text variant</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--divider-line-start</code></td><td><code class="nds-inline-code lang-html">none</code></td><td>Caps the length of the line before the label, so the label moves and the other line takes the rest. Text variant only. Any length or percentage works, and <code class="nds-inline-code lang-html">0</code> pins the label to the start. It is a cap, not a fixed width: a container too narrow for it shrinks the line rather than overflowing. Follows writing direction, so it is the right-hand line in RTL</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--divider-line-end</code></td><td><code class="nds-inline-code lang-html">none</code></td><td>Same, for the line after the label</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--divider-color</code></td><td><code class="nds-inline-code lang-html">--colors-alpha-black-10</code></td><td>Color of the rule. Swaps automatically to <code class="nds-inline-code lang-html">--colors-alpha-white-10</code> in dark mode. Override per-instance to match surrounding surfaces</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="dividerRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Sign in](../examples/sign-in): an "or" label between two sign-in options.
+- [Manage Records](../examples/manage-records): `hr` lines between the groups of a filter menu and above its footer.
+- [Faculty CV](../examples/faculty-cv): date labels at the top of each step in a career timeline.
+- [Contact Us Template](../templates/contact-us-template): a line between the groups of the side info.
+
+</div>
+  </div>
 </section>
