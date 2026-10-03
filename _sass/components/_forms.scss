@@ -3,7 +3,7 @@
 // .nds-form is a validation hook — wiring lives in _js/nds-forms.js initForm().
 // It owns no layout: children carry their own layout classes (.nds-flex.nds-col,
 // .nds-grid, etc.), and `display: contents` removes the <form> from the box tree
-// so parent layout rules (e.g. .nds-main-content's flex column) reach those
+// so parent layout rules (e.g. .nds-content's flex column) reach those
 // children directly. Without this, a form wrapping .nds-content-section blocks
 // the flex chain: sections stay pinned at combined min-content, don't shrink to
 // viewport, and internal overflow affordances (tabs show-more, table scroll)

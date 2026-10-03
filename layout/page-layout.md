@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.8.0"
-updated: "1.12.0"
-last_edit: "03/10/2026 - 04:22 AM"
+updated: "1.12.x"
+last_edit: "03/10/2026 - 05:31 AM"
 ---
 
 <section id="pageLayoutOverview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "03/10/2026 - 04:22 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Every NDS page has one body structure. The `header` and the `footer` sit around `main`. `main` holds the hero and one `nds-content-layout`. The content layout holds an optional side menu and `nds-main-content`, and the main content holds the page sections. Classes on `body`, on the content layout and on the main content pick the page shape.
+Every NDS page has one body structure. A skip link comes first, then the `header`, `main` and the `footer`. `main` holds the hero and one `nds-content-layout`. The content layout holds an optional side menu and `nds-content`, and `nds-content` holds the page sections. Classes on `body`, on the content layout and on the main content pick the page shape.
 
 Each shape in the builder below is the markup of a live page. Open the page to see the whole shape at work. Chrome is the frame around the content: `full` has the header and the footer, `minimal` has neither, and `console` reaches the screen edges:
 
@@ -53,6 +53,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
     <div class="nds-section-body">
 <script type="text/html" id="layout-content" data-canon data-variants="pageLayoutVariantsTable" data-preview="page">
 <body>
+  <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
     <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
   </header>
@@ -71,7 +72,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       </div>
     </section>
     <div class="nds-content-layout">
-      <div class="nds-main-content">
+      <div class="nds-content" id="main-content">
         <section class="nds-content-section">
           <div class="nds-section-wrapper">
             <div class="nds-section-head">
@@ -113,6 +114,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 </script>
 <script type="text/html" id="layout-home" data-canon>
 <body>
+  <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
     <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
   </header>
@@ -145,7 +147,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       </div>
     </section>
     <div class="nds-content-layout">
-      <div class="nds-main-content">
+      <div class="nds-content" id="main-content">
         <section class="nds-content-section">
           <div class="nds-section-wrapper">
             <div class="nds-section-head">
@@ -181,6 +183,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 </script>
 <script type="text/html" id="layout-article" data-canon>
 <body>
+  <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
     <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
   </header>
@@ -199,7 +202,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       </div>
     </section>
     <div class="nds-content-layout nds-wSideInfo">
-      <div class="nds-main-content">
+      <div class="nds-content" id="main-content">
         <section id="passport-guide" class="nds-content-section nds-sideinfo-section">
           <div class="nds-section-body">
             <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
@@ -242,9 +245,10 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 </script>
 <script type="text/html" id="layout-minimal" data-canon>
 <body class="nds-page-bg" style="--bg-img: url('../assets/img/riyadhcenter.webp')">
+  <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <main>
     <div class="nds-content-layout nds-content-wrapper nds-middle">
-      <div class="nds-main-content">
+      <div class="nds-content" id="main-content">
         <section class="nds-content-section nds-ghost nds-flush">
           <div class="nds-section-wrapper">
             <div class="nds-section-body">
@@ -269,6 +273,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 </script>
 <script type="text/html" id="layout-console" data-canon>
 <body class="nds-full-width">
+  <a class="nds-skip-link" href="#main-content">Skip to main content</a>
   <header>
     <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
   </header>
@@ -304,7 +309,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
           </div>
         </nav>
       </aside>
-      <div class="nds-main-content">
+      <div class="nds-content" id="main-content">
         <section class="nds-hero-section nds-sub">
           <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
             <ol class="nds-breadcrumb">
@@ -425,15 +430,16 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 
 | Part | Holds | Required |
 |---|---|---|
-| `body` | The header, `main` and the footer, in a column. `nds-full-width` takes a console to the screen edges, and `nds-page-bg` puts an image behind a minimal page | Yes |
+| `body` | The skip link, the header, `main` and the footer, in a column. `nds-full-width` takes a console to the screen edges, and `nds-page-bg` puts an image behind a minimal page | Yes |
+| `a.nds-skip-link` | The first child of `body`: a link to `#main-content`, hidden until it has focus. The label is "Skip to main content", or "تخطي إلى المحتوى الرئيسي" on an Arabic page | Yes |
 | `header` | The top bar and the main navigation: [Header](../ui-shell/header). A minimal page has none | No |
 | `main` | The hero, the content layout, and the page feedback after it | Yes |
-| `section.nds-hero-section` | The page hero: [Hero](../ui-shell/hero). A standard page uses the sub hero (`nds-sub`), and the home page the hero slider. An article adds `nds-flat`, and a service page with side info adds `nds-aside`. A console puts the hero in `nds-main-content` | No |
-| `.nds-content-layout` | The side menu, if any, and `nds-main-content`. The shape classes go on it | Yes |
+| `section.nds-hero-section` | The page hero: [Hero](../ui-shell/hero). A standard page uses the sub hero (`nds-sub`), and the home page the hero slider. An article adds `nds-flat`, and a service page with side info adds `nds-aside`. A console puts the hero in `nds-content` | No |
+| `.nds-content-layout` | The side menu, if any, and `nds-content`. The shape classes go on it | Yes |
 | `aside.nds-sidemenu` | The side menu, as the first child: [Side Menu](../ui-shell/sidemenu). It needs `nds-wSideMenu` on the content layout | No |
-| `.nds-main-content` | The page sections. The stripe classes go on it | Yes |
+| `.nds-content` | The page sections, with `id="main-content"` for the skip link. The stripe classes go on it | Yes |
 | `section.nds-content-section` | One page section: [Section](../layout/section) | Yes |
-| `section.nds-last-edit.nds-content-section` | The last modified date, as the last section of `nds-main-content` | No |
+| `section.nds-last-edit.nds-content-section` | The last modified date, as the last section of `nds-content` | No |
 | `section.nds-user-feedback-section` | The page feedback, in `main` after the content layout: [User Feedback](../components/user-feedback) | No |
 | `footer.nds-footer` | The footer: [Footer](../ui-shell/footer). A minimal page has none | No |
 {: .nds-table .nds-responsive}
@@ -457,16 +463,16 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 | Structure | Home (id: home) (demo: + stripe) | `canon #layout-home` | — | The home page: the hero slider first in `main`. Write Stripe too: the home page stripes its sections. No page feedback |
 | Structure | Article (id: article) | `canon #layout-article` | — | A guide or a long text page: a flat hero, then one section that holds the text and a table of contents beside it |
 | Structure | Minimal (id: minimal) | `canon #layout-minimal` | — | Sign in, a one-time code and other focused steps. No header, hero or footer. The content centers in the screen, over an optional page image |
-| Structure | Console (id: console) | `canon #layout-console` | — | An admin or back-office page. `nds-full-width` on `body` takes the page to the screen edges, and the hero sits in `nds-main-content` beside the side menu |
+| Structure | Console (id: console) | `canon #layout-console` | — | An admin or back-office page. `nds-full-width` on `body` takes the page to the screen edges, and the hero sits in `nds-content` beside the side menu |
 | Side column | None (default) | — | — | No side column |
 | Side column | Side menu (not: home, article, minimal, console) | `.nds-wSideMenu` | `.nds-content-layout` | A menu of the pages in this part of the site, beside the content on a desktop |
 | Side column | Side menu (not: home, article, minimal, console) | `canon #layout-sidemenu` | `.nds-content-layout` (start) | The side menu aside. Written with `nds-wSideMenu` |
 | Side column | Side info (not: home, article, minimal, console) | `.nds-wSideInfo` | `.nds-content-layout` | A service page: facts such as the fee and the duration beside the first section's text |
 | Side column | Side info (not: home, article, minimal, console) | `.nds-aside` | `.nds-hero-section.nds-sub` | Narrows the hero title, so the side info moves up beside it on a desktop. Written with `nds-wSideInfo` |
-| Side column | Side info (not: home, article, minimal, console) | `canon #layout-sideinfo` | `.nds-main-content` (start) | The first section, which holds the text and the side info. Write the service description in it, not in a second section. Written with `nds-wSideInfo` |
+| Side column | Side info (not: home, article, minimal, console) | `canon #layout-sideinfo` | `.nds-content` (start) | The first section, which holds the text and the side info. Write the service description in it, not in a second section. Written with `nds-wSideInfo` |
 | Card view | Card view (not: home, article, minimal) | `.nds-cardView` | `.nds-content-layout` | Each section shows as a raised card, for record and profile pages. Stripe has no effect with it |
-| Stripe | Stripe (id: stripe) (not: article, minimal) | `.nds-stripe` | `.nds-main-content` | Every second section gets the stripe color, from the second one |
-| Odd | Odd | `.nds-odd` | `.nds-main-content.nds-stripe` | The stripe starts on the first section. Needs Stripe |
+| Stripe | Stripe (id: stripe) (not: article, minimal) | `.nds-stripe` | `.nds-content` | Every second section gets the stripe color, from the second one |
+| Odd | Odd | `.nds-odd` | `.nds-content.nds-stripe` | The stripe starts on the first section. Needs Stripe |
 {: #pageLayoutVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -498,13 +504,13 @@ An article is one side info section that holds the whole text. The `aside` holds
 
 ### Section Stripes
 
-`nds-stripe` on `nds-main-content` gives every second section the `--background-stripe` color, from the second section. Add `nds-odd` too, and the stripe starts on the first section instead, for a first section that must stand apart from the hero. The stripes work at every screen width, with or without a side menu. The count includes every `section` in `nds-main-content`, so a section that is added or removed flips the color of every section below it. On a console, the hero is the first section in the count.
+`nds-stripe` on `nds-content` gives every second section the `--background-stripe` color, from the second section. Add `nds-odd` too, and the stripe starts on the first section instead, for a first section that must stand apart from the hero. The stripes work at every screen width, with or without a side menu. The count includes every `section` in `nds-content`, so a section that is added or removed flips the color of every section below it. On a console, the hero is the first section in the count.
 
 A section that paints its own background is never striped, but it still counts: `nds-primary`, `nds-gradient-primary`, `nds-neutral`, `nds-brand` and `nds-user-feedback-section`. The last modified section always takes the color of the section above it.
 
 ### Console
 
-`nds-full-width` on `body` sets `--nds-content-MaxWidth` to 100%, so the header, the content and the footer reach the screen edges. The content layout also removes its own gutters, except in card view. The hero is in `nds-main-content`, beside the side menu.
+`nds-full-width` on `body` sets `--nds-content-MaxWidth` to 100%, so the header, the content and the footer reach the screen edges. The content layout also removes its own gutters, except in card view. The hero is in `nds-content`, beside the side menu.
 
 ### Minimal Page
 
@@ -534,6 +540,13 @@ A section that paints its own background is never striped, but it still counts: 
             <span class="nds-label">Footer at the Bottom</span>
           </span>
           <p class="nds-item-desc"><code class="nds-inline-code lang-html">body</code> is a column, and <code class="nds-inline-code lang-html">main</code> and the content layout grow into the space left. On a short page, the footer stays at the bottom of the screen.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-keyboard"></i>
+            <span class="nds-label">Skip Link</span>
+          </span>
+          <p class="nds-item-desc">The first Tab on a page shows a link to <code class="nds-inline-code lang-html">nds-content</code>, so a keyboard user skips the header, the hero and the side menu. The link is hidden until it has focus, from the first paint, and the content lands below the sticky main navigation.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -585,11 +598,12 @@ A section that paints its own background is never striped, but it still counts: 
 - Copy the header, the footer and the script tags whole from the built HTML of a live page. Never rebuild the body from the canons on this page: their header and footer are left empty.
 - Keep each shape's classes as its live page has them. A structure written from memory loses the classes that set the width, the centering and the background.
 - Use one `nds-content-layout` per page. Never put one content layout in another.
-- Put every page section in `nds-main-content`.
+- Put every page section in `nds-content`.
 - Write the layout classes in the HTML that the browser paints first. A class that a script adds after the app starts shows one frame at the wrong shape.
 - In an app whose layout class depends on the route, set the class with a script that runs at once, as the first child of `body`, before the framework starts. A mount effect runs too late.
 - Give a framework's mount element between `body` and `main` (`#root`, `#app`, `app-root`) `display: contents`. If the app styles that element, give it `flex: 1; display: flex; flex-direction: column` instead. Without one of them, `main` does not grow, and the footer moves up the screen.
-- Return a fragment, not a wrapper `div`, from a framework component in the content layout or the main content. In the content layout, a wrapper takes a grid column: with a side menu, the whole page shrinks to the side menu's width. In the main content, a wrapper gets no width of its own, so narrow content moves away from the page edges.
+- Return a fragment, not a wrapper `div`, from a framework component in the content layout or in `nds-content`. In the content layout, a wrapper takes a grid column: with a side menu, the whole page shrinks to the side menu's width. In `nds-content`, a wrapper gets no width of its own, so narrow content moves away from the page edges.
+- In an app with a hash router (`#/page`), the skip link's `#main-content` reads as a route. Handle its click instead: `preventDefault()`, then focus `#main-content`, which needs `tabindex="-1"` for that.
 - Keep `nds-full-width` in the markup of an app that also has pages without NDS. Only NDS regions read it.
 - On a page with long text, flatten the hero with `nds-flat`: see [Hero](../ui-shell/hero).
 
@@ -614,8 +628,8 @@ For AI agents. Copy the built HTML once for each chrome. For every page after th
 | Key | Value | Markup |
 |---|---|---|
 | `layout` | `page` | A standard page: the sub hero first in `main`, then the content layout with a side menu, then the page feedback |
-| `layout` | `home` | The home page: the hero slider, then the content layout with `nds-stripe` on `nds-main-content` |
-| `layout` | `console` | A console: the content layout with a side menu, the sub hero first in `nds-main-content`, then the page feedback. The page also sets `body_class: nds-full-width` |
+| `layout` | `home` | The home page: the hero slider, then the content layout with `nds-stripe` on `nds-content` |
+| `layout` | `console` | A console: the content layout with a side menu, the sub hero first in `nds-content`, then the page feedback. The page also sets `body_class: nds-full-width` |
 | `layout` | `minimal` | A minimal page: no header, hero or footer, and `nds-content-wrapper` on the content layout |
 | `layout` | `shell` | The page writes its whole body itself, as the [Home Page Template](../templates/home-template) does |
 | `layout_class` | Classes | Added to `.nds-content-layout`: `nds-wSideInfo`, `nds-cardView`, `nds-middle` |
@@ -625,7 +639,7 @@ For AI agents. Copy the built HTML once for each chrome. For every page after th
 | `hero_style` | Classes | Added to the sub hero section: `nds-flat`, `nds-aside` |
 | `page_bg` | Image path | On a minimal page: `nds-page-bg` on `body`, with the image in `--bg-img` |
 | `bg_opacity_top`, `bg_opacity_bottom` | Percent | On a minimal page: `--bg-opacity-top` and `--bg-opacity-bottom` on `body`. Default `80%` |
-| `last_edit` | Date | The last modified section, last in `nds-main-content`. `page` layout only |
+| `last_edit` | Date | The last modified section, last in `nds-content`. `page` layout only |
 | `hideFeedback` | `true` | No page feedback section |
 | `feedback_type` | `rating` | The star rating strip in place of the Yes and No feedback |
 {: .nds-table .nds-responsive}
@@ -651,9 +665,9 @@ Set the first five on `.nds-content-layout`, and the last three on `body`.
 |---|---|---|
 | `--layout-min-height` | `400px` | The content layout's minimum height. `nds-middle` sets `100dvh` |
 | `--layout-gap` | `0` | The gap between the side menu and the content. Card view sets `--spacing-xl`. Always `0` on a phone |
-| `--main-padding-block` | `0` | The padding above and below `nds-main-content`. Card view sets `--spacing-xl` below 960px |
-| `--main-padding-inline` | `0` | The padding at the sides of `nds-main-content` |
-| `--main-gap` | `0` | The gap between the sections. Card view sets `--spacing-4xl` |
+| `--content-padding-block` | `0` | The padding above and below `nds-content`. Card view sets `--spacing-xl` below 960px |
+| `--content-padding-inline` | `0` | The padding at the sides of `nds-content` |
+| `--content-gap` | `0` | The gap between the sections. Card view sets `--spacing-4xl` |
 | `--bg-img` | Not set | The image behind a `body.nds-page-bg`, as a `url()` |
 | `--bg-opacity-top` | `80%` | How strongly the page background color covers the image at the top of the page |
 | `--bg-opacity-bottom` | `80%` | How strongly the page background color covers the image at the bottom of the page |

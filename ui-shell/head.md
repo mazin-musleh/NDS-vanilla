@@ -67,6 +67,7 @@ last_edit: "24/09/2026 - 07:31 AM"
   html .nds-swiper.nds-hero:not([data-nds-swiper-initialized],[data-swiper-preset]) .nds-swiper-slide:not(:first-child){display:none}
   :where(.nds-topbar&gt;*,.nds-main-nav&gt;*,.nds-hero-section .nds-section-action,.nds-content-layout,.nds-user-feedback-section,.nds-footer){visibility:hidden}
   html:not([data-nds-loaded]) main{overflow-x:clip}
+  .nds-skip-link:not(:focus){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0}
   :root{--nds-icons-opacity: 0}
   :is(.nds-hidden,[hidden],[data-state~=hidden],[data-filtered]){display:none !important}
   :where(.nds-hero-section){position:relative;height:550px}

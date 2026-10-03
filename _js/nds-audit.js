@@ -125,9 +125,9 @@
         document.querySelectorAll('.nds-content-layout').forEach(layout => {
             if (layout.closest('code, .code-example')) return;
             Array.from(layout.children).forEach(child => {
-                if (child.matches('.nds-main-content, .nds-sidemenu')) return;
+                if (child.matches('.nds-content, .nds-sidemenu')) return;
                 if (getComputedStyle(child).display === 'contents') return;
-                console.warn(`[NDS.Audit] <${child.tagName.toLowerCase()}> is a direct child of .nds-content-layout but is neither .nds-main-content nor .nds-sidemenu — it takes a grid column and shifts the layout. Return a fragment from the component instead of a wrapper, or give the wrapper "display: contents". See layout/page-layout.md.`, child);
+                console.warn(`[NDS.Audit] <${child.tagName.toLowerCase()}> is a direct child of .nds-content-layout but is neither .nds-content nor .nds-sidemenu — it takes a grid column and shifts the layout. Return a fragment from the component instead of a wrapper, or give the wrapper "display: contents". See layout/page-layout.md.`, child);
             });
         });
     }

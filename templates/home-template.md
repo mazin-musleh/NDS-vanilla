@@ -94,7 +94,7 @@ direction: ltr
     </section>
 
     <div class="nds-content-layout">
-        <div class="nds-main-content nds-stripe">
+        <div class="nds-content nds-stripe" id="main-content">
         <section id="about" class="nds-content-section">
             <div class="nds-section-wrapper">
                 <div class="nds-section-head">

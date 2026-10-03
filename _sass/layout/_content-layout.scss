@@ -14,9 +14,9 @@ main {
 .nds-content-layout {
     --_layout-min-height: var(--layout-min-height, 400px);
     --_layout-gap: var(--layout-gap, 0);
-    --_main-padding-block: var(--main-padding-block, 0);
-    --_main-padding-inline: var(--main-padding-inline, 0);
-    --_main-gap: var(--main-gap, 0);
+    --_content-padding-block: var(--content-padding-block, 0);
+    --_content-padding-inline: var(--content-padding-inline, 0);
+    --_content-gap: var(--content-gap, 0);
 
     position: relative;
     flex: 1; // fills the leftover space in main's column; siblings stay auto
@@ -32,16 +32,18 @@ main {
         }
     }
 
-    .nds-main-content {
+    .nds-content {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         align-content: flex-start;
         position: relative;
-        padding-block: var(--_main-padding-block);
-        padding-inline: var(--_main-padding-inline);
-        gap: var(--_main-gap);
+        padding-block: var(--_content-padding-block);
+        padding-inline: var(--_content-padding-inline);
+        gap: var(--_content-gap);
         min-width: 0;
+        // The skip link's target: land below the sticky main nav, not under it.
+        scroll-margin-block-start: var(--nds-nav-height);
 
         // Basis auto, not 0: with a 0 basis the pre-stamp layout (cv holds, definite
         // column) gave every section the same height, so a restored scroll landed
@@ -61,7 +63,7 @@ main {
             padding: var(--nds-viewport-padding);
         }
 
-        .nds-main-content {
+        .nds-content {
             justify-content: center;
             align-content: center;
         }
@@ -78,13 +80,13 @@ main {
     body.nds-full-width &:not(.nds-cardView) {
         padding: 0;
 
-        // The knobs sit on .nds-main-content, so they beat cardView's
+        // The knobs sit on .nds-content, so they beat cardView's
         // root-level values by inheritance proximity — hence the exemption
         // has to repeat here, not just on the padding above.
-        &:is(.nds-wSideMenu, .nds-wSideInfo) .nds-main-content {
-            --main-padding-block: 0;
-            --main-padding-inline: 0;
-            --main-gap: 0;
+        &:is(.nds-wSideMenu, .nds-wSideInfo) .nds-content {
+            --content-padding-block: 0;
+            --content-padding-inline: 0;
+            --content-gap: 0;
         }
     }
 
@@ -99,7 +101,7 @@ main {
             --section-padding-block: var(--spacing-5xl);
         }
 
-        .nds-main-content {
+        .nds-content {
             section.nds-noBg {
                 --_section-margin-block-start-base: var(--spacing-5xl);
             }
@@ -121,7 +123,7 @@ main {
 
     /* ── Post layout ── */
 
-    &.nds-post .nds-main-content section:first-of-type {
+    &.nds-post .nds-content section:first-of-type {
         --_section-padding-block-start-base: 0;
     }
 
@@ -130,16 +132,16 @@ main {
     &.nds-cardView {
         --section-padding-block: var(--nds-viewport-padding);
         --layout-gap: var(--spacing-xl);
-        --main-padding-block: var(--spacing-xl);
-        --main-gap: var(--spacing-4xl);
+        --content-padding-block: var(--spacing-xl);
+        --content-gap: var(--spacing-4xl);
 
         @include desktop(min) {
-            --main-padding-block: 0;
+            --content-padding-block: 0;
             padding-inline: var(--nds-viewport-padding);
             padding-block: var(--spacing-xl);
         }
 
-        .nds-main-content {
+        .nds-content {
             section:not(.nds-hero-section, .nds-ghost) {
                 --_section-shadow-base: var(--shadow-md);
                 --_section-border-radius-base: var(--radius-md);
@@ -232,10 +234,10 @@ main {
         }
     }
 
-    // Opt-in: .nds-stripe on .nds-main-content, at every width and with or
+    // Opt-in: .nds-stripe on .nds-content, at every width and with or
     // without a side menu. The :not() list is the per-section opt-out.
     // .nds-odd flips the parity, for pages whose first section should be tinted.
-    &:not(.nds-cardView) .nds-main-content.nds-stripe {
+    &:not(.nds-cardView) .nds-content.nds-stripe {
         &:not(.nds-odd) {
             @include _section-striping(even, odd);
         }

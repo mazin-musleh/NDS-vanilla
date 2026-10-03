@@ -275,7 +275,7 @@
     }
 
     // Add padding-top to mainContent when drawer is open
-    .nds-sidemenu.nds-top[data-state~="open"]~.nds-main-content {
+    .nds-sidemenu.nds-top[data-state~="open"]~.nds-content {
         margin-top: calc((var(--_topsubmenu-height) - var(--nds-sidemenu-toggle-height, 40px) + 16px) * -1);
     }
 }

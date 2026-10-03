@@ -80,7 +80,7 @@
     // Get mainContent sibling
     const getMainContent = (accMenu) => {
         const el = accMenu.nextElementSibling;
-        return el && el.classList.contains('nds-main-content') ? el : null;
+        return el && el.classList.contains('nds-content') ? el : null;
     };
 
     // Epoch counter to invalidate stale z-index removals
