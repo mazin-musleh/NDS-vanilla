@@ -715,8 +715,8 @@
   scss: _sass/components/_forms.scss
 
 - title: "Share"
-  description: "Social share dropmenu for X, LinkedIn, WhatsApp, and copy link"
-  use_when: "Share this page: a social share menu for X, LinkedIn, and WhatsApp, plus copy link."
+  description: "Share buttons for X, LinkedIn, WhatsApp, other sites, and copy link, in a menu or a row"
+  use_when: "Share this page or one item on it: a share menu or a row of buttons for X, LinkedIn, WhatsApp, or any site with a share link, plus copy link."
   icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
   category: "Utilities"
   tags: ["JS", "CSS"]
