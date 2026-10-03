@@ -11,12 +11,9 @@
     align-items: center;
     gap: var(--spacing-sm);
     min-width: 40px;
+}
 
-    .nds-dropmenu-menu .nds-label {
-        white-space: nowrap;
-    }
-
-    .nds-dropmenu-menu [data-status="success"] i::before {
-        content: "㶦";
-    }
+// On the menu, not under .nds-share: a portaled menu leaves the wrapper
+.nds-share-menu .nds-label {
+    white-space: nowrap;
 }
