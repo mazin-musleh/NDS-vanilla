@@ -1102,7 +1102,7 @@
         const defaultRegion = () => {
             if (!shared || !shared.isConnected) {
                 shared = document.createElement('div');
-                shared.className = 'sr-only';
+                shared.className = 'nds-sr-only';
                 shared.setAttribute('aria-live', 'polite');
                 shared.setAttribute('aria-atomic', 'true');
                 document.body.appendChild(shared);

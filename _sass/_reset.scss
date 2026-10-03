@@ -190,7 +190,6 @@ header {
     background-color: transparent;
 }
 
-.nds-sr-only,
-.sr-only {
+.nds-sr-only {
     @include label-hidden;
 }
