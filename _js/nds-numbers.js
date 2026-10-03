@@ -8,222 +8,119 @@
  * Events:
  *   (none)
  * Hooks:
- *   .nds-number-format   class on any element holding a number — its text gets locale
- *                        digits and separators
+ *   .nds-number-format   class on any element holding a number — its text gets the page
+ *                        lang's separators, in Latin digits (NDS.formatNumber), with the
+ *                        decimals as written ("1250.50" → "1,250.50")
  *   .nds-counter-value   class on a counting element, plus:
  *   data-target          the end value; a prefix or suffix in it is kept ("$75,000", "98.6%")
  *   data-start           the start value, default 0
  *   data-duration        milliseconds, default 1000
- *   data-decimals        decimal places; derived from data-target when absent
  *   written by the component: data-animated once a counter has finished
  * Gotchas:
- *   - format() is idempotent — separators are stripped before parsing, so a caller like
- *     the slider can run it after every value write.
+ *   - format() is idempotent — it remembers the text it wrote and re-reads the source,
+ *     so a caller like the slider can run it after every value write, in any locale.
  *   - It rewrites the TEXT NODE holding the number, so icons and other children survive.
+ *   - format() skips a counter: the counter owns its text.
  *   - A counter runs when it scrolls into view, once. Reduced motion jumps to the target.
- *     Remove data-animated to let it run again.
+ *     To run it again, remove data-animated and call reinit().
  */
-// Numbers and Counter Formatting
 (() => {
     'use strict';
 
-    // Format the number text inside a single .nds-number-format element.
-    // Idempotent (commas are stripped before parsing), so callers like the
-    // Slider can call this after every value write without double-formatting.
-    function format(el) {
-        if (!el || el.closest('code, .code-example')) return;
-        // Find the text node containing the number (preserves child elements like icons)
-        const textNodes = [];
+    // prefix · sign · digits (commas allowed) · suffix
+    const NUMBER = /^(.*?)([-+]?)((?:\d[\d,]*)?\.?\d+)(.*)$/s;
+    // text node → [text we wrote, the text it came from]: a re-run reads the source, never
+    // our own output, which other locales group with "." ("3.240.000").
+    const written = new WeakMap();
+
+    function source(node) {
+        const w = written.get(node);
+        return w && w[0] === node.textContent ? w[1] : node.textContent;
+    }
+
+    function write(node, text) {
+        written.set(node, [text, source(node)]);
+        node.textContent = text;
+    }
+
+    // The written decimals are kept: both min and max, so 1250.50 keeps its zero.
+    const places = (n) => ({ minimumFractionDigits: n.decimals, maximumFractionDigits: n.decimals });
+
+    function parse(text) {
+        const m = text.trim().match(NUMBER);
+        if (!m) return null;
+        const digits = m[3].replace(/,/g, '');
+        return { prefix: m[1] + m[2], value: parseFloat(digits), decimals: (digits.split('.')[1] || '').length, suffix: m[4] };
+    }
+
+    // The text node holding the number; icons and other children stay.
+    function numberNode(el) {
         for (const node of el.childNodes) {
-            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-                textNodes.push(node);
-            }
+            if (node.nodeType === Node.TEXT_NODE && /\d/.test(node.textContent)) return node;
         }
+        return null;
+    }
 
-        const targetNode = textNodes.find(n => /\d/.test(n.textContent));
-        if (!targetNode) return;
-
-        const text = targetNode.textContent.trim();
-        const match = text.match(/^([^\d]*)([-+]?\d[\d,]*\.?\d*)(.*)$/);
-        if (match) {
-            const prefix = match[1] || '';
-            const numStr = match[2].replace(/,/g, '');
-            const suffix = match[3] || '';
-            const num = parseFloat(numStr);
-
-            if (!isNaN(num)) {
-                targetNode.textContent = `${prefix}${NDS.formatNumber(num)}${suffix}`;
-            }
-        }
+    function format(el) {
+        if (!el || el.closest('code, .code-example') || el.classList.contains('nds-counter-value')) return;
+        const node = numberNode(el);
+        const n = node && parse(source(node));
+        if (n) write(node, n.prefix + NDS.formatNumber(n.value, places(n)) + n.suffix);
     }
 
     function formatNumbers() {
         document.querySelectorAll('.nds-number-format').forEach(format);
     }
 
+    function count(el, reduced) {
+        const node = numberNode(el);
+        const n = parse(el.getAttribute('data-target') || (node ? source(node) : '')) || { prefix: '', value: 0, decimals: 0, suffix: '' };
+        const opts = places(n);
+        const start = parseFloat(el.getAttribute('data-start')) || 0;
+        const ms = parseInt(el.getAttribute('data-duration'), 10);
+        const duration = reduced ? 0 : (isNaN(ms) ? 1000 : ms);
+
+        const show = (value) => {
+            const text = n.prefix + NDS.formatNumber(value, opts) + n.suffix;
+            const target = numberNode(el);
+            if (!target) el.appendChild(document.createTextNode(text));
+            else if (target.textContent !== text) write(target, text);
+        };
+        const done = () => {
+            show(n.value);
+            el.setAttribute('data-animated', 'true');
+            delete el._ndsCounting;
+        };
+
+        el._ndsCounting = true;
+        if (!duration) return done();
+        const t0 = performance.now();
+        const tick = (now) => {
+            const p = (now - t0) / duration;
+            if (p >= 1) return done();
+            show(start + (n.value - start) * p);
+            requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }
+
     function setupCounterAnimations() {
-        const counters = document.querySelectorAll('.nds-counter-value');
-        if (!counters.length) return;
-
-        const prefersReducedMotion = NDS.prefersReducedMotion;
-
-        function parseTarget(el) {
-            let targetStr = el.getAttribute('data-target');
-            let decimalsAttr = el.getAttribute('data-decimals');
-            let prefix = '';
-            let suffix = '';
-
-            if (targetStr) {
-                // Extract prefix/suffix from data-target (e.g. "$75,000", "98.6%").
-                // Grouping separators stay inside the number capture, then get
-                // stripped — "3,742" is one value, not 3 with a ",742" suffix.
-                const m = targetStr.match(/^([^\d.-]*)([-+]?[\d,]*\.?\d+)(.*)$/);
-                if (m) {
-                    prefix = m[1] || '';
-                    targetStr = m[2].replace(/,/g, '');
-                    suffix = m[3] || '';
-                }
-            } else {
-                // Fallback: parse from element text
-                const full = el.textContent.trim();
-                const m = full.replace(/,/g, '').match(/([-+]?\d*\.?\d+)/);
-                targetStr = m ? m[1] : '0';
-            }
-
-            const target = parseFloat(targetStr || '0') || 0;
-            let decimals = 0;
-            if (decimalsAttr != null) {
-                decimals = Math.max(0, parseInt(decimalsAttr, 10) || 0);
-            } else if (String(targetStr).includes('.')) {
-                decimals = String(targetStr).split('.')[1].length;
-            }
-
-            if (target < 0) prefix = prefix || '-';
-            return {
-                target: Math.abs(target),
-                decimals,
-                prefix,
-                suffix
-            };
-        }
-
-        // Pre-parse all counters on initialization (avoid work during scroll)
-        const counterConfigs = new WeakMap();
-
-        counters.forEach(counter => {
-            if (counter.closest('code, .code-example')) return;
-            const cfg = parseTarget(counter);
-            const start = parseFloat(counter.getAttribute('data-start') || '0') || 0;
-            const duration = parseInt(counter.getAttribute('data-duration') || '1000', 10);
-            // Pre-format target value to avoid formatting work during animation
-            const formatNumber = (value) => NDS.formatNumber(value, {
-                minimumFractionDigits: cfg.decimals,
-                maximumFractionDigits: cfg.decimals
-            });
-
-            counterConfigs.set(counter, {
-                cfg,
-                start,
-                duration,
-                formatNumber,
-                preFormattedTarget: formatNumber(cfg.target)
-            });
-        });
-
-        // Helper to update counter text (preserves child elements like icons)
-        const updateText = (el, cfg, formattedValue) => {
-            const text = `${cfg.prefix}${formattedValue}${cfg.suffix}`;
-
-            // Find existing text node with a number, or the last text node
-            const textNodes = [];
-            for (const node of el.childNodes) {
-                if (node.nodeType === Node.TEXT_NODE) textNodes.push(node);
-            }
-            const targetNode = textNodes.find(n => /\d/.test(n.textContent)) || textNodes[textNodes.length - 1];
-            if (targetNode) {
-                targetNode.textContent = text;
-            } else {
-                el.appendChild(document.createTextNode(text));
-            }
-        };
-
-        // Smart cache key based on target magnitude for better cache hit rate
-        const getCacheKey = (value, target, decimals) => {
-            if (decimals > 0) {
-                return Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
-            }
-
-            const absTarget = Math.abs(target);
-            if (absTarget >= 1000000000) return Math.round(value / 10000) * 10000;
-            if (absTarget >= 1000000) return Math.round(value / 1000) * 1000;
-            if (absTarget >= 100000) return Math.round(value / 100) * 100;
-            if (absTarget >= 10000) return Math.round(value / 10) * 10;
-            return Math.round(value);
-        };
-
-        const startCounter = (entry) => {
-            if (!entry.isIntersecting || entry.target.hasAttribute('data-animated')) return;
-
-            const el = entry.target;
-            const off = el._ndsCounterOff;
-            if (off) off();
+        const reduced = NDS.prefersReducedMotion;
+        document.querySelectorAll('.nds-counter-value').forEach(el => {
+            // reinit() re-arms: release a subscription that has not fired yet.
+            if (el._ndsCounterOff) el._ndsCounterOff();
             delete el._ndsCounterOff;
-
-            const config = counterConfigs.get(el);
-            if (!config) return;
-
-            const { cfg, start, duration, formatNumber, preFormattedTarget } = config;
-            const animDuration = prefersReducedMotion ? 0 : duration;
-
-            if (animDuration === 0) {
-                updateText(el, cfg, preFormattedTarget);
-                el.setAttribute('data-animated', 'true');
-                return;
-            }
-
-            const startTime = performance.now();
-            const formattedCache = new Map();
-            let lastCacheKey = null;
-
-            function updateCounter(now) {
-                const elapsed = now - startTime;
-                const progress = Math.min(elapsed / animDuration, 1);
-
-                if (progress < 1) {
-                    const currentValue = start + (cfg.target - start) * progress;
-                    const cacheKey = getCacheKey(currentValue, cfg.target, cfg.decimals);
-
-                    if (cacheKey !== lastCacheKey) {
-                        lastCacheKey = cacheKey;
-                        if (!formattedCache.has(cacheKey)) {
-                            formattedCache.set(cacheKey, formatNumber(cacheKey));
-                        }
-                        updateText(el, cfg, formattedCache.get(cacheKey));
-                    }
-
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    updateText(el, cfg, preFormattedTarget);
-                    el.setAttribute('data-animated', 'true');
-                    formattedCache.clear();
-                }
-            }
-
-            requestAnimationFrame(updateCounter);
-        };
-
-        counters.forEach(counter => {
-            if (!counterConfigs.has(counter)) return;
-            // Release any prior subscription so reinit() doesn't stack pooled
-            // IntersectionObserver entries on counters that haven't yet
-            // triggered (startCounter normally clears _ndsCounterOff on
-            // intersect; this handles the un-intersected case).
-            if (counter._ndsCounterOff) counter._ndsCounterOff();
-            counter._ndsCounterOff = NDS.onIntersect(counter, startCounter, { threshold: 0.5 });
+            if (el.closest('code, .code-example') || el.hasAttribute('data-animated') || el._ndsCounting) return;
+            el._ndsCounterOff = NDS.onIntersect(el, (entry) => {
+                if (!entry.isIntersecting) return;
+                el._ndsCounterOff();
+                delete el._ndsCounterOff;
+                count(el, reduced);
+            }, { threshold: 0.5 });
         });
     }
 
-    // CRITICAL: Expose global API immediately (called by unified init system)
+    // Exposed at once: the loader's init system calls it.
     NDS.Numbers = {
         format,
         formatNumbers,
@@ -237,6 +134,4 @@
             setupCounterAnimations();
         }
     };
-
-    // Note: Initialization now handled by nds-loader.js unified system
 })();

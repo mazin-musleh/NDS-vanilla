@@ -369,7 +369,11 @@
     // THE separator rule for every number NDS renders — .nds-number-format
     // (nds-numbers.js), the pagination records slots, and the selection
     // count all route here so they can never drift.
-    NDS.formatNumber = (n, opts) => n.toLocaleString(undefined, opts);
+    // Page lang, Latin digits: one look whatever the browser's language. A bad lang falls back to en.
+    NDS.formatNumber = (n, opts) => {
+        try { return n.toLocaleString(`${document.documentElement.lang || 'en'}-u-nu-latn`, opts); }
+        catch { return n.toLocaleString('en', opts); }
+    };
 
     // ── Run-When-Idle ────────────────────────────────────────────────
     // Defers work to a browser-idle slot via requestIdleCallback, with a

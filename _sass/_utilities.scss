@@ -20,9 +20,6 @@
     width: var(--_number-icon-size);
     height: var(--_number-icon-size);
     align-self: center;
-    @include dark {
-      filter: invert(1);
-    }
   }
   &[data-currency]::after {
     align-self: center;

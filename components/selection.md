@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 08:29 PM"
+last_edit: "03/10/2026 - 06:31 PM"
 ---
 
 <section id="selectionOverview" class="nds-content-section nds-doc-overview">
@@ -300,7 +300,7 @@ Use it on a paged list, so one line serves both browsing and selecting. The coun
             <i class="hgi hgi-stroke hgi-text-number-sign"></i>
             <span class="nds-label">Number Formatting</span>
           </span>
-          <p class="nds-item-desc">Numbers get the thousand separators of the browser's language, the same rule as the Pagination records line.</p>
+          <p class="nds-item-desc">Numbers get the thousand separators of the page's language, in Latin digits, the same rule as the Pagination records line.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
