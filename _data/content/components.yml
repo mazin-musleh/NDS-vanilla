@@ -668,14 +668,6 @@
   url: "/core/request.html"
   js: _js/nds-core.js
 
-- title: "Saudi Cities"
-  description: "Bundled JSON dataset of 132 Saudi Arabian cities with bilingual names, drop-in for autocomplete and address flows"
-  use_when: "A bundled dataset of 132 Saudi cities with Arabic and English names. Drop it into an autocomplete, a select, or an address form instead of sourcing your own list."
-  icon: '<i class="hgi hgi-stroke hgi-globe-02"></i>'
-  category: "Utilities"
-  tags: ["Data"]
-  url: "/utilities/saudi-cities.html"
-
 - title: "Scroll More"
   description: "Overflow wrapper with edge mask-fade and sticky show-more button"
   use_when: "Wrap content that overflows its container: a scrollable region with faded edges and a sticky show-more button. Auto-detects whether it scrolls horizontally or vertically."

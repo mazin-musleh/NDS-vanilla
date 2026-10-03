@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "03/10/2026 - 11:45 PM"
 ---
 
 <section id="autocompleteOverview" class="nds-content-section nds-doc-overview">
@@ -306,7 +306,6 @@ The full API is in the banner of `_js/nds-autocomplete.js`.
 - [Services List](../examples/services-list): a search box with results that also filters the list.
 - [Manage Records](../examples/manage-records): a required requester field that loads the list once, in a modal.
 - [Form Template](../templates/form-template): a required city field on a request form.
-- [Saudi Cities](../utilities/saudi-cities): the city list, loaded once with a one-character start.
 
 </div>
   </div>
