@@ -112,7 +112,7 @@
         max-width: none;
     }
 
-    .nds-center &,
+    :is(.nds-center, .nds-status-section) &,
     &.nds-center {
         flex-direction: column;
         gap: var(--spacing-xl);
@@ -305,7 +305,8 @@
 
 /* ── Centered layout ── */
 
-.nds-content-section.nds-center {
+.nds-content-section.nds-center,
+:is(.nds-hero-section, .nds-content-section).nds-status-section {
     >.nds-section-wrapper {
         flex-direction: column;
         align-items: center;
@@ -318,6 +319,8 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
+        // Beats the start alignment a head takes after .nds-section-image.
+        text-align: center;
     }
 
     .nds-section-description {
@@ -364,7 +367,7 @@
     --btn-width: unset;
 }
 
-:is(.nds-center, .nds-horizontal)>.nds-section-wrapper>.nds-section-head>.nds-section-action {
+:is(.nds-center, .nds-status-section, .nds-horizontal)>.nds-section-wrapper>.nds-section-head>.nds-section-action {
     float: none;
     order: 1;
     margin-inline-start: 0;
@@ -404,26 +407,14 @@
 }
 
 /* ── Status section (an outcome message: not found, submitted, failed) ──
-   .nds-404 is the old name of this variant, kept so pages copied from the
-   previous 404 template keep working. Drop it at the next major. ── */
+   Its parts center through the centered-layout rules above. ── */
 
-:is(.nds-hero-section, .nds-content-section):is(.nds-404, .nds-status-section) {
+:is(.nds-hero-section, .nds-content-section).nds-status-section {
     max-height: unset;
     --feedback-size: 56px;
     display: flex;
     align-items: center;
     flex: 1;
-
-    * {
-        text-align: center;
-        margin-inline: auto;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    .nds-section-action {
-        flex: 1;
-    }
 }
 
 /* ── Horizontal layout ── */

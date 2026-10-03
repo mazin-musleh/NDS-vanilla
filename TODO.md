@@ -66,6 +66,8 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 
 - **Release notes, File Upload — Fixed:** a long file name stays on one line: the name ends in an ellipsis and the extension stays, and hovering shows the whole name. It wrapped over several lines.
 
+- **Release notes, Status Section — Migrating:** `.nds-404` is removed: use `.nds-status-section`. **Fixed:** a button with an icon showed the icon above its label, and two buttons in the action stacked; the section no longer sets column flex on every element inside it. **Section — Fixed:** an `nds-center` section with an image centers its title and description; they were aligned to the start.
+
 - **Release notes, Persona — Changed:** every element after the divider takes its own full row, so a definition list after it needs no inline `flex`.
 
 - **Release notes, Link — Changed:** a link is primary by default everywhere, not only inside a content section; `nds-neutral` makes it neutral anywhere. Breadcrumb, footer and alert keep neutral links, and a link that is an avatar keeps its own look. A plain `<a>` outside a section that relied on the neutral default turns primary: add `nds-neutral` to keep it neutral.
