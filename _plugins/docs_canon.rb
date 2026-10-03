@@ -281,8 +281,8 @@ module DocsCanon
   def self.options(id, rows, src, js, canons, mode, side)
     groups = rows.group_by { |r| r[:group] }.select { |_, list| list.any? { |r| r[:live] } }
     # `Group (any)`: each chip turns on and off by itself, so parts that stack need no combo rows.
-    any, rest = groups.partition { |g, _| g.end_with?(' (any)') }
-    multi, single = rest.partition { |_, list| list.size > 1 }
+    # Rows keep the table's order; one-row groups gather in More at the end.
+    single = groups.select { |g, list| list.size == 1 && !g.end_with?(' (any)') }
     esc = ->(t) { CGI.escapeHTML(t.to_s) }
     # Primary chips pick one of a set that always has a value; neutral chips can be turned off.
     # One hover tooltip per chip: its hint while on, its reason while off; nds-docs.js swaps the text.
@@ -299,14 +299,14 @@ module DocsCanon
     row = lambda do |name, chips|
       %(<div class="nds-divider nds-4xl" data-builder-group="#{esc[name]}">#{esc[name]}</div><div class="nds-chips">#{chips.join}</div>)
     end
-    body = multi.map do |group, list|
+    body = (groups.to_a - single.to_a).map do |group, list|
+      next row[group.delete_suffix(' (any)'), list.map { |r| chip[group, r, false] }] if group.end_with?(' (any)')
       default = list.find { |r| r[:option].include?('(default)') }
       none = default && label(default[:option]) == 'None'
       chips = list.reject { |r| (none && r.equal?(default)) || label(r[:option]).include?(' + ') }
       tone = none || list.any? { |r| label(r[:option]).include?(' + ') } ? 'neutral' : 'primary'
       row[group, chips.map { |r| chip[group, r, !none && r.equal?(default), tone] }]
     end
-    any.each { |group, list| body << row[group.delete_suffix(' (any)'), list.map { |r| chip[group, r, false] }] }
     body << row['More', single.map { |group, (r)| chip[group, r, r[:option].include?('(default)')] }] if single.any?
     panel = side || (mode ? mode == 'panel' : body.size > 3)
     return [%(<div id="#{id}-options" class="nds-builder-options" role="group" aria-label="Options" hidden>#{body.join}</div>\n), false] unless panel
