@@ -119,7 +119,7 @@ last_edit: "04/09/2026 - 05:35 AM"
                                                         <span class="nds-label">WhatsApp</span>
                                                     </button>
                                                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                                                        data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close>
+                                                        data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close>
                                                         <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
                                                         <span class="nds-label">Copy Link</span>
                                                     </button>
@@ -183,7 +183,7 @@ last_edit: "04/09/2026 - 05:35 AM"
               &lt;span class="nds-label"&gt;WhatsApp&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close&gt;
+                data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close&gt;
               &lt;i class="nds-icon nds-hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
               &lt;span class="nds-label"&gt;Copy Link&lt;/span&gt;
             &lt;/button&gt;

@@ -13,10 +13,10 @@
  * Events:
  *   (none)
  * Hooks (on the button):
- *   data-copy          the literal text to copy
- *   data-copy-target   a selector — copies that element's textContent instead
- *   data-label         label swap during the flash (needs a .nds-label inside)
- *   data-message       what is announced; falls back to data-label, then "Copied" / "تم النسخ"
+ *   data-copy           the literal text to copy
+ *   data-copy-target    a selector — copies that element's textContent instead
+ *   data-copy-label     label swap during the flash (needs a .nds-label inside)
+ *   data-copy-announce  what is announced; falls back to data-copy-label, then "Copied" / "تم النسخ"
  * Gotchas:
  *   - Text resolution stops at the first hit: data-copy, then data-copy-target, then the
  *     <code> inside a surrounding .nds-code block.
@@ -67,8 +67,8 @@
         const opts = options || {};
         const duration = opts.duration || DEFAULT_FLASH_MS;
 
-        const labelText = button.getAttribute('data-label');
-        const messageText = button.getAttribute('data-message') || labelText || (NDS.isArabic ? 'تم النسخ' : 'Copied');
+        const labelText = button.getAttribute('data-copy-label');
+        const messageText = button.getAttribute('data-copy-announce') || labelText || (NDS.isArabic ? 'تم النسخ' : 'Copied');
 
         // Icon swap: snapshot the className and replace with the mask
         // checkmark for the flash window. Wholesale replace is needed because

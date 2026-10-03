@@ -47,7 +47,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                         <span class="nds-label">WhatsApp</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                                        data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close>
+                                        data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close>
                                         <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
                                         <span class="nds-label">Copy Link</span>
                                     </button>
@@ -95,7 +95,7 @@ last_edit: "28/06/2026 - 01:27 PM"
             &lt;span class="nds-label"&gt;WhatsApp&lt;/span&gt;
         &lt;/button&gt;
         &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-            data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close&gt;
+            data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close&gt;
             &lt;i class="nds-icon nds-hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
             &lt;span class="nds-label"&gt;Copy Link&lt;/span&gt;
         &lt;/button&gt;
@@ -152,7 +152,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                         <span class="nds-label">WhatsApp</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                                        data-label="Link Copied!" data-message="Article link copied to clipboard" data-no-auto-close>
+                                        data-copy-label="Link Copied!" data-copy-announce="Article link copied to clipboard" data-no-auto-close>
                                         <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
                                         <span class="nds-label">Copy Link</span>
                                     </button>
@@ -202,7 +202,7 @@ last_edit: "28/06/2026 - 01:27 PM"
             &lt;span class="nds-label"&gt;WhatsApp&lt;/span&gt;
         &lt;/button&gt;
         &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-            data-label="Link Copied!" data-message="Article link copied to clipboard" data-no-auto-close&gt;
+            data-copy-label="Link Copied!" data-copy-announce="Article link copied to clipboard" data-no-auto-close&gt;
             &lt;i class="nds-icon nds-hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
             &lt;span class="nds-label"&gt;Copy Link&lt;/span&gt;
         &lt;/button&gt;
@@ -257,7 +257,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                     <span class="nds-label">WhatsApp</span>
                                 </button>
                                 <button class="nds-btn nds-secondary-outline nds-share-copy" type="button" aria-label="Copy Link"
-                                    data-label="Link Copied!" data-message="Page link copied to clipboard">
+                                    data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard">
                                     <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
                                     <span class="nds-label">Copy Link</span>
                                 </button>
@@ -300,7 +300,7 @@ last_edit: "28/06/2026 - 01:27 PM"
         &lt;span class="nds-label"&gt;WhatsApp&lt;/span&gt;
     &lt;/button&gt;
     &lt;button class="nds-btn nds-secondary-outline nds-share-copy" type="button" aria-label="Copy Link"
-        data-label="Link Copied!" data-message="Page link copied to clipboard"&gt;
+        data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard"&gt;
         &lt;i class="nds-icon nds-hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;span class="nds-label"&gt;Copy Link&lt;/span&gt;
     &lt;/button&gt;
@@ -384,7 +384,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <li>Always set a meaningful <code class="nds-inline-code lang-html">aria-label</code> on the trigger ("Share Page", "Share Article", "Share Report") so screen reader users know what is being shared</li>
                     <li>Keep <code class="nds-inline-code lang-html">data-no-auto-close</code> on the Copy Link item <strong>in the dropmenu variant</strong>. Without it the dropmenu closes before the 2 second success flash finishes, and users never see the confirmation. The inline variant does not need this attribute</li>
                     <li>Pick the <strong>inline variant</strong> for article footers, cards, and anywhere you want the share targets visible at rest. Pick the <strong>dropmenu variant</strong> for toolbar-style placements where the trigger needs to collapse</li>
-                    <li>Pair <code class="nds-inline-code lang-html">data-label</code> with <code class="nds-inline-code lang-html">data-message</code> on the Copy Link item so sighted users and screen reader users get equivalent feedback. The defaults ("Link Copied!" / "Page link copied to clipboard") are a good starting point</li>
+                    <li>Pair <code class="nds-inline-code lang-html">data-copy-label</code> with <code class="nds-inline-code lang-html">data-copy-announce</code> on the Copy Link item so sighted users and screen reader users get equivalent feedback. The defaults ("Link Copied!" / "Page link copied to clipboard") are a good starting point</li>
                     <li>Avoid stacking more than one Share wrapper in the same visual block. If a list has a share button per row, put the trigger inside the row, not next to a page-level share</li>
                     <li>Do not remove share targets silently to "simplify" the UI. Either show all four or drop the Share utility on that page entirely; partial sets confuse returning users</li>
                 </ul>
@@ -397,8 +397,8 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-share-url</code></td><td>Wrapper</td><td>URL to share. Falls back to <code class="nds-inline-code lang-js">window.location.href</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-share-title</code></td><td>Wrapper</td><td>Title passed to X and WhatsApp share dialogs. Falls back to <code class="nds-inline-code lang-js">document.title</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-label</code></td><td>Copy Link item</td><td>Visible label swap during the 2 second success flash. Read by the Copy utility.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-message</code></td><td>Copy Link item</td><td>Screen reader announcement on successful copy. Falls back to <code class="nds-inline-code lang-html">data-label</code>, then to "Copied".</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-copy-label</code></td><td>Copy Link item</td><td>Visible label swap during the 2 second success flash. Read by the Copy utility.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-copy-announce</code></td><td>Copy Link item</td><td>Screen reader announcement on successful copy. Falls back to <code class="nds-inline-code lang-html">data-copy-label</code>, then to "Copied".</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-no-auto-close</code></td><td>Copy Link item</td><td>Keeps the Dropmenu open during the success flash so the user sees the confirmation.</td></tr>
                     </tbody>
                 </table>

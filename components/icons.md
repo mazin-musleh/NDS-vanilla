@@ -138,7 +138,7 @@ last_edit: "23/09/2026 - 08:37 PM"
                 <h3 class="nds-block-title">Interface Glyphs</h3>
                 <div class="nds-grid nds-doc-icons">
                     {%- for name in site.data.content.icons.hgi %}
-                    <button class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-message="{{ name }} class copied">
+                    <button class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-copy-announce="{{ name }} class copied">
                         <i class="nds-icon {{ name }}" aria-hidden="true"></i>
                         <span class="nds-label">{{ name }}</span>
                     </button>
@@ -150,7 +150,7 @@ last_edit: "23/09/2026 - 08:37 PM"
                 <p>Glyphs outside the HugeIcons set, so they carry an <code class="nds-inline-code lang-html">nds-icon-</code> name: the store logos, the Saudi riyal symbol, and the small marks components paint themselves, such as the avatar placeholder and the checkbox tick.</p>
                 <div class="nds-grid nds-doc-icons">
                     {%- for name in site.data.content.icons.custom %}
-                    <button class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-message="{{ name }} class copied">
+                    <button class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-copy-announce="{{ name }} class copied">
                         <i class="nds-icon {{ name }}" aria-hidden="true"></i>
                         <span class="nds-label">{{ name }}</span>
                     </button>
