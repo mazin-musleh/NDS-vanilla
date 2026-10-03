@@ -443,8 +443,8 @@
   scss: _sass/_utilities.scss
 
 - title: "Hidden"
-  description: "Visibility utilities: the hidden attribute honored everywhere and band-exact responsive hiding with data-hidden"
-  use_when: "Hiding things: the hidden attribute honoured everywhere, plus breakpoint-exact responsive hiding with data-hidden. Use this instead of writing your own display-none rule."
+  description: "CSS utilities that hide an element always, at chosen screen widths, or on screen only while screen readers still read it"
+  use_when: "Hiding things: the hidden attribute honoured everywhere, breakpoint-exact responsive hiding with data-hidden, and screen-reader-only text with the sr token or nds-sr-only. Use this instead of writing your own display-none rule."
   icon: '<i class="hgi hgi-stroke hgi-view-off-slash"></i>'
   category: "Utilities"
   tags: ["CSS"]
