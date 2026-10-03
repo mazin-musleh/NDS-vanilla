@@ -147,7 +147,9 @@ module DocsCanon
       own << ['html', base] if structure?(r[:group]) && !r[:structure]
       own.any? do |lang, text|
         choice[:targets].any? { |t| t != '—' && (lang == 'js' ? matches?('', t, text) : matches?(text, t)) }
-      end || adds?(r, choice)
+      end || adds?(r, choice) ||
+        # Any value meets a bare `[attr]`; a sibling or a chip that is off itself is no way in.
+        (adds?(r, choice, bare: true) && r[:group] != choice[:group] && applies?(r, base))
     end
     # Every structure holds it: the control can never be disabled, so it needs no hint.
     structures = rows.select { |r| structure?(r[:group]) }
@@ -173,14 +175,15 @@ module DocsCanon
   end
 
   # An option that adds the class or attribute a choice's target asks for ("Stroke" needs Card),
-  # or with `negated`, one its `:not()` excludes. A bare `[attr]` there excludes any value.
-  def self.adds?(r, choice, negated: false)
+  # or with `negated`, one its `:not()` excludes. A bare `[attr]` there excludes any value,
+  # and with `bare`, takes any value.
+  def self.adds?(r, choice, negated: false, bare: false)
     (r[:adds] || []).any? do |m|
       choice[:targets].any? do |t|
         part = negated ? t.scan(/:not\((.*?)\)(?=:|\s|\z)/).flatten.join(' ') : t.gsub(/:(?:not|has)\([^)]*\)/, '')
         next part.scan(/\.([\w-]+)/).flatten.include?(m[1..]) if m.start_with?('.')
 
-        part.include?(m) || (negated && part.include?("[#{m[/\[([\w-]+)/, 1]}]"))
+        part.include?(m) || ((negated || bare) && part.include?("[#{m[/\[([\w-]+)/, 1]}]"))
       end
     end
   end
@@ -300,7 +303,7 @@ module DocsCanon
       %(<div class="nds-divider nds-4xl" data-builder-group="#{esc[name]}">#{esc[name]}</div><div class="nds-chips">#{chips.join}</div>)
     end
     body = (groups.to_a - single.to_a).map do |group, list|
-      next row[group.delete_suffix(' (any)'), list.map { |r| chip[group, r, false] }] if group.end_with?(' (any)')
+      next row[group.delete_suffix(' (any)'), list.map { |r| chip[group, r, r[:option].include?('(default)')] }] if group.end_with?(' (any)')
       default = list.find { |r| r[:option].include?('(default)') }
       none = default && label(default[:option]) == 'None'
       chips = list.reject { |r| (none && r.equal?(default)) || label(r[:option]).include?(' + ') }
