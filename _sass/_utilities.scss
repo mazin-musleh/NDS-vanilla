@@ -125,7 +125,8 @@
     overflow: hidden;
   }
   .nds-expandable-content {
-    mask-image: linear-gradient(180deg, black calc(100% - var(--mask-fade-percentage)), transparent 100%);
+    // Clear by the button's top (40px, nds-md), so no line peeks out under it.
+    mask-image: linear-gradient(180deg, black calc(100% - var(--mask-fade-percentage) - 40px), transparent calc(100% - 40px));
   }
   .nds-expand-btn {
     position: absolute;

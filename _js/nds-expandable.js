@@ -17,8 +17,8 @@
  *    .nds-expand-all on an ancestor to make sibling containers expand together)
  * Gotchas:
  *   - The Show More / Show Less button is BUILT by the component. Do not author one.
- *   - --max-height on the content sets the clamp (default 300px). It is read once and
- *     cached, so changing it at runtime needs a recheckHeight().
+ *   - --max-height on the content sets the clamp (default 300px). px only: it is parsed
+ *     with parseInt. It is cached, so changing it at runtime needs a recheckHeight().
  *   - A container that is not rendered measures 0 and is left clamped until it becomes
  *     visible. Tabs already calls recheckHeights() on panel activation.
  *   - The instance lives on the root as el.ndsExpandable.
@@ -104,7 +104,7 @@
         }
 
         getMaxHeight() {
-            // Cache the CSS custom property — it doesn't change at runtime
+            // Cached for resize checks; recheckHeight() clears it
             if (this._cachedMaxHeight === undefined) {
                 const computedStyle = getComputedStyle(this.contentElement);
                 const maxHeightValue = computedStyle.getPropertyValue('--max-height') || '300px';
@@ -120,7 +120,6 @@
             // Create the expand button
             this.expandButton = document.createElement('button');
             this.expandButton.className = 'nds-btn nds-subtle nds-expand-btn nds-menu-btn nds-md';
-            NDS.aria.label(this.expandButton, 'Expand content');
             NDS.aria.expanded(this.expandButton, false);
 
             this.expandButton.innerHTML = `<span class="nds-label">${labels[NDS.langKey].showMore}</span>`;
@@ -152,7 +151,6 @@
             // Update button state
             if (this.expandButton) {
                 NDS.aria.expanded(this.expandButton, true);
-                NDS.aria.label(this.expandButton, 'Menu');
                 this.expandButton.querySelector('.nds-label').textContent = labels[NDS.langKey].showLess;
             }
 
@@ -174,7 +172,6 @@
             // Update button state
             if (this.expandButton) {
                 NDS.aria.expanded(this.expandButton, false);
-                NDS.aria.label(this.expandButton, 'Menu');
                 this.expandButton.querySelector('.nds-label').textContent = labels[NDS.langKey].showMore;
             }
 
@@ -251,6 +248,7 @@
 
         recheckHeight() {
             // Force recheck of content height (useful when element becomes visible)
+            this._cachedMaxHeight = undefined;
             this.checkContentHeight();
         }
 
@@ -303,8 +301,9 @@
     // already CSS-clamped before JS runs, so the sweep buys nothing by
     // staying on the critical path — NDS.onIdle keeps a page with many
     // expandables from paying it as one blocking task.
+    let swept = false;
     function initializeExpandableContent() {
-        NDS.onIdle(() => {
+        const sweep = () => {
             const expandableContainers = document.querySelectorAll('.nds-expandable');
 
             expandableContainers.forEach(container => {
@@ -316,7 +315,11 @@
                 // Only a valid construction stamps, so content that renders late stays eligible.
                 if (!container.hasAttribute('data-nds-expandable-initialized')) new NDSExpandable(container);
             });
-        });
+        };
+        // Idle only at page load: a later mount follows a user action, and an idle wait
+        // (up to 2s) leaves the new box with no fade or button.
+        if (swept) sweep();
+        else { swept = true; NDS.onIdle(sweep); }
     }
 
     // Re-initialize when new content is added
@@ -360,7 +363,7 @@
  *
  * // Manual initialization
  * const expandableElement = document.querySelector('#myExpandable');
- * const expandableInstance = NDSExpandable.create(expandableElement);
+ * const expandableInstance = NDS.Expandable.create(expandableElement);
  *
  * // Programmatic control
  * expandableInstance.expandContent();    // Expand content
@@ -382,7 +385,7 @@
  * });
  *
  * // Reinitialize after dynamic content changes
- * NDSExpandable.reinit();
+ * NDS.Expandable.reinit();
  *
  * // CSS Custom Properties:
  * // --max-height: Set custom height limit (default: 300px)
