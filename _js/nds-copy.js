@@ -23,7 +23,7 @@
  *   - Outside a secure context it falls back to a hidden textarea and execCommand, so a
  *     plain-HTTP dev address still copies.
  *   - flash() holds data-status="success" and aria-disabled for 2 seconds by default, then
- *     restores the icon and label and calls onRestore.
+ *     restores the icon and label and calls onRestore. A call during a flash is ignored.
  */
 /**
  * NDS Copy — shared clipboard utility with copy-button success state
@@ -105,7 +105,8 @@
     }
 
     function flash(button, options) {
-        if (!button) return;
+        // A second flash would snapshot the checkmark as the original icon (Enter skips pointer-events: none)
+        if (!button || NDS.Status.get(button) === 'success') return;
         const opts = options || {};
         const duration = opts.duration || DEFAULT_FLASH_MS;
 
