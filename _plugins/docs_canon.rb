@@ -70,6 +70,8 @@ module DocsCanon
     table.scan(%r{<tr>(.*?)</tr>}m).each do |(tr)|
       group, option, markup, target = tr.scan(%r{<td[^>]*>(.*?)</td>}m).flatten.map { |c| text(c) }
       c = (choices["#{group}|#{option}"] ||= { group: group, option: option })
+      # `(not: home)`: off on the structures marked `(id: home)`, for a shape with no class of its own to exclude.
+      c[:not] ||= option[/\(not:\s*([^)]*)\)/, 1]&.split(/[\s,]+/)
       target = target.to_s.sub(/\s*\((start|end|after)\)\z/, '')
       # `canon #id` swaps the markup in the Structure (or Example) group; anywhere else it inserts a part block.
       if markup =~ /\Acanon #([\w-]+)\z/
@@ -138,7 +140,7 @@ module DocsCanon
   def self.needs(choice, rows, canons, base)
     return '' unless choice[:targets]
 
-    providers = rows.reject { |r| r.equal?(choice) }.select do |r|
+    providers = rows.reject { |r| r.equal?(choice) || (structure?(r[:group]) && choice[:not]&.include?(r[:option][/\(id:\s*([\w-]+)\)/, 1])) }.select do |r|
       # A JS part is a run of options inside a call, not a call, so it never provides a create() target.
       own = [r[:structure], *r[:inserts]].compact.map { |cid| canons[cid] }
       own.reject! { |lang, _| lang == 'js' } unless r[:structure]
@@ -241,7 +243,7 @@ module DocsCanon
 
   # Option markers: `(default)` pre-selects; `(demo: + x)` also turns on the row marked `(id: x)`
   # (demo aid only); `(hint: text)` is a short description shown under the option in the sheet.
-  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/, '')
+  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
   # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner, and
@@ -368,7 +370,7 @@ module DocsCanon
       js = canons[attr(attrs, 'data-js')]&.last
       table = attr(attrs, 'data-variants')
       preview = lang == 'html' && attr(attrs, 'data-preview') != 'none'
-      # data-live: a page-shell canon changes the page's own copy (its footer); its preview card
+      # data-live: a shell canon changes the page's own copy (its footer); its preview card
       # holds a button that scrolls there.
       live = attr(attrs, 'data-live')
       builder = lang == 'html' && table && (preview || live)
@@ -381,8 +383,11 @@ module DocsCanon
         out << %(<div class="nds-divider nds-xl nds-doc-divider">Preview</div>\n) if table
         demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
+        # data-preview="page": the code is a whole <body>, previewed as a page of its own in a frame (nds-docs.js).
+        page = attr(attrs, 'data-preview') == 'page'
+        demo = '' if page
         # A builder's card names its builder, so Dark reaches the code too.
-        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}) : '"'
+        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}#{' data-preview-page' if page}) : '"'
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
         oncolor = preview && src.include?('nds-oncolor')
         out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(!%w[run js].include?(attr(attrs, 'data-preview'))) if preview && !stage_panel}#{demo}\n</div>\n)

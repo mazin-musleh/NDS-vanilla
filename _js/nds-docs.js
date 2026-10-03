@@ -16,6 +16,7 @@
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
  * data-preview="run" on an HTML canon does the same for markup that leaves the card (a FAB), with Clear.
  * data-preview="js" runs the JS tab after each render, for a component with no init (Sort).
+ * data-preview="page": the canon is a whole <body>, previewed as a page of its own in a frame.
  * data-harness="form" renders the preview inside a form with Validate and Reset buttons, outside the code.
  * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
  * stays in place, disabled, and its tooltip says why.
@@ -32,8 +33,8 @@
     // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
     var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input';
 
-    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name).
-    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*)\)/g, ''); }
+    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name), (not: ids).
+    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/g, ''); }
 
     function dedent(s) {
         s = s.replace(/^\s*\n/, '').replace(/\s+$/, '');
@@ -140,7 +141,8 @@
 
     // A lazy canon keeps its element in a <template>, which querySelectorAll does not enter.
     function targets(root, sel) {
-        if (!sel || sel === '—') return [root.firstElementChild];
+        // A page canon parses to a document: its outer element is <body>.
+        if (!sel || sel === '—') return [root.body || root.firstElementChild];
         var found = Array.prototype.slice.call(root.querySelectorAll(sel));
         Array.prototype.forEach.call(root.querySelectorAll('template'), function (t) {
             found = found.concat(targets(t.content, sel));
@@ -311,10 +313,18 @@
         // A group with no chip on starts on its default (None has no chip).
         order.forEach(function (g) { if (!active[g] && defaults[g]) active[g] = defaults[g]; });
         var pristine = document.createElement('div'), call = null, html = false, dark = false, darkWins = false, wasOncolor = false;
+        var page = script.getAttribute('data-preview') === 'page';
 
         // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
+        // `(not: home)`: off while the structure marked `(id: home)` is chosen.
+        function excluded(c) {
+            var not = c.option.match(/\(not:\s*([^)]*)\)/), sg = order.filter(function (g) { return STRUCT.test(g); })[0];
+            var id = not && sg && active[sg] && (active[sg].option.match(/\(id:\s*([\w-]+)\)/) || [])[1];
+            return !!id && not[1].split(/[\s,]+/).indexOf(id) >= 0;
+        }
         function applies(c) {
             if (c.structure) return true;
+            if (excluded(c)) return false;
             // A `—` row with a target (a default that fits only some structures) is checked too.
             var ops = c.ops.filter(function (o) { return o.op || (o.target && o.target !== '—'); });
             // Like the build, a descendant target never gates when the choice has a one-element target.
@@ -351,22 +361,26 @@
             // A JS-only structure (a toast) has no HTML form.
             html = srcEl.getAttribute('data-lang') !== 'js';
             var callEl = html ? jsEl : srcEl;
-            pristine.innerHTML = html ? dedent(srcEl.textContent) : '';
+            // A page canon is a whole <body>, which innerHTML drops: it parses as a document.
+            if (page) pristine = new DOMParser().parseFromString(dedent(srcEl.textContent), 'text/html');
+            else pristine.innerHTML = html ? dedent(srcEl.textContent) : '';
             call = callEl ? parseCall(dedent(callEl.textContent)) : null;
             [html && pristine, call].forEach(function (root) {
                 if (!root) return;
                 order.forEach(function (g) { if (defaults[g] && active[g] !== defaults[g]) unapply(root, defaults[g], active[g]); });
                 // A default choice is the canon as written, so it adds nothing.
-                order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'insert'); });
-                order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'markup'); });
+                // An option the structure excludes stays chosen, but adds nothing until a structure takes it.
+                var on = function (g) { return active[g] && active[g] !== defaults[g] && !excluded(active[g]); };
+                order.forEach(function (g) { if (on(g)) apply(root, active[g], 'insert'); });
+                order.forEach(function (g) { if (on(g)) apply(root, active[g], 'markup'); });
                 // A JS part whose create({ k: v }) target a markup row just set lands on a second pass.
-                if (root === call) order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'insert'); });
+                if (root === call) order.forEach(function (g) { if (on(g)) apply(root, active[g], 'insert'); });
             });
             showApplicable();
             // Dark: data-theme="dark" on the markup's outer element, so the copied code carries it.
-            if (dark) Array.prototype.forEach.call(pristine.children, function (el) { el.setAttribute('data-theme', 'dark'); });
+            if (dark) Array.prototype.forEach.call(page ? [pristine.body] : pristine.children, function (el) { el.setAttribute('data-theme', 'dark'); });
 
-            var out = html ? serialize(pristine) : '', js = call ? printCall(call) : '';
+            var out = page ? serialize(pristine.documentElement).replace(/^<head><\/head>/, '') : html ? serialize(pristine) : '', js = call ? printCall(call) : '';
             [[codeHtml, out], [codeJs, js]].forEach(function (pair) {
                 if (!pair[0] || !pair[1]) return;
                 pair[0].textContent = pair[1];
@@ -381,6 +395,7 @@
             if (liveEl) return renderLive();
             // The frame goes dark too, so a dark component is not shown on a light card.
             dark ? preview.setAttribute('data-theme', 'dark') : preview.removeAttribute('data-theme');
+            if (page) { preview.ndsOut = out; return frame(preview); }
             // A run card keeps its Run and Clear buttons: the next Run adds the code shown.
             // A choice also rebuilds the last copy added, so it changes on the spot.
             if (script.getAttribute('data-preview') === 'run') {
@@ -614,6 +629,8 @@
         var desk = screens.length && [screens[0].getAttribute('aria-label'), screens[0].querySelector('i').className];
         if (screens.length) NDS.onElementResize(card, function () {
             if (!card.clientWidth) return;
+            // A page preview scales every screen to fit, so none hides.
+            if (card.hasAttribute('data-preview-page')) return function () { fit(card); };
             var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * BEZEL;
             var tier = matchMedia(NDS.breakpoints.desktop).matches ? null : screens[matchMedia(NDS.breakpoints.tablet).matches ? 1 : 2];
             return function () {
@@ -641,10 +658,11 @@
     // shown in its slot, and keeps the card's other parts (a harness).
     var GUTTER = 24, BEZEL = 12, RADIUS = 36;
     function frame(card) {
-        var w = card.getAttribute('data-screen'), dev = card.querySelector('.nds-doc-device'), f = dev && dev.firstChild;
-        if (!w) { if (dev) dev.remove(); return; }
         // A plain card shows its canon as written; a builder's render keeps ndsOut current.
         if (card.ndsOut == null) card.ndsOut = dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
+        if (card.hasAttribute('data-preview-page')) return pageFrame(card);
+        var w = card.getAttribute('data-screen'), dev = card.querySelector('.nds-doc-device'), f = dev && dev.firstChild;
+        if (!w) { if (dev) dev.remove(); return; }
         // The card's dark goes on the frame's body, so the harness around the markup goes dark too.
         var theme = function (d) { var t = card.getAttribute('data-theme'); t ? d.body.setAttribute('data-theme', t) : d.body.removeAttribute('data-theme'); };
         var win = f && f.ndsSize === w && f.contentWindow, slot = win && win.NDS && f.contentDocument.querySelector('[data-demo-slot]');
@@ -682,11 +700,7 @@
             });
             return copy.outerHTML;
         }).join('');
-        // The NDS runtime: the page's own deferred scripts from assets/js (not docs-assets).
-        var runtime = Array.prototype.filter.call(document.querySelectorAll('script[defer][src]'), function (x) { return /\/assets\/js\//.test(x.src); })
-            .map(function (x) { return '<script defer src="' + x.src + '"></' + 'script>'; }).join('');
-        var root = Array.prototype.filter.call(document.documentElement.attributes, function (a) { return !/^data-nds-/.test(a.name); })
-            .map(function (a) { return a.name + '="' + a.value.replace(/"/g, '&quot;') + '"'; }).join(' ');
+        var runtime = runtimeScripts(), root = rootAttrs();
         f.onload = function () {
             theme(f.contentDocument);
             f.style.visibility = '';
@@ -699,6 +713,63 @@
             '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + GUTTER + 'px;' + lay + '}</style>' +
             '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
     }
+
+    // The NDS runtime: the page's own deferred scripts from assets/js (not docs-assets).
+    function runtimeScripts() {
+        return Array.prototype.filter.call(document.querySelectorAll('script[defer][src]'), function (x) { return /\/assets\/js\//.test(x.src); })
+            .map(function (x) { return '<script defer src="' + x.src + '"></' + 'script>'; }).join('');
+    }
+    function rootAttrs() {
+        return Array.prototype.filter.call(document.documentElement.attributes, function (a) { return !/^data-nds-/.test(a.name); })
+            .map(function (a) { return a.name + '="' + a.value.replace(/"/g, '&quot;') + '"'; }).join(' ');
+    }
+
+    // data-preview="page": the code is a whole <body>, so it previews as a page of its own, at the
+    // chosen screen's size (Desktop is 1280 wide), scaled down to fit the card. The header and
+    // footer are left out: only the code shows them. Each render loads a fresh frame over the old
+    // one and swaps when it is ready, so the preview never blanks.
+    var PAGE = '1280x800';
+    function pageFrame(card) {
+        var dev = card.querySelector('.nds-doc-device');
+        if (!dev) {
+            dev = document.createElement('div');
+            dev.className = 'nds-doc-device';
+            card.appendChild(dev);
+        }
+        var doc = new DOMParser().parseFromString(card.ndsOut, 'text/html');
+        doc.querySelectorAll('body > header, body > footer').forEach(function (el) { el.remove(); });
+        var f = document.createElement('iframe');
+        f.className = 'nds-doc-screen';
+        f.title = 'Preview';
+        f.style.visibility = 'hidden';
+        f.onload = function () {
+            dev.querySelectorAll('iframe').forEach(function (x) { if (x !== f) x.remove(); });
+            f.style.visibility = '';
+        };
+        dev.appendChild(f);
+        fit(card);
+        f.srcdoc = '<!doctype html><html ' + rootAttrs() + '><head><base target="_top">' + document.head.innerHTML +
+            // No header in the frame: sticky parts pin near its top, not under a missing nav.
+            '<style>:root{color-scheme:normal!important;--nds-nav-height:var(--spacing-md)}</style></head>' + doc.body.outerHTML.replace(/<\/body>$/, runtimeScripts() + '</body>') + '</html>';
+    }
+    function fit(card) {
+        var dev = card.querySelector('.nds-doc-device');
+        if (!dev) return;
+        var size = (card.getAttribute('data-screen') || PAGE).split('x'), w = +size[0], h = +size[1];
+        var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * BEZEL;
+        var s = Math.min(1, room / w);
+        dev.style.cssText = 'width:' + (w * s + 2 * BEZEL) + 'px;height:' + (h * s + 2 * BEZEL) + 'px;border-radius:' + RADIUS + 'px';
+        dev.querySelectorAll('iframe').forEach(function (f) {
+            f.style.top = f.style.left = BEZEL + 'px';
+            f.style.width = w + 'px';
+            f.style.height = h + 'px';
+            f.style.borderRadius = (RADIUS - BEZEL) / s + 'px';
+            f.style.transform = 'scale(' + s + ')';
+            f.style.transformOrigin = '0 0';
+        });
+    }
+    // A page card has no slot: its first frame loads with the page.
+    document.querySelectorAll('[data-preview-page]').forEach(frame);
 
     // data-preview="run": Run mounts a copy of the code shown in the card's held box, where it can
     // leave the card (a FAB docks at the screen edge). Each copy's ids get its own suffix, so each

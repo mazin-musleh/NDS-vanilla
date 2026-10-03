@@ -103,6 +103,14 @@ def check(path):
             if len(r) == 5:
                 errs += [f'#{tid}: {r[0]} / {r[1]}: (demo: + {d}) names no (id: {d}) row'
                          for d in re.findall(r'\(demo:\s*\+\s*([^)]*?)\s*\)', r[1]) if d not in row_ids]
+        # `(not: x)` turns a row off on the structures marked `(id: x)`, so their canons may carry it.
+        struct_of = {}
+        for r in rows:
+            if len(r) == 5 and r[0] in ('Structure', 'Example'):
+                sid = re.search(r'\(id:\s*([\w-]+)\)', r[1])
+                ref = re.search(r'canon `?#([\w-]+)', r[2])
+                if sid:
+                    struct_of[ref.group(1) if ref else cid] = sid.group(1)
         for row in rows:
             if len(row) != 5:
                 errs.append(f'#{tid}: row with {len(row)} cells: {" | ".join(row)[:80]}')
@@ -126,7 +134,9 @@ def check(path):
                 if name not in attrs:
                     return False
                 return value is None or (value in attrs[name].split() if tilde else attrs[name] == value)
-            for t, cls, attrs in tags(html):
+            nots = set(re.findall(r'[\w-]+', (re.search(r'\(not:([^)]*)\)', option) or [None, ''])[1]))
+            scope = '\n'.join(b for c, a, b in canons if c in named and struct_of.get(c) not in nots and (attr(a, 'data-lang') or 'html') == 'html') if nots else html
+            for t, cls, attrs in tags(scope):
                 if want <= cls and not (skip & cls) and (not tag or t == tag.group(1)) and has(cls, attrs):
                     errs.append(f'#{tid}: {group} / {option}: a canon already has {markup} on {target}')
                     break
