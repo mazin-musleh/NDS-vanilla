@@ -22,7 +22,7 @@
 
     // Padding gives the focus outline breathing room; negative margin
     // cancels it so surrounding text doesn't shift.
-    &:focus-visible {
+    &:focus-visible:not(:where(.nds-brand)) {
         padding: 2px 4px;
         margin: -2px -4px;
     }
