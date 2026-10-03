@@ -710,7 +710,7 @@
             .map(function (k) { return k + ':' + cs.getPropertyValue(k); }).join(';');
         // base target: a link opens its page in the window, not in the frame.
         f.srcdoc = '<!doctype html><html ' + root + '><head><base target="_top">' + document.head.innerHTML +
-            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + GUTTER + 'px;' + lay + '}</style>' +
+            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + GUTTER + 'px;' + lay + ';justify-content:flex-start}</style>' +
             '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
     }
 
