@@ -20,7 +20,7 @@ sidemenu_mode: false
     <div class="nds-section-body">
 
         <div class="nds-info-content">
-            <p class="nds-required-notice"><span class="nds-label">*Required information</span></p>
+            <p class="nds-note nds-block" data-status="error"><span class="nds-label">*Required information</span></p>
 
             <!-- data-ajax: Forms owns the submit listener and stops the POST itself
                  after validation. Send the request from nds:formValid. -->
@@ -457,7 +457,7 @@ sidemenu_mode: false
             return new Promise(resolve => setTimeout(resolve, 1200));
         }
 
-        const requiredNotice = document.querySelector('#formTemplate .nds-required-notice');
+        const requiredNotice = document.querySelector('#formTemplate .nds-note');
         const formSection = document.getElementById('formTemplate');
 
         function showPanel(step) {

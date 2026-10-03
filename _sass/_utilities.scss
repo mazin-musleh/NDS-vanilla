@@ -180,27 +180,16 @@
 // a footnote under a table, or a hint beside a label. Status tints the text.
 // For a note that needs an icon or a box, use Feedback or Alert instead.
 // Plain class specificity, not :where() — a note carries meaning, so it should
-// not lose to any class that happens to land on the same element. Legacy
-// .nds-required-notice rides along as the error case.
-:is(.nds-note, .nds-required-notice) {
+// not lose to any class that happens to land on the same element.
+.nds-note {
   color: var(--text-secondary-paragraph);
   font-size: var(--typo-text-sm-FS);
   line-height: var(--typo-text-sm-LH);
-}
 
-.nds-note {
   &[data-status="error"] { color: var(--text-error); }
   &[data-status="warning"] { color: var(--text-warning); }
   &[data-status="success"] { color: var(--text-success); }
   &[data-status="info"] { color: var(--text-info); }
-}
-
-// The alias is the error note plus the block spacing it shipped with. .nds-note
-// carries none, so it stays safe beside a label, where a flex parent would
-// blockify a span.
-.nds-required-notice {
-  color: var(--text-error);
-  margin-block-end: var(--spacing-md);
 }
 
 // ==============================================
