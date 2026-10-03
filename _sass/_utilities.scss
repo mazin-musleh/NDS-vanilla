@@ -68,8 +68,7 @@
   &[data-unit]:not([data-currency]) {
     @include ltr { flex-direction: row; }
   }
-  // Zero-price display: render the label as-is (e.g. "Free") and suppress
-  // the currency icon. Pairs with data-currency for consistent typography.
+  // Deprecated (DEPRECATIONS.md): same as leaving out data-currency.
   &[data-free]::after {
     display: none;
   }

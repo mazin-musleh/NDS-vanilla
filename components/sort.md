@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "03/10/2026 - 06:51 PM"
 ---
 
 <section id="sortOverview" class="nds-content-section nds-doc-overview">
@@ -116,7 +116,7 @@ The root holds both the triggers and the items, so the selector strings resolve 
           <span class="nds-card-title">Identity Verification</span>
         </div>
         <div class="nds-card-value">
-          <span class="nds-number-format" data-currency="SAR" data-free>Free</span>
+          <span class="nds-number-format">Free</span>
         </div>
       </div>
     </div>
@@ -196,7 +196,7 @@ The root holds both the triggers and the items, so the selector strings resolve 
           <span class="nds-card-title">Identity Verification</span>
         </div>
         <div class="nds-card-value">
-          <span class="nds-number-format" data-currency="SAR" data-free>Free</span>
+          <span class="nds-number-format">Free</span>
         </div>
       </div>
     </div>
