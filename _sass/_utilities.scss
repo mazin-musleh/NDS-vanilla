@@ -248,7 +248,7 @@
   --placeholder-LH: var(--typo-text-2xs-LH);
   // One control tall (a default button), so it can stand in for a toolbar slot.
   min-height: max(40px, 100%);
-  padding: var(--spacing-xs) var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
 }
 
 .nds-content-placeholder.nds-lg {
