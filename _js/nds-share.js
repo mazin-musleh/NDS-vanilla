@@ -7,30 +7,17 @@
  *   (none)
  * Hooks:
  *   data-share-url     on the .nds-share wrapper; defaults to the page URL. A URL whose
- *                      scheme is not http(s) is rejected and the page URL is used
+ *                      scheme is not http(s), mailto or tel is rejected and the page URL is used
  *   data-share-title   on the wrapper; defaults to document.title
+ *   data-share-href    on any other button in the wrapper: a link pattern for a target the
+ *                      classes don't cover; {url} and {title} are filled in, encoded
  * Gotchas:
- *   - Buttons are identified by CLASS, not by an attribute: .nds-share-x,
- *     .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy.
- *   - X, LinkedIn and WhatsApp open a 600×400 popup window.
+ *   - The built-in targets are identified by CLASS: .nds-share-x, .nds-share-linkedin,
+ *     .nds-share-whatsapp, .nds-share-copy. A class wins over data-share-href.
+ *   - X, LinkedIn, WhatsApp and data-share-href open a 600×400 popup window; a mailto: or
+ *     tel: pattern opens in the same tab, so no empty window stays behind.
  *   - init() stamps .nds-share-menu on each share dropmenu, so styling survives the menu
  *     portaling to <body>.
- */
-/**
- * NDS Share — standalone share-page utility
- *
- * Binds to any `.nds-share` wrapper containing share buttons with one of
- * `.nds-share-x`, `.nds-share-linkedin`, `.nds-share-whatsapp`,
- * `.nds-share-copy`. Works with either a `.nds-dropmenu` trigger or an
- * `.nds-inline` row of buttons — the module only wires click handlers.
- *
- * Per-instance overrides on the `.nds-share` wrapper:
- *   - data-share-url="https://…"   defaults to window.location.href
- *   - data-share-title="…"         defaults to document.title
- *
- * Public API:
- *   NDS.Share.init()   Delegate click on '.nds-share'. Called by the loader.
- *                      Repeat-safe via AbortController.
  */
 (function () {
     'use strict';
@@ -89,9 +76,18 @@
         else if (button.classList.contains('nds-share-linkedin')) shareOnLinkedIn(url);
         else if (button.classList.contains('nds-share-whatsapp')) shareOnWhatsApp(url, title);
         else if (button.classList.contains('nds-share-copy')) copyLink(url, button);
+        else shareOnHref(button.getAttribute('data-share-href'), url, title);
     }
 
-    const TARGET_SELECTOR = '.nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy';
+    function shareOnHref(template, url, title) {
+        const href = NDS.safeUrl(template && template.replace(/\{(url|title)\}/g, (_, key) => encodeURIComponent(key === 'url' ? url : title)));
+        if (!href) return;
+        // A mail or phone link opens its app; in a popup it would leave an empty window
+        if (/^(mailto|tel):/.test(href)) window.location.href = href;
+        else openPopup(href);
+    }
+
+    const TARGET_SELECTOR = '.nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy, [data-share-href]';
 
     let _abortController = null;
     function init() {
