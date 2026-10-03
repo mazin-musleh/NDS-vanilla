@@ -2,208 +2,58 @@
 layout: page
 title: Request
 hero_title: Request - National Design System
-hero_description: A fetch wrapper that applies a timeout, a response size cap, and a status check to every call, then hands back parsed JSON or raw text. Use it anywhere you would reach for fetch so a hung endpoint or an oversized response cannot leave your UI stuck.
+hero_description: A fetch wrapper that adds a timeout, a response size cap and an error on a failed status, then returns the body as JSON or text
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.6.0"
-updated: "1.6.0"
-last_edit: "29/07/2026 - 03:35 PM"
+updated: "1.12.0"
+last_edit: "03/10/2026 - 11:54 PM"
 ---
 
-<!-- Overview -->
-<section id="requestOverview" class="nds-content-section nds-demo-section">
+<section id="requestOverview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
-      <p class="nds-section-description"><code class="nds-inline-code lang-js">NDS.request()</code> ships in the main bundle and is available on every page. It owns the part of a request that is easy to get wrong: aborting on time, refusing a response that is too large, throwing on a non-OK status, and deciding whether the body is JSON. Every component in the system that fetches goes through it.</p>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-clock-01"></i>
-            <span class="nds-label">Timeout by default</span>
-          </span>
-          <p class="nds-item-desc">Every call aborts after 15 seconds unless you set your own. A stalled endpoint surfaces as a rejection instead of a spinner that never stops.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-database"></i>
-            <span class="nds-label">Response size cap</span>
-          </span>
-          <p class="nds-item-desc">Bodies are streamed and cancelled the moment they pass <code class="nds-inline-code lang-js">maxBytes</code>, so an unexpectedly huge response is refused rather than parsed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cancel-01"></i>
-            <span class="nds-label">Abort composition</span>
-          </span>
-          <p class="nds-item-desc">Pass your own <code class="nds-inline-code lang-js">signal</code> and it is combined with the timeout, so a superseding request and an expiry both cancel cleanly through one channel.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-source-code"></i>
-            <span class="nds-label">JSON or text, decided for you</span>
-          </span>
-          <p class="nds-item-desc">The <code class="nds-inline-code lang-js">Content-Type</code> header picks the branch, and <code class="nds-inline-code lang-js">json: true</code> forces parsing when you know the endpoint better than its headers do.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-alert-circle"></i>
-            <span class="nds-label">Errors you can branch on</span>
-          </span>
-          <p class="nds-item-desc">Failures carry <code class="nds-inline-code lang-js">status</code> and <code class="nds-inline-code lang-js">name</code>, so retry logic never has to match on a message string.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sliders-horizontal"></i>
-            <span class="nds-label">Every fetch option still works</span>
-          </span>
-          <p class="nds-item-desc">Anything you would pass to <code class="nds-inline-code lang-js">fetch</code>, including <code class="nds-inline-code lang-js">method</code>, <code class="nds-inline-code lang-js">headers</code>, <code class="nds-inline-code lang-js">body</code>, and <code class="nds-inline-code lang-js">credentials</code>, is forwarded untouched.</p>
-        </div>
-      </div>
-    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+`NDS.request(url, options)` calls `fetch` and returns a promise of `{ isJson, data }`. It handles the response only. Your code builds the request, shows the loading state and writes the result into the page.
+
+It is in the main bundle, so every page has it, with no init call. Every NDS component that loads data uses it, except File Upload.
+
+Pick another component when:
+
+- the user uploads a file and needs a progress bar: [File Upload](../components/upload)
+
+</div>
   </div>
 </section>
 
-<!-- Basic Example -->
-<section id="requestExample" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Example</h2>
-      <p class="nds-section-description">The default shape: read JSON, render on success, branch on <code class="nds-inline-code lang-js">error.status</code> for known failure modes.</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-label">Read JSON from an endpoint</div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-request-basic-1" id="tab-request-basic-1">
-                    <span class="nds-tab-label">JS</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-request-basic-1"
-                  aria-labelledby="tab-request-basic-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <code class="lang-js code">
-try {
-  const { data } = await NDS.request('/api/services', { json: true });
-  renderServices(data);
-} catch (error) {
-  if (error.status === 404) return showEmptyState();
-  showError();
-}
-              </code>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Options -->
-<section id="requestOptions" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Options</h2>
-      <p class="nds-section-description">Four options belong to the helper. Everything else in the object is handed to <code class="nds-inline-code lang-js">fetch</code> as-is, so any option <code class="nds-inline-code lang-js">fetch</code> supports now or gains later works without a change here. The trade is a shared name space: these four names are ones <code class="nds-inline-code lang-js">fetch</code> can never use, which is why they stay deliberately outside its vocabulary.</p>
-    </div>
-    <div class="nds-section-body">
-      <table class="nds-table nds-responsive">
-        <thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><code class="nds-inline-code lang-js">timeout</code></td><td>15000</td><td>Milliseconds before the request aborts. Set <code class="nds-inline-code lang-js">0</code> to opt out entirely, for a long poll or a stream.</td></tr>
-          <tr><td><code class="nds-inline-code lang-js">maxBytes</code></td><td>1048576</td><td>Ceiling on the response body, in bytes. Raise it for HTML fragments, which run larger than JSON payloads.</td></tr>
-          <tr><td><code class="nds-inline-code lang-js">json</code></td><td>sniffed</td><td>Forces the JSON branch on or off. Without it the <code class="nds-inline-code lang-js">Content-Type</code> header decides. Pass <code class="nds-inline-code lang-js">true</code> when the endpoint returns JSON but the host may mislabel it.</td></tr>
-          <tr><td><code class="nds-inline-code lang-js">signal</code></td><td>none</td><td>Your own <code class="nds-inline-code lang-js">AbortSignal</code>, combined with the timeout rather than replacing it.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- Result -->
-<section id="requestResult" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Result and Failures</h2>
-      <p class="nds-section-description">A resolved call returns an object, so it can grow new fields later without breaking callers. A rejected call throws an <code class="nds-inline-code lang-js">Error</code> you can classify without reading its message.</p>
-    </div>
-    <div class="nds-section-body">
-      <table class="nds-table nds-responsive">
-        <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><code class="nds-inline-code lang-js">isJson</code></td><td>boolean</td><td>Whether the body was treated as JSON.</td></tr>
-          <tr><td><code class="nds-inline-code lang-js">data</code></td><td>object | string</td><td>Parsed JSON, or the raw text when it is not JSON. An empty body yields an empty string.</td></tr>
-        </tbody>
-      </table>
-      <table class="nds-table nds-responsive">
-        <thead><tr><th>Failure</th><th>How to detect it</th></tr></thead>
-        <tbody>
-          <tr><td>Non-OK status</td><td><code class="nds-inline-code lang-js">error.status</code> holds the HTTP code, <code class="nds-inline-code lang-js">error.url</code> the request URL, and <code class="nds-inline-code lang-js">error.body</code> a best-effort slice of the response body (first ~512 bytes, <code class="nds-inline-code lang-js">undefined</code> if the read failed). Surface it in the toast or log so the operator sees what the server actually said.</td></tr>
-          <tr><td>Timeout reached</td><td><code class="nds-inline-code lang-js">error.name === 'TimeoutError'</code></td></tr>
-          <tr><td>Aborted by your signal</td><td><code class="nds-inline-code lang-js">error.name === 'AbortError'</code>. Usually means a newer request replaced this one, so most callers stay silent here.</td></tr>
-          <tr><td>Over <code class="nds-inline-code lang-js">maxBytes</code></td><td>Neither a status nor a recognised name is present.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- Usage -->
-<section id="requestUsage" class="nds-content-section nds-demo-section">
+<section id="requestMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage</h2>
-      <p class="nds-section-description">Two more shapes cover the rest: a read a later interaction can cancel, and a read whose failure has to leave the page consistent.</p>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
+    <div class="nds-section-body nds-prose" markdown="1">
 
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-label">Cancel a request that a newer one replaces</div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-request-abort-1" id="tab-request-abort-1">
-                    <span class="nds-tab-label">JS</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-abort-1"
-                  aria-labelledby="tab-request-abort-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-js code">
+Read JSON from an endpoint. A failed status rejects the promise, so a 404 reaches the `catch`.
+
+<script type="text/html" id="request-read" data-canon data-lang="js">
+async function loadServices() {
+  try {
+    const { data } = await NDS.request('/api/services', { json: true });
+    renderServices(data);
+  } catch (error) {
+    if (error.status === 404) return showEmptyState();
+    showError();
+  }
+}
+</script>
+
+Cancel a search when a newer search replaces it.
+
+<script type="text/html" id="request-cancel" data-canon data-lang="js">
 let controller;
 
 async function search(term) {
@@ -213,164 +63,187 @@ async function search(term) {
 
   setLoading(true);
   try {
-const { data } = await NDS.request(`/api/search?q=${encodeURIComponent(term)}`,
-                                   { signal, json: true });
-renderResults(data);
+    const { data } = await NDS.request(`/api/search?q=${encodeURIComponent(term)}`, { signal, json: true });
+    renderResults(data);
   } catch (error) {
-// A newer search aborted this one. It owns the loading state now,
-// so clearing it here would kill a spinner that is still needed.
-if (error.name === 'AbortError') return;
-showError();
+    // A newer search aborted this one.
+    if (error.name === 'AbortError') return;
+    showError();
   } finally {
-if (controller.signal === signal) setLoading(false);
+    // A newer search owns the loading state: clear it only from the latest one.
+    if (controller.signal === signal) setLoading(false);
   }
 }
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+</script>
+
+</div>
+  </div>
+</section>
+
+<section id="requestFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-clock-01"></i>
+            <span class="nds-label">Timeout by Default</span>
+          </span>
+          <p class="nds-item-desc">A request aborts after 15 seconds unless you set <code class="nds-inline-code lang-js">timeout</code>. When a server never answers, the promise rejects with a <code class="nds-inline-code lang-js">TimeoutError</code>.</p>
         </div>
-
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-label">Leave the page consistent when a request fails</div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-request-rollback-1" id="tab-request-rollback-1">
-                    <span class="nds-tab-label">JS</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-rollback-1"
-                  aria-labelledby="tab-request-rollback-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-js code">
-// Taking over Filter's AJAX submission. Chips, badge and URL params are
-// already committed when this fires, so a failed request has to put them
-// back: otherwise they describe results that were never rendered.
-filterEl.addEventListener('nds:filterFormAjax', (e) =&gt; {
-  e.preventDefault();
-
-  const params = new URLSearchParams(new FormData(e.detail.form));
-
-  NDS.request(`/api/search?${params}`, { json: true })
-.then(({ data }) =&gt; renderResults(data.Records))
-.catch(() =&gt; e.detail.rollback());
-});
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-database"></i>
+            <span class="nds-label">Response Size Cap</span>
+          </span>
+          <p class="nds-item-desc">The body is read as a stream and cancelled once it passes <code class="nds-inline-code lang-js">maxBytes</code>. When the <code class="nds-inline-code lang-js">Content-Length</code> header is already over the cap, the body is refused unread.</p>
         </div>
-
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-cancel-01"></i>
+            <span class="nds-label">Combined Abort Signals</span>
+          </span>
+          <p class="nds-item-desc">Your <code class="nds-inline-code lang-js">signal</code> and the timeout control the same request. Either one aborts it, and the error name says which.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-source-code"></i>
+            <span class="nds-label">JSON or Text</span>
+          </span>
+          <p class="nds-item-desc">The <code class="nds-inline-code lang-js">Content-Type</code> header decides how the body is read. <code class="nds-inline-code lang-js">json: true</code> parses it as JSON whatever the header says.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-alert-circle"></i>
+            <span class="nds-label">Errors With a Status</span>
+          </span>
+          <p class="nds-item-desc">A failed status rejects with an error that holds the HTTP code, the URL and the start of the response body.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-sliders-horizontal"></i>
+            <span class="nds-label">Fetch Options</span>
+          </span>
+          <p class="nds-item-desc">Every other option goes to <code class="nds-inline-code lang-js">fetch</code> unchanged, such as <code class="nds-inline-code lang-js">method</code>, <code class="nds-inline-code lang-js">headers</code>, <code class="nds-inline-code lang-js">body</code> and <code class="nds-inline-code lang-js">credentials</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-browser"></i>
+            <span class="nds-label">Older Safari</span>
+          </span>
+          <p class="nds-item-desc">Safari before 17.4 has no <code class="nds-inline-code lang-js">AbortSignal.any</code>. There, <code class="nds-inline-code lang-js">NDS.request</code> combines the signals itself, and the error names stay the same.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="requestGuidelines" class="nds-content-section nds-demo-section">
+<section id="requestPractices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Usage Guidelines</h2>
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
-    <div class="nds-section-body">
+    <div class="nds-section-body nds-prose" markdown="1">
 
-      <div class="nds-block nds-prose">
-        <h3 class="nds-block-title">Best Practices</h3>
-        <ul>
-          <li>Reach for it wherever you would call <code class="nds-inline-code lang-js">fetch</code> to read a response. The guards it adds are the ones every caller eventually needs and rarely writes.</li>
-          <li>Pass <code class="nds-inline-code lang-js">json: true</code> whenever you know the endpoint returns JSON. Static hosts and misconfigured servers label JSON as <code class="nds-inline-code lang-js">text/plain</code> often enough that trusting the header silently hands you a string.</li>
-          <li>Raise <code class="nds-inline-code lang-js">maxBytes</code> for HTML fragments. The default suits JSON payloads, and a full page of markup can legitimately exceed it.</li>
-          <li>Treat <code class="nds-inline-code lang-js">AbortError</code> as silent. It means a newer request replaced this one, so showing an error would report a failure the user did not experience.</li>
-          <li>Branch on <code class="nds-inline-code lang-js">error.status</code> and <code class="nds-inline-code lang-js">error.name</code>, never on the message text. Messages change; those two do not.</li>
-          <li>Guard whatever you release in a <code class="nds-inline-code lang-js">finally</code> block. When a superseding request has already taken over the loading state, clearing it there hides a spinner that is still needed.</li>
-          <li>Do not use it for uploads that need progress events. Those require <code class="nds-inline-code lang-js">XMLHttpRequest</code>, which is what <a class="nds-color" href="{{ 'components/upload' | relative_url }}">Upload</a> uses.</li>
-          <li>Best-effort widget that wants a fallback instead of a throw on non-OK? A one-line wrapper at the call site is enough — no option needed here: <code class="nds-inline-code lang-js">const optional = (url, opts) =&gt; NDS.request(url, opts).catch(err =&gt; err.status ? null : Promise.reject(err));</code></li>
-          <li>Do not wrap it in a retry helper without checking the request is safe to repeat. A filter or form submission may not be idempotent.</li>
-          <li>Set <code class="nds-inline-code lang-js">timeout: 0</code> only for a connection meant to stay open. Every ordinary request is better off failing than hanging.</li>
-        </ul>
-      </div>
+- Use `NDS.request` wherever you would call `fetch` to read a response.
+- Pass `json: true` when you know the endpoint returns JSON. Some servers label JSON as `text/plain`, and `data` is then a string.
+- Raise `maxBytes` for an HTML fragment. A full page of markup can pass 1 MB.
+- Set `timeout: 0` only for a connection that stays open on purpose, such as a long poll.
+- Branch on `error.status` and `error.name`, not on the message. Only the size error needs its message.
+- Ignore an `AbortError` in the `catch`. It comes from your own `abort()` call, so the user saw no failure.
+- Log `error.body` with the status. It shows what the server said.
+- For a fallback value instead of an error on a failed status, wrap the call: `const optional = (url, opts) => NDS.request(url, opts).catch(err => err.status ? null : Promise.reject(err));`
+- Write retry, caching or interceptors in your own code: `NDS.request` has none. The browser's HTTP cache still works, as it does for `fetch`.
+- Check that a request is safe to send twice before you retry it. A form submission may not be.
 
-      <div class="nds-block nds-prose">
-        <h3 class="nds-block-title">What it does not do</h3>
-        <p>The helper owns the response contract and nothing else, which keeps it predictable across every component that calls it. It does not manage loading state, apply a response to the DOM, or build the request for you. It adds no retry, no caching, and no interceptors: pass <code class="nds-inline-code lang-js">cache: 'default'</code> through to <code class="nds-inline-code lang-js">fetch</code> and the browser HTTP cache handles repeat reads.</p>
-      </div>
+</div>
+  </div>
+</section>
 
-      <div class="nds-block nds-prose">
-        <h3 class="nds-block-title">JavaScript API</h3>
-        <p>Available on every page as part of the main bundle. No initialization required.</p>
-      </div>
-      <div class="nds-tabs nds-code nds-divided">
-          <div class="nds-tab-list-container nds-scroll-more">
-            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-              <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                aria-controls="panel-request-api-1" id="tab-request-api-1">
-                <span class="nds-tab-label">JS API</span>
-              </button>
-            </nav>
-            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-            </button>
-          </div>
-          <div class="nds-tab-content">
-            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-api-1"
-              aria-labelledby="tab-request-api-1">
-              <div class="nds-code-action">
-                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                  <i class="nds-icon nds-hgi-copy-01"></i>
-                </button>
-              </div>
-              <div class="nds-expandable-content">
-                <code class="lang-js code">
-NDS.request(url, options) → Promise&lt;{ isJson, data }&gt;
+<section id="requestApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-// options
-//   timeout   number   ms before abort (default 15000, 0 disables)
-//   maxBytes  number   response ceiling in bytes (default 1048576)
-//   json      boolean  force the JSON branch (default: sniff Content-Type)
-//   signal    AbortSignal  your own signal, combined with the timeout
-//   ...rest   forwarded to fetch (method, headers, body, credentials, cache, …)
+### Options
+{: .nds-block-title}
 
-// resolves
-//   isJson    boolean  whether the body was treated as JSON
-//   data      object | string  parsed JSON, or raw text
+| Option | Default | Effect |
+|---|---|---|
+| `timeout` | `15000` | Milliseconds before the request aborts with a `TimeoutError`. `0` turns the timeout off |
+| `maxBytes` | `1048576` (1 MB) | The largest response body, in bytes. A larger body rejects the promise |
+| `json` | the `Content-Type` header | `true` parses the body as JSON, and `false` returns it as text. Without it, the body is parsed only when `Content-Type` holds `application/json` |
+| `signal` | none | Your own `AbortSignal`. It aborts the request together with the timeout: the first one to fire wins |
+| any other option | — | Passed to `fetch` unchanged, such as `method`, `headers`, `body`, `credentials` and `cache`. A JSON `body` needs `JSON.stringify()` and its own `Content-Type` header, as with `fetch` |
+{: .nds-table .nds-responsive}
 
-// rejects
-//   error.status              HTTP code on a non-OK response
-//                             (error.url and error.body — first ~512 bytes of the
-//                             response body, undefined if the read failed — set too)
-//   error.name 'TimeoutError' the timeout elapsed
-//   error.name 'AbortError'   your signal aborted, usually a superseding request
-//   neither                   the response exceeded maxBytes
+### Result
+{: .nds-block-title}
 
-// POST a form and read an HTML fragment back
-const { isJson, data } = await NDS.request('/api/search', {
+| Property | Holds |
+|---|---|
+| `isJson` | `true` when the body was parsed as JSON |
+| `data` | The parsed JSON, or the body as text. An empty body gives `''`, also with `json: true` |
+{: .nds-table .nds-responsive}
+
+### Failures
+{: .nds-block-title}
+
+The promise rejects with an error. Tell the failures apart by these tests:
+
+| Failure | Test | Detail |
+|---|---|---|
+| A status outside 200 to 299 | `error.status` is set | `status` is the HTTP code, and `url` is the URL you passed. `body` holds up to 512 characters of the response, or `undefined` when they cannot be read |
+| Timeout | `error.name === 'TimeoutError'` | The request passed `timeout` |
+| Your signal aborted | `error.name === 'AbortError'` | The name is `AbortError` only when you call `abort()` with no reason. A reason you pass to `abort()` becomes the error |
+| Body too large | `error.message === 'Response too large'` | The `Content-Length` header, or the body read so far, passed `maxBytes` |
+| Network failure | `error.name === 'TypeError'` | `fetch` got no response: the network is down, or the browser blocked the request |
+| Invalid JSON | `error.name === 'SyntaxError'` | The body was parsed as JSON and was not valid JSON |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.request(url, options)` | Sends the request. Returns a promise of `{ isJson, data }` |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="request-api-js" data-canon data-lang="js">
+// Post a form and read the HTML fragment it returns.
+// A page of markup can pass 1 MB, so raise the cap to 4 MB.
+const form = document.querySelector('#search-form');
+const { data } = await NDS.request(form.action, {
   method: 'POST',
   body: new FormData(form),
   maxBytes: 4194304
 });
-            </code>
-              </div>
-            </div>
-          </div>
-        </div>
+// data holds the HTML as text.
+</script>
 
+The full API is in the banner of `_js/nds-core.js`, and in the comment above `NDS.request` there.
+
+</div>
+  </div>
+</section>
+
+<section id="requestRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Filter](../components/filter): the `nds:filterFormAjax` event lets you send the search yourself. Its `rollback()` puts the chips, the badge and the URL back when your request fails.
+- [User Feedback](../components/user-feedback): Submit sends the form with `NDS.request`.
+- [Cooldown Button](../components/cooldown-button): a resend request that resets the cooldown when it fails.
+- [Autocomplete](../components/autocomplete): loads its results with `NDS.request`.
+
+</div>
   </div>
 </section>

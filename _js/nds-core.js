@@ -27,7 +27,7 @@
  *     NDS.stickyHeaderBottom() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.gridLastRow(container) · NDS.trapFocus(getEl) · NDS.focusableSel
  *   data + text
- *     NDS.request(url, opts) → Promise<{data, response}>   the shared fetch wrapper
+ *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
  *     NDS.cache.get / .set (key, value, minutes)           localStorage with expiry
  *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.announce(text)               say something in the shared live region
