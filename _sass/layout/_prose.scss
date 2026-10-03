@@ -90,6 +90,16 @@
     > :where(*:last-child) {
         margin-block-end: 0;
     }
+
+    // The first and last SHOWN child (the global hide list; data-state hidden mirrors to .nds-hidden).
+    // Own rules: a browser without `of S` (pre-2023) drops them and keeps the two above.
+    > :where(:nth-child(1 of :not(.nds-hidden, [hidden], [data-filtered]))) {
+        margin-block-start: 0;
+    }
+
+    > :where(:nth-last-child(1 of :not(.nds-hidden, [hidden], [data-filtered]))) {
+        margin-block-end: 0;
+    }
 }
 
 .nds-prose {
