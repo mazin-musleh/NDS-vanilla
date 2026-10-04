@@ -2,715 +2,575 @@
 layout: page
 title: Side Menu
 hero_title: Side Menu - National Design System
-hero_description: A persistent sidebar for navigating sections and pages within a site, with collapsible accordion groups, responsive slide-in and top dropdown modes, and active page tracking.
+hero_description: The menu beside the content that links the pages of one part of the site, in groups that open and close.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "27/08/2026 - 01:04 AM"
+updated: "1.12.x"
+last_edit: "04/10/2026 - 06:57 PM"
 ---
 
-<!-- Side Menu Structure -->
-<section id="sideNavStructure" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Side Menu Structure</h2>
-            <p class="nds-section-description">The side menu sits inside the content layout wrapper alongside the main content area. It uses the drawer component internally for scrollable, collapsible list navigation. The markup below is the plain baseline. This site's own side menu also carries <code class="nds-inline-code lang-html">nds-lined</code> on the drawer, which draws the vertical rail beside each submenu. That class is optional. See <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> for that class and the other drawer variants.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Component Tree</div>
-                        </div>
-                        <div class="demo-container nds-noBg">
-                            <div class="nds-code nds-expandable">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
-aside.nds-sidemenu (direct child of div.nds-content-layout.nds-wSideMenu)
-&#9500;&#9472;&#9472; button.nds-sidemenu-toggle.nds-btn.nds-peek
-&#9474;   &#9500;&#9472;&#9472; i.hgi.hgi-stroke.hgi-menu-02.nds-icon
-&#9474;   &#9492;&#9472;&#9472; span.nds-label.nds-truncate (toggle label, hidden on desktop)
-&#9474;
-&#9492;&#9472;&#9472; nav.nds-drawer.nds-divided.nds-full-height
-    &#9492;&#9472;&#9472; div.nds-scroll-more.nds-divided
-        &#9500;&#9472;&#9472; ul.nds-drawer-list.nds-scroll-more-content
-        &#9474;   &#9500;&#9472;&#9472; li (flat link)
-        &#9474;   &#9474;   &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
-        &#9474;   &#9474;       &#9492;&#9472;&#9472; span.nds-label
-        &#9474;   &#9492;&#9472;&#9472; li (accordion section)
-        &#9474;       &#9500;&#9472;&#9472; button.nds-btn.nds-subtle.nds-menu-btn.nds-indicator
-        &#9474;       &#9474;   &#9500;&#9472;&#9472; span.nds-label
-        &#9474;       &#9474;   &#9492;&#9472;&#9472; span.nds-tag (optional count)
-        &#9474;       &#9492;&#9472;&#9472; ul (submenu)
-        &#9474;           &#9500;&#9472;&#9472; li (flat link)
-        &#9474;           &#9474;   &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
-        &#9474;           &#9474;       &#9492;&#9472;&#9472; span.nds-label
-        &#9474;           &#9492;&#9472;&#9472; li (optional 3rd level group)
-        &#9474;               &#9500;&#9472;&#9472; button.nds-btn.nds-subtle.nds-indicator
-        &#9474;               &#9474;   &#9500;&#9472;&#9472; span.nds-label
-        &#9474;               &#9474;   &#9492;&#9472;&#9472; span.nds-tag (optional count)
-        &#9474;               &#9492;&#9472;&#9472; ul (group submenu)
-        &#9474;                   &#9492;&#9472;&#9472; li
-        &#9474;                       &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
-        &#9474;                           &#9492;&#9472;&#9472; span.nds-label
-        &#9492;&#9472;&#9472; button.nds-show-more.nds-btn.nds-subtle
-            &#9492;&#9472;&#9472; i.hgi.hgi-stroke.hgi-arrow-down-01
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sidemenuOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The side menu is a column of links on the start side of the content. It holds the pages of one part of the site, such as a documentation set or an admin console. A link can open a group of links, and a group can hold groups of its own. The list is a [Drawer](../components/drawer), and the side menu adds the column and a button that opens the menu on small screens.
+
+The side menu is a page shell part. The preview shows it in a frame of its own, so it does not clash with this page's own side menu.
+
+Pick another component when:
+
+- the steps of one task must go in order: [Stepper](../components/stepper)
+- the views are parts of the same page: [Tabs](../components/tabs)
+- the links go to the headings of one long page: [Table of Contents](../components/toc)
+- the list is not the site's menu: [Drawer](../components/drawer)
+
+The main links of the site belong in the [Main Navigation](../ui-shell/mainnav), and the links at the end of the page in the [Footer](../ui-shell/footer).
+
+</div>
+  </div>
 </section>
 
-<!-- Default Side Menu -->
-<section id="sideNavDefault" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Default Side Menu</h2>
-            <p class="nds-section-description">The standard sidebar layout with flat links and collapsible accordion groups. On desktop it stays fixed beside the content. On tablet and mobile it slides in from the edge with a toggle button.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Side Menu with Accordion Groups</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-default-1" id="tab-sidenav-default-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sidenav-default-1" aria-labelledby="tab-sidenav-default-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;aside class="nds-sidemenu" aria-label="Sidebar"&gt;
-  &lt;button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-menu-02" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;span class="nds-label nds-truncate" hidden&gt;Side menu&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;nav class="nds-drawer nds-divided nds-full-height"&gt;
-    &lt;div class="nds-scroll-more nds-divided"&gt;
-      &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
-        &lt;!-- Flat link --&gt;
-        &lt;li data-state="active"&gt;
-          &lt;a class="nds-btn nds-subtle nds-indicator" href="/"&gt;
-            &lt;span class="nds-label"&gt;Home&lt;/span&gt;
-          &lt;/a&gt;
-        &lt;/li&gt;
-        &lt;!-- Accordion group --&gt;
-        &lt;li&gt;
-          &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
-            &lt;span class="nds-label"&gt;Components&lt;/span&gt;
-          &lt;/button&gt;
-          &lt;ul&gt;
-            &lt;li&gt;
-              &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/accordion.html"&gt;
-                &lt;span class="nds-label"&gt;Accordion&lt;/span&gt;
-              &lt;/a&gt;
-            &lt;/li&gt;
-            &lt;li&gt;
-              &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/alert.html"&gt;
-                &lt;span class="nds-label"&gt;Alert&lt;/span&gt;
-              &lt;/a&gt;
-            &lt;/li&gt;
-            &lt;li&gt;
-              &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/button.html"&gt;
-                &lt;span class="nds-label"&gt;Buttons&lt;/span&gt;
-              &lt;/a&gt;
-            &lt;/li&gt;
-          &lt;/ul&gt;
-        &lt;/li&gt;
-        &lt;!-- Another accordion group --&gt;
-        &lt;li&gt;
-          &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
-            &lt;span class="nds-label"&gt;Layout&lt;/span&gt;
-          &lt;/button&gt;
-          &lt;ul&gt;
-            &lt;li&gt;
-              &lt;a class="nds-btn nds-subtle nds-indicator" href="/layout/grid.html"&gt;
-                &lt;span class="nds-label"&gt;Grid&lt;/span&gt;
-              &lt;/a&gt;
-            &lt;/li&gt;
-            &lt;li&gt;
-              &lt;a class="nds-btn nds-subtle nds-indicator" href="/layout/section.html"&gt;
-                &lt;span class="nds-label"&gt;Section&lt;/span&gt;
-              &lt;/a&gt;
-            &lt;/li&gt;
-          &lt;/ul&gt;
-        &lt;/li&gt;
-      &lt;/ul&gt;
-      &lt;button class="nds-show-more nds-btn nds-subtle" aria-label="Show more"&gt;
-        &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/nav&gt;
-&lt;/aside&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sidemenuMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
-</section>
-
-<!-- Grouped Navigation -->
-<section id="sideNavGrouped" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
+    <div class="nds-section-body">
+<script type="text/html" id="sidemenu-canon" data-canon data-preview="page" data-preview-height="520" data-variants="sidemenuVariantsTable">
+<div class="nds-content-layout nds-wSideMenu">
+  <aside class="nds-sidemenu" aria-label="Sidebar">
+    <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden>
+      <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
+      <span class="nds-label nds-truncate">Side menu</span>
+    </button>
+    <nav class="nds-drawer nds-divided">
+      <div class="nds-scroll-more nds-divided">
+        <ul class="nds-drawer-list nds-scroll-more-content">
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <span class="nds-label">Overview</span>
+            </a>
+          </li>
+          <li>
+            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+              <span class="nds-label">Passports</span>
+              <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+            </button>
+            <ul>
+              <li data-state="active">
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Renew a Passport</span>
+                </a>
+              </li>
+              <li>
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Issue a Passport</span>
+                </a>
+              </li>
+              <li>
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Report a Lost Passport</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+              <span class="nds-label">Visas</span>
+              <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">2</span></span>
+            </button>
+            <ul>
+              <li>
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Visit Visa</span>
+                </a>
+              </li>
+              <li>
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Work Visa</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <span class="nds-label">Contact Us</span>
+            </a>
+          </li>
+        </ul>
+        <button class="nds-show-more nds-btn nds-subtle" aria-label="Show more">
+          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+  </aside>
+  <div class="nds-content" id="main-content">
+    <section class="nds-content-section">
+      <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Grouped Navigation</h2>
-            <p class="nds-section-description">To add a third level, put another <code class="nds-inline-code lang-html">ul</code> inside a submenu item. No class is needed: an <code class="nds-inline-code lang-html">li</code> that sits directly inside a sub-<code class="nds-inline-code lang-html">ul</code> is styled as a group header. Each group gets its own collapsible button. Use a count tag to show the number of items at a glance.</p>
+          <h2 class="nds-section-title">Renew a Passport</h2>
+          <p class="nds-section-description">Renew your passport online, with no visit to an office.</p>
         </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Section → Group → Item</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo" style="padding: var(--spacing-xl); display: flex; justify-content: center;">
-                                <nav class="nds-drawer nds-divided" style="width: 280px;">
-                                    <ul class="nds-drawer-list">
-                                        <li>
-                                            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                                <span class="nds-label">Components</span>
-                                                <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">10</span></span>
-                                            </button>
-                                            <ul>
-                                                <li>
-                                                    <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                                        <span class="nds-label">Forms</span>
-                                                        <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">4</span></span>
-                                                    </button>
-                                                    <ul>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Autocomplete</span></a></li>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Checkbox</span></a></li>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Switch</span></a></li>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Upload</span></a></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                                        <span class="nds-label">UI</span>
-                                                        <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
-                                                    </button>
-                                                    <ul>
-                                                        <li data-state="active"><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Alert</span></a></li>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Modal</span></a></li>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Tabs</span></a></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                                        <span class="nds-label">Data</span>
-                                                        <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
-                                                    </button>
-                                                    <ul>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Chart</span></a></li>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Sort</span></a></li>
-                                                        <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Tables</span></a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
-                                                <span class="nds-label">Layout</span>
-                                                <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
-                                            </button>
-                                            <ul>
-                                                <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Grid</span></a></li>
-                                                <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Section</span></a></li>
-                                                <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Block</span></a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-grouped-1" id="tab-sidenav-grouped-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sidenav-grouped-1" aria-labelledby="tab-sidenav-grouped-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;ul class="nds-drawer-list"&gt;
-  &lt;!-- Level 1: Section --&gt;
-  &lt;li&gt;
-    &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
-      &lt;span class="nds-label"&gt;Components&lt;/span&gt;
-      &lt;span class="nds-tag nds-gray nds-xs nds-rounded"&gt;&lt;span class="nds-label"&gt;10&lt;/span&gt;&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;ul&gt;
-
-      &lt;!-- Level 2: Group --&gt;
-      &lt;li&gt;
-        &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
-          &lt;span class="nds-label"&gt;Forms&lt;/span&gt;
-          &lt;span class="nds-tag nds-gray nds-xs nds-rounded"&gt;&lt;span class="nds-label"&gt;4&lt;/span&gt;&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;ul&gt;
-          &lt;!-- Level 3: Pages --&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/autocomplete.html"&gt;
-              &lt;span class="nds-label"&gt;Autocomplete&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/checkbox.html"&gt;
-              &lt;span class="nds-label"&gt;Checkbox&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li data-state="active"&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/switch.html"&gt;
-              &lt;span class="nds-label"&gt;Switch&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/upload.html"&gt;
-              &lt;span class="nds-label"&gt;Upload&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-
-      &lt;!-- More groups... --&gt;
-
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Responsive Modes -->
-<section id="sideNavModes" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Responsive Modes</h2>
-            <p class="nds-section-description">On screens below 960px the side menu switches from a persistent sidebar to one of two mobile-friendly patterns, controlled by the layout wrapper class.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Responsive Mode</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-primary nds-lg" id="toggleTopSideMenu">
-                                    <span class="nds-label">Toggle Top Submenu Mode</span>
-                                </button>
-                                <div class="nds-alert nds-card nds-inline" data-status="info" role="alert" style="margin-top: var(--spacing-md);">
-                                    <span class="nds-feedback nds-alert-icon">
-                                        <span class="nds-feedback-icon">
-                                            <i class="nds-icon" aria-hidden="true"></i>
-                                        </span>
-                                    </span>
-                                    <div class="nds-alert-content">
-                                        <div class="nds-alert-text">
-                                            <p class="nds-alert-description" id="topSideMenuStatus">Current mode: <strong>Slider</strong> (default). Resize the viewport below 960px to see the side menu behavior.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidemenu-modes-1" id="tab-sidemenu-modes-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sidemenu-modes-1" aria-labelledby="tab-sidemenu-modes-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;!-- Add nds-top to the sidemenu to switch from slider to top dropdown mode --&gt;
-&lt;aside class="nds-sidemenu nds-top" aria-label="Sidebar"&gt;...&lt;/aside&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-block">
-                <script>
-                document.getElementById('toggleTopSideMenu').addEventListener('click', function() {
-                    var menu = document.querySelector('.nds-sidemenu');
-                    var status = document.getElementById('topSideMenuStatus');
-                    if (!menu) return;
-                    menu.classList.toggle('nds-top');
-                    var isTop = menu.classList.contains('nds-top');
-                    status.innerHTML = 'Current mode: <strong>' + (isTop ? 'Top Submenu' : 'Slider') + '</strong>' + (isTop ? '' : ' (default)') + '. Resize the viewport below 960px to see the side menu behavior.';
-                    NDS.Sidemenu.init();
-                });
-            </script>
-            </div>
-            <div class="nds-block" style="margin-top: var(--spacing-3xl);">
-                <h3 class="nds-block-title">Mode Comparison</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Mode</th><th>Class</th><th>Mobile Behavior</th><th>Best For</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td>Slider</td>
-                            <td>(none, default)</td>
-                            <td>Fixed panel slides in from the edge with a floating toggle button. Body scroll is not locked.</td>
-                            <td>Long navigation lists where users may need to scroll the menu independently</td>
-                        </tr>
-                        <tr>
-                            <td>Top Submenu</td>
-                            <td><code class="nds-inline-code lang-html">nds-top</code></td>
-                            <td>Full-width bar with the active page label. Tapping it drops the drawer down from below the header. Body scroll is locked.</td>
-                            <td>Short navigation lists or content-heavy pages where edge slide-in would feel intrusive</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Active State -->
-<section id="sideNavActiveState" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Active Page Tracking</h2>
-            <p class="nds-section-description">Mark the current page by adding <code class="nds-inline-code lang-html">data-state="active"</code> to its <code class="nds-inline-code lang-html">&lt;li&gt;</code> element. The JS automatically expands all parent accordion groups so the active item is visible on load.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Active Item in a Nested Group</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-sidenav-active-1" id="tab-sidenav-active-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sidenav-active-1" aria-labelledby="tab-sidenav-active-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;ul class="nds-drawer-list"&gt;
-  &lt;li&gt;
-    &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
-      &lt;span class="nds-label"&gt;Components&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/accordion.html"&gt;
-          &lt;span class="nds-label"&gt;Accordion&lt;/span&gt;
-        &lt;/a&gt;
-      &lt;/li&gt;
-      &lt;!-- Active item: parent group auto-expands on init --&gt;
-      &lt;li data-state="active"&gt;
-        &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/alert.html"&gt;
-          &lt;span class="nds-label"&gt;Alert&lt;/span&gt;
-        &lt;/a&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Built-in Features -->
-<section id="sideNavFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. Toggle button, close-on-click-outside, and Escape key handling all attach automatically. Accordion behavior is provided by the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> component.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-target-01"></i>
-                            <span class="nds-label">Active Page Tracking</span>
-                        </span>
-                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-state="active"</code> on a menu item and all parent accordion groups expand on load so the current page is always visible.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-04"></i>
-                            <span class="nds-label">Dual Responsive Modes</span>
-                        </span>
-                        <p class="nds-item-desc">Choose between a slide-in sidebar panel or a top dropdown bar for mobile. Switch modes by adding <code class="nds-inline-code lang-html">nds-top</code> to the sidemenu.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
-                            <span class="nds-label">Animated Accordion Groups</span>
-                        </span>
-                        <p class="nds-item-desc">Nested groups expand and collapse with smooth height transitions. Opening one group automatically closes its siblings.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-cursor-02"></i>
-                            <span class="nds-label">Peek Toggle Button</span>
-                        </span>
-                        <p class="nds-item-desc">The floating toggle button reveals itself briefly on page load and reappears as the cursor approaches, giving users a visual hint without obstructing content.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.Sidemenu.init()</code> to re-initialize after dynamic content changes or SPA route transitions.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Usage Guidelines -->
-<section id="sideNavGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
+      </div>
+    </section>
+  </div>
+</div>
+</script>
+<script type="text/html" id="sidemenu-grouped" data-canon>
+<div class="nds-content-layout nds-wSideMenu">
+  <aside class="nds-sidemenu" aria-label="Sidebar">
+    <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden>
+      <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
+      <span class="nds-label nds-truncate">Side menu</span>
+    </button>
+    <nav class="nds-drawer nds-divided">
+      <div class="nds-scroll-more nds-divided">
+        <ul class="nds-drawer-list nds-scroll-more-content">
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <span class="nds-label">Overview</span>
+            </a>
+          </li>
+          <li>
+            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+              <span class="nds-label">Services</span>
+              <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">5</span></span>
+            </button>
+            <ul>
+              <li>
+                <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                  <span class="nds-label">Passports</span>
+                  <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+                </button>
                 <ul>
-                    <li>Use the side menu for sites with <strong>hierarchical page structures</strong> where users need to jump between sections: documentation, admin consoles, multi-step workflows</li>
-                    <li>Use the side menu alongside the <a class="nds-color" href="{{ 'ui-shell/header' | relative_url }}">Header</a> for primary navigation. The header handles global actions and top-level links while the side menu handles section-level navigation</li>
-                    <li>Choose <strong>top submenu mode</strong> (<code class="nds-inline-code lang-html">nds-top</code>) when the navigation list is short (under 10 items) or the content area needs full viewport width on mobile</li>
-                    <li>Choose <strong>slider mode</strong> (default) for longer navigation trees or when users frequently switch between pages and benefit from a persistent, independently scrollable menu</li>
-                    <li>Do not use the side menu for simple linear flows or single-page sites. Use <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> for sequential processes or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switching between views on the same page</li>
-                    <li>Use <strong>two levels</strong> for most navigation trees. Use the three-level grouped pattern only when the section has enough items to benefit from categorization, such as a large component library</li>
-                    <li>Always set <code class="nds-inline-code lang-html">data-state="active"</code> on the current page's <code class="nds-inline-code lang-html">&lt;li&gt;</code> so users can orient themselves</li>
-                    <li>Group related pages under a single accordion parent with a clear category label. Avoid mixing unrelated items in the same group</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-cardView</code> to the layout wrapper when the page design calls for rounded, card-like containers. This applies border-radius to the sidebar</li>
-                    <li>Hide the side menu entirely on pages that do not need section navigation (landing pages, full-width dashboards): omit the <code class="nds-inline-code lang-html">&lt;aside&gt;</code> and drop <code class="nds-inline-code lang-html">nds-wSideMenu</code> from the layout wrapper</li>
+                  <li data-state="active">
+                    <a class="nds-btn nds-subtle nds-indicator" href="#">
+                      <span class="nds-label">Renew a Passport</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="nds-btn nds-subtle nds-indicator" href="#">
+                      <span class="nds-label">Issue a Passport</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="nds-btn nds-subtle nds-indicator" href="#">
+                      <span class="nds-label">Report a Lost Passport</span>
+                    </a>
+                  </li>
                 </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Applied To</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-top</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-sidemenu</code></td>
-                            <td>Switches mobile behavior from slide-in sidebar to top dropdown bar</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-wSideMenu</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-content-layout</code></td>
-                            <td>Required. The layout hides a direct-child <code class="nds-inline-code lang-html">&lt;aside&gt;</code> unless it carries this class (or <code class="nds-inline-code lang-html">nds-wSideInfo</code>)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-cardView</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-content-layout</code></td>
-                            <td>Adds border-radius to the sidebar for a card-like appearance</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-peek</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-sidemenu-toggle</code></td>
-                            <td>Enables the proximity-aware peek animation on the toggle button</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-divided</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-drawer</code></td>
-                            <td>Adds separator lines between menu items (from the drawer component)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-full-height</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-drawer</code></td>
-                            <td>Stretches the drawer to fill the sidebar height</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-state="active"</code></td>
-                            <td>Set on <code class="nds-inline-code lang-html">&lt;li&gt;</code> to mark the current page. Parent accordion groups expand automatically on initialization.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-state="open"</code></td>
-                            <td>Managed by JS on accordion groups and the sidebar itself. Indicates the element is expanded or visible.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">aria-expanded</code></td>
-                            <td>Set on accordion group buttons. Updated automatically by JS when groups expand or collapse.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--nds-sidemenu-width</code></td>
-                            <td>Set in variables</td>
-                            <td>Width of the sidebar panel</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--drawer-max-height</code></td>
-                            <td><code class="nds-inline-code lang-html">calc(100svh - nav - spacing)</code></td>
-                            <td>Maximum height of the drawer before scroll overflow activates. Recalculated dynamically in slider mode.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--toggle-height</code></td>
-                            <td><code class="nds-inline-code lang-html">40px</code></td>
-                            <td>Height of the toggle button</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--toggle-pos</code></td>
-                            <td><code class="nds-inline-code lang-html">40svh</code></td>
-                            <td>Vertical position of the floating toggle button in slider mode</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Sidemenu</strong> namespace exposes a single initialization method. The component auto-initializes when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is present on the page, but you can call <code class="nds-inline-code lang-js">init()</code> manually after dynamic content changes.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialization ──────────────────────────────────
-// Auto-runs on page load via nds-loader when .nds-sidemenu exists.
-// Call manually after injecting a new sidemenu into the DOM:
-NDS.Sidemenu.init();
-
-// ── What init() sets up ─────────────────────────────
-// - Toggle button: shown on tablet/mobile, opens/closes
-//   the sidebar with backdrop overlay
-// - Close triggers: click outside, Escape key, or
-//   viewport width change all close the menu
-// - Peek behavior: the toggle button flashes on load
-//   and reappears when the cursor moves near it
-//
-// Accordion toggle and active state expansion are handled
-// by the drawer component (NDS.Drawer) automatically.
-
-// ── Backdrop integration ────────────────────────────
-// Uses NDS.Backdrop.show() / .hide() for the overlay.
-// In slider mode, body scroll remains unlocked.
-// In top submenu mode, body scroll locks while open.
-
-// ── Drawer overflow ─────────────────────────────────
-// Handled automatically by the .nds-scroll-more wrapper
-// inside the drawer (shows/hides the "show more" button
-// and edge mask-fade via its own ResizeObserver).
-</code>
-                    </div>
-                </div>
-            </div>
-
+              </li>
+              <li>
+                <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                  <span class="nds-label">Visas</span>
+                  <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">2</span></span>
+                </button>
+                <ul>
+                  <li>
+                    <a class="nds-btn nds-subtle nds-indicator" href="#">
+                      <span class="nds-label">Visit Visa</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="nds-btn nds-subtle nds-indicator" href="#">
+                      <span class="nds-label">Work Visa</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <span class="nds-label">Contact Us</span>
+            </a>
+          </li>
+        </ul>
+        <button class="nds-show-more nds-btn nds-subtle" aria-label="Show more">
+          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+  </aside>
+  <div class="nds-content" id="main-content">
+    <section class="nds-content-section">
+      <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+          <h2 class="nds-section-title">Renew a Passport</h2>
+          <p class="nds-section-description">Renew your passport online, with no visit to an office.</p>
         </div>
+      </div>
+    </section>
+  </div>
+</div>
+</script>
+<script type="text/html" id="sidemenu-more" data-canon>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Family Visit</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Hajj and Umrah</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Residence Permits</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Exit and Re-entry</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Final Exit</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Transfer of Services</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Travel Documents</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Newborn Registration</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Change of Profession</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Appointments</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Fees and Payments</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Office Locations</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Sponsorship Transfer</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Visa Extension</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Absher Accounts</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Digital ID</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Vehicle Registration</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Driving Licenses</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Traffic Violations</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Civil Records</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Marriage Registration</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Death Registration</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Complaints</span>
+  </a>
+</li>
+<li>
+  <a class="nds-btn nds-subtle nds-indicator" href="#">
+    <span class="nds-label">Frequently Asked Questions</span>
+  </a>
+</li>
+</script>
     </div>
+  </div>
+</section>
+
+<section id="sidemenuParts" class="nds-content-section nds-doc-parts">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Parts</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+| Part | Holds | Required |
+|---|---|---|
+| `.nds-content-layout.nds-wSideMenu` | The side menu, then `.nds-content`. Without `nds-wSideMenu`, the layout hides the side menu. See [Page Layout](../layout/page-layout) | Yes |
+| `aside.nds-sidemenu` | The menu button and the drawer. Give it an `aria-label`. One per page | Yes |
+| `button.nds-sidemenu-toggle` | The button that opens the menu below 960px: an icon and a `.nds-label`. Write it with `hidden` and an `aria-label` | Yes |
+| `nav.nds-drawer` | The list: a `.nds-scroll-more` with the `ul.nds-drawer-list` and the show more button. See [Drawer](../components/drawer) | Yes |
+| `li` with an `a.nds-btn` | One link | Yes |
+| `li` with a `button.nds-btn` and a `ul` | A group: the button opens the `ul` under it. A group can hold groups | No |
+| `span.nds-tag` | The number of links in a group, counting the links in its own groups. It sits in the group's button | No |
+| `.nds-content` | The page sections, right after the side menu, with `id="main-content"` for the skip link | Yes |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="sidemenuVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+The Small screens options change the menu below 960px only.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Two levels (default) | — | — | Links and groups of links. Fits most sites |
+| Structure | Three levels | canon `#sidemenu-grouped` | — | Groups inside a group. Use it only when one group holds many pages |
+| Small screens | Slide-in (default) | — | — | Below 960px, the menu slides in from the side over the page. Fits a long list |
+| Small screens | Top bar | `.nds-top` | `.nds-sidemenu` | Below 960px, a bar above the content shows the current page, and the menu drops down from it. Fits a short list |
+| Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
+| Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list` | 24 more links. Shows how the list scrolls when it is taller than the screen |
+{: #sidemenuVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="sidemenuBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Slide-in Mode
+{: .nds-block-title}
+
+Below 960px, the side menu moves off screen, and the menu button shows at the screen edge. A press on the button slides the menu in over the page.
+
+### Top Bar Mode
+{: .nds-block-title}
+
+`nds-top` on the `aside` shows a bar above the content below 960px. The bar shows the name of the current page, or of the first link when no page is current. A press scrolls the bar to the top of the screen and drops the menu down from it, over the content.
+
+### Peek Button
+{: .nds-block-title}
+
+In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the screen edge, so it does not cover the content. It shows for a moment when the page loads, and comes out when the mouse moves near it. Without `nds-peek`, the button always shows in full.
+
+</div>
+  </div>
+</section>
+
+<section id="sidemenuFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto Start</span>
+          </span>
+          <p class="nds-item-desc">The script starts when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. It shows the menu button and writes the current page's name in its label.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-target-01"></i>
+            <span class="nds-label">Current Page</span>
+          </span>
+          <p class="nds-item-desc">The groups above the current page's link open when the page loads, so the link is in view.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-unfold-less"></i>
+            <span class="nds-label">One Open Group</span>
+          </span>
+          <p class="nds-item-desc">A group that opens closes the other open group at the same level, so the list stays short.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-pin"></i>
+            <span class="nds-label">Sticky Menu</span>
+          </span>
+          <p class="nds-item-desc">The menu stays in view below the main navigation while the page scrolls: the column on a desktop, and the bar in top bar mode.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
+            <span class="nds-label">Overflow Detection</span>
+          </span>
+          <p class="nds-item-desc">A list taller than the screen scrolls in place, and the show more arrow appears at its bottom.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layers-01"></i>
+            <span class="nds-label">Backdrop Overlay</span>
+          </span>
+          <p class="nds-item-desc">Below 960px, the open menu dims the page behind it, and the page does not scroll.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-cancel-circle"></i>
+            <span class="nds-label">Close Triggers</span>
+          </span>
+          <p class="nds-item-desc">A second press on the menu button, Escape, a click outside the menu, or a change of the screen width closes it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sidemenuPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Put one side menu on a page. The script uses the first one it finds.
+- Mark the current page's `li` with `data-state="active"`. It highlights the link, opens its groups, and names the top bar.
+- Name each group by what its pages share. Do not mix pages of other topics in one group.
+- Use two levels for most sites. A third level hides pages two clicks deep.
+- Pick Top bar for a short list, and Slide-in for a long one that people scroll.
+- Do not write color classes on the menu button. Each mode styles it.
+- On a page with no side menu, remove the `aside` and `nds-wSideMenu` together.
+
+</div>
+  </div>
+</section>
+
+<section id="sidemenuApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-peek` | `button.nds-sidemenu-toggle` | Keeps the button mostly hidden until the mouse is near. It has no effect in top bar mode. See Peek Button under Behavior |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-state` | `aside.nds-sidemenu` in slide-in mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
+| `hidden` | `button.nds-sidemenu-toggle` | Write it in the markup. The script removes it when it starts |
+| `aria-expanded` | `button.nds-sidemenu-toggle` | The script writes `false` when it starts and the attribute is missing. It sets `true` when the menu opens, and `false` after the close |
+| `data-state="open"` | `button.nds-sidemenu-toggle` | The script sets it when the menu opens, and removes it after the close |
+| `hidden` | The menu button's `.nds-label` | The script sets it in slide-in mode, and removes it in top bar mode. Leave the label's text to the script: it writes the current page's name in it |
+| `data-state` | `nav.nds-drawer` in top bar mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
+| `data-state="active"` | The current page's `li` | Set it yourself. The drawer opens every group above it when it starts |
+| `aria-expanded` | A group's `button` | Write `false` in the markup. The drawer sets `true` when the group opens, and `false` when it closes. See [Drawer](../components/drawer) |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--nds-sidemenu-width` | `260px` | The width of the side menu and of its layout column. Set it on `:root` |
+| `--nds-sidemenu-toggle-height` | `56px` | The height of the top bar. Set it on `:root` |
+| `--toggle-pos` | `40svh` | How far below the main navigation the slide-in menu button sits. Set it on `button.nds-sidemenu-toggle` |
+| `--drawer-max-height` | The screen height less the main navigation, or `60svh` in top bar mode | The height of the list before it scrolls. Set it on `aside.nds-sidemenu`. The open slide-in menu fits the list to the screen and ignores it |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Sidemenu.init()` | Starts the side menu. It runs on page load. A second call stops the running side menu and starts it again. It does not start the drawer: for new markup, call `NDS.Init.refresh()` instead, which starts both. See [Refresh](../core/refresh) |
+| `NDS.Sidemenu.destroy()` | Closes the menu and removes every listener. The markup stays, and `init()` starts it again |
+{: .nds-table .nds-responsive}
+
+The side menu fires no events. The drawer fires `nds:drawer:shown` after a group opens, and `nds:drawer:hidden` after it closes: see [Drawer](../components/drawer).
+
+<script type="text/html" id="sidemenu-js" data-canon data-lang="js" data-preview="none">
+// A framework rendered a new side menu after the NDS script ran:
+// start the side menu and its drawer
+NDS.Init.refresh(document.querySelector('.nds-content-layout'));
+
+// Know which group opened
+document.querySelector('.nds-sidemenu').addEventListener('nds:drawer:shown', (e) => {
+  console.log(e.detail.item);
+});
+
+// A framework removes the side menu: release it first
+NDS.Sidemenu.destroy();
+</script>
+
+The full API is in the banner of `_js/nds-sidemenu.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="sidemenuRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Page Layout](../layout/page-layout): the content layout, and the console page with a side menu.
+- [Drawer](../components/drawer): the list inside the side menu, and its other classes.
+- [Faculty](../examples/faculty): a page with the side menu in top bar mode.
+- [Header](../ui-shell/header), [Main Navigation](../ui-shell/mainnav) and [Footer](../ui-shell/footer): the other parts of the page shell.
+
+</div>
+  </div>
 </section>
