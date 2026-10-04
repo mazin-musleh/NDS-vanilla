@@ -7,8 +7,8 @@
 
   Consent: defaults to denied (Consent Mode v2). `_js/nds-cookies.js` reads
   `window.GA_TRACKING_ID` and calls `gtag('consent', 'update', …)` when the user
-  accepts/declines the cookie banner. If a prior 'accepted' consent cookie exists
-  on this load, we lift consent immediately so returning visitors are tracked.
+  accepts/declines the cookie banner. The stored choice is applied here too (the
+  same mapping as nds-cookies.js), so GA never runs ahead of the deferred bundle.
 
   Perf: placed in <head> so consent default (Consent Mode v2) lands at the
   earliest possible moment — required for GDPR/PDPL compliance. dataLayer +
@@ -29,5 +29,5 @@
 {%- endcomment %}
 {%- if jekyll.environment == "production" and site.google_analytics and site.google_analytics != "" %}
 {%- assign ga_id = site.google_analytics %}
-<script>window.GA_TRACKING_ID='{{ ga_id }}';window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('consent','default',{analytics_storage:'denied',functionality_storage:'denied',personalization_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});try{var m=document.cookie.match(/(?:^|; )cookieConsent=([^;]+)/),v=m&&m[1];if(v==='accepted')gtag('consent','update',{analytics_storage:'granted',functionality_storage:'granted',personalization_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});else if(v==='declined')window['ga-disable-{{ ga_id }}']=!0}catch(e){}gtag('config','{{ ga_id }}',{anonymize_ip:!0});(function(){var f,t,o={once:!0,passive:!0},e=['pointerdown','keydown','scroll','touchstart','wheel','mousemove'];function l(){var s=document.createElement('script');s.async=!0;s.src='https://www.googletagmanager.com/gtag/js?id={{ ga_id }}';s.fetchPriority='low';document.head.appendChild(s)}function k(){f||(f=1,clearTimeout(t),e.forEach(function(x){removeEventListener(x,k,o)}),l())}e.forEach(function(x){addEventListener(x,k,o)});t=setTimeout(k,1e4)})()</script>
+<script>window.GA_TRACKING_ID='{{ ga_id }}';window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('consent','default',{analytics_storage:'denied',functionality_storage:'denied',personalization_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});try{var m=document.cookie.match(/(?:^|; )cookieConsent=([^;]+)/),v=m?m[1]:'',g=function(c){return v==='accepted'||v.split(',').indexOf(c)>-1?'granted':'denied'};window['ga-disable-{{ ga_id }}']=g('performance')==='denied';if(v&&v!=='declined')gtag('consent','update',{analytics_storage:g('performance'),functionality_storage:g('functional'),personalization_storage:g('functional'),ad_storage:g('targeting'),ad_user_data:g('targeting'),ad_personalization:g('targeting')})}catch(e){}gtag('config','{{ ga_id }}',{anonymize_ip:!0});(function(){var f,t,o={once:!0,passive:!0},e=['pointerdown','keydown','scroll','touchstart','wheel','mousemove'];function l(){var s=document.createElement('script');s.async=!0;s.src='https://www.googletagmanager.com/gtag/js?id={{ ga_id }}';s.fetchPriority='low';document.head.appendChild(s)}function k(){f||(f=1,clearTimeout(t),e.forEach(function(x){removeEventListener(x,k,o)}),l())}e.forEach(function(x){addEventListener(x,k,o)});t=setTimeout(k,1e4)})()</script>
 {%- endif %}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "04/10/2026 - 07:47 AM"
 ---
 
 <section id="cookiesOverview" class="nds-content-section nds-doc-overview">
@@ -364,6 +364,28 @@ gtag('consent', 'default', {
 });
 
 window.GA_TRACKING_ID = 'G-XXXXXXXXXX'; // or an array of ids
+
+// Apply a stored choice now: gtag.js can send a hit before the NDS scripts run.
+(function () {
+  var match = document.cookie.match(/(?:^|; )cookieConsent=([^;]+)/);
+  var stored = match ? match[1] : '';
+  function state(category) {
+    return stored === 'accepted' || stored.split(',').indexOf(category) > -1 ? 'granted' : 'denied';
+  }
+  [].concat(window.GA_TRACKING_ID).forEach(function (id) {
+    window['ga-disable-' + id] = state('performance') === 'denied';
+  });
+  if (stored && stored !== 'declined') {
+    gtag('consent', 'update', {
+      analytics_storage: state('performance'),
+      functionality_storage: state('functional'),
+      personalization_storage: state('functional'),
+      ad_storage: state('targeting'),
+      ad_user_data: state('targeting'),
+      ad_personalization: state('targeting')
+    });
+  }
+})();
 
 gtag('js', new Date());
 gtag('config', 'G-XXXXXXXXXX');
