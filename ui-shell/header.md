@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "04/10/2026 - 11:41 AM"
+last_edit: "04/10/2026 - 05:06 PM"
 ---
 
 <section id="headerOverview" class="nds-content-section nds-doc-overview">
@@ -43,7 +43,7 @@ The code shows the outer element of each part. Copy each part whole from its own
   <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
     <!-- The stamp panel: ../ui-shell/topbar -->
   </div>
-  <nav class="nds-main-nav nds-content-wrapper" id="ndsMainNav" aria-label="Primary navigation">
+  <nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation">
     <!-- The brand, the links and the actions: ../ui-shell/mainnav -->
   </nav>
 </header>

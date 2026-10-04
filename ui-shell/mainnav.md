@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 04:50 PM"
+last_edit: "04/10/2026 - 05:05 PM"
 ---
 
 <section id="mainnavOverview" class="nds-content-section nds-doc-overview">
@@ -35,7 +35,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="mainnav-canon" data-canon data-form data-preview="page" data-preview-height="440" data-variants="mainnavVariantsTable">
-<nav class="nds-main-nav nds-content-wrapper" id="ndsMainNav" aria-label="Primary navigation">
+<nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation">
   <div class="nds-nav-container">
     <a href="../" class="nds-brand">
       <img class="nds-brand-logo" src="../assets/img/palm_swords.svg" width="40" height="40" loading="lazy" alt="National Portal logo">
@@ -44,13 +44,13 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
       </span>
     </a>
     <ul class="nds-nav-minimal" hidden>
-      <li class="nds-mainNav-toggler nds-nav-item">
-        <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="ndsNavCollapse">
+      <li class="nds-nav-toggler nds-nav-item">
+        <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nds-nav-collapse">
           <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
         </button>
       </li>
     </ul>
-    <div class="nds-collapse" id="ndsNavCollapse" hidden>
+    <div class="nds-collapse" id="nds-nav-collapse" hidden>
       <div class="nds-collapse-content">
         <ul class="nds-nav-primary">
           <li class="nds-nav-item">
@@ -68,60 +68,60 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
               <span class="nds-label">Contact</span>
             </a>
           </li>
-          <li class="nds-nav-item nds-dropdown">
+          <li class="nds-nav-item nds-has-menu">
             <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
               <span class="nds-label">Services</span>
             </a>
-            <div class="nds-dropdown-menu" hidden>
-              <div class="nds-dropdown-content nds-content-wrapper">
-                <div class="nds-dropdown-columns nds-colView">
+            <div class="nds-nav-menu" hidden>
+              <div class="nds-nav-menu-content nds-content-wrapper">
+                <div class="nds-nav-columns">
                   <div class="nds-column">
-                    <div class="nds-dropdown-title">Individuals</div>
+                    <div class="nds-nav-title">Individuals</div>
                     <div class="nds-list">
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Renew an ID card</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Book an appointment</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Track a request</span>
                       </a>
                     </div>
                   </div>
                   <div class="nds-column">
-                    <div class="nds-dropdown-title">Businesses</div>
+                    <div class="nds-nav-title">Businesses</div>
                     <div class="nds-list">
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Register a company</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Renew a license</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Pay fees</span>
                       </a>
                     </div>
                   </div>
                   <div class="nds-column">
-                    <div class="nds-dropdown-title">Regions</div>
+                    <div class="nds-nav-title">Regions</div>
                     <div class="nds-list nds-multi-column-list">
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Riyadh</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Makkah</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Madinah</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Eastern Province</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Asir</span>
                       </a>
-                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                      <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Tabuk</span>
                       </a>
                     </div>
@@ -137,10 +137,10 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
           </a>
         </div>
         <ul class="nds-nav-actions">
-          <li class="nds-nav-item nds-dropdown nds-icon-only nds-search nds-PAB">
+          <li class="nds-nav-item nds-has-menu nds-icon-only nds-search nds-pinned">
             <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Search" aria-expanded="false"><i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Search</span></button>
-            <div class="nds-dropdown-menu" hidden>
-              <div class="nds-dropdown-content">
+            <div class="nds-nav-menu" hidden>
+              <div class="nds-nav-menu-content">
                 <div class="nds-content-wrapper">
                   <form class="nds-form-container nds-search-box" role="search" method="get" action="#">
                     <div class="nds-search-content">
@@ -173,60 +173,60 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </nav>
 </script>
 <script type="text/html" id="mainnav-columns" data-canon>
-<li class="nds-nav-item nds-dropdown">
+<li class="nds-nav-item nds-has-menu">
   <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
     <span class="nds-label">Services</span>
   </a>
-  <div class="nds-dropdown-menu" hidden>
-    <div class="nds-dropdown-content nds-content-wrapper">
-      <div class="nds-dropdown-columns nds-colView">
+  <div class="nds-nav-menu" hidden>
+    <div class="nds-nav-menu-content nds-content-wrapper">
+      <div class="nds-nav-columns">
         <div class="nds-column">
-          <div class="nds-dropdown-title">Individuals</div>
+          <div class="nds-nav-title">Individuals</div>
           <div class="nds-list">
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Renew an ID card</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Book an appointment</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Track a request</span>
             </a>
           </div>
         </div>
         <div class="nds-column">
-          <div class="nds-dropdown-title">Businesses</div>
+          <div class="nds-nav-title">Businesses</div>
           <div class="nds-list">
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Register a company</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Renew a license</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Pay fees</span>
             </a>
           </div>
         </div>
         <div class="nds-column">
-          <div class="nds-dropdown-title">Regions</div>
+          <div class="nds-nav-title">Regions</div>
           <div class="nds-list nds-multi-column-list">
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Riyadh</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Makkah</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Madinah</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Eastern Province</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Asir</span>
             </a>
-            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Tabuk</span>
             </a>
           </div>
@@ -237,27 +237,27 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </li>
 </script>
 <script type="text/html" id="mainnav-rows" data-canon>
-<li class="nds-nav-item nds-dropdown">
+<li class="nds-nav-item nds-has-menu">
   <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
     <span class="nds-label">Media Center</span>
   </a>
-  <div class="nds-dropdown-menu" hidden>
-    <div class="nds-dropdown-content nds-content-wrapper">
-      <div class="nds-dropdown-columns nds-rowView">
+  <div class="nds-nav-menu" hidden>
+    <div class="nds-nav-menu-content nds-content-wrapper">
+      <div class="nds-nav-row">
         <div class="nds-list">
-          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+          <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
             <span class="nds-label">News</span>
           </a>
-          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+          <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
             <span class="nds-label">Events</span>
           </a>
-          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+          <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
             <span class="nds-label">Photos</span>
           </a>
-          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+          <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
             <span class="nds-label">Videos</span>
           </a>
-          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+          <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
             <span class="nds-label">Reports</span>
           </a>
         </div>
@@ -299,10 +299,10 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </li>
 </script>
 <script type="text/html" id="mainnav-search" data-canon data-form>
-<li class="nds-nav-item nds-dropdown nds-icon-only nds-search nds-PAB">
+<li class="nds-nav-item nds-has-menu nds-icon-only nds-search nds-pinned">
   <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Search" aria-expanded="false"><i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Search</span></button>
-  <div class="nds-dropdown-menu" hidden>
-    <div class="nds-dropdown-content">
+  <div class="nds-nav-menu" hidden>
+    <div class="nds-nav-menu-content">
       <div class="nds-content-wrapper">
         <form class="nds-form-container nds-search-box" role="search" method="get" action="#">
           <div class="nds-search-content">
@@ -327,10 +327,10 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </li>
 </script>
 <script type="text/html" id="mainnav-notifications" data-canon>
-<li class="nds-nav-item nds-dropdown nds-icon-only" id="nav-notifications">
+<li class="nds-nav-item nds-has-menu nds-icon-only" id="nav-notifications">
   <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications" aria-expanded="false"><i class="nds-icon nds-hgi-notification-02" aria-hidden="true"><span class="nds-badge">2</span></i><span class="nds-label" data-hidden="sm md sr">Notifications</span></button>
-  <div class="nds-dropdown-menu nds-fit" hidden>
-    <div class="nds-dropdown-content">
+  <div class="nds-nav-menu nds-fit" hidden>
+    <div class="nds-nav-menu-content">
       <div class="nds-column">
         <nav class="nds-drawer" style="--drawer-max-height: 40svh; min-width: 40vw; max-width: 100%;">
           <div class="nds-scroll-more nds-divided">
@@ -386,10 +386,10 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </li>
 </script>
 <script type="text/html" id="mainnav-user" data-canon>
-<li class="nds-nav-item nds-dropdown nds-icon-only" id="nav-user">
+<li class="nds-nav-item nds-has-menu nds-icon-only" id="nav-user">
   <button class="nds-nav-link nds-btn nds-subtle nds-lg nds-indicator nds-tooltip" data-tooltip-hover="500" title="Ahmed" aria-expanded="false"><span class="nds-avatar"><img src="../docs-assets/img/avatar3.webp" alt="Ahmed" class="nds-icon" loading="lazy"></span><span class="nds-label" data-hidden="sm md sr">Ahmed</span></button>
-  <div class="nds-dropdown-menu nds-fit" hidden>
-    <div class="nds-dropdown-content">
+  <div class="nds-nav-menu nds-fit" hidden>
+    <div class="nds-nav-menu-content">
       <div class="nds-column">
         <div class="nds-persona nds-sm">
           <div class="nds-persona-info">
@@ -399,15 +399,15 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
           </div>
           <hr class="nds-divider">
           <div class="nds-persona-action">
-            <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+            <a href="#" class="nds-btn nds-subtle nds-nav-menu-item">
               <i class="nds-icon nds-hgi-identity-card" aria-hidden="true"></i>
               <span class="nds-label">My account</span>
             </a>
-            <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+            <a href="#" class="nds-btn nds-subtle nds-nav-menu-item">
               <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
               <span class="nds-label">Change password</span>
             </a>
-            <a href="#" class="nds-btn nds-subtle nds-destructive nds-dropdown-item">
+            <a href="#" class="nds-btn nds-subtle nds-destructive nds-nav-menu-item">
               <i class="nds-icon nds-hgi-door-01" aria-hidden="true"></i>
               <span class="nds-label">Sign out</span>
             </a>
@@ -424,7 +424,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </li>
 </script>
 <script type="text/html" id="mainnav-cta" data-canon>
-<li class="nds-nav-item nds-CTA" id="nav-cta">
+<li class="nds-nav-item nds-nav-cta" id="nav-cta">
   <a href="#" class="nds-btn nds-primary" title="Apply now"><span class="nds-label">Apply now</span></a>
 </li>
 </script>
@@ -444,12 +444,12 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 | `nav.nds-main-nav` | The whole bar. Add `nds-content-wrapper` to keep its content at the page width. One per page | Yes |
 | `.nds-nav-container` | The brand, the menu button and the drawer, in that order | Yes |
 | `a.nds-brand` | The logo (`img.nds-brand-logo`) and `.nds-brand-name`, with `.nds-brand-slogan` inside the name. It links to the home page | Yes |
-| `ul.nds-nav-minimal` | The menu button (`li.nds-mainNav-toggler`), and the pinned actions below 960px. It ships `hidden` | Yes |
-| `#ndsNavCollapse.nds-collapse` | The drawer: one `.nds-collapse-content` with the links, the show more button and the actions. It ships `hidden`. The script finds it by this id | Yes |
+| `ul.nds-nav-minimal` | The menu button (`li.nds-nav-toggler`), and the pinned actions below 960px. It ships `hidden` | Yes |
+| `#nds-nav-collapse.nds-collapse` | The drawer: one `.nds-collapse-content` with the links, the show more button and the actions. It ships `hidden`. The script finds it by this id | Yes |
 | `ul.nds-nav-primary` | The primary links, one `li.nds-nav-item` each | Yes |
-| `li.nds-nav-item.nds-dropdown` | A link that opens a menu: the trigger `a.nds-nav-link.nds-menu-btn`, then `.nds-dropdown-menu` > `.nds-dropdown-content` | No |
-| `.nds-dropdown-columns` | The menu's content. `nds-colView` for titled columns (`.nds-column` with a `.nds-dropdown-title` and a `.nds-list`), `nds-rowView` for one row of links (one `.nds-list`) | With a dropdown |
-| `a.nds-dropdown-item` | One link in a menu | With a dropdown |
+| `li.nds-nav-item.nds-has-menu` | A link that opens a menu: the trigger `a.nds-nav-link.nds-menu-btn`, then `.nds-nav-menu` > `.nds-nav-menu-content` | No |
+| `.nds-nav-columns` or `.nds-nav-row` | The menu's content. `.nds-nav-columns` holds titled columns (`.nds-column` with a `.nds-nav-title` and a `.nds-list`); `.nds-nav-row` holds one row of links (one `.nds-list`) | With a dropdown |
+| `a.nds-nav-menu-item` | One link in a menu | With a dropdown |
 | `.nds-show-more` | The arrow that scrolls the links when they do not fit. Write it right after `.nds-nav-primary` | Yes |
 | `ul.nds-nav-actions` | The actions, one `li.nds-nav-item` each. An action is a link, a button, or a dropdown with its own content | No |
 {: .nds-table .nds-responsive}
@@ -467,14 +467,14 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 
 The canon carries the Services dropdown, the search action and the language action. Each dropdown and each action is one part: **Dropdowns** and **Actions** add or remove them, and the parts keep the table order. **Many links** adds six links, so the links do not fit and the show more arrow appears.
 
-**Pinned on Small Screens** adds `nds-PAB` to that action's `li`. The option is off while its action is off.
+**Pinned on Small Screens** adds `nds-pinned` to that action's `li`. The option is off while its action is off.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Brand | Logo and name (default) | — | — | The logo, the site name and the slogan. Leave the slogan out when the name says enough |
 | Brand | Logo only | `remove` | `.nds-brand-name` | Only the logo. Pick it when the logo carries the site name. Keep the logo's `alt` text |
-| Dropdowns (any) | Columns (default) | canon `#mainnav-columns` | `.nds-nav-primary` | A menu of titled columns, `nds-colView`. Pick it to group many pages by topic. `nds-multi-column-list` spreads one long list over 3 columns |
-| Dropdowns (any) | Row list | canon `#mainnav-rows` | `.nds-nav-primary` | A menu of one row of links, `nds-rowView`. Pick it for a short flat list |
+| Dropdowns (any) | Columns (default) | canon `#mainnav-columns` | `.nds-nav-primary` | A menu of titled columns, `.nds-nav-columns`. Pick it to group many pages by topic. `nds-multi-column-list` spreads one long list over 3 columns |
+| Dropdowns (any) | Row list | canon `#mainnav-rows` | `.nds-nav-primary` | A menu of one row of links, `.nds-nav-row`. Pick it for a short flat list |
 | Many links | Many links (hint: The links do not fit, so the show more arrow appears) | canon `#mainnav-more` | `.nds-nav-primary` | Six more links. Shows how the bar scrolls the links that do not fit |
 | Actions (any) | Search (default) | canon `#mainnav-search` | `.nds-nav-actions` | A search box that opens below the bar |
 | Actions (any) | Notifications | canon `#mainnav-notifications` | `.nds-nav-actions` | A small `nds-fit` menu of messages, with a count badge |
@@ -482,12 +482,12 @@ The canon carries the Services dropdown, the search action and the language acti
 | Actions (any) | User (limit: 1 account) | canon `#mainnav-user` | `.nds-nav-actions` | The signed-in person's avatar, with a small `nds-fit` menu of account links |
 | Actions (any) | Language (default) | canon `#mainnav-language` | `.nds-nav-actions` | A link to the page in the other language. Its label is the other language's name |
 | Actions (any) | Call to action | canon `#mainnav-cta` | `.nds-nav-actions` | A filled button for the one task the site steers people to, such as an application. Its label shows at every width. Use one at most |
-| Pinned on Small Screens (any) | Search (default) | `.nds-PAB` | `.nds-search` | Search stays in the bar below 960px |
-| Pinned on Small Screens (any) | Notifications | `.nds-PAB` | `#nav-notifications` | Notifications stay in the bar below 960px |
-| Pinned on Small Screens (any) | Guest | `.nds-PAB` | `#nav-guest` | Sign in stays in the bar below 960px |
-| Pinned on Small Screens (any) | User | `.nds-PAB` | `#nav-user` | The avatar stays in the bar below 960px |
-| Pinned on Small Screens (any) | Language | `.nds-PAB` | `#nav-language` | Language stays in the bar below 960px |
-| Pinned on Small Screens (any) | Call to action | `.nds-PAB` | `#nav-cta` | The button stays in the bar below 960px, first in the row |
+| Pinned on Small Screens (any) | Search (default) | `.nds-pinned` | `.nds-search` | Search stays in the bar below 960px |
+| Pinned on Small Screens (any) | Notifications | `.nds-pinned` | `#nav-notifications` | Notifications stay in the bar below 960px |
+| Pinned on Small Screens (any) | Guest | `.nds-pinned` | `#nav-guest` | Sign in stays in the bar below 960px |
+| Pinned on Small Screens (any) | User | `.nds-pinned` | `#nav-user` | The avatar stays in the bar below 960px |
+| Pinned on Small Screens (any) | Language | `.nds-pinned` | `#nav-language` | Language stays in the bar below 960px |
+| Pinned on Small Screens (any) | Call to action | `.nds-pinned` | `#nav-cta` | The button stays in the bar below 960px, first in the row |
 {: #mainnavVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -509,12 +509,12 @@ A click on a dropdown link opens its menu, and closes any other open menu. A sec
 ### Small Menus
 {: .nds-block-title}
 
-`nds-fit` on `.nds-dropdown-menu` makes the menu as wide as its content, centered under its link. The script moves the menu sideways when it would cross the screen edge. Use it for an action's menu, such as notifications or an account.
+`nds-fit` on `.nds-nav-menu` makes the menu as wide as its content, centered under its link. The script moves the menu sideways when it would cross the screen edge. Use it for an action's menu, such as notifications or an account.
 
 ### Pinned Actions
 {: .nds-block-title}
 
-Below 960px, the actions move into the drawer, in one row at its bottom. An action with `nds-PAB` stays in the bar next to the menu button instead. The script moves it into `.nds-nav-minimal`, and back to its place above 960px.
+Below 960px, the actions move into the drawer, in one row at its bottom. An action with `nds-pinned` stays in the bar next to the menu button instead. The script moves it into `.nds-nav-minimal`, and back to its place above 960px.
 
 </div>
   </div>
@@ -620,8 +620,8 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 | `nds-icon-only` | An action's `li` | Shows only the icon. The label stays for screen readers |
 | `nds-menu-btn` | A dropdown's trigger link | The arrow that turns when the menu opens. See [Button](../components/button) |
 | `nds-multi-column-list` | A `.nds-list` in a menu | Spreads the links over 3 columns, and 2 below 960px |
-| `nds-fit` | `.nds-dropdown-menu` | Makes the menu as wide as its content. See Small Menus under Behavior |
-| `nds-CTA` | An action's `li` | Makes the action's button 32px high, for a call to action written as `nds-btn nds-primary`. A pinned one comes first in the bar |
+| `nds-fit` | `.nds-nav-menu` | Makes the menu as wide as its content. See Small Menus under Behavior |
+| `nds-nav-cta` | An action's `li` | Makes the action's button 32px high, for a call to action written as `nds-btn nds-primary`. A pinned one comes first in the bar |
 | `nds-minimal` | `nav.nds-main-nav` | The script sets it below 960px and removes it above. Key your own drawer styles on it |
 {: .nds-table .nds-responsive}
 
@@ -630,22 +630,24 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 
 | Attribute | Element | Effect |
 |---|---|---|
+| `data-nav-open` | `nav.nds-main-nav` | The script sets it while the drawer or a menu is open, and removes it once all have closed. While it is set, the bar does not clip what spills past it |
 | `hidden` | `ul.nds-nav-minimal` | Write it in the markup. The script removes it below 960px, and sets it again above |
 | `aria-expanded` | The menu button | Write `false` in the markup. The script sets `true` when the drawer opens, and `false` when it closes |
-| `data-state="open"` | `li.nds-mainNav-toggler` | The script sets it when the drawer opens, and removes it when the drawer closes |
-| `hidden` | `#ndsNavCollapse` | Write it in the markup. The script removes it when it starts |
-| `data-state` | `#ndsNavCollapse` | The script sets `open` and `opening` when the drawer opens, then `opened`. It adds `closing` when the drawer closes, and removes all of them after the close |
+| `data-state="open"` | `li.nds-nav-toggler` | The script sets it when the drawer opens, and removes it when the drawer closes |
+| `hidden` | `#nds-nav-collapse` | Write it in the markup. The script removes it when it starts |
+| `data-state` | `#nds-nav-collapse` | The script sets `open` and `opening` when the drawer opens, then `opened`. It adds `closing` when the drawer closes, and removes all of them after the close |
 | `data-state` | `ul.nds-nav-primary` | The script sets `has-more` while the links do not fit, `at-start` at the start of the scroll, and `at-end` at its end |
 | `data-state="current"` | A primary `a.nds-nav-link` | Set it yourself on the current page's link. It is the only attribute that highlights it. `NDS.Init.audit()` reports a current-page link without it |
 | `aria-current="page"` | A primary `a.nds-nav-link` | Set it yourself, with `data-state="current"`. It names the current page for screen readers, and changes no style |
-| `data-state` | `li.nds-dropdown` | The script sets `open` and `opening` when the menu opens, then `opened`. It adds `closing` when the menu closes, and removes all of them after the close |
+| `data-state` | `li.nds-has-menu` | The script sets `open` and `opening` when the menu opens, then `opened`. It adds `closing` when the menu closes, and removes all of them after the close |
 | `aria-expanded` | A dropdown's trigger | Write `false` in the markup. The script writes it when it is missing, sets `true` when the menu opens, and `false` when it closes |
-| `data-state="active"` | A dropdown's trigger | The script sets it when the menu opens, and removes it when the menu closes. Never write it: the current page is `current` |
-| `hidden` | `.nds-dropdown-menu` | Write it in the markup. The script removes it when the menu opens, and sets it again after the menu closes |
+| `data-state="open"` | A dropdown's trigger | The script sets it when the menu opens, and removes it when the menu closes. Never write it: the current page is `current` |
+| `hidden` | `.nds-nav-menu` | Write it in the markup. The script removes it when the menu opens, and sets it again after the menu closes |
 | `data-modal-target` | A nav link | Opens the [Modal](../components/modal) with that id. Any modal that opens closes the open menus and the drawer |
+| `data-nav-actions-open` | `.nds-collapse-content` | The script sets it while an action's menu is open in the drawer. The drawer's corners square off, and the links shrink to make room |
 | `data-nav-actions-empty` | `.nds-collapse-content` | The script sets it while the actions row is empty or missing, and the show more arrow moves down to the drawer's bottom edge |
 | `data-nav-empty` | `ul.nds-nav-actions` | The script sets it while the row holds no action, such as below 960px when every action is pinned. The row is hidden while it is set |
-| `data-hidden="sm md sr"` | An action's `.nds-label` | Hides the label below 960px. Screen readers still read it. Leave it off an `nds-CTA` label. See [Hidden](../utilities/hidden) |
+| `data-hidden="sm md sr"` | An action's `.nds-label` | Hides the label below 960px. Screen readers still read it. Leave it off an `nds-nav-cta` label. See [Hidden](../utilities/hidden) |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
@@ -667,11 +669,19 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 |---|---|
 | `NDS.Mainnav.init()` | Starts the main navigation. It runs on page load, and a second call does nothing |
 | `NDS.Mainnav.reinit()` | Finds the main navigation again and starts it. Call it when the nav itself is new: rendered after the NDS script ran, or replaced by a route change. `NDS.Init.refresh()` calls it too |
-| `NDS.Mainnav.toggleNavbar()` | Opens or closes the drawer |
-| `NDS.Mainnav.toggleDropdown(event)` | Opens or closes the menu of the dropdown that `event.target` is in. It takes the click event, not an element |
+| `NDS.Mainnav.destroy()` | Removes every listener and observer, and the backdrop. The markup stays, and `reinit()` starts it again |
+| `NDS.Mainnav.open()` | Opens the drawer |
+| `NDS.Mainnav.close()` | Closes the drawer |
+| `NDS.Mainnav.toggle()` | Opens or closes the drawer |
+| `NDS.Mainnav.openMenu(trigger)` | Opens the menu of the `li.nds-has-menu` that holds `trigger`, and closes any other open menu |
+| `NDS.Mainnav.closeMenus()` | Closes every open menu |
 {: .nds-table .nds-responsive}
 
-The main navigation fires no events.
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:mainnav:opened` | `#nds-nav-collapse` or an `li.nds-has-menu` | None. Fires when the drawer or the menu starts to open. It bubbles, so one listener on the nav hears both |
+| `nds:mainnav:closed` | The same element | None. Fires after the drawer or the menu has closed |
+{: .nds-table .nds-responsive}
 
 <script type="text/html" id="mainnav-js" data-canon data-lang="js" data-preview="none">
 // A framework rendered the header after the NDS script ran
@@ -680,8 +690,16 @@ NDS.Mainnav.reinit();
 // Open the drawer from a link in the page
 document.querySelector('#menu-link').addEventListener('click', (e) => {
   e.preventDefault();
-  NDS.Mainnav.toggleNavbar();
+  NDS.Mainnav.open();
 });
+
+// Pause a video while the drawer or a menu is open
+const nav = document.querySelector('.nds-main-nav');
+nav.addEventListener('nds:mainnav:opened', () => video.pause());
+nav.addEventListener('nds:mainnav:closed', () => video.play());
+
+// A framework removes the header: release the nav first
+NDS.Mainnav.destroy();
 </script>
 
 The full API is in the banner of `_js/nds-mainnav.js`.

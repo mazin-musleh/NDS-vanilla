@@ -4,7 +4,7 @@
     {%- assign content_label = include.item.content_label | default: "title" %}
     {%- assign content_limit = include.item.content_limit | default: 3 %}
     {%- for entry in source_data limit:content_limit %}
-    <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+    <a href="#" class="nds-btn nds-subtle nds-nav-menu-item">
         {%- if entry.icon %}{{ entry.icon }}{%- endif %}
         <span class="nds-label">{{ entry[content_label] }}</span>
     </a>
@@ -17,7 +17,7 @@
     <hr class="nds-divider">
     {%- else %}
     <a href="{%- if subitem.url contains '#' and subitem.url | slice: 0 == '#' %}{{ subitem.url }}{%- else %}{{ subitem.url | relative_url }}{%- endif %}"
-        class="nds-btn nds-subtle nds-dropdown-item{%- if subitem.custom_class %} {{ subitem.custom_class }}{%- endif %}">
+        class="nds-btn nds-subtle nds-nav-menu-item{%- if subitem.custom_class %} {{ subitem.custom_class }}{%- endif %}">
         {%- if subitem.img_icon %}
         <img src="{{ subitem.img_icon | relative_url }}" alt="{{ subitem.label }}" class="nds-icon">
         {%- elsif subitem.icon %}

@@ -36,16 +36,10 @@
     z-index: var(--_nav-z-base);
     transform: translateY(0);
 
-    // Clip horizontal overflow to prevent scroll bleed, but only when
-    // nothing is open. Open dropdowns/collapse panels need overflow
-    // visible so their content can extend beyond the nav boundary.
-    // Three open-state sources:
-    //   1. .nds-collapse .nds-dropdown — desktop dropdown
-    //   2. .nds-collapse — mobile hamburger panel
-    //   3. .nds-nav-minimal .nds-dropdown — minimal nav dropdown
-    &:not(:has(.nds-collapse .nds-dropdown[data-state~="open"],
-        .nds-collapse[data-state~="open"],
-        .nds-nav-minimal .nds-dropdown[data-state~="open"])) {
+    // Clip horizontal overflow to prevent scroll bleed, but only while nothing is
+    // open: an open menu or drawer must spill past the bar. data-nav-open is set by
+    // the script (syncOpenFlags).
+    &:not([data-nav-open]) {
         overflow-x: clip;
     }
 
@@ -113,7 +107,7 @@
     }
 
     /* Navigation Toggler */
-    .nds-mainNav-toggler {
+    .nds-nav-toggler {
         background: none;
         border: none;
         font-size: 1.2rem;
@@ -154,7 +148,7 @@
     /* Navigation Items */
     .nds-nav-item {
 
-        :is(.nds-nav-link, .nds-dropdown-item) {
+        :is(.nds-nav-link, .nds-nav-menu-item) {
 
             --btn-height-min: 40px;
 
@@ -165,7 +159,7 @@
             }
         }
 
-        &.nds-CTA {
+        &.nds-nav-cta {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -253,10 +247,10 @@
    DROPDOWN BASE STYLES
    ======================================== */
 
-.nds-main-nav .nds-dropdown {
+.nds-main-nav .nds-has-menu {
     position: relative;
 
-    .nds-dropdown-menu {
+    .nds-nav-menu {
         display: none;
         border-radius: 0;
         z-index: var(--_nav-z-dropdown);
@@ -270,7 +264,7 @@
         // (or use a drawer which already wraps one). Leaving scroll to the
         // consumer avoids the double-scroll footgun when internal components
         // (drawer, scroll-more) manage their own overflow.
-        >.nds-dropdown-content {
+        >.nds-nav-menu-content {
             background: var(--_nav-menu-bg);
             transform: translate(0, -100%);
             transition: transform var(--nds-transition);
@@ -289,41 +283,41 @@
         }
 
         &.nds-fit {
-            .nds-dropdown-item {
+            .nds-nav-menu-item {
                 --btn-width: 100%;
             }
         }
     }
 
-    &[data-state~="open"] .nds-dropdown-menu {
+    &[data-state~="open"] .nds-nav-menu {
         display: flex;
         flex-direction: column;
     }
 
-    .nds-dropdown-menu .nds-dropdown-content {
+    .nds-nav-menu .nds-nav-menu-content {
         overflow: clip;
     }
 
-    &[data-state~="opened"] .nds-dropdown-menu {
+    &[data-state~="opened"] .nds-nav-menu {
         overflow: unset;
         padding-bottom: unset !important;
 
         // Allow nested popovers (dropmenus, tooltips) to escape the clip.
         // No scroll here — consumer owns it via .nds-scroll-more.
-        .nds-dropdown-content {
+        .nds-nav-menu-content {
             overflow: visible;
         }
     }
 
-    &[data-state~="open"] .nds-dropdown-menu .nds-dropdown-content {
+    &[data-state~="open"] .nds-nav-menu .nds-nav-menu-content {
         transform: translateY(0);
     }
 
-    &:is([data-state~="opening"], [data-state~="closing"]) .nds-dropdown-menu .nds-dropdown-content {
+    &:is([data-state~="opening"], [data-state~="closing"]) .nds-nav-menu .nds-nav-menu-content {
         transform: translateY(-100%);
     }
 
-    .nds-dropdown-item {
+    .nds-nav-menu-item {
         text-decoration: none;
         justify-content: start;
 
@@ -332,7 +326,7 @@
         }
     }
 
-    .nds-dropdown-menu .nds-column {
+    .nds-nav-menu .nds-column {
         padding: var(--spacing-lg);
         display: flex;
         flex-direction: column;
@@ -340,11 +334,11 @@
         min-width: fit-content;
     }
 
-    /* Dropdown Columns Grid */
-    .nds-dropdown-columns {
+    /* Menu content: titled columns (.nds-nav-columns) or one row of links (.nds-nav-row) */
+    :is(.nds-nav-columns, .nds-nav-row) {
         padding: var(--spacing-lg) 0;
 
-        .nds-dropdown-title {
+        .nds-nav-title {
             font-size: var(--typo-text-clamp-lg-FS);
             line-height: var(--typo-text-clamp-lg-LH);
             color: var(--_nav-menu-title);
@@ -380,21 +374,20 @@
 
             }
         }
+    }
 
-        &.nds-rowView {
-            .nds-list {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-evenly;
-                flex-wrap: wrap;
-                column-gap: var(--spacing-2xl);
-            }
+    .nds-nav-row .nds-list {
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        @include tablet(max) {
+            flex-direction: column;
         }
     }
 }
 
 /* Dropdown Column View */
-.nds-dropdown-menu .nds-dropdown-columns.nds-colView {
+.nds-nav-menu .nds-nav-columns {
     column-count: 4;
     column-gap: var(--spacing-2xl);
 
@@ -497,13 +490,13 @@
     }
 
     /* Dropdown Menu for Desktop/Tablet */
-    .nds-dropdown-menu {
+    .nds-nav-menu {
         position: fixed;
         inset-inline: 0;
     }
 
 
-    .nds-dropdown-menu.nds-fit {
+    .nds-nav-menu.nds-fit {
         min-width: fit-content !important;
         max-inline-size: calc(100vw - 16px);
         position: absolute !important;
@@ -522,26 +515,15 @@
 /* Large Desktop: 1280px and down */
 @include desktop(max) {
 
-    .nds-dropdown-menu .nds-dropdown-columns.nds-colView {
+    .nds-nav-menu .nds-nav-columns {
         column-count: 3;
     }
 }
 
 /* Tablet: 960px and down */
 @include tablet(max) {
-    .nds-dropdown-menu {
-        .nds-dropdown-columns {
-            &.nds-colView {
-                column-count: 2;
-            }
-
-            &.nds-rowView {
-
-                .nds-list {
-                    flex-direction: column;
-                }
-            }
-        }
+    .nds-nav-menu .nds-nav-columns {
+        column-count: 2;
     }
 
     // Nav action labels collapse to icon-only at tablet/mobile via
@@ -588,7 +570,7 @@
         flex-shrink: 0;
     }
 
-    .nds-mainNav-toggler {
+    .nds-nav-toggler {
         display: flex;
 
         i {
@@ -616,7 +598,7 @@
 
             // The see-through actions row shows these corners; square off so an
             // open action dropdown sits flush under it.
-            &:has(.nds-nav-actions .nds-dropdown[data-state~="open"]) {
+            &[data-nav-actions-open] {
                 border-radius: 0;
 
                 .nds-nav-primary {
@@ -687,7 +669,7 @@
                         }
                     }
 
-                    &:is([data-state~="active"], [data-state~="selected"], [data-state~="current"]):not( :active, .nds-oncolor) {
+                    &:is([data-state~="open"], [data-state~="selected"], [data-state~="current"]):not( :active, .nds-oncolor) {
                         --btn-indicator-color: var(--background-primary);
                         --btn-indicator-selected: var(--background-primary);
                     }
@@ -707,7 +689,7 @@
 
         }
 
-        .nds-dropdown-menu {
+        .nds-nav-menu {
             display: grid;
             transition: grid-template-rows var(--nds-transition);
             grid-template-rows: 0fr;
@@ -720,7 +702,7 @@
             contain: layout;
             padding: 0;
 
-            .nds-dropdown-content {
+            .nds-nav-menu-content {
                 grid-row: 1 / span 2;
                 transform: translateY(0);
                 transition: none;
@@ -729,16 +711,16 @@
                 padding-inline: 0;
             }
 
-            .nds-dropdown-item {
+            .nds-nav-menu-item {
                 width: 100%;
             }
         }
 
-        .nds-dropdown[data-state~="open"] .nds-dropdown-menu {
+        .nds-has-menu[data-state~="open"] .nds-nav-menu {
             grid-template-rows: 1fr;
         }
 
-        .nds-dropdown:is([data-state~="opening"], [data-state~="closing"]) .nds-dropdown-menu {
+        .nds-has-menu:is([data-state~="opening"], [data-state~="closing"]) .nds-nav-menu {
             grid-template-rows: 0fr;
         }
 
@@ -818,13 +800,13 @@
         }
 
         /* Mobile Dropdown Styles */
-        .nds-dropdown-menu {
+        .nds-nav-menu {
             position: fixed !important;
             inset-inline: 0;
             z-index: var(--_nav-z-secondary-dropdown);
             /* Above all navigation */
 
-            .nds-dropdown-content {
+            .nds-nav-menu-content {
                 background-color: var(--background-nav);
                 border-radius: 0 0 var(--radius-lg) var(--radius-lg);
                 box-shadow: var(--shadow-md);
@@ -833,7 +815,7 @@
 
     }
 
-    :is(.nds-nav-primary, .nds-nav-actions) .nds-dropdown-content {
+    :is(.nds-nav-primary, .nds-nav-actions) .nds-nav-menu-content {
         border-radius: 0;
         box-shadow: unset;
         margin: 0;
@@ -841,19 +823,19 @@
 }
 
 /* Minimal Navigation Dropdown (shared between mobile and desktop) */
-.nds-main-nav .nds-nav-minimal .nds-dropdown-menu {
+.nds-main-nav .nds-nav-minimal .nds-nav-menu {
     position: fixed !important;
     inset-inline: 0;
     z-index: var(--_nav-z-dropdown);
 
-    .nds-dropdown-content {
+    .nds-nav-menu-content {
         margin-inline: 0;
     }
 }
 
 /* Small Mobile Screens */
 @include mobile {
-    .nds-dropdown-menu .nds-dropdown-columns.nds-colView {
+    .nds-nav-menu .nds-nav-columns {
         column-count: 1;
         width: 100%;
     }
@@ -862,7 +844,7 @@
 /* Respect reduced motion preferences */
 @include reduced-motion {
 
-    .nds-main-nav :is(.nds-dropdown-menu, .nds-dropdown-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-actions, .nds-show-more) {
+    .nds-main-nav :is(.nds-nav-menu, .nds-nav-menu-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-actions, .nds-show-more) {
         transition: none !important;
     }
 }

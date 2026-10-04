@@ -29,7 +29,7 @@
 #
 # Type Behavior:
 # ──────────────────────────────────────────────────────────────
-# dropdown  - Renders template inside nds-dropdown-menu (inside nav)
+# dropdown  - Renders template inside nds-nav-menu (inside nav)
 # modal     - Renders template inside nds-modal nds-card (outside nav)
 #             Button gets data-modal-target, modal id = "{label-slugified}-modal"
 # (none)    - Plain link or button, no content container
@@ -79,13 +79,13 @@ actions_nav:
   - label: "Search"
     icon: "nds-hgi-search-01"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
-    custom_class: "nds-icon-only nds-search nds-PAB"
+    custom_class: "nds-icon-only nds-search nds-pinned"
     template: "mainnav-search.html"
     type: "dropdown"
 
   - label: "Notifications"
     icon: "nds-hgi-notification-02"
-    custom_class: "nds-icon-only nds-PAB"
+    custom_class: "nds-icon-only nds-pinned"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     content_source: "notifications"
     template: "mainnav-notifications.html"
@@ -118,5 +118,5 @@ actions_nav:
   # not compliant with DGA
   # - label: "Call to Action"
   #   url: "#"
-  #   custom_class: "nds-CTA"
+  #   custom_class: "nds-nav-cta"
   #   button_style: "nds-btn nds-primary"

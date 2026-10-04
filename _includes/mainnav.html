@@ -1,4 +1,4 @@
-<nav class="nds-main-nav nds-content-wrapper" id="ndsMainNav" aria-label="Primary navigation">
+<nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation">
     <div class="nds-nav-container">
         {%- assign nav_data_file = page.mainnav | default: site.mainnav | default: "mainnav" %}
         {%- assign nav_data = site.data.mainnav[nav_data_file] %}
@@ -25,20 +25,20 @@
             {%- endif %}
         </a>
         <ul class="nds-nav-minimal" hidden>
-            <li class="nds-mainNav-toggler nds-nav-item">
+            <li class="nds-nav-toggler nds-nav-item">
                 <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu"
-                    aria-expanded="false" aria-controls="ndsNavCollapse">
+                    aria-expanded="false" aria-controls="nds-nav-collapse">
                     <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                 </button>
             </li>
         </ul>
 
-        <div class="nds-collapse" id="ndsNavCollapse" hidden>
+        <div class="nds-collapse" id="nds-nav-collapse" hidden>
             <div class="nds-collapse-content">
                 {%- if nav_data.primary_nav and nav_data.primary_nav.size > 0 %}
                 <ul class="nds-nav-primary">
                     {%- for item in nav_data.primary_nav %}
-                    <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-dropdown{%- endif %}" {{ item.attr }}>
+                    <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-has-menu{%- endif %}" {{ item.attr }}>
                         {%- if item.type %}
                         <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"
                             {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}
@@ -46,8 +46,8 @@
                             <span class="nds-label">{{ item.label }}</span>
                         </a>
                         {%- if item.type == 'dropdown' %}
-                        <div class="nds-dropdown-menu" hidden>
-                            <div class="nds-dropdown-content nds-content-wrapper">
+                        <div class="nds-nav-menu" hidden>
+                            <div class="nds-nav-menu-content nds-content-wrapper">
                                 {%- if item.template %}
                                 {% include {{ item.template }} item=item %}
                                 {%- endif %}
@@ -87,7 +87,7 @@
                             <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
                         {%- endif -%}
                         <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}"
-                            {%- unless item.custom_class contains 'nds-CTA' %} data-hidden="sm md sr"{%- endunless %}>{{ item.label }}</span>
+                            {%- unless item.custom_class contains 'nds-nav-cta' %} data-hidden="sm md sr"{%- endunless %}>{{ item.label }}</span>
                     {%- endcapture -%}
                     {%- assign action_class = item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' %}
                     {%- comment %} Icon-only actions name themselves in a hover tooltip built from the title (label-hidden keeps the accessible name). {%- endcomment %}
@@ -95,7 +95,7 @@
                     {%- if item.type == 'modal' %}
                         {%- assign modal_target = item.id | default: item.label | slugify | append: '-modal' %}
                     {%- endif %}
-                    <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-dropdown{%- endif %}{%- if item.custom_class %} {{ item.custom_class }}{%- endif %}" {{ item.attr }}>
+                    <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-has-menu{%- endif %}{%- if item.custom_class %} {{ item.custom_class }}{%- endif %}" {{ item.attr }}>
                         {%- if item.url %}
                         <a href="{%- if item.url contains '#' and item.url | slice: 0 == '#' %}{{ item.url }}{%- else %}{{ item.url | relative_url }}{%- endif %}"
                             class="{{ action_class }}"{{ action_tip }}
@@ -115,8 +115,8 @@
                         {%- endif %}
                         {%- endif %}
                         {%- if item.type == 'dropdown' %}
-                        <div class="nds-dropdown-menu{%- if item.content_class %} {{ item.content_class }}{%- endif %}" hidden>
-                            <div class="nds-dropdown-content">
+                        <div class="nds-nav-menu{%- if item.content_class %} {{ item.content_class }}{%- endif %}" hidden>
+                            <div class="nds-nav-menu-content">
                                 {%- if item.template %}
                                 {% include {{ item.template }} item=item %}
                                 {%- endif %}
