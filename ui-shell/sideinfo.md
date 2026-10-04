@@ -2,505 +2,341 @@
 layout: page
 title: Side Info
 hero_title: Side Info - National Design System
-hero_description: A companion column placed alongside the main article for service details, progress, tables of contents, and other context, with sticky positioning, size variants, and an opt-in alignment that lifts the column into the hero's reserved aside slot.
+hero_description: A column beside the content of a section, for the facts of a service, the progress of a form, or a table of contents.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.11.0"
-last_edit: "28/08/2026 - 06:05 PM"
+updated: "1.12.x"
+last_edit: "04/10/2026 - 09:27 PM"
 ---
 
-<!-- Side Info Structure -->
-<section id="sideinfoStructure" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Structure</h2>
-            <p class="nds-section-description">The side info wraps the page body in a flex row. The main article sits in <code class="nds-inline-code lang-html">.nds-info-content</code> and the companion column in <code class="nds-inline-code lang-html">.nds-sideinfo</code>. The aside is a track: it sets the width and the sticky behavior. Put the surface classes on the companion content itself, so the card, stroke and shadow belong to the content. On mobile the row collapses to a column.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Component Tree</div>
-                        </div>
-                        <div class="demo-container nds-noBg">
-                            <div class="nds-code nds-expandable">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
-section.nds-content-section nds-demo-section.nds-sideinfo-section
-&#9492;&#9472;&#9472; div.nds-section-body
-    &#9500;&#9472;&#9472; div.nds-info-content
-    &#9474;   &#9492;&#9472;&#9472; article (main content)
-    &#9492;&#9472;&#9472; aside.nds-sideinfo.nds-sticky
-        &#9492;&#9472;&#9472; dl.nds-definition-list.nds-card.nds-stroke.nds-shadow
-            (or any companion content: TOC, stepper, etc.)
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sideinfoOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Side info sits in a section whose body is a row: the content in `.nds-info-content`, and the column in `aside.nds-sideinfo`. The `aside` sets the width, the place and the sticky behavior. It has no look of its own: the cards inside it have the look.
+
+The preview shows it in a frame of its own, with a hero above it, so the column can move up beside the page title. A placeholder stands in for the card in the column: the [Related](#sideinfoRelated) templates show real content.
+
+Pick another component when:
+
+- the links go to the pages of one part of the site: [Side Menu](../ui-shell/sidemenu)
+- the reader opens the extra information and closes it again: [Panels](../components/panels)
+- the facts belong in the content, with no column: [Definition List](../components/definition-list)
+
+The side info is the side column of a standard page. The other page columns are on [Page Layout](../layout/page-layout).
+
+</div>
+  </div>
 </section>
 
-<!-- Standard -->
-<section id="sideinfoStandard" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Standard</h2>
-            <p class="nds-section-description">A sticky sideinfo that tracks with the article. Toggle <code class="nds-inline-code lang-html">nds-sticky</code> to see the difference between pinned and in-flow behavior.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-sticky", ".nds-sideinfo", "sideinfoStandardSticky"]'>
-                                    <span class="nds-label">Sticky</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-stroke", ".nds-sideinfo > .nds-card", "sideinfoStandardStroke"]'>
-                                    <span class="nds-label">Stroke</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-shadow", ".nds-sideinfo > .nds-card", "sideinfoStandardShadow"]'>
-                                    <span class="nds-label">Shadow</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-content-section nds-demo-section nds-sideinfo-section" style="width: 100%;">
-                                    <div class="nds-section-body">
-                                        <div class="nds-info-content">
-                                            <h3 style="margin-top: 0;">Article Heading</h3>
-                                            <p>This is an example of the article column next to a side info card. In production the article fills the remaining width while the sideinfo stays at its configured width.</p>
-                                            <p>Reduce the viewport below 960px to see the columns stack.</p>
-                                        </div>
-                                        <aside class="nds-sideinfo nds-sticky" aria-label="Side information">
-                                            <dl class="nds-definition-list nds-card nds-stroke nds-shadow">
-                                                <div class="nds-definition-item">
-                                                    <dt><i class="hgi hgi-stroke hgi-clock-01"></i><span class="nds-label">Duration</span></dt>
-                                                    <dd>Immediately</dd>
-                                                </div>
-                                                <div class="nds-definition-item">
-                                                    <dt><i class="hgi hgi-stroke hgi-riyal"></i><span class="nds-label">Fee</span></dt>
-                                                    <dd>Free</dd>
-                                                </div>
-                                                <div class="nds-definition-item">
-                                                    <dt><i class="hgi hgi-stroke hgi-user-multiple-02"></i><span class="nds-label">Beneficiaries</span></dt>
-                                                    <dd>Citizens, Residents</dd>
-                                                </div>
-                                            </dl>
-                                        </aside>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-sideinfo-standard-1" id="tab-sideinfo-standard-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sideinfo-standard-1"
-                                        aria-labelledby="tab-sideinfo-standard-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section nds-sideinfo-section"&gt;
-  &lt;div class="nds-section-body"&gt;
-    &lt;div class="nds-info-content"&gt;
-      &lt;h3&gt;Article Heading&lt;/h3&gt;
-      &lt;p&gt;This is an example of the article column next to a side info card. In production the article fills the remaining width while the sideinfo stays at its configured width.&lt;/p&gt;
-      &lt;p&gt;Reduce the viewport below 960px to see the columns stack.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;aside class="nds-sideinfo nds-sticky" aria-label="Side information"&gt;
-      &lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;
-        &lt;div class="nds-definition-item"&gt;
-          &lt;dt&gt;&lt;i class="hgi hgi-stroke hgi-clock-01"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;Duration&lt;/span&gt;&lt;/dt&gt;
-          &lt;dd&gt;Immediately&lt;/dd&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-definition-item"&gt;
-          &lt;dt&gt;&lt;i class="hgi hgi-stroke hgi-riyal"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;Fee&lt;/span&gt;&lt;/dt&gt;
-          &lt;dd&gt;Free&lt;/dd&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-definition-item"&gt;
-          &lt;dt&gt;&lt;i class="hgi hgi-stroke hgi-user-multiple-02"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;Beneficiaries&lt;/span&gt;&lt;/dt&gt;
-          &lt;dd&gt;Citizens, Residents&lt;/dd&gt;
-        &lt;/div&gt;
-      &lt;/dl&gt;
-    &lt;/aside&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sideinfoMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="sideinfo-canon" data-canon data-preview="page" data-preview-height="720" data-preview-style="@media (width >= 960px) { .nds-hero-section.nds-aside + .nds-content-layout .nds-sideinfo > :first-child .nds-content-placeholder { min-height: 500px } }" data-variants="sideinfoVariantsTable">
+<section class="nds-hero-section nds-sub">
+  <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+    <ol class="nds-breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li class="nds-truncate" aria-current="page">Renew a Passport</li>
+    </ol>
+  </nav>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h1 class="nds-section-title">Renew a Passport</h1>
+      <p class="nds-section-description">Renew your passport online through Absher, with no visit to an office.</p>
+    </div>
+  </div>
+</section>
+<div class="nds-content-layout nds-wSideInfo">
+  <div class="nds-content" id="main-content">
+    <section class="nds-content-section nds-sideinfo-section">
+      <div class="nds-section-body">
+        <div class="nds-info-content">
+          <article class="nds-prose">
+            <h2>Service Description</h2>
+            <p>This service renews a Saudi passport that has expired or expires within six months.</p>
+            <p>The new passport is ready within 3 working days, at the office you pick.</p>
+            <h2>Required Documents</h2>
+            <ul>
+              <li>The old passport</li>
+              <li>A recent photo with a white background</li>
+              <li>The national ID of the applicant</li>
+            </ul>
+            <h2>Steps</h2>
+            <ol>
+              <li>Sign in to Absher with your national ID.</li>
+              <li>Open Passports, then Renew a Passport.</li>
+              <li>Pay the fee, then pick the office for delivery.</li>
+            </ol>
+            <h2>Terms</h2>
+            <p>The applicant must have no unpaid traffic fines.</p>
+            <p>A passport for a person under 21 needs the approval of the guardian.</p>
+            <h2>Fees</h2>
+            <p>The fee is 300 riyals for 5 years, or 600 riyals for 10 years.</p>
+            <p>The portal takes the fee by card or through SADAD before it sends the request.</p>
+          </article>
+        </div>
+        <aside class="nds-sideinfo nds-sticky nds-top" aria-label="Service information">
+          <div class="nds-card nds-stroke nds-shadow">
+            <div class="nds-content-placeholder">
+              <span>Swap with the column's card</span>
+              <span>استبدل هذا العنصر بمحتوى العمود</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </div>
+</div>
+</script>
+<script type="text/html" id="sideinfo-more" data-canon>
+<div class="nds-card nds-stroke nds-shadow">
+  <div class="nds-content-placeholder">
+    <span>Swap with a second card</span>
+    <span>استبدل هذا العنصر ببطاقة ثانية</span>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Sizes -->
-<section id="sideinfoSizes" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Sizes</h2>
-            <p class="nds-section-description">Three preset widths. Default is large (400px). Choose small for compact rails like in-page navigation, medium for moderate content, or large for cards with several definition rows.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
-                                        <span class="nds-label">Size: Large</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-sm", ".nds-sideinfo", "sideinfoSize"]'
-                                                data-trigger-label="Small">
-                                                <span class="nds-label">Small (200px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-md", ".nds-sideinfo", "sideinfoSize"]'
-                                                data-trigger-label="Medium">
-                                                <span class="nds-label">Medium (300px)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["nds-lg", ".nds-sideinfo", "sideinfoSize"]'
-                                                data-trigger-label="Large">
-                                                <span class="nds-label">Large (400px, default)</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-content-section nds-demo-section nds-sideinfo-section" style="width: 100%;">
-                                    <div class="nds-section-body">
-                                        <div class="nds-info-content">
-                                            <p>The sideinfo width updates instantly when you switch the size. The main article fills whatever remains.</p>
-                                        </div>
-                                        <aside class="nds-sideinfo nds-lg" aria-label="Side information">
-                                            <dl class="nds-definition-list nds-card nds-stroke nds-shadow">
-                                                <div class="nds-definition-item">
-                                                    <dt><span class="nds-label">Support</span></dt>
-                                                    <dd>24/7</dd>
-                                                </div>
-                                                <div class="nds-definition-item">
-                                                    <dt><span class="nds-label">Language</span></dt>
-                                                    <dd>Arabic, English</dd>
-                                                </div>
-                                            </dl>
-                                        </aside>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-sideinfo-sizes-1" id="tab-sideinfo-sizes-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sideinfo-sizes-1"
-                                        aria-labelledby="tab-sideinfo-sizes-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;!-- Small (200px) --&gt;
-&lt;aside class="nds-sideinfo nds-sm"&gt;&lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;...&lt;/dl&gt;&lt;/aside&gt;
-
-&lt;!-- Medium (300px) --&gt;
-&lt;aside class="nds-sideinfo nds-md"&gt;&lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;...&lt;/dl&gt;&lt;/aside&gt;
-
-&lt;!-- Large (400px, default) --&gt;
-&lt;aside class="nds-sideinfo nds-lg"&gt;&lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;...&lt;/dl&gt;&lt;/aside&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sideinfoParts" class="nds-content-section nds-doc-parts">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Parts</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+| Part | Holds | Required |
+|---|---|---|
+| `section.nds-hero-section.nds-sub` | The page hero. With `nds-aside`, the column moves up beside its title. See [Hero](../ui-shell/hero) | No |
+| `.nds-content-layout.nds-wSideInfo` | The page content. `nds-wSideInfo` sets the section padding of a page with a side column. See [Page Layout](../layout/page-layout) | Yes |
+| `section.nds-sideinfo-section` | A `.nds-section-body` with the content and the column | Yes |
+| `.nds-info-content` | The content of the section, usually an `article` | Yes |
+| `aside.nds-sideinfo` | The column. Give it an `aria-label` that names what it holds | Yes |
+| The card | A direct child of the `aside`, such as a definition list, a table of contents or a stepper. It carries `nds-card` itself. The `aside` can hold several. For several blocks in one card, use a `div` with `nds-card` that holds groups | Yes |
+| `.nds-sideinfo-group` | One block in that `div`: a `span.nds-sideinfo-title`, then its definition list or links | No |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Reverse -->
-<section id="sideinfoReverse" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Reverse</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-reverse</code> to flip the column to the inline-start side (left in LTR, right in RTL). The article body fills the rest.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["nds-reverse", ".nds-sideinfo", "sideinfoReverseToggle"]'>
-                                    <span class="nds-label">Reverse</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-content-section nds-demo-section nds-sideinfo-section" style="width: 100%;">
-                                    <div class="nds-section-body">
-                                        <div class="nds-info-content">
-                                            <p>With reverse enabled, the sideinfo takes the start side of the row and the article fills the end. Useful when the sideinfo hosts navigation (e.g., a table of contents) that readers expect on the left.</p>
-                                        </div>
-                                        <aside class="nds-sideinfo nds-md nds-reverse" aria-label="Side information">
-                                            <dl class="nds-definition-list nds-card nds-stroke nds-shadow">
-                                                <div class="nds-definition-item">
-                                                    <dt><span class="nds-label">Position</span></dt>
-                                                    <dd>Start side</dd>
-                                                </div>
-                                            </dl>
-                                        </aside>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-sideinfo-reverse-1" id="tab-sideinfo-reverse-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-sideinfo-reverse-1"
-                                        aria-labelledby="tab-sideinfo-reverse-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;aside class="nds-sideinfo nds-md nds-reverse" aria-label="Side information"&gt;
-  &lt;dl class="nds-definition-list nds-card nds-stroke nds-shadow"&gt;
-    &lt;div class="nds-definition-item"&gt;
-      &lt;dt&gt;&lt;span class="nds-label"&gt;Position&lt;/span&gt;&lt;/dt&gt;
-      &lt;dd&gt;Start side&lt;/dd&gt;
-    &lt;/div&gt;
-  &lt;/dl&gt;
-&lt;/aside&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sideinfoVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The width is not in the builder: see `--nds-sideinfo-width` in the API.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Sticky (any) | Desktop (default) | `.nds-sticky` | `.nds-sideinfo` | At 960px and wider, the column stays in view below the main navigation while the content scrolls. Turn it off for a short page |
+| Sticky (any) | Small screens | `.nds-sticky-md` | `.nds-sideinfo.nds-top` | Below 960px, the column stays in view as a strip across the screen, below the main navigation. Needs the column above the content. For a short column, such as a progress dial |
+| Small screens | Above the content (default) | `.nds-top` | `.nds-sideinfo` | Below 960px, the column moves above the content |
+| Small screens | Under the content | — | `.nds-sideinfo:not(.nds-reverse)` | Below 960px, the column stays under the content, and scrolls away with it. It cannot be sticky there. Not with Start side |
+| Start side | Start side (limit: 1 position) | `.nds-reverse` | `.nds-sideinfo` | The column moves to the start side of the row, and above the content below 960px. For a table of contents, write the `aside` first in the markup instead. Not with Beside the title |
+| Beside the title | Beside the title (hint: On desktops, the column moves up beside the page title) (limit: 1 position) | `.nds-aside` | `.nds-hero-section.nds-sub` | At 960px and wider, the column moves up beside the page title, on the end side. For a column about the whole page, in the first section. Not with Start side |
+| More cards | More cards (hint: A second card under the first) | canon `#sideinfo-more` | `.nds-sideinfo` | A second card in the column, under the first |
+| Card stroke | Card stroke (default) | `.nds-stroke` | `.nds-card` | A border around the card. It goes on the card, never on the `aside` |
+| Card shadow | Card shadow (default) | `.nds-shadow` | `.nds-card` | A shadow under the card. It goes on the card, never on the `aside` |
+{: #sideinfoVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="sideinfoFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates on any <code class="nds-inline-code lang-html">.nds-sideinfo</code> on the page. Positioning, sticky, and resize hooks attach automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-right"></i>
-                            <span class="nds-label">Hero-Aside Alignment</span>
-                        </span>
-                        <p class="nds-item-desc">When the hero opts in with <code class="nds-inline-code lang-html">nds-aside</code>, the column lifts into the hero's reserved slot so the card visually starts next to the page title.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-pin"></i>
-                            <span class="nds-label">Smart Sticky Fallback</span>
-                        </span>
-                        <p class="nds-item-desc">Sticky positioning drops automatically when the card is taller than the viewport and restores when it fits, so readers never get trapped on unreachable content.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-resize-01"></i>
-                            <span class="nds-label">Size Variants</span>
-                        </span>
-                        <p class="nds-item-desc">Three preset widths (small, medium, large) cover everything from compact navigation rails to content-rich service cards.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-                            <span class="nds-label">Responsive Stack</span>
-                        </span>
-                        <p class="nds-item-desc">Below the tablet breakpoint the row collapses to a column and the sideinfo spans the full width. Pair with <code class="nds-inline-code lang-html">nds-top</code> to place it above the article on small screens.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Create a single instance or reinitialize all sideinfos after injecting new markup through the <code class="nds-inline-code lang-js">NDS.Sideinfo</code> API.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sideinfoBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Sticky Column
+{: .nds-block-title}
+
+`nds-sticky` on the `aside` keeps the column in view below the main navigation while the content scrolls. While the column is taller than the screen, the script removes `nds-sticky`, so the reader can scroll to its end. It adds the class back when the column fits again. Below 960px, `nds-sticky` has no effect.
+
+### Sticky on Small Screens
+{: .nds-block-title}
+
+`nds-sticky-md` keeps the column in view below 960px, and `nds-sticky-sm` below 600px only. The column then spans the screen below the main navigation, with a shadow under it. Each one works alone or with `nds-sticky`. Write `nds-top` with it: under the content, the column is the last item in its section, so it never sticks. Like `nds-sticky`, the script removes it while the column is taller than the screen.
+
+### Column Order
+{: .nds-block-title}
+
+The `aside` shows where it is in the markup: after the content, it is on the end side and under the content below 960px. `nds-reverse` moves it to the start side, and above the content below 960px. `nds-top` moves it above the content below 960px only. For navigation such as a table of contents, write the `aside` first instead: it is then on the start side and on top, and keyboard users reach it first.
+
+### Beside the Title
+{: .nds-block-title}
+
+`nds-aside` on the sub hero narrows the hero text by the column width. At 960px and wider, the script then measures the hero and moves the column up beside the title. It measures again when the screen size changes, when the hero changes size, and after the fonts and images load. Below 960px, the column stays in its section. It works only with the column on the end side, so do not write it with `nds-reverse`.
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="sideinfoGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Live Examples</h3>
-                <ul>
-                    <li><a class="nds-color" href="{{ 'templates/content-template' | relative_url }}">Content Template</a>: article with a <a class="nds-color" href="{{ 'components/toc' | relative_url }}">TOC</a> in the sideinfo column</li>
-                    <li><a class="nds-color" href="{{ 'templates/service-template' | relative_url }}">Service Page Template</a>: government service with hero-aside alignment and a definition-list card</li>
-                    <li><a class="nds-color" href="{{ 'templates/form-template' | relative_url }}">Form Template</a>: multi-step form with a sideinfo stepper on desktop, radial on mobile</li>
-                    <li><a class="nds-color" href="{{ 'templates/contact-us-template' | relative_url }}">Contact Us Template</a>: contact form with an emergency-contacts sideinfo card</li>
-                </ul>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use a <strong>sideinfo</strong> for supporting context that should stay visible while the reader scrolls the article: service metadata, progress, <a class="nds-color" href="{{ 'components/toc' | relative_url }}">table of contents</a>, or quick actions</li>
-                    <li>Use the <strong>hero-aside</strong> (<code class="nds-inline-code lang-html">hero_style: "nds-aside"</code>) when the card represents the whole page's context (service details, contact card) so it visually anchors to the page title. Omit <code class="nds-inline-code lang-html">nds-aside</code> when the sideinfo belongs to the article body (a TOC, inline help)</li>
-                    <li>Do not use a sideinfo to hold unrelated ads or cross-promotional content. The column is a continuation of the article's context, not a marketing slot. Prefer a <a class="nds-color" href="{{ 'components/cards' | relative_url }}">card grid</a> below the main content instead</li>
-                    <li>Do not use it for primary site navigation. That's the <a class="nds-color" href="{{ 'ui-shell/sidemenu' | relative_url }}">Side Menu</a>'s job</li>
-                    <li>Pick <code class="nds-inline-code lang-html">nds-sm</code> or <code class="nds-inline-code lang-html">nds-md</code> when the column hosts a link list (TOC). Reserve <code class="nds-inline-code lang-html">nds-lg</code> (default) for cards with several definition rows or an embedded stepper</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-sticky</code> for long articles where readers benefit from always-available context. Skip it for short pages where the initial view already shows everything</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-top</code> alongside <code class="nds-inline-code lang-html">nds-sticky</code> when the content should move above the article on mobile (progress trackers, step indicators)</li>
-                    <li>Put <code class="nds-inline-code lang-html">nds-card</code> plus <code class="nds-inline-code lang-html">nds-stroke</code> or <code class="nds-inline-code lang-html">nds-shadow</code> on the companion content, not on the aside. The aside stays an unstyled track, so the surface belongs to the content it holds. Borderless cards work only against contrasting section backgrounds</li>
-                    <li>Add a wrapper only when the column holds several blocks that share one surface. A single block carries the card classes itself</li>
-                    <li>Older pages that put <code class="nds-inline-code lang-html">nds-card</code> on the aside itself still render the same. Both shapes are supported</li>
-                    <li>Keep the column's content scannable. Use a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">definition list</a> for paired labels and values, or a <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">stepper</a> for progress. Avoid long paragraphs inside the column</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Compact 200px width for navigation rails and link lists</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium 300px width for moderate content</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Large 400px width for rich cards (default)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sticky</code></td><td>Pin the column to the nav's lower edge as the page scrolls. Auto-disables when the card is taller than the viewport</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-top</code></td><td>On mobile, place the sideinfo above the main content when the columns stack</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-reverse</code></td><td>Flip the column to the inline-start side of the flex row</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--nds-sideinfo-width</code></td><td><code class="nds-inline-code lang-html">400px</code></td><td>Column width. Preset by the size modifiers; override for a custom width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--nds-sideinfo-top-offset</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Extra space above the card. Adds to the sticky <code class="nds-inline-code lang-html">top</code> threshold and, on hero-aside pages, folds into the pull-up so the card shifts down by the same amount before and after sticking</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--nds-sideinfo-top</code></td><td>computed</td><td>Set by the JS to align the card with the hero section-head when <code class="nds-inline-code lang-html">nds-aside</code> is on the hero. Not intended for manual override</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Sideinfo</strong> API handles positioning and sticky fallback. Auto-init runs on <code class="nds-inline-code lang-js">DOMContentLoaded</code>; call <code class="nds-inline-code lang-js">NDS.Sideinfo.reinit()</code> after injecting new sideinfo markup.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Initialize all sideinfo columns on the page ─────
-// Runs automatically once. Call reinit after DOM changes.
-NDS.Sideinfo.init();
-NDS.Sideinfo.reinit();
-
-// ── Create a single instance ────────────────────────
-// Returns the NDSSideInfo instance
-const aside = document.querySelector('.nds-sideinfo');
-const instance = NDS.Sideinfo.create(aside);
-
-// ── Manually tear down and re-wire ──────────────────
-instance.destroy();         // Remove listeners, clear CSS variable
-NDS.Sideinfo.destroy(aside);// The same teardown from the namespace. NDS.Init.destroy()
-                            // calls this for every column in a container it releases.
-instance.updatePosition();  // Recompute the hero-alignment offset
-instance.updateStickyState();// Re-check whether sticky fits the viewport
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<section id="sideinfoFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto Start</span>
+          </span>
+          <p class="nds-item-desc">The script starts each <code class="nds-inline-code lang-html">.nds-sideinfo</code> on the page when it loads.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
+            <span class="nds-label">Responsive Stack</span>
+          </span>
+          <p class="nds-item-desc">Below 960px, the row becomes a column, and the side info takes the full width.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Width by Content</span>
+          </span>
+          <p class="nds-item-desc">The column is 400px wide, or 300px when it holds a table of contents.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layers-01"></i>
+            <span class="nds-label">Stacked Cards</span>
+          </span>
+          <p class="nds-item-desc">Several cards in the column stack, with <code class="nds-inline-code lang-css">--nds-sideinfo-gap</code> between them.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layout-right"></i>
+            <span class="nds-label">Column Card</span>
+          </span>
+          <p class="nds-item-desc">The card in the column fills its width, with the menu background and a larger padding.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-align-left"></i>
+            <span class="nds-label">Compact Facts</span>
+          </span>
+          <p class="nds-item-desc">A definition list in the column gets larger icons (24px) and smaller labels. A transparent button in a value loses its padding, so it lines up with the text.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-align-top"></i>
+            <span class="nds-label">Section Gaps</span>
+          </span>
+          <p class="nds-item-desc">In an <code class="nds-inline-code lang-html">article</code> in the content, each <code class="nds-inline-code lang-html">.nds-section-title</code> after the first gets space above it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sideinfoPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Put information about the section's content in the column: facts, progress, or a table of contents. Do not put ads or links to other pages in it.
+- Put `nds-card` on the card inside the `aside`, never on the `aside`.
+- Give each topic its own card. Use one card with groups for short blocks that belong together, such as contact numbers.
+- Keep the column short. Use a definition list for facts and a stepper for progress, not long paragraphs.
+- Make the column sticky beside long content. On a short page, the reader sees all of it without help.
+- Use Beside the title only when the column is about the whole page, and only in the first section.
+- Give the `aside` an `aria-label` that names what it holds, such as "Service information".
+
+</div>
+  </div>
+</section>
+
+<section id="sideinfoApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-sticky-sm` | `aside.nds-sideinfo.nds-top` | Keeps the column in view below 600px only, as a strip across the screen. Tablets scroll it |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--nds-sideinfo-width` | None | The width of the column at 960px and wider. Without it, the column is 400px, or 300px when it holds a table of contents. Set it in the `style` of one `aside`, or on `:root` for every column. With Beside the title, set it on `:root`: the hero reads it from there |
+| `--nds-sideinfo-gap` | `var(--spacing-4xl)` | The space between the cards in the column. Set it on the `aside`, or on `:root` for every column |
+| `--nds-sideinfo-top-offset` | `0px` | Space above the column, at 960px and wider: it adds to the sticky top, and to the move beside the title. Set it in the `style` attribute of the `aside` |
+| `--nds-sideinfo-top` | None | The distance from the section to the hero's title, for Beside the title. The script writes it on the `aside` at 960px and wider. Until then, the CSS uses `-180px`. Do not set it |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Sideinfo.init()` | Starts each `.nds-sideinfo` on the page that has not started. It runs on page load |
+| `NDS.Sideinfo.reinit()` | The same as `init()` |
+| `NDS.Sideinfo.create(el)` | Starts one column and returns its instance. Call it once for each column |
+| `NDS.Sideinfo.destroy(el)` | Stops one column: it removes the listeners and `--nds-sideinfo-top`, and adds back the sticky classes the markup had. `NDS.Init.destroy()` calls it for each column in the element it releases |
+{: .nds-table .nds-responsive}
+
+The side info fires no events.
+
+<script type="text/html" id="sideinfo-js" data-canon data-lang="js" data-preview="none">
+// A framework rendered a new section with side info after the NDS script ran:
+// start the column and the components in it
+NDS.Init.mount(document.querySelector('.nds-sideinfo-section'));
+
+// A framework removes the section: release it first
+NDS.Init.destroy(document.querySelector('.nds-sideinfo-section'));
+</script>
+
+The full API is in the banner of `_js/nds-sideinfo.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="sideinfoRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Service Page Template](../templates/service-template): the facts of a service, beside the title.
+- [Form Template](../templates/form-template): a stepper that is sticky on all screens.
+- [Content Template](../templates/content-template): a sticky table of contents beside long content.
+- [Contact Us Template](../templates/contact-us-template): contact numbers in groups.
+- [Faculty CV](../examples/faculty-cv): a table of contents beside a profile.
+- [Page Layout](../layout/page-layout): the standard page with a side column.
+- [Table of Contents](../components/toc) and [Stepper](../components/stepper): the components that most often fill the column.
+
+</div>
+  </div>
 </section>
