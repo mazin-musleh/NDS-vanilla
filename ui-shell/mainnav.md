@@ -50,8 +50,8 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
         </button>
       </li>
     </ul>
-    <div class="nds-collapse" id="nds-nav-collapse" hidden>
-      <div class="nds-collapse-content">
+    <div class="nds-nav-collapse" id="nds-nav-collapse" hidden>
+      <div class="nds-nav-collapse-content">
         <ul class="nds-nav-primary">
           <li class="nds-nav-item">
             <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator" data-state="current" aria-current="page">
@@ -75,9 +75,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
             <div class="nds-nav-menu" hidden>
               <div class="nds-nav-menu-content nds-content-wrapper">
                 <div class="nds-nav-columns">
-                  <div class="nds-column">
+                  <div class="nds-nav-column">
                     <div class="nds-nav-title">Individuals</div>
-                    <div class="nds-list">
+                    <div class="nds-nav-list">
                       <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Renew an ID card</span>
                       </a>
@@ -89,9 +89,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
                       </a>
                     </div>
                   </div>
-                  <div class="nds-column">
+                  <div class="nds-nav-column">
                     <div class="nds-nav-title">Businesses</div>
-                    <div class="nds-list">
+                    <div class="nds-nav-list">
                       <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Register a company</span>
                       </a>
@@ -103,9 +103,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
                       </a>
                     </div>
                   </div>
-                  <div class="nds-column">
+                  <div class="nds-nav-column">
                     <div class="nds-nav-title">Regions</div>
-                    <div class="nds-list nds-multi-column-list">
+                    <div class="nds-nav-list nds-multi-col">
                       <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
                         <span class="nds-label">Riyadh</span>
                       </a>
@@ -180,9 +180,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
   <div class="nds-nav-menu" hidden>
     <div class="nds-nav-menu-content nds-content-wrapper">
       <div class="nds-nav-columns">
-        <div class="nds-column">
+        <div class="nds-nav-column">
           <div class="nds-nav-title">Individuals</div>
-          <div class="nds-list">
+          <div class="nds-nav-list">
             <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Renew an ID card</span>
             </a>
@@ -194,9 +194,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
             </a>
           </div>
         </div>
-        <div class="nds-column">
+        <div class="nds-nav-column">
           <div class="nds-nav-title">Businesses</div>
-          <div class="nds-list">
+          <div class="nds-nav-list">
             <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Register a company</span>
             </a>
@@ -208,9 +208,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
             </a>
           </div>
         </div>
-        <div class="nds-column">
+        <div class="nds-nav-column">
           <div class="nds-nav-title">Regions</div>
-          <div class="nds-list nds-multi-column-list">
+          <div class="nds-nav-list nds-multi-col">
             <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
               <span class="nds-label">Riyadh</span>
             </a>
@@ -244,7 +244,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
   <div class="nds-nav-menu" hidden>
     <div class="nds-nav-menu-content nds-content-wrapper">
       <div class="nds-nav-row">
-        <div class="nds-list">
+        <div class="nds-nav-list">
           <a class="nds-btn nds-subtle nds-nav-menu-item" href="#">
             <span class="nds-label">News</span>
           </a>
@@ -331,7 +331,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
   <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications" aria-expanded="false"><i class="nds-icon nds-hgi-notification-02" aria-hidden="true"><span class="nds-badge">2</span></i><span class="nds-label" data-hidden="sm md sr">Notifications</span></button>
   <div class="nds-nav-menu nds-fit" hidden>
     <div class="nds-nav-menu-content">
-      <div class="nds-column">
+      <div class="nds-nav-column">
         <nav class="nds-drawer" style="--drawer-max-height: 40svh; min-width: 40vw; max-width: 100%;">
           <div class="nds-scroll-more nds-divided">
             <ul class="nds-drawer-list nds-scroll-more-content">
@@ -390,7 +390,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
   <button class="nds-nav-link nds-btn nds-subtle nds-lg nds-indicator nds-tooltip" data-tooltip-hover="500" title="Ahmed" aria-expanded="false"><span class="nds-avatar"><img src="../docs-assets/img/avatar3.webp" alt="Ahmed" class="nds-icon" loading="lazy"></span><span class="nds-label" data-hidden="sm md sr">Ahmed</span></button>
   <div class="nds-nav-menu nds-fit" hidden>
     <div class="nds-nav-menu-content">
-      <div class="nds-column">
+      <div class="nds-nav-column">
         <div class="nds-persona nds-sm">
           <div class="nds-persona-info">
             <span class="nds-persona-name">Ahmed Mohammed</span>
@@ -445,10 +445,10 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 | `.nds-nav-container` | The brand, the menu button and the drawer, in that order | Yes |
 | `a.nds-brand` | The logo (`img.nds-brand-logo`) and `.nds-brand-name`, with `.nds-brand-slogan` inside the name. It links to the home page | Yes |
 | `ul.nds-nav-minimal` | The menu button (`li.nds-nav-toggler`), and the pinned actions below 960px. It ships `hidden` | Yes |
-| `#nds-nav-collapse.nds-collapse` | The drawer: one `.nds-collapse-content` with the links, the show more button and the actions. It ships `hidden`. The script finds it by this id | Yes |
+| `#nds-nav-collapse.nds-nav-collapse` | The drawer: one `.nds-nav-collapse-content` with the links, the show more button and the actions. It ships `hidden`. The script finds it by this id | Yes |
 | `ul.nds-nav-primary` | The primary links, one `li.nds-nav-item` each | Yes |
 | `li.nds-nav-item.nds-has-menu` | A link that opens a menu: the trigger `a.nds-nav-link.nds-menu-btn`, then `.nds-nav-menu` > `.nds-nav-menu-content` | No |
-| `.nds-nav-columns` or `.nds-nav-row` | The menu's content. `.nds-nav-columns` holds titled columns (`.nds-column` with a `.nds-nav-title` and a `.nds-list`); `.nds-nav-row` holds one row of links (one `.nds-list`) | With a dropdown |
+| `.nds-nav-columns` or `.nds-nav-row` | The menu's content. `.nds-nav-columns` holds titled columns (`.nds-nav-column` with a `.nds-nav-title` and a `.nds-nav-list`); `.nds-nav-row` holds one row of links (one `.nds-nav-list`) | With a dropdown |
 | `a.nds-nav-menu-item` | One link in a menu | With a dropdown |
 | `.nds-show-more` | The arrow that scrolls the links when they do not fit. Write it right after `.nds-nav-primary` | Yes |
 | `ul.nds-nav-actions` | The actions, one `li.nds-nav-item` each. An action is a link, a button, or a dropdown with its own content | No |
@@ -473,7 +473,7 @@ The canon carries the Services dropdown, the search action and the language acti
 |---|---|---|---|---|
 | Brand | Logo and name (default) | — | — | The logo, the site name and the slogan. Leave the slogan out when the name says enough |
 | Brand | Logo only | `remove` | `.nds-brand-name` | Only the logo. Pick it when the logo carries the site name. Keep the logo's `alt` text |
-| Dropdowns (any) | Columns (default) | canon `#mainnav-columns` | `.nds-nav-primary` | A menu of titled columns, `.nds-nav-columns`. Pick it to group many pages by topic. `nds-multi-column-list` spreads one long list over 3 columns |
+| Dropdowns (any) | Columns (default) | canon `#mainnav-columns` | `.nds-nav-primary` | A menu of titled columns, `.nds-nav-columns`. Pick it to group many pages by topic. `nds-multi-col` spreads one long list over 3 columns |
 | Dropdowns (any) | Row list | canon `#mainnav-rows` | `.nds-nav-primary` | A menu of one row of links, `.nds-nav-row`. Pick it for a short flat list |
 | Many links | Many links (hint: The links do not fit, so the show more arrow appears) | canon `#mainnav-more` | `.nds-nav-primary` | Six more links. Shows how the bar scrolls the links that do not fit |
 | Actions (any) | Search (default) | canon `#mainnav-search` | `.nds-nav-actions` | A search box that opens below the bar |
@@ -619,7 +619,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 | `nds-oncolor` | `a.nds-brand` | In dark mode, shows the logo in white |
 | `nds-icon-only` | An action's `li` | Shows only the icon. The label stays for screen readers |
 | `nds-menu-btn` | A dropdown's trigger link | The arrow that turns when the menu opens. See [Button](../components/button) |
-| `nds-multi-column-list` | A `.nds-list` in a menu | Spreads the links over 3 columns, and 2 below 960px |
+| `nds-multi-col` | A `.nds-nav-list` in a menu | Spreads the links over 3 columns, and 2 below 960px |
 | `nds-fit` | `.nds-nav-menu` | Makes the menu as wide as its content. See Small Menus under Behavior |
 | `nds-nav-cta` | An action's `li` | Makes the action's button 32px high, for a call to action written as `nds-btn nds-primary`. A pinned one comes first in the bar |
 | `nds-minimal` | `nav.nds-main-nav` | The script sets it below 960px and removes it above. Key your own drawer styles on it |
@@ -644,8 +644,8 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 | `data-state="open"` | A dropdown's trigger | The script sets it when the menu opens, and removes it when the menu closes. Never write it: the current page is `current` |
 | `hidden` | `.nds-nav-menu` | Write it in the markup. The script removes it when the menu opens, and sets it again after the menu closes |
 | `data-modal-target` | A nav link | Opens the [Modal](../components/modal) with that id. Any modal that opens closes the open menus and the drawer |
-| `data-nav-actions-open` | `.nds-collapse-content` | The script sets it while an action's menu is open in the drawer. The drawer's corners square off, and the links shrink to make room |
-| `data-nav-actions-empty` | `.nds-collapse-content` | The script sets it while the actions row is empty or missing, and the show more arrow moves down to the drawer's bottom edge |
+| `data-nav-actions-open` | `.nds-nav-collapse-content` | The script sets it while an action's menu is open in the drawer. The drawer's corners square off, and the links shrink to make room |
+| `data-nav-actions-empty` | `.nds-nav-collapse-content` | The script sets it while the actions row is empty or missing, and the show more arrow moves down to the drawer's bottom edge |
 | `data-nav-empty` | `ul.nds-nav-actions` | The script sets it while the row holds no action, such as below 960px when every action is pinned. The row is hidden while it is set |
 | `data-hidden="sm md sr"` | An action's `.nds-label` | Hides the label below 960px. Screen readers still read it. Leave it off an `nds-nav-cta` label. See [Hidden](../utilities/hidden) |
 {: .nds-table .nds-responsive}

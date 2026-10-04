@@ -2,11 +2,11 @@
 <div class="nds-nav-columns">
     {%- if data.columns %}
     {%- for column in data.columns %}
-    <div class="nds-column">
+    <div class="nds-nav-column">
         {%- if column.title %}
         <div class="nds-nav-title">{{ column.title }}</div>
         {%- endif %}
-        <div class="nds-list{%- if column.multi_column_list %} nds-multi-column-list{%- endif %}">
+        <div class="nds-nav-list{%- if column.multi_column_list %} nds-multi-col{%- endif %}">
             {%- for subitem in column.items %}
             <a class="nds-btn nds-subtle nds-nav-menu-item" href="{%- if subitem.url contains '#' and subitem.url | slice: 0 == '#' %}{{ subitem.url }}{%- else %}{{ subitem.url | relative_url }}{%- endif %}">
                 {%- if subitem.img_icon %}

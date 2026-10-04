@@ -209,7 +209,7 @@
     }
 
     /* Show More Navigation */
-    .nds-collapse-content {
+    .nds-nav-collapse-content {
 
         .nds-show-more {
             background-color: var(--_nav-bg);
@@ -326,7 +326,7 @@
         }
     }
 
-    .nds-nav-menu .nds-column {
+    .nds-nav-menu .nds-nav-column {
         padding: var(--spacing-lg);
         display: flex;
         flex-direction: column;
@@ -351,13 +351,13 @@
             margin: 0;
         }
 
-        .nds-list {
+        .nds-nav-list {
             display: flex;
             flex-wrap: wrap;
             flex-direction: column;
             column-gap: var(--spacing-2xl);
 
-            &.nds-multi-column-list {
+            &.nds-multi-col {
                 display: block;
                 column-count: 3;
                 column-gap: var(--spacing-4xl);
@@ -376,7 +376,7 @@
         }
     }
 
-    .nds-nav-row .nds-list {
+    .nds-nav-row .nds-nav-list {
         flex-direction: row;
         justify-content: space-evenly;
 
@@ -391,7 +391,7 @@
     column-count: 4;
     column-gap: var(--spacing-2xl);
 
-    .nds-column {
+    .nds-nav-column {
         break-inside: avoid;
     }
 }
@@ -419,7 +419,7 @@
         }
     }
 
-    .nds-collapse {
+    .nds-nav-collapse {
         display: flex;
         width: 100%;
         // min-width: 0 lets this flex item shrink below its content's
@@ -429,7 +429,7 @@
         // toward primary's `flex: 1 1 0` would never propagate.
         min-width: 0;
 
-        .nds-collapse-content {
+        .nds-nav-collapse-content {
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -443,7 +443,7 @@
 
     .nds-nav-primary {
         // flex: 1 1 0 + min-width: 0 lets this list shrink against its
-        // .nds-collapse-content sibling (.nds-show-more) so the items
+        // .nds-nav-collapse-content sibling (.nds-show-more) so the items
         // overflow into overflow-x: auto instead of pushing the nav
         // container wider. Replaces the JS-computed inline max-width
         // that updateNavMaxWidth() used to write on every resize / DOM
@@ -465,7 +465,7 @@
     }
 
     /* Show More Button Styles - using sibling selector. The ~ combinator
-       already pins same-parent (.nds-collapse-content), so the wrapper level
+       already pins same-parent (.nds-nav-collapse-content), so the wrapper level
        is structurally redundant in the selector. */
     .nds-nav-primary[data-state~="has-more"] {
         ~.nds-show-more {
@@ -579,7 +579,7 @@
         }
     }
 
-    .nds-collapse {
+    .nds-nav-collapse {
         position: absolute;
         top: var(--nds-nav-height);
         transform: translateY(-1px); // close the subpixel gap under the bar
@@ -589,7 +589,7 @@
         /* Fallback for older browsers */
         overflow: clip;
 
-        .nds-collapse-content {
+        .nds-nav-collapse-content {
             background-color: var(--background-nav);
             box-shadow: var(--shadow-md);
             transform: translateY(-100%);
@@ -611,13 +611,13 @@
             display: flex;
             flex-direction: column;
 
-            .nds-collapse-content {
+            .nds-nav-collapse-content {
                 transform: translateY(0);
             }
         }
 
         &:is([data-state~="opening"], [data-state~="closing"]) {
-            .nds-collapse-content {
+            .nds-nav-collapse-content {
                 transform: translateY(-100%);
             }
         }
@@ -764,7 +764,7 @@
     }
 
     // No actions row below it (all pinned, or none written): stamped by checkNavComposition().
-    .nds-collapse-content[data-nav-actions-empty] > .nds-show-more {
+    .nds-nav-collapse-content[data-nav-actions-empty] > .nds-show-more {
         bottom: 0;
         border-radius: 0 0 var(--radius-lg) var(--radius-lg);
         overflow: clip;
@@ -844,7 +844,7 @@
 /* Respect reduced motion preferences */
 @include reduced-motion {
 
-    .nds-main-nav :is(.nds-nav-menu, .nds-nav-menu-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-actions, .nds-show-more) {
+    .nds-main-nav :is(.nds-nav-menu, .nds-nav-menu-content, .nds-nav-collapse, .nds-nav-collapse-content, .nds-nav-primary, .nds-nav-actions, .nds-show-more) {
         transition: none !important;
     }
 }

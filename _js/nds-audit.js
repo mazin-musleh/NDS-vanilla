@@ -86,10 +86,33 @@
             const ariaCurrent = a.getAttribute('aria-current') === 'page';
             if (!samePage && !ariaCurrent) return;
             if (a.matches('[data-state~="active"]')) {
-                console.warn('[NDS.Audit] current-page nav link uses data-state="active" — that token is component-owned and wiped when a dropdown closes. Use data-state="current".', a);
+                console.warn('[NDS.Audit] current-page nav link uses data-state="active" — the main navigation marks the current page with "current" only. Use data-state="current".', a);
             } else {
                 console.warn(`[NDS.Audit] this nav link ${samePage ? 'points at the current page' : 'carries aria-current="page"'} but has no data-state="current" — the current-page highlight never renders. Add data-state="current"${ariaCurrent ? '' : ' and aria-current="page"'}.`, a);
             }
+        });
+
+        // v2.0.0 renamed the main navigation's own classes and ids. Markup that kept an old
+        // name still paints, but that part gets no nav style or behavior: name the new one.
+        const NAV_V2 = {
+            'nds-dropdown': 'nds-has-menu', 'nds-dropdown-menu': 'nds-nav-menu',
+            'nds-dropdown-content': 'nds-nav-menu-content', 'nds-dropdown-item': 'nds-nav-menu-item',
+            'nds-dropdown-columns': 'nds-nav-columns', 'nds-colView': 'nds-nav-columns (one class)',
+            'nds-rowView': 'nds-nav-row (in place of nds-dropdown-columns)', 'nds-dropdown-title': 'nds-nav-title',
+            'nds-column': 'nds-nav-column', 'nds-list': 'nds-nav-list', 'nds-multi-column-list': 'nds-multi-col',
+            'nds-collapse': 'nds-nav-collapse', 'nds-collapse-content': 'nds-nav-collapse-content',
+            'nds-mainNav-toggler': 'nds-nav-toggler', 'nds-CTA': 'nds-nav-cta', 'nds-PAB': 'nds-pinned',
+        };
+        document.querySelectorAll('.nds-main-nav').forEach(nav => {
+            if (nav.closest('code, .code-example')) return;
+            Object.keys(NAV_V2).forEach(old => {
+                const el = nav.querySelector('.' + old);
+                if (el) console.warn(`[NDS.Audit] main navigation uses the class "${old}", renamed in v2.0.0. Use ${NAV_V2[old]}.`, el);
+            });
+            [['ndsMainNav', 'nds-main-nav'], ['ndsNavCollapse', 'nds-nav-collapse']].forEach(([old, now]) => {
+                const el = nav.id === old ? nav : nav.querySelector('#' + old);
+                if (el) console.warn(`[NDS.Audit] main navigation uses the id "${old}", renamed in v2.0.0. Use id="${now}"${now === 'nds-nav-collapse' ? ', and aria-controls="nds-nav-collapse" on the menu button' : ''}.`, el);
+            });
         });
 
         // The stepper hands off a submit-typed control (see its banner), so the

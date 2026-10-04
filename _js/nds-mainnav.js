@@ -66,7 +66,7 @@
         const nav = document.querySelector('.nds-main-nav');
         DOM.nav = nav;
         DOM.collapse = nav?.querySelector('#nds-nav-collapse') || null;
-        DOM.collapseContent = nav?.querySelector('.nds-collapse-content') || null;
+        DOM.collapseContent = nav?.querySelector('.nds-nav-collapse-content') || null;
         DOM.primary = nav?.querySelector('.nds-nav-primary') || null;
         DOM.secondary = nav?.querySelector('.nds-nav-actions') || null;
         DOM.toggler = nav?.querySelector('.nds-nav-toggler') || null;
