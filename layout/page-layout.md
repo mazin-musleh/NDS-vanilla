@@ -284,7 +284,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
           <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
           <span class="nds-label nds-truncate">Side menu</span>
         </button>
-        <nav class="nds-drawer nds-divided nds-lined nds-full-height">
+        <nav class="nds-drawer nds-divided nds-lined">
           <div class="nds-scroll-more nds-divided">
             <ul class="nds-drawer-list nds-scroll-more-content">
               <li data-state="active">
@@ -354,7 +354,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
     <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
     <span class="nds-label nds-truncate">Side menu</span>
   </button>
-  <nav class="nds-drawer nds-divided nds-lined nds-full-height">
+  <nav class="nds-drawer nds-divided nds-lined">
     <div class="nds-scroll-more nds-divided">
       <ul class="nds-drawer-list nds-scroll-more-content">
         <li data-state="active">

@@ -12,7 +12,6 @@
 .nds-sidemenu {
     --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
     --btn-width: 40px;
-    --_toggle-height: var(--toggle-height, var(--nds-sidemenu-toggle-height, 40px));
     width: var(--nds-sidemenu-width);
     background-color: var(--background-menu);
     box-shadow: var(--shadow-md);
@@ -21,12 +20,7 @@
     z-index: 1;
 }
 
-.nds-content-layout.nds-cardView .nds-sidemenu {
-    border-radius: var(--radius-md);
-}
-
 .nds-sidemenu-toggle {
-    --_toggle-transform: var(--toggle-transform, unset);
     --_toggle-pos: var(--toggle-pos, 40svh);
     display: none;
 }
@@ -40,32 +34,32 @@
     top: calc(var(--nds-nav-height) + var(--spacing-md));
 }
 
+@include desktop(min) {
+    .nds-content-layout.nds-cardView .nds-sidemenu {
+        border-radius: var(--radius-md);
+    }
+}
+
 /* ========================================
    TABLET AND MOBILE STYLES (959.98px and below)
    ======================================== */
 
 @include tablet(max) {
-    .nds-sidemenu {
-
-        height: 100%;
-        border-radius: 0 !important;
-        border-top: 0;
-        border-bottom: 0;
-    }
 
     /* Side Menu Toggle Button */
     .nds-sidemenu-toggle {
         --btn-size: 40px;
+        --_toggle-transform: translate(calc((var(--nds-sidemenu-width)) * -1), var(--_toggle-pos));
         border: unset;
-        outline: none;
         border-radius: var(--radius-sm) 0 0 var(--radius-sm);
         position: fixed;
         right: 0;
         display: flex;
         justify-content: center;
         top: calc(var(--nds-nav-height) + var(--spacing-md));
-        --toggle-transform: translate(calc((var(--nds-sidemenu-width)) * -1), var(--_toggle-pos));
         box-shadow: var(--shadow-md);
+        // The closed slide-in aside is hidden; its button stays on screen.
+        visibility: visible;
     }
 
     .nds-sidemenu-toggle i {
@@ -76,25 +70,16 @@
         margin: auto;
     }
 
-    /* LTR Support */
     @include ltr {
         .nds-sidemenu-toggle i {
             scale: 1;
         }
 
-        .nds-sidemenu:not(.nds-top) {
-            transform: translateX(-100%);
-        }
-
         .nds-sidemenu-toggle {
+            --_toggle-transform: translate(calc(var(--nds-sidemenu-width)), var(--_toggle-pos));
             right: unset;
             left: 0;
-            --toggle-transform: translate(calc(var(--nds-sidemenu-width)), var(--_toggle-pos));
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-        }
-
-        .nds-sidemenu li.redirect.external>a::after {
-            scale: -1;
         }
     }
 
@@ -102,39 +87,40 @@
     // SLIDER MODE - Horizontal sliding (tablet/mobile)
     // ========================================
     .nds-sidemenu:not(.nds-top) {
+        // Off the start edge: right in RTL, left in LTR.
+        --_out: 100%;
         position: fixed;
         top: 0;
         bottom: 0;
         z-index: 899;
         --btn-height: 72px;
-        --toggle-height: var(--btn-height);
-
-        // RTL: slide out to the right
-        transform: translateX(100%);
+        transform: translateX(var(--_out));
+        // Out of the tab order while it is off screen.
+        visibility: hidden;
 
         @include ltr {
-            transform: translateX(-100%);
+            --_out: -100%;
         }
 
-        // Open state
         &[data-state~="open"] {
-            transform: translateX(0px) !important;
+            transform: none;
+            visibility: visible;
             transition: transform var(--nds-transition);
         }
 
-        // Closing state
+        // Closing coexists with open, so it comes after it.
         &[data-state~="closing"] {
-            transform: translateX(100%) !important;
-            transition: transform var(--nds-transition);
-
-            @include ltr {
-                transform: translateX(-100%) !important;
-            }
+            transform: translateX(var(--_out));
         }
 
         .nds-sidemenu-toggle {
             transform: var(--_toggle-transform);
             transition: transform var(--nds-transition);
+            --btn-bg: var(--button-background-primary-default);
+            --btn-bg-hover: var(--button-background-primary-hovered);
+            --btn-bg-active: var(--button-background-primary-pressed);
+            --btn-bg-selected: var(--button-background-primary-selected);
+            --btn-color: var(--text-oncolor-primary);
             --btn-indicator-size: 3px;
             --btn-indicator-color: var(--button-indicator-primary);
             @include btn-indicator('v');
@@ -146,32 +132,19 @@
             }
 
             &.nds-peek {
-                // Label and icon read the --_peek-* hooks the closed state sets below:
-                // a `.nds-label` or `i` tail after [data-state] would join the shared
-                // invalidation set (PERF-06).
-                .nds-label {
-                    height: var(--_peek-label-height, auto);
-                    width: var(--_peek-label-width, auto);
-                    opacity: var(--_peek-opacity, 1);
-                    display: var(--_peek-label-display, inline);
-                    position: var(--_peek-label-position, static);
-                }
-
+                // The icon reads --_peek-opacity: an `i` tail after [data-state]
+                // would join the shared invalidation set (PERF-06).
                 i {
                     opacity: var(--_peek-opacity, 1);
                 }
 
                 &:not([data-state="open"]) {
-                    --toggle-transform: translate(calc((var(--nds-sidemenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
+                    --_toggle-transform: translate(calc((var(--nds-sidemenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
                     --btn-indicator-size: 5px;
-                    --_peek-label-height: 100%;
-                    --_peek-label-width: 40px;
                     --_peek-opacity: 0;
-                    --_peek-label-display: block;
-                    --_peek-label-position: absolute;
 
                     @include ltr {
-                        --toggle-transform: translate(calc(var(--nds-sidemenu-width) - var(--btn-width)/1.5), var(--_toggle-pos));
+                        --_toggle-transform: translate(calc(var(--nds-sidemenu-width) - var(--btn-width)/1.5), var(--_toggle-pos));
                     }
                 }
             }
@@ -179,23 +152,23 @@
     }
 
     // ========================================
-    // TOP SUBMENU MODE - Vertical dropdown (tablet/mobile)
+    // TOP BAR MODE - the menu drops down under the bar (tablet/mobile)
     // ========================================
     .nds-sidemenu.nds-top {
         grid-column: 1 / -1;
         --btn-gap: var(--spacing-md);
         position: sticky;
-        top: calc(var(--nds-nav-height));
+        top: var(--nds-nav-height);
         --nds-sidemenu-width: 100%;
         --drawer-max-height: 60svh;
         background-color: unset;
-        overflow: clip;
-        height: var(--_toggle-height);
-        min-height: 40px;
         padding: 0;
         border-radius: 0;
-        transform: translateX(0px) !important;
         z-index: 900;
+        // The layout drops its row gap below 960px (slide-in leaves row 1 empty).
+        margin-block-end: var(--_layout-gap);
+        // Clips only above the bar, so the menu hides behind it while it slides.
+        clip-path: inset(0 -100vw -100vh);
 
         .nds-sidemenu-toggle {
             --btn-width: 100%;
@@ -204,22 +177,43 @@
             --btn-bg-active: var(--button-background-secondary-pressed);
             --btn-bg-selected: var(--button-background-secondary-selected);
             --btn-indicator-size: 3px;
-            --btn-height: var(--_toggle-height);
+            --btn-height: var(--nds-sidemenu-toggle-height);
             max-width: var(--nds-content-MaxWidth);
             margin: 0 auto;
             padding: 0 var(--nds-viewport-padding);
             border-radius: 0;
+            // The aside is the same box and casts the bar's shadow.
+            box-shadow: none;
             position: relative;
             top: unset;
-            --toggle-transform: unset;
             z-index: 1;
+            @include btn-indicator;
+
+            &:hover::before {
+                background-color: var(--_btn-indicator-color);
+            }
+
+            &[data-state~="open"]::before {
+                background-color: var(--_btn-indicator-selected);
+            }
+
+            // The menu arrow (.nds-menu-btn's) without the class.
+            &::after {
+                content: "";
+                width: calc(var(--_btn-icon-size) - 4px);
+                height: calc(var(--_btn-icon-size) - 4px);
+                background: currentColor;
+                mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
+                opacity: var(--nds-icons-opacity);
+                rotate: -90deg;
+                transition: transform 0.1s ease;
+            }
+
+            &[data-state~="open"]::after {
+                transform: rotate(180deg);
+            }
 
             .nds-label {
-                &[hidden] {
-                    visibility: hidden;
-                    display: block;
-                }
-
                 flex: 1;
             }
 
@@ -229,53 +223,26 @@
         }
 
         .nds-drawer {
-            top: calc(var(--nds-nav-height));
+            position: absolute;
+            top: 100%;
+            inset-inline: 0;
             background-color: var(--background-menu);
             box-shadow: var(--shadow-md);
             padding: var(--spacing-md);
             border-radius: 0 0 var(--radius-md) var(--radius-md);
-            transform: translateY(-110%);
-            transition: transform var(--nds-transition);
-        }
-
-        // Opening state (coexists with open)
-        .nds-drawer[data-state~="opening"] {
             transform: translateY(-100%);
+            transition: transform var(--nds-transition);
+            visibility: hidden;
         }
 
-        // Open state
+        // Closing coexists with open, so it comes after it.
         .nds-drawer[data-state~="open"] {
-            transform: translateY(0);
+            transform: none;
+            visibility: visible;
         }
 
-        // Closing state overrides open (coexists with open)
         .nds-drawer[data-state~="closing"] {
             transform: translateY(-100%);
         }
-
-        // Backdrop effect when sideMenu is open or closing (matches modal backdrop)
-        &:is([data-state~="open"], [data-state~="closing"]) {
-
-            top: 0;
-            height: fit-content;
-            box-shadow: unset;
-            padding: 0;
-            border-radius: 0;
-            margin-bottom: 1rem;
-
-            .nds-sidemenu-toggle {
-                position: sticky;
-                top: var(--nds-nav-height);
-            }
-        }
-
-        .nds-drawer > .nds-scroll-more {
-            padding-top: var(--nds-nav-height);
-        }
-    }
-
-    // Add padding-top to mainContent when drawer is open
-    .nds-sidemenu.nds-top[data-state~="open"]~.nds-content {
-        margin-top: calc((var(--_topsubmenu-height) - var(--nds-sidemenu-toggle-height, 40px) + 16px) * -1);
     }
 }

@@ -32,6 +32,19 @@ main {
         }
     }
 
+    // Row 1 holds a top bar side menu at its own height (empty for the fixed slide-in
+    // one); stretched auto rows would grow the bar on a short page.
+    @include tablet(max) {
+        &.nds-wSideMenu {
+            grid-template-rows: auto 1fr;
+            row-gap: 0;
+
+            >.nds-content {
+                grid-row: 2;
+            }
+        }
+    }
+
     .nds-content {
         display: flex;
         flex-direction: column;

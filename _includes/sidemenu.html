@@ -3,7 +3,7 @@
         <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
         <span class="nds-label nds-truncate">Side menu</span>
     </button>
-    <nav class="nds-drawer nds-divided nds-lined nds-full-height">
+    <nav class="nds-drawer nds-divided nds-lined">
         {%- assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" %}
         {%- assign sidemenu_items = site.data.sidemenu[sidemenu_data_file] %}
         <div class="nds-scroll-more nds-divided">

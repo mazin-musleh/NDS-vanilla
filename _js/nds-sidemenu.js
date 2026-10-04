@@ -1,6 +1,7 @@
 /* NDS.Sidemenu — public surface
  * Rides: nds-drawer (the menu tree inside it — expand/collapse and the responsive
- *        open rules) · nds-backdrop (dims the page while it is open; soft)
+ *        open rules) · nds-backdrop (dims the page while it is open, and closes it on
+ *        Escape or a click outside)
  * Methods:
  *   NDS.Sidemenu.init()      wire the one sidemenu on the page (destroys the previous
  *                            instance first, so it doubles as reinit)
@@ -14,20 +15,20 @@
  * Gotchas:
  *   - One sidemenu per page: init() takes the FIRST .nds-sidemenu it finds.
  *   - There is no reinit(): call init() again and it re-wires from scratch.
- *   - .nds-top scrolls past the hero and locks the page before it opens.
+ *   - init() does not start the drawer: new markup needs NDS.Init.refresh().
+ *   - .nds-top scrolls its bar to the top and locks the page before it opens.
  *   - A width change closes it.
  */
 // Side Menu Navigation
 (() => {
     'use strict';
 
-    // State helpers — delegated to NDS.State (nds-core.js)
-    const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.State;
+    const { add: addState, has: hasState, clear: clearState } = NDS.State;
 
     // Track current instance for cleanup on re-init
     let currentInstance = null;
 
-    // Set --drawer-max-height for slider mode only
+    // Slide-in only: clear the visible header and fit the list below it
     const updateDrawerMaxHeight = (accMenu, drawer) => {
         const visibleHeader = NDS.stickyHeaderBottom();
 
@@ -35,52 +36,31 @@
         drawer.style.setProperty('--drawer-max-height', Math.max(window.innerHeight - visibleHeader - 16, 100) + 'px');
     };
 
-    // Scroll lock helpers for top mode
-    const lockBodyScroll = () => NDS.scrollLock.lock();
-    const unlockBodyScroll = () => NDS.scrollLock.unlock();
-
-    // Scroll past hero then lock — handles user touch interruption
-    const scrollPastHeroAndLock = () => {
-        const heroSection = document.querySelector('.nds-hero-section');
-        const nav = document.querySelector('.nds-main-nav');
-        const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
-        const heroBtm = heroSection ? heroSection.getBoundingClientRect().bottom : 0;
-
-        if (!heroSection || heroBtm <= navBottom) {
-            lockBodyScroll();
-            return;
-        }
-
-        window.scrollTo({ top: heroBtm + window.scrollY, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
-
-        let locked = false;
-        const doLock = () => {
-            if (locked) return;
-            locked = true;
-            // If hero still visible (user touch interrupted smooth scroll), force instant scroll
-            const currentBtm = heroSection.getBoundingClientRect().bottom;
-            if (currentBtm > navBottom) {
-                window.scrollTo({ top: currentBtm + window.scrollY, behavior: 'instant' });
-            }
-            lockBodyScroll();
+    // Top bar: scroll the bar to its sticky spot, then lock. A lock mid-scroll would
+    // stop it short, so wait for the scroll to settle (a touch can interrupt it).
+    const scrollBarUpAndLock = (ctx) => {
+        const bar = ctx.accMenu;
+        const gap = () => bar.getBoundingClientRect().top - parseFloat(getComputedStyle(bar).top);
+        let done = false;
+        const lock = () => {
+            if (done || !hasState(ctx.animTarget, 'open')) return;
+            done = true;
+            if (gap() >= 1) window.scrollBy({ top: gap(), behavior: 'instant' });
+            NDS.scrollLock.lock();
         };
+        if (gap() < 1) return lock();
 
-        let lastY = window.pageYOffset;
-        let stableFrames = 0;
-        const checkSettled = () => {
-            if (locked) return;
-            const currentY = window.pageYOffset;
-            if (currentY === lastY) { stableFrames++; } else { stableFrames = 0; lastY = currentY; }
-            stableFrames >= 3 ? doLock() : requestAnimationFrame(checkSettled);
+        window.scrollBy({ top: gap(), behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
+        let lastY = -1;
+        let still = 0;
+        const settle = () => {
+            if (done) return;
+            still = window.scrollY === lastY ? still + 1 : 0;
+            lastY = window.scrollY;
+            still >= 3 ? lock() : requestAnimationFrame(settle);
         };
-        requestAnimationFrame(checkSettled);
-        setTimeout(doLock, 500);
-    };
-
-    // Get mainContent sibling
-    const getMainContent = (accMenu) => {
-        const el = accMenu.nextElementSibling;
-        return el && el.classList.contains('nds-content') ? el : null;
+        requestAnimationFrame(settle);
+        setTimeout(lock, 500);
     };
 
     // Epoch counter to invalidate stale z-index removals
@@ -92,68 +72,43 @@
 
         const backdropZ = isTopMode ? 997 : 998;
 
-        // Layout reads BEFORE any style writes to avoid forced reflow
-        if (isTopMode) {
-            scrollPastHeroAndLock();
-        } else {
-            updateDrawerMaxHeight(accMenu, drawer);
-        }
-
-        // Style writes after reads
+        if (!isTopMode) updateDrawerMaxHeight(accMenu, drawer);
         accMenu.style.zIndex = backdropZ + 1;
+        addState(toggleBtn, 'open');
+        NDS.aria.expanded(toggleBtn, true);
+        addState(animTarget, 'open');
+        // After the open state: the lock checks it.
+        if (isTopMode) scrollBarUpAndLock(ctx);
 
-        // Show backdrop
-        // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
-        if (NDS.Backdrop) {
-            NDS.Backdrop.show({
-                zIndex: backdropZ,
-                preventScroll: !isTopMode,
-                onClick: () => { if (hasState(animTarget, 'open')) closeMenu(ctx); }
-            });
-        }
+        NDS.Backdrop.show({
+            zIndex: backdropZ,
+            preventScroll: !isTopMode,
+            onClick: () => closeMenu(ctx)
+        });
+    };
 
-        if (toggleBtn) { addState(toggleBtn, 'open'); NDS.aria.expanded(toggleBtn, true); }
-
-        if (isTopMode) {
-            addState(accMenu, 'open');
-            addState(animTarget, 'open', 'opening');
-            const mainContent = getMainContent(accMenu);
-            if (mainContent) mainContent.style.setProperty('--_topsubmenu-height', accMenu.offsetHeight + 'px');
-        } else {
-            addState(animTarget, 'open', 'opening');
-            accMenu.classList.remove('nds-peek');
-        }
-
-        const onOpened = () => {
-            removeState(animTarget, 'opening');
-            animTarget.removeEventListener('transitionend', onOpened);
-        };
-        animTarget.addEventListener('transitionend', onOpened);
+    // Undo everything openMenu() wrote, except the z-index.
+    const reset = (ctx) => {
+        const { accMenu, animTarget, toggleBtn, isTopMode, drawer } = ctx;
+        clearState(animTarget);
+        if (isTopMode) NDS.scrollLock.unlock();
+        else accMenu.style.removeProperty('padding-top');
+        clearState(toggleBtn);
+        NDS.aria.expanded(toggleBtn, false);
+        drawer.style.removeProperty('--drawer-max-height');
+        NDS.Backdrop.hide();
     };
 
     const closeMenu = (ctx) => {
-        const { accMenu, animTarget, toggleBtn, isTopMode, drawer } = ctx;
+        const { accMenu, animTarget } = ctx;
+        if (!hasState(animTarget, 'open') || hasState(animTarget, 'closing')) return;
         const closeEpoch = menuEpoch;
 
-        if (isTopMode) addState(accMenu, 'closing');
         addState(animTarget, 'closing');
 
         NDS.onTransitionEnd(animTarget, () => {
-            clearState(animTarget);
-            if (isTopMode) {
-                clearState(accMenu);
-                const mainContent = getMainContent(accMenu);
-                if (mainContent) mainContent.style.removeProperty('--_topsubmenu-height');
-                unlockBodyScroll();
-            } else {
-                accMenu.classList.add('nds-peek');
-                accMenu.style.removeProperty('padding-top');
-            }
-            if (toggleBtn) { clearState(toggleBtn); NDS.aria.expanded(toggleBtn, false); }
-            if (drawer) drawer.style.removeProperty('--drawer-max-height');
-
-            // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
-            if (NDS.Backdrop) NDS.Backdrop.hide();
+            reset(ctx);
+            // Stay above the backdrop while it fades out.
             setTimeout(() => { if (closeEpoch === menuEpoch) accMenu.style.removeProperty('z-index'); }, 300);
         });
     };
@@ -165,16 +120,8 @@
         const menuLabel = accMenu.querySelector('li[data-state~="active"] .nds-btn .nds-label')
             || accMenu.querySelector('.nds-drawer-list > li .nds-btn .nds-label');
         if (menuLabel) labelSpan.textContent = menuLabel.textContent;
-
-        if (isTopMode) {
-            labelSpan.removeAttribute('hidden');
-            toggleBtn.classList.add('nds-menu-btn', 'nds-subtle', 'nds-indicator');
-            toggleBtn.classList.remove('nds-primary');
-        } else {
-            labelSpan.setAttribute('hidden', '');
-            toggleBtn.classList.add('nds-primary', 'nds-indicator');
-            toggleBtn.classList.remove('nds-menu-btn', 'nds-subtle');
-        }
+        // The label shows only on the top bar; the slide-in button is icon-only.
+        labelSpan.hidden = !isTopMode;
     }
 
     function setupScrollPeek(toggleBtn, abortController) {
@@ -198,7 +145,6 @@
             return cachedRect;
         };
 
-        const scrollHandler = NDS.rafThrottle(invalidate);
         const mousemoveHandler = NDS.rafThrottle((e) => {
             const rect = getRect();
             const cx = rect.left + rect.width / 2;
@@ -208,7 +154,6 @@
         });
 
         const { signal } = abortController;
-        window.addEventListener('scroll', scrollHandler, { passive: true, signal });
         window.addEventListener('mousemove', mousemoveHandler, { passive: true, signal });
         // Pooled handle takes no signal — bridge it onto the same teardown.
         const offResize = NDS.onResize(invalidate);
@@ -217,23 +162,10 @@
 
     function destroy() {
         if (currentInstance) {
-            const { abortController, accMenu, animTarget, toggleBtn, isTopMode, drawer } = currentInstance;
+            const { abortController, accMenu, animTarget } = currentInstance;
 
-            // Close menu if open before destroying
             if (hasState(animTarget, 'open')) {
-                clearState(animTarget);
-                if (isTopMode) {
-                    clearState(accMenu);
-                    const mainContent = getMainContent(accMenu);
-                    if (mainContent) mainContent.style.removeProperty('--_topsubmenu-height');
-                    unlockBodyScroll();
-                } else {
-                    accMenu.style.removeProperty('padding-top');
-                }
-                if (toggleBtn) { clearState(toggleBtn); NDS.aria.expanded(toggleBtn, false); }
-                if (drawer) drawer.style.removeProperty('--drawer-max-height');
-                // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
-                if (NDS.Backdrop) NDS.Backdrop.hide();
+                reset(currentInstance);
                 accMenu.style.removeProperty('z-index');
             }
 
@@ -253,6 +185,7 @@
         const abortController = new AbortController();
 
         const toggleBtn = accMenu.querySelector(".nds-sidemenu-toggle");
+        if (!toggleBtn) return;
         const isTopMode = accMenu.classList.contains('nds-top');
         const animTarget = isTopMode ? accMenu.querySelector('.nds-drawer') : accMenu;
         const drawer = accMenu.querySelector('.nds-drawer');
@@ -263,39 +196,15 @@
         // Store for cleanup
         currentInstance = ctx;
 
-        // Toggle button
-        if (toggleBtn) {
-            // Closed is the start state; open/close only write on a flip.
-            if (!toggleBtn.hasAttribute('aria-expanded')) NDS.aria.expanded(toggleBtn, false);
-            const toggleHandler = (e) => {
-                e.stopPropagation();
-                hasState(animTarget, 'open') ? closeMenu(ctx) : openMenu(ctx);
-            };
-            toggleBtn.addEventListener("click", toggleHandler, { signal: abortController.signal });
-            toggleBtn.removeAttribute('hidden');
-            updateToggleLabel(accMenu, toggleBtn, isTopMode);
-            setupScrollPeek(toggleBtn, abortController);
-        }
-
-        // Click outside
-        const outsideHandler = (e) => {
-            if (!hasState(animTarget, 'open')) return;
-            if (toggleBtn && toggleBtn.contains(e.target)) return;
-
-            if (isTopMode) {
-                if (drawer && drawer.contains(e.target)) return;
-            } else {
-                if (accMenu.contains(e.target)) return;
-            }
-            closeMenu(ctx);
-        };
-        document.addEventListener("click", outsideHandler, { signal: abortController.signal });
-
-        // Escape key
-        const escapeHandler = (e) => {
-            if (e.key === "Escape" && hasState(animTarget, 'open')) closeMenu(ctx);
-        };
-        document.addEventListener("keydown", escapeHandler, { signal: abortController.signal });
+        // Closed is the start state; open/close only write on a flip.
+        if (!toggleBtn.hasAttribute('aria-expanded')) NDS.aria.expanded(toggleBtn, false);
+        // Escape and a click outside reach the backdrop's onClick.
+        toggleBtn.addEventListener("click", () => {
+            hasState(animTarget, 'open') ? closeMenu(ctx) : openMenu(ctx);
+        }, { signal: abortController.signal });
+        toggleBtn.removeAttribute('hidden');
+        updateToggleLabel(accMenu, toggleBtn, isTopMode);
+        setupScrollPeek(toggleBtn, abortController);
 
         // Close on width change
         let prevWidth = window.innerWidth;
