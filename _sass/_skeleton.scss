@@ -51,11 +51,13 @@ html {
             display: flex;
             flex-direction: column;
             gap: 2px;
-            font-size: var(--typo-text-clamp-md-FS);
+            font-size: max(var(--typo-text-clamp-md-FS), var(--typo-text-sm-FS));
             line-height: var(--typo-text-clamp-md-LH);
+            color: var(--text-display);
 
             :where(.nds-brand-slogan) {
                 display: block;
+                color: var(--text-secondary-paragraph);
                 font-size: var(--typo-text-sm-FS);
                 line-height: var(--typo-text-sm-LH);
                 font-weight: 400;

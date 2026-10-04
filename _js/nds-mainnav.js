@@ -378,6 +378,8 @@
         const secondaryHas = hasItems(DOM.secondary);
 
         if (DOM.secondary) DOM.secondary.toggleAttribute('data-nav-empty', !secondaryHas);
+        // No actions row under the drawer's show-more: it drops to the bottom edge.
+        DOM.collapseContent?.toggleAttribute('data-nav-actions-empty', !secondaryHas);
         if (!DOM.toggler) return;
         DOM.toggler.style.display = (primaryHas || secondaryHas) ? '' : 'none';
     }

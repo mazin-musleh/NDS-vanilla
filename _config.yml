@@ -76,9 +76,9 @@ headerBrandH: 40
 
 # Brand Name
 brandName: "NDS" #comment this to remove text from brand
-brandNameColor: var(--text-display,#1f2a37)
+# brandNameColor: "#0a3d62" # optional; the CSS default is --text-display
 brandSlogan: Vanilla Design System
-brandSloganColor: var(--text-secondary-paragraph,#6c727e)
+# brandSloganColor: "#6c727e" # optional; the CSS default is --text-secondary-paragraph
 
 hero_image: assets/img/riyadhcenter_ai.webp
 hero_image_small: assets/img/riyadhcenter3s.webp

@@ -16,10 +16,10 @@
             <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}" height="{{ brand_height }}" loading="lazy" alt="{{ site_title }} Logo">
             {%- endif %}
             {%- if brand_name %}
-            <span class="nds-brand-name" style="color: {{ brand_name_color }};">
+            <span class="nds-brand-name"{% if brand_name_color %} style="color: {{ brand_name_color }};"{% endif %}>
                 {{- brand_name -}}
                 {%- if brand_slogan %}
-                <span class="nds-brand-slogan" style="color: {{ brand_slogan_color }};">{{ brand_slogan }}</span>
+                <span class="nds-brand-slogan"{% if brand_slogan_color %} style="color: {{ brand_slogan_color }};"{% endif %}>{{ brand_slogan }}</span>
                 {%- endif %}
             </span>
             {%- endif %}

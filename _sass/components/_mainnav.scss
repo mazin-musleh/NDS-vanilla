@@ -67,7 +67,7 @@
         display: flex;
         align-items: center;
         flex-direction: row;
-        flex: 0 1 var(--nds-brand-width, auto);
+        flex: 0 0 var(--nds-brand-width, auto);
         font-weight: var(--font-weight-bold);
         text-decoration: none;
         gap: var(--spacing-lg);
@@ -95,13 +95,16 @@
             // reveals (_skeleton.scss). Setting visible would leak the name
             // through the pre-crit hide gate before crit lands (CLS).
             line-height: var(--typo-text-clamp-md-LH);
-            font-size: var(--typo-text-clamp-md-FS);
+            // Never below the slogan: the clamp bottoms out at 12px on a phone.
+            font-size: max(var(--typo-text-clamp-md-FS), var(--typo-text-sm-FS));
+            color: var(--text-display);
             display: flex;
             flex-direction: column;
             gap: var(--spacing-xxs);
         }
 
         .nds-brand-slogan {
+            color: var(--text-secondary-paragraph);
             font-size: var(--typo-text-sm-FS);
             line-height: var(--typo-text-sm-LH);
             font-weight: var(--font-weight-regular);
@@ -551,6 +554,40 @@
 
 .nds-main-nav.nds-minimal {
 
+    // The brand text is the site's, so it gives way: the menu button never leaves the screen.
+    .nds-brand {
+        flex-shrink: 1;
+        min-width: 0;
+    }
+
+    // A wide logo scales down inside the brand, at its own aspect, from the start edge.
+    .nds-brand-logo {
+        min-width: 0;
+        max-width: 100%;
+        object-fit: contain;
+        object-position: right;
+
+        @include ltr {
+            object-position: left;
+        }
+    }
+
+    // The text gives way before the logo does.
+    .nds-brand-name {
+        flex-shrink: 999;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .nds-brand-slogan {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .nds-nav-minimal {
+        flex-shrink: 0;
+    }
+
     .nds-mainNav-toggler {
         display: flex;
 
@@ -737,17 +774,32 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity .1s, visibility .1s;
+
+        > .nds-nav-link {
+            --btn-indicator-size: 0px;
+            border-radius: 0;
+        }
+    }
+
+    // No actions row below it (all pinned, or none written): stamped by checkNavComposition().
+    .nds-collapse-content[data-nav-actions-empty] > .nds-show-more {
+        bottom: 0;
+        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        overflow: clip;
     }
 
     /* Action Navigation */
     .nds-nav-actions {
         position: sticky !important;
         inset-inline: 0;
+        // The bar's height, and it never shrinks under a long list of links.
+        height: var(--nds-nav-height);
+        flex-shrink: 0;
         flex-direction: row;
         align-items: stretch;
         gap: 0;
         width: 100%;
-        border-top: 1px solid var(--divider-color);
+        box-shadow: inset 0 1px 0 var(--divider-color);
         justify-content: center;
         z-index: var(--_nav-z-secondary);
 
