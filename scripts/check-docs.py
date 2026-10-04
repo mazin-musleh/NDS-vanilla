@@ -125,6 +125,9 @@ def check(path):
             op = re.fullmatch(r'\.([\w-]+)|\[([\w-]+)(?:(~?)="([^"]*)")?\]', markup)
             if not op or '(default)' in option or target.startswith('create('):
                 continue
+            # A default row writes it too: picking this option puts it back after that default is off.
+            if any(len(r) == 5 and '(default)' in r[1] and r[2].replace('`', '') == markup for r in rows):
+                continue
             want = set(re.findall(r'\.([\w-]+)', re.sub(r':not\([^)]*\)', '', target)))
             skip = set(re.findall(r':not\(\.([\w-]+)\)', target))
             ids = re.findall(r'#([\w-]+)', re.sub(r':not\([^)]*\)', '', target))

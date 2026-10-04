@@ -296,7 +296,13 @@ module DocsCanon
       need = needs(r, rows, canons, src)
       # `(limit: 2 widgets)`: once that many chips sharing it start on, the others start off.
       lim = r[:option][/\(limit:\s*([^)]+)\)/, 1]
-      need = "Up to #{lim}" if lim && need.empty?
+      # A limit of 1 makes the chips exclusive: name the other one, like any blocker.
+      if lim && need.empty?
+        others = rows.select { |x| !x.equal?(r) && x[:option].include?("(limit: #{lim})") }.map do |x|
+          rows.count { |y| y[:group] == x[:group] } == 1 ? label(x[:option]) : "#{x[:group].delete_suffix(' (any)')}: #{label(x[:option])}"
+        end
+        need = lim.to_i == 1 ? "Not with #{others.join(' or ')}" : "Up to #{lim}"
+      end
       full = lim && !sel && rows.count { |x| x[:option].include?("(limit: #{lim})") && x[:option].include?('(default)') } >= lim.to_i
       off = !applies?(r, src, js) || full
       state = [('selected' if sel), ('disabled' if off)].compact.join(' ')

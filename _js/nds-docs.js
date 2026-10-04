@@ -788,7 +788,9 @@
         var dark = card.getAttribute('data-theme') === 'dark' || !!doc.querySelector('body > [data-theme~="dark"]');
         f.srcdoc = '<!doctype html><html ' + rootAttrs(dark) + '><head><base target="_top">' + document.head.innerHTML +
             // No nav in the frame: sticky parts pin at its top, not under a missing nav. A nav part keeps its height.
-            '<style>:root{color-scheme:normal!important;scrollbar-width:none' + (doc.querySelector('.nds-main-nav') ? '' : ';--nds-nav-height:0px') + '}</style></head>' + doc.body.outerHTML.replace(/<\/body>$/, runtimeScripts() + '</body>') + '</html>';
+            // data-preview-style on the canon: CSS for the preview only, never in the code.
+            '<style>:root{color-scheme:normal!important;scrollbar-width:none' + (doc.querySelector('.nds-main-nav') ? '' : ';--nds-nav-height:0px') + '}' +
+            (document.getElementById(card.getAttribute('data-preview-of')).getAttribute('data-preview-style') || '') + '</style></head>' + doc.body.outerHTML.replace(/<\/body>$/, runtimeScripts() + '</body>') + '</html>';
     }
     function fit(card) {
         var dev = card.querySelector('.nds-doc-device');
