@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 05:31 AM"
+last_edit: "04/10/2026 - 09:27 PM"
 ---
 
 <section id="pageLayoutOverview" class="nds-content-section nds-doc-overview">
@@ -205,7 +205,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       <div class="nds-content" id="main-content">
         <section id="passport-guide" class="nds-content-section nds-sideinfo-section">
           <div class="nds-section-body">
-            <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
+            <aside class="nds-sideinfo nds-sticky nds-top" aria-label="On this page">
               <nav class="nds-toc" aria-label="Table of contents" data-toc-source="#passport-guide article" data-toc-levels="h2, h3">
                 <div class="nds-toc-head">
                   <span class="nds-label">On this page</span>

@@ -31,7 +31,6 @@
     .nds-sideinfo {
         --nds-sideinfo-top-offset: 0px;
         --_sideinfo-sticky-top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--nds-sideinfo-top-offset));
-        width: var(--nds-sideinfo-width);
         position: static;
         top: var(--_sideinfo-sticky-top);
         height: fit-content;
@@ -50,9 +49,27 @@
             --card-width: 100%;
         }
 
+        // Cards in the column stack with a gap. The older pairing keeps the card's own layout.
+        &:not(.nds-card) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--nds-sideinfo-gap, var(--spacing-4xl));
+        }
+
+        // The aside sizes to its children, so a table of contents gets its own default with no :has().
+        // --nds-sideinfo-width overrides both defaults.
+        &:not(.nds-card) > * { width: var(--nds-sideinfo-width, 400px); }
+        &:not(.nds-card) > .nds-toc { width: var(--nds-sideinfo-width, 300px); }
+        // The older pairing: the aside is the card, so it carries the width itself.
+        &.nds-card { width: var(--nds-sideinfo-width, 400px); }
+
+        // Full width below desktop, whatever width the column has above it.
         @include tablet(max) {
             top: unset;
-            --nds-sideinfo-width: 100%;
+            width: 100%;
+
+            &.nds-card,
+            &:not(.nds-card) > :is(*, .nds-toc) { width: 100%; }
         }
 
         &.nds-sticky {
@@ -64,8 +81,8 @@
             }
         }
 
-        // Opt-in below-desktop pinning: pair with .nds-sticky to keep the
-        // sideinfo sticky as a full-width strip below the main nav.
+        // Opt-in below-desktop pinning, on its own or with .nds-sticky: keeps the
+        // sideinfo sticky as a full-width strip below the main nav. Pair with .nds-top.
         //   .nds-sticky-sm → pinned at mobile only (≤600)
         //   .nds-sticky-md → pinned at tablet-max (≤960, includes mobile)
         @mixin _sideinfo-pin {
@@ -93,11 +110,11 @@
             }
         }
 
-        &.nds-sticky.nds-sticky-sm {
+        &.nds-sticky-sm {
             @include mobile { @include _sideinfo-pin; }
         }
 
-        &.nds-sticky.nds-sticky-md {
+        &.nds-sticky-md {
             @include tablet(max) { @include _sideinfo-pin; }
         }
 
@@ -112,11 +129,6 @@
         &.nds-reverse {
             order: -1;
         }
-
-        // Size variants — default (lg) 400px defined in tokens/_primitives.scss.
-        &.nds-sm { --nds-sideinfo-width: 200px; }
-        &.nds-md { --nds-sideinfo-width: 300px; }
-        &.nds-lg { --nds-sideinfo-width: 400px; }
 
         .nds-sideinfo-group {
             display: flex;

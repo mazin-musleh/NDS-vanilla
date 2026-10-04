@@ -8,12 +8,12 @@
  * Events:
  *   (none)
  * Hooks:
- *   (none — class-driven: .nds-sideinfo on the card, plus .nds-sticky to opt into sticky.
+ *   (none — class-driven: .nds-sideinfo on the card, plus .nds-sticky / .nds-sticky-sm / .nds-sticky-md to opt into sticky.
  *    The component writes --nds-sideinfo-top on the card for the hero alignment)
  * Gotchas:
  *   - Alignment to the hero only runs when the page has a .nds-hero-section.nds-aside and
  *     the viewport is desktop-width. Otherwise the card just follows content start.
- *   - .nds-sticky is REMOVED automatically while the card is taller than the viewport,
+ *   - The sticky classes are REMOVED automatically while the card is taller than the viewport,
  *     and restored when it fits again — do not treat the class as fixed.
  *   - The instance lives on the element as el._ndsSideInfo.
  */
@@ -36,9 +36,9 @@
             this.sideInfoParent = element.parentElement;
             this.sectionHead = document.querySelector('.nds-hero-section');
             this.abortController = new AbortController();
-            // Remember whether the author opted into sticky so we can re-apply
-            // it after a viewport/content change makes it fit again.
-            this.wantsSticky = element.classList.contains('nds-sticky');
+            // Remember which sticky classes the author wrote, so we can re-apply
+            // them after a viewport/content change makes the card fit again.
+            this.stickyClasses = ['nds-sticky', 'nds-sticky-sm', 'nds-sticky-md'].filter(c => element.classList.contains(c));
 
             // A sideinfo without a hero is a valid plain sticky-aside config — it
             // skips the hero-alignment offset but still gets sticky-fit + resize
@@ -70,10 +70,19 @@
         // (the user can never scroll past it). Drop the modifier in that case
         // and let normal flow handle it; restore when it fits again.
         updateStickyState() {
-            if (!this.wantsSticky) return;
-            const top = parseFloat(getComputedStyle(this.sideInfo).top) || 0;
+            if (!this.stickyClasses.length) return;
+            // The spot the card pins at, the same with the classes on or off, so dropping them cannot flip the result.
+            let top;
+            if (window.matchMedia(NDS.breakpoints.desktop).matches) {
+                const cs = getComputedStyle(this.sideInfo);
+                // Beside the title pulls the card up with a transform: the pinned spot is top + that shift.
+                top = (parseFloat(cs.top) || 0) + (cs.transform === 'none' ? 0 : new DOMMatrix(cs.transform).m42);
+            } else {
+                // The small-screen strip pins right under the main nav.
+                top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-nav-height')) || 0;
+            }
             const fits = this.sideInfo.offsetHeight + top <= document.documentElement.clientHeight;
-            this.sideInfo.classList.toggle('nds-sticky', fits);
+            this.stickyClasses.forEach(c => this.sideInfo.classList.toggle(c, fits));
         }
 
         updatePosition() {
@@ -119,7 +128,7 @@
         }
 
         setupContentResize() {
-            if (!this.wantsSticky) return;
+            if (!this.stickyClasses.length) return;
             this._offContentResize = NDS.onElementResize(this.sideInfo, () => {
                 this.updateStickyState();
             });
@@ -151,7 +160,7 @@
             this.abortController.abort();
             this.sideInfo.removeAttribute('data-nds-sideinfo-initialized');
             this.sideInfo.style.removeProperty('--nds-sideinfo-top');
-            if (this.wantsSticky) this.sideInfo.classList.add('nds-sticky');
+            this.sideInfo.classList.add(...this.stickyClasses);
 
             if (this._offHeroResize) this._offHeroResize();
             if (this._offResize) this._offResize();

@@ -20,7 +20,7 @@ sidemenu_mode: false
 
 <section id="facultyProfile" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
-        <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
+        <aside class="nds-sideinfo nds-sticky nds-top" aria-label="On this page">
             <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 5"
                 data-toc-source="#facultyProfile .nds-info-content" data-toc-levels="h2">
                 <div class="nds-toc-head">

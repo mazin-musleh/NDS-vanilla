@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/09/2026 - 08:18 AM"
+last_edit: "04/10/2026 - 09:27 PM"
 ---
 
 <section id="tocOverview" class="nds-content-section nds-doc-overview">
@@ -45,7 +45,7 @@ The TOC sits in a sticky [Side Info](../ui-shell/sideinfo) column next to the ar
 <script type="text/html" id="toc-auto" data-canon data-preview="panel" data-preview-flush>
 <section id="policyPage" class="nds-content-section nds-sideinfo-section">
   <div class="nds-section-body">
-    <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
+    <aside class="nds-sideinfo nds-sticky nds-top" aria-label="On this page">
       <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 5"
         data-toc-source="#policyPage article" data-toc-levels="h2,h3">
         <div class="nds-toc-head">
@@ -235,7 +235,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
 - Give every heading its own short `id`. An id made from the text changes when the text changes, and breaks the links people shared.
 - Keep the list to three levels or fewer. A deeper list is hard to scan, and often means the page should be split. Set `data-toc-levels="h2,h3"` when the page uses `h4` for small labels, not sections.
 - Set `--toc-skeleton-rows` on `.nds-toc` to the number of links the page has. On a phone, the TOC sits above the article, so a wrong count moves the article when the list fills in.
-- Put the TOC in a sticky `.nds-sideinfo` with `nds-sm` (200px) or `nds-md` (300px), so it stays in view.
+- Put the TOC in a sticky `.nds-sideinfo`, so it stays in view. The column is 300px wide for a TOC: `--nds-sideinfo-width` changes it.
 - Give the `<nav>` an `aria-label`, so screen reader users can tell it from the page's other navigation.
 - Let the script mark the active link. It sets `data-state="active"` from the scroll position, and clears any the markup carries at init.
 
