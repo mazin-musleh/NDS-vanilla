@@ -68,8 +68,9 @@ def check(path):
             errs.append(f'old demo markup left: {s}')
 
     # A Structure canon replaces the base, so it may reuse the base's ids (the root a shared JS call names).
+    # So may a part on a (default) row: it is a copy of what the base already carries.
     alts = {m for _, a, _ in canons if attr(a, 'data-variants')
-            for r in (table(src, attr(a, 'data-variants')) or []) if len(r) == 5 and r[0] in ('Structure', 'Example')
+            for r in (table(src, attr(a, 'data-variants')) or []) if len(r) == 5 and (r[0] in ('Structure', 'Example') or '(default)' in r[1])
             for m in re.findall(r'canon `?#([\w-]+)', r[2])}
     base_ids = {i for _, a, b in canons if attr(a, 'data-variants') for i in re.findall(r'\sid="([^"]+)"', b)}
     ids = {}

@@ -16,7 +16,7 @@
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
  * data-preview="run" on an HTML canon does the same for markup that leaves the card (a FAB), with Clear.
  * data-preview="js" runs the JS tab after each render, for a component with no init (Sort).
- * data-preview="page": the canon is a whole <body>, previewed as a page of its own in a frame.
+ * data-preview="page": the canon is a whole <body>, or a part of one (the top bar), previewed as a page of its own in a frame.
  * data-harness="form" renders the preview inside a form with Validate and Reset buttons, outside the code.
  * The section action holds Reset and Options; Options shows a chip row per group, inline or in a panel. A chip that does not apply
  * stays in place, disabled, and its tooltip says why.
@@ -33,8 +33,8 @@
     // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
     var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input';
 
-    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name), (not: ids).
-    function label(o) { return o.replace(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/g, ''); }
+    // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name), (not: ids), (limit: n name).
+    function label(o) { return o.replace(/\s*\((default|limit:[^)]*|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/g, ''); }
 
     function dedent(s) {
         s = s.replace(/^\s*\n/, '').replace(/\s+$/, '');
@@ -233,6 +233,20 @@
         });
     }
 
+    // A default part (the canon carries a copy): remove the copy, found by its markup.
+    function removePart(root, id) {
+        var flat = function (h) { return h.replace(/>\s+</g, '><').replace(/\s+/g, ' ').trim(); };
+        var t = document.createElement('template');
+        t.innerHTML = dedent(document.getElementById(id).textContent);
+        Array.prototype.forEach.call(t.content.children, function (k) {
+            var el = Array.prototype.filter.call(root.querySelectorAll(k.tagName), function (x) { return flat(x.outerHTML) === flat(k.outerHTML); })[0];
+            if (!el) return;
+            // Its own line goes with it.
+            if (el.previousSibling && el.previousSibling.nodeType === 3) el.previousSibling.remove();
+            el.remove();
+        });
+    }
+
     function readTable(id) {
         var table = document.getElementById(id);
         if (!table) { console.warn('[NDS Docs] no Variants table #' + id); return []; }
@@ -322,9 +336,13 @@
             var id = not && sg && active[sg] && (active[sg].option.match(/\(id:\s*([\w-]+)\)/) || [])[1];
             return !!id && not[1].split(/[\s,]+/).indexOf(id) >= 0;
         }
+        // `(limit: 2 widgets)`: once that many chips sharing it are on, the others stay off.
+        var limitOf = function (c) { var m = c.option.match(/\(limit:\s*([^)]+)\)/); return m && m[1]; };
         function applies(c) {
             if (c.structure) return true;
             if (excluded(c)) return false;
+            var lim = limitOf(c);
+            if (lim && active[c.group] !== c && order.filter(function (g) { return active[g] && limitOf(active[g]) === lim; }).length >= parseInt(lim, 10)) return false;
             // A `—` row with a target (a default that fits only some structures) is checked too.
             var ops = c.ops.filter(function (o) { return o.op || (o.target && o.target !== '—'); });
             // Like the build, a descendant target never gates when the choice has a one-element target.
@@ -354,6 +372,9 @@
             });
         }
 
+        var partIds = function (c) { return c.ops.filter(function (o) { return o.op && o.op.kind === 'insert'; }).map(function (o) { return o.op.id; }); };
+        var isPart = function (c) { return !!c && partIds(c).length > 0; };
+
         function render() {
             var sg = order.filter(function (g) { return STRUCT.test(g); })[0];
             var struct = sg && active[sg] && active[sg].structure;
@@ -367,20 +388,29 @@
             call = callEl ? parseCall(dedent(callEl.textContent)) : null;
             [html && pristine, call].forEach(function (root) {
                 if (!root) return;
-                order.forEach(function (g) { if (defaults[g] && active[g] !== defaults[g]) unapply(root, defaults[g], active[g]); });
+                var dom = root !== call;
+                // A default part comes out first and goes back in with the chosen parts, in table order,
+                // so any mix keeps one order.
+                if (dom) order.forEach(function (g) { if (isPart(defaults[g])) partIds(defaults[g]).forEach(function (id) { removePart(root, id); }); });
+                var undo = function () { order.forEach(function (g) { if (defaults[g] && active[g] !== defaults[g] && !(dom && isPart(defaults[g]))) unapply(root, defaults[g], active[g]); }); };
+                // A JS call drops a default before the parts go in; markup drops it after, so it leaves a part put back too.
+                if (!dom) undo();
                 // A default choice is the canon as written, so it adds nothing.
                 // An option the structure excludes stays chosen, but adds nothing until a structure takes it.
-                var on = function (g) { return active[g] && active[g] !== defaults[g] && !excluded(active[g]); };
+                var on = function (g) { var c = active[g]; return c && (c !== defaults[g] || (dom && isPart(c))) && !excluded(c); };
                 order.forEach(function (g) { if (on(g)) apply(root, active[g], 'insert'); });
+                if (dom) undo();
                 order.forEach(function (g) { if (on(g)) apply(root, active[g], 'markup'); });
                 // A JS part whose create({ k: v }) target a markup row just set lands on a second pass.
-                if (root === call) order.forEach(function (g) { if (on(g)) apply(root, active[g], 'insert'); });
+                if (!dom) order.forEach(function (g) { if (on(g)) apply(root, active[g], 'insert'); });
             });
             showApplicable();
+            // A page canon without <body> is a part of a page (the top bar): its code is the part alone.
+            var whole = page && /<body[\s>]/i.test(srcEl.textContent);
             // Dark: data-theme="dark" on the markup's outer element, so the copied code carries it.
-            if (dark) Array.prototype.forEach.call(page ? [pristine.body] : pristine.children, function (el) { el.setAttribute('data-theme', 'dark'); });
+            if (dark) Array.prototype.forEach.call(whole ? [pristine.body] : page ? pristine.body.children : pristine.children, function (el) { el.setAttribute('data-theme', 'dark'); });
 
-            var out = page ? serialize(pristine.documentElement).replace(/^<head><\/head>/, '') : html ? serialize(pristine) : '', js = call ? printCall(call) : '';
+            var out = whole ? serialize(pristine.documentElement).replace(/^<head><\/head>/, '') : page ? serialize(pristine.body) : html ? serialize(pristine) : '', js = call ? printCall(call) : '';
             [[codeHtml, out], [codeJs, js]].forEach(function (pair) {
                 if (!pair[0] || !pair[1]) return;
                 pair[0].textContent = pair[1];
@@ -728,7 +758,10 @@
     // chosen screen's size (Desktop is 1280 wide), scaled down to fit the card. The header and
     // footer are left out: only the code shows them. Each render loads a fresh frame over the old
     // one and swaps when it is ready, so the preview never blanks.
+    // A page part (a canon with no <body>, the top bar) shows Desktop as tall as its content:
+    // the frame grows when a panel in it opens.
     var PAGE = '1280x800';
+    function isPart(card) { return !/<body[\s>]/i.test(document.getElementById(card.getAttribute('data-preview-of')).textContent); }
     function pageFrame(card) {
         var dev = card.querySelector('.nds-doc-device');
         if (!dev) {
@@ -745,6 +778,14 @@
         f.onload = function () {
             dev.querySelectorAll('iframe').forEach(function (x) { if (x !== f) x.remove(); });
             f.style.visibility = '';
+            if (!isPart(card)) return;
+            // The part's own elements, not what the runtime adds later (a tooltip balloon).
+            var kids = Array.prototype.slice.call(f.contentDocument.body.children);
+            var ro = new ResizeObserver(function () {
+                card.ndsPartH = Math.ceil(kids.reduce(function (m, el) { return Math.max(m, el.getBoundingClientRect().bottom); }, 0));
+                fit(card);
+            });
+            kids.forEach(function (el) { ro.observe(el); });
         };
         dev.appendChild(f);
         fit(card);
@@ -755,15 +796,19 @@
     function fit(card) {
         var dev = card.querySelector('.nds-doc-device');
         if (!dev) return;
+        // Desktop is the reader's own screen: a plain frame, no device around it.
+        var desk = !card.getAttribute('data-screen'), b = desk ? 0 : BEZEL;
         var size = (card.getAttribute('data-screen') || PAGE).split('x'), w = +size[0], h = +size[1];
-        var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * BEZEL;
+        var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * b;
+        if (desk && isPart(card)) h = card.ndsPartH || 40;
         var s = Math.min(1, room / w);
-        dev.style.cssText = 'width:' + (w * s + 2 * BEZEL) + 'px;height:' + (h * s + 2 * BEZEL) + 'px;border-radius:' + RADIUS + 'px';
+        dev.style.cssText = 'width:' + (w * s + 2 * b) + 'px;height:' + (h * s + 2 * b) + 'px;' +
+            (desk ? 'background:none;box-shadow:none' : 'border-radius:' + RADIUS + 'px');
         dev.querySelectorAll('iframe').forEach(function (f) {
-            f.style.top = f.style.left = BEZEL + 'px';
+            f.style.top = f.style.left = b + 'px';
             f.style.width = w + 'px';
             f.style.height = h + 'px';
-            f.style.borderRadius = (RADIUS - BEZEL) / s + 'px';
+            f.style.borderRadius = desk ? '' : (RADIUS - BEZEL) / s + 'px';
             f.style.transform = 'scale(' + s + ')';
             f.style.transformOrigin = '0 0';
         });

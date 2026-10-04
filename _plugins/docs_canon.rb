@@ -246,7 +246,7 @@ module DocsCanon
 
   # Option markers: `(default)` pre-selects; `(demo: + x)` also turns on the row marked `(id: x)`
   # (demo aid only); `(hint: text)` is a short description shown under the option in the sheet.
-  def self.label(option) = option.gsub(/\s*\((default|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/, '')
+  def self.label(option) = option.gsub(/\s*\((default|limit:[^)]*|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
   # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner, and
@@ -293,7 +293,11 @@ module DocsCanon
     chip = lambda do |group, r, sel, tone = 'neutral'|
       tip = hint(r[:option]).to_s
       need = needs(r, rows, canons, src)
-      off = !applies?(r, src, js)
+      # `(limit: 2 widgets)`: once that many chips sharing it start on, the others start off.
+      lim = r[:option][/\(limit:\s*([^)]+)\)/, 1]
+      need = "Up to #{lim}" if lim && need.empty?
+      full = lim && !sel && rows.count { |x| x[:option].include?("(limit: #{lim})") && x[:option].include?('(default)') } >= lim.to_i
+      off = !applies?(r, src, js) || full
       state = [('selected' if sel), ('disabled' if off)].compact.join(' ')
       msg = off && !need.empty? ? need : (tip.empty? ? need : tip)
       tooltip = msg.empty? ? '' : %( data-tooltip-hover="#{off ? 0 : 500}" data-tooltip-message="#{esc[msg]}"#{%( data-hint="#{esc[tip]}") unless tip.empty?}#{%( data-reason="#{esc[need]}") unless need.empty?})
@@ -386,7 +390,7 @@ module DocsCanon
         out << %(<div class="nds-divider nds-xl nds-doc-divider">Preview</div>\n) if table
         demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
-        # data-preview="page": the code is a whole <body>, previewed as a page of its own in a frame (nds-docs.js).
+        # data-preview="page": the code is a whole <body> (or a part of one), previewed as a page of its own in a frame (nds-docs.js).
         page = attr(attrs, 'data-preview') == 'page'
         demo = '' if page
         # A builder's card names its builder, so Dark reaches the code too.

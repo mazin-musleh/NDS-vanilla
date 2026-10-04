@@ -24,7 +24,7 @@ A doc page has two readers. **People** browse it, try options in the builder and
 | `components/cards.md` | structure canons, part inserts, combo rows, many groups |
 | `components/alert.md` | a JS twin (`data-js`), `create()` rows, a JS-only structure with a Run button |
 | `components/button.md` | many structures, `:not()` targets that disable bad combinations |
-| `ui-shell/footer.md` | a shell page: code-only canon, `data-live`, a Parts table |
+| `ui-shell/topbar.md` | a shell page: a part canon framed with `data-preview="page"`, a Parts table |
 | `layout/grid.md` | a reference page: one `Example` group of whole examples |
 
 **Parked, never convert without their own plan:** `components/tokens.md`, `ui-shell/head.md`, `components/forms.md`, `components/themes.md`, `components/icons.md`, `components/accessibility.md`, `layout/section.md`, `components/filter.md`, `components/tables.md`, `components/chart.md`.
@@ -40,7 +40,7 @@ A doc page has two readers. **People** browse it, try options in the builder and
 | Type | Pages | Builder |
 |---|---|---|
 | Component | most of `components/`, `utilities/` | options you combine: Structure plus modifier groups |
-| Shell | `ui-shell/` (header, mainnav, footer, topbar, sidemenu, hero) | code-only canon; `data-live` changes the page's own copy |
+| Shell | `ui-shell/` (header, mainnav, footer, topbar, sidemenu, hero) | a part canon in a frame (`data-preview="page"`), at every screen size |
 | Reference | `layout/` (grid, flex), `core/` | one `Example` group of whole examples, never mixed toggles |
 
 ---
@@ -160,10 +160,10 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
   - **Structure:** named by a `Structure` (or `Example`) row. Reached only through the builder.
   - **Part:** a small block that a row inserts, such as an icon or an actions row.
   - **JS:** `data-lang="js"`. `data-js="{id}"` on the base names its JS twin: the same component as one `create()` call, shown in a JS tab. A JS-only structure (a toast) previews as a Run button that runs the code shown.
-  - **Code-only:** `data-preview="none"`, for shells, `<head>` and JS examples.
+  - **Code-only:** `data-preview="none"`, for `<head>` and JS examples.
   - **Run:** `data-preview="run"`, for markup that leaves the card (a FAB docks at the screen edge). The card holds Run (`data-run-label` renames it), which adds a copy of the code shown, and Clear. A choice rebuilds the last copy added.
   - **Panel:** `data-preview="panel"`, for markup that needs a page around it (a TOC over a long article, a shell). The card holds Preview (`data-run-label` renames it), which opens a tall, resizable bottom panel with the code shown mounted in it. The panel body zeroes `--nds-nav-height`, so sticky parts pin to its top. Add `data-preview-flush` when the markup brings its own padding (a section): the body gets `nds-flush`. Closing it removes the copy.
-  - **Page:** `data-preview="page"`, for a canon that is a whole `<body>` (Page Layout). The preview is a page of its own in a frame, Desktop at 1280px wide scaled to fit, with the header and footer left out. A row can target `body`.
+  - **Page:** `data-preview="page"`, for a canon that is a whole `<body>` (Page Layout), or a page part that must not share the doc page (the top bar: its ids would clash with the page's own). The preview is a page of its own in a frame, Desktop at 1280px wide scaled to fit, with the header and footer left out. Desktop is a plain frame with no device around it; Tablet and Phone show a device. A whole-body canon's rows can target `body`. A part's code is the part alone, and its Desktop frame is as tall as its content.
   - **JS-started:** `data-preview="js"` with `data-js`, for a component with no `init()` (Sort). The preview runs the JS tab after each render. A Structure canon may reuse the base's root id, since the one call names it.
   - **Demo-only:** `data-code="none"`, a Behavior demo in a preview card with no code. Its wiring `<script>` sits after the canon, never in it.
 - **A canon never holds `</script>`.** Code with a `<script>` tag inside stays out of the canon format for now (see `ui-shell/head.md`).
@@ -173,7 +173,7 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
 - **A stepper** adds `data-harness="stepper"`: Back and Next buttons under the preview move the canon's root id. The code never shows them.
 - **A form that is the component's own markup** (user feedback validates the form it sits in) stays in the canon: add `data-form` to the canon script, and `check-docs.py` allows the `<form>`. Never use it for a demo wrapper.
 - **Dark mode:** every preview card gets Dark mode and Grid lines toggles in its top corner, builder or not. On a builder card, Dark writes `data-theme="dark"` on the markup's outer element, so the copied code carries it; on a plain card it darkens the card only. Dark hides while the site itself is dark: NDS has no light area to switch to. Never add a Dark option to the Variants table. Grid lines changes only the card, never the code.
-- **Shell pages** add `data-live="footer.nds-footer"` to change the page's own copy, and `data-sheet="top"` to open the options in a top panel that stays open over the footer. Its Preview card holds a button that opens that panel.
+- **Shell pages** preview in a frame, Desktop included: `data-preview="page"` with the shell part as the canon (no `<body>`). The frame keeps the part's ids and scripts apart from the doc page's own shell, which has the same ids. `data-live` (change the page's own copy) predates the frame: `ui-shell/footer.md` still uses it and moves to the frame on its next pass. Never use `data-live` on a new page.
 - **Options placement:** up to 3 rows sit inline above the preview; 4 or more open in a bottom panel, so the preview stays in view. `data-options="inline"` or `"panel"` on the base canon overrides it. A panel or fab doc needs `inline`: its demo's own panel closes the options panel.
 - **Reference pages:** each example canon opens with an HTML comment that says what it does: `<!-- 3 columns on desktop, 2 on tablets, 1 on phones -->`.
 
@@ -195,9 +195,10 @@ A short paragraph above the table explains any target that is not obvious (what 
 - Rows that share a Group are one set of chips. `(default)` marks the one the canon already shows. A group whose default is `None` shows no None chip: a second tap on the chosen chip turns it off.
 - A Group with one row is an on/off chip in the "More" row.
 - `Group (any)` (Validation (any)) is a row of on/off chips: each turns on and off by itself, so any mix stacks with no combo rows. Use it for parts that add up (password rules). The row label drops `(any)`.
+- **A default part:** a `(default)` row whose Markup is `canon #part` says the canon carries a copy of that part. The builder takes the copy out (found by its markup, so write the part exactly as the canon has it) and puts every part that is on back in table order, so any mix keeps one order. Its ids may repeat the base's. With `(any)`, parts toggle one by one (the top bar's widgets).
 - **Two rows with the same Group and Option are one choice** that makes both changes. Tell agents to write both.
 - `Structure` (or `Example` on a reference page) rows swap the whole markup: `canon #id` and `—` in On element.
-- **Option markers:** `(hint: text)` is the chip's tooltip. `(demo: + size-sm)` also turns on the row marked `(id: size-sm)`, for a demo that only shows with it. It goes by id, never by name, so a translated page keeps working. Mark every row of that choice with the id. A row can carry several `demo` markers. `(not: home, minimal)` turns the option off while a Structure row marked `(id: home)` or `(id: minimal)` is chosen: use it when that structure has no class of its own for a `:not()` target, and when its canon already carries the option (`check-docs.py` then allows it). `A + B` is a combo row: its group becomes multi-select, and both chips on use the combo's markup.
+- **Option markers:** `(hint: text)` is the chip's tooltip. `(limit: 2 widgets)` caps the chips that share it: once two are on, the others stay off and their tooltip says "Up to 2 widgets" (the top bar's DGA limit). `(demo: + size-sm)` also turns on the row marked `(id: size-sm)`, for a demo that only shows with it. It goes by id, never by name, so a translated page keeps working. Mark every row of that choice with the id. A row can carry several `demo` markers. `(not: home, minimal)` turns the option off while a Structure row marked `(id: home)` or `(id: minimal)` is chosen: use it when that structure has no class of its own for a `:not()` target, and when its canon already carries the option (`check-docs.py` then allows it). `A + B` is a combo row: its group becomes multi-select, and both chips on use the combo's markup.
 
 **Markup cell** (CSS selector syntax):
 - `.cls` class · `[attr]` bare attribute · `[attr="v"]` attribute · `[data-state~="t"]` a token
