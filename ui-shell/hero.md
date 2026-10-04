@@ -2,717 +2,446 @@
 layout: page
 title: Hero
 hero_title: Hero - National Design System
-hero_description: Full-width page banners for home page sliders and compact sub-page headers, providing a visually consistent entry point that adapts to every level of site hierarchy.
+hero_description: The banner at the top of a page, with the page title, or a slider of full-width images on the home page.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "04/09/2026 - 05:35 AM"
+updated: "1.12.x"
+last_edit: "04/10/2026 - 10:07 PM"
 ---
 
-<!-- Sub Hero -->
-<section id="heroSubHero" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Sub Hero</h2>
-            <p class="nds-section-description">The sub hero sits below the header on every content page and displays the page title and description. The flat variant removes the gradient background for pages where a neutral, image-free header is more appropriate.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Default</div>
-                        </div>
-                        <div class="demo-container" style="padding: 0; overflow: hidden;">
-                            <section class="nds-hero-section nds-sub">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="#">UI Shell</a></li>
-                                        <li aria-current="page">Service Portal</li>
-                                    </ol>
-                                </nav>
-                                <div class="nds-section-wrapper">
-                                    <div class="nds-section-head">
-                                        <h2 class="nds-section-title">Service Portal</h2>
-                                        <p class="nds-section-description">Access government services, track applications, and manage your digital identity in one place.</p>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-hero-sub-1" id="tab-hero-sub-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-sub-1"
-                                        aria-labelledby="tab-hero-sub-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-    &lt;ol class="nds-breadcrumb"&gt;
-      &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="/parent"&gt;Parent Section&lt;/a&gt;&lt;/li&gt;
-      &lt;li aria-current="page"&gt;Current Page&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/nav&gt;
-  &lt;div class="nds-section-wrapper"&gt;
-    &lt;div class="nds-section-head"&gt;
-      &lt;h1 class="nds-section-title"&gt;Service Portal&lt;/h1&gt;
-      &lt;p class="nds-section-description"&gt;Access government services, track applications, and manage your digital identity in one place.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Flat</div>
-                        </div>
-                        <div class="demo-container" style="padding: 0; overflow: hidden;">
-                            <section class="nds-hero-section nds-sub nds-flat">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="#">UI Shell</a></li>
-                                        <li aria-current="page">Service Portal</li>
-                                    </ol>
-                                </nav>
-                                <div class="nds-section-wrapper">
-                                    <div class="nds-section-head">
-                                        <div class="nds-section-action nds-minimal">
-                                            <div class="nds-share nds-dropmenu">
-                                                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
-                                                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-                                                    <span class="nds-label">Share Page</span>
-                                                </button>
-                                                <div class="nds-dropmenu-menu" hidden>
-                                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
-                                                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                                                        <span class="nds-label">X</span>
-                                                    </button>
-                                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
-                                                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                                                        <span class="nds-label">LinkedIn</span>
-                                                    </button>
-                                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
-                                                        <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
-                                                        <span class="nds-label">WhatsApp</span>
-                                                    </button>
-                                                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                                                        data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close>
-                                                        <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
-                                                        <span class="nds-label">Copy Link</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <h2 class="nds-section-title">Service Portal</h2>
-                                        <p class="nds-section-description">Access government services, track applications, and manage your digital identity in one place.</p>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-hero-flat-1" id="tab-hero-flat-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-flat-1"
-                                        aria-labelledby="tab-hero-flat-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub nds-flat"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-    &lt;ol class="nds-breadcrumb"&gt;
-      &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="/parent"&gt;Parent Section&lt;/a&gt;&lt;/li&gt;
-      &lt;li aria-current="page"&gt;Current Page&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/nav&gt;
-  &lt;div class="nds-section-wrapper"&gt;
-    &lt;div class="nds-section-head"&gt;
-      &lt;div class="nds-section-action nds-minimal"&gt;
-        &lt;div class="nds-share nds-dropmenu"&gt;
-          &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page"&gt;
-            &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;span class="nds-label"&gt;Share Page&lt;/span&gt;
-          &lt;/button&gt;
-          &lt;div class="nds-dropmenu-menu" hidden&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X"&gt;
-              &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;X&lt;/span&gt;
-            &lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn"&gt;
-              &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;LinkedIn&lt;/span&gt;
-            &lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp"&gt;
-              &lt;i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;WhatsApp&lt;/span&gt;
-            &lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
-                data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close&gt;
-              &lt;i class="nds-icon nds-hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;Copy Link&lt;/span&gt;
-            &lt;/button&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;h1 class="nds-section-title"&gt;Service Portal&lt;/h1&gt;
-      &lt;p class="nds-section-description"&gt;Access government services, track applications, and manage your digital identity in one place.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">With Brief</div>
-                        </div>
-                        <div class="demo-container" style="padding: 0; overflow: hidden;">
-                            <section class="nds-hero-section nds-sub">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="#">UI Shell</a></li>
-                                        <li aria-current="page">Digital Identity</li>
-                                    </ol>
-                                </nav>
-                                <div class="nds-section-wrapper">
-                                    <div class="nds-section-head">
-                                        <h2 class="nds-section-title">Digital Identity</h2>
-                                        <p class="nds-section-brief">Your unified gateway to all government services</p>
-                                        <p class="nds-section-description">Manage your national ID, verify documents, and access personalized services from a single secure account linked to your identity.</p>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-hero-brief-1" id="tab-hero-brief-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-brief-1"
-                                        aria-labelledby="tab-hero-brief-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-    &lt;ol class="nds-breadcrumb"&gt;
-      &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="/parent"&gt;Parent Section&lt;/a&gt;&lt;/li&gt;
-      &lt;li aria-current="page"&gt;Digital Identity&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/nav&gt;
-  &lt;div class="nds-section-wrapper"&gt;
-    &lt;div class="nds-section-head"&gt;
-      &lt;h1 class="nds-section-title"&gt;Digital Identity&lt;/h1&gt;
-      &lt;p class="nds-section-brief"&gt;Your unified gateway to all government services&lt;/p&gt;
-      &lt;p class="nds-section-description"&gt;Manage your national ID, verify documents, and access personalized services from a single secure account linked to your identity.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="heroOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The hero is the first section in `main`. It comes in two forms. The sub hero is on most pages: a breadcrumb, the page title and a description, on a light tint of the brand primary. A service page and a profile page have their own shape of it. The main hero is on the home page: a [Swiper](../components/swiper) of slides, each with a full-width image under a tint and its own title.
+
+Pick another component when:
+
+- the title belongs to a section of the content, not to the page: [Section](../layout/section)
+- the page says that something was not found, sent or failed: [Status Section](../layout/status-section)
+- the slides are cards or images inside the content: [Swiper](../components/swiper)
+
+The hero is one region of the page. The other regions are on [Page Layout](../layout/page-layout).
+
+</div>
+  </div>
 </section>
 
-<!-- With Background Image -->
-<section id="heroBgImage" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">With Background Image</h2>
-            <p class="nds-section-description">Set the <code class="nds-inline-code lang-html">--hero_image</code> CSS custom property to place a branded photograph behind the sub hero. A CSS mask fades the image from the start edge toward the content area — the background color shows through where the image fades out, so the fade adapts automatically to any theme or color token.</p>
+<section id="heroMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
+    </div>
+    <div class="nds-section-body">
+<script type="text/html" id="hero-canon" data-canon data-preview="page" data-preview-height="560" data-variants="heroVariantsTable">
+<section class="nds-hero-section nds-sub">
+  <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+    <ol class="nds-breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li class="nds-truncate" aria-current="page">About the Authority</li>
+    </ol>
+  </nav>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <div class="nds-section-action nds-minimal">
+        <div class="nds-share nds-dropmenu">
+          <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
+            <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+            <span class="nds-label">Share Page</span>
+          </button>
+          <div class="nds-dropmenu-menu" hidden>
+            <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
+              <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+              <span class="nds-label">X</span>
+            </button>
+            <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
+              <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+              <span class="nds-label">LinkedIn</span>
+            </button>
+            <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
+              <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+              <span class="nds-label">WhatsApp</span>
+            </button>
+            <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link" data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close>
+              <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+              <span class="nds-label">Copy Link</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <h1 class="nds-section-title">About the Authority</h1>
+      <p class="nds-section-description">The Digital Government Authority leads digital transformation across Saudi government services.</p>
+    </div>
+  </div>
+</section>
+</script>
+<script type="text/html" id="hero-service" data-canon>
+<section class="nds-hero-section nds-sub">
+  <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+    <ol class="nds-breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Services</a></li>
+      <li class="nds-truncate" aria-current="page">Renew a Passport</li>
+    </ol>
+  </nav>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <div class="nds-section-action nds-wrap">
+        <a class="nds-btn nds-primary" href="#">
+          <span class="nds-label">Start the Service</span>
+        </a>
+        <div class="nds-share nds-dropmenu">
+          <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
+            <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+            <span class="nds-label">Share Page</span>
+          </button>
+          <div class="nds-dropmenu-menu" hidden>
+            <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
+              <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+              <span class="nds-label">X</span>
+            </button>
+            <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
+              <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+              <span class="nds-label">LinkedIn</span>
+            </button>
+            <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
+              <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+              <span class="nds-label">WhatsApp</span>
+            </button>
+            <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link" data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close>
+              <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+              <span class="nds-label">Copy Link</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <h1 class="nds-section-title">Renew a Passport</h1>
+      <div class="nds-section-meta">
+        <div class="nds-section-tags">
+          <span class="nds-tag nds-blue nds-sm">
+            <span class="nds-label">Individuals</span>
+          </span>
+          <span class="nds-tag nds-green nds-sm">
+            <span class="nds-label">Most Used</span>
+          </span>
+        </div>
+      </div>
+      <p class="nds-section-description">Renew your passport online through Absher, with no visit to an office.</p>
+    </div>
+  </div>
+</section>
+</script>
+<script type="text/html" id="hero-profile" data-canon>
+<section class="nds-hero-section nds-sub nds-flat">
+  <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
+    <ol class="nds-breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Faculty</a></li>
+      <li class="nds-truncate" aria-current="page">Dr. Noura Al-Otaibi</li>
+    </ol>
+  </nav>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-image">
+      <div class="nds-avatar nds-image-border">
+        <img src="../docs-assets/img/avatar2.webp" width="120" height="120" alt="Dr. Noura Al-Otaibi" fetchpriority="high">
+      </div>
+    </div>
+    <div class="nds-section-head">
+      <h1 class="nds-section-title">Dr. Noura Al-Otaibi</h1>
+      <p class="nds-section-description">Associate Professor, Department of Industrial Engineering.</p>
+    </div>
+    <div class="nds-section-action">
+      <div class="nds-share nds-dropmenu">
+        <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page">
+          <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+          <span class="nds-label">Share Page</span>
+        </button>
+        <div class="nds-dropmenu-menu" hidden>
+          <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
+            <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+            <span class="nds-label">X</span>
+          </button>
+          <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
+            <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+            <span class="nds-label">LinkedIn</span>
+          </button>
+          <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
+            <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+            <span class="nds-label">WhatsApp</span>
+          </button>
+          <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link" data-copy-label="Link Copied!" data-copy-announce="Page link copied to clipboard" data-no-auto-close>
+            <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+            <span class="nds-label">Copy Link</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</script>
+<script type="text/html" id="hero-main" data-canon>
+<section class="nds-hero-section">
+  <div class="nds-swiper nds-hero nds-oncolor nds-full-width" data-swiper-loop>
+    <div class="nds-swiper-wrapper">
+      <div class="nds-swiper-slide nds-content-wrapper">
+        <div class="nds-hero-image-wrapper" style="--overlay: 0.6;">
+          <picture>
+            <source media="(max-width: 768px)" srcset="../assets/img/riyadhcenter_IQ_sm.webp">
+            <source media="(max-width: 1646px)" srcset="../assets/img/riyadhcenter_IQ_md.webp">
+            <img src="../assets/img/riyadhcenter_IQ.webp" class="nds-hero-image" alt="" fetchpriority="high">
+          </picture>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">With Background Image</div>
-                        </div>
-                        <div class="demo-container" style="padding: 0; overflow: hidden;">
-                            <section class="nds-hero-section nds-sub" style="--hero_image: url('{{ '/assets/img/riyadhcenter_ai.webp' | relative_url }}')">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="#">About</a></li>
-                                        <li aria-current="page">About the Authority</li>
-                                    </ol>
-                                </nav>
-                                <div class="nds-section-wrapper">
-                                    <div class="nds-section-head">
-                                        <h2 class="nds-section-title">About the Authority</h2>
-                                        <p class="nds-section-description">The Digital Government Authority leads digital transformation across Saudi government services and establishes national standards.</p>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-hero-bg-1" id="tab-hero-bg-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-bg-1"
-                                        aria-labelledby="tab-hero-bg-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub" style="--hero_image: url('assets/img/hero.webp')"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-    &lt;ol class="nds-breadcrumb"&gt;
-      &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="/parent"&gt;Parent Section&lt;/a&gt;&lt;/li&gt;
-      &lt;li aria-current="page"&gt;Current Page&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/nav&gt;
-  &lt;div class="nds-section-wrapper"&gt;
-    &lt;div class="nds-section-head"&gt;
-      &lt;h1 class="nds-section-title"&gt;About the Authority&lt;/h1&gt;
-      &lt;p class="nds-section-description"&gt;The Digital Government Authority leads digital transformation across Saudi government services and establishes national standards.&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <h1 class="nds-section-title">Government Services</h1>
+          <p class="nds-section-description">Apply, renew and pay online, at any time.</p>
+          <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary nds-oncolor nds-lg">
+              <span class="nds-label">Browse Services</span>
+            </a>
+          </div>
         </div>
+      </div>
+      <div class="nds-swiper-slide nds-content-wrapper" hidden>
+        <div class="nds-hero-image-wrapper" style="--overlay: 0.7;">
+          <picture>
+            <source media="(max-width: 768px)" data-srcset="../docs-assets/img/home_hero_bg_sm.webp">
+            <source media="(max-width: 1646px)" data-srcset="../docs-assets/img/home_hero_bg_md.webp">
+            <img data-src="../docs-assets/img/home_hero_bg.webp" class="nds-hero-image" alt="">
+          </picture>
+        </div>
+        <div class="nds-section-body">
+          <h2 class="nds-section-title">Digital Identity</h2>
+          <p class="nds-section-description">One account for every government service.</p>
+          <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary nds-oncolor nds-lg">
+              <span class="nds-label">Learn More</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="nds-swiper-navigation" hidden>
+      <div class="nds-swiper-buttons">
+        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide"></button>
+        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide"></button>
+      </div>
+      <div class="nds-swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- With Actions -->
-<section id="heroActions" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Sub Hero with Actions</h2>
-            <p class="nds-section-description">The sub hero provides two action slots: a float action placed inline-end inside the heading area for contextual tools such as share or bookmark, and a standard action block below the description for primary calls-to-action.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">With Actions</div>
-                        </div>
-                        <div class="demo-container" style="padding: 0; overflow: hidden;">
-                            <section class="nds-hero-section nds-sub">
-                                <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
-                                    <ol class="nds-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="#">Services</a></li>
-                                        <li aria-current="page">Digital Services Portal</li>
-                                    </ol>
-                                </nav>
-                                <div class="nds-section-wrapper">
-                                    <div class="nds-section-head">
-                                        <div class="nds-section-action">
-                                            <a class="nds-btn nds-secondary-outline" href="#">
-                                                <span class="nds-label">Help Center</span>
-                                            </a>
-                                        </div>
-                                        <h2 class="nds-section-title">Digital Services Portal</h2>
-                                        <p class="nds-section-description">Browse and apply for government services from one centralized portal available around the clock.</p>
-                                    </div>
-                                    <div class="nds-section-action">
-                                        <a class="nds-btn nds-primary" href="#">
-                                            <span class="nds-label">Browse Services</span>
-                                        </a>
-                                        <a class="nds-btn nds-secondary-outline" href="#">
-                                            <span class="nds-label">Learn More</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-hero-actions-1" id="tab-hero-actions-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-hero-actions-1"
-                                        aria-labelledby="tab-hero-actions-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
-    &lt;ol class="nds-breadcrumb"&gt;
-      &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="/services"&gt;Services&lt;/a&gt;&lt;/li&gt;
-      &lt;li aria-current="page"&gt;Digital Services Portal&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/nav&gt;
-  &lt;div class="nds-section-wrapper"&gt;
-    &lt;div class="nds-section-head"&gt;
-      &lt;!-- Float action: appears inline-end inside the heading area --&gt;
-      &lt;div class="nds-section-action"&gt;
-        &lt;a class="nds-btn nds-secondary-outline" href="/help"&gt;
-          &lt;span class="nds-label"&gt;Help Center&lt;/span&gt;
-        &lt;/a&gt;
-      &lt;/div&gt;
-      &lt;h1 class="nds-section-title"&gt;Digital Services Portal&lt;/h1&gt;
-      &lt;p class="nds-section-description"&gt;Browse and apply for government services from one centralized portal available around the clock.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;!-- Standard action: appears below the description --&gt;
-    &lt;div class="nds-section-action"&gt;
-      &lt;a class="nds-btn nds-primary" href="/services"&gt;
-        &lt;span class="nds-label"&gt;Browse Services&lt;/span&gt;
-      &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline" href="/about"&gt;
-        &lt;span class="nds-label"&gt;Learn More&lt;/span&gt;
-      &lt;/a&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="heroParts" class="nds-content-section nds-doc-parts">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Parts</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The sub hero is a section with a breadcrumb before its wrapper. Its head parts are the parts of a [Section](../layout/section) head, in this order: the title action, the title, the brief, the tags, then the description.
+
+| Part | Holds | Required |
+|---|---|---|
+| `section.nds-hero-section.nds-sub` | The sub hero | Yes |
+| `nav.nds-breadcrumb-nav` | The [Breadcrumb](../components/breadcrumb). The last item is the page, with `nds-truncate` and `aria-current="page"` | Yes |
+| `.nds-section-wrapper` | The head, and the action row after it | Yes |
+| `.nds-section-image` | A 120px [Avatar](../components/avatar) before the head (80px on phones). For a page about one person or entity | No |
+| `.nds-section-head` | The head parts, in the order above | Yes |
+| `.nds-section-action` in the head | The title action: written first in the head, it floats on the end side of the title. With `nds-minimal`, its buttons show only their icons on phones. With `nds-wrap`, it moves under the title on phones | No |
+| `h1.nds-section-title` | The page title. The sub hero holds the page's `h1` | Yes |
+| `.nds-section-brief` | One short line under the title, in semibold | No |
+| `.nds-section-meta` | A `.nds-section-tags` of small [Tags](../components/tags), under the title | No |
+| `.nds-section-description` | One or two sentences on the page | Yes |
+| `.nds-section-action` after the head | The action row. It sits beside the head, on the end side, and moves under the description when the head has a title action | No |
+{: .nds-table .nds-responsive}
+
+The main hero is a section that holds one hero swiper. The navigation row is the [Swiper](../components/swiper)'s.
+
+| Part | Holds | Required |
+|---|---|---|
+| `section.nds-hero-section` | The main hero, with no `nds-sub` | Yes |
+| `.nds-swiper.nds-hero` | The slides. Write `nds-oncolor` and `nds-full-width` with it | Yes |
+| `.nds-swiper-slide.nds-content-wrapper` | One slide. Write `hidden` on every slide after the first | Yes |
+| `.nds-hero-image-wrapper` | The image and its tint. `--overlay` in its `style` sets the tint for the slide | Yes |
+| `img.nds-hero-image` | The image, in a `picture` with one `source` for each screen size. Give it `alt=""`: the image is decoration. `object-position` in its `style` picks the part of the image that stays in view | Yes |
+| `.nds-section-body` | The title, the description and a `.nds-section-action`. The first slide's title is the page's `h1`, the others are `h2` | Yes |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Main Hero Slider -->
-<section id="heroMain" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Main Hero Slider</h2>
-            <p class="nds-section-description">The main hero is a full-viewport-height banner used on home and hub pages. It wraps a <a class="nds-color" href="{{ 'components/swiper' | relative_url }}">Swiper</a> carousel so multiple slides can rotate with pagination controls. Each slide has its own background image, overlay opacity, and content area.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Main Hero Slider</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-hero-main-1" id="tab-hero-main-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-hero-main-1"
-                                        aria-labelledby="tab-hero-main-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;section class="nds-hero-section"&gt;
-  &lt;div class="nds-swiper nds-hero nds-middle nds-oncolor nds-full-width" style="--total: 2"&gt;
-    &lt;div class="nds-swiper-wrapper"&gt;
-
-      &lt;!-- First slide: srcset loads eagerly, fetchpriority="high" for LCP --&gt;
-      &lt;div class="nds-swiper-slide nds-content-wrapper"&gt;
-        &lt;div class="nds-hero-image-wrapper" style="--overlay: 0.8;"&gt;
-          &lt;picture&gt;
-            &lt;source media="(max-width: 768px)" srcset="assets/img/hero-sm.webp"&gt;
-            &lt;source media="(max-width: 1646px)" srcset="assets/img/hero-md.webp"&gt;
-            &lt;img src="assets/img/hero.webp" class="nds-hero-image" alt="" fetchpriority="high"&gt;
-          &lt;/picture&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-          &lt;h1 class="nds-section-title"&gt;Welcome to Our Portal&lt;/h1&gt;
-          &lt;p class="nds-section-description"&gt;Access government services, information, and resources.&lt;/p&gt;
-          &lt;div class="nds-section-action"&gt;
-            &lt;a href="/services" class="nds-btn nds-primary nds-oncolor nds-md"&gt;
-              &lt;span class="nds-label"&gt;Get Started&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;!-- Later slides: hidden, and data-srcset/data-src so they load on demand --&gt;
-      &lt;div class="nds-swiper-slide nds-content-wrapper" hidden&gt;
-        &lt;div class="nds-hero-image-wrapper" style="--overlay: 0.8;"&gt;
-          &lt;picture&gt;
-            &lt;source media="(max-width: 768px)" data-srcset="assets/img/hero-2-sm.webp"&gt;
-            &lt;source media="(max-width: 1646px)" data-srcset="assets/img/hero-2-md.webp"&gt;
-            &lt;img data-src="assets/img/hero-2.webp" class="nds-hero-image" alt=""
-              style="object-position: 50% 50%;"&gt;
-          &lt;/picture&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-          &lt;h2 class="nds-section-title"&gt;Digital Transformation&lt;/h2&gt;
-          &lt;p class="nds-section-description"&gt;Join millions of citizens benefiting from smart government services.&lt;/p&gt;
-          &lt;div class="nds-section-action"&gt;
-            &lt;a href="/about" class="nds-btn nds-secondary-outline nds-oncolor nds-md"&gt;
-              &lt;span class="nds-label"&gt;Learn More&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-    &lt;/div&gt;
-    &lt;div class="nds-swiper-navigation" hidden&gt;
-      &lt;div class="nds-swiper-buttons"&gt;
-        &lt;button class="nds-btn nds-subtle nds-icon-only nds-prev" type="button"
-            aria-label="Previous slide"&gt;&lt;/button&gt;
-        &lt;button class="nds-btn nds-subtle nds-icon-only nds-next" type="button"
-            aria-label="Next slide"&gt;&lt;/button&gt;
-      &lt;/div&gt;
-      &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="heroVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The structures are the shapes the site uses. For another mix of the head parts, see Parts. Background is for Sub hero and Service. The slider options of the main hero, such as Loop and the arrows at the middle, are on [Swiper](../components/swiper). `nds-aside` is in the API: it works only with a side info column.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Sub hero (default) | — | — | The top of most pages: the breadcrumb, Share beside the title, the title and a description |
+| Structure | Service (id: service) | `canon #hero-service` | — | A service page: a main button and Share beside the title, and tags under it. Write `nds-aside` too when the page has a side info column |
+| Structure | Profile (id: profile) | `canon #hero-profile` | — | A page about one person or entity: a flat hero with an [Avatar](../components/avatar) before the name, and Share beside the head |
+| Structure | Main hero (id: main) | `canon #hero-main` | — | The home page: a slider of full-width images, each with a title and a button |
+| Background | Tint (default) (not: profile) | — | `.nds-hero-section.nds-sub` | A light tint of the brand primary, with a shadow inside its edges |
+| Background | Image (not: profile) | `--hero-image: url('../assets/img/riyadhcenter_ai.webp')` | `.nds-hero-section.nds-sub` | A photo on the end side, which fades into the tint toward the title. For a page with its own photo |
+| Background | Flat (not: profile) | `.nds-flat` | `.nds-hero-section.nds-sub` | The page background, with no tint, shadow or image. For an article or a form, where the content starts right under the title |
+{: #heroVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="heroFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-image-02"></i>
-                            <span class="nds-label">Background Image Support</span>
-                        </span>
-                        <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--hero_image</code> on the sub hero to place a branded photograph behind the gradient with no additional markup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-blend"></i>
-                            <span class="nds-label">CSS Mask Image Fade</span>
-                        </span>
-                        <p class="nds-item-desc">A CSS mask fades the background image to transparent on the content side so the page background color shows through — no gradient color matching needed when the theme or background token changes.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-03"></i>
-                            <span class="nds-label">Flat Variant</span>
-                        </span>
-                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-flat</code> to switch to a plain page background with no gradient, suited for utility and documentation pages.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-sidebar-right"></i>
-                            <span class="nds-label">Aside Layout Mode</span>
-                        </span>
-                        <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-aside</code> to narrow the hero content area to leave room for a <a class="nds-color" href="{{ 'ui-shell/sideinfo' | relative_url }}">Side Info</a> panel sitting alongside on desktop.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-cursor-01"></i>
-                            <span class="nds-label">Dual Action Slots</span>
-                        </span>
-                        <p class="nds-item-desc">The sub hero has a float action slot inside the heading for contextual tools and a standard action slot below the description for primary calls-to-action.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-flip-horizontal"></i>
-                            <span class="nds-label">Bidirectional Mask</span>
-                        </span>
-                        <p class="nds-item-desc">The mask fade direction flips automatically between RTL (Arabic) and LTR (English), so the image always appears on the correct edge and text remains readable in both directions.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="heroBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Hero Slider
+{: .nds-block-title}
+
+The main hero shows one slide at a time, and the Swiper script moves between them. Before the script starts, only the first slide shows, so the page paints with its image. The later slides load their images from `data-src` and `data-srcset` when they come near the screen. The slider options are on [Swiper](../components/swiper).
+
+### Background Image
+{: .nds-block-title}
+
+`--hero-image` on the sub hero puts a photo behind it. The photo is solid at the end side and fades out toward the title, so the tint shows under the text. The fade turns with the text direction. The tint also covers half of the photo. Knobs in the API change the fade, the part in view and the tint. `nds-flat` hides the photo.
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="heroGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use the sub hero on every content page as the primary title area. Pair it with the <a class="nds-color" href="{{ 'ui-shell/header' | relative_url }}">Header</a> for complete shell structure</li>
-                    <li>Reserve the main hero slider for home pages and top-level hub pages. It occupies 60% of the viewport height and is inappropriate for deep content pages</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-flat</code> on pages where a gradient or brand-colored header would feel heavy, such as documentation pages, search results, and admin interfaces</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-aside</code> only when the page layout also includes a <a class="nds-color" href="{{ 'ui-shell/sideinfo' | relative_url }}">Side Info</a> panel. Without the panel, the narrowed content area looks unbalanced</li>
-                    <li>Keep sub hero descriptions to one or two sentences. The hero is an orientation area, not a content section</li>
-                    <li>Add action buttons sparingly. One or two calls-to-action in the standard slot is enough. Overcrowding the hero with buttons competes with the page content below</li>
-                    <li>For main hero slides, use the float action slot (such as a share button) for tools rather than navigation. Visitors who arrived on the page are past the "where to go" decision</li>
-                    <li>Background images on the sub hero should have a clear subject on the start edge (right in RTL, left in LTR) — the mask keeps that edge fully opaque while fading toward the content area</li>
-                    <li>Set <code class="nds-inline-code lang-html">fetchpriority="high"</code> on the first main hero slide image. It is the Largest Contentful Paint element on home pages and skipping this degrades Core Web Vitals scores</li>
-                    <li>Preload that same first slide image in the page <code class="nds-inline-code lang-html">&lt;head&gt;</code>, one <code class="nds-inline-code lang-html">&lt;link rel="preload" as="image"&gt;</code> per breakpoint. The image sits in a <code class="nds-inline-code lang-html">&lt;picture&gt;</code> deep in the body, so the browser finds it late and the download starts after the page parses. Repeat the <code class="nds-inline-code lang-html">media</code> conditions from the slide's <code class="nds-inline-code lang-html">&lt;source&gt;</code> elements exactly, or the browser preloads one file and then paints another. The preload is page-specific: each page preloads its own hero image, and a page with no hero image carries none of these lines. See <a class="nds-color" href="{{ 'ui-shell/head' | relative_url }}">Head</a> for the block to copy</li>
-                    <li>Use <code class="nds-inline-code lang-html">data-src</code> on second and later main hero slides to defer image loading until the slide is about to appear. Add <code class="nds-inline-code lang-html">data-srcset</code> on their <code class="nds-inline-code lang-html">&lt;source&gt;</code> elements too — a plain <code class="nds-inline-code lang-html">srcset</code> there loads straight away and the deferral is lost</li>
-                    <li>The canonical main hero carries a photograph. If you do not have one yet, keep the <code class="nds-inline-code lang-html">&lt;picture&gt;</code> and point it at a placeholder image, then replace the file later. A hero with no image is a design choice the project makes on purpose, not the shape to fall back to when an image file is missing</li>
-                    <li>Leave <code class="nds-inline-code lang-html">--img-overlay-color</code> alone. It already carries the brand surface color and follows a brand re-tint on its own. Setting it by hand replaces a themeable token with a fixed value, and that hero then stops following the theme</li>
-                    <li>Do not use <code class="nds-inline-code lang-html">nds-flat</code> on a main hero. It is a sub hero class and does nothing here</li>
-                    <li>Adjust <code class="nds-inline-code lang-html">--overlay</code> per slide on the main hero to match each image's brightness. Dark images need lower values (0.4-0.5), bright outdoor images need higher values (0.6-0.8)</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Applied To</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-sub</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-hero-section</code></td>
-                            <td>Compact sub-page variant with gradient background, fit-content height, and reduced typography scale</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-flat</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-hero-section.nds-sub</code></td>
-                            <td>Removes the gradient and brand background, rendering the hero on the standard page background color. Sub hero only: the rule is scoped to <code class="nds-inline-code lang-html">.nds-sub</code>, so the class has no effect on the main hero slider. Text inside a flat hero must not carry <code class="nds-inline-code lang-html">nds-oncolor</code>, which would render white on white</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">nds-aside</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-hero-section.nds-sub</code></td>
-                            <td>Narrows the hero content area at desktop width to leave room for a Side Info panel alongside</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--hero_image</code></td>
-                            <td>none</td>
-                            <td>Background image URL for the sub hero. Set as an inline style: <code class="nds-inline-code lang-html">style="--hero_image: url('...')"</code>. The CSS mask fades it automatically.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--hero-mask-angle</code></td>
-                            <td><code class="nds-inline-code lang-html">90deg</code> RTL / <code class="nds-inline-code lang-html">270deg</code> LTR</td>
-                            <td>Direction of the mask gradient. Auto-set per text direction; override with a fixed angle for a top-to-bottom or diagonal fade.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--hero-mask-from</code></td>
-                            <td><code class="nds-inline-code lang-html">0%</code></td>
-                            <td>Start position of the fully opaque image edge. Increase to push the visible area inward from the start edge.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--hero-mask-to</code></td>
-                            <td><code class="nds-inline-code lang-html">70%</code></td>
-                            <td>Point at which the image fully fades out. Decrease for a sharper cut, increase to reveal more of the image behind the content area.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--overlay</code></td>
-                            <td><code class="nds-inline-code lang-html">0.7</code></td>
-                            <td>Opacity of the dark overlay on the main hero image wrapper. Set on <code class="nds-inline-code lang-html">.nds-hero-image-wrapper</code> via inline style. Range: 0 (transparent) to 1 (fully opaque).</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--img-overlay-color</code></td>
-                            <td><code class="nds-inline-code lang-html">--colors-primary-950</code></td>
-                            <td>Color of that overlay. It is a global token that already follows the active brand, so leave it at its default. Override it on the wrapper only to recolor one slide against the brand, and expect that slide to stay fixed while the rest of the theme changes.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="heroFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-flash"></i>
+            <span class="nds-label">First Paint</span>
+          </span>
+          <p class="nds-item-desc">The title, the description and the breadcrumb paint with the critical CSS, before the rest of the page. The buttons keep their height while they load, so nothing moves.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-ruler"></i>
+            <span class="nds-label">Height</span>
+          </span>
+          <p class="nds-item-desc">The main hero is 550px high on every screen, and each image covers it. <code class="nds-inline-code lang-css">--hero-height</code> changes it. The sub hero is as high as its content, at least 220px.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-font"></i>
+            <span class="nds-label">Title Sizes</span>
+          </span>
+          <p class="nds-item-desc">The main hero's title is a large display size, and the sub hero's is one size smaller. Both scale with the screen width.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-paint-board"></i>
+            <span class="nds-label">Brand Tint</span>
+          </span>
+          <p class="nds-item-desc">The tint over a slide image and the sub hero background come from theme tokens, so they follow a brand change.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="heroPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use the main hero on the home page and on the home page of a sub-site. Every other page uses the sub hero.
+- Keep the description to one or two sentences. The hero says where the reader is. The content comes after it.
+- Put one or two buttons in the action row. In the title action, put Share and at most one main button, such as the start of a service.
+- Give the first slide's image `fetchpriority="high"`. It is the largest paint on the home page.
+- Preload the first slide's image in the `<head>`, with one `<link rel="preload" as="image">` for each `source`. Copy the `media` of each `source` exactly, or the browser loads one file and paints another. Each page preloads only its own hero image. See [Head](../ui-shell/head).
+- Give each later slide's `img` a `data-src`, and each of its `source` elements a `data-srcset`. A plain `srcset` loads at once.
+- Keep a photo in the main hero. If the photo is not ready, point the `picture` at a placeholder image and replace it later.
+- Set `--overlay` on each slide for its image: about 0.4 to 0.5 for a dark image, and 0.6 to 0.8 for a bright one.
+- Do not set `--img-overlay-color`. It follows the brand, and a fixed value stops that.
+- For a photo in the sub hero, pick one with its subject on one side. The fade keeps the end side and hides the side of the title.
+- Do not write `nds-oncolor` on text in a flat hero: it shows white on a light page.
+
+</div>
+  </div>
+</section>
+
+<section id="heroApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-aside` | `section.nds-hero-section.nds-sub` | At 960px and wider, narrows the breadcrumb, the title and the description by the width of the side info column. The column then moves up beside the title. Write it only on a page with a side info column: see [Side Info](../ui-shell/sideinfo) |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--hero-height` | `550px` | The height of the main hero. Set it in the `style` of the section |
+| `--hero-image` | None | The photo of the sub hero, as `url('…')`. Set it in the `style` of the section |
+| `--hero-image-position` | `left center` | The part of the photo that stays in view, as a `background-position`, such as `50% 30%`. Set it in the `style` of the section, with `--hero-image` |
+| `--hero-image-fade-angle` | `90deg`, or `270deg` on a left-to-right page | The direction of the photo's fade. Another angle fades it from the top or a corner |
+| `--hero-image-fade-from` | `0%` | Where the fade starts. Up to this point, the photo is solid |
+| `--hero-image-fade-to` | `70%` | Where the photo is gone |
+| `--overlay` | `0.7` on a slide, `0.5` on the sub hero | The strength of the tint over the image, from `0` (none) to `1` (solid). On the main hero, set it in the `style` of each `.nds-hero-image-wrapper`. On the sub hero, set it in the `style` of the section, with `--hero-image` |
+| `--img-overlay-color` | `var(--colors-primary-950)` | The color of that tint, a theme token. A custom brand sets it to `var(--colors-neutral-950)`. Do not set it |
+| `--background-hero` | `var(--background-primary-strong)` | The color behind the main hero, a theme token. It shows until the first image loads |
+| `--background-sub-hero` | `var(--background-primary-light)` | The color of the sub hero, a theme token. High contrast mode changes it |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+The hero has no script of its own. The Swiper script runs the main hero, and the Share script runs the Share menu: see [Swiper](../components/swiper) and [Share](../utilities/share).
+
+</div>
+  </div>
+</section>
+
+<section id="heroRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Home Page Template](../templates/home-template): the main hero.
+- [Service Page Template](../templates/service-template): the Service shape, beside a side info column.
+- [Content Template](../templates/content-template): a flat sub hero with a brief.
+- [Faculty CV](../examples/faculty-cv): the Profile shape.
+- [Page Layout](../layout/page-layout): where the hero sits on each page shape.
+
+</div>
+  </div>
 </section>
