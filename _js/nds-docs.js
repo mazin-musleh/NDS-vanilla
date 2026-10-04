@@ -764,10 +764,8 @@
     // chosen screen's size (Desktop is 1280 wide), scaled down to fit the card. The header and
     // footer are left out: only the code shows them. Each render loads a fresh frame over the old
     // one and swaps when it is ready, so the preview never blanks.
-    // A page part (a canon with no <body>, the top bar) shows Desktop as tall as its content:
-    // the frame grows when a panel in it opens.
+    // data-preview-height sets the Desktop height (a short part, the top bar); a page is 800.
     var PAGE = '1280x800';
-    function isPart(card) { return !/<body[\s>]/i.test(document.getElementById(card.getAttribute('data-preview-of')).textContent); }
     function pageFrame(card) {
         var dev = card.querySelector('.nds-doc-device');
         if (!dev) {
@@ -784,28 +782,13 @@
         f.onload = function () {
             dev.querySelectorAll('iframe').forEach(function (x) { if (x !== f) x.remove(); });
             f.style.visibility = '';
-            if (!isPart(card)) return;
-            // The part's own elements, not what the runtime adds later (a tooltip balloon).
-            var kids = Array.prototype.slice.call(f.contentDocument.body.children);
-            // Every descendant: an open dropdown is out of flow, so its parent's box misses it.
-            var measure = function () {
-                card.ndsPartH = Math.ceil(kids.reduce(function (m, el) {
-                    return Array.prototype.reduce.call(el.querySelectorAll('*'), function (n, d) { return Math.max(n, d.getBoundingClientRect().bottom); }, Math.max(m, el.getBoundingClientRect().bottom));
-                }, 0));
-                fit(card);
-            };
-            var ro = new ResizeObserver(measure);
-            kids.forEach(function (el) { ro.observe(el); });
-            // An out-of-flow menu opening resizes nothing: re-measure on state changes and after transitions.
-            new MutationObserver(function () { requestAnimationFrame(measure); }).observe(f.contentDocument.body, { attributes: true, subtree: true, attributeFilter: ['data-state', 'hidden'] });
-            f.contentDocument.addEventListener('transitionend', measure);
         };
         dev.appendChild(f);
         fit(card);
         var dark = card.getAttribute('data-theme') === 'dark' || !!doc.querySelector('body > [data-theme~="dark"]');
         f.srcdoc = '<!doctype html><html ' + rootAttrs(dark) + '><head><base target="_top">' + document.head.innerHTML +
-            // No nav in the frame: sticky parts pin near its top, not under a missing nav. A nav part keeps its height.
-            '<style>:root{color-scheme:normal!important;scrollbar-width:none' + (doc.querySelector('.nds-main-nav') ? '' : ';--nds-nav-height:var(--spacing-md)') + '}</style></head>' + doc.body.outerHTML.replace(/<\/body>$/, runtimeScripts() + '</body>') + '</html>';
+            // No nav in the frame: sticky parts pin at its top, not under a missing nav. A nav part keeps its height.
+            '<style>:root{color-scheme:normal!important;scrollbar-width:none' + (doc.querySelector('.nds-main-nav') ? '' : ';--nds-nav-height:0px') + '}</style></head>' + doc.body.outerHTML.replace(/<\/body>$/, runtimeScripts() + '</body>') + '</html>';
     }
     function fit(card) {
         var dev = card.querySelector('.nds-doc-device');
@@ -814,8 +797,7 @@
         var desk = !card.getAttribute('data-screen'), b = desk ? 0 : BEZEL;
         var size = (card.getAttribute('data-screen') || PAGE).split('x'), w = +size[0], h = +size[1];
         var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * b;
-        // data-preview-height reserves room for what opens later (a menu), so the frame never jumps.
-        if (desk && isPart(card)) h = Math.max(card.ndsPartH || 40, +document.getElementById(card.getAttribute('data-preview-of')).getAttribute('data-preview-height') || 0);
+        if (desk) h = +document.getElementById(card.getAttribute('data-preview-of')).getAttribute('data-preview-height') || h;
         var s = Math.min(1, room / w);
         dev.style.cssText = 'width:' + (w * s + 2 * b) + 'px;height:' + (h * s + 2 * b) + 'px;' +
             (desk ? 'background:none;box-shadow:none' : 'border-radius:' + RADIUS + 'px');
