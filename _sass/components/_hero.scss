@@ -1,16 +1,22 @@
 @use '../mixins' as *;
 
+// Registered as <url> so a relative path resolves from the page that sets it,
+// not from this stylesheet's folder (an unregistered url() 404s from assets/css/).
+@property --hero-image {
+    syntax: '<url> | none';
+    inherits: true;
+    initial-value: none;
+}
+
 // ── Base ──
 .nds-hero-section {
     --_hero-height: var(--hero-height, 550px);
     background-color: var(--background-hero);
     position: relative;
-    background-position: center;
     // public knob, not -base: it has to beat the value _content-layout sets on
     // an ancestor, and an inherited public value outranks a base default.
     --section-padding-block: 0;
     height: var(--_hero-height);
-    max-height: 550px;
 
     &:not(.nds-sub) {
         --_section-title-FS-base: var(--typo-display-clamp-lg-FS);
@@ -71,13 +77,10 @@
     // ── Sub variant ──
 
     &.nds-sub {
-        // Public tokens — override on the element to customize the mask shape
-        // --hero-mask-angle: 90deg / 270deg  (auto-set by RTL/LTR; override to a fixed angle)
-        // --hero-mask-from:  0%              (opaque edge of the image)
-        // --hero-mask-to:    70%             (point where image fully fades out)
-        --_mask-angle: var(--hero-mask-angle, 90deg);
-        --_mask-from: var(--hero-mask-from, 0%);
-        --_mask-to: var(--hero-mask-to, 70%);
+        --_fade-angle: var(--hero-image-fade-angle, 90deg);
+        --_fade-from: var(--hero-image-fade-from, 0%);
+        --_fade-to: var(--hero-image-fade-to, 70%);
+        --_image-position: var(--hero-image-position, left center);
         --section-padding-block: var(--spacing-5xl);
         --_section-title-FS-base: var(--typo-display-clamp-md-FS);
         --_section-title-LH-base: var(--typo-display-clamp-md-LH);
@@ -104,9 +107,12 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: var(--hero_image) left center / cover no-repeat;
-            -webkit-mask-image: linear-gradient(var(--_mask-angle), black var(--_mask-from), transparent var(--_mask-to));
-            mask-image: linear-gradient(var(--_mask-angle), black var(--_mask-from), transparent var(--_mask-to));
+            background: var(--hero-image) var(--_image-position) / cover no-repeat;
+            -webkit-mask-image: linear-gradient(var(--_fade-angle), black var(--_fade-from), transparent var(--_fade-to));
+            mask-image: linear-gradient(var(--_fade-angle), black var(--_fade-from), transparent var(--_fade-to));
+            // The main hero's tint knob: the tint is the background under the photo,
+            // so covering the photo by N is showing it at 1 - N.
+            opacity: calc(1 - var(--overlay, 0.5));
             pointer-events: none;
         }
 
@@ -117,7 +123,7 @@
         }
 
         @include ltr {
-            --_mask-angle: var(--hero-mask-angle, 270deg);
+            --_fade-angle: var(--hero-image-fade-angle, 270deg);
         }
 
         .nds-hero-image-wrapper {
@@ -144,14 +150,6 @@
                     width: calc(100% - var(--nds-sideinfo-width, 400px) - var(--spacing-4xl));
                 }
             }
-        }
-    }
-
-    // ── Mobile ──
-
-    @include mobile {
-        &:not(.nds-sub) .nds-section-body .nds-section-title::before {
-            width: 80vw;
         }
     }
 }

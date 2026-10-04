@@ -48,13 +48,11 @@
     position: relative;
     column-gap: var(--spacing-xl);
 
+    // Centered beside the image as a flex item, not a flex column: a flex
+    // container ignores float, which the head's float action needs.
     .nds-section-image~& {
-        display: flex;
         text-align: start;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 0;
-        flex-direction: column;
+        align-self: center;
     }
 }
 
@@ -410,7 +408,6 @@
    Its parts center through the centered-layout rules above. ── */
 
 :is(.nds-hero-section, .nds-content-section).nds-status-section {
-    max-height: unset;
     --feedback-size: 56px;
     display: flex;
     align-items: center;

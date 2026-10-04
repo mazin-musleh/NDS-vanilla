@@ -79,7 +79,7 @@
 {%- endfor %}
 {%- if share_placement == "action" -%}{%- assign _has_action = true -%}{%- endif %}
 <section class="nds-hero-section nds-sub{%- if page.hero_style and page.hero_style != "" %} {{ page.hero_style }}{%- endif %}"
-    {%- if hero_bg %} style="--hero_image: url('{{ hero_bg | relative_url }}');"{%- endif %}>
+    {%- if hero_bg %} style="--hero-image: url('{{ hero_bg | relative_url }}');{%- if page.hero_image_pos %} --hero-image-position: {{ page.hero_image_pos }};{%- endif %}"{%- endif %}>
     <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
         <ol class="nds-breadcrumb">
             {%- assign home_text = 'الرئيسية' -%}{%- if page.lang == 'en' -%}{%- assign home_text = 'Home' -%}{%- endif %}
