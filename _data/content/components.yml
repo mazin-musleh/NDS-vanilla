@@ -418,7 +418,7 @@
 
 - title: "Header"
   description: "The region at the top of the page where the top bar, digital stamp panel, and main navigation compose"
-  use_when: "How the top bar, the DGA digital stamp panel, and the main navigation compose into one header region, with the full structure tree. Layout-coupled, so copy it from a full template page rather than in isolation. For the navigation bar itself, its dropdown menus and its JS API, use Main Navigation. For the government branding strip use Top Bar."
+  use_when: "How the top bar, the DGA digital stamp panel, and the main navigation compose into one header region: their order, and why the header draws no box. Copy each part from its own page, or the whole header from a built page. For the navigation bar itself, its dropdown menus and its JS API, use Main Navigation. For the government branding strip use Top Bar."
   icon: '<i class="hgi hgi-stroke hgi-navigation-01"></i>'
   category: "UI Shell"
   tags: ["CSS"]

@@ -749,9 +749,15 @@
         return Array.prototype.filter.call(document.querySelectorAll('script[defer][src]'), function (x) { return /\/assets\/js\//.test(x.src); })
             .map(function (x) { return '<script defer src="' + x.src + '"></' + 'script>'; }).join('');
     }
-    function rootAttrs() {
-        return Array.prototype.filter.call(document.documentElement.attributes, function (a) { return !/^data-nds-/.test(a.name); })
-            .map(function (a) { return a.name + '="' + a.value.replace(/"/g, '&quot;') + '"'; }).join(' ');
+    // dark: the preview is dark, so the whole frame page is too (its background, backdrop and menus).
+    function rootAttrs(dark) {
+        var html = document.documentElement, out = Array.prototype.filter.call(html.attributes, function (a) { return !/^data-nds-/.test(a.name); })
+            .map(function (a) {
+                var v = a.name === 'data-theme' && dark && !/(^|\s)dark(\s|$)/.test(a.value) ? (a.value + ' dark').trim() : a.value;
+                return a.name + '="' + v.replace(/"/g, '&quot;') + '"';
+            });
+        if (dark && !html.hasAttribute('data-theme')) out.push('data-theme="dark"');
+        return out.join(' ');
     }
 
     // data-preview="page": the code is a whole <body>, so it previews as a page of its own, at the
@@ -781,17 +787,25 @@
             if (!isPart(card)) return;
             // The part's own elements, not what the runtime adds later (a tooltip balloon).
             var kids = Array.prototype.slice.call(f.contentDocument.body.children);
-            var ro = new ResizeObserver(function () {
-                card.ndsPartH = Math.ceil(kids.reduce(function (m, el) { return Math.max(m, el.getBoundingClientRect().bottom); }, 0));
+            // Every descendant: an open dropdown is out of flow, so its parent's box misses it.
+            var measure = function () {
+                card.ndsPartH = Math.ceil(kids.reduce(function (m, el) {
+                    return Array.prototype.reduce.call(el.querySelectorAll('*'), function (n, d) { return Math.max(n, d.getBoundingClientRect().bottom); }, Math.max(m, el.getBoundingClientRect().bottom));
+                }, 0));
                 fit(card);
-            });
+            };
+            var ro = new ResizeObserver(measure);
             kids.forEach(function (el) { ro.observe(el); });
+            // An out-of-flow menu opening resizes nothing: re-measure on state changes and after transitions.
+            new MutationObserver(function () { requestAnimationFrame(measure); }).observe(f.contentDocument.body, { attributes: true, subtree: true, attributeFilter: ['data-state', 'hidden'] });
+            f.contentDocument.addEventListener('transitionend', measure);
         };
         dev.appendChild(f);
         fit(card);
-        f.srcdoc = '<!doctype html><html ' + rootAttrs() + '><head><base target="_top">' + document.head.innerHTML +
-            // No header in the frame: sticky parts pin near its top, not under a missing nav.
-            '<style>:root{color-scheme:normal!important;--nds-nav-height:var(--spacing-md)}</style></head>' + doc.body.outerHTML.replace(/<\/body>$/, runtimeScripts() + '</body>') + '</html>';
+        var dark = card.getAttribute('data-theme') === 'dark' || !!doc.querySelector('body > [data-theme~="dark"]');
+        f.srcdoc = '<!doctype html><html ' + rootAttrs(dark) + '><head><base target="_top">' + document.head.innerHTML +
+            // No nav in the frame: sticky parts pin near its top, not under a missing nav. A nav part keeps its height.
+            '<style>:root{color-scheme:normal!important;scrollbar-width:none' + (doc.querySelector('.nds-main-nav') ? '' : ';--nds-nav-height:var(--spacing-md)') + '}</style></head>' + doc.body.outerHTML.replace(/<\/body>$/, runtimeScripts() + '</body>') + '</html>';
     }
     function fit(card) {
         var dev = card.querySelector('.nds-doc-device');
@@ -800,7 +814,8 @@
         var desk = !card.getAttribute('data-screen'), b = desk ? 0 : BEZEL;
         var size = (card.getAttribute('data-screen') || PAGE).split('x'), w = +size[0], h = +size[1];
         var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * b;
-        if (desk && isPart(card)) h = card.ndsPartH || 40;
+        // data-preview-height reserves room for what opens later (a menu), so the frame never jumps.
+        if (desk && isPart(card)) h = Math.max(card.ndsPartH || 40, +document.getElementById(card.getAttribute('data-preview-of')).getAttribute('data-preview-height') || 0);
         var s = Math.min(1, room / w);
         dev.style.cssText = 'width:' + (w * s + 2 * b) + 'px;height:' + (h * s + 2 * b) + 'px;' +
             (desk ? 'background:none;box-shadow:none' : 'border-radius:' + RADIUS + 'px');

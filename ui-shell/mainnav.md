@@ -2,578 +2,706 @@
 layout: page
 title: Main Navigation
 hero_title: Main Navigation - National Design System
-hero_description: The site's primary navigation bar, carrying branding, top-level links, mega-menu dropdowns, utility actions, and a mobile drawer that collapses the whole set behind one toggle.
+hero_description: The bar at the top of every page with the brand, the main links, dropdown menus and the action buttons.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/09/2026 - 07:38 PM"
+last_edit: "04/10/2026 - 04:50 PM"
 ---
 
-
-<!-- Navigation Bar -->
-<section id="navBar" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Navigation Bar</h2>
-            <p class="nds-section-description">The sticky navigation bar holds branding, primary links, secondary actions, and the mobile hamburger toggle.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Navigation Bar</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-nav-bar-1" id="tab-nav-bar-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nav-bar-1" aria-labelledby="tab-nav-bar-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;nav class="nds-main-nav nds-content-wrapper" id="ndsMainNav" aria-label="Primary navigation"&gt;
-  &lt;div class="nds-nav-container"&gt;
-    &lt;a class="nds-brand" href="/"&gt;
-      &lt;img class="nds-brand-logo" src="logo.svg" width="120" height="40" alt="Brand Logo"&gt;
-      &lt;span class="nds-brand-name"&gt;Brand Name
-        &lt;span class="nds-brand-slogan"&gt;Slogan text&lt;/span&gt;
-      &lt;/span&gt;
-    &lt;/a&gt;
-    &lt;ul class="nds-nav-minimal" hidden&gt;
-      &lt;li class="nds-mainNav-toggler nds-nav-item"&gt;
-        &lt;button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="ndsNavCollapse"&gt;
-          &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;div class="nds-collapse" id="ndsNavCollapse" hidden&gt;
-      &lt;div class="nds-collapse-content"&gt;
-        &lt;ul class="nds-nav-primary"&gt;
-          &lt;li class="nds-nav-item"&gt;
-            &lt;a href="/services" class="nds-nav-link nds-btn nds-subtle nds-indicator"&gt;
-              &lt;span class="nds-label"&gt;Services&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li class="nds-nav-item"&gt;
-            &lt;a href="/about" class="nds-nav-link nds-btn nds-subtle nds-indicator"&gt;
-              &lt;span class="nds-label"&gt;About&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;div class="nds-nav-item nds-show-more"&gt;
-          &lt;a class="nds-nav-link nds-btn nds-subtle nds-indicator nds-full"&gt;
-            &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;/a&gt;
-        &lt;/div&gt;
-        &lt;ul class="nds-nav-actions"&gt;
-          &lt;li class="nds-nav-item"&gt;
-            &lt;a href="/search" class="nds-nav-link nds-btn nds-subtle nds-indicator"&gt;
-              &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label" data-hidden="sm md sr"&gt;Search&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Persistent Actions and Call to Action</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-nav-actions-1" id="tab-nav-actions-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nav-actions-1" aria-labelledby="tab-nav-actions-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;ul class="nds-nav-actions"&gt;
-  &lt;!-- Stays reachable in minimal mode --&gt;
-  &lt;li class="nds-nav-item nds-icon-only nds-PAB"&gt;
-    &lt;!-- Icon-only: the hover tooltip is built from the title, on a native-title delay --&gt;
-    &lt;a href="/notifications" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications"&gt;
-      &lt;i class="nds-icon nds-hgi-notification-02" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;span class="nds-label" data-hidden="sm md sr"&gt;Notifications&lt;/span&gt;
-    &lt;/a&gt;
-  &lt;/li&gt;
-  &lt;!-- Compact button, placed first in the minimal bar --&gt;
-  &lt;li class="nds-nav-item nds-PAB nds-CTA"&gt;
-    &lt;a href="/apply" class="nds-btn nds-primary" title="Apply Now"&gt;
-      &lt;span class="nds-label"&gt;Apply Now&lt;/span&gt;
-    &lt;/a&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="mainnavOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The main navigation is the bar below the top bar. On the start side, the brand links to the home page. Next to it, the primary links take people to the main pages of the site, and a dropdown groups the pages under one link. On the end side, the actions hold search, language and the other site tools.
+
+The main navigation is a page shell part. The preview shows it in a frame of its own, so it does not clash with this page's own main navigation.
+
+The [Header](../ui-shell/header) shows how the main navigation sits with the top bar. The links at the end of the page belong in the [Footer](../ui-shell/footer), and the links inside one section in the [Side Menu](../ui-shell/sidemenu).
+
+</div>
+  </div>
 </section>
 
-<!-- Dropdown Menus -->
-<section id="navDropdowns" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Dropdown Menu Content</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-dropdown</code> to a nav item to attach a dropdown panel. The panel's <code class="nds-inline-code lang-html">nds-dropdown-columns</code> child supports three layouts for organizing content.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Column View: Categories with Titles</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-col-1" id="tab-dropdown-col-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dropdown-col-1" aria-labelledby="tab-dropdown-col-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;li class="nds-nav-item nds-dropdown"&gt;
-  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
-    &lt;span class="nds-label"&gt;Services&lt;/span&gt;
-  &lt;/a&gt;
-  &lt;div class="nds-dropdown-menu" hidden&gt;
-    &lt;div class="nds-dropdown-content nds-content-wrapper"&gt;
-      &lt;div class="nds-dropdown-columns nds-colView"&gt;
-
-        &lt;div class="nds-column"&gt;
-          &lt;div class="nds-dropdown-title"&gt;For Citizens&lt;/div&gt;
-          &lt;div class="nds-list"&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/citizens/national-id"&gt;
-              &lt;i class="nds-icon nds-hgi-identity-card" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;National ID&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/citizens/travel"&gt;
-              &lt;i class="nds-icon nds-hgi-door-01" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;Travel Services&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-
-        &lt;div class="nds-column"&gt;
-          &lt;div class="nds-dropdown-title"&gt;For Businesses&lt;/div&gt;
-          &lt;div class="nds-list"&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/business/licensing"&gt;
-              &lt;i class="nds-icon nds-hgi-award-05" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;Licensing&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/business/tax"&gt;
-              &lt;i class="nds-icon nds-hgi-riyal-circular" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;Tax Filing&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/li&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Row View: Flat Horizontal List</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-row-1" id="tab-dropdown-row-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-dropdown-row-1" aria-labelledby="tab-dropdown-row-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;li class="nds-nav-item nds-dropdown"&gt;
-  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
-    &lt;span class="nds-label"&gt;Tools&lt;/span&gt;
-  &lt;/a&gt;
-  &lt;div class="nds-dropdown-menu nds-fit" hidden&gt;
-    &lt;div class="nds-dropdown-content"&gt;
-      &lt;div class="nds-dropdown-columns nds-rowView"&gt;
-        &lt;div class="nds-list"&gt;
-          &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/tools/search"&gt;
-            &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;span class="nds-label"&gt;Search&lt;/span&gt;
-          &lt;/a&gt;
-          &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/tools/translate"&gt;
-            &lt;i class="nds-icon nds-hgi-translation" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;span class="nds-label"&gt;Translate&lt;/span&gt;
-          &lt;/a&gt;
-          &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/tools/support"&gt;
-            &lt;i class="nds-icon nds-hgi-headphones" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;span class="nds-label"&gt;Support&lt;/span&gt;
-          &lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/li&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Multi-Column List: 3-Column Grid Inside a Column</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dropdown-mcl-1" id="tab-dropdown-mcl-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dropdown-mcl-1" aria-labelledby="tab-dropdown-mcl-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;li class="nds-nav-item nds-dropdown"&gt;
-  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
-    &lt;span class="nds-label"&gt;All Services&lt;/span&gt;
-  &lt;/a&gt;
-  &lt;div class="nds-dropdown-menu" hidden&gt;
-    &lt;div class="nds-dropdown-content nds-content-wrapper"&gt;
-      &lt;div class="nds-dropdown-columns nds-colView"&gt;
-        &lt;div class="nds-column"&gt;
-          &lt;div class="nds-dropdown-title"&gt;Directory&lt;/div&gt;
-          &lt;div class="nds-list nds-multi-column-list"&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
-              &lt;span class="nds-label"&gt;Education&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
-              &lt;span class="nds-label"&gt;Health&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
-              &lt;span class="nds-label"&gt;Transport&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
-              &lt;span class="nds-label"&gt;Housing&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
-              &lt;span class="nds-label"&gt;Employment&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
-              &lt;span class="nds-label"&gt;Legal&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/li&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
+<section id="mainnavMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="mainnav-canon" data-canon data-form data-preview="page" data-preview-height="440" data-variants="mainnavVariantsTable">
+<nav class="nds-main-nav nds-content-wrapper" id="ndsMainNav" aria-label="Primary navigation">
+  <div class="nds-nav-container">
+    <a href="../" class="nds-brand">
+      <img class="nds-brand-logo" src="../assets/img/palm_swords.svg" width="40" height="40" loading="lazy" alt="National Portal logo">
+      <span class="nds-brand-name">National Portal
+        <span class="nds-brand-slogan">All services in one place</span>
+      </span>
+    </a>
+    <ul class="nds-nav-minimal" hidden>
+      <li class="nds-mainNav-toggler nds-nav-item">
+        <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="ndsNavCollapse">
+          <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
+        </button>
+      </li>
+    </ul>
+    <div class="nds-collapse" id="ndsNavCollapse" hidden>
+      <div class="nds-collapse-content">
+        <ul class="nds-nav-primary">
+          <li class="nds-nav-item">
+            <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator" data-state="current" aria-current="page">
+              <span class="nds-label">Home</span>
+            </a>
+          </li>
+          <li class="nds-nav-item">
+            <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator">
+              <span class="nds-label">About</span>
+            </a>
+          </li>
+          <li class="nds-nav-item">
+            <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator">
+              <span class="nds-label">Contact</span>
+            </a>
+          </li>
+          <li class="nds-nav-item nds-dropdown">
+            <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+              <span class="nds-label">Services</span>
+            </a>
+            <div class="nds-dropdown-menu" hidden>
+              <div class="nds-dropdown-content nds-content-wrapper">
+                <div class="nds-dropdown-columns nds-colView">
+                  <div class="nds-column">
+                    <div class="nds-dropdown-title">Individuals</div>
+                    <div class="nds-list">
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Renew an ID card</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Book an appointment</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Track a request</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="nds-column">
+                    <div class="nds-dropdown-title">Businesses</div>
+                    <div class="nds-list">
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Register a company</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Renew a license</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Pay fees</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="nds-column">
+                    <div class="nds-dropdown-title">Regions</div>
+                    <div class="nds-list nds-multi-column-list">
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Riyadh</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Makkah</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Madinah</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Eastern Province</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Asir</span>
+                      </a>
+                      <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+                        <span class="nds-label">Tabuk</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="nds-nav-item nds-show-more">
+          <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-full" title="Show More" aria-label="Show more">
+            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+          </a>
+        </div>
+        <ul class="nds-nav-actions">
+          <li class="nds-nav-item nds-dropdown nds-icon-only nds-search nds-PAB">
+            <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Search" aria-expanded="false"><i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Search</span></button>
+            <div class="nds-dropdown-menu" hidden>
+              <div class="nds-dropdown-content">
+                <div class="nds-content-wrapper">
+                  <form class="nds-form-container nds-search-box" role="search" method="get" action="#">
+                    <div class="nds-search-content">
+                      <div class="nds-form-control">
+                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                        <input id="mainSearch" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search">
+                        <div class="nds-form-action">
+                          <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search">
+                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <button type="submit" class="nds-btn nds-primary nds-search-btn">
+                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                        <span class="nds-label" data-hidden="sm sr">Search</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nds-nav-item nds-icon-only" id="nav-language">
+            <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="العربية" lang="ar"><i class="nds-icon nds-hgi-translation" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">العربية</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+</script>
+<script type="text/html" id="mainnav-columns" data-canon>
+<li class="nds-nav-item nds-dropdown">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+    <span class="nds-label">Services</span>
+  </a>
+  <div class="nds-dropdown-menu" hidden>
+    <div class="nds-dropdown-content nds-content-wrapper">
+      <div class="nds-dropdown-columns nds-colView">
+        <div class="nds-column">
+          <div class="nds-dropdown-title">Individuals</div>
+          <div class="nds-list">
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Renew an ID card</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Book an appointment</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Track a request</span>
+            </a>
+          </div>
+        </div>
+        <div class="nds-column">
+          <div class="nds-dropdown-title">Businesses</div>
+          <div class="nds-list">
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Register a company</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Renew a license</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Pay fees</span>
+            </a>
+          </div>
+        </div>
+        <div class="nds-column">
+          <div class="nds-dropdown-title">Regions</div>
+          <div class="nds-list nds-multi-column-list">
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Riyadh</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Makkah</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Madinah</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Eastern Province</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Asir</span>
+            </a>
+            <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+              <span class="nds-label">Tabuk</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+</script>
+<script type="text/html" id="mainnav-rows" data-canon>
+<li class="nds-nav-item nds-dropdown">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+    <span class="nds-label">Media Center</span>
+  </a>
+  <div class="nds-dropdown-menu" hidden>
+    <div class="nds-dropdown-content nds-content-wrapper">
+      <div class="nds-dropdown-columns nds-rowView">
+        <div class="nds-list">
+          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <span class="nds-label">News</span>
+          </a>
+          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <span class="nds-label">Events</span>
+          </a>
+          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <span class="nds-label">Photos</span>
+          </a>
+          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <span class="nds-label">Videos</span>
+          </a>
+          <a class="nds-btn nds-subtle nds-dropdown-item" href="#">
+            <span class="nds-label">Reports</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+</script>
+<script type="text/html" id="mainnav-more" data-canon>
+<li class="nds-nav-item">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator">
+    <span class="nds-label">Open Data</span>
+  </a>
+</li>
+<li class="nds-nav-item">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator">
+    <span class="nds-label">Careers</span>
+  </a>
+</li>
+<li class="nds-nav-item">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator">
+    <span class="nds-label">Tenders</span>
+  </a>
+</li>
+<li class="nds-nav-item">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator">
+    <span class="nds-label">Partners</span>
+  </a>
+</li>
+<li class="nds-nav-item">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator">
+    <span class="nds-label">Questions and Answers</span>
+  </a>
+</li>
+<li class="nds-nav-item">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator">
+    <span class="nds-label">Privacy Policy</span>
+  </a>
+</li>
+</script>
+<script type="text/html" id="mainnav-search" data-canon data-form>
+<li class="nds-nav-item nds-dropdown nds-icon-only nds-search nds-PAB">
+  <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Search" aria-expanded="false"><i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Search</span></button>
+  <div class="nds-dropdown-menu" hidden>
+    <div class="nds-dropdown-content">
+      <div class="nds-content-wrapper">
+        <form class="nds-form-container nds-search-box" role="search" method="get" action="#">
+          <div class="nds-search-content">
+            <div class="nds-form-control">
+              <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+              <input id="mainSearch" type="text" class="nds-search-input" name="q" placeholder="Search..." aria-label="Search">
+              <div class="nds-form-action">
+                <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search">
+                  <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <button type="submit" class="nds-btn nds-primary nds-search-btn">
+              <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+              <span class="nds-label" data-hidden="sm sr">Search</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</li>
+</script>
+<script type="text/html" id="mainnav-notifications" data-canon>
+<li class="nds-nav-item nds-dropdown nds-icon-only" id="nav-notifications">
+  <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications" aria-expanded="false"><i class="nds-icon nds-hgi-notification-02" aria-hidden="true"><span class="nds-badge">2</span></i><span class="nds-label" data-hidden="sm md sr">Notifications</span></button>
+  <div class="nds-dropdown-menu nds-fit" hidden>
+    <div class="nds-dropdown-content">
+      <div class="nds-column">
+        <nav class="nds-drawer" style="--drawer-max-height: 40svh; min-width: 40vw; max-width: 100%;">
+          <div class="nds-scroll-more nds-divided">
+            <ul class="nds-drawer-list nds-scroll-more-content">
+              <li>
+                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                  <span class="nds-featured-icon nds-sm">
+                    <i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>
+                  </span>
+                  <span class="nds-drawer-item">
+                    <span class="nds-drawer-item-head">
+                      <span class="nds-tag nds-xs" data-status="success">
+                        <span class="nds-label">Approved</span>
+                      </span>
+                      <span class="nds-label nds-truncate">License renewed</span>
+                    </span>
+                    <span class="nds-description">Your business license is renewed until next year.</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nds-btn nds-subtle nds-indicator">
+                  <span class="nds-featured-icon nds-sm">
+                    <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
+                  </span>
+                  <span class="nds-drawer-item">
+                    <span class="nds-drawer-item-head">
+                      <span class="nds-tag nds-xs" data-status="warning">
+                        <span class="nds-label">Due soon</span>
+                      </span>
+                      <span class="nds-label nds-truncate">Appointment tomorrow</span>
+                    </span>
+                    <span class="nds-description">Your appointment at the Riyadh service center is tomorrow at 10:00 AM.</span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <hr class="nds-divider">
+        <a href="#" class="nds-btn nds-subtle nds-full">
+          <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
+          <span class="nds-label">View all notifications</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</li>
+</script>
+<script type="text/html" id="mainnav-guest" data-canon>
+<li class="nds-nav-item nds-icon-only" id="nav-guest">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Sign in"><i class="nds-icon nds-icon-avatar" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Sign in</span></a>
+</li>
+</script>
+<script type="text/html" id="mainnav-user" data-canon>
+<li class="nds-nav-item nds-dropdown nds-icon-only" id="nav-user">
+  <button class="nds-nav-link nds-btn nds-subtle nds-lg nds-indicator nds-tooltip" data-tooltip-hover="500" title="Ahmed" aria-expanded="false"><span class="nds-avatar"><img src="../docs-assets/img/avatar3.webp" alt="Ahmed" class="nds-icon" loading="lazy"></span><span class="nds-label" data-hidden="sm md sr">Ahmed</span></button>
+  <div class="nds-dropdown-menu nds-fit" hidden>
+    <div class="nds-dropdown-content">
+      <div class="nds-column">
+        <div class="nds-persona nds-sm">
+          <div class="nds-persona-info">
+            <span class="nds-persona-name">Ahmed Mohammed</span>
+            <span class="nds-persona-role nds-truncate">Business owner</span>
+            <span class="nds-persona-desc">ahmed@example.sa</span>
+          </div>
+          <hr class="nds-divider">
+          <div class="nds-persona-action">
+            <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+              <i class="nds-icon nds-hgi-identity-card" aria-hidden="true"></i>
+              <span class="nds-label">My account</span>
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-dropdown-item">
+              <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+              <span class="nds-label">Change password</span>
+            </a>
+            <a href="#" class="nds-btn nds-subtle nds-destructive nds-dropdown-item">
+              <i class="nds-icon nds-hgi-door-01" aria-hidden="true"></i>
+              <span class="nds-label">Sign out</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+</script>
+<script type="text/html" id="mainnav-language" data-canon>
+<li class="nds-nav-item nds-icon-only" id="nav-language">
+  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="العربية" lang="ar"><i class="nds-icon nds-hgi-translation" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">العربية</span></a>
+</li>
+</script>
+<script type="text/html" id="mainnav-cta" data-canon>
+<li class="nds-nav-item nds-CTA" id="nav-cta">
+  <a href="#" class="nds-btn nds-primary" title="Apply now"><span class="nds-label">Apply now</span></a>
+</li>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="mainnavFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Dropdowns, collapse, overflow detection, and scroll behavior attach automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-                            <span class="nds-label">Responsive Collapse</span>
-                        </span>
-                        <p class="nds-item-desc">Switches from a horizontal nav bar to a hamburger menu at a configurable breakpoint, with animated expand and collapse transitions.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
-                            <span class="nds-label">Overflow Detection</span>
-                        </span>
-                        <p class="nds-item-desc">Primary nav items that exceed the available width become scrollable, with a show-more button that scrolls through hidden items.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-grid"></i>
-                            <span class="nds-label">Dropdown Columns</span>
-                        </span>
-                        <p class="nds-item-desc">Dropdown content can be organized in column, row, or multi-column list layouts that adapt to narrower screens.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-navigation-03"></i>
-                            <span class="nds-label">Scroll-to-Anchor</span>
-                        </span>
-                        <p class="nds-item-desc">Same-page anchor links in the nav close open menus and scroll smoothly to the target section.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-drag-drop"></i>
-                            <span class="nds-label">Drag and Wheel Scrolling</span>
-                        </span>
-                        <p class="nds-item-desc">Primary nav supports horizontal drag scrolling and converts vertical mouse wheel input to horizontal scroll when items overflow.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-sidebar-right"></i>
-                            <span class="nds-label">RTL Support</span>
-                        </span>
-                        <p class="nds-item-desc">Scroll direction, drag behavior, and layout flip automatically in right-to-left contexts.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-shield-01"></i>
-                            <span class="nds-label">Reduced Motion</span>
-                        </span>
-                        <p class="nds-item-desc">All header transitions respect the <code class="nds-inline-code lang-html">prefers-reduced-motion</code> setting, skipping animations for users who have requested it.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-pin-location-01"></i>
-                            <span class="nds-label">Persistent Action Buttons</span>
-                        </span>
-                        <p class="nds-item-desc">Nav items marked with <code class="nds-inline-code lang-html">nds-PAB</code> automatically relocate to the minimal nav bar on small screens and return to their original position on larger viewports.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layers-01"></i>
-                            <span class="nds-label">Backdrop Overlay</span>
-                        </span>
-                        <p class="nds-item-desc">Opening a dropdown or the mobile collapse displays a backdrop that closes the menu on outside clicks, preventing interaction with page content beneath.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="mainnavParts" class="nds-content-section nds-doc-parts">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Parts</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+| Part | Holds | Required |
+|---|---|---|
+| `nav.nds-main-nav` | The whole bar. Add `nds-content-wrapper` to keep its content at the page width. One per page | Yes |
+| `.nds-nav-container` | The brand, the menu button and the drawer, in that order | Yes |
+| `a.nds-brand` | The logo (`img.nds-brand-logo`) and `.nds-brand-name`, with `.nds-brand-slogan` inside the name. It links to the home page | Yes |
+| `ul.nds-nav-minimal` | The menu button (`li.nds-mainNav-toggler`), and the pinned actions below 960px. It ships `hidden` | Yes |
+| `#ndsNavCollapse.nds-collapse` | The drawer: one `.nds-collapse-content` with the links, the show more button and the actions. It ships `hidden`. The script finds it by this id | Yes |
+| `ul.nds-nav-primary` | The primary links, one `li.nds-nav-item` each | Yes |
+| `li.nds-nav-item.nds-dropdown` | A link that opens a menu: the trigger `a.nds-nav-link.nds-menu-btn`, then `.nds-dropdown-menu` > `.nds-dropdown-content` | No |
+| `.nds-dropdown-columns` | The menu's content. `nds-colView` for titled columns (`.nds-column` with a `.nds-dropdown-title` and a `.nds-list`), `nds-rowView` for one row of links (one `.nds-list`) | With a dropdown |
+| `a.nds-dropdown-item` | One link in a menu | With a dropdown |
+| `.nds-show-more` | The arrow that scrolls the links when they do not fit. Write it right after `.nds-nav-primary` | Yes |
+| `ul.nds-nav-actions` | The actions, one `li.nds-nav-item` each. An action is a link, a button, or a dropdown with its own content | No |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="mainnavGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
+<section id="mainnavVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+The canon carries the Services dropdown, the search action and the language action. Each dropdown and each action is one part: **Dropdowns** and **Actions** add or remove them, and the parts keep the table order. **Many links** adds six links, so the links do not fit and the show more arrow appears.
+
+**Pinned on Small Screens** adds `nds-PAB` to that action's `li`. The option is off while its action is off.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Brand | Logo and name (default) | — | — | The logo, the site name and the slogan. Leave the slogan out when the name says enough |
+| Brand | Logo only | `remove` | `.nds-brand-name` | Only the logo. Pick it when the logo carries the site name. Keep the logo's `alt` text |
+| Dropdowns (any) | Columns (default) | canon `#mainnav-columns` | `.nds-nav-primary` | A menu of titled columns, `nds-colView`. Pick it to group many pages by topic. `nds-multi-column-list` spreads one long list over 3 columns |
+| Dropdowns (any) | Row list | canon `#mainnav-rows` | `.nds-nav-primary` | A menu of one row of links, `nds-rowView`. Pick it for a short flat list |
+| Many links | Many links (hint: The links do not fit, so the show more arrow appears) | canon `#mainnav-more` | `.nds-nav-primary` | Six more links. Shows how the bar scrolls the links that do not fit |
+| Actions (any) | Search (default) | canon `#mainnav-search` | `.nds-nav-actions` | A search box that opens below the bar |
+| Actions (any) | Notifications | canon `#mainnav-notifications` | `.nds-nav-actions` | A small `nds-fit` menu of messages, with a count badge |
+| Actions (any) | Guest (limit: 1 account) | canon `#mainnav-guest` | `.nds-nav-actions` | The sign-in link, for a visitor who is not signed in. Show Guest or User, never both |
+| Actions (any) | User (limit: 1 account) | canon `#mainnav-user` | `.nds-nav-actions` | The signed-in person's avatar, with a small `nds-fit` menu of account links |
+| Actions (any) | Language (default) | canon `#mainnav-language` | `.nds-nav-actions` | A link to the page in the other language. Its label is the other language's name |
+| Actions (any) | Call to action | canon `#mainnav-cta` | `.nds-nav-actions` | A filled button for the one task the site steers people to, such as an application. Its label shows at every width. Use one at most |
+| Pinned on Small Screens (any) | Search (default) | `.nds-PAB` | `.nds-search` | Search stays in the bar below 960px |
+| Pinned on Small Screens (any) | Notifications | `.nds-PAB` | `#nav-notifications` | Notifications stay in the bar below 960px |
+| Pinned on Small Screens (any) | Guest | `.nds-PAB` | `#nav-guest` | Sign in stays in the bar below 960px |
+| Pinned on Small Screens (any) | User | `.nds-PAB` | `#nav-user` | The avatar stays in the bar below 960px |
+| Pinned on Small Screens (any) | Language | `.nds-PAB` | `#nav-language` | Language stays in the bar below 960px |
+| Pinned on Small Screens (any) | Call to action | `.nds-PAB` | `#nav-cta` | The button stays in the bar below 960px, first in the row |
+{: #mainnavVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="mainnavBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Dropdowns
+{: .nds-block-title}
+
+A click on a dropdown link opens its menu, and closes any other open menu. A second click, a click outside the menu, or Escape closes it. On a desktop, a primary menu spans the page width below the bar. In the drawer, it opens in place, under its link.
+
+### Small Menus
+{: .nds-block-title}
+
+`nds-fit` on `.nds-dropdown-menu` makes the menu as wide as its content, centered under its link. The script moves the menu sideways when it would cross the screen edge. Use it for an action's menu, such as notifications or an account.
+
+### Pinned Actions
+{: .nds-block-title}
+
+Below 960px, the actions move into the drawer, in one row at its bottom. An action with `nds-PAB` stays in the bar next to the menu button instead. The script moves it into `.nds-nav-minimal`, and back to its place above 960px.
+
+</div>
+  </div>
+</section>
+
+<section id="mainnavFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto Start</span>
+          </span>
+          <p class="nds-item-desc">The script starts when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Links and actions added or removed later are picked up with no call.</p>
         </div>
-        <div class="nds-section-body">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
+            <span class="nds-label">Responsive Drawer</span>
+          </span>
+          <p class="nds-item-desc">Below 960px, the links and the actions fold into a drawer that slides open under the bar. The menu button opens and closes it. When the bar is full, the brand text shrinks first, so the menu button always stays on screen.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
+            <span class="nds-label">Overflow Detection</span>
+          </span>
+          <p class="nds-item-desc">Links that do not fit scroll in place, and the show more arrow appears. Each press of the arrow shows the next links. At the end, it goes back to the first ones.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-drag-drop"></i>
+            <span class="nds-label">Drag and Wheel Scrolling</span>
+          </span>
+          <p class="nds-item-desc">On a desktop, links that do not fit scroll with a mouse drag, and the mouse wheel scrolls them sideways.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-navigation-03"></i>
+            <span class="nds-label">Same-Page Links</span>
+          </span>
+          <p class="nds-item-desc">A link to a section of the same page closes the open menus, then scrolls to the section.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layers-01"></i>
+            <span class="nds-label">Backdrop Overlay</span>
+          </span>
+          <p class="nds-item-desc">An open menu or drawer dims the page behind it. A click on the dimmed page closes it.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-shield-01"></i>
+            <span class="nds-label">Reduced Motion</span>
+          </span>
+          <p class="nds-item-desc">When the user asks for reduced motion, menus and the drawer open and close with no animation, and scrolls jump.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Place the navigation bar at the top of every page, inside the <code class="nds-inline-code lang-html">&lt;header&gt;</code> element. See <a class="nds-color" href="{{ 'ui-shell/header' | relative_url }}">Header</a> for how it composes with the <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">top bar</a> above it.</li>
-                    <li>Keep primary nav items between 3 and 8 links. Overflow handling activates automatically, but excessive items reduce usability.</li>
-                    <li>Use dropdown menus for grouping related pages under a single primary nav item. Organize content into columns using <code class="nds-inline-code lang-html">nds-colView</code> for category-based layouts or <code class="nds-inline-code lang-html">nds-rowView</code> for flat lists.</li>
-                    <li>Reserve the secondary nav for utility actions: search, language toggle, user profile, notifications. These persist across all breakpoints as icon-only buttons on smaller screens.</li>
-                    <li>Pages with no header still need a language switch. Put it in the page's own top area. The <a class="nds-color" href="{{ 'examples/sign-in' | relative_url }}">Sign in</a> example puts it in the card header, next to the brand logo.</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-CTA</code> on a nav item to render it as a compact button instead of a link, for the one action the page is steering people toward: sign in, start a service, book an appointment. Omit <code class="nds-inline-code lang-html">data-hidden</code> on its label so the text stays readable at every width.</li>
-                    <li>Do not use the main navigation for in-page section links. Use <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switching between content panels on the same page, or anchor links within the page body.</li>
-                    <li>Do not place critical actions only inside dropdown menus. Users on mobile may not discover them. Promote key actions to the primary or secondary nav level.</li>
-                    <li>Do not add more than one level of dropdown nesting. The component supports single-level dropdowns only.</li>
-                    <li>Set the brand logo dimensions explicitly with <code class="nds-inline-code lang-html">width</code> and <code class="nds-inline-code lang-html">height</code> attributes to prevent layout shift during page load.</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-icon-only</code> on secondary nav items that should display as icon buttons at every width. For labels that should collapse only on smaller screens, stamp <code class="nds-inline-code lang-html">data-hidden="sm md sr"</code> on the label as the markup above shows: the <code class="nds-inline-code lang-html">sr</code> token keeps the accessible name while the label is visually hidden. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility.</li>
-                    <li>Mark nav items that must stay reachable at every breakpoint with <code class="nds-inline-code lang-html">nds-PAB</code>. Search, language, and account are the usual ones. Do not mark every action: unmarked items stay in the expanded menu, and a minimal bar carrying everything defeats it. JavaScript moves the item into the minimal bar and returns it to the position you authored, so do not reparent a PAB item yourself at runtime.</li>
-                    <li>A PAB carrying <code class="nds-inline-code lang-html">nds-CTA</code> is placed first in the minimal bar, ahead of the other persistent items. Use that when the call to action must be the one control a small screen never hides.</li>
-                </ul>
-            </div>
+<section id="mainnavPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-dropdown</code></td><td>nav-item</td><td>Enables dropdown menu behavior</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-CTA</code></td><td>nav-item</td><td>Renders the item as a compact button rather than a link, sizing the inner button to 32px</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-icon-only</code></td><td>nav-item</td><td>Displays as icon button, hides label</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-PAB</code></td><td>nav-item</td><td>Persistent action button. JavaScript moves the item into <code class="nds-inline-code lang-html">.nds-nav-minimal</code> in minimal mode and returns it to its authored position on wider viewports</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-show-more</code></td><td>nav-item</td><td>Marks the overflow scroll button</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>nav-link</td><td>Applies on-color text styling for dark backgrounds</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-menu-btn</code></td><td>nav-link</td><td>Transparent background style with indicator for primary nav items (mobile)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-fit</code></td><td>dropdown-menu</td><td>Sizes the dropdown to fit its content width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-colView</code></td><td>dropdown-columns</td><td>Organizes content in vertical columns</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>dropdown-columns</td><td>Organizes content in a horizontal row layout</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-multi-column-list</code></td><td>list inside dropdown</td><td>Renders items in a 3-column grid</td></tr>
-                    </tbody>
-                </table>
-            </div>
+- Put the main navigation in `header`, after the top bar. See [Header](../ui-shell/header).
+- Keep 3 to 8 primary links. More links scroll, and people miss the ones they cannot see.
+- Use a dropdown to group pages under one link. Do not put a dropdown inside a menu: menus have one level.
+- Do not put a key task only inside a menu. Give it a primary link or an action.
+- Mark the current page's link with `data-state="current"` and `aria-current="page"`. The highlight comes only from `data-state`, and screen readers read only `aria-current`.
+- Pin only the actions people need on a small screen, such as search, language and the account. Pinned actions crowd the bar next to the menu button.
+- Keep a call to action's label to one or two words. On a small screen, a pinned one takes its room from the brand.
+- Do not move a pinned action with your own script. The script moves it, and puts it back where you wrote it.
+- Give every icon-only action a `title`. It is the tooltip, and the action's name.
+- Set `width` and `height` on the logo, so the bar does not move when the logo loads.
+- A page with no header still needs a language switch. The [Sign In](../examples/sign-in) example puts it in the card header, next to the logo.
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>nav-link</td><td>Marks the current page. You write it, and nothing in the component removes it. This is the only attribute that highlights the current page in the main nav. <code class="nds-inline-code lang-html">aria-current="page"</code> is for screen readers and drives no styling, so a link with that alone renders with no highlight at all &mdash; set both. <code class="nds-inline-code lang-js">NDS.Init.audit()</code> reports a link that is missing it</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="active"</code></td><td>nav-link</td><td>Written and removed by the component while that link's dropdown is open. Never author it. On a current-page link it looks correct at first and then disappears, because the next dropdown close strips it. The <a class="nds-color" href="{{ 'ui-shell/sidemenu' | relative_url }}">Side Menu</a> uses the same word on its <code class="nds-inline-code lang-html">&lt;li&gt;</code> elements, where it does mean the current page &mdash; a different element doing a different job. Do not carry that spelling over to the main nav</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-hidden="sm md sr"</code></td><td>action-item label</td><td>Collapses the label to icon-only below 960px while screen readers keep the name. Omit on <code class="nds-inline-code lang-html">nds-CTA</code> items so their labels stay visible. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility</td></tr>
-                    </tbody>
-                </table>
-            </div>
+</div>
+  </div>
+</section>
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--nds-nav-height</code></td><td><code class="nds-inline-code lang-html">72px</code></td><td>Height of the navigation bar</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--nds-minimal-nav-bp</code></td><td><code class="nds-inline-code lang-html">960px</code></td><td>Breakpoint width for switching to mobile/minimal mode</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--nds-transition-speed</code></td><td><code class="nds-inline-code lang-html">0.2</code></td><td>Base transition speed in seconds</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--nds-minimal-nav-item-height</code></td><td><code class="nds-inline-code lang-html">40px</code></td><td>Height of each nav item in the mobile collapse panel</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<section id="mainnavApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The main navigation initializes automatically when <code class="nds-inline-code lang-html">.nds-main-nav</code> exists on the page, and wires its own click handling through event delegation: the hamburger toggle and dropdown triggers respond without any inline <code class="nds-inline-code lang-html">onclick</code> attributes. The functions below are exposed on the <code class="nds-inline-code lang-js">NDS.Mainnav</code> namespace for driving the nav from external scripts. If your app renders the header itself, read the re-initialize note at the end of the block.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Toggle Functions ─────────────────────────
-// Exposed on the NDS.Mainnav namespace for external scripts
-// and integrations. Bind to your own triggers as needed.
+### Other Classes
+{: .nds-block-title}
 
-// Toggle the mobile hamburger collapse.
-// Opens the collapse panel if closed, closes it if open.
-// Queues the action if an animation is already running.
-NDS.Mainnav.toggleNavbar();
+| Class | Element | Effect |
+|---|---|---|
+| `nds-oncolor` | `a.nds-brand` | In dark mode, shows the logo in white |
+| `nds-icon-only` | An action's `li` | Shows only the icon. The label stays for screen readers |
+| `nds-menu-btn` | A dropdown's trigger link | The arrow that turns when the menu opens. See [Button](../components/button) |
+| `nds-multi-column-list` | A `.nds-list` in a menu | Spreads the links over 3 columns, and 2 below 960px |
+| `nds-fit` | `.nds-dropdown-menu` | Makes the menu as wide as its content. See Small Menus under Behavior |
+| `nds-CTA` | An action's `li` | Makes the action's button 32px high, for a call to action written as `nds-btn nds-primary`. A pinned one comes first in the bar |
+| `nds-minimal` | `nav.nds-main-nav` | The script sets it below 960px and removes it above. Key your own drawer styles on it |
+{: .nds-table .nds-responsive}
 
-// Toggle a dropdown menu.
-// Pass the native click event from the trigger element.
-// The function finds the closest .nds-dropdown ancestor,
-// closes any other open dropdown first, then opens the target.
-NDS.Mainnav.toggleDropdown(event);
+### Data Attributes
+{: .nds-block-title}
 
-// ── Re-initialize ────────────────────────────
-// Call when the nav ELEMENT itself is new. Two cases,
-// both silent without it: the nav renders after the
-// bundle runs, which happens when a framework mounts
-// the chrome, or a route change replaces the nav. In
-// both, the CSS still paints the nav and no click works.
+| Attribute | Element | Effect |
+|---|---|---|
+| `hidden` | `ul.nds-nav-minimal` | Write it in the markup. The script removes it below 960px, and sets it again above |
+| `aria-expanded` | The menu button | Write `false` in the markup. The script sets `true` when the drawer opens, and `false` when it closes |
+| `data-state="open"` | `li.nds-mainNav-toggler` | The script sets it when the drawer opens, and removes it when the drawer closes |
+| `hidden` | `#ndsNavCollapse` | Write it in the markup. The script removes it when it starts |
+| `data-state` | `#ndsNavCollapse` | The script sets `open` and `opening` when the drawer opens, then `opened`. It adds `closing` when the drawer closes, and removes all of them after the close |
+| `data-state` | `ul.nds-nav-primary` | The script sets `has-more` while the links do not fit, `at-start` at the start of the scroll, and `at-end` at its end |
+| `data-state="current"` | A primary `a.nds-nav-link` | Set it yourself on the current page's link. It is the only attribute that highlights it. `NDS.Init.audit()` reports a current-page link without it |
+| `aria-current="page"` | A primary `a.nds-nav-link` | Set it yourself, with `data-state="current"`. It names the current page for screen readers, and changes no style |
+| `data-state` | `li.nds-dropdown` | The script sets `open` and `opening` when the menu opens, then `opened`. It adds `closing` when the menu closes, and removes all of them after the close |
+| `aria-expanded` | A dropdown's trigger | Write `false` in the markup. The script writes it when it is missing, sets `true` when the menu opens, and `false` when it closes |
+| `data-state="active"` | A dropdown's trigger | The script sets it when the menu opens, and removes it when the menu closes. Never write it: the current page is `current` |
+| `hidden` | `.nds-dropdown-menu` | Write it in the markup. The script removes it when the menu opens, and sets it again after the menu closes |
+| `data-modal-target` | A nav link | Opens the [Modal](../components/modal) with that id. Any modal that opens closes the open menus and the drawer |
+| `data-nav-actions-empty` | `.nds-collapse-content` | The script sets it while the actions row is empty or missing, and the show more arrow moves down to the drawer's bottom edge |
+| `data-nav-empty` | `ul.nds-nav-actions` | The script sets it while the row holds no action, such as below 960px when every action is pinned. The row is hidden while it is set |
+| `data-hidden="sm md sr"` | An action's `.nds-label` | Hides the label below 960px. Screen readers still read it. Leave it off an `nds-CTA` label. See [Hidden](../utilities/hidden) |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--nds-nav-height` | `72px` | The height of the bar. Sticky parts on the page sit below it |
+| `--nds-minimal-nav-bp` | `960px` | The width below which the drawer takes over. Set it on `:root`. The script reads it once, when the page loads |
+| `--nds-minimal-nav-item-height` | `40px` | The height of each link in the drawer |
+| `--nds-brand-width` | `auto` | The width of the brand. Set it on `a.nds-brand` |
+| `--brand-logo-height` | `40px` | The height of the logo. Set it on `a.nds-brand` or the logo |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Mainnav.init()` | Starts the main navigation. It runs on page load, and a second call does nothing |
+| `NDS.Mainnav.reinit()` | Finds the main navigation again and starts it. Call it when the nav itself is new: rendered after the NDS script ran, or replaced by a route change. `NDS.Init.refresh()` calls it too |
+| `NDS.Mainnav.toggleNavbar()` | Opens or closes the drawer |
+| `NDS.Mainnav.toggleDropdown(event)` | Opens or closes the menu of the dropdown that `event.target` is in. It takes the click event, not an element |
+{: .nds-table .nds-responsive}
+
+The main navigation fires no events.
+
+<script type="text/html" id="mainnav-js" data-canon data-lang="js" data-preview="none">
+// A framework rendered the header after the NDS script ran
 NDS.Mainnav.reinit();
 
-// Or make the one call that covers every component.
-NDS.Init.refresh(document.body);
+// Open the drawer from a link in the page
+document.querySelector('#menu-link').addEventListener('click', (e) => {
+  e.preventDefault();
+  NDS.Mainnav.toggleNavbar();
+});
+</script>
 
-// Adding or removing nav ITEMS inside a live nav needs
-// no call. The nav watches for that and re-runs its
-// overflow and placement work on its own. Re-running on
-// an unchanged nav is a no-op, so both calls above are
-// safe to make as often as you like.
+The full API is in the banner of `_js/nds-mainnav.js`.
 
-// init() wires the nav once, on page load. Calling it
-// again does nothing, so reach for reinit() instead.
-NDS.Mainnav.init();
+</div>
+  </div>
+</section>
 
-// For top bar widget APIs (date, clock, weather, DGA stamp)
-// see the Top Bar documentation page.
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<section id="mainnavRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Header](../ui-shell/header), [Top Bar](../ui-shell/topbar) and [Footer](../ui-shell/footer): the other parts of the page shell.
+- [Side Menu](../ui-shell/sidemenu): the links inside one section of the site.
+- [Home Page Template](../templates/home-template): the main navigation in a complete page.
+- [Sign In](../examples/sign-in): a page with no header, and its language switch.
+
+</div>
+  </div>
 </section>

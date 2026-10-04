@@ -20,6 +20,7 @@ module DocsCanon
               '.nds-builder-options{margin-block-end:var(--spacing-4xl)}' \
               '.nds-card.nds-doc-frame{--card-width:100%;--card-radius:var(--radius-md);min-height:200px;display:flex;justify-content:center;align-items:center}' \
               '.nds-card.nds-doc-preview{padding-block:56px;--card-gap:0}' \
+              '.nds-doc-preview[data-preview-page]:not([data-screen]){justify-content:flex-start;align-items:flex-start}' \
               '.nds-doc-oncolor{--card-bg:var(--background-primary-strong)}' \
               '.nds-divider.nds-doc-divider{margin-block-start:0;--divider-line-start:24px}' \
               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px;display:flex;gap:var(--spacing-md)}' \

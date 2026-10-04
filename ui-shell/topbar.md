@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 10:20 AM"
+last_edit: "04/10/2026 - 12:13 PM"
 ---
 
 <section id="topbarOverview" class="nds-content-section nds-doc-overview">
@@ -34,7 +34,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="topbar-canon" data-canon data-preview="page" data-variants="topbarVariantsTable">
+<script type="text/html" id="topbar-canon" data-canon data-preview="page" data-preview-height="304" data-variants="topbarVariantsTable">
 <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities">
   <button class="nds-btn nds-menu-btn nds-digitalStamp-tab" role="button" aria-expanded="false" aria-controls="nds-digitalStamp">
     <img class="nds-flag" src="../assets/icon/SAflag.min.svg" width="20" height="14" loading="lazy" alt="Saudi Arabia flag">
