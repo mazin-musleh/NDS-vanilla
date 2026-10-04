@@ -13,7 +13,8 @@
  *   ids, not attributes: #nds-date (the date line) · #nds-realTimeClock (the clock)
  *   data-calendar   on #nds-date: hijri | gregorian. Default follows the page language
  * Gotchas:
- *   - Both widgets read Riyadh time (GMT+3), not the visitor's clock.
+ *   - Both widgets read the visitor's clock. Only the date's cache key follows Riyadh (GMT+3).
+ *   - init() re-renders on every call, so a replaced widget element fills in again.
  *   - getHijriDate() stays a Promise because the date picker chains on it, even though
  *     the value is computed locally.
  *   - The clock stops while the tab is hidden and catches up when it returns.
@@ -155,7 +156,8 @@
     let clockTimer = null;
 
     function ensureClockDOM() {
-        if (clockText) return true;
+        // A replaced clock element strands the old text node: rebuild into the new one.
+        if (clockText?.isConnected) return true;
         const el = document.getElementById('nds-realTimeClock');
         if (!el) return false;
         const icon = document.createElement('i');
@@ -187,11 +189,10 @@
     }
 
     function startClock() {
-        if (clockTimer) return;
         const el = document.getElementById('nds-realTimeClock');
         if (!el || !rendered(el)) return;
         updateClock();
-        scheduleNextMinute();
+        if (!clockTimer) scheduleNextMinute();
     }
 
     function stopClock() {
@@ -214,33 +215,40 @@
         const dateEl = document.getElementById('nds-date');
         const clockEl = document.getElementById('nds-realTimeClock');
 
-        if (dateEl && !_dateInitDone) {
-            _dateInitDone = true;
+        // The render runs on every init, so a widget element added or replaced later fills in;
+        // the latches guard only the timers and listeners.
+        if (dateEl) {
             // Defer the initial render to an idle slot so the Intl/ICU work
             // (formatter construction) doesn't compete with critical resources
             // during post-DCL hydration. The 24h interval and lang-change
             // handler still run inline so they respond promptly when triggered.
             NDS.onIdle(updateDate);
-            setInterval(updateDate, 24 * 60 * 60 * 1000);
-            NDS.onAttrChange('html', ['lang'], updateDate);
+            if (!_dateInitDone) {
+                _dateInitDone = true;
+                setInterval(updateDate, 24 * 60 * 60 * 1000);
+                NDS.onAttrChange('html', ['lang'], updateDate);
+            }
         }
 
-        if (clockEl && !_clockInitDone) {
-            _clockInitDone = true;
+        if (clockEl) {
             // Skip the tick loop while the tab is hidden — no point burning
             // per-second DOM mutations no one can see. On resume, startClock()
             // ticks immediately so the time isn't a second stale.
             if (!document.hidden) startClock();
-            document.addEventListener('visibilitychange', () => {
-                document.hidden ? stopClock() : startClock();
-            });
+            if (!_clockInitDone) {
+                _clockInitDone = true;
+                document.addEventListener('visibilitychange', () => {
+                    document.hidden ? stopClock() : startClock();
+                });
+            }
         }
 
         if ((dateEl || clockEl) && !_resizeInitDone) {
             _resizeInitDone = true;
             NDS.onResize(() => {
                 updateDate();
-                if (clockEl && rendered(clockEl) && !document.hidden) startClock(); else stopClock();
+                const el = document.getElementById('nds-realTimeClock');
+                if (el && rendered(el) && !document.hidden) startClock(); else stopClock();
             });
         }
     }

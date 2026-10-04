@@ -13,7 +13,8 @@
  *   (none — class and id markup: .nds-digitalStamp-tab is the trigger, #nds-digitalStamp
  *    is the panel)
  * Gotchas:
- *   - One per page, resolved by id at init.
+ *   - One per page, resolved by id at init. A re-init after the tab or panel is replaced
+ *     re-wires to the new elements.
  *   - It closes itself when a click lands outside the tab and panel, which is also what
  *     closes it when the nav opens — the two need no cross-component call.
  *   - A click during the close animation RE-OPENS it rather than doing nothing.
@@ -37,7 +38,6 @@
     let tab = null;
     let panel = null;
     let abortController = null;
-    let _initDone = false;
     // Cancel handle for the in-flight close cleanup, so a re-open mid-close
     // discards the pending hide() instead of letting it fire late.
     let _cancelClose = null;
@@ -88,11 +88,14 @@
     }
 
     function init() {
-        if (_initDone) return;
-        tab = document.querySelector('.nds-digitalStamp-tab');
-        panel = document.getElementById('nds-digitalStamp');
-        if (!tab || !panel) return;
-        _initDone = true;
+        const t = document.querySelector('.nds-digitalStamp-tab');
+        const p = document.getElementById('nds-digitalStamp');
+        // Re-wire only when the tab or panel was replaced.
+        if (!t || !p || (t === tab && p === panel)) return;
+        tab = t;
+        panel = p;
+        _cancelClose?.();
+        _cancelClose = null;
 
         // Scope all listeners to one AbortController so a re-init detaches the
         // prior batch atomically instead of stacking handlers on document.

@@ -12,7 +12,8 @@
  *   data-latitude · data-longitude   on #nds-weatherInfo; default Riyadh
  * Gotchas:
  *   - Weather comes from the public open-meteo API. No key, no account — and no data at
- *     all when the request fails; the widget just stays as served.
+ *     all when the request fails; the widget hides (display: none).
+ *   - init() re-renders on every call, so a replaced widget element fills in again.
  *   - Both languages are cached together, so a language switch needs no new request.
  *   - The cache holds primitives and the DOM is rebuilt from them — nothing stored ever
  *     reaches the HTML parser.
@@ -191,40 +192,34 @@
         }
     }
 
-    // One-shot init guard. A re-run of init (e.g. NDS.Init.initialize())
-    // would otherwise re-stack the setInterval and the
-    // NDS.onAttrChange subscription on every re-call — none of those have
-    // (selector, fn) dedup in core, so a stable function reference alone
-    // wouldn't help. Page lifecycle is single-shot anyway; the guard keeps
-    // re-call honest without changing any normal-load behavior.
+    // Guards the setInterval and the NDS.onAttrChange subscription: neither
+    // has (selector, fn) dedup in core, so a re-run of init would re-stack them.
     let _initDone = false;
 
     function initializeCityWeather() {
-        if (_initDone) return;
-
         const weatherEl = document.getElementById('nds-weatherInfo');
         const cityEl = document.getElementById('nds-cityName');
 
         // Only run if both weather and city elements exist (they depend on each other)
-        if (weatherEl && cityEl) {
-            _initDone = true;
+        if (!weatherEl || !cityEl) return;
 
-            // Defer the initial fetches to an idle slot — on cache miss
-            // these hit open-meteo and nominatim, and we don't want them
-            // racing critical resources during post-DCL hydration. The
-            // 15-min weather interval and lang-change handler still run
-            // inline so they respond promptly when triggered.
-            NDS.onIdle(() => {
-                updateWeather();
-                updateCity();
-            });
+        // Defer the initial fetches to an idle slot — on cache miss
+        // these hit open-meteo and nominatim, and we don't want them
+        // racing critical resources during post-DCL hydration. Runs on
+        // every init, so a replaced widget element fills in again.
+        NDS.onIdle(() => {
+            updateWeather();
+            updateCity();
+        });
 
-            // Update weather every 15 minutes
-            setInterval(updateWeather, 15 * 60 * 1000);
+        if (_initDone) return;
+        _initDone = true;
 
-            // City doesn't need interval - coordinates don't change, cached for 30 days
-            NDS.onAttrChange('html', ['lang'], () => { updateWeather(); updateCity(); });
-        }
+        // Update weather every 15 minutes
+        setInterval(updateWeather, 15 * 60 * 1000);
+
+        // City doesn't need interval - coordinates don't change, cached for 30 days
+        NDS.onAttrChange('html', ['lang'], () => { updateWeather(); updateCity(); });
     }
 
     NDS.CityWeather = {
