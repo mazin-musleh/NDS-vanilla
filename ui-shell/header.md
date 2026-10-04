@@ -2,119 +2,131 @@
 layout: page
 title: Header
 hero_title: Header - National Design System
-hero_description: The region at the top of every page, where the top bar, the DGA digital stamp panel, and the main navigation compose into one responsive header.
+hero_description: The top of every page, which holds the top bar, the digital stamp panel and the main navigation.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "02/09/2026 - 01:16 AM"
+last_edit: "04/10/2026 - 11:41 AM"
 ---
 
-<!-- Header Structure -->
-<section id="headerStructure" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Header Structure</h2>
-            <p class="nds-section-description">The header wraps three layers without creating a box of its own: the <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">top bar</a> for government branding and utilities, the main navigation bar, and the expandable <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}#dgaDigitalStamp">DGA digital stamp</a> panel.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Header Structure</div>
-                        </div>
-                        <div class="demo-container nds-noBg">
-                            <div class="nds-code nds-expandable">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
-header
-&#9500;&#9472;&#9472; div.nds-topbar.nds-content-wrapper
-&#9474;   &#9500;&#9472;&#9472; button.nds-digitalStamp-tab
-&#9474;   &#9492;&#9472;&#9472; div.nds-topbar-info
-&#9474;
-&#9500;&#9472;&#9472; div#nds-digitalStamp (expandable panel, hidden by default)
-&#9474;   &#9492;&#9472;&#9472; div.nds-content-wrapper
-&#9474;       &#9492;&#9472;&#9472; div.nds-digitalStamp-notices
-&#9474;           &#9500;&#9472;&#9472; div.nds-digitalStamp-card (notice cards)
-&#9474;           &#9474;   &#9500;&#9472;&#9472; div.nds-digitalStamp-icon
-&#9474;           &#9474;   &#9492;&#9472;&#9472; div.nds-digitalStamp-content
-&#9474;           &#9492;&#9472;&#9472; div.nds-digitalStamp-register
-&#9474;
-&#9492;&#9472;&#9472; nav.nds-main-nav.nds-content-wrapper
-    &#9492;&#9472;&#9472; div.nds-nav-container
-        &#9500;&#9472;&#9472; a.nds-brand
-        &#9474;   &#9500;&#9472;&#9472; img.nds-brand-logo
-        &#9474;   &#9492;&#9472;&#9472; span.nds-brand-name
-        &#9474;       &#9492;&#9472;&#9472; span.nds-brand-slogan
-        &#9500;&#9472;&#9472; ul.nds-nav-minimal
-        &#9474;   &#9492;&#9472;&#9472; li.nds-mainNav-toggler (hamburger button)
-        &#9492;&#9472;&#9472; div.nds-collapse#ndsNavCollapse
-            &#9492;&#9472;&#9472; div.nds-collapse-content
-                &#9500;&#9472;&#9472; ul.nds-nav-primary
-                &#9474;   &#9500;&#9472;&#9472; li.nds-nav-item
-                &#9474;   &#9474;   &#9492;&#9472;&#9472; a.nds-nav-link
-                &#9474;   &#9500;&#9472;&#9472; li.nds-nav-item.nds-dropdown
-                &#9474;   &#9474;   &#9500;&#9472;&#9472; a.nds-nav-link
-                &#9474;   &#9474;   &#9492;&#9472;&#9472; div.nds-dropdown-menu
-                &#9474;   &#9474;       &#9492;&#9472;&#9472; div.nds-dropdown-content.nds-content-wrapper
-                &#9474;   &#9492;&#9472;&#9472; div.nds-show-more
-                &#9492;&#9472;&#9472; ul.nds-nav-actions
-                    &#9492;&#9472;&#9472; li.nds-nav-item
-                        &#9492;&#9472;&#9472; a/button.nds-nav-link
-                                </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="headerOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The header holds three parts: the top bar, the digital stamp panel and the main navigation. It draws no box of its own. `header` has `display: contents`, so its parts sit in the page as if the header were not there.
+
+The links at the end of the page belong in the [Footer](../ui-shell/footer), and the links inside one section in the [Side Menu](../ui-shell/sidemenu).
+
+</div>
+  </div>
 </section>
 
-<!-- Header Parts -->
-<section id="headerParts" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Header Parts</h2>
-            <p class="nds-section-description">Each layer has its own page, with demos, modifier classes, and its JavaScript API.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <ul>
-                    <li><a class="nds-color" href="{{ 'ui-shell/mainnav' | relative_url }}">Main Navigation</a> covers the navigation bar: branding, primary links, dropdown menus, utility actions, and the mobile drawer.</li>
-                    <li><a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">Top Bar</a> covers the government branding strip above the navigation, with the date, clock, weather, and dark mode toggle.</li>
-                    <li><a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}#dgaDigitalStamp">DGA Digital Stamp</a> covers the expandable verification panel.</li>
-                </ul>
-            </div>
-        </div>
+<section id="headerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Usage</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The code shows the outer element of each part. Copy each part whole from its own page, or copy the whole header from the built HTML of a live page.
+
+<script type="text/html" id="header-canon" data-canon data-preview="none">
+<header>
+  <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities">
+    <!-- The stamp tab, the widgets and the dark mode button: ../ui-shell/topbar -->
+  </div>
+  <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
+    <!-- The stamp panel: ../ui-shell/topbar -->
+  </div>
+  <nav class="nds-main-nav nds-content-wrapper" id="ndsMainNav" aria-label="Primary navigation">
+    <!-- The brand, the links and the actions: ../ui-shell/mainnav -->
+  </nav>
+</header>
+</script>
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="headerGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>The <code class="nds-inline-code lang-html">&lt;header&gt;</code> element carries <code class="nds-inline-code lang-html">display: contents</code>, so it creates no box of its own. The top bar, the digital stamp panel, and the navigation bar join the page flow directly as siblings.</li>
-                    <li>Style the parts, not the wrapper. Background, padding, borders, and sticky behavior belong on <code class="nds-inline-code lang-html">.nds-topbar</code> and <code class="nds-inline-code lang-html">.nds-main-nav</code>. Rules set on <code class="nds-inline-code lang-html">&lt;header&gt;</code> render nothing.</li>
-                    <li>This applies to every <code class="nds-inline-code lang-html">&lt;header&gt;</code> on the page, not only the site header. A header element carried in from an existing layout loses its own box, so move that styling to a child element.</li>
-                    <li>Keep one header region per page, holding the three layers in the order the structure tree shows.</li>
-                </ul>
-            </div>
-            </div>
-        </div>
+<section id="headerParts" class="nds-content-section nds-doc-parts">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Parts</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+| Part | Holds | Required |
+|---|---|---|
+| `header` | The three parts below | Yes |
+| `.nds-topbar` | The top bar: the stamp tab, the widgets and the dark mode button. See [Top Bar](../ui-shell/topbar) | Yes, on a government site |
+| `#nds-digitalStamp` | The stamp panel, right after the top bar. The stamp tab opens it. See [Top Bar](../ui-shell/topbar#dgaDigitalStamp) | Yes, with the stamp tab |
+| `nav.nds-main-nav` | The main navigation: the brand, the links, the dropdowns and the actions. See [Main Navigation](../ui-shell/mainnav) | Yes |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="headerFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-pin"></i>
+            <span class="nds-label">Sticky Navigation</span>
+          </span>
+          <p class="nds-item-desc">The main navigation sticks to the top of the screen while the page scrolls, and the top bar scrolls away. The navigation sticks inside <code class="nds-inline-code lang-html">body</code>, not inside the header, because the header has no box.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-cancel-circle"></i>
+            <span class="nds-label">One Panel at a Time</span>
+          </span>
+          <p class="nds-item-desc">The stamp panel and the main navigation's menu close each other. When one opens, the other closes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="headerPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Style the parts, not the header. Background, padding, borders and the sticky position go on `.nds-topbar` and `.nds-main-nav`. Rules on `header` render nothing.
+- The `display: contents` rule hits every `header` element on the page, such as an article header in your own markup. Put that header's styles on a child element, or use a `div`.
+- Use one header per page: the first element in `body` after the skip link. See [Page Layout](../layout/page-layout).
+- Keep the parts in the order of the Parts table. The stamp panel opens right below the top bar, and the main navigation comes last.
+- Leave the header out of a minimal page, such as sign in or a one-time code. See [Page Layout](../layout/page-layout).
+
+</div>
+  </div>
+</section>
+
+<section id="headerRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Top Bar](../ui-shell/topbar) and [Main Navigation](../ui-shell/mainnav): the parts of the header, with their options and APIs.
+- [Page Layout](../layout/page-layout): where the header sits in `body`, and the page shapes without one.
+- [Home Page Template](../templates/home-template): the header in a complete page.
+- [Footer](../ui-shell/footer): the other end of the page shell.
+
+</div>
+  </div>
 </section>

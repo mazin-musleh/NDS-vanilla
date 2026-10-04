@@ -26,6 +26,7 @@ A doc page has two readers. **People** browse it, try options in the builder and
 | `components/button.md` | many structures, `:not()` targets that disable bad combinations |
 | `ui-shell/topbar.md` | a shell page: a part canon framed with `data-preview="page"`, a Parts table |
 | `layout/grid.md` | a reference page: one `Example` group of whole examples |
+| `core/refresh.md` | an info page: a `Usage` section of code-only canons, no preview |
 
 **Parked, never convert without their own plan:** `components/tokens.md`, `ui-shell/head.md`, `components/forms.md`, `components/themes.md`, `components/icons.md`, `components/accessibility.md`, `layout/section.md`, `components/filter.md`, `components/tables.md`, `components/chart.md`.
 
@@ -40,8 +41,9 @@ A doc page has two readers. **People** browse it, try options in the builder and
 | Type | Pages | Builder |
 |---|---|---|
 | Component | most of `components/`, `utilities/` | options you combine: Structure plus modifier groups |
-| Shell | `ui-shell/` (header, mainnav, footer, topbar, sidemenu, hero) | a part canon in a frame (`data-preview="page"`), at every screen size |
-| Reference | `layout/` (grid, flex), `core/` | one `Example` group of whole examples, never mixed toggles |
+| Shell | `ui-shell/` (mainnav, footer, topbar, sidemenu, hero) | a part canon in a frame (`data-preview="page"`), at every screen size |
+| Reference | `layout/` (grid, flex) | one `Example` group of whole examples, never mixed toggles |
+| Info | `core/`, `ui-shell/header` | none. Explains how something works: a `Usage` section with code-only canons (`data-preview="none"`). A page that only composes parts with their own pages (the header) shows each part's root with a comment linking that page, never the parts' markup again |
 
 ---
 
