@@ -107,7 +107,9 @@
              el = el.parentElement && el.parentElement.closest('.nds-swiper')) {
             if (_activeSwipers.has(el._ndsSwiper)) return el._ndsSwiper;
         }
-        // Nothing focused inside a swiper — fall back to the innermost hovered one.
+        // Nothing focused inside a swiper — fall back to the innermost hovered one,
+        // but only when nothing else holds focus: a field elsewhere owns its arrows.
+        if (active && active !== document.body && active !== document.documentElement) return null;
         let best = null;
         for (const s of _activeSwipers) {
             if (s.container.matches(':hover') && (!best || best.container.contains(s.container))) best = s;
@@ -724,8 +726,6 @@
         // ==============================================
 
         setupPagination() {
-            if (!this.pagination) return;
-
             const pageCount = this._pageCount;
 
             const hidden = pageCount <= 1;
@@ -837,11 +837,11 @@
                 const off = NDS.onIntersect(slide, (entry) => {
                     if (entry.isIntersecting) {
                         // Activate <source> elements inside <picture> first.
-                        entry.target.querySelectorAll('source[data-srcset]').forEach(source => {
+                        this._lazyIn(slide, 'source[data-srcset]').forEach(source => {
                             source.srcset = fixSrcsetSpaces(source.dataset.srcset);
                             delete source.dataset.srcset;
                         });
-                        entry.target.querySelectorAll('img[data-src], img[data-srcset]').forEach(img => {
+                        this._lazyIn(slide, 'img[data-src], img[data-srcset]').forEach(img => {
                             if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
                             if (img.dataset.srcset) { img.srcset = fixSrcsetSpaces(img.dataset.srcset); delete img.dataset.srcset; }
                         });
@@ -851,6 +851,15 @@
                 offs.push(off);
             });
             this._offLazyLoad = offs;
+        }
+
+        // A nested swiper that lazy-loads its own slides keeps its images; one that
+        // doesn't (a single slide, a loop clone's dead copy) leaves them to us.
+        _lazyIn(slide, sel) {
+            return Array.from(slide.querySelectorAll(sel)).filter(el => {
+                const owner = el.closest('.nds-swiper');
+                return !owner || owner === this.container || !owner._ndsSwiper?._offLazyLoad;
+            });
         }
 
         // ==============================================
@@ -944,7 +953,8 @@
             ['--total', '--slides'].forEach(p => this.container.style.removeProperty(p));
             if (this._ownsPeek) this.container.style.removeProperty('--peek');
             if (this._spotlight) this.slides.forEach(s => NDS.Status.clear(s));
-            if (this.wrapper) { this.wrapper.style.removeProperty('overflow'); this.wrapper.removeAttribute('data-swiper-moving'); }
+            this.wrapper.style.removeProperty('overflow');
+            this.wrapper.removeAttribute('data-swiper-moving');
             if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }
             if (this.navigation) this.navigation.toggleAttribute('hidden', this._navHadHidden);
             if (this.prevBtn) this.prevBtn.style.removeProperty('display');

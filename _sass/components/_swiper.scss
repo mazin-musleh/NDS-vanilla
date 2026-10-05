@@ -52,10 +52,9 @@
         --swiper-padding: var(--padding, var(--swiper-gap));
     }
 
-    // Pre-init guard for the hero variant lives in nds.critical.min.scss
-    // (html:not([data-nds-loaded]) scope) so it applies before main CSS.
-    // Non-hero swipers no longer have a pre-init guard — content is
-    // gated by visibility:hidden until JS init completes.
+    // Pre-init guards live in critical CSS, released by the init stamp or the
+    // loader's data-swiper-preset: hero first-slide collapse in _fold.scss,
+    // the clipped card-width row in _skeleton.scss.
 }
 
 // ==============================================
