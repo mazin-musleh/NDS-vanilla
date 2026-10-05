@@ -114,20 +114,6 @@ main {
             --section-padding-block: var(--spacing-5xl);
         }
 
-        .nds-content {
-            section.nds-noBg {
-                --_section-margin-block-start-base: var(--spacing-5xl);
-            }
-
-            section.nds-noBg:first-of-type {
-                --_section-margin-block-start-base: 0;
-            }
-
-            section.nds-noBg:not(:has(+ .nds-noBg)) {
-                --_section-margin-block-end-base: var(--spacing-5xl);
-            }
-        }
-
         >aside {
             // keep: !important — sidemenu's own display rules outrank this hide.
             display: none !important;

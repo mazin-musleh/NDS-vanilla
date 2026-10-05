@@ -60,8 +60,6 @@ are exempt by name, not by design:
 Neither is marked deprecated, and the docs use both. Pick the survivor before the major,
 then the loser moves to the table above.
 
-- **`.nds-ghost` vs `.nds-noBg`** — the same section reset (`_sass/layout/_section.scss`
-  routes both to `reset-section-style`). Docs: `nds-noBg` in 43 pages, `nds-ghost` in 6.
 - **What each status component answers to.** All of these work and none misleads, so this
   is a consistency question, not deprecation — but a dev who learns one component guesses
   wrong at the next.

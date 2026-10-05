@@ -77,7 +77,7 @@
         &[data-status="info"] { --_section-title-color-base: var(--text-info); }
     }
 
-    &:is(.nds-ghost, .nds-noBg) {
+    &.nds-ghost {
         @include reset-section-style( !important);
     }
 }
