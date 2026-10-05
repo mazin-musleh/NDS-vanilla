@@ -175,7 +175,7 @@ def verify(out, version):
     if packs.returncode:
         sys.exit('check-event-css.py failed:\n' + packs.stdout + packs.stderr)
 
-    # head.md prints the inline critical gate as canonical markup a consumer
+    # head.md prints the inline critical gate and head script as canonical markup a consumer
     # copies into their own <head>. It is a hand-maintained copy of what
     # _includes/critical-inline.html compiles from _sass/_fold.scss, so it can
     # drift — and it silently had, shipping a gate missing the dark-mode brand
@@ -194,14 +194,17 @@ def verify(out, version):
 
     live_page = z.read(root + '_site/index.html').decode('utf8')
     doc_page = z.read(root + '_site/ui-shell/head.html').decode('utf8')
-    live_m = re.search(r'<style>(.*?)</style>', live_page, re.S)
-    i, j = doc_page.find('id="panel-setup-html"'), doc_page.find('id="panel-setup-js"')
-    doc_m = re.search(r'&lt;style&gt;(.*?)&lt;/style&gt;', doc_page[i:j], re.S)
+    live_head = live_page[:live_page.find('</head>')]
+    # The code block docs_canon.rb writes after the head-setup canon.
+    i = doc_page.find('id="head-setup"')
+    doc_code = html.unescape(re.search(r'<code class="lang-html code">(.*?)</code>', doc_page[i:], re.S).group(1)) if i > -1 else ''
+    live_m = re.search(r'<style>(.*?)</style>', live_head, re.S)
+    doc_m = re.search(r'<style>(.*?)</style>', doc_code, re.S)
     if not live_m or not doc_m:
         sys.exit('Critical gate: could not locate the inline gate in index.html '
-                 'or the copied block in ui-shell/head.html.')
+                 'or the head-setup code block in ui-shell/head.html.')
     live_r = _rules(live_m.group(1))
-    doc_r = _rules(html.unescape(doc_m.group(1)))
+    doc_r = _rules(doc_m.group(1))
     if live_r != doc_r:
         missing = sorted(live_r - doc_r)
         extra = sorted(doc_r - live_r)
@@ -209,6 +212,13 @@ def verify(out, version):
                  'site serves. Regenerate it from the rendered <style> block.\n'
                  + ''.join(f'  missing from the doc: {s}\n' for s in missing)
                  + ''.join(f'  in the doc only:      {s}\n' for s in extra))
+
+    # The inline script too: a consumer copies it, and a hash covers its bytes.
+    live_s = re.search(r'<script>\s*(\(function.*?)</script>', live_head, re.S)
+    doc_s = re.search(r'<script>\s*(\(function.*?)</script>', doc_code, re.S)
+    if not live_s or not doc_s or re.sub(r'\s', '', live_s.group(1)) != re.sub(r'\s', '', doc_s.group(1)):
+        sys.exit('Head script in ui-shell/head.md has drifted from _includes/head-inline-scripts.html. '
+                 'Copy it from the served head.')
 
     # The rules file's checks run against its SOURCE include (the guide
     # renders the same include; raw main and the zip top level serve it

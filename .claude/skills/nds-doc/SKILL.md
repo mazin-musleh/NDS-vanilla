@@ -28,7 +28,7 @@ A doc page has two readers. **People** browse it, try options in the builder and
 | `layout/grid.md` | a reference page: one `Example` group of whole examples |
 | `core/refresh.md` | an info page: a `Usage` section of code-only canons, no preview |
 
-**Parked, never convert without their own plan:** `components/tokens.md`, `ui-shell/head.md`, `components/forms.md`, `components/themes.md`, `components/icons.md`, `components/accessibility.md`, `layout/section.md`, `components/filter.md`, `components/tables.md`, `components/chart.md`.
+**Parked, never convert without their own plan:** `components/tokens.md`, `components/forms.md`, `components/themes.md`, `components/icons.md`, `components/accessibility.md`, `layout/section.md`, `components/filter.md`, `components/tables.md`, `components/chart.md`.
 
 ---
 
@@ -161,14 +161,14 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
   - **Base:** carries `data-variants="{table id}"`. It is the builder.
   - **Structure:** named by a `Structure` (or `Example`) row. Reached only through the builder.
   - **Part:** a small block that a row inserts, such as an icon or an actions row.
-  - **JS:** `data-lang="js"`. `data-js="{id}"` on the base names its JS twin: the same component as one `create()` call, shown in a JS tab. A JS-only structure (a toast) previews as a Run button that runs the code shown.
+  - **JS:** `data-lang="js"`. `data-js="{id}"` on the base names its JS twin: the same component as one `create()` call, shown in a JS tab. `data-tab-label` on either canon renames its tab, and a twin with no `data-lang` shows as HTML (the head's Head and JS Library tabs). A JS-only structure (a toast) previews as a Run button that runs the code shown.
   - **Code-only:** `data-preview="none"`, for `<head>` and JS examples.
   - **Run:** `data-preview="run"`, for markup that leaves the card (a FAB docks at the screen edge). The card holds Run (`data-run-label` renames it), which adds a copy of the code shown, and Clear. A choice rebuilds the last copy added.
   - **Panel:** `data-preview="panel"`, for markup that needs a page around it (a TOC over a long article, a shell). The card holds Preview (`data-run-label` renames it), which opens a tall, resizable bottom panel with the code shown mounted in it. The panel body zeroes `--nds-nav-height`, so sticky parts pin to its top. Add `data-preview-flush` when the markup brings its own padding (a section): the body gets `nds-flush`. Closing it removes the copy.
   - **Page:** `data-preview="page"`, for a canon that is a whole `<body>` (Page Layout), or a page part that must not share the doc page (the top bar: its ids would clash with the page's own). The preview is a page of its own in a frame, Desktop at 1280px wide scaled to fit, with the header and footer left out. Desktop is a plain frame with no device around it; Tablet and Phone show a device. A whole-body canon's rows can target `body`. A part's code is the part alone. `data-preview-height="360"` (page px at 1280 wide) sets its Desktop frame height, 800 without it: make it fit the tallest open state (a menu, a panel).
   - **JS-started:** `data-preview="js"` with `data-js`, for a component with no `init()` (Sort). The preview runs the JS tab after each render. A Structure canon may reuse the base's root id, since the one call names it.
   - **Demo-only:** `data-code="none"`, a Behavior demo in a preview card with no code. Its wiring `<script>` sits after the canon, never in it.
-- **A canon never holds `</script>`.** Code with a `<script>` tag inside stays out of the canon format for now (see `ui-shell/head.md`).
+- **A canon never holds `</script>`:** the first one ends it. Code with a `<script>` tag inside is written as plain HTML in a Liquid `capture`, and the canon holds `{{ x | strip | escape }}` with `data-escaped`, so the build does not escape it twice (`ui-shell/head.md`).
 - **Screen widths:** every preview card has Desktop, Tablet and Phone buttons beside Dark mode. Tablet and Phone show the preview in a device screen 768×720 or 390×720 at full size (a card too narrow for one hides its button, and a phone reader gets none; the first button, no frame, names the reader's own device), so a breakpoint class (`nds-vertical-sm`) shows on a desktop too and a popup has a real screen to open in. A Run or Panel card has none: its demo leaves the card.
 - **Preview width:** `data-demo-width="300px"` on the base canon fixes the preview's width, for a field that would otherwise shrink or stretch to its content. Preview only: the code never shows it.
 - **Preview style:** `data-preview-style="…"` on a page canon (`data-preview="page"`) adds CSS to the preview frame only, for a demo that needs a size the markup must not carry (the side info's column grows to 500px with Beside the title). Key it on the option's own class, so it shows only with that option.

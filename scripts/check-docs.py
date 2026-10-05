@@ -78,7 +78,9 @@ def check(path):
         # Canon bodies: plain HTML, no demo-only parts.
         for bad, why in (('{{', 'Liquid'), ('{%', 'Liquid'), ('&lt;', 'escaped markup'), ('<form', 'a <form>'), ('id="demo-', 'a demo- id')):
             # data-form: the form is the component's own markup (user feedback validates its form).
-            if bad in body and not (bad == '<form' and attr(attrs, 'data-form') is not None):
+            # data-escaped: the body is a Liquid capture of code that holds </script> (the document head).
+            if bad in body and not (bad == '<form' and attr(attrs, 'data-form') is not None) \
+                    and not (bad in ('{{', '{%') and attr(attrs, 'data-escaped') is not None):
                 errs.append(f'canon #{cid}: {why}')
         for i in [cid] + [i for i in re.findall(r'\sid="([^"]+)"', body) if cid not in alts or i not in base_ids]:
             ids[i] = ids.get(i, 0) + 1

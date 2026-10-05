@@ -2,334 +2,361 @@
 layout: page
 title: Document Head
 hero_title: Document Head - National Design System
-hero_description: The stylesheets and scripts every NDS page loads so it paints fast, with no flash of unstyled content and no layout shift.
+hero_description: The stylesheets and scripts every NDS page loads, so the page paints fast with no flash of unstyled content and no layout shift
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "24/09/2026 - 07:31 AM"
+last_edit: "05/10/2026 - 07:30 AM"
 ---
 
-<!-- Page Setup -->
-<section id="pageSetup" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Page Setup</h2>
-            <p class="nds-section-description">Put the assets and inline scripts in <code class="nds-inline-code lang-html">&lt;head&gt;</code>, and the main bundle just before <code class="nds-inline-code lang-html">&lt;/body&gt;</code>. The <code class="nds-inline-code lang-html">?ver=</code> query is a cache-busting stamp: change it whenever a bundle changes.</p>
-        </div>
-        <div class="nds-section-body nds-prose">
-            <div class="nds-tabs nds-code nds-divided">
-                <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Page setup code">
-                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-setup-html" id="tab-setup-html">
-                            <span class="nds-tab-label">HTML</span>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-js" id="tab-setup-js">
-                            <span class="nds-tab-label">JavaScript</span>
-                        </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <div class="nds-tab-content">
-
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-html" aria-labelledby="tab-setup-html">
-                        <div class="nds-code-action">
-                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <div class="nds-expandable-content">
-                            <code class="lang-html code">
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-  &lt;title&gt;Page Title&lt;/title&gt;
-
-  &lt;style&gt;
-  /* -- Colors: the first-paint fills. Edit here to re-skin the shell. -- */
-  html[data-theme~=dark] :where(.nds-main-nav .nds-brand.nds-oncolor :is(img,svg)){filter:brightness(0) invert(1)}
-  html{background-color:var(--background-body, #f9fafb)}
-  html[data-theme~=dark]{background-color:var(--background-body, #111927)}
-  :where(.nds-topbar){background-color:var(--background-topbar, #f3f4f6)}
-  html[data-theme~=dark] :where(.nds-topbar){background-color:var(--background-topbar, #111927)}
-  :where(.nds-main-nav){background-color:var(--background-nav, #fff)}
-  html[data-theme~=dark] :where(.nds-main-nav){background-color:var(--background-nav, #1f2a37)}
-  :where(.nds-hero-image-wrapper)::before{content:"";position:absolute;inset:0;background:color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent);pointer-events:none}
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-  /* -- Layout reservations and gates (structure) -- */
-  html{overflow-anchor:none}
-  html :where(header){display:contents}
-  html :where(.nds-topbar){height:40px}
-  html :where(.nds-main-nav){height:var(--nds-nav-height, 72px)}
-  html .nds-swiper.nds-hero:not([data-nds-swiper-initialized],[data-swiper-preset]) .nds-swiper-slide:not(:first-child){display:none}
-  :where(.nds-topbar&gt;*,.nds-main-nav&gt;*,.nds-hero-section .nds-section-action,.nds-content-layout,.nds-user-feedback-section,.nds-footer){visibility:hidden}
-  html:not([data-nds-loaded]) main{overflow-x:clip}
-  .nds-skip-link:not(:focus){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0}
-  :root{--nds-icons-opacity: 0}
-  :is(.nds-hidden,[hidden],[data-state~=hidden],[data-filtered]){display:none !important}
-  :where(.nds-hero-section){position:relative;height:550px}
-  :where(.nds-hero-section.nds-sub){height:auto;min-height:220px}
-  :where(.nds-hero-image-wrapper){position:absolute;inset:0}
-  :where(.nds-hero-image){width:100%;height:100%;object-fit:cover;display:block}
-  :where(.nds-hero-section :is(.nds-section-body,.nds-section-wrapper,.nds-breadcrumb-nav)){visibility:hidden}
-  &lt;/style&gt;
-
-  &lt;!-- Hero image — page-specific. Only on a page whose hero carries a photograph.
-       The hero image is the LCP element, and the browser finds it late because it sits
-       in a &lt;picture&gt; deep in the body. Preload the FIRST slide only, and repeat the
-       &lt;source&gt; breakpoints exactly so the browser preloads the same file it will use.
-       Drop these three lines on a page with no hero photo. --&gt;
-  &lt;link rel="preload" as="image" href="assets/img/hero-sm.webp"
-    media="(max-width: 768px)" fetchpriority="high"&gt;
-  &lt;link rel="preload" as="image" href="assets/img/hero-md.webp"
-    media="(min-width: 769px) and (max-width: 1646px)" fetchpriority="high"&gt;
-  &lt;link rel="preload" as="image" href="assets/img/hero.webp"
-    media="(min-width: 1647px)" fetchpriority="high"&gt;
-
-  &lt;!-- Critical CSS — non-blocking; the gate above holds the layout until it lands. --&gt;
-  &lt;link rel="preload" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"
-    as="style" fetchpriority="high" data-nds-defer&gt;
-
-  &lt;!-- Main CSS — deferred; the inline script applies it, the loader adds the icon sheets after it. --&gt;
-  &lt;link rel="preload" href="assets/css/nds-main.min.css?ver={{ site.latest_release }}"
-    as="style" fetchpriority="low" data-nds-defer="main"&gt;
-
-  &lt;!-- Placeholder icon — replace with your own. --&gt;
-  &lt;link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg"&gt;
-
-  &lt;!-- Inline script — theme guard + applies the deferred styles. Copy from the JavaScript tab. Keep it last in the head. --&gt;
-  &lt;script&gt;/* see the JavaScript tab */&lt;/script&gt;
-&lt;/head&gt;
-
-&lt;!-- ...page content... then just before &lt;/body&gt;: --&gt;
-&lt;script defer src="assets/js/nds-main.min.js?ver={{ site.latest_release }}"&gt;&lt;/script&gt;
-&lt;!-- No tag for the accessibility panel. nds-main.min.js fetches it on demand. --&gt;
-                        </code>
-                        </div>
-                    </div>
-
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-js" aria-labelledby="tab-setup-js" hidden>
-                        <div class="nds-code-action">
-                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <div class="nds-expandable-content">
-                            <code class="lang-javascript code">
-// Apply the saved theme before first paint (no light-to-dark flip).
-(function () {
-  var v; try { v = localStorage.getItem('nds-theme'); } catch (e) {}
-  if (v) {
-var d = document.documentElement;
-var t = ((d.getAttribute('data-theme') || '') + ' ' + v).split(/\s+/)
-  .filter(function (x, i, a) { return x &amp;&amp; a.indexOf(x) === i; });
-d.setAttribute('data-theme', t.join(' '));
-  }
-})();
-
-// Turn each marked preload into a real stylesheet link. Same download, no second request.
-// Clones every attribute except rel/as, so integrity, crossorigin, and fetchpriority carry over.
-(function () {
-  document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (p) {
-var l = document.createElement('link');
-for (var i = 0; i &lt; p.attributes.length; i++) {
-  var a = p.attributes[i];
-  if (a.name !== 'rel' &amp;&amp; a.name !== 'as') l.setAttribute(a.name, a.value);
-}
-l.rel = 'stylesheet';
-p.removeAttribute('data-nds-defer');
-document.head.appendChild(l);
-  });
-})();
-                        </code>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3>The version stamp</h3>
-                <p>Change the <code class="nds-inline-code lang-html">?ver=</code> value every time you upgrade NDS. A stale stamp serves the old bundles from the browser cache.</p>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3>Switching to a blocking critical stylesheet</h3>
-                <p>The setup above is the gated one, and it is what this site runs. The inline style block draws the page shell so the page paints before critical CSS arrives, and the shell holds the layout until the real styles land. That block is the same shell this site serves, one rule per line so you can edit the colors.</p>
-                <p>Use a blocking stylesheet instead when a strict Content Security Policy cannot grant a nonce or a hash for that inline block. Delete the <code class="nds-inline-code lang-html">&lt;style&gt;</code> block, then replace the preload link under it with a plain stylesheet link:</p>
-            </div>
-            <div class="nds-block">
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-html code">
-&lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"&gt;
-                    </code>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-block nds-prose">
-                <p>It blocks the first paint until critical CSS arrives, so the first thing on screen already has the real tokens and nothing flashes. Never remove the style block on its own: without the gate the page paints raw HTML first, then jumps when critical CSS lands.</p>
-            </div>
-        </div>
+<section id="headOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Every page carries the same `<head>`: an inline style block (the gate), two stylesheet preloads and one inline script, and the main script goes before `</body>`. The gate draws the shell of the page and hides its content until the main CSS applies. The inline script turns the preloads into stylesheets. The main script starts the components and loads every other file.
+
+The code below is the head this site serves.
+
+The body of the page is on [Page Layout](../layout/page-layout).
+
+</div>
+  </div>
 </section>
 
-<!-- Asset Files -->
-<section id="assetFiles" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Asset Files</h2>
-            <p class="nds-section-description">What each bundle holds and how it loads.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>File</th><th>Contents</th><th>Loading</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds.critical.min.css</code></td><td>Tokens, reset, fonts, hero, gate</td><td>Render-blocking (or async behind the gate)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-main.min.css</code></td><td>All component and layout styles</td><td>Deferred; gates the page reveal</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-icons.min.css</code></td><td>UI icons (<code class="nds-inline-code lang-html">nds-icon</code>)</td><td>Added by the loader once main CSS applies</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">hgi-rounded-stroke-min.css</code></td><td>Content icon glyph map (<code class="nds-inline-code lang-html">hgi hgi-stroke</code>). Its <code class="nds-inline-code lang-html">@font-face</code> ships in the critical file, so this sheet can land late without a full relayout</td><td>Added by the loader at the reveal, after main CSS and the critical pass</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility.min.css</code></td><td>Accessibility panel and its mode overrides</td><td>Fetched by nds-accessibility.js itself once the panel arms — not linked in &lt;head&gt;. Optional; see <a class="nds-color" href="{{ 'components/accessibility' | relative_url }}">Accessibility</a>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-main.min.js</code></td><td>Loader and all component behavior</td><td><code class="nds-inline-code lang-html">&lt;script defer&gt;</code> before <code class="nds-inline-code lang-html">&lt;/body&gt;</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility.min.js</code></td><td>Accessibility panel behavior</td><td>Fetched by nds-main.min.js on the first press of the accessibility button, or at load for a visitor with saved settings. No tag of its own. Optional</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<section id="headMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Usage</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Copy the head as one block. The JS Library tab holds the main script: put it just before `</body>`. Change only the lines the Parts table marks as per page.
+
+{%- comment %} The <script> below would end a canon, so the code sits in a capture. verify() in mkrelease.py fails the release when its gate or script drifts from the served head. {% endcomment %}
+{%- capture head_code %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Title</title>
+  <style>
+    /* Colors: the first-paint fills. Edit the fallbacks to match a brand. */
+    html[data-theme~=dark] :where(.nds-main-nav .nds-brand.nds-oncolor :is(img,svg)){filter:brightness(0) invert(1)}
+    html{background-color:var(--background-body, #f9fafb)}
+    html[data-theme~=dark]{background-color:var(--background-body, #111927)}
+    :where(.nds-topbar){background-color:var(--background-topbar, #f3f4f6)}
+    html[data-theme~=dark] :where(.nds-topbar){background-color:var(--background-topbar, #111927)}
+    :where(.nds-main-nav){background-color:var(--background-nav, #fff)}
+    html[data-theme~=dark] :where(.nds-main-nav){background-color:var(--background-nav, #1f2a37)}
+    :where(.nds-hero-image-wrapper)::before{content:"";position:absolute;inset:0;background:color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent);pointer-events:none}
+
+    /* Structure: reserved heights, and the rules that hide the content until the main CSS applies. */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{overflow-anchor:none}
+    html :where(header){display:contents}
+    html :where(.nds-topbar){height:40px}
+    html :where(.nds-main-nav){height:var(--nds-nav-height, 72px)}
+    html .nds-swiper.nds-hero:not([data-nds-swiper-initialized],[data-swiper-preset]) .nds-swiper-slide:not(:first-child){display:none}
+    :where(.nds-topbar>*,.nds-main-nav>*,.nds-hero-section .nds-section-action,.nds-content-layout,.nds-user-feedback-section,.nds-footer){visibility:hidden}
+    html:not([data-nds-loaded]) main{overflow-x:clip}
+    .nds-skip-link:not(:focus){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0}
+    :root{--nds-icons-opacity: 0}
+    :is(.nds-hidden,[hidden],[data-state~=hidden],[data-filtered]){display:none !important}
+    :where(.nds-hero-section){position:relative;height:550px}
+    :where(.nds-hero-section.nds-sub){height:auto;min-height:220px}
+    :where(.nds-hero-image-wrapper){position:absolute;inset:0}
+    :where(.nds-hero-image){width:100%;height:100%;object-fit:cover;display:block}
+    :where(.nds-hero-section :is(.nds-section-body,.nds-section-wrapper,.nds-breadcrumb-nav)){visibility:hidden}
+  </style>
+  <!-- Hero photo only: preload the first slide, with its <source> breakpoints -->
+  <link rel="preload" as="image" href="assets/img/hero-sm.webp" media="(max-width: 768px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero-md.webp" media="(min-width: 769px) and (max-width: 1646px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero.webp" media="(min-width: 1647px)" fetchpriority="high">
+  <link rel="preload" href="assets/css/nds.critical.min.css?ver={{ site.asset_ver }}" as="style" fetchpriority="high" data-nds-defer>
+  <link rel="preload" href="assets/css/nds-main.min.css?ver={{ site.asset_ver }}" as="style" fetchpriority="low" data-nds-defer="main">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" fetchpriority="low">
+  <script>
+    (function() {
+      var v; try { v = localStorage.getItem('nds-theme'); } catch (e) {}
+      if (v) {
+        var d = document.documentElement;
+        var t = ((d.getAttribute('data-theme') || '') + ' ' + v).split(/\s+/)
+          .filter(function (x, i, a) { return x && a.indexOf(x) === i; });
+        d.setAttribute('data-theme', t.join(' '));
+      }
+    })();
+    (function () {
+      document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (p) {
+        var l = document.createElement('link');
+        for (var i = 0; i < p.attributes.length; i++) {
+          var a = p.attributes[i];
+          if (a.name !== 'rel' && a.name !== 'as') l.setAttribute(a.name, a.value);
+        }
+        l.rel = 'stylesheet';
+        p.removeAttribute('data-nds-defer');
+        document.head.appendChild(l);
+      });
+    })();
+  </script>
+</head>
+{% endcapture %}
+{%- capture head_main %}
+<script defer src="assets/js/nds-main.min.js?ver={{ site.asset_ver }}"></script>
+{% endcapture %}
+
+<script type="text/html" id="head-setup" data-canon data-preview="none" data-escaped data-js="head-main" data-tab-label="Head">
+{{ head_code | strip | escape }}
+</script>
+
+<script type="text/html" id="head-main" data-canon data-escaped data-tab-label="JS Library">
+{{ head_main | strip | escape }}
+</script>
+
+</div>
+  </div>
 </section>
 
-<!-- Content Security Policy -->
-<section id="csp" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Content Security Policy</h2>
-            <p class="nds-section-description">NDS runs under a strict CSP. One inline script needs your permission. Everything else loads from your own origin and needs nothing.</p>
+<section id="headParts" class="nds-content-section nds-doc-parts">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Parts</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+| Part | Holds | Required |
+|---|---|---|
+| `<title>` | The page title. Per page | Yes |
+| `<style>` (the gate) | The shell's first-paint colors, its reserved heights, and the rules that hide the content. Edit the fallback colors in its Colors group to match a brand | Yes, unless you load the critical CSS as a blocking stylesheet |
+| Hero image preloads | The first hero slide, one link per `<source>` in its `<picture>`, with the same media queries. Per page | Only on a page whose hero has a photo |
+| Critical CSS preload | `nds.critical.min.css`. `data-nds-defer` marks it for the inline script | Yes |
+| Main CSS preload | `nds-main.min.css`. `data-nds-defer="main"` marks it as the sheet the page waits for | Yes |
+| Favicon | A placeholder icon. Replace the file with your own | Yes |
+| Inline script | The saved theme, applied before the first paint, and the loop that turns each `data-nds-defer` preload into a stylesheet | Yes |
+| Main script | `nds-main.min.js`, in the JS Library tab | Yes |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="headBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Gated First Paint
+{: .nds-block-title}
+
+The head above is the gated setup. The browser paints the gate's shell at once, while the critical CSS downloads without blocking. Once the main CSS applies, the loader sets `data-nds-loaded` on `<html>`, and the page shows in its final layout. NDS needs JavaScript: without it, no NDS style applies, and the gate keeps the content hidden.
+
+### Blocking Critical CSS
+{: .nds-block-title}
+
+Use a blocking stylesheet when a strict Content Security Policy cannot grant a nonce or a hash to the inline style block. Delete the `<style>` block. Replace the critical CSS preload with `<link rel="stylesheet" href="assets/css/nds.critical.min.css?ver=…">`. The first paint waits for that file, and it holds the same gate. Never delete the style block alone: the page then paints raw HTML first, and jumps when the critical CSS lands.
+
+### Framework Navigation
+{: .nds-block-title}
+
+The inline script runs once, at page load. The stylesheet links it adds and the `data-nds-loaded` stamp are not in the server HTML. A framework that compares `<head>` with the server HTML on each navigation removes them, while the gate stays, so the page hides itself until a full reload. Turbo, htmx boost and Blazor enhanced navigation work this way. Mark those links and the stamp as permanent, in the way your framework offers. If it removes them anyway, run the stylesheet loop again after each navigation and put the stamp back. Components on a new view are covered on [Refresh](../core/refresh).
+
+</div>
+  </div>
+</section>
+
+<section id="headFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-view-off"></i>
+            <span class="nds-label">No Unstyled Content</span>
+          </span>
+          <p class="nds-item-desc">The gate hides the content until the main CSS applies. A visitor never sees raw HTML or half-styled components.</p>
         </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <p>A strict policy blocks inline code. NDS keeps its inline code to one small script, so you have one thing to allow. You allow it with a <strong>nonce</strong> or with a <strong>hash</strong>. Prefer the nonce whenever your server renders responses. Use the hash only on a static host: a hash must match the script's bytes exactly, and that match breaks easily.</p>
-            </div>
-            <div class="nds-block">
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Part</th><th>What it needs</th></tr></thead>
-                    <tbody>
-                        <tr><td>Inline script in <code class="nds-inline-code lang-html">&lt;head&gt;</code> (theme guard + deferred stylesheets)</td><td>A nonce or a hash</td></tr>
-                        <tr><td>Inline critical gate (<code class="nds-inline-code lang-html">&lt;style&gt;</code>), unless you switched to the blocking stylesheet</td><td>A nonce or a hash in <code class="nds-inline-code lang-css">style-src</code></td></tr>
-                        <tr><td>Inline knobs on copied markup (<code class="nds-inline-code lang-html">style="--gap: …"</code>)</td><td>Move the knob to your own class. A <code class="nds-inline-code lang-html">style</code> attribute needs <code class="nds-inline-code lang-css">'unsafe-inline'</code>, and no nonce or hash can cover one</td></tr>
-                        <tr><td>All stylesheets and script bundles</td><td><code class="nds-inline-code lang-css">'self'</code></td></tr>
-                        <tr><td>Icon sheets the loader adds</td><td>Nothing — same origin as your other files</td></tr>
-                        <tr><td>UI icons (<code class="nds-inline-code lang-html">nds-icon</code>)</td><td><code class="nds-inline-code lang-css">img-src data:</code> — each icon is an inline SVG mask</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="nds-block nds-prose">
-                <p>A policy that covers all of it:</p>
-            </div>
-            <div class="nds-block">
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-plaintext code">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-ruler"></i>
+            <span class="nds-label">Reserved Layout</span>
+          </span>
+          <p class="nds-item-desc">The gate gives the top bar, the main navigation and the hero their final heights at first paint. Nothing moves when the styles land.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-moon-02"></i>
+            <span class="nds-label">Saved Theme Before Paint</span>
+          </span>
+          <p class="nds-item-desc">The inline script reads the theme the visitor saved and writes it on <code class="nds-inline-code lang-html">&lt;html&gt;</code> before the first paint. A dark page never flashes light.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
+            <span class="nds-label">Non-Blocking Styles</span>
+          </span>
+          <p class="nds-item-desc">Each stylesheet downloads as a preload and applies when it arrives, so no CSS file blocks the first paint. The hero preload starts the largest image before the body is parsed.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-package"></i>
+            <span class="nds-label">One Script Tag</span>
+          </span>
+          <p class="nds-item-desc">The main script loads every other bundle and the icon sheets itself, after the page shows. A page needs no tag for them.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-security-check"></i>
+            <span class="nds-label">Strict CSP</span>
+          </span>
+          <p class="nds-item-desc">A nonce or a hash can cover a script element, but never an inline event handler. So the head applies its stylesheets with a script, not an <code class="nds-inline-code lang-html">onload</code> attribute.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="headPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Change the `?ver=` value on every NDS upgrade. A stale value serves the old files from the browser cache. The loader adds the main script's `?ver=` to every bundle it loads.
+- Keep the head entries in their order. The inline script must come after every `data-nds-defer` preload, because it converts only the preloads above it.
+- Keep every NDS stylesheet in one folder, with the file names as shipped. The loader builds the icon and accessibility sheet URLs from the main CSS link, by swapping its file name.
+- Never add a tag for `nds-delegated.min.js`, `nds-extras.min.js` or any other bundle. The loader adds each one when the page needs it.
+- To defer a stylesheet of your own, give its preload `data-nds-defer`: `<link rel="preload" href="css/site.css" as="style" data-nds-defer>`. The inline script applies it with the others.
+- For a default stylesheet theme, add `<link id="nds-theme-stylesheet" rel="stylesheet" href="…">` right after the critical CSS preload, as a blocking stylesheet, so the brand applies before the first paint. See [Themes](../components/themes).
+
+</div>
+  </div>
+</section>
+
+<section id="headApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Files
+{: .nds-block-title #assetFiles}
+
+| File | Holds | Loading |
+|---|---|---|
+| `nds.critical.min.css` | Tokens, palette, fonts, reset, section layout, hero and the gate | A preload behind the gate, or a blocking stylesheet |
+| `nds-main.min.css` | Every component and layout style | A preload. The page shows once it applies |
+| `nds-icons.min.css` | UI icons (`nds-icon`) | Added by the loader once the main CSS applies |
+| `hgi-rounded-stroke-min.css` | The content icon map (`hgi hgi-stroke`). The icon font face is in the critical CSS | Added by the loader when the page shows |
+| `nds-main.min.js` | The loader and the components that paint the first screen | A `defer` script at the end of `<body>` |
+| `nds-delegated.min.js`, `nds-extras.min.js`, `nds-cookie-consent.min.js` | The other components | Added by the loader after the page shows, when the page holds one of their components |
+| `nds-accessibility.min.js` and `nds-accessibility.min.css` | The accessibility panel. See [Accessibility](../components/accessibility) | Added by the loader on the first press of the accessibility button, or at load for a visitor with saved settings |
+| `nds-audit.min.js` | The page audit | Added by the first `NDS.Init.audit()` call, or by `enableLogging`. Never on a production page |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-nds-defer` | a `<link rel="preload" as="style">` | The inline script adds a stylesheet link for it, with the same attributes, and removes the mark from the preload |
+| `data-nds-defer="main"` | the main CSS preload | The same, and it marks the main CSS. The loader waits for that sheet to apply before it shows the page, and finds the folder of the other NDS sheets from its URL |
+| `data-theme` | `<html>` | The inline script adds the theme saved under `nds-theme` in `localStorage` to it, before the first paint. The theme switcher writes that key |
+| `data-nds-loaded` | `<html>` | The loader sets it once the main CSS has applied, and the page shows. Do not set it yourself |
+{: .nds-table .nds-responsive}
+
+The loader's window settings (`NDSInitConfig`, `NDSAssetBase`) are on [Refresh](../core/refresh).
+
+### Content Security Policy
+{: .nds-block-title #csp}
+
+A strict policy blocks inline code, so the gate and the inline script each need a nonce or a hash. Prefer a nonce when your server renders each response. Use a hash only on a static host.
+
+| Part | Needs |
+|---|---|
+| The inline script | A nonce or a hash in `script-src` |
+| The gate (`<style>`), unless you load the critical CSS as a blocking stylesheet | A nonce or a hash in `style-src` |
+| Every stylesheet and script file | `'self'` |
+| The bundles the loader adds | `'self'`, or the nonce: the loader copies the main script's nonce onto each one |
+| UI icons (`nds-icon`) | `img-src data:`: each icon is an inline SVG mask |
+| A `style` attribute on your markup (`style="--gap: 16px"`) | `'unsafe-inline'`. No nonce or hash covers an attribute, so move the value to a class |
+| Trusted Types (`require-trusted-types-for 'script'`) | The policy name `nds` in `trusted-types` |
+{: .nds-table .nds-responsive}
+
+A policy that covers it all:
+
+<script type="text/html" id="head-csp" data-canon data-preview="none" data-lang="plaintext">
 Content-Security-Policy:
   default-src 'self';
   script-src  'self' 'nonce-YOUR_RANDOM_VALUE';
   style-src   'self' 'nonce-YOUR_RANDOM_VALUE';
   img-src     'self' data:;
   font-src    'self';
-                    </code>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-block nds-prose">
-                <p>Then put the same value on the tag:</p>
-            </div>
-            <div class="nds-block">
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-html code">
-&lt;script nonce="YOUR_RANDOM_VALUE"&gt;/* the head script */&lt;/script&gt;
+</script>
 
-&lt;script nonce="YOUR_RANDOM_VALUE" defer src="assets/js/nds-main.min.js"&gt;&lt;/script&gt;
-                    </code>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-block nds-prose">
-                <p>Your server must make a new random value for every response. A fixed value is not a nonce. It gives an attacker the same permission your own code has.</p>
-                <p>The main bundle needs the value too. The loader adds more script files at runtime, and it copies the nonce from the main bundle's tag onto each one. Without it, a <strong>nonce-only</strong> policy — one with no <code class="nds-inline-code lang-css">'self'</code> in <code class="nds-inline-code lang-css">script-src</code> — blocks them, and the components they carry never start.</p>
-                <p><strong>No server?</strong> Use a hash instead. A hash covers the script's contents between the tags, byte for byte — indentation, line endings, everything. A file saved with Windows CRLF line endings hashes differently from the same script saved with LF, and a formatter or minifier that touches the script kills the match too. Hash the contents only, never the tags. Take the SHA-256 of the script's contents, base64 it, and add <code class="nds-inline-code lang-css">'sha256-…'</code> to <code class="nds-inline-code lang-css">script-src</code>. The browser tells you the right value for the bytes it actually served: load the page with the policy on, and the console error prints the hash it expected. Re-do this whenever anything edits the script.</p>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3>Inline knobs under a strict CSP</h3>
-                <p>A <code class="nds-inline-code lang-html">style</code> attribute needs <code class="nds-inline-code lang-css">'unsafe-inline'</code>. No nonce and no hash can cover one. So under a strict policy every inline knob is dead: the value never applies, and the only warning is the browser's own CSP violation.</p>
-                <p>Find them all. Search your pages for <code class="nds-inline-code lang-html">style="--</code>. Then move each knob to a class in your own stylesheet, which <code class="nds-inline-code lang-css">'self'</code> already allows. The markup keeps its NDS classes; you add one of your own.</p>
-            </div>
-            <div class="nds-block">
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-html code">
-&lt;!-- Before — dead under a strict CSP. The knob never applies. --&gt;
-&lt;div class="nds-block nds-flex nds-col" style="--align: center;"&gt;
+Put the same value on the gate, the inline script and the main script:
 
-&lt;!-- After — same NDS classes, plus one of yours. --&gt;
-&lt;div class="nds-block nds-flex nds-col signin-stack"&gt;
-                    </code>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-block nds-prose">
-                <p>Then set the knob in your stylesheet:</p>
-            </div>
-            <div class="nds-block">
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-css code">
+{%- capture head_nonce %}
+<style nonce="YOUR_RANDOM_VALUE">/* the gate */</style>
+<script nonce="YOUR_RANDOM_VALUE">/* the inline script */</script>
+
+<script nonce="YOUR_RANDOM_VALUE" defer src="assets/js/nds-main.min.js?ver=…"></script>
+{% endcapture %}
+
+<script type="text/html" id="head-nonce" data-canon data-preview="none" data-escaped>
+{{ head_nonce | strip | escape }}
+</script>
+
+Your server makes a new random value for each response: a fixed value gives an attacker the same permission as your own code. Under a policy with no `'self'` in `script-src`, the main script needs the value too. Without it, the bundles the loader adds are blocked, and their components never start.
+
+**No server?** Use a hash: the SHA-256 of the bytes between the tags, never the tags, in base64. It covers those bytes exactly, indentation and line endings included. A file saved with CRLF line endings hashes differently from the same file with LF, and a formatter or minifier breaks the match too. When the policy blocks a block, the browser prints the hash it expected in the console error. Add that hash to the policy as `'sha256-…'`. Do it again whenever anything edits the block.
+
+A policy that allows no injected scripts can still run NDS: add each bundle's own `<script>` tag with its nonce or `integrity`. The loader skips a bundle that already has a tag.
+
+### Inline Knobs
+{: .nds-block-title}
+
+Under a strict policy, a knob in a `style` attribute never applies, and the only warning is the browser's CSP error. Search your pages for `style="--`, and move each knob to a class in your own stylesheet:
+
+<script type="text/html" id="head-knob" data-canon data-preview="none">
+<!-- Before: dead under a strict CSP -->
+<div class="nds-block nds-flex nds-col" style="--align: center;">
+
+<!-- After: the same NDS classes, plus one of yours -->
+<div class="nds-block nds-flex nds-col signin-stack">
+</script>
+
+<script type="text/html" id="head-knob-css" data-canon data-preview="none" data-lang="css">
 .signin-stack { --align: center; }
-                    </code>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-block nds-prose">
-                <p>NDS components are not affected. Their JavaScript sets styles through the CSSOM, which no policy blocks. Only knobs you wrote into a <code class="nds-inline-code lang-html">style</code> attribute need this treatment.</p>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3>Frameworks that re-render the head</h3>
-                <p>The head script runs once, at page load. It adds the stylesheet links, and NDS later stamps <code class="nds-inline-code lang-html">data-nds-loaded</code> and <code class="nds-inline-code lang-html">data-nds-fonts-loaded</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. None of that is in the server HTML. A framework that diffs the <code class="nds-inline-code lang-html">&lt;head&gt;</code> against the server HTML on navigation removes all of it, while the inline gate stays. The page then hides itself until a full reload. Turbo, htmx boost and Blazor enhanced navigation all work this way.</p>
-                <p>Keep those nodes out of the diff: mark the injected links and the two <code class="nds-inline-code lang-html">&lt;html&gt;</code> attributes as permanent, in the way your framework offers. If it removes them anyway, run the deferred-styles loop again after each navigation and put the two stamps back. The component side of a route change is covered in <a class="nds-color" href="{{ 'core/refresh' | relative_url }}">Refresh</a>.</p>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3>Why the stylesheets look the way they do</h3>
-                <p>Each deferred stylesheet ships as a <code class="nds-inline-code lang-html">rel="preload"</code> link with a <code class="nds-inline-code lang-html">data-nds-defer</code> mark. The preload downloads the file at the right priority without blocking render. The head script then adds a normal stylesheet link for it, which reuses that download. A more common way to defer CSS is an <code class="nds-inline-code lang-html">onload</code> attribute on the link. NDS does not use one, because <strong>a nonce and a hash both cover a script element, and neither can ever cover an inline event handler</strong>. An <code class="nds-inline-code lang-html">onload</code> attribute needs <code class="nds-inline-code lang-css">'unsafe-inline'</code>, which defeats the policy. Moving the same work into a script element is what makes a strict CSP possible.</p>
-                <p>NDS needs JavaScript. The head script is what applies the deferred sheets, so a browser with JavaScript turned off loads no styles and shows a blank page. There is no fallback for this, and it is deliberate: the components need JavaScript to work at all.</p>
-                <p>The icon sheets load from <code class="nds-inline-code lang-html">nds-main.min.js</code> for the same reason. That file is already allowed by <code class="nds-inline-code lang-css">'self'</code>, so icons need no grant from you at all.</p>
-            </div>
-        </div>
+</script>
+
+NDS components are not affected: their scripts set styles through the CSSOM, which no policy blocks.
+
+</div>
+  </div>
+</section>
+
+<section id="headRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Page Layout](../layout/page-layout): the `<body>` that follows this head.
+- [Hero](../ui-shell/hero): the hero `<picture>` that the hero preloads match.
+- [Refresh](../core/refresh): components on content that changes after load.
+- [Themes](../components/themes): the theme the inline script applies before the first paint.
+
+</div>
+  </div>
 </section>

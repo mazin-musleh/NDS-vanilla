@@ -190,13 +190,14 @@ module DocsCanon
   end
 
   # HTML and JS forms of one builder: the canonical tabbed code block (components/code.md).
-  def self.code_tabs(id, html_src, js_src)
-    tabs = [['html', 'HTML', html_src], ['js', 'JS', js_src]]
-    list = tabs.each_with_index.map do |(lang, name, _), i|
-      %(<button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="#{i.zero?}" aria-controls="#{id}-panel-#{lang}" id="#{id}-tab-#{lang}"><span class="nds-label">#{name}</span></button>)
+  # data-tab-label renames a tab, and the twin's data-lang sets its code language (the head's script tag is HTML).
+  def self.code_tabs(id, html_src, js_src, names = [], js_lang = 'js')
+    tabs = [['html', names[0] || 'HTML', html_src, 'html'], ['js', names[1] || 'JS', js_src, js_lang]]
+    list = tabs.each_with_index.map do |(key, name, _), i|
+      %(<button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="#{i.zero?}" aria-controls="#{id}-panel-#{key}" id="#{id}-tab-#{key}"><span class="nds-label">#{name}</span></button>)
     end
-    panels = tabs.each_with_index.map do |(lang, _, src), i|
-      %(<div class="nds-tab-panel code-example" role="tabpanel" id="#{id}-panel-#{lang}" aria-labelledby="#{id}-tab-#{lang}"#{' hidden' unless i.zero?}><div class="nds-code-action"><button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example"><i class="nds-icon nds-hgi-copy-01"></i></button></div><code class="lang-#{lang} code">
+    panels = tabs.each_with_index.map do |(key, _, src, lang), i|
+      %(<div class="nds-tab-panel code-example" role="tabpanel" id="#{id}-panel-#{key}" aria-labelledby="#{id}-tab-#{key}"#{' hidden' unless i.zero?}><div class="nds-code-action"><button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example"><i class="nds-icon nds-hgi-copy-01"></i></button></div><code class="lang-#{lang} code">
 #{CGI.escapeHTML(src)}
 </code></div>)
     end
@@ -333,7 +334,7 @@ module DocsCanon
     builder_only = {}
     canons = {}
     html.scan(CANON_RE) do |attrs, body|
-      canons[attr(attrs, 'id')] = [attr(attrs, 'data-lang') || 'html', dedent(body)]
+      canons[attr(attrs, 'id')] = [attr(attrs, 'data-lang') || 'html', attrs.include?('data-escaped') ? CGI.unescapeHTML(dedent(body)) : dedent(body), attr(attrs, 'data-tab-label')]
       builder_only[attr(attrs, 'data-js')] = true if attr(attrs, 'data-js')
       table = attr(attrs, 'data-variants')
       rows(html, table).each { |r| [r[:structure], *r[:inserts]].compact.each { |id| builder_only[id] = true } } if table
@@ -377,11 +378,14 @@ module DocsCanon
       next whole unless attr(attrs, 'data-canon') && !builder_only[id]
 
       src = dedent(body)
+      # data-escaped: code holding </script> arrives escaped by Liquid, since the first one would end the canon.
+      src = CGI.unescapeHTML(src) if attrs.include?('data-escaped')
       lang = attr(attrs, 'data-lang') || 'html'
       out = +whole
       out << "\n"
       # data-js names the builder's JS form: the same component as one create() call.
-      js = canons[attr(attrs, 'data-js')]&.last
+      twin = canons[attr(attrs, 'data-js')]
+      js = twin&.[](1)
       table = attr(attrs, 'data-variants')
       preview = lang == 'html' && attr(attrs, 'data-preview') != 'none'
       # data-live: a shell canon changes the page's own copy (its footer); its preview card
@@ -408,7 +412,7 @@ module DocsCanon
         out << "#{stage_panel}\n" if stage_panel
       end
       # data-code="none": a behavior demo, shown with no code.
-      out << (js ? code_tabs(id, src, js) : code_block(lang, src)) unless attr(attrs, 'data-code') == 'none'
+      out << (js ? code_tabs(id, src, js, [attr(attrs, 'data-tab-label'), twin[2]], twin[0]) : code_block(lang, src)) unless attr(attrs, 'data-code') == 'none'
       out
     end
 
