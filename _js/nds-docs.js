@@ -32,7 +32,7 @@
     // The group whose rows swap the whole markup. A reference page (grid) names it Example.
     var STRUCT = /^(Structure|Example)$/;
     // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
-    var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input';
+    var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input, .nds-time-input';
 
     // An option's name without its markers: (default), (demo: + id), (hint: text), (id: name), (not: ids), (limit: n name).
     function label(o) { return o.replace(/\s*\((default|limit:[^)]*|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/g, ''); }
@@ -249,7 +249,8 @@
         var t = document.createElement('template');
         t.innerHTML = dedent(document.getElementById(id).textContent);
         Array.prototype.forEach.call(t.content.children, function (k) {
-            var el = Array.prototype.filter.call(root.querySelectorAll(k.tagName), function (x) { return flat(x.outerHTML) === flat(k.outerHTML); })[0];
+            var want = flat(k.outerHTML);
+            var el = Array.prototype.find.call(root.querySelectorAll(k.tagName), function (x) { return flat(x.outerHTML) === want; });
             if (!el) return;
             // Its own line goes with it.
             if (el.previousSibling && el.previousSibling.nodeType === 3) el.previousSibling.remove();
@@ -300,7 +301,7 @@
                 var lb = liveEl.getBoundingClientRect();
                 if (lb.top < sheet.getBoundingClientRect().bottom || lb.top > window.innerHeight - 160) {
                     backTo = window.scrollY;
-                    liveEl.scrollIntoView({ block: 'end', behavior: 'smooth' });
+                    liveEl.scrollIntoView({ block: 'end', behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
                 }
                 return;
             }
@@ -311,12 +312,12 @@
             var room = (down ? window.innerHeight : s.top) - head, fits = box.height <= room - 32;
             if (top >= head && top + (fits ? box.height : 160) <= head + room) return;
             var at = fits ? head + (room - box.height) / 2 : head + 16;
-            window.scrollTo({ top: top + window.scrollY - at, behavior: 'smooth' });
+            window.scrollTo({ top: top + window.scrollY - at, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
         });
         // Scrolling away to the live copy on open is undone on close, back to the markup.
         var backTo = null;
         sheet.addEventListener('nds:panel:closed', function () {
-            if (backTo != null) window.scrollTo({ top: backTo, behavior: 'smooth' });
+            if (backTo != null) window.scrollTo({ top: backTo, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
             backTo = null;
         });
         var byKey = {}, order = [], active = {}, defaults = {}, sizes = {}, combos = {}, picks = {};
@@ -892,7 +893,7 @@
         var id = b.getAttribute('data-builder-live');
         b.addEventListener('click', function () {
             if (document.getElementById(id + '-options').hidden) document.querySelector('[data-builder-for="' + id + '"] [data-panel-toggle]').click();
-            else document.querySelector(document.getElementById(id).getAttribute('data-live')).scrollIntoView({ block: 'end', behavior: 'smooth' });
+            else document.querySelector(document.getElementById(id).getAttribute('data-live')).scrollIntoView({ block: 'end', behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
         });
     });
 
