@@ -80,7 +80,7 @@ module DocsCanon
         structure?(group) ? c[:structure] = Regexp.last_match(1) : (c[:inserts] ||= []) << Regexp.last_match(1)
       end
       c[:live] ||= markup != '—'
-      (c[:adds] ||= []) << markup if markup =~ /\A(\.[\w-]+|\[[\w-]+(~?="[^"]*")?\])\z/
+      (c[:adds] ||= []) << markup if markup =~ /\A(\.[\w-]+|\[[\w-]+(~?="[^"]*"|='[^']*')?\])\z/
       # A `—` row with a target (a default that fits only some structures) is checked too.
       (c[:targets] ||= []) << target if (markup != '—' || !['—', ''].include?(target)) && !c[:structure]
     end

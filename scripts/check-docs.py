@@ -124,7 +124,7 @@ def check(path):
             if ref and ref.group(1) not in known:
                 errs.append(f'#{tid}: {group} / {option}: canon #{ref.group(1)} does not exist')
             # A non-default option must not be in the canon already, or it can never be turned off.
-            op = re.fullmatch(r'\.([\w-]+)|\[([\w-]+)(?:(~?)="([^"]*)")?\]', markup)
+            op = re.fullmatch(r'''\.([\w-]+)|\[([\w-]+)(?:(~?)=(?:"([^"]*)"|'([^']*)'))?\]''', markup)
             if not op or '(default)' in option or target.startswith('create('):
                 continue
             # A default row writes it too: picking this option puts it back after that default is off.
@@ -137,7 +137,7 @@ def check(path):
             def has(cls, attrs):
                 if op.group(1):
                     return op.group(1) in cls
-                name, tilde, value = op.group(2), op.group(3), op.group(4)
+                name, tilde, value = op.group(2), op.group(3), op.group(4) if op.group(4) is not None else op.group(5)
                 if name not in attrs:
                     return False
                 return value is None or (value in attrs[name].split() if tilde else attrs[name] == value)
