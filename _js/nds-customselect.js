@@ -127,10 +127,19 @@
         // rotation rule (`.nds-form-container[data-state~="open"]`) keeps working.
         formControl.addEventListener('nds:dropmenu:opened', function () {
             NDS.State.add(formContainer, 'open');
-            if (options[0]) options[0].focus();
+            (dropdown.querySelector('.nds-select-option[data-state~="selected"]') || options[0]).focus();
         });
         formControl.addEventListener('nds:dropmenu:closed', function () {
             NDS.State.remove(formContainer, 'open');
+        });
+
+        // Readonly CSS stops the pointer only; this stops the keyboard open.
+        // Added before the dropmenu's own trigger listener, so it runs first.
+        selectInput.addEventListener('keydown', function (e) {
+            if (/^(Enter| |ArrowDown|ArrowUp)$/.test(e.key) && NDS.State.has(formContainer, 'readonly')) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
         });
 
         // Hand off all behaviour to the dropmenu.

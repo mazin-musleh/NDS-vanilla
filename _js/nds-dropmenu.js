@@ -652,9 +652,10 @@
 
         // The item representing the menu's current value — a row a component
         // stamped data-state active (pagination's current page, sort's active
-        // option). Keyboard-open lands focus there instead of the list edge.
+        // option) or selected (picker mode, custom select). Keyboard-open lands
+        // focus there instead of the list edge.
         getCurrentItem() {
-            return this._ownFirst('.nds-dropmenu-item[data-state~="active"]:not(:disabled):not([hidden])');
+            return this._ownFirst('.nds-dropmenu-item:is([data-state~="active"], [data-state~="selected"]):not(:disabled):not([hidden])');
         }
 
         handleTriggerKeydown(e) {
