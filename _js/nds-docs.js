@@ -799,13 +799,20 @@
         f.className = 'nds-doc-screen';
         f.title = 'Preview';
         f.style.visibility = 'hidden';
+        var dark = card.getAttribute('data-theme') === 'dark' || !!doc.querySelector('body > [data-theme~="dark"]');
+        var canon = document.getElementById(card.getAttribute('data-preview-of'));
         f.onload = function () {
+            // data-preview-light: drop the site's dark (the copied head script restores it), so a dark area shows on a light page.
+            var r = f.contentDocument.documentElement;
+            if (canon.hasAttribute('data-preview-light') && !dark) r.setAttribute('data-theme', (r.getAttribute('data-theme') || '').replace(/(^|\s)dark(?=\s|$)/g, '').trim());
             dev.querySelectorAll('iframe').forEach(function (x) { if (x !== f) x.remove(); });
             f.style.visibility = '';
+            fit(card);
         };
         dev.appendChild(f);
         fit(card);
-        var dark = card.getAttribute('data-theme') === 'dark' || !!doc.querySelector('body > [data-theme~="dark"]');
+        // A light frame without screen buttons watches the card's width itself.
+        if (canon.hasAttribute('data-preview-light') && !card.querySelector('[data-preview-screen]') && !card.ndsFitWatch) card.ndsFitWatch = NDS.onElementResize(card, function () { return function () { fit(card); }; });
         f.srcdoc = '<!doctype html><html ' + rootAttrs(dark) + '><head><base target="_top">' + document.head.innerHTML +
             // No nav in the frame: sticky parts pin at its top, not under a missing nav. A nav part keeps its height.
             // data-preview-style on the canon: CSS for the preview only, never in the code.
@@ -819,7 +826,10 @@
         var desk = !card.getAttribute('data-screen'), b = desk ? 0 : BEZEL;
         var size = (card.getAttribute('data-screen') || PAGE).split('x'), w = +size[0], h = +size[1];
         var cs = getComputedStyle(card), room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2 * b;
-        if (desk) h = +document.getElementById(card.getAttribute('data-preview-of')).getAttribute('data-preview-height') || h;
+        var canon = document.getElementById(card.getAttribute('data-preview-of'));
+        if (desk) h = +canon.getAttribute('data-preview-height') || h;
+        // data-preview-light: the frame takes the card's width and its content's height, like a plain preview.
+        if (desk && canon.hasAttribute('data-preview-light')) { w = room; h = contentHeight(dev, w) || h; }
         var s = Math.min(1, room / w);
         dev.style.cssText = 'width:' + (w * s + 2 * b) + 'px;height:' + (h * s + 2 * b) + 'px;' +
             (desk ? 'background:none;box-shadow:none' : 'border-radius:' + RADIUS + 'px');
@@ -831,6 +841,13 @@
             f.style.transform = 'scale(' + s + ')';
             f.style.transformOrigin = '0 0';
         });
+    }
+    // The loaded frame's content height at width w; 0 before it loads.
+    function contentHeight(dev, w) {
+        var f = dev.querySelector('iframe:last-of-type'), d = f && f.contentDocument, top = d && d.body && d.body.firstElementChild;
+        if (!top) return 0;
+        f.style.width = w + 'px';
+        return Math.ceil(top.getBoundingClientRect().bottom + parseFloat(d.defaultView.getComputedStyle(d.body).paddingBottom));
     }
     // A page card has no slot: its first frame loads with the page.
     document.querySelectorAll('[data-preview-page]').forEach(frame);
