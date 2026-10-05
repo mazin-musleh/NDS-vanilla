@@ -1,1548 +1,472 @@
 ---
 layout: page
 title: Section
-hero_title: Section Layout - National Design System
-hero_description: A structured container for organizing page content into titled blocks with optional actions, images, color themes, and full-width breakout areas.
+hero_title: Section - National Design System
+hero_description: A section is one titled block of page content, with an optional action, image and background color.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/09/2026 - 08:03 AM"
+last_edit: "05/10/2026 - 11:39 AM"
 ---
 
-<!-- Section Structure Overview -->
-<section id="structure" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Section Hierarchy</h2>
-            <p class="nds-section-description">The section component uses responsive padding for content constraining and a flex wrapper for grouping head, action, image, and content.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Section Structure</div>
-                        </div>
-                        <div class="demo-container nds-noBg">
-                            <div class="nds-code nds-expandable">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                    <code class="lang-html code">
-section.nds-content-section.nds-demo-section          (responsive padding for content constraining)
-├── div.nds-section-wrapper          (Flex row + responsive breakpoints. Repeatable: stack several
-│                                     to put multiple titled blocks on one surface. See Tier 7)
-│   ├── div.nds-section-image        (optional)
-│   ├── div.nds-section-head         (flex:1, title + desc + meta)
-│   │   ├── div.nds-section-action   (optional float, must be first child)
-│   │   │                            Modifiers: .nds-minimal (icon-only on mobile) | .nds-wrap (allow wrap)
-│   │   ├── h2.nds-section-title
-│   │   │   └── span.nds-featured-icon.nds-section-icon (optional mark, sized to the title)
-│   │   ├── div.nds-section-meta
-│   │   └── p.nds-section-description
-│   ├── div.nds-section-action       (optional, auto width. Add .nds-nowrap to keep inline on mobile)
-│   └── div.nds-section-body      (full row below)
-│       └── div.nds-block    (optional spacing unit — see below)
-│           ├── h3.nds-block-title   (optional)
-│           └── p, ul, ol, img...    (direct content)
-└── div.nds-section-body.nds-max-width  (outside wrapper for breakout)
-                            </code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sectionOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+All page content sits in sections. A section is a `section.nds-content-section`. Its wrapper groups the head (a title and a description), an optional action, an optional image and the body. The section sets the page gutter, the space above and below, and the background. Sections need no JavaScript.
+
+Pick another component when:
+
+- the content is a group inside a section, with no background of its own: [Block](../layout/block)
+- the section shows an outcome, such as a page not found: [Status Section](../layout/status-section)
+- the content is one item in a set: [Cards](../components/cards)
+- the content folds open and closed: [Accordion](../components/accordion)
+
+</div>
+  </div>
 </section>
 
-<!-- Tier 1: Minimal -->
-<section id="tier1" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tier 1: Minimal (No Wrapper)</h2>
-            <p class="nds-section-description">Simplest usage: title, description, and content as direct children of the section grid. No wrapper needed.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Variant</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Gradient Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Brand</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Ghost</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-content-section.nds-demo-section", "sectionLayout"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-demo-section">
-                                    <h2 class="nds-section-title">Section Title</h2>
-                                    <p class="nds-section-description">Section description goes here. Used for simple sections with only a title and content.</p>
-                                    <div class="nds-section-body">
-                                        <p>Section content area.</p>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-tier1" id="tab-tier1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier1" aria-labelledby="tab-tier1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section"&gt;
-    &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-    &lt;p class="nds-section-description"&gt;Section description goes here. Used for simple sections with only a title and content.&lt;/p&gt;
-    &lt;div class="nds-section-body"&gt;
-        &lt;p&gt;Section content area.&lt;/p&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Tier 2: Standard with Wrapper -->
-<section id="tier2" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tier 2: Standard (With Wrapper)</h2>
-            <p class="nds-section-description">Wrapper groups head and content with consistent gap spacing. Used for most sections.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Variant</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Gradient Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Brand</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Ghost</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-content-section.nds-demo-section", "sectionLayout"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-demo-section">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">Section Title</h2>
-                                            <p class="nds-section-description">Description text wrapped with content inside a section wrapper.</p>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Section content area.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-tier2" id="tab-tier2">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier2" aria-labelledby="tab-tier2">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Description text wrapped with content inside a section wrapper.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Section content area.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Tier 3: With Action -->
-<section id="tier3" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tier 3: With Action</h2>
-            <p class="nds-section-description">Action buttons sit beside the head on desktop and drop to full-row below on tablet and smaller.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Variant</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Gradient Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Brand</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Ghost</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-content-section.nds-demo-section", "sectionLayout"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-demo-section">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">Latest News</h2>
-                                            <p class="nds-section-description">Stay up to date with the latest updates and announcements.</p>
-                                        </div>
-                                        <div class="nds-section-action">
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">View All</span>
-                                            </a>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>News cards or content goes here.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-tier3" id="tab-tier3">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier3" aria-labelledby="tab-tier3">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Latest News&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Stay up to date with the latest updates and announcements.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-action"&gt;
-            &lt;a href="#" class="nds-btn nds-primary"&gt;
-                &lt;span class="nds-label"&gt;View All&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;News cards or content goes here.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Float Action -->
-<section id="float-action" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Float Action</h2>
-            <p class="nds-section-description">Place the action as the <strong>first child</strong> inside the section head. It floats to the inline-end, letting the title and description text wrap around it. Not compatible with .nds-center or .nds-horizontal layouts. Add <strong>.nds-minimal</strong> to hide button labels on mobile (icon-only) or <strong>.nds-wrap</strong> to allow items to wrap.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Variant</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Gradient Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Brand</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Ghost</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-minimal", ".nds-section-head > .nds-section-action", "floatMod"]'>
-                                    <span class="nds-label">Minimal</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-wrap", ".nds-section-head > .nds-section-action", "floatMod"]'>
-                                    <span class="nds-label">Wrap</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-content-section.nds-demo-section", "sectionLayout"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-demo-section">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <div class="nds-section-action">
-                                                <a href="#" class="nds-btn nds-primary" aria-label="View All">
-                                                    <i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i>
-                                                    <span class="nds-label">View All</span>
-                                                </a>
-                                            </div>
-                                            <h2 class="nds-section-title">Section Title</h2>
-                                            <p class="nds-section-description">The action button floats to the inline-end corner while the title and description text wrap around it naturally. This creates a compact layout without the action taking its own flex row.</p>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Section content area.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-float" id="tab-float">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-float" aria-labelledby="tab-float">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;div class="nds-section-action"&gt;
-                &lt;a href="#" class="nds-btn nds-primary" aria-label="View All"&gt;
-                    &lt;i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"&gt;&lt;/i&gt;
-                    &lt;span class="nds-label"&gt;View All&lt;/span&gt;
-                &lt;/a&gt;
-            &lt;/div&gt;
-            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;The action button floats to the inline-end corner while the title and description text wrap around it naturally. This creates a compact layout without the action taking its own flex row.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Section content area.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Dual Action -->
-<section id="dual-action" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Dual Action</h2>
-            <p class="nds-section-description">A section can have both a float action inside the head and a standard action outside. The outside action automatically wraps to a full row when a float action is present.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Variant</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Gradient Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Brand</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Ghost</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-content-section.nds-demo-section", "sectionLayout"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-demo-section nds-ghost">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <div class="nds-section-action">
-                                                <a href="#" class="nds-btn nds-subtle">
-                                                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-                                                    <span class="nds-label">Share</span>
-                                                </a>
-                                            </div>
-                                            <h2 class="nds-section-title">Section Title</h2>
-                                            <p class="nds-section-description">Float action in the head, standard action outside for secondary controls.</p>
-                                        </div>
-                                        <div class="nds-section-action">
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">View All</span>
-                                            </a>
-                                            <a href="#" class="nds-btn nds-secondary-outline">
-                                                <span class="nds-label">Download</span>
-                                            </a>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Section content area.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-dual" id="tab-dual">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-dual" aria-labelledby="tab-dual">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section nds-ghost"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;div class="nds-section-action"&gt;
-                &lt;a href="#" class="nds-btn nds-subtle"&gt;
-                    &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
-                    &lt;span class="nds-label"&gt;Share&lt;/span&gt;
-                &lt;/a&gt;
-            &lt;/div&gt;
-            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Float action in the head, standard action outside for secondary controls.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-action"&gt;
-            &lt;a href="#" class="nds-btn nds-primary"&gt;
-                &lt;span class="nds-label"&gt;View All&lt;/span&gt;
-            &lt;/a&gt;
-            &lt;a href="#" class="nds-btn nds-secondary-outline"&gt;
-                &lt;span class="nds-label"&gt;Download&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Section content area.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- nds-nowrap Modifier -->
-<section id="nowrap" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Action Wrapping: nds-nowrap</h2>
-            <p class="nds-section-description">By default, the standard action wraps to a full row on mobile. Add .nds-nowrap to keep it inline.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Variant</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Gradient Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Brand</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Ghost</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-demo-section">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">Section Title</h2>
-                                            <p class="nds-section-description">The action stays inline on all breakpoints.</p>
-                                        </div>
-                                        <div class="nds-section-action nds-nowrap">
-                                            <a href="#" class="nds-btn nds-primary nds-sm">
-                                                <span class="nds-label">Action</span>
-                                            </a>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Resize the browser to mobile width. The action stays beside the head.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-nowrap" id="tab-nowrap">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nowrap" aria-labelledby="tab-nowrap">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;The action stays inline on all breakpoints.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-action nds-nowrap"&gt;
-            &lt;a href="#" class="nds-btn nds-primary nds-sm"&gt;
-                &lt;span class="nds-label"&gt;Action&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Resize the browser to mobile width. The action stays beside the head.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Tier 4: With Image -->
-<section id="tier4" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tier 4: With Image</h2>
-            <p class="nds-section-description">Image, head, and action form a flex row. Content takes full row below.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Variant</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Gradient Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Brand</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Ghost</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-content-section.nds-demo-section", "sectionLayout"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-demo-section">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-image">
-                                            <div class="nds-avatar">
-                                                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">Faculty Profile</h2>
-                                            <p class="nds-section-description">Professor of Computer Science, College of Engineering.</p>
-                                        </div>
-                                        <div class="nds-section-action">
-                                            <a href="#" class="nds-btn nds-primary">
-                                                <span class="nds-label">Contact</span>
-                                            </a>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Profile details and content goes here.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-tier4" id="tab-tier4">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier4" aria-labelledby="tab-tier4">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-image"&gt;
-            &lt;div class="nds-avatar"&gt;
-                &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Faculty Profile&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Professor of Computer Science, College of Engineering.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-action"&gt;
-            &lt;a href="#" class="nds-btn nds-primary"&gt;
-                &lt;span class="nds-label"&gt;Contact&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Profile details and content goes here.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Tier 5: Max-Width Breakout -->
-<section id="tier5" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tier 5: Max-Width Breakout</h2>
-            <p class="nds-section-description">Content lives outside the wrapper and uses .nds-max-width to break out of the content padding into the full available width. Wrapper holds head + action only. This demo is live on the page itself — the swiper below escapes the content max-width to the viewport gutter edge (a nested demo card can't show this: the breakout resolves against its container, not the page).</p>
-        </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-primary">
-                <span class="nds-label">View All</span>
-            </a>
-        </div>
-    </div>
-    <div class="nds-section-body nds-max-width">
-        <div class="nds-block">
-            <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
-                <div class="nds-swiper-wrapper">
-                    {% for service in site.data.content.services limit:6 %}
-                    <div class="nds-swiper-slide">
-                        <div class="nds-card nds-stroke">
-                            <div class="nds-card-header">
-                                <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-xl">
-                                        {{ service.icon }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="nds-card-content">
-                                <div class="nds-card-text">
-                                    <span class="nds-card-title nds-truncate">{{ service.title }}</span>
-                                    <span class="nds-card-description nds-truncate">{{ service.description }}</span>
-                                </div>
-                            </div>
-                            <div class="nds-card-actions">
-                                <a href="#" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
-                                    <span class="nds-label">Details</span>
-                                </a>
-                                <a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
-                                    <span class="nds-label">Get Started</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <div class="nds-swiper-navigation" hidden>
-                    <div class="nds-swiper-buttons">
-                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"></button>
-                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"></button>
-                    </div>
-                    <div class="nds-swiper-pagination"></div>
-                </div>
-            </div>
-        </div>
+<section id="sectionMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-        <div class="nds-block">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-tier5" id="tab-tier5">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tier5" aria-labelledby="tab-tier5">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
-&lt;div class="nds-section-wrapper"&gt;
-    &lt;div class="nds-section-head"&gt;
-        &lt;h2 class="nds-section-title"&gt;Related Services&lt;/h2&gt;
-        &lt;p class="nds-section-description"&gt;Explore other government digital services that may be relevant to you.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-section-action"&gt;
-        &lt;a href="#" class="nds-btn nds-primary"&gt;
-            &lt;span class="nds-label"&gt;View All&lt;/span&gt;
-        &lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="nds-section-body nds-max-width"&gt;
-    &lt;div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px"&gt;
-        &lt;div class="nds-swiper-wrapper"&gt;
-            &lt;div class="nds-swiper-slide"&gt;
-                &lt;div class="nds-card nds-stroke"&gt;
-                    &lt;div class="nds-card-header"&gt;
-                        &lt;div class="nds-card-featured-icon"&gt;
-                            &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
-                                &lt;i class="hgi hgi-stroke hgi-user-id-verification"&gt;&lt;/i&gt;
-                            &lt;/span&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class="nds-card-content"&gt;
-                        &lt;div class="nds-card-text"&gt;
-                            &lt;span class="nds-card-title nds-truncate"&gt;Identity Verification&lt;/span&gt;
-                            &lt;span class="nds-card-description nds-truncate"&gt;Verify your national identity and obtain digital certificates.&lt;/span&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div class="nds-card-actions"&gt;
-                        &lt;a href="#" class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Details&lt;/span&gt;&lt;/a&gt;
-                        &lt;a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon"&gt;&lt;span class="nds-label"&gt;Get Started&lt;/span&gt;&lt;/a&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;!-- more slides... --&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-swiper-navigation" hidden&gt;
-            &lt;div class="nds-swiper-buttons"&gt;
-                &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
-                &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<script type="text/html" id="section-standard" data-canon data-variants="sectionVariantsTable" data-preview-flush>
+<section class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Digital Services</h2>
+      <p class="nds-section-description">Services you can complete online, without a visit to a branch.</p>
     </div>
+    <div class="nds-section-body nds-prose">
+      <p>Apply for a permit, renew a license or track a request from your account.</p>
+    </div>
+  </div>
+</section>
+</script>
+<script type="text/html" id="section-icon" data-canon>
+<section class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">
+        <span class="nds-featured-icon nds-section-icon">
+          <i class="hgi hgi-stroke hgi-stars"></i>
+        </span>
+        <span>Digital Services</span>
+      </h2>
+      <p class="nds-section-description">Services you can complete online, without a visit to a branch.</p>
+    </div>
+    <div class="nds-section-body nds-prose">
+      <p>Apply for a permit, renew a license or track a request from your account.</p>
+    </div>
+  </div>
+</section>
+</script>
+<script type="text/html" id="section-horizontal" data-canon>
+<section class="nds-content-section nds-horizontal">
+  <div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Visit the Service Center</h2>
+      <p class="nds-section-description">The center in Riyadh is open Sunday to Thursday, from 8 AM to 4 PM.</p>
+      <div class="nds-section-action">
+        <a href="#" class="nds-btn nds-primary">
+          <span class="nds-label">Book a Visit</span>
+        </a>
+      </div>
+    </div>
+    <div class="nds-section-body">
+      <img src="../assets/img/riyadhcenter.webp" alt="The service center in Riyadh">
+    </div>
+  </div>
+</section>
+</script>
+<script type="text/html" id="section-stacked" data-canon>
+<section class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Profile</h2>
+      <p class="nds-section-description">Professor of Computer Science, College of Engineering.</p>
+    </div>
+    <div class="nds-section-body nds-prose">
+      <p>Research in distributed systems and network security.</p>
+    </div>
+  </div>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Experience</h2>
+    </div>
+    <div class="nds-section-body nds-prose">
+      <p>Twelve years of teaching and research at King Saud University.</p>
+    </div>
+  </div>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Publications</h2>
+    </div>
+    <div class="nds-section-body nds-prose">
+      <p>Thirty-four papers in peer-reviewed journals.</p>
+    </div>
+  </div>
+</section>
+</script>
+<script type="text/html" id="section-breakout" data-canon>
+<section class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Service Centers</h2>
+      <p class="nds-section-description">Find a center near you and see its opening hours.</p>
+    </div>
+    <div class="nds-section-action">
+      <a href="#" class="nds-btn nds-primary">
+        <span class="nds-label">View All</span>
+      </a>
+    </div>
+  </div>
+  <div class="nds-section-body nds-max-width">
+    <img src="../assets/img/riyadhcenter.webp" alt="The service center in Riyadh">
+  </div>
+</section>
+</script>
+<script type="text/html" id="section-profile" data-canon>
+<section class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-image">
+      <div class="nds-avatar">
+        <img src="../docs-assets/img/avatar3.webp" alt="Dr. Faisal Al-Harbi">
+      </div>
+    </div>
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Dr. Faisal Al-Harbi</h2>
+      <p class="nds-section-description">Associate Professor, Department of Computer Science</p>
+    </div>
+    <div class="nds-section-action">
+      <a href="mailto:f.alharbi@university.edu.sa" class="nds-btn nds-secondary-outline">
+        <span class="nds-label">Contact</span>
+      </a>
+    </div>
+    <div class="nds-section-body">
+      <dl class="nds-definition-list nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-school" aria-hidden="true"></i>
+            <span class="nds-label">College</span>
+          </dt>
+          <dd>College of Computer and Information Sciences</dd>
+        </div>
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-building-02" aria-hidden="true"></i>
+            <span class="nds-label">Department</span>
+          </dt>
+          <dd>Department of Computer Science</dd>
+        </div>
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-book-02" aria-hidden="true"></i>
+            <span class="nds-label">Specialization</span>
+          </dt>
+          <dd>Artificial Intelligence</dd>
+        </div>
+        <div class="nds-definition-item">
+          <dt>
+            <i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>
+            <span class="nds-label">Office</span>
+          </dt>
+          <dd>Building 31, Room 2104</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+</script>
+<script type="text/html" id="section-action" data-canon>
+<div class="nds-section-action">
+  <a href="#" class="nds-btn nds-primary">
+    <span class="nds-label">View All</span>
+  </a>
+</div>
+</script>
+<script type="text/html" id="section-float-action" data-canon>
+<div class="nds-section-action">
+  <a href="#" class="nds-btn nds-primary">
+    <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
+    <span class="nds-label">View All</span>
+  </a>
+</div>
+</script>
+<script type="text/html" id="section-action-secondary" data-canon>
+<div class="nds-section-action">
+  <a href="#" class="nds-btn nds-secondary-outline">
+    <span class="nds-label">Download the Guide</span>
+  </a>
+</div>
+</script>
+<script type="text/html" id="section-image" data-canon>
+<div class="nds-section-image">
+  <img src="../assets/img/riyadhcenter3s.webp" alt="The service center in Riyadh" width="120" height="112">
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Tier 6: Horizontal Layout -->
-<section id="tier6" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tier 6: Horizontal Layout</h2>
-            <p class="nds-section-description">Add .nds-horizontal to a section to switch the wrapper from flex to a two-column grid layout on desktop (head start, content end).</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-
-                            <div class="demo-action">
-                                <div class="nds-dropmenu demo-toggle-menu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                        <span class="nds-label">Variant</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                                data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Default</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Neutral</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                                <span class="nds-label">Gradient Primary</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Brand</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                                data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                                <span class="nds-label">Ghost</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-content-section.nds-demo-section", "sectionLayout"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-demo-section nds-horizontal">
-                                    <div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;">
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">Side by Side</h2>
-                                            <p class="nds-section-description">Head and content are displayed in a horizontal grid on desktop screens.</p>
-                                            <div class="nds-section-action">
-                                                <a href="#" class="nds-btn nds-primary">
-                                                    <span class="nds-label">View All</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <img src="https://placehold.co/600x400/e2e8f0/475569?text=Content+Image" alt="Placeholder image" style="border-radius: var(--radius-lg); width: 100%;">
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-tier6" id="tab-tier6">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier6" aria-labelledby="tab-tier6">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section nds-horizontal"&gt;
-    &lt;div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Side by Side&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Head and content are displayed in a horizontal grid on desktop screens.&lt;/p&gt;
-            &lt;div class="nds-section-action"&gt;
-                &lt;a href="#" class="nds-btn nds-primary"&gt;
-                    &lt;span class="nds-label"&gt;View All&lt;/span&gt;
-                &lt;/a&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;img src="https://placehold.co/600x400/e2e8f0/475569?text=Content+Image" alt="Placeholder image" style="border-radius: var(--radius-lg); width: 100%;"&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sectionVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The standard action goes right after the head. The float action goes first in the head: `.nds-section-action:first-child` is the float action. Primary, Gradient and Neutral write two changes on the section: the color class and `data-theme="dark"`.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Standard (default) (id: standard) | — | — | A wrapper that holds the head and the body. Start here |
+| Structure | Title icon (id: icon) | canon `#section-icon` | — | A [featured icon](../components/featured-icons) before the title text. Wrap the text in a `<span>` |
+| Structure | Horizontal (id: horizontal) | canon `#section-horizontal` | — | The head beside the body on a desktop. The action goes in the head, after the description |
+| Structure | Stacked (id: stacked) | canon `#section-stacked` | — | Several wrappers in one section, on one background |
+| Structure | Profile (id: profile) | canon `#section-profile` | — | A person: a photo in `nds-section-image`, the name as the title, the role, a contact action and the details in a [definition list](../components/definition-list) |
+| Structure | Breakout (id: breakout) | canon `#section-breakout` | — | A body after the wrapper, with `nds-max-width`, that runs to the section edges. For a swiper or a wide image |
+| Action | None (default) | — | — | No action |
+| Action | Standard (not: horizontal, stacked, profile, breakout) | canon `#section-action` | `.nds-section-head` (after) | Beside the head on a desktop. On a phone it takes its own row, and each button is full width |
+| Action | Float (not: horizontal, stacked, profile, breakout) | canon `#section-float-action` | `.nds-section-head` (start) | In the head, first. It sits in the end corner, and the title and the description wrap around it |
+| Action | Dual (not: horizontal, stacked, profile, breakout) | canon `#section-float-action` | `.nds-section-head` (start) | A float action and a standard action. The standard action then takes its own row |
+| Action | Dual (not: horizontal, stacked, profile, breakout) | canon `#section-action-secondary` | `.nds-section-head` (after) | A float action and a standard action. The standard action then takes its own row |
+| Float action (any) | Icon only on phones | `.nds-minimal` | `.nds-section-action:first-child` | Hides the button labels below 600px. Each button needs an icon. The label stays as the accessible name |
+| Float action (any) | Own row on phones | `.nds-wrap` | `.nds-section-action:first-child` | Moves the float action under the description below 600px |
+| Image | Image (not: horizontal, stacked, profile) | canon `#section-image` | `.nds-section-wrapper` (start) | A small image before the head. Set its size with `width` and `height`. The head centers on it. For a person, use an avatar: see Profile |
+| Layout | Center | `.nds-center` | `.nds-content-section:not(.nds-horizontal)` | Centers the head, the action and the body |
+| Color | None (default) | — | — | The page background |
+| Color | Primary | `.nds-primary` | `.nds-content-section` | A deep primary background, for one section that must stand out |
+| Color | Primary | `[data-theme="dark"]` | `.nds-content-section` | The components inside take their dark-mode colors |
+| Color | Gradient | `.nds-gradient-primary` | `.nds-content-section` | A gradient from deep primary to primary |
+| Color | Gradient | `[data-theme="dark"]` | `.nds-content-section` | The components inside take their dark-mode colors |
+| Color | Neutral | `.nds-neutral` | `.nds-content-section` | A dark neutral background |
+| Color | Neutral | `[data-theme="dark"]` | `.nds-content-section` | The components inside take their dark-mode colors |
+| Color | Brand | `.nds-brand` | `.nds-content-section` | A light brand tint with an inset shadow |
+| Color | Ghost | `.nds-ghost` | `.nds-content-section` | No background, border or shadow, in every layout |
+{: #sectionVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Tier 7: Stacked Wrappers -->
-<section id="tier7" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Tier 7: Stacked Wrappers</h2>
-            <p class="nds-section-description">Several titled blocks inside one section, sharing a single surface. Use it where a section has a visible surface of its own: card view, where each section paints as a card, and striped layouts, where sections alternate background.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Three blocks on one surface</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-neutral">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">Profile</h2>
-                                            <p class="nds-section-description">The first block carries the heading that names the whole surface.</p>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Section content area.</p>
-                                        </div>
-                                    </div>
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">Experience</h2>
-                                            <p class="nds-section-description">Each following block keeps its own head and body.</p>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Section content area.</p>
-                                        </div>
-                                    </div>
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">Publications</h2>
-                                            <p class="nds-section-description">Spacing between blocks is handled for you, so no extra classes are needed.</p>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Section content area.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-tier7" id="tab-tier7">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tier7" aria-labelledby="tab-tier7">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                    <code class="lang-html code">
-&lt;section class="nds-content-section nds-neutral"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Profile&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;The first block carries the heading that names the whole surface.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Section content area.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Experience&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Each following block keeps its own head and body.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Section content area.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Publications&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Spacing between blocks is handled for you, so no extra classes are needed.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Section content area.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sectionBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### No Wrapper
+
+A section with no action and no image can leave out `nds-section-wrapper`: its `nds-section-head` and `nds-section-body` then sit straight in the section. It looks the same as a section with a wrapper.
+
+### Horizontal Layout
+{: #sectionHorizontal}
+
+`nds-horizontal` on the section makes the wrapper a grid of two columns at 960px and wider: the head, then the body. Below 960px the wrapper stacks again. Add `nds-grid` to the wrapper to set the column widths with `--max-track`: see [Grid](../layout/grid).
+
+### Stacked Wrappers
+{: #sectionStacked}
+
+Each `nds-section-wrapper` after the first starts a new titled block, with `--section-wrapper-gap` above it. The blocks share the section background. In card view they are one card, and with stripes they are one stripe. Both are set on the page, not on the section: see [Page Layout](../layout/page-layout).
+
+### Breakout
+{: #sectionBreakout}
+
+A body with `nds-max-width` cancels the section's side padding, so its content runs to the section edges. Put it after the wrapper, not inside it. `nds-full-width` on an element in a section goes further, to the edges of the screen. The two differ where the section is narrower than the screen, such as beside a side menu.
+
+### Standard Action
+
+A `nds-section-action` after the head sits beside it on a desktop, at the top. Below 600px it takes its own row, and each button is full width.
+
+### Float Action
+
+A `nds-section-action` that is the first child of the head floats to the end corner. The title and the description wrap around it, so it takes no row of its own. The buttons stack in a column and share one width. In a centered or horizontal section it does not float: it goes under the description. Add `nds-minimal` to show only the icons below 600px, or `nds-wrap` to move it under the description there.
+
+### Dual Action
+
+A section can hold a float action and a standard action. The standard action then takes its own row on every screen, under the head.
+
+### Image
+
+A `nds-section-image` before the head holds a small image or an [avatar](../components/avatar). It sits beside the head, and the head centers on it. An avatar in it is 120px, and 80px below 600px.
+
+### Center
+
+`nds-center` stacks the wrapper in one column and centers the head, the action and the body. A title icon goes above the title and is 48px.
+
+### Background Colors
+
+`nds-primary`, `nds-gradient-primary` and `nds-neutral` paint a dark background, and the section text takes the on-color text colors. Write `data-theme="dark"` on the same section, so the buttons, tags and other components inside take their dark-mode colors: see [Dark Areas](../components/themes). `nds-brand` paints a light tint and needs no dark area. The gradient runs at `-45deg`, and at `45deg` on an LTR page. A section with a background color is never striped: see [Page Layout](../layout/page-layout).
+
+</div>
+  </div>
 </section>
 
-<!-- Title Icon -->
-<section id="titleIcon" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Title Icon</h2>
-            <p class="nds-section-description">A mark that sits beside the heading, for sections that carry an emblem or a category symbol. Put <code class="nds-inline-code lang-html">nds-section-icon</code> inside the title, with the heading text in a <code class="nds-inline-code lang-html">&lt;span&gt;</code> after it, and the mark takes the heading height, so it rescales with the title on every breakpoint. The title holds the mark on one row, so a long heading wraps its text and leaves the mark in place. Add <code class="nds-inline-code lang-html">nds-center</code> to the section to center the head and stack the mark above the text.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["nds-center", ".nds-content-section", "iconAlign"]'>
-                                    <span class="nds-label">Center</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-head">
-                                            <h2 class="nds-section-title">
-                                                <span class="nds-featured-icon nds-section-icon">
-                                                    <i class="hgi hgi-stroke hgi-stars"></i>
-                                                </span>
-                                                <span>Digital services</span>
-                                            </h2>
-                                            <p class="nds-section-description">Services you can complete online, without a visit to a branch.</p>
-                                        </div>
-                                        <div class="nds-section-body">
-                                            <p>Section content area.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-section-icon-1" id="tab-section-icon-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-section-icon-1"
-                                        aria-labelledby="tab-section-icon-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;
-                &lt;span class="nds-featured-icon nds-section-icon"&gt;
-                    &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
-                &lt;/span&gt;
-                &lt;span&gt;Digital services&lt;/span&gt;
-            &lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Services you can complete online, without a visit to a branch.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-body"&gt;
-            &lt;p&gt;Section content area.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sectionFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layers-01"></i>
+            <span class="nds-label">Progressive Structure</span>
+          </span>
+          <p class="nds-item-desc">Start with a head and a body. Add an action, an image or a breakout body only when the content needs one.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-layout-03"></i>
+            <span class="nds-label">Layout Aware</span>
+          </span>
+          <p class="nds-item-desc">The page layout sets the section spacing. A desktop page with no side column gets more space above and below each section, and card view shows each section as a card.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-font"></i>
+            <span class="nds-label">Fluid Typography</span>
+          </span>
+          <p class="nds-item-desc">The title and the subtitle sizes scale between phone and desktop. The title, subtitle and description stop at 720px wide, for a readable line length.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
+            <span class="nds-label">Phone Layout</span>
+          </span>
+          <p class="nds-item-desc">Below 600px a standard action takes its own row, and each button is full width.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-contrast"></i>
+            <span class="nds-label">High Contrast</span>
+          </span>
+          <p class="nds-item-desc">In high contrast mode every section, including a colored one, takes the high contrast background and text colors.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
+            <span class="nds-label">Fast First Paint</span>
+          </span>
+          <p class="nds-item-desc">Until the page shows, the browser skips the layout of off-screen sections after the first two, so a long page shows sooner.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="sectionFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layers-01"></i>
-                            <span class="nds-label">Progressive Tiers</span>
-                        </span>
-                        <p class="nds-item-desc">Start with a minimal title and body, then layer in wrappers, actions, images, and full-width breakouts as the layout demands.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-board"></i>
-                            <span class="nds-label">Color Themes</span>
-                        </span>
-                        <p class="nds-item-desc">Apply primary, neutral, brand, gradient, or ghost backgrounds with a single class. Text colors adapt automatically to maintain contrast.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-02"></i>
-                            <span class="nds-label">Horizontal Layout</span>
-                        </span>
-                        <p class="nds-item-desc">Switch to a side-by-side grid with <code class="nds-inline-code lang-html">nds-horizontal</code> for sections where the head and content sit next to each other on desktop.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-cursor-move-02"></i>
-                            <span class="nds-label">Float and Dual Actions</span>
-                        </span>
-                        <p class="nds-item-desc">Place actions beside the title as a float, outside the head as a standard row, or both at once for primary and secondary controls.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-arrow-expand-01"></i>
-                            <span class="nds-label">Full-Width Breakout</span>
-                        </span>
-                        <p class="nds-item-desc">Content marked with <code class="nds-inline-code lang-html">nds-max-width</code> breaks out of the content padding to span the full available width, ideal for carousels and media.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-font"></i>
-                            <span class="nds-label">Fluid Typography</span>
-                        </span>
-                        <p class="nds-item-desc">Title and description sizes scale smoothly between mobile and desktop using clamp-based tokens, with every value overridable through CSS custom properties.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-note-01"></i>
-                            <span class="nds-label">Stacked Wrappers</span>
-                        </span>
-                        <p class="nds-item-desc">Repeat the wrapper to put several titled blocks on one surface, spaced apart for you. In card view they share a single card instead of becoming separate cards, and in striped layouts they hold one stripe instead of alternating.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-artboard"></i>
-                            <span class="nds-label">Container Query Anchor</span>
-                        </span>
-                        <p class="nds-item-desc">The wrapper establishes a named <code class="nds-inline-code lang-html">section</code> CSS container. Nested <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">grids</a> and components respond to the actual column width, not just the viewport — correct sizing in sidebar layouts where the content column is narrower than the screen.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="sectionPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Put each distinct part of a page in its own section, in `nds-content`.
+- Do not put a section inside a section. Use a [block](../layout/block) to divide a section body. Stack wrappers when each part needs its own title.
+- Stack wrappers only in card view or on a striped page, where the parts must share one surface.
+- Leave a stacked section without `nds-flex` and `--gap`. The section already spaces its wrappers, so a gap doubles every break. Set `--section-wrapper-gap` to change the space.
+- Use a horizontal section where a short text and an image sit side by side, such as a feature or a call to action.
+- Striping counts sections, not wrappers. When you merge sections into one, check the stripes of the sections below it.
+- Use a float action for a secondary action when the head has room. Use a standard action for a main call to action.
+- Give each button in an `nds-minimal` float action an icon. Without one, the button is empty on a phone.
+- Use a background color on one section at a time. Two dark sections in a row read as one block.
+- Use a breakout body for a [swiper](../components/swiper) or a wide image, not for text.
+- Use `nds-full` on a title or a description only for short text. Long lines are hard to read.
+
+</div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="sectionGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use sections as the <strong>primary building block</strong> for all page content. Every distinct content area on a page should be wrapped in its own <code class="nds-inline-code lang-html">nds-content-section</code></li>
-                    <li>Use <strong>Tier 2 (with wrapper)</strong> as the default starting point. Only drop to Tier 1 for truly minimal sections that need no action or image</li>
-                    <li>Use <strong>full-width breakout</strong> for content that benefits from edge-to-edge display: carousels, <a class="nds-color" href="{{ 'components/swiper' | relative_url }}">Swiper</a> components, wide image galleries, or full-bleed media</li>
-                    <li>Use <strong>horizontal layout</strong> for marketing-style sections where a text block and visual sit side by side, like feature highlights or call-to-action blocks</li>
-                    <li>Do not use sections for small inline UI elements. Use <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a> for self-contained content items, or <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> for collapsible groups</li>
-                    <li>Do not nest <code class="nds-inline-code lang-html">nds-content-section</code> inside another <code class="nds-inline-code lang-html">nds-content-section</code>. Use a <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a> to subdivide content within a section, or stack several <code class="nds-inline-code lang-html">nds-section-wrapper</code> children when each part needs its own title and description</li>
-                    <li>Use <strong>stacked wrappers</strong> when several titled blocks belong on one surface: a profile or record page in card view that should read as a single card, or related blocks in a striped layout that should hold one background instead of alternating. In a plain layout with no striping, separate sections already read as one flow, so stacking gains nothing</li>
-                    <li>Leave a stacked section as a plain block. It spaces its wrappers already, so adding <code class="nds-inline-code lang-html">nds-flex</code> and a <code class="nds-inline-code lang-html">--gap</code> doubles every break and leaks the gap into nested flex containers. To widen or tighten the breaks, set <code class="nds-inline-code lang-html">--section-wrapper-gap</code> on the section</li>
-                    <li>Remember that striping counts sections, not wrappers. Merging several sections into one flips the stripe parity of every section below it, so check the rest of the page after the change</li>
-                    <li>Choose <strong>float action</strong> when the action is secondary and the title area has room. Choose <strong>standard action</strong> when the action buttons are prominent and should have their own row on mobile</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-nowrap</code> to the action container only when the action is compact (a single small button) and should stay inline at all breakpoints</li>
-                    <li>Use color themes sparingly. Reserve <code class="nds-inline-code lang-html">nds-primary</code> and <code class="nds-inline-code lang-html">nds-gradient-primary</code> for hero-level emphasis, and <code class="nds-inline-code lang-html">nds-brand</code> or <code class="nds-inline-code lang-html">nds-ghost</code> for subtle visual separation between adjacent sections</li>
-                </ul>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Content Spacing</h3>
-                <ul>
-                    <li>Flow content in a section body is spaced automatically. Paragraphs, lists, tables, and code blocks get a bottom margin, and list items get vertical padding: write plain <code class="nds-inline-code lang-html">&lt;p&gt;</code>, <code class="nds-inline-code lang-html">&lt;ul&gt;</code>, and <code class="nds-inline-code lang-html">&lt;ol&gt;</code> with no spacing classes</li>
-                    <li>The rhythm is direction-aware. Arabic fills more of the line box than Latin at the same size, so RTL gets one step more padding between list items than LTR</li>
-                    <li>Nested lists indent one step per level and read as a tighter cluster under their parent item. Nested <code class="nds-inline-code lang-html">&lt;ol&gt;</code> markers cycle <strong>1.</strong> &rarr; <strong>a.</strong> &rarr; <strong>i.</strong>, while an <code class="nds-inline-code lang-html">&lt;ol&gt;</code> inside a <code class="nds-inline-code lang-html">&lt;ul&gt;</code> stays decimal because it starts a new count</li>
-                    <li>Lists inside <code class="nds-inline-code lang-html">nav</code>, <code class="nds-inline-code lang-html">nds-scroll-more</code>, <code class="nds-inline-code lang-html">nds-drawer</code>, or a <code class="nds-inline-code lang-html">nds-drawer-list</code> item opt out, because those components space their own items. Do not wrap a prose list in one of these containers or it loses the automatic spacing</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Centers all section content (head, action, body) in a column layout</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-horizontal</code></td><td>Switches the wrapper to a two-column grid on desktop (head start, content end)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Deep primary background with on-color text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-green</code></td><td>Deep primary background with on-color text (alias for nds-primary)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-gradient-primary</code></td><td>Diagonal gradient background (deprecated alias: <code class="nds-inline-code lang-html">nds-gradient-green</code>), direction-aware (flips for RTL/LTR)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Dark neutral background with on-color text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-brand</code></td><td>Light brand background with inset shadow, adapts for dark mode</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Removes all background, border, and shadow (transparent section)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-block</code></td><td>Spacing only: full width plus a bottom margin, dropped on the last one. It is not a container and it groups nothing, so put it straight on a block-level component such as a stepper, tab set, or table. Wrap elements in one only when they really are a single group; two groups need two blocks, or the gap between them never appears</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-max-width</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: breaks out of content padding to span the full available width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-full-width</code></td><td>On a section child: spans the full viewport width, regardless of the container. <code class="nds-inline-code lang-html">nds-max-width</code> only cancels the wrapper padding, so it stops at its container edge. The two differ when the container is narrower than the screen, such as beside a side menu</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-full</code></td><td>On <code class="nds-inline-code lang-html">nds-section-title</code>, <code class="nds-inline-code lang-html">nds-section-subtitle</code> or <code class="nds-inline-code lang-html">nds-section-description</code>: removes the 720px paragraph width cap so the text spans the section width</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-minimal</code></td><td>On float action: hides button labels on mobile (icon-only)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>On float action: allows action to wrap below the title on mobile instead of floating</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-nowrap</code></td><td>On standard action: keeps action inline at all breakpoints instead of wrapping to full row</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-noBg</code></td><td>Removes section background, border, and shadow (alias for nds-ghost)</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive nds-striped" style="--min-width:600px;">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--section-bg</code></td><td>var(--background-default)</td><td>Section background color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-shadow</code></td><td>none</td><td>Section box shadow</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-border</code></td><td>none</td><td>Section border</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-border-radius</code></td><td>0</td><td>Section border radius</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-title-color</code></td><td>var(--text-display)</td><td>Title text color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-subtitle-color</code></td><td>var(--text-secondary-paragraph)</td><td>Subtitle text color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-description-color</code></td><td>var(--text-default)</td><td>Description text color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-text-color</code></td><td>inherit</td><td>General text color inside section</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-padding-block</code></td><td>var(--spacing-5xl)</td><td>Vertical padding shorthand (top and bottom)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-padding-block-start</code></td><td>var(--section-padding-block)</td><td>Top padding override</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-padding-block-end</code></td><td>var(--section-padding-block)</td><td>Bottom padding override</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-margin-block-start</code></td><td>0</td><td>Top margin</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-margin-block-end</code></td><td>0</td><td>Bottom margin</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-col-gap</code></td><td>var(--spacing-xl)</td><td>Column gap between head and action in the wrapper</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-row-gap</code></td><td>var(--spacing-4xl)</td><td>Row gap between wrapper children</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-wrapper-gap</code></td><td>var(--spacing-6xl)</td><td>Space between stacked wrappers, when one wrapper directly follows another. Set it on the section</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-title-FS</code></td><td>var(--typo-display-clamp-md-FS)</td><td>Title font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-title-LH</code></td><td>var(--typo-display-clamp-md-LH)</td><td>Title line height</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-title-MB</code></td><td>var(--typo-display-clamp-md-MB)</td><td>Title bottom margin</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-subtitle-FS</code></td><td>var(--typo-text-clamp-lg-FS)</td><td>Subtitle font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-subtitle-LH</code></td><td>var(--typo-text-clamp-lg-LH)</td><td>Subtitle line height</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-subtitle-MB</code></td><td>var(--section-title-MB)</td><td>Subtitle bottom margin</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-description-FS</code></td><td>var(--typo-text-clamp-lg-FS)</td><td>Description font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-description-LH</code></td><td>var(--typo-text-clamp-lg-LH)</td><td>Description line height</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-description-MB</code></td><td>var(--spacing-2xl)</td><td>Description bottom margin</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-icon-size</code></td><td>var(--section-title-FS), 48px when centered</td><td>Height of <code class="nds-inline-code lang-html">.nds-section-icon</code> when it sits inside the title. A centered title stacks the mark above the text, so it stops tracking the title size. Setting this knob overrides both</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--section-image-MB</code></td><td>var(--spacing-2xl)</td><td>Image bottom margin (outside wrapper)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--block-title-FS</code></td><td>var(--typo-text-xl-FS)</td><td>Content block title font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--block-title-LH</code></td><td>var(--typo-text-xl-LH)</td><td>Content block title line height</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--block-title-FW</code></td><td>600</td><td>Content block title font weight</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--block-title-MB</code></td><td>var(--spacing-lg)</td><td>Content block title bottom margin</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--block-title-color</code></td><td>var(--text-display)</td><td>Content block title color</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+<section id="sectionApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Other Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-section-subtitle` | A `<p>` in `.nds-section-head`, after the title | A line under the title, larger than the description |
+| `nds-section-brief` | A `<p>` in `.nds-section-head` | One short line in semibold. The [hero](../ui-shell/hero) uses it |
+| `nds-section-meta` | A `<div>` in `.nds-section-head` | A row that holds a `nds-section-tags` and a `nds-section-rating`. The [hero](../ui-shell/hero) uses it |
+| `nds-full` | `.nds-section-title`, `.nds-section-subtitle` or `.nds-section-description` | Removes the 720px width limit |
+| `nds-full-width` | Any element in a section | Runs to the edges of the screen, past the section padding |
+| `nds-section-icon` | An element beside `.nds-section-head` | Centers its content, as `nds-section-image` does. In the title, it is the title icon |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set these on `.nds-content-section`. The block title properties are on the [Block](../layout/block) page.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--section-bg` | `var(--background-default)` | Background color. A color class changes the default |
+| `--section-shadow` | `none` | Shadow |
+| `--section-border` | `none` | Border |
+| `--section-border-radius` | `0` | Corner radius |
+| `--section-title-color` | `var(--text-display)` | Title color |
+| `--section-subtitle-color` | `var(--text-secondary-paragraph)` | Subtitle color |
+| `--section-description-color` | `var(--text-default)` | Description color |
+| `--section-text-color` | `inherit` | Text color of everything else in the section |
+| `--section-padding-block` | `var(--spacing-5xl)` | Top and bottom padding. On a desktop page with no side column, the layout sets it to `var(--spacing-7xl)` |
+| `--section-padding-block-start` | `var(--section-padding-block)` | Top padding |
+| `--section-padding-block-end` | `var(--section-padding-block)` | Bottom padding |
+| `--section-margin-block-start` | `0` | Top margin |
+| `--section-margin-block-end` | `0` | Bottom margin |
+| `--section-col-gap` | `var(--spacing-xl)` | Gap between the image, the head and the action. Also the space around a float action |
+| `--section-row-gap` | `var(--spacing-4xl)` | Gap between the rows of a wrapper |
+| `--section-wrapper-gap` | `var(--spacing-6xl)` | Space above each stacked wrapper |
+| `--section-title-FS` | `var(--typo-display-clamp-md-FS)` | Title font size. Card view uses `var(--typo-display-clamp-sm-FS)` |
+| `--section-title-LH` | `var(--typo-display-clamp-md-LH)` | Title line height |
+| `--section-title-MB` | `var(--typo-display-clamp-md-MB)` | Space under the title |
+| `--section-icon-size` | `var(--section-title-FS)`, `48px` when centered | Height of the title icon |
+| `--section-subtitle-FS` | `var(--typo-text-clamp-lg-FS)` | Subtitle font size |
+| `--section-subtitle-LH` | `var(--typo-text-clamp-lg-LH)` | Subtitle line height |
+| `--section-subtitle-MB` | `var(--section-title-MB)` | Space under the subtitle |
+| `--section-description-FS` | `var(--typo-text-lg-FS)` | Description font size |
+| `--section-description-LH` | `var(--typo-text-lg-LH)` | Description line height |
+| `--section-description-MB` | `var(--spacing-2xl)` | Space under the description |
+| `--section-image-MB` | `var(--spacing-2xl)` | Space under the image |
+| `--gradient-angle` | `-45deg`, `45deg` on an LTR page | Direction of the `nds-gradient-primary` background |
+| `--gap` | `var(--spacing-6xl)` | Gap between the columns of a horizontal section |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+Sections have no script, methods or events.
+
+</div>
+  </div>
+</section>
+
+<section id="sectionRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Page Layout](../layout/page-layout): where sections go on a page, card view and stripes.
+- [Home Page Template](../templates/home-template): sections with actions, colors and a breakout swiper.
+- [Faculty Profile](../examples/faculty): a profile section with a photo and a definition list.
+- [Faculty CV](../examples/faculty-cv): stacked wrappers in one section.
+
+</div>
+  </div>
 </section>

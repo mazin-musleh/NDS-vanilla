@@ -362,7 +362,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 - Give the slides in one swiper the same height. The tallest slide sets the height of the row.
 - Load the images of later slides with `data-src` and `data-srcset`, not `src`. Give the first image `fetchpriority="high"`.
 - Give a lazy image a width and a height, or an `aspect-ratio`. Before it loads it has no size of its own, so its skeleton does not show.
-- To run the row to the edges of the page, put the swiper in a section body with `nds-max-width`. See [Section](../layout/section#tier5).
+- To run the row to the edges of the page, put the swiper in a section body with `nds-max-width`. See [Section](../layout/section#sectionBreakout).
 - Add `--peek` when the slides do not fit on one page, so the user sees there is more.
 - Keep a hero to four slides or fewer. Few users reach the later ones.
 - Put one element in each spotlight slide, such as an image or a card. The spotlight shrinks and grows that one element.
