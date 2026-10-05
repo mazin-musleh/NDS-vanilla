@@ -3,9 +3,10 @@
  * Methods:
  *   NDS.Theme.init()      sync the toggle UI, load an active stylesheet theme's assets, re-apply
  *                         a saved custom palette, wire the delegated clicks
- *   NDS.Theme.get()       the current data-theme string, e.g. "dark crimson"
- *   NDS.Theme.set(value)  set it and persist
- *   NDS.Theme.toggle()    flip light and dark, keeping the theme token
+ *   NDS.Theme.get()       the mode: 'light' or 'dark'
+ *   NDS.Theme.set(mode, el?)  set the mode and persist, keeping the theme token; the
+ *                         reveal grows from el's center (screen center without it)
+ *   NDS.Theme.toggle(el?) flip light and dark, keeping the theme token
  * Events:
  *   (none)
  * Hooks:

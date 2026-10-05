@@ -2,500 +2,161 @@
 layout: page
 title: Themes
 hero_title: Themes - National Design System
-hero_description: Keep the DGA default, switch on dark mode, or make the system your own. Define a brand palette from a few seed colours with the OKLCH engine, or ship a full stylesheet theme that overrides the design tokens.
+hero_description: Dark mode, a theme menu, and your own brand colors, from a few seed colors or a stylesheet that overrides the color tokens.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 12:45 PM"
+last_edit: "05/10/2026 - 10:20 PM"
 ---
 
-<!-- Experimental notice (dark mode) -->
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
-                    <span class="nds-feedback nds-alert-icon">
-                        <span class="nds-feedback-icon">
-                            <i class="nds-icon" aria-hidden="true"></i>
-                        </span>
-                    </span>
-                    <div class="nds-alert-content">
-                        <div class="nds-alert-text">
-                            <span class="nds-alert-title">Experimental</span>
-                            <p class="nds-alert-description">Dark mode is currently in an experimental phase and is not guaranteed to meet DGA compliance standards. Use in production at your own discretion.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="themesOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Themes set the page's colors: light or dark mode, and a palette. The `data-theme` attribute on `<html>` holds both, as a list of words. `dark` turns on dark mode, and a theme name such as `crimson` picks a palette: `data-theme="dark crimson"`. With no attribute, the page shows the DGA palette in light mode. A dark mode button and a theme menu write the attribute for the user, and save the choice. Dark mode is experimental: it is not checked against the DGA standards yet.
+
+Pick another component when:
+
+- you need the token names to use in your own CSS: [Tokens](../components/tokens)
+- one section needs a deep primary or dark background: [Section](../layout/section)
+
+</div>
+  </div>
 </section>
 
-<!-- Theme Switcher -->
-<section id="themesSwitcher" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Theme Switcher</h2>
-            <p class="nds-section-description">Everything lives in one attribute on the root element: <code class="nds-inline-code lang-html">data-theme</code> is a space-separated token list holding the mode (<code class="nds-inline-code lang-html">dark</code>, with light as the default) and an optional theme name, so <code class="nds-inline-code lang-html">data-theme="dark crimson"</code> is dark mode on the Crimson palette. Give any control a <code class="nds-inline-code lang-html">data-theme-value</code> and it becomes a switcher: clicking it writes that theme token into <code class="nds-inline-code lang-html">data-theme</code> (keeping the dark token), saves the choice, and syncs <code class="nds-inline-code lang-html">aria-current</code>. Pick a theme and every component below updates.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu">
-                                    <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-                                        <span class="nds-label">Theme</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu nds-theme-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
-                                                <span class="nds-label">Default (DGA)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="crimson">
-                                                <span class="nds-label">Crimson</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="corporate">
-                                                <span class="nds-label">Corporate</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="sunset">
-                                                <span class="nds-label">Sunset</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
-                                    <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-primary">
-                                    <span class="nds-label">Primary action</span>
-                                </button>
-                                <a href="#themesSwitcher" class="nds-link nds-primary">Themed link</a>
-                                <button class="nds-chip nds-primary nds-rounded"><span class="nds-label">Theme chip</span></button>
-                                <span class="nds-tag nds-green nds-sm">Status</span>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-themes-switcher-1" id="tab-themes-switcher-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-switcher-1"
-                                        aria-labelledby="tab-themes-switcher-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-dropmenu"&gt;
-  &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"&gt;
-    &lt;span class="nds-label"&gt;Theme&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu nds-theme-menu" hidden&gt;
-    &lt;div class="nds-dropmenu-scroll"&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value=""&gt;
-        &lt;span class="nds-label"&gt;Default (DGA)&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="crimson"&gt;
-        &lt;span class="nds-label"&gt;Crimson&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="corporate"&gt;
-        &lt;span class="nds-label"&gt;Corporate&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="sunset"&gt;
-        &lt;span class="nds-label"&gt;Sunset&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="themesMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body">
+<script type="text/html" id="theme-toggle" data-canon data-screens="none" data-variants="themesVariantsTable">
+<button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+  <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
+</button>
+</script>
+<script type="text/html" id="theme-switch" data-canon>
+<div class="nds-form-container nds-switch-container" data-theme-toggle>
+  <div class="nds-form-header" data-feedback-target>
+    <label for="theme-dark-switch">
+      <span class="nds-label">Dark mode</span>
+      <span class="nds-info">Switch between light and dark colors</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-switch nds-neutral">
+      <input type="checkbox" id="theme-dark-switch" class="nds-switch-input" role="switch">
+      <div class="nds-switch-track">
+        <div class="nds-switch-thumb"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="theme-menu" data-canon>
+<div class="nds-dropmenu">
+  <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
+    <span class="nds-label">Theme</span>
+  </button>
+  <div class="nds-dropmenu-menu nds-theme-menu" hidden>
+    <div class="nds-dropmenu-scroll">
+      <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
+        <span class="nds-label">Default (DGA)</span>
+      </button>
+      <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="crimson">
+        <span class="nds-label">Crimson</span>
+      </button>
+      <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="corporate">
+        <span class="nds-label">Corporate</span>
+      </button>
+      <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="sunset">
+        <span class="nds-label">Sunset</span>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+    </div>
+  </div>
 </section>
 
-<!-- Dark Mode -->
-<section id="themesDark" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Dark Mode</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-theme-toggle</code> to any button or switch and it is wired automatically: the click flips the <code class="nds-inline-code lang-html">dark</code> token (keeping any active theme), persists the choice, swaps the moon and sun icon, and plays a circular reveal. Dark works on every palette.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Button toggle</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
-                                    <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-themes-darkbtn-1" id="tab-themes-darkbtn-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-darkbtn-1"
-                                        aria-labelledby="tab-themes-darkbtn-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;button class="nds-btn nds-subtle nds-icon-only"
-        data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode"&gt;
-  &lt;i class="nds-icon nds-hgi-moon-02" aria-hidden="true"&gt;&lt;/i&gt;
-&lt;/button&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Switch toggle (settings pages)</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div class="nds-form-container nds-switch-container" data-theme-toggle>
-                                    <div class="nds-form-header" data-feedback-target>
-                                        <label for="themes-dark-switch-1">
-                                            <span class="nds-label">Dark Mode</span>
-                                            <span class="nds-info">Switch between light and dark themes</span>
-                                        </label>
-                                    </div>
-                                    <div class="nds-form-control">
-                                        <div class="nds-switch nds-neutral">
-                                            <input type="checkbox" id="themes-dark-switch-1" class="nds-switch-input" role="switch" aria-label="Dark mode">
-                                            <div class="nds-switch-track">
-                                                <div class="nds-switch-thumb"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-themes-darksw-1" id="tab-themes-darksw-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-darksw-1"
-                                        aria-labelledby="tab-themes-darksw-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-form-container nds-switch-container" data-theme-toggle&gt;
-  &lt;div class="nds-form-header" data-feedback-target&gt;
-    &lt;label for="dark-switch"&gt;
-      &lt;span class="nds-label"&gt;Dark Mode&lt;/span&gt;
-      &lt;span class="nds-info"&gt;Switch between light and dark themes&lt;/span&gt;
-    &lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-    &lt;div class="nds-switch nds-neutral"&gt;
-      &lt;input type="checkbox" id="dark-switch" class="nds-switch-input" role="switch" aria-label="Dark mode"&gt;
-      &lt;div class="nds-switch-track"&gt;&lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="themesVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+The preview controls the real page: a click changes the look of this whole page, as it would on your site.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Button toggle (default) | — | — | The dark mode button. Put it in the [Top Bar](../ui-shell/topbar), so it is on every page |
+| Structure | Switch toggle | canon `#theme-switch` | — | Dark mode as a setting, on a settings page |
+| Structure | Theme menu | canon `#theme-menu` | — | A menu of themes. Each option names its theme in `data-theme-value`. The empty value is the DGA default |
+{: #themesVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Dark Areas -->
-<section id="themesDarkArea" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Dark Areas</h2>
-            <p class="nds-section-description">Put <code class="nds-inline-code lang-html">data-theme="dark"</code> on a dark surface, such as a deep primary section, the footer or a card on a photo. Every component inside it takes its dark-mode colors, and the rest of the page stays as it is. Status tags keep their status colors. On a single component, such as a card, it renders that component in dark mode.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">A deep primary section</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <section class="nds-content-section nds-primary" data-theme="dark">
-                                    <div class="nds-section-wrapper">
-                                        <div class="nds-section-body">
-                                            <div class="nds-block">
-                                                <div class="nds-tags">
-                                                    <span class="nds-tag" data-status="success"><span class="nds-label">Approved</span></span>
-                                                    <span class="nds-tag" data-status="warning"><span class="nds-label">Expiring</span></span>
-                                                    <span class="nds-tag nds-outline"><span class="nds-label">Riyadh</span></span>
-                                                </div>
-                                            </div>
-                                            <button class="nds-btn nds-secondary-outline"><span class="nds-label">View requests</span></button>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-themes-darkarea-1" id="tab-themes-darkarea-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-darkarea-1"
-                                        aria-labelledby="tab-themes-darkarea-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;section class="nds-content-section nds-primary" data-theme="dark"&gt;
-  &lt;div class="nds-section-wrapper"&gt;
-    &lt;div class="nds-section-body"&gt;
-      &lt;div class="nds-block"&gt;
-        &lt;div class="nds-tags"&gt;
-          &lt;span class="nds-tag" data-status="success"&gt;&lt;span class="nds-label"&gt;Approved&lt;/span&gt;&lt;/span&gt;
-          &lt;span class="nds-tag" data-status="warning"&gt;&lt;span class="nds-label"&gt;Expiring&lt;/span&gt;&lt;/span&gt;
-          &lt;span class="nds-tag nds-outline"&gt;&lt;span class="nds-label"&gt;Riyadh&lt;/span&gt;&lt;/span&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;button class="nds-btn nds-secondary-outline"&gt;&lt;span class="nds-label"&gt;View requests&lt;/span&gt;&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/section&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="themesBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
-</section>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-<!-- Themes and Custom Palette -->
-<section id="themesPalette" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Custom Palette</h2>
-            <p class="nds-section-description">Define a complete theme from one to three seed colours. The OKLCH engine derives every ramp step from your seed with CSS relative colour, <code class="nds-inline-code lang-css">oklch(from var(--brand-primary) L C H)</code>: it keeps the seed's hue, sets a perceptually-even lightness, and scales the chroma, so the ramp stays balanced for any colour. Set the seeds plus the <code class="nds-inline-code lang-html">data-palette</code> flag on the root element and the full light palette, the brand-tint alphas, a temperature-matched neutral scale, and the dark variant are all generated. Without the flag the page stays on the frozen DGA default. The engine needs CSS relative colour (Chrome 119, Safari 16.4, Firefox 128; mid-2024); older browsers fall back to the DGA default, so ship a stylesheet theme if you must brand them.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <div class="nds-dropmenu">
-                                    <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-                                        <span class="nds-label">Palette</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu nds-theme-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
-                                                <span class="nds-label">DGA (default)</span>
-                                            </button>
-                                            <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="violet" data-seed-primary="#7c3aed" data-seed-secondary="#ec4899" data-seed-tint="0.4">
-                                                <span class="nds-label">Custom (Violet)</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="nds-btn nds-subtle nds-icon-only" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
-                                    <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-primary">
-                                    <span class="nds-label">Primary action</span>
-                                </button>
-                                <a href="#themesPalette" class="nds-link nds-primary">Themed link</a>
-                                <button class="nds-chip nds-primary nds-rounded"><span class="nds-label">Theme chip</span></button>
-                                <span class="nds-tag nds-green nds-sm">Status</span>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-themes-html" id="tab-themes-html">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-themes-css" id="tab-themes-css">
-                                            <span class="nds-tab-label">CSS</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-themes-js" id="tab-themes-js">
-                                            <span class="nds-tab-label">JS</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-html"
-                                        aria-labelledby="tab-themes-html">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;!-- Seeds inline on the root element --&gt;
-&lt;html data-palette style="--brand-primary: #7c3aed; --brand-secondary: #ec4899; --neutral-tint: 0.4;"&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-css"
-                                        aria-labelledby="tab-themes-css" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-css code">
-/* Add data-palette to &lt;html&gt;; only --brand-primary is required. */
+### Theme Menu
+{: .nds-block-title}
+
+A click on an option writes its `data-theme-value` into `data-theme` and keeps the `dark` word. A second click on the chosen option goes back to the DGA default. NDS ships three themes: `crimson`, `corporate` (Cairo font) and `sunset` (Readex Pro font). NDS loads a theme's font only when the theme is on.
+
+Each pick also writes `?theme=name` in the address bar, so the user can copy the link. A page that opens with `?theme=name` applies that option, and `?theme=` with no name applies the default. The theme must be an option in a menu on that page.
+
+### Custom Palette
+{: .nds-block-title}
+
+Set `data-palette` and the seed colors on `<html>`, and NDS builds the whole palette from them. `--brand-primary` is the only seed you must set. It becomes the 600 step of the primary colors, and NDS builds the other steps, the tints and the dark mode colors from it. Each step keeps the seed's hue, takes its lightness from the DGA scale, and scales the seed's color strength (chroma). The gray scale takes a little of its hue: `--neutral-tint` sets how much.
+
+NDS uses CSS relative colors in OKLCH. Chrome 119, Safari 16.4 and Firefox 128 support them. An older browser shows the DGA palette.
+
+<script type="text/html" id="theme-palette-html" data-canon data-preview="none" data-js="theme-palette-css">
+<html lang="ar" dir="rtl" data-palette style="--brand-primary: #7c3aed; --brand-secondary: #ec4899; --neutral-tint: 0.4;">
+</script>
+<script type="text/html" id="theme-palette-css" data-canon data-lang="css" data-tab-label="CSS">
 :root[data-palette] {
-  --brand-primary:   #7c3aed;
+  --brand-primary: #7c3aed;
   --brand-secondary: #ec4899;
-  --neutral-tint:    0.4;
+  --neutral-tint: 0.4;
 }
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-js"
-                                        aria-labelledby="tab-themes-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-javascript code">
-// Set the seeds, then flip the data-palette flag.
-const root = document.documentElement;
-root.style.setProperty('--brand-primary', '#7c3aed');
-root.style.setProperty('--brand-secondary', '#ec4899');
-root.style.setProperty('--neutral-tint', '0.4');
-root.setAttribute('data-palette', '');
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+</script>
 
-<!-- Stylesheet Themes -->
-<section id="themesStylesheet" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Stylesheet Themes</h2>
-            <p class="nds-section-description">For exact, contrast-checked colours, the widest browser support, or styling beyond colour (custom hero layouts, patterns, injected content), ship a theme as its own stylesheet that overrides the colour tokens at <code class="nds-inline-code lang-css">:root</code>. In production you load it server-side as a render-blocking <code class="nds-inline-code lang-html">&lt;link&gt;</code> after the NDS critical CSS. Override the full set of themeable tokens below; the semantic and component tokens re-resolve from them.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Override the colour tokens in your own stylesheet</div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-themes-ss-css" id="tab-themes-ss-css">
-                                            <span class="nds-tab-label">Theme CSS</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-themes-ss-html" id="tab-themes-ss-html">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-css"
-                                        aria-labelledby="tab-themes-ss-css">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-css code">
-/* DGA values shown; replace with your brand ramp. Status + base stay on DGA. */
+A theme option with `data-seed-*` in place of a theme name applies a custom palette on click, and saves it. Click the button to see this page in the palette, and click it again to go back to DGA. In a theme menu, the option is one more `nds-dropmenu-item`.
+
+<script type="text/html" id="theme-custom-option" data-canon data-screens="none">
+<button class="nds-btn nds-primary" data-theme-value="violet" data-seed-primary="#7c3aed" data-seed-secondary="#ec4899" data-seed-tint="0.4">
+  <span class="nds-label">Violet palette</span>
+</button>
+</script>
+
+### Stylesheet Themes
+{: .nds-block-title}
+
+A stylesheet theme is your own CSS file that sets the color tokens at `:root`. Load it with a `<link>` in the `<head>`, after the NDS CSS, so it applies before first paint. Do not load it from a script. The semantic and component tokens follow the colors you set.
+
+<script type="text/html" id="theme-sheet-html" data-canon data-preview="none" data-js="theme-sheet-css">
+<link rel="stylesheet" href="assets/themes/my-brand.css">
+</script>
+<script type="text/html" id="theme-sheet-css" data-canon data-lang="css" data-tab-label="Theme CSS">
+/* DGA values shown: replace them with your brand ramp. The status and base colors stay DGA. */
 :root {
-  /* Primary ramp (anchor your brand colour at the 600 step) */
+  /* Primary ramp: your brand color is the 600 step */
   --colors-primary-25:  #f7fdf9;
   --colors-primary-50:  #f3fcf6;
   --colors-primary-100: #dff6e7;
@@ -508,7 +169,7 @@ root.setAttribute('data-palette', '');
   --colors-primary-800: #14573a;
   --colors-primary-900: #104631;
   --colors-primary-950: #092a1e;
-  /* Brand-tint alphas (chips, table selection, footer) */
+  /* Primary tints: chips, table selection, footer */
   --colors-primary-alpha-10: #1b835419;
   --colors-primary-alpha-20: #1b835433;
   --colors-primary-alpha-30: #1b83544c;
@@ -533,7 +194,7 @@ root.setAttribute('data-palette', '');
   --colors-secondary-900: #6e3c00;
   --colors-secondary-950: #472400;
 
-  /* Tertiary ramp (anchor at the 500 step) */
+  /* Tertiary ramp: your color is the 500 step */
   --colors-tertiary-25:  #fefcff;
   --colors-tertiary-50:  #f9f5fa;
   --colors-tertiary-100: #f2e9f5;
@@ -549,7 +210,7 @@ root.setAttribute('data-palette', '');
   --colors-tertiary-alpha-10: #80519f19;
   --colors-tertiary-alpha-20: #80519f33;
 
-  /* Neutral ramp (grayscale; adds 750 + 850 steps) */
+  /* Neutral ramp: it also has 750 and 850 steps */
   --colors-neutral-25:  #fcfcfd;
   --colors-neutral-50:  #f9fafb;
   --colors-neutral-100: #f3f4f6;
@@ -565,210 +226,246 @@ root.setAttribute('data-palette', '');
   --colors-neutral-900: #111927;
   --colors-neutral-950: #0c111b;
 
-  /* Deep brand surfaces (hero / footer / image overlay) */
+  /* Deep brand surfaces: hero, footer, image overlay */
   --background-primary-strong: var(--colors-primary-900);
   --background-primary-light:  var(--colors-primary-50);
-  --img-overlay-color:       var(--colors-neutral-950);
+  --img-overlay-color:         var(--colors-primary-950);
 }
 
-/* Dark-mode corrections; double the :root if this sheet loads first. */
-:root:root[data-theme~="dark"] {
+/* Dark mode fixes. The second selector reaches dark areas. :root:root wins even if this sheet loads before NDS. */
+:root:root[data-theme~="dark"],
+[data-theme~="dark"]:not(:root) {
   --background-card:   #1f2a37;
   --background-footer: #0c111b;
 }
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-html"
-                                        aria-labelledby="tab-themes-ss-html" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;link rel="stylesheet" href="assets/themes/my-brand.css"&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+</script>
+
+A theme menu option can load a stylesheet theme too. `data-theme-css` on the option names the CSS file, and `data-theme-js` names a script. Each attribute works on its own: an option can carry one or both. The script loads them when the user picks the option, and removes the stylesheet when the user picks another one. The [event themes](../events/) are stylesheet themes that load from one script tag.
+
+### Dark Areas
+{: .nds-block-title #themesDarkArea}
+
+`data-theme="dark"` on any element renders it and everything inside it in dark mode. The rest of the page stays as it is. Put it on a dark surface, such as a deep primary section, the footer or a card on a photo. In the preview, the second card carries it. Status tags keep their status colors. Only the `dark` word works on an element: a theme name works only on `<html>`.
+
+<script type="text/html" id="theme-dark-area" data-canon data-preview="page" data-preview-light data-preview-height="260" data-preview-style="body{padding:24px}">
+<div class="nds-grid" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+  <div class="nds-card nds-stroke">
+    <div class="nds-card-header">
+      <div class="nds-card-status">
+        <span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Approved</span></span>
+      </div>
     </div>
+    <div class="nds-card-content">
+      <div class="nds-card-text">
+        <span class="nds-card-title">Building permit</span>
+        <p class="nds-card-description">Request 1184, Riyadh. Valid until 30 June 2027.</p>
+      </div>
+    </div>
+    <div class="nds-card-actions">
+      <a href="#" class="nds-btn nds-primary"><span class="nds-label">View permit</span></a>
+    </div>
+  </div>
+  <div class="nds-card nds-stroke" data-theme="dark">
+    <div class="nds-card-header">
+      <div class="nds-card-status">
+        <span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Approved</span></span>
+      </div>
+    </div>
+    <div class="nds-card-content">
+      <div class="nds-card-text">
+        <span class="nds-card-title">Building permit</span>
+        <p class="nds-card-description">Request 1184, Riyadh. Valid until 30 June 2027.</p>
+      </div>
+    </div>
+    <div class="nds-card-actions">
+      <a href="#" class="nds-btn nds-primary"><span class="nds-label">View permit</span></a>
+    </div>
+  </div>
+</div>
+</script>
+
+</div>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="themesFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Toggles and switchers wire themselves: drop in <code class="nds-inline-code lang-html">data-theme-toggle</code> or <code class="nds-inline-code lang-html">data-theme-value</code> controls and they work, no setup code.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-database"></i>
-                            <span class="nds-label">Preference Persistence</span>
-                        </span>
-                        <p class="nds-item-desc">The chosen mode and theme are saved to <code class="nds-inline-code lang-js">localStorage</code> and restored on every page, so the choice follows the user across visits.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-bucket"></i>
-                            <span class="nds-label">Zero-Flash</span>
-                        </span>
-                        <p class="nds-item-desc">A saved mode or theme re-applies before the page is visible, so there is no colour flash on first load or return visit.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-sparkles"></i>
-                            <span class="nds-label">Circular Reveal Animation</span>
-                        </span>
-                        <p class="nds-item-desc">Switching mode or theme expands the new look outward from the clicked control in a circular ripple, with an instant swap where View Transitions are unsupported.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-moon-02"></i>
-                            <span class="nds-label">Light and Dark</span>
-                        </span>
-                        <p class="nds-item-desc">A built-in dark mode that works on every palette, with an automatic moon and sun icon swap on any toggle control.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-color-picker"></i>
-                            <span class="nds-label">Custom Palettes</span>
-                        </span>
-                        <p class="nds-item-desc">Set one to three seed colours and a neutral-tint dial; the OKLCH engine derives the full ramp and the dark variant. Dark follows the seeds with no extra work.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-file-script"></i>
-                            <span class="nds-label">Stylesheet Themes</span>
-                        </span>
-                        <p class="nds-item-desc">Ship a full theme as its own stylesheet that overrides the colour tokens at the root, for bespoke palettes and visuals beyond the generated ramp.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-api"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Read or flip the mode with <code class="nds-inline-code lang-js">NDS.Theme.get/set/toggle</code>, or apply a custom palette by setting <code class="nds-inline-code lang-css">--brand-*</code> and the <code class="nds-inline-code lang-html">data-palette</code> flag.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="themesFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">The script listens for clicks on the whole page. A toggle or a theme menu works as soon as it is in the page, with no setup code. The script starts when the page has one at load. On a page with none at load, call <code class="nds-inline-code lang-js">NDS.Init.refresh()</code> after you add the first one.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-database"></i>
+            <span class="nds-label">Preference Persistence</span>
+          </span>
+          <p class="nds-item-desc">The script saves the mode and the theme in <code class="nds-inline-code lang-js">localStorage</code>, and every page restores them. The key is <code class="nds-inline-code lang-js">nds-theme</code>, and <code class="nds-inline-code lang-js">nds-palette</code> for a custom palette.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-paint-bucket"></i>
+            <span class="nds-label">Zero-Flash</span>
+          </span>
+          <p class="nds-item-desc">A script in the <a href="../ui-shell/head">head</a> writes the saved mode and theme name before first paint, so the page does not show the wrong colors first. A saved custom palette comes back after first paint, so it can flash on load.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-sparkles"></i>
+            <span class="nds-label">Circular Reveal Animation</span>
+          </span>
+          <p class="nds-item-desc">The new colors grow in a circle from the clicked control. Without View Transitions support, or with reduced motion, they change at once.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-moon-02"></i>
+            <span class="nds-label">Light and Dark</span>
+          </span>
+          <p class="nds-item-desc">Every theme and custom palette has a dark mode, and every toggle on the page follows each change.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-link-04"></i>
+            <span class="nds-label">Shareable Link</span>
+          </span>
+          <p class="nds-item-desc">A link with <code class="nds-inline-code lang-html">?theme=</code> opens the page in that theme. See Theme Menu.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-api"></i>
+            <span class="nds-label">Programmatic Control</span>
+          </span>
+          <p class="nds-item-desc">Read and change the mode with <code class="nds-inline-code lang-js">NDS.Theme.get()</code>, <code class="nds-inline-code lang-js">set()</code> and <code class="nds-inline-code lang-js">toggle()</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="themesGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
+<section id="themesPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Most government sites need no setup: the DGA default is active out of the box. Add theming only when you need dark mode or your own brand colours</li>
-                    <li>Place a dark-mode button toggle in the <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">Top Bar</a> so it is reachable from every page; use the switch toggle on settings or preferences pages</li>
-                    <li>Reach for a <strong>custom palette</strong> (<code class="nds-inline-code lang-html">data-palette</code> + <code class="nds-inline-code lang-css">--brand-primary</code>) when you want your brand colour fast and dark mode handled for you</li>
-                    <li>Reach for a <strong>stylesheet theme</strong> when you need exact, contrast-checked colours, support for older browsers, or styling beyond colour (layouts, patterns, injected content); in production load it server-side as a render-blocking <code class="nds-inline-code lang-html">&lt;link&gt;</code>, rather than injecting at runtime</li>
-                    <li>Use <code class="nds-inline-code lang-js">NDS.Theme.toggle()</code> / <code class="nds-inline-code lang-js">NDS.Theme.set()</code> for mode changes instead of writing <code class="nds-inline-code lang-html">data-theme</code> by hand, so the active theme token is preserved</li>
-                    <li>Reference semantic tokens (<code class="nds-inline-code lang-css">--background-card</code>, <code class="nds-inline-code lang-css">--text-default</code>) in your own component CSS so it follows both mode and theme automatically</li>
-                    <li>Do not hardcode colours in your CSS: hardcoded values respond to neither dark mode nor themes</li>
-                    <li>For a custom palette, check WCAG contrast (4.5:1 text, 3:1 UI) on your primary against white. The seed anchors the 600 step exactly, but the derived steps are perceptual approximations and are not contrast-guaranteed</li>
-                    <li>Scope your own dark rules with <code class="nds-inline-code lang-css">[data-theme~="dark"] .your-class</code>. It matches in dark mode and in a dark area, and the word selector matches even when a theme token is also present, such as <code class="nds-inline-code lang-html">"dark crimson"</code></li>
-                    <li>Put <code class="nds-inline-code lang-html">data-theme="dark"</code> on the dark surface itself, not on each component inside it. On a light page, put it on a card to make a dark card. On an element, only the <code class="nds-inline-code lang-html">dark</code> token works: a theme name applies to the whole page only</li>
-                    <li>Test every component in both modes and across your themes whenever you add a surface</li>
-                </ul>
-            </div>
+- Add nothing for the DGA look: it is the default.
+- Put the dark mode button in the [Top Bar](../ui-shell/topbar). Use the switch toggle on a settings page.
+- Use a custom palette for a brand color with dark mode built for you. Use a stylesheet theme for exact colors, older browsers, or styles beyond color.
+- Check the contrast of a custom palette: 4.5:1 for text and 3:1 for controls, on white. The seed is exact, but NDS does not check the steps it builds.
+- Change the mode with `NDS.Theme.set()` or `toggle()`, not by writing `data-theme`. They keep the theme name, save the choice and update the toggles.
+- Use semantic tokens in your own CSS, such as `--background-card` and `--text-default`. A hard-coded color follows neither dark mode nor the theme.
+- Write your own dark rules with `[data-theme~="dark"] .your-class`, never `[data-theme="dark"]`. The attribute can hold a theme name too, and the `~=` rule also matches inside a dark area.
+- Put `data-theme="dark"` on the dark surface, not on each component inside it.
+- Test every new surface in both modes and in each theme you ship.
 
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme-toggle</code></td><td>Place on any button or switch container to register it as a dark-mode toggle. Keeps <code class="nds-inline-code lang-html">aria-pressed</code>, the moon and sun icon, and the checkbox state in sync. Flips only the <code class="nds-inline-code lang-html">dark</code> token, preserving any active theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme</code></td><td>Set on the root element for the whole page, or <code class="nds-inline-code lang-html">data-theme="dark"</code> on a dark surface for a dark area. On the root it is a space-separated token list: the mode (<code class="nds-inline-code lang-html">dark</code>; light is the default, no token) plus an optional theme name. Matched per token by the <code class="nds-inline-code lang-css">~=</code> word selector, so they coexist.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme-value</code></td><td>Set on a switcher item. On click the matching theme token is written into <code class="nds-inline-code lang-html">data-theme</code> (preserving the dark token), the choice is saved, and <code class="nds-inline-code lang-html">aria-current</code> syncs. An empty string restores the DGA default.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-palette</code> + <code class="nds-inline-code lang-html">--brand-*</code></td><td>Set on the root element to activate the runtime OKLCH ramp from your inline seed variables (<code class="nds-inline-code lang-css">--brand-primary</code> required; <code class="nds-inline-code lang-css">-secondary</code>, <code class="nds-inline-code lang-css">-tertiary</code>, <code class="nds-inline-code lang-css">--neutral-tint</code>, <code class="nds-inline-code lang-css">--nds-font-brand</code>, <code class="nds-inline-code lang-css">--font-weight-{regular,medium,semibold,bold}</code> optional). With no flag the page is pure DGA.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-seed-*</code></td><td>Place on a switcher item (alongside <code class="nds-inline-code lang-html">data-theme-value</code>) to apply a custom palette on click: <code class="nds-inline-code lang-html">data-seed-primary</code> (required), plus optional <code class="nds-inline-code lang-html">data-seed-secondary</code>, <code class="nds-inline-code lang-html">data-seed-tertiary</code>, <code class="nds-inline-code lang-html">data-seed-tint</code>, <code class="nds-inline-code lang-html">data-seed-font</code>, <code class="nds-inline-code lang-html">data-seed-weight-{regular,medium,semibold,bold}</code> (for a brand font that reads lighter or heavier than IBM Plex at the same nominal weight). The switcher sets the matching <code class="nds-inline-code lang-css">--brand-*</code> seeds plus <code class="nds-inline-code lang-html">data-palette</code>, then persists the palette so it restores on the next visit.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme-css</code></td><td>On a switcher item, the URL of a stylesheet to load on the click and unload on switch-away. Optional.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme-js</code></td><td>On a switcher item, the URL of a script to load once on first activation and re-run on each switch-in. Optional. Each attribute is loaded on its own, so an item can carry either, both or neither — follow the theme's own install guide. Read by <code class="nds-inline-code lang-js">nds-theme.js</code> at both click-time and reconciliation.</td></tr>
-                    </tbody>
-                </table>
-            </div>
+</div>
+  </div>
+</section>
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <p>Set these on the root element (with <code class="nds-inline-code lang-html">data-palette</code>) for a custom palette, or at <code class="nds-inline-code lang-css">:root</code> in a stylesheet theme.</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--brand-primary</code></td><td>DGA green</td><td>Seed for the primary colour family (anchors at the 600 step). Drives the OKLCH ramp.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--brand-secondary</code></td><td>derived</td><td>Seed for the secondary family. Auto-derived from primary if omitted.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--brand-tertiary</code></td><td>derived</td><td>Seed for the tertiary family (anchors at the 500 step). Auto-derived if omitted.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--neutral-tint</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Gray temperature dial (0 = true gray). Warms or cools the gray scale toward the primary hue.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--nds-font-brand</code></td><td>IBM Plex Sans Arabic</td><td>Theme typeface stack, e.g. <code class="nds-inline-code lang-css">'Cairo', sans-serif</code>. The font must be loaded by the page.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--font-weight-regular</code></td><td><code class="nds-inline-code lang-html">400</code></td><td>Regular weight for the theme font. Set per-theme in <code class="nds-inline-code lang-css">_register.scss</code> when the brand font reads lighter than IBM Plex at the same nominal weight (corporate and sunset themes use 300).</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--font-weight-medium</code></td><td><code class="nds-inline-code lang-html">500</code></td><td>Medium weight for the theme font.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--font-weight-semibold</code></td><td><code class="nds-inline-code lang-html">600</code></td><td>Semibold weight for the theme font.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--font-weight-bold</code></td><td><code class="nds-inline-code lang-html">700</code></td><td>Bold weight for the theme font.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--background-primary-strong</code></td><td><code class="nds-inline-code lang-html">--colors-primary-900</code></td><td>Deep brand surface used by the hero and footer.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--background-primary-light</code></td><td><code class="nds-inline-code lang-html">--colors-primary-25</code></td><td>Light brand surface token set by the OKLCH ramp and also by full-override themes (such as Hajj). Used for subtle tinted backgrounds.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--img-overlay-color</code></td><td><code class="nds-inline-code lang-html">--colors-primary-950</code></td><td>Colour of the translucent overlay on hero images.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--colors-*</code></td><td>DGA palette</td><td>The full colour ramps (primary, secondary, tertiary, neutral, status). Override these directly in a stylesheet theme for exact values.</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<section id="themesApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Theme</strong> module initializes automatically and owns both axes. Use it to read or flip the dark and light mode; predefined themes are applied by the switcher (or by writing the <code class="nds-inline-code lang-html">data-theme</code> token), and a custom palette by setting the seeds plus <code class="nds-inline-code lang-html">data-palette</code>.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Dark / light MODE ──────────────────────────────────────────
-NDS.Theme.get();              // 'light' | 'dark'  (reads the mode token)
-NDS.Theme.set('dark');        // no animation origin (center of screen)
-NDS.Theme.set('light', el);   // circular reveal originating from an element
-NDS.Theme.toggle(el);         // flip mode, preserving the active theme token
-NDS.Theme.init();             // re-init after injecting new toggles/switchers
+### Data Attributes
+{: .nds-block-title}
 
-// ── Apply a custom palette ─────────────────────────────────────
-// Set the seeds (primary required; the rest auto-derive) + the flag that
-// gates the runtime OKLCH ramp. The whole palette and dark mode re-resolve.
-const root = document.documentElement;
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-theme` | `<html>` | The mode and the theme, as words: `dark`, a theme name, or both. Light mode has no word. The script writes it when the user picks a mode or a theme. The head script writes the saved value before first paint |
+| `data-palette` | `<html>` | Builds the palette from the `--brand-*` seeds. The script sets it when the user picks an option with `data-seed-primary`, and removes it when the user picks another option |
+| `data-theme="dark"` | any element except `<html>` | Renders the element and everything inside it in dark mode. A theme name does nothing here |
+| `data-theme-toggle` | a button, or a `.nds-switch-container` | Makes it a dark mode toggle. `id="ndsThemeToggle"` does the same |
+| `aria-pressed` | a dark mode toggle | Write `false` in the markup. The script sets `true` in dark mode and `false` in light mode, at load and on each change. It also swaps the icon between `nds-hgi-moon-02` and `nds-hgi-sun-03`, and checks the switch in dark mode |
+| `data-theme-value` | a theme option: a button, or a `.nds-switch-container` | The theme name the option applies. Leave it empty for the DGA default |
+| `aria-current` | a theme option | The script sets `true` on the chosen option and `false` on the others, at load and on each pick. It also checks the switch of the chosen option |
+| `data-seed-primary` | a theme option | Makes it a custom palette option, with this primary seed. The script saves the palette |
+| `data-seed-secondary`, `data-seed-tertiary`, `data-seed-tint`, `data-seed-font` | a theme option with `data-seed-primary` | Set `--brand-secondary`, `--brand-tertiary`, `--neutral-tint` and `--nds-font-brand` |
+| `data-seed-weight-regular`, `-medium`, `-semibold`, `-bold` | a theme option with `data-seed-primary` | Set the four `--font-weight-*` values, for a font that looks lighter or heavier than IBM Plex |
+| `data-theme-css` | a theme option | A stylesheet URL. The script adds it as `<link id="nds-theme-stylesheet">` when the user picks the option, and removes it when the user picks another one |
+| `data-theme-js` | a theme option | A script URL. The script loads it once, the first time the user picks the option, or at load when it is the saved theme |
+{: .nds-table .nds-responsive}
+
+`?theme=name` in the page URL: see Theme Menu.
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set the `--brand-*` seeds and `--neutral-tint` on `<html>` with `data-palette`. Set the others on `<html>`, or at `:root` in a stylesheet theme.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--brand-primary` | — | The primary seed: the 600 step of the primary colors |
+| `--brand-secondary` | the primary hue + 150° | The secondary seed: the 600 step of the secondary colors |
+| `--brand-tertiary` | the primary hue − 30° | The tertiary seed: the 500 step of the tertiary colors |
+| `--neutral-tint` | `1` | How much of the primary hue the gray scale takes. `0` is a true gray |
+| `--nds-font-brand` | `'IBM Plex Sans Arabic', sans-serif` | The typeface, such as `'Cairo', sans-serif`. Your page loads the font |
+| `--font-weight-regular`, `-medium`, `-semibold`, `-bold` | `400`, `500`, `600`, `700` | The four font weights. Corporate and Sunset set `300`, `400`, `500`, `600` |
+| `--background-primary-strong` | `var(--colors-primary-900)` | The deep primary surface of the hero and the footer |
+| `--background-primary-light` | `var(--colors-primary-50)` | The light primary surface, such as the sub hero. A custom palette sets it to `--background-primary-faint` |
+| `--img-overlay-color` | `var(--colors-primary-950)` | The overlay color on hero images. A custom palette sets it to `--colors-neutral-950` |
+| `--colors-*` | the DGA palette | The color ramps: primary, secondary, tertiary, neutral and status. Set them in a stylesheet theme for exact colors |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+`NDS.Theme` controls the mode. It works on every page, with or without a toggle. It fires no events.
+
+| Method | Effect |
+|---|---|
+| `NDS.Theme.get()` | Returns `'dark'` or `'light'` |
+| `NDS.Theme.set(mode, el)` | Sets `'dark'` or `'light'`, keeps the theme name, and saves the choice. The reveal grows from the center of `el`, or from the center of the screen without it |
+| `NDS.Theme.toggle(el)` | Switches between dark and light, like `set()` |
+| `NDS.Theme.init()` | Syncs the toggles and the theme menu, and loads the saved theme. The loader calls it when the page has a toggle or a theme option. It runs once |
+{: .nds-table .nds-responsive}
+
+There is no method to pick a theme. To set a palette from code, set the seeds and `data-palette` yourself. NDS does not save it.
+
+<script type="text/html" id="theme-js" data-canon data-lang="js">
+NDS.Theme.set('dark');
+
+// A custom palette
+var root = document.documentElement;
 root.style.setProperty('--brand-primary', '#7c3aed');
 root.style.setProperty('--neutral-tint', '0.4');
 root.setAttribute('data-palette', '');
 
-// ── Restore the DGA default ────────────────────────────────────
-['--brand-primary', '--brand-secondary', '--brand-tertiary', '--neutral-tint']
-  .forEach(p =&gt; root.style.removeProperty(p));
-root.removeAttribute('data-palette');   // frozen DGA palette takes over
-</code>
-                    </div>
-                </div>
-            </div>
+// Back to the DGA palette
+['--brand-primary', '--brand-secondary', '--brand-tertiary', '--neutral-tint'].forEach(function (p) {
+  root.style.removeProperty(p);
+});
+root.removeAttribute('data-palette');
+</script>
 
-        </div>
+The full API is in the banner of `_js/nds-theme.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="themesRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Top Bar](../ui-shell/topbar): the dark mode button, on every page.
+- [Section](../layout/section): the Primary, Gradient and Neutral colors write `data-theme="dark"`.
+- [Head](../ui-shell/head): the script that writes the saved theme before first paint.
+- [Event themes](../events/): stylesheet themes for national days and seasons.
+
+</div>
+  </div>
 </section>
