@@ -88,7 +88,9 @@
  *   - Auto-generated options come from _buildFilterInput(): div.nds-form-container plus
  *     nds-{check,radio,switch}-container, wrapping div.nds-form-header > label[for] >
  *     span.nds-label and div.nds-form-control > the input. Hand-written options must match
- *     that shape — read the generator, do not guess it.
+ *     that shape — read the generator, do not guess it. A hand-written range is a
+ *     [data-filter] group holding a .nds-slider-container (canon in components/slider.md);
+ *     put data-filter-currency / data-filter-unit on the group for the chip.
  *   - Resetting is markup, not JS: a [data-filter-action="reset"] button inside the surface
  *     clears every input and re-emits nds:filter:change. Hand-clearing fields + syncState
  *     repaints only — it dispatches nothing.
@@ -1302,7 +1304,8 @@
                 this.setupSearchFilter(element);
                 return;
             }
-            if (filterType === 'slider') {
+            // A group holding a slider you wrote is a range filter too, with no data-filter-type.
+            if (filterType === 'slider' || element.querySelector('.nds-slider-container')) {
                 this.setupRangeFilter(element, filterName);
                 return;
             }
@@ -1756,6 +1759,8 @@
         // both data-filter-min + data-filter-max → dual range (two thumbs);
         // data-filter-max alone → single "up to" (one thumb, floor 0).
         generateRangeControl(placeholder, filterName) {
+            // Your own slider markup is used as written.
+            if (placeholder.querySelector('.nds-slider-container')) return placeholder;
             const hasMin = placeholder.hasAttribute('data-filter-min');
             const hasMax = placeholder.hasAttribute('data-filter-max');
             const min = hasMin ? parseFloat(placeholder.getAttribute('data-filter-min')) : 0;
@@ -2038,6 +2043,8 @@
             const values = includeAllOption ? ['', ...collectedValues] : collectedValues;
 
             const isInDropmenu = container.closest('.nds-dropmenu-menu') !== null;
+            // Read before _resolveFilterFieldset: it swaps a placeholder div for a fieldset, detaching the div.
+            const searchable = isInDropmenu && !!container.closest('.nds-dropmenu[data-search]');
             const multiple = values.length > 1;
 
             const fieldset = this._resolveFilterFieldset(container, { legendText, isInDropmenu, multiple });
@@ -2068,7 +2075,7 @@
                 allLabel,
                 labelMap: this.filterLabels[filterName] || {},
                 // Row-level search opt-in gated on the parent dropmenu opting in.
-                searchable: isInDropmenu && !!container.closest('.nds-dropmenu[data-search]'),
+                searchable,
             };
 
             values.forEach((value, index) => {
@@ -2303,7 +2310,7 @@
                 const input = document.createElement('input');
                 input.type = inputType;
                 input.id = id;
-                input.name = inputType === 'radio' ? groupName : `filter-${filterName}`;
+                input.name = `filter-${filterName}`;
                 input.value = value;
                 input.className = inputClass;
                 if (variant) {
@@ -2347,12 +2354,12 @@
             this.updateAppliedChips();
         }
 
-        // How a criteria change gets committed. AJAX mode re-fetches from the
-        // server; every other mode filters the items already on the page. One
+        // How a criteria change gets committed. Form mode, AJAX or not, asks the
+        // server again; client mode filters the items already on the page. One
         // definition so a new commit path can't pick the wrong half — the chip,
         // clear and range-reset paths all route here.
         _commitCriteriaChange() {
-            if (!this.isAjaxMode) {
+            if (!this.isFormMode) {
                 this.applyFilters();
                 return;
             }
@@ -2698,8 +2705,8 @@
 
             this.dispatchResetEvent();
 
-            // In AJAX mode, resubmit to re-fetch results with cleared criteria
-            if (this.isAjaxMode) {
+            // In form mode, resubmit: the server's results still carry the old criteria
+            if (this.isFormMode) {
                 this.submitForm();
                 return;
             }
