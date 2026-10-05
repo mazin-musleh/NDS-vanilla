@@ -848,7 +848,7 @@
   icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
-  url: "/components/forms.html#textareaInput"
+  url: "/components/forms.html"
   js: _js/nds-forms.js
   scss: _sass/components/_forms.scss
 

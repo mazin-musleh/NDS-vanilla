@@ -297,7 +297,12 @@ This is a rewrite, not a conversion. Each page is written fresh from its SCSS, i
 ### Own-plan pages (outside the batches)
 
 - `components/tokens.md` — **PARKED, LAST (owner 2026-09-26): full UI/UX rework with its own plan.** Today it is generic and not useful enough. Its token list is generated at build by `_plugins/tokens_data.rb` from the four token SCSS files, so the `.md` holds no token names (clashes with G4).
-- `components/forms.md`: 148 KB, and the shared home for field states.
+- `components/forms.md`: 148 KB, and the shared home for field states. **Plan (owner 2026-10-05):**
+  - One builder for the text fields: base canon the text input with `data-harness="form"`; Structure rows Text, Email, Number, Search, Phone, Textarea, Native Select; groups for Prefix/Suffix, Size and the shared field states.
+  - A Field states section: the target of the 53 "Field states → Forms" links.
+  - Form-level features (actions row, Status API, server errors, loading, permanent feedback) go to Behavior, each a `###` with a small canon; their attributes and methods go to the API.
+  - `#numberInput` and `#textareaInput` survive as heading ids. Password drops to a link to `components/password.md`.
+  - **Custom Select moves to its own page** `components/custom-select.md` (own namespace, JS and catalog card), in its own session after Forms: register it, and repoint the three `forms#customSelect` links and the catalog URL.
 - `components/themes.md`, `components/icons.md` and `components/accessibility.md`.
 - `ui-shell/head.md` — **DONE (2026-10-05).** The code is plain HTML in a Liquid `capture` (a `<script>` inside would end a canon), escaped into a `data-escaped` canon that `docs_canon.rb` unescapes before the code block. Agents read it in the `.md`. It is a hand copy of the served gate and head script, so `mkrelease.py verify()` compares both against `_site/index.html`.
 - `layout/section.md`: 112 KB with 58 toggles.

@@ -2,2576 +2,669 @@
 layout: page
 title: Text Fields
 hero_title: Text Fields - National Design System
-hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
+hero_description: Form fields the user types in, with the label, messages and submit validation that every NDS field shares
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/09/2026 - 11:12 PM"
+last_edit: "05/10/2026 - 08:59 AM"
 lang: en
 direction: ltr
 ---
 
-<!-- Text Input -->
-<section id="textInput" class="nds-content-section nds-demo-section">
+<section id="formsOverview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Text Input</h2>
-      <p class="nds-section-description">Standard single-line text field with clear button and validation feedback</p>
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A text field is a `.nds-form-container` with three parts: a header with the label, a control box with the input, and an action slot for buttons such as Clear. The same container holds an email, password, search, number, phone, textarea or native select field. This page also covers what every NDS field shares: the required mark, the disabled and readonly states, the messages under the field, and submit validation.
+
+Pick another component when:
+
+- the user picks one option from a list: [Custom Select](../components/custom-select)
+- the user picks a date or a time: [Date Picker](../components/date-picker), [Time Picker](../components/time-picker)
+- the user types and picks from suggestions: [Autocomplete](../components/autocomplete)
+- the user picks a new password: [Password](../components/password)
+- the user types a one-time code: [OTP Input](../components/otp)
+- the user adds several values as tags: [Tag Input](../components/taginput)
+- the user turns a setting on or off, or picks from a few options: [Switch](../components/switch), [Checkbox](../components/checkbox), [Radio](../components/radio)
+
+</div>
+  </div>
+</section>
+
+<section id="formsMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container">
-                <div class="nds-form-header">
-                  <label for="demo-textInput">
-                    <span class="nds-label">Full Name</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <input type="text" id="demo-textInput" class="nds-input" placeholder="Enter your full name...">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-text-input-1" id="tab-text-input-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-text-input-1"
-                  aria-labelledby="tab-text-input-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="text-input-1"&gt;
-  &lt;span class="nds-label"&gt;Full Name&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;input type="text" id="text-input-1" class="nds-input" placeholder="Enter your full name..."&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<script type="text/html" id="field-text" data-canon data-variants="formsVariantsTable" data-harness="form" data-demo-width="320px">
+<div class="nds-form-container">
+  <div class="nds-form-header">
+    <label for="full-name">
+      <span class="nds-label">Full name</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <input type="text" id="full-name" name="full-name" class="nds-input" placeholder="Enter your full name" autocomplete="name">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-email" data-canon>
+<div class="nds-form-container">
+  <div class="nds-form-header">
+    <label for="email-address">
+      <span class="nds-label">Email address</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
+    <input type="email" id="email-address" name="email" class="nds-input" placeholder="name@example.com" autocomplete="email">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-password" data-canon>
+<div class="nds-form-container">
+  <div class="nds-form-header">
+    <label for="current-password">
+      <span class="nds-label">Password</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+    <input type="password" id="current-password" name="password" class="nds-input" placeholder="Enter your password" autocomplete="current-password">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+        <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-search" data-canon>
+<div class="nds-form-container">
+  <div class="nds-form-header">
+    <label for="search-services">
+      <span class="nds-label">Search services</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+    <input type="text" id="search-services" name="search" class="nds-search-input" placeholder="Search services">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+      <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input">
+        <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-number" data-canon>
+<div class="nds-form-container" style="--form-width: 160px">
+  <div class="nds-form-header">
+    <label for="quantity">
+      <span class="nds-label">Quantity</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-form-action nds-prefix">
+      <button class="nds-btn nds-subtle nds-number-decrement" type="button" aria-label="Decrease value">
+        <i class="nds-icon nds-hgi-minus-sign" aria-hidden="true"></i>
+      </button>
+    </div>
+    <input type="text" id="quantity" name="quantity" class="nds-input nds-center" inputmode="numeric" value="1" min="1" max="20" step="1">
+    <div class="nds-form-action nds-suffix">
+      <button class="nds-btn nds-subtle nds-number-increment" type="button" aria-label="Increase value">
+        <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-phone" data-canon>
+<div class="nds-form-container">
+  <div class="nds-form-header">
+    <label for="mobile">
+      <span class="nds-label">Mobile number</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-form-action nds-prefix">
+      <span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span>
+    </div>
+    <input type="tel" id="mobile" name="mobile" class="nds-input nds-phone" placeholder="5XX XXX XXX" autocomplete="tel-national" inputmode="numeric" maxlength="9">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-phone-country" data-canon>
+<div class="nds-form-container">
+  <div class="nds-form-header">
+    <label for="phone">
+      <span class="nds-label">Phone</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
+      <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
+        <span class="nds-label">+966</span>
+      </button>
+      <div class="nds-dropmenu-menu" hidden>
+        <div class="nds-dropmenu-scroll">
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966">
+            <span class="nds-label">Saudi Arabia (+966)</span>
+          </button>
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971">
+            <span class="nds-label">United Arab Emirates (+971)</span>
+          </button>
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-trigger-label="+973">
+            <span class="nds-label">Bahrain (+973)</span>
+          </button>
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-trigger-label="+974">
+            <span class="nds-label">Qatar (+974)</span>
+          </button>
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-trigger-label="+965">
+            <span class="nds-label">Kuwait (+965)</span>
+          </button>
+          <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-trigger-label="+968">
+            <span class="nds-label">Oman (+968)</span>
+          </button>
         </div>
       </div>
+    </div>
+    <input type="tel" id="phone" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric">
+    <div class="nds-form-action">
+      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-textarea" data-canon>
+<div class="nds-form-container nds-textarea">
+  <div class="nds-form-header">
+    <label for="message">
+      <span class="nds-label">Message</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <textarea id="message" name="message" class="nds-textarea" placeholder="Write your message" rows="4"></textarea>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-select" data-canon>
+<div class="nds-form-container nds-select">
+  <div class="nds-form-header">
+    <label for="region">
+      <span class="nds-label">Region</span>
+    </label>
+  </div>
+  <div class="nds-form-control">
+    <select id="region" name="region" class="nds-input">
+      <option value="" disabled selected>Choose a region</option>
+      <option value="riyadh">Riyadh</option>
+      <option value="makkah">Makkah</option>
+      <option value="eastern">Eastern Province</option>
+      <option value="asir">Asir</option>
+    </select>
+  </div>
+</div>
+</script>
+<script type="text/html" id="field-prefix" data-canon>
+<div class="nds-form-action nds-prefix">
+  <span class="nds-btn nds-subtle"><span class="nds-label">Prefix</span></span>
+</div>
+</script>
+<script type="text/html" id="field-suffix" data-canon>
+<div class="nds-form-action nds-suffix">
+  <span class="nds-btn nds-subtle"><span class="nds-label">Suffix</span></span>
+</div>
+</script>
+<script type="text/html" id="field-info" data-canon>
+<span class="nds-info">More details about what to enter here</span>
+</script>
+<script type="text/html" id="field-hint" data-canon>
+<div class="nds-form-footer" data-feedback-target>
+  <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+    <span class="nds-feedback-message">A hint that stays under the field</span>
+  </span>
+</div>
+</script>
     </div>
   </div>
 </section>
 
-<!-- Prefix & Suffix -->
-<section id="prefixSuffix" class="nds-content-section nds-demo-section">
+<section id="formsVariants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Prefix & Suffix</h2>
-      <p class="nds-section-description">Text input with inline prefix and suffix labels inside the form control</p>
+      <h2 class="nds-section-title">Variants</h2>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
-                  <span class="nds-label">Fix: Subtle</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-subtle", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixStyle"]'>
-                      <span class="nds-label">Subtle</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-secondary", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixStyle"]'>
-                      <span class="nds-label">Solid</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
-                  <span class="nds-label">Fix: LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
-                  <span class="nds-label">Fix: Both</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-form-fix="prefix">
-                      <span class="nds-label">Prefix</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-form-fix="suffix">
-                      <span class="nds-label">Suffix</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-state="selected" data-form-fix="both">
-                      <span class="nds-label">Both</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn" data-form-fix-icon>
-                <span class="nds-label">Icon</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" data-form-fix-dropmenu>
-                <span class="nds-label">Dropmenu</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container">
-                <div class="nds-form-header">
-                  <label for="demo-prefixSuffix">
-                    <span class="nds-label">Label</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="nds-label">Prefix</span></span></div>
-                  <input type="text" id="demo-prefixSuffix" class="nds-input" placeholder="Entered text">
-                  <div class="nds-form-action nds-suffix"><span class="nds-btn nds-subtle"><span class="nds-label">Suffix</span></span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-prefix-suffix-1" id="tab-prefix-suffix-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-prefix-suffix-1"
-                  aria-labelledby="tab-prefix-suffix-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="prefix-suffix-1"&gt;
-  &lt;span class="nds-label"&gt;Label&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;div class="nds-form-action nds-prefix"&gt;&lt;span class="nds-btn nds-subtle"&gt;&lt;span class="nds-label"&gt;Prefix&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
-&lt;input type="text" id="prefix-suffix-1" class="nds-input" placeholder="Entered text"&gt;
-&lt;div class="nds-form-action nds-suffix"&gt;&lt;span class="nds-btn nds-subtle"&gt;&lt;span class="nds-label"&gt;Suffix&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="nds-section-body" markdown="1">
+
+Each Structure is one field type. Options stack: a field can be MD, Lighter and Required at once. Prefix goes first in `.nds-form-control`, and Suffix goes right after the input. They fit a plain text, email, password or search field. Number and Phone carry their own affixes, and a textarea or a select takes none. Number starts with Solid and MD affixes, so write `nds-secondary nds-md` on its buttons. Phone starts with Solid, so write `nds-secondary` on its `+966`.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Text (default) | — | — | A single line of text, such as a name |
+| Structure | Email | canon `#field-email` | — | An email address. `type="email"` checks the format at submit |
+| Structure | Password | canon `#field-password` | — | A password the user already has, on a sign-in form. For a new password, use [Password](../components/password) |
+| Structure | Search | canon `#field-search` | — | A search box with a voice button. See [Voice Input](../components/voice-input) |
+| Structure | Number (demo: + affix-solid) (demo: + affix-md) | canon `#field-number` | — | A whole number with minus and plus buttons, between `min` and `max` |
+| Structure | Phone (demo: + affix-solid) | canon `#field-phone` | — | A Saudi mobile number after a fixed `+966` |
+| Structure | Phone with country | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name` |
+| Structure | Textarea | canon `#field-textarea` | — | Several lines of text, such as a message |
+| Structure | Select | canon `#field-select` | — | A native `<select>`, for the phone's own picker. For a choice in a form, use [Custom Select](../components/custom-select) |
+| Size | LG (default) | — | — | 40px high. It needs no class |
+| Size | MD | `.nds-md` | `.nds-form-container` | 32px high, with smaller text, for a table filter or a side panel |
+| Style | Outline (default) | — | — | A border on the page background |
+| Style | Lighter | `.nds-lighter` | `.nds-form-container` | A light fill and no border, for a field on a white card |
+| Style | Darker | `.nds-darker` | `.nds-form-container` | A darker fill and no border, for a field on a gray surface |
+| Affix (any) | Prefix | canon `#field-prefix` | `.nds-form-control:not(:has(> textarea, > select, .nds-number-decrement, .nds-phone))` (start) | Fixed text before the value, such as a currency or `https://` |
+| Affix (any) | Suffix | canon `#field-suffix` | `input:not(.nds-phone, [inputmode="numeric"], [type="hidden"])` (after) | Fixed text after the value, such as a unit or a domain |
+| Affix style | Subtle (default) | `.nds-subtle` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on the field's own background: text, the number buttons and the country picker |
+| Affix style | Solid (id: affix-solid) | `.nds-secondary` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on a light fill, set apart from the value |
+| Affix size | LG (default) | — | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The affix button's default padding. It needs no class |
+| Affix size | MD (id: affix-md) | `.nds-md` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | Smaller prefix and suffix buttons, with smaller text |
+| State | None (default) | — | — | The user can type |
+| State | Disabled | `[data-state~="disabled"]` | `.nds-form-container` | The field is dimmed and does not take focus. A disabled value does not submit |
+| State | Readonly | `[data-state~="readonly"]` | `.nds-form-container:not(.nds-select)` | The value shows and submits, and the user cannot change it. Not on a select: the browser ignores `readonly` there |
+| State | Loading | `[data-state~="loading"]` | `.nds-form-container:not(.nds-select)` | A spinner in place of the action buttons, while a script checks the value. Set it with `NDS.State.add()` and remove it when the check ends |
+| Required | Required | `[data-required]` | `.nds-form-container` | A red asterisk before the label. An empty field blocks the submit |
+| Info | Info | canon `#field-info` | `label` | A line of help text under the label |
+| Hint | Hint | canon `#field-hint` | `.nds-form-container` | A hint under the field that stays. A validation message takes its place while it shows |
+{: #formsVariantsTable .nds-table .nds-responsive}
+
+</div>
   </div>
 </section>
 
-<!-- Phone Number with Country Code -->
-<section id="phoneCountryCode" class="nds-content-section nds-demo-section">
+<section id="formsBehavior" class="nds-content-section nds-doc-behavior">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Phone Number with Country Code</h2>
-      <p class="nds-section-description">Compound input using a prefix-slot dropmenu as a value picker. The dropmenu's <code class="nds-inline-code lang-html">data-select-name</code> opt-in captures the selected country code into a hidden input that ships with the form, and updates the trigger label to a compact display variant. Add <code class="nds-inline-code lang-html">nds-phone</code> to the input itself to strip non-digits and any leading zero as the user types, since the country code is already prepended via the prefix slot.</p>
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
-                  <span class="nds-label">Fix: Subtle</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-subtle", ".nds-prefix > .nds-btn", "fixStyle"]'>
-                      <span class="nds-label">Subtle</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-secondary", ".nds-prefix > .nds-btn", "fixStyle"]'>
-                      <span class="nds-label">Solid</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
-                  <span class="nds-label">Fix: LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-prefix > .nds-btn", "fixSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-prefix > .nds-btn", "fixSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container" style="--form-width: 360px;">
-                <div class="nds-form-header">
-                  <label for="demo-phoneCountryCode">
-                    <span class="nds-label">Phone</span>
-                  </label>
-                </div>
-                <div class="nds-form-control nds-ltr">
-                  <div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
-                    <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
-                      <span class="nds-label">+966</span>
-                    </button>
-                    <div class="nds-dropmenu-menu" hidden>
-                      <div class="nds-dropmenu-scroll">
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966">
-                          <span class="nds-label">Saudi Arabia (+966)</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971">
-                          <span class="nds-label">United Arab Emirates (+971)</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-trigger-label="+973">
-                          <span class="nds-label">Bahrain (+973)</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-trigger-label="+974">
-                          <span class="nds-label">Qatar (+974)</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-trigger-label="+965">
-                          <span class="nds-label">Kuwait (+965)</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-trigger-label="+968">
-                          <span class="nds-label">Oman (+968)</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <input type="tel" id="demo-phoneCountryCode" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric" required>
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-phone-country-1" id="tab-phone-country-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-phone-country-1"
-                  aria-labelledby="tab-phone-country-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="phone-country-1"&gt;
-  &lt;span class="nds-label"&gt;Phone&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966"&gt;
-  &lt;button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"&gt;
-    &lt;span class="nds-label"&gt;+966&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" hidden&gt;
-    &lt;div class="nds-dropmenu-scroll"&gt;
-      &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966"&gt;
-        &lt;span class="nds-label"&gt;Saudi Arabia (+966)&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971"&gt;
-        &lt;span class="nds-label"&gt;United Arab Emirates (+971)&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-trigger-label="+973"&gt;
-        &lt;span class="nds-label"&gt;Bahrain (+973)&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-trigger-label="+974"&gt;
-        &lt;span class="nds-label"&gt;Qatar (+974)&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-trigger-label="+965"&gt;
-        &lt;span class="nds-label"&gt;Kuwait (+965)&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-trigger-label="+968"&gt;
-        &lt;span class="nds-label"&gt;Oman (+968)&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;input type="tel" id="phone-country-1" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric" required&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Field States
+{: .nds-block-title #fieldStates}
+
+Every NDS field uses these states, and the other field pages link here for them. `data-required` on the container adds the red asterisk, and the forms script adds `required` to the input. `data-state="disabled"` or `data-state="readonly"` on the container sets the same property on every input inside it. The script also works the other way: an input that is disabled, readonly or required in the HTML puts its state on the container.
+
+### Submit Validation
+{: .nds-block-title}
+
+A `<form class="nds-form">` checks every visible field when the user submits it. A field that fails shows its message under it, the first one takes focus, and the submit stops. The API lists each check and its message. A message clears as soon as the user edits the field. Add `data-ajax` to stop the page from reloading after a passing submit, and send the request from `nds:formValid`.
+
+<script type="text/html" id="forms-submit" data-canon data-form data-preview="none">
+<form class="nds-form" data-ajax>
+  <div class="nds-flex nds-col">
+    <div class="nds-form-container" data-required>
+      <div class="nds-form-header">
+        <label for="applicant-name">
+          <span class="nds-label">Full name</span>
+        </label>
+      </div>
+      <div class="nds-form-control">
+        <input type="text" id="applicant-name" name="name" class="nds-input" autocomplete="name">
+      </div>
+    </div>
+    <div class="nds-form-container" data-required>
+      <div class="nds-form-header">
+        <label for="applicant-email">
+          <span class="nds-label">Email address</span>
+        </label>
+      </div>
+      <div class="nds-form-control">
+        <input type="email" id="applicant-email" name="email" class="nds-input" autocomplete="email">
       </div>
     </div>
   </div>
-</section>
-
-<!-- Number Input -->
-<section id="numberInput" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Number Input</h2>
-      <p class="nds-section-description">Numeric field with increment and decrement buttons for precise value adjustments</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
-                  <span class="nds-label">Fix: Solid</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-subtle", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixStyle"]'>
-                      <span class="nds-label">Subtle</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-secondary", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixStyle"]'>
-                      <span class="nds-label">Solid</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
-                  <span class="nds-label">Fix: LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                data-toggler='["nds-center", ".nds-input", "inputAlign"]'>
-                <span class="nds-label">Center</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container" style="--form-width: 160px">
-                <div class="nds-form-header">
-                  <label for="demo-numberInput">
-                    <span class="nds-label">Quantity</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <div class="nds-form-action nds-prefix"><button class="nds-btn nds-secondary nds-number-increment" type="button" aria-label="Increase value"><i class="hgi hgi-stroke hgi-add-01"></i></button></div>
-                  <input type="text" id="demo-numberInput" class="nds-input nds-center" inputmode="numeric" value="1" min="0" max="1000" step="1" placeholder="0">
-                  <div class="nds-form-action nds-suffix"><button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"><i class="hgi hgi-stroke hgi-minus-sign"></i></button></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-number-input-1" id="tab-number-input-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-number-input-1"
-                  aria-labelledby="tab-number-input-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container" style="--form-width: 160px"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="number-input-1"&gt;
-  &lt;span class="nds-label"&gt;Quantity&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;div class="nds-form-action nds-prefix"&gt;&lt;button class="nds-btn nds-secondary nds-number-increment" type="button" aria-label="Increase value"&gt;&lt;i class="hgi hgi-stroke hgi-add-01"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
-&lt;input type="text" id="number-input-1" class="nds-input nds-center" inputmode="numeric" value="1" min="0" max="1000" step="1" placeholder="0"&gt;
-&lt;div class="nds-form-action nds-suffix"&gt;&lt;button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"&gt;&lt;i class="hgi hgi-stroke hgi-minus-sign"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="nds-form-actions">
+    <button type="button" class="nds-btn nds-secondary-outline">
+      <span class="nds-label">Back</span>
+    </button>
+    <button type="submit" class="nds-btn nds-primary">
+      <span class="nds-label">Submit</span>
+    </button>
   </div>
-</section>
+</form>
+</script>
 
-<!-- Search Input -->
-<section id="searchInput" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Search Input</h2>
-      <p class="nds-section-description">Search field with leading icon, voice input, and clear button</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container">
-                <div class="nds-form-header">
-                  <label for="demo-searchInput">
-                    <span class="nds-label">Search Services</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                  <input type="text" id="demo-searchInput" class="nds-search-input" name="search"
-                    placeholder="Search services...">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input">
-                      <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-search-input-1" id="tab-search-input-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-search-input-1"
-                  aria-labelledby="tab-search-input-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="search-input-1"&gt;
-  &lt;span class="nds-label"&gt;Search Services&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-&lt;input type="text" id="search-input-1" class="nds-search-input" name="search" placeholder="Search services..."&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-  &lt;button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input"&gt;
-    &lt;i class="nds-icon nds-hgi-mic-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+`.nds-form` draws no box: give the fields a gapped wrapper such as `nds-flex nds-col`. On an element that is not a `<form>`, `.nds-form` checks nothing. Call `NDS.Forms.validateForm(step)` from your own button there, where `step` is that `.nds-form` element, and read `valid` in the result.
 
-<!-- Email Input -->
-<section id="emailInput" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Email Input</h2>
-      <p class="nds-section-description">Email field with leading icon and built-in format validation</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container">
-                <div class="nds-form-header">
-                  <label for="demo-emailInput">
-                    <span class="nds-label">Email Address</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                  <input type="email" id="demo-emailInput" class="nds-input" placeholder="Enter your email...">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-email-input-1" id="tab-email-input-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-email-input-1"
-                  aria-labelledby="tab-email-input-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="email-input-1"&gt;
-  &lt;span class="nds-label"&gt;Email Address&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;i class="nds-icon nds-hgi-mail-01" aria-hidden="true"&gt;&lt;/i&gt;
-&lt;input type="email" id="email-input-1" class="nds-input" placeholder="Enter your email..."&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+### Status Messages
+{: .nds-block-title}
 
-<!-- Password Input -->
-<section id="passwordInput" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Password Input</h2>
-      <p class="nds-section-description">Password field with visibility toggle and Arabic character filtering. For live strength rules and confirm-match checking, see <a class="nds-color" href="{{ 'components/password' | relative_url }}">Password</a></p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <form class="nds-form" onsubmit="return false" novalidate>
-                <label for="demo-passwordUsername" hidden aria-hidden="true">Username</label>
-                <input type="text" id="demo-passwordUsername" autocomplete="username" hidden aria-hidden="true">
-                <div class="nds-form-container">
-                  <div class="nds-form-header">
-                    <label for="demo-passwordInput">
-                      <span class="nds-label">Password</span>
-                    </label>
-                  </div>
-                  <div class="nds-form-control">
-                    <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-                    <input type="password" id="demo-passwordInput" class="nds-input" placeholder="Enter password..." autocomplete="new-password">
-                    <div class="nds-form-action">
-                      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
-                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                      </button>
-                      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                        <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-password-input-1" id="tab-password-input-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-password-input-1"
-                  aria-labelledby="tab-password-input-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="password-input-1"&gt;
-  &lt;span class="nds-label"&gt;Password&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;i class="nds-icon nds-hgi-lock-password" aria-hidden="true"&gt;&lt;/i&gt;
-&lt;input type="password" id="password-input-1" class="nds-input" placeholder="Enter password..." autocomplete="new-password"&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-  &lt;button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password"&gt;
-    &lt;i class="nds-icon nds-hgi-view-off" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+`NDS.Forms.setStatus()` shows a message under a field, such as an error the server returns. A field shows `error` or `help`. `help` is a hint in the neutral color with a "?" icon, not a validation result. Any other status shows the message in the neutral color, with no red outline. `setStatus()` never moves focus, so focus the first field with an error yourself. Focus also scrolls the field into view.
 
-<!-- Textarea -->
-<section id="textareaInput" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Textarea</h2>
-      <p class="nds-section-description">Multi-line text entry for longer content like messages and descriptions</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container nds-textarea">
-                <div class="nds-form-header">
-                  <label for="demo-textareaInput">
-                    <span class="nds-label">Message</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <textarea id="demo-textareaInput" class="nds-textarea" placeholder="Enter your message..."
-                    rows="4"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-textarea-1" id="tab-textarea-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-textarea-1"
-                  aria-labelledby="tab-textarea-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container nds-textarea"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="textarea-1"&gt;
-  &lt;span class="nds-label"&gt;Message&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;textarea id="textarea-1" class="nds-textarea" placeholder="Enter your message..." rows="4"&gt;&lt;/textarea&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Custom Select -->
-<section id="customSelect" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Custom Select</h2>
-      <p class="nds-section-description">Custom dropdown select with keyboard navigation and hidden input for form submission</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Readonly</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container nds-select">
-                <div class="nds-form-header">
-                  <label for="demo-selectInput">
-                    <span class="nds-label">Region</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <input type="text" id="demo-selectInput" class="nds-input nds-select-input"
-                    placeholder="Choose an option..." readonly>
-                  <input type="hidden" name="selectValue" class="nds-select-value">
-
-                  <!-- Custom Dropdown Menu -->
-                  <div class="nds-select-dropdown" hidden>
-                    <div class="nds-select-options">
-                      <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="">
-                        <span class="nds-option-text">
-                          <span class="nds-label">Choose an option...</span>
-                        </span>
-                      </button>
-                      <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option1">
-                        <span class="nds-option-text">
-                          <span class="nds-label">Option 1</span>
-                        </span>
-                      </button>
-                      <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option2">
-                        <span class="nds-option-text">
-                          <span class="nds-label">Option 2</span>
-                        </span>
-                      </button>
-                      <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3">
-                        <i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i>
-                        <span class="nds-option-text">
-                          <span class="nds-label">Option 3</span>
-                          <span class="nds-description">Free decoration is allowed inside an option</span>
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-select-1" id="tab-select-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-select-1"
-                  aria-labelledby="tab-select-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container nds-select"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="select-input-1"&gt;
-  &lt;span class="nds-label"&gt;Region&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;input type="text" id="select-input-1" class="nds-input nds-select-input" placeholder="Choose an option..." readonly&gt;
-&lt;input type="hidden" name="selectValue" class="nds-select-value"&gt;
-&lt;div class="nds-select-dropdown" hidden&gt;
-  &lt;div class="nds-select-options"&gt;
-    &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value=""&gt;
-      &lt;span class="nds-option-text"&gt;
-        &lt;span class="nds-label"&gt;Choose an option...&lt;/span&gt;
-      &lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option1"&gt;
-      &lt;span class="nds-option-text"&gt;
-        &lt;span class="nds-label"&gt;Option 1&lt;/span&gt;
-      &lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option2"&gt;
-      &lt;span class="nds-option-text"&gt;
-        &lt;span class="nds-label"&gt;Option 2&lt;/span&gt;
-      &lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3"&gt;
-      &lt;i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;span class="nds-option-text"&gt;
-        &lt;span class="nds-label"&gt;Option 3&lt;/span&gt;
-        &lt;span class="nds-description"&gt;Free decoration is allowed inside an option&lt;/span&gt;
-      &lt;/span&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Native Select -->
-<section id="nativeSelect" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Native Select</h2>
-      <p class="nds-section-description">Standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> element wrapped in the form container for native mobile picker behavior. In-form choice fields use the <a class="nds-color" href="#customSelect">custom select</a> by default, whatever the option count. Use this one only when the design asks for the native picker</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">State</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formState"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
-                      <span class="nds-label">Required</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
-                      <span class="nds-label">Disabled</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">Style</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Default</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled lighter</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
-                      <span class="nds-label">Filled darker</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="nds-dropmenu demo-toggle-menu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                  <span class="nds-label">LG</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                  <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">LG</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
-                      <span class="nds-label">MD</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container nds-select">
-                <div class="nds-form-header">
-                  <label for="demo-nativeSelect">
-                    <span class="nds-label">Region</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <select id="demo-nativeSelect" name="region" class="nds-input">
-                    <option value="" disabled selected>Choose an option...</option>
-                    <option value="riyadh">Riyadh</option>
-                    <option value="makkah">Makkah</option>
-                    <option value="eastern">Eastern Province</option>
-                    <option value="asir">Asir</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-nativeSelect-1" id="tab-nativeSelect-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nativeSelect-1"
-                  aria-labelledby="tab-nativeSelect-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container nds-select"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="native-select-1"&gt;
-  &lt;span class="nds-label"&gt;Region&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;select id="native-select-1" name="region" class="nds-input"&gt;
-  &lt;option value="" disabled selected&gt;Choose an option...&lt;/option&gt;
-  &lt;option value="riyadh"&gt;Riyadh&lt;/option&gt;
-  &lt;option value="makkah"&gt;Makkah&lt;/option&gt;
-  &lt;option value="eastern"&gt;Eastern Province&lt;/option&gt;
-  &lt;option value="asir"&gt;Asir&lt;/option&gt;
-&lt;/select&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Form Actions -->
-<section id="formActionsRow" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Form Actions</h2>
-      <p class="nds-section-description">The form-level action row for submit and navigation buttons. The row carries its own top margin and gap</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card" data-code-rebuild>
-          <div class="demo-header">
-            <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                <span class="nds-label">Remove bg</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-actions">
-                <button type="button" class="nds-btn nds-secondary-outline">
-                  <span class="nds-label">Back</span>
-                </button>
-                <button type="submit" class="nds-btn nds-primary">
-                  <span class="nds-label">Submit</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-form-actions-1" id="tab-form-actions-1">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-form-actions-1"
-                  aria-labelledby="tab-form-actions-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-actions"&gt;
-  &lt;button type="button" class="nds-btn nds-secondary-outline"&gt;
-&lt;span class="nds-label"&gt;Back&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;button type="submit" class="nds-btn nds-primary"&gt;
-&lt;span class="nds-label"&gt;Submit&lt;/span&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-                </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Form Status API -->
-<section id="formStatusApi" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Form Status API</h2>
-      <p class="nds-section-description">Set the error status on any form container with automatic feedback display. A field carries error, help, or nothing. Help is neutral gray with a "?" icon, for hint text. Any other status renders as a plain neutral message.</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-error-btn">
-                <span class="nds-label">Error</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-help-btn">
-                <span class="nds-label">Help</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-neutral-btn">
-                <span class="nds-label">Neutral</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="status-clear-btn">
-                <span class="nds-label">Clear</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container" id="status-demo-container">
-                <div class="nds-form-header">
-                  <label for="status-demo-input">
-                    <span class="nds-label">National ID</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <input type="text" id="status-demo-input" class="nds-input"
-                    placeholder="Enter your national ID...">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-status-api-html" id="tab-status-api-html">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                    aria-controls="panel-status-api-js" id="tab-status-api-js">
-                    <span class="nds-tab-label">JS API</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-status-api-html"
-                  aria-labelledby="tab-status-api-html">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container" id="national-id-field"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="national-id"&gt;
-  &lt;span class="nds-label"&gt;National ID&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;input type="text" id="national-id" class="nds-input" placeholder="Enter your national ID..."&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-              </code>
-                  </div>
-                </div>
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-status-api-js"
-                  aria-labelledby="tab-status-api-js" hidden>
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-javascript code">var field = document.getElementById('national-id-field');
-
-// Set the error status with a message
-NDS.Forms.setStatus({ element: field, status: 'error', message: 'This field is required' });
-
-// A field carries error, help, or nothing. Anything else renders as a
-// plain neutral message — no red outline, no colour.
-NDS.Forms.setStatus({ element: field, status: 'neutral', message: 'Additional information' });
-
-// Help is neutral gray with a "?" icon — for hint text, not a validation result
-NDS.Forms.setStatus({ element: field, status: 'help', message: 'Use 3-20 characters' });
-
-// Clear status (restores permanent feedback if present)
-NDS.Forms.clearStatus(field);
-
-// Get current status
-var status = NDS.Forms.getStatus(field);
-// Returns: { status: 'error', message: '...', isValid: false }</code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="nds-block nds-prose">
-        <h3 class="nds-block-title">Server-rendered Errors</h3>
-        <p>A server-rendered page paints its own errors on load. Loop over the errors from the server, call <code class="nds-inline-code lang-js">setStatus</code> for each field, then focus the first one. <code class="nds-inline-code lang-js">setStatus</code> sets the status and inserts the message, but it never moves focus — only the caller knows which error comes first. Focus also scrolls the field into view, so an error below the fold reaches the user.</p>
-      </div>
-      <div class="nds-block">
-        <div class="nds-code nds-expandable">
-          <div class="nds-code-action">
-            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-              <i class="nds-icon nds-hgi-copy-01"></i>
-            </button>
-          </div>
-          <div class="nds-expandable-content">
-            <code class="lang-javascript code">// Errors rendered by the server, in field order
+<script type="text/html" id="forms-status-js" data-canon data-lang="js" data-preview="none">
+// Errors the server returned, in field order
 var errors = [
-  { field: 'national-id-field', message: 'This field is required' },
+  { field: 'national-id-field', message: 'This ID is not registered' },
   { field: 'email-field', message: 'Enter a valid email address' }
 ];
+var first = null;
 
-var firstError = null;
-
-errors.forEach(function(error) {
-  var container = document.getElementById(error.field);
-  if (!container) return;
-
-  NDS.Forms.setStatus({ element: container, status: 'error', message: error.message });
-  if (!firstError) firstError = container;
+errors.forEach(function (error) {
+  var field = document.getElementById(error.field);
+  if (!field) return;
+  NDS.Forms.setStatus({ element: field, status: 'error', message: error.message });
+  if (!first) first = field;
 });
 
-// Focus the first error. A group container — an OTP fieldset, a radio group —
-// cannot take focus, so focus the first input inside it.
-if (firstError) {
-  var target = firstError.querySelector('input, textarea, select') || firstError;
-  target.focus();
-}</code>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+// A group cannot take focus: focus the first input inside it
+if (first) (first.querySelector('input, textarea, select') || first).focus();
+</script>
 
-<!-- Loading State -->
-<section id="formLoading" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Loading State</h2>
-      <p class="nds-section-description">Flip <code class="nds-inline-code lang-html">data-state="loading"</code> on any form-container / form-group / form-control (via <code class="nds-inline-code lang-js">NDS.State.add</code>) and forms handles the visual UX: auto-creates a <code class="nds-inline-code lang-html">[data-loading-slot]</code> spinner in <code class="nds-inline-code lang-html">.nds-form-action</code> (creating the slot if missing), hides sibling action buttons, and stamps <code class="nds-inline-code lang-html">data-state="loading"</code> on the shell — <code class="nds-inline-code lang-html">.nds-btn</code>'s CSS renders the spinner. On exit the siblings restore; <code class="nds-inline-code lang-html">.nds-clear</code> re-computes from the current input value. Zero markup burden — same UX for remote validation, autocomplete, custom fetch, anything</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-action">
-              <button class="nds-btn nds-secondary-outline demo-toggle-btn" id="loading-toggle-btn">
-                <span class="nds-label">Simulate 2s load</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container" id="loading-demo-container">
-                <div class="nds-form-header">
-                  <label for="loading-demo-input">
-                    <span class="nds-label">Username</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <input type="text" id="loading-demo-input" class="nds-input" placeholder="Type then click the button...">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-loading-html" id="tab-loading-html">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                    aria-controls="panel-loading-js" id="tab-loading-js">
-                    <span class="nds-tab-label">JS API</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-loading-html"
-                  aria-labelledby="tab-loading-html">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;!-- Author the field as usual. Forms owns the spinner shell —
- you don't add a &lt;button data-loading-slot&gt; unless you want a
- custom label / icon; auto-creation covers the default case. --&gt;
-&lt;div class="nds-form-container" id="username-field"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="username"&gt;&lt;span class="nds-label"&gt;Username&lt;/span&gt;&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;input type="text" id="username" class="nds-input"&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-              </code>
-                  </div>
-                </div>
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-loading-js"
-                  aria-labelledby="tab-loading-js" hidden>
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-javascript code">var field = document.getElementById('username-field');
+### Permanent Feedback
+{: .nds-block-title}
 
-// Enter loading — spinner shell in, action siblings hidden.
-NDS.State.add(field, 'loading');
+A `.nds-feedback` with `data-permanent` stays under the field as a hint. A validation message hides it, and it comes back when the message clears. It sits in an element with `data-feedback-target`: every message for the field goes there. A `.nds-form-footer` puts the messages under the input, and the `.nds-form-header` puts them above it. Without a feedback target, messages go at the end of the container.
 
-// Exit loading — siblings restored, .nds-clear re-syncs to input value.
-NDS.State.remove(field, 'loading');
+### Loading
+{: .nds-block-title}
 
-// Wrapping a fetch:
-async function checkAvailability(name) {
+`data-state="loading"` on a field shows a spinner button and hides the other action buttons, a suffix included. Use it while a script checks the value, such as a username lookup. The forms script adds the spinner to the field's last action slot: on Number, that is the suffix. A prefix never changes. When loading ends, the buttons come back, and Clear shows only if the field still has a value.
+
+<script type="text/html" id="forms-loading-js" data-canon data-lang="js" data-preview="none">
+var field = document.getElementById('username-field');
+
+async function checkUsername(name) {
   NDS.State.add(field, 'loading');
   try {
-var { data } = await NDS.request('/api/username?name=' + encodeURIComponent(name),
-                                 { json: true });
-var available = data.available;
-NDS.Forms.setStatus({
-  element: field,
-  status: available ? 'neutral' : 'error',
-  message: available ? 'Username is available' : 'Already taken',
-});
+    var { data } = await NDS.request('/api/username?name=' + encodeURIComponent(name), { json: true });
+    NDS.Forms.setStatus({
+      element: field,
+      status: data.available ? 'neutral' : 'error',
+      message: data.available ? 'This username is free' : 'This username is taken'
+    });
   } finally {
-NDS.State.remove(field, 'loading');
+    NDS.State.remove(field, 'loading');
   }
-}</code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+}
+</script>
+
+### Number Stepper
+{: .nds-block-title #numberInput}
+
+The minus and plus buttons change the value by `step`, 1 by default. Hold a button to repeat the step, and hold it about two seconds to step ten at a time. A button at `min` or `max` shows a message instead of a change. A value typed outside the range is set to the nearest limit when the field loses focus. Without `min` and `max`, the value has no limit.
+
+### Phone Number
+{: .nds-block-title}
+
+`.nds-phone` on a `type="tel"` input removes every character that is not a digit, and any leading zero, as the user types or pastes. The value then joins the country code with no edit. Limit the length with `maxlength`. A country picker is a [Dropmenu](../components/dropmenu) that writes its code to a hidden input named by `data-select-name`, so the code and the number submit as two fields.
+
+### Password
+{: .nds-block-title}
+
+The eye button switches the field between hidden and plain text, and its label between "Show password" and "Hide password". A password field does not accept Arabic letters: the script removes one as it is typed and shows an error.
+
+</div>
   </div>
 </section>
 
-<!-- Permanent Feedback -->
-<section id="formPermanentFeedback" class="nds-content-section nds-demo-section">
-  <div class="nds-section-wrapper">
-    <div class="nds-section-head">
-      <h2 class="nds-section-title">Permanent Feedback</h2>
-      <p class="nds-section-description">Tips and hints that persist across validation cycles, hidden during errors and restored when cleared</p>
-    </div>
-    <div class="nds-section-body">
-      <div class="nds-showcase">
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-action">
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="permanent-error-btn">
-                <span class="nds-label">Show Error</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" id="permanent-clear-btn">
-                <span class="nds-label">Clear Error</span>
-              </button>
-            </div>
-          </div>
-          <div class="demo-container">
-            <div class="state-demo">
-              <div class="nds-form-container" id="permanent-demo-container">
-                <div class="nds-form-header">
-                  <label for="permanent-demo-input">
-                    <span class="nds-label">Username</span>
-                    <span class="nds-info">Permanent tip shows again after error is cleared</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <input type="text" id="permanent-demo-input" class="nds-input" placeholder="Enter username...">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="nds-form-footer" data-feedback-target>
-                  <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
-                    </span>
-                    <span class="nds-feedback-message">Use 3-20 characters, letters and numbers only</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-permanent-html" id="tab-permanent-html">
-                    <span class="nds-tab-label">HTML</span>
-                  </button>
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                    aria-controls="panel-permanent-js" id="tab-permanent-js">
-                    <span class="nds-tab-label">JS API</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-html"
-                  aria-labelledby="tab-permanent-html">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-html code">
-&lt;div class="nds-form-container"&gt;
-  &lt;div class="nds-form-header"&gt;
-&lt;label for="username"&gt;
-  &lt;span class="nds-label"&gt;Username&lt;/span&gt;
-  &lt;span class="nds-info"&gt;Permanent tip shows again after error is cleared&lt;/span&gt;
-&lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-control"&gt;
-&lt;input type="text" id="username" class="nds-input" placeholder="Enter username..."&gt;
-&lt;div class="nds-form-action"&gt;
-  &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
-    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/button&gt;
-&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-form-footer" data-feedback-target&gt;
-&lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
-  &lt;span class="nds-feedback-icon"&gt;
-    &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-  &lt;span class="nds-feedback-message"&gt;Use 3-20 characters, letters and numbers only&lt;/span&gt;
-&lt;/span&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-              </code>
-                  </div>
-                </div>
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-js"
-                  aria-labelledby="tab-permanent-js" hidden>
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-javascript code">// Create permanent hint via Forms API
-NDS.Forms.setStatus({
-element: container,
-status: 'neutral',
-message: 'Use 3-20 characters, letters and numbers only',
-permanent: true
-});
-
-// Show validation error: permanent feedback is hidden automatically
-NDS.Forms.setStatus({ element: container, status: 'error', message: 'Username is required' });
-
-// Clear validation: permanent feedback is restored automatically
-NDS.Forms.clearStatus(container);</code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="nds-block nds-prose">
-        <p>The <code class="nds-inline-code lang-html">data-feedback-target</code> element sets where a field's feedback renders. It is optional: without one, the API creates feedback in the field's container. Place it anywhere inside the container — a <code class="nds-inline-code lang-html">nds-form-footer</code> puts messages below the input, a <code class="nds-inline-code lang-html">nds-form-header</code> puts them above. A hidden target is shown when a message lands and hidden again when the last message clears.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Built-in Features -->
-<section id="formFeatures" class="nds-content-section nds-demo-section">
+<section id="formsFeatures" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
-      <p class="nds-section-description">What you get out of the box with zero configuration</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
+      <div class="nds-definition-list nds-divided nds-grid">
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">All form inputs auto-initialize on page load. Two-way state binding syncs <code class="nds-inline-code lang-html">disabled</code> and <code class="nds-inline-code lang-html">data-required</code> between inputs and containers. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Forms.init()</code>.</p>
+          <p class="nds-item-desc">Every field on the page starts when the page loads, and a field added later starts on its own. Call <code class="nds-inline-code lang-js">NDS.Forms.initializeContainer()</code> only to start a part of the page at once.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-            <span class="nds-label">Validation</span>
+            <span class="nds-label">Inline Messages</span>
           </span>
-          <p class="nds-item-desc">Uses HTML5 validity checks but replaces browser popups with styled inline feedback. Error messages auto-clear on blur or change once the field is corrected. Custom messages via <code class="nds-inline-code lang-html">data-error-message</code>.</p>
+          <p class="nds-item-desc">Validation uses the browser's checks but shows no browser popup. The message appears under the field.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">Extending Validation</span>
+            <span class="nds-label">Custom Checks</span>
           </span>
-          <p class="nds-item-desc">Custom components hook into submit validation by stamping <code class="nds-inline-code lang-js">setCustomValidity('message')</code> on their input (empty string when valid) — <code class="nds-inline-code lang-js">validateForm</code> blocks the submit and shows the stamped message as-is, no forms changes needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-03"></i>
-            <span class="nds-label">Status Feedback</span>
-          </span>
-          <p class="nds-item-desc">Feedback is created by the API: <code class="nds-inline-code lang-js">setStatus</code> places the message in the field's container, or in a <code class="nds-inline-code lang-html">data-feedback-target</code> element when one is present. A field shows error or help; any other status renders neutral. Permanent hints survive validation cycles with <code class="nds-inline-code lang-html">data-permanent</code>.</p>
+          <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">input.setCustomValidity('message')</code> to fail a field with your own message, and pass an empty string when it passes. Submit validation blocks the form and shows the message. A message of one space outlines the field with no text.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-cursor-02"></i>
-            <span class="nds-label">Interactive States</span>
+            <span class="nds-label">Interaction States</span>
           </span>
-          <p class="nds-item-desc">Focus, active, typing, filled, and disabled states are tracked automatically via <code class="nds-inline-code lang-html">data-state</code>. Clear buttons auto-show when the input has a value and hide when empty.</p>
+          <p class="nds-item-desc">The script writes <code class="nds-inline-code lang-html">focus</code>, <code class="nds-inline-code lang-html">active</code> and <code class="nds-inline-code lang-html">typing</code> to the container's <code class="nds-inline-code lang-html">data-state</code>. A line grows under the field on focus.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view"></i>
-            <span class="nds-label">Password Toggle</span>
+            <i class="hgi hgi-stroke hgi-cancel-circle"></i>
+            <span class="nds-label">Clear Button</span>
           </span>
-          <p class="nds-item-desc">Add a button with <code class="nds-inline-code lang-html">nds-toggle-password</code> class to toggle between password and text input. The icon updates automatically to show the current visibility state.</p>
+          <p class="nds-item-desc">The <code class="nds-inline-code lang-html">nds-clear</code> button shows only while the field has a value. It empties the field, shows no "required" error, and puts focus back in the field.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
-            <span class="nds-label">Voice Input</span>
+            <i class="hgi hgi-stroke hgi-access"></i>
+            <span class="nds-label">Screen Reader Errors</span>
           </span>
-          <p class="nds-item-desc">Add a button with <code class="nds-inline-code lang-html">nds-voice-input</code> class to enable speech-to-text on any input. Uses the Web Speech API with automatic language detection from the page.</p>
+          <p class="nds-item-desc">The script sets <code class="nds-inline-code lang-html">aria-invalid</code> on a field with an error, and points its <code class="nds-inline-code lang-html">aria-describedby</code> at the message. A required field gets <code class="nds-inline-code lang-html">aria-required="true"</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-language-circle"></i>
-            <span class="nds-label">Arabic Character Filtering</span>
+            <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+            <span class="nds-label">Hidden Fields Skipped</span>
           </span>
-          <p class="nds-item-desc">Password fields automatically strip Arabic and RTL characters on input, ensuring passwords contain only compatible characters without manual validation logic.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plus-minus-01"></i>
-            <span class="nds-label">Number Input Controls</span>
-          </span>
-          <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-number-increment</code> and <code class="nds-inline-code lang-html">nds-number-decrement</code> buttons as prefix/suffix actions. Supports <code class="nds-inline-code lang-html">min</code>, <code class="nds-inline-code lang-html">max</code>, and <code class="nds-inline-code lang-html">step</code> attributes, with accelerated stepping on long press.</p>
+          <p class="nds-item-desc">Submit validation skips a field that is hidden or inside a hidden parent, and a disabled field. A step of a multi-step form that is out of view does not block the submit.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="formGuidelines" class="nds-content-section nds-demo-section">
+<section id="formsPractices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <h2 class="nds-section-title">Usage Guidelines</h2>
-      <p class="nds-section-description">When and how to use form inputs effectively</p>
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
-    <div class="nds-section-body">
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Best Practices</h3>
-        <ul>
-          <li>Use form inputs for any data collection scenario: registration flows, search interfaces, settings pages, and inline editing. Every input type shares the same container structure, so switching between text, email, password, or select requires minimal markup changes.</li>
-          <li>A <code class="nds-inline-code lang-html">nds-form</code> element draws no box of its own — it is a validation hook, not a layout container. Give its fields a gapped wrapper: <code class="nds-inline-code lang-html">nds-card-content</code> or <code class="nds-inline-code lang-html">nds-flex nds-col</code>. Fields in a bare container render flush against each other.</li>
-          <li>Use <code class="nds-inline-code lang-html">nds-search-input</code> for search fields where voice input and automatic clear actions improve discoverability. The search variant includes a leading icon and optional microphone button out of the box.</li>
-          <li>Wrap a form's submit and navigation buttons in <code class="nds-inline-code lang-html">nds-form-actions</code>. The plural class is the form-level row and carries its own top margin. The singular <code class="nds-inline-code lang-html">nds-form-action</code> is the per-input slot inside <code class="nds-inline-code lang-html">nds-form-control</code>. Never use a section action slot for a form's buttons.</li>
-          <li>Use the custom select dropdown (<code class="nds-inline-code lang-html">nds-select</code>) for in-form choice fields, whatever the option count — a native select beside styled fields breaks the form's look. It ships with keyboard navigation and a hidden input so it submits with the form. Wrap a standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> in the same <code class="nds-inline-code lang-html">nds-form-container nds-select</code> shell only when the design calls for the native mobile picker, as shown in the Native Select demo. With <code class="nds-inline-code lang-html">data-required</code> on the container, form validation reads the hidden value input at submit, the same as any other field.</li>
-          <li>Do not use form inputs for binary choices or toggles. Use <a href="{{ 'components/switch' | relative_url }}" class="nds-color">switches</a> for instant on/off toggles, <a href="{{ 'components/checkbox' | relative_url }}" class="nds-color">checkboxes</a> for multiple selections, or <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> for single selection from a set.</li>
-          <li>Do not use plain text inputs for specialized data types. Use <a href="{{ 'components/date-picker' | relative_url }}" class="nds-color">date picker</a> for dates, <a href="{{ 'components/otp' | relative_url }}" class="nds-color">OTP input</a> for verification codes, and <a href="{{ 'components/autocomplete' | relative_url }}" class="nds-color">autocomplete</a> for search-as-you-type with remote data.</li>
-          <li>Choose <code class="nds-inline-code lang-html">nds-lg</code> (default) for standalone forms and primary data entry. Use <code class="nds-inline-code lang-html">nds-md</code> for compact layouts like table filters, inline editing, or sidebars where space is limited.</li>
-          <li>Add <code class="nds-inline-code lang-html">data-required</code> to the container rather than <code class="nds-inline-code lang-html">required</code> on the input. The system syncs the two automatically and adds the required indicator to the label.</li>
-          <li>Use permanent feedback (<code class="nds-inline-code lang-html">data-permanent</code>) for format hints and character requirements. These persist across validation cycles: they hide when an error appears and restore when the error clears.</li>
-          <li>Use prefix and suffix slots for units, currency symbols, or action buttons that contextualize the input. Prefix/suffix buttons support both subtle and solid styles, and can include icons or dropmenus for compound inputs.</li>
-          <li>For compound inputs (phone + country code, amount + currency, measurement + unit), use a prefix-slot dropmenu with <code class="nds-inline-code lang-html">data-select-name</code>. The dropmenu renders a hidden input that submits with the form and keeps the trigger label compact while the dropdown rows stay descriptive. See the Phone Number with Country Code demo for the full pattern.</li>
-          <li>Validation feedback needs no markup of its own: <code class="nds-inline-code lang-js">setStatus</code> and submit validation create the message element and place it in the field's container. Add a <code class="nds-inline-code lang-html">data-feedback-target</code> element only when the design wants a permanent feedback position — see the Permanent Feedback section.</li>
-          <li>Set <code class="nds-inline-code lang-html">data-error-message</code> on the container to override default browser validation messages with context-specific text that guides the user toward correction.</li>
-        </ul>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Modifier Classes</h3>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">nds-select</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Required on a container that holds a native <code class="nds-inline-code lang-html">&lt;select&gt;</code>. It hides the browser's own arrow so the NDS chevron is the only one, and sizes the control for the select. Without it both arrows render</td></tr>
-              <tr><td><code class="nds-inline-code lang-html">nds-textarea</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Required on a container that holds a <code class="nds-inline-code lang-html">&lt;textarea&gt;</code>. Without it the control keeps single-line input sizing, and the textarea loses its padding and minimum height</td></tr>
-              <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Medium size with reduced height (32px) and smaller font</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">nds-lighter</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the lighter surface token. Removes the input border so the fill alone defines the field boundary. Not applied to file upload containers.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">nds-darker</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the darker surface token. Same border behavior as <code class="nds-inline-code lang-html">nds-lighter</code>. Not applied to file upload containers.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">nds-form-group</code></td><td>Lays out checkbox, radio, or switch group items in a horizontal wrapping row instead of the default vertical column.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">nds-phone</code></td><td><code class="nds-inline-code lang-html">nds-input</code> (tel)</td><td>Set on a tel input that sits next to a country-code prefix slot. On every keystroke, strips non-digit characters and any leading zero so the value submitted is the local number ready to concatenate with the prefix. Length is still controlled by the input's <code class="nds-inline-code lang-html">maxlength</code>.</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Validation Attributes</h3>
-        <p>Validation runs on the browser's own constraint API. These are standard HTML attributes, not NDS ones, and they go on the <code class="nds-inline-code lang-html">&lt;input&gt;</code>. NDS supplies the message text in Arabic and English and places it in the field footer.</p>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Attribute</th><th>Message when the value fails it</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">required</code></td><td>This field is required. Prefer <code class="nds-inline-code lang-html">data-required</code> on the container: it sets this attribute for you and adds the asterisk.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">type="email"</code></td><td>Please enter a valid email address</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">type="url"</code></td><td>Please enter a valid URL</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">minlength</code></td><td>Input is too short (minimum N characters)</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">maxlength</code></td><td>Input is too long (maximum N characters). The browser also blocks typing past the limit, so this message appears only for a value set in code or pasted.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">pattern</code></td><td>Please match the requested format. The value must match the whole expression, so <code class="nds-inline-code lang-html">pattern="[0-9]{10}"</code> accepts exactly ten digits and nothing else. Give the field a <code class="nds-inline-code lang-html">data-error-message</code> that states the rule: the default text does not say what the format is.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">min</code> / <code class="nds-inline-code lang-html">max</code></td><td>Value must be at least N / Value must be no more than N. On number inputs these also bound the stepper buttons: see the Data Attributes table below.</td></tr>
-          </tbody>
-        </table>
-        <p>Any other failure reads <em>Invalid input</em>. A field that a component validates itself, such as a date picker, carries that component's own message instead.</p>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">Data Attributes</h3>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-container</code> to mark the field as required. Automatically syncs to the input's <code class="nds-inline-code lang-html">required</code> attribute and adds the asterisk indicator.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td>Set on the <code class="nds-inline-code lang-html">&lt;input&gt;</code> to replace every validation message that field would otherwise show, whichever constraint failed. For a checkbox or radio group, set it on the <code class="nds-inline-code lang-html">nds-form-group</code> instead. It is read from those two elements only, not from the container.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-permanent</code></td><td>Set on a feedback element inside the footer. Permanent feedback hides during validation errors and restores when cleared.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">min</code></td><td>Set on number inputs to define the minimum allowed value (default: 0).</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">max</code></td><td>Set on number inputs to define the maximum allowed value (default: 1000).</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">step</code></td><td>Set on number inputs to define the increment/decrement size (default: 1). Long press accelerates to 10x this value.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-select-name</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu</code> (including prefix/suffix dropmenus) to turn it into a value picker. Renders a hidden <code class="nds-inline-code lang-html">&lt;input&gt;</code> with this name; item clicks write the item's <code class="nds-inline-code lang-html">data-value</code> into it and update the trigger label.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-select-value</code></td><td>Set on a select-mode dropmenu to pre-select the item whose <code class="nds-inline-code lang-html">data-value</code> matches. Takes precedence over any pre-rendered <code class="nds-inline-code lang-html">data-state="selected"</code> item.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-required</code> (on dropmenu)</td><td>Set on a select-mode dropmenu to add <code class="nds-inline-code lang-html">required</code> to the hidden input, so native form submission blocks when nothing is picked.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-trigger-label</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu-item</code> to override the trigger label text when that item is chosen. Useful when the dropdown row is descriptive (<em>Saudi Arabia (+966)</em>) but the trigger slot needs something compact (<em>+966</em>).</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-min-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid unless at least this many checkboxes are checked. Also adds the required asterisk to the group label.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-max-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid when more than this many checkboxes are checked. Defaults to the total checkbox count when absent.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-required</code> (on a rating group)</td><td>Set on an <code class="nds-inline-code lang-html">nds-form-group</code> that holds a <a class="nds-color" href="{{ 'components/rating' | relative_url }}">Rating</a>. The group is invalid while <code class="nds-inline-code lang-html">data-rating</code> is <code class="nds-inline-code lang-html">0</code>, and the first star takes focus. Picking a star clears the message, the way typing in an input does; submit re-checks the rule. The stars are buttons, not inputs, so add a hidden input if the score must post with the form.</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-ajax</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form</code>. When present, the form's submit event is intercepted and <code class="nds-inline-code lang-html">preventDefault()</code> is called after validation passes, allowing you to handle submission via fetch or XHR without a page reload.</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">CSS Custom Properties</h3>
-        <table class="nds-table nds-responsive">
-          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td><code class="nds-inline-code lang-html">--form-width</code></td><td>100%</td><td>Controls the width of the form container</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--input-size</code></td><td>40px</td><td>Height of the input field (32px for <code class="nds-inline-code lang-html">nds-md</code>)</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--input-radius</code></td><td>var(--radius-sm)</td><td>Border radius of the input field</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td>16px</td><td>Size (width and height) of the checkbox and radio control element. Size modifier classes set it to 20px (<code class="nds-inline-code lang-html">nds-md</code>) or 24px (<code class="nds-inline-code lang-html">nds-lg</code>). Set directly to use a custom size.</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="nds-block nds-prose">
-          <h3 class="nds-block-title">JavaScript API</h3>
-        <p>The <strong>NDS.Forms</strong> API manages initialization, status feedback, state management, and form validation. For dynamically added form elements, call <code class="nds-inline-code lang-js">NDS.Forms.initializeContainer(element)</code> to initialize new inputs.</p>
-    </div>
-    <div class="nds-block">
-        <div class="nds-code nds-expandable">
-              <div class="nds-code-action">
-                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                  <i class="nds-icon nds-hgi-copy-01"></i>
-                </button>
-              </div>
-              <div class="nds-expandable-content">
-                <code class="lang-javascript code">
-// ── Initialization ──────────────────────────────────
-// All forms auto-initialize on page load
-NDS.Forms.init();
+    <div class="nds-section-body nds-prose" markdown="1">
 
-// Initialize a specific container (for dynamic content)
-NDS.Forms.initializeContainer(containerElement);
+- Give every field a `<label>` whose `for` matches the input's `id`. A placeholder is not a label: it disappears when the user types.
+- Write `data-required` on the container, not `required` on the input. The container then shows the asterisk before the script loads.
+- Add `nds-textarea` to a textarea's container, and `nds-select` to a native select's container. Without them, the textarea keeps the single-line height, and the select shows two arrows.
+- Use [Custom Select](../components/custom-select) for a choice in a form. Use the native Select only when the design asks for the phone's own picker.
+- Set `data-error-message` on the input when the default message does not say what is wrong, such as for `pattern`. It replaces every message that field shows.
+- Put a unit, a currency or a short code in a prefix or suffix. The slot also takes a button or a [Dropmenu](../components/dropmenu), such as an amount with a currency picker.
+- Use MD only where space is short, such as a table filter. Keep one size in one form.
+- Put a form's Submit and Back buttons in `.nds-form-actions`, after the fields. The singular `.nds-form-action` is the button slot inside one field.
+- Set `input.value` from a script, then call `NDS.Forms.syncState(input)`. Setting the value alone does not update the Clear button or the field's state.
+- Do not call `form.reset()`. No NDS field listens for it: clear each field and call `syncState()` on it.
+- Give an icon-only action button an `aria-label`, such as "Clear input".
 
-// Initialize a dynamic &lt;form&gt; element (attaches submit validation)
-NDS.Forms.initForm(formElement);
-
-// ── Status API ──────────────────────────────────────
-// A field carries 'error', 'help' or nothing. Anything else renders neutral.
-NDS.Forms.setStatus({ element: el, status: 'error', message: 'Required field' });
-NDS.Forms.setStatus({ element: el, status: 'help', message: 'Use 3-20 characters' });
-NDS.Forms.setStatus({ element: el, status: 'neutral', message: 'Hint text' });
-
-// Permanent feedback (survives validation cycles)
-NDS.Forms.setStatus({ element: el, status: 'neutral', message: 'Tip text', permanent: true });
-
-// Clear status (restores permanent feedback if present)
-NDS.Forms.clearStatus(el);
-
-// Get current status
-NDS.Forms.getStatus(el);
-// Returns: { status: 'error', message: '...', isValid: false }
-
-// setStatus never moves focus. For server-rendered errors, focus the first
-// field yourself — see the Form Status API section.
-
-// ── Field Sync ──────────────────────────────────────
-// Re-sync a form-control's chrome after programmatic value/checked changes.
-// Call this (or dispatch input/change) when setting a field's value from JS;
-// raw assignment alone no longer notifies the field.
-NDS.Forms.syncState(inputElement);
-
-// Set or clear a checkbox's indeterminate state.
-// Stamps data-state="indeterminate" on the container and fires nds:indeterminateChange.
-NDS.Forms.setIndeterminate(checkboxElement, true);
-
-// ── State Management ────────────────────────────────
-// Set disabled or required state programmatically
-NDS.Forms.setState(el, 'disabled', true);
-NDS.Forms.setState(el, 'required', true);
-
-// ── Custom Select: programmatic value ───────────────
-// The same write sequence as a user pick: display label, hidden
-// .nds-select-value, selected markers, input/change events (field sync),
-// and the nds:customselect:change dispatch. Pass the .nds-form-control or the
-// .nds-select-input. setValue returns false when no option carries the
-// value — display and submit value are never desynced. Works before the
-// dropdown is first built and while its menu is open.
-NDS.CustomSelect.setValue(formControl, 'option1');
-NDS.CustomSelect.clear(formControl);
-
-// ── Form Validation ─────────────────────────────────
-// Validate entire form (returns { valid, invalidFields, errors })
-NDS.Forms.validateForm(formElement);
-
-// Validate specific groups (used on checkbox, radio, OTP pages)
-NDS.Forms.validateCheckboxGroup(group);
-NDS.Forms.validateRadioGroup(group);
-NDS.Forms.validateOtpGroup(group);
-
-// ── Events ──────────────────────────────────────────
-// Status change on any .nds-form-container
-element.addEventListener('nds:statusChange', function(e) {
-// e.detail: { status: 'error'|'success'|...|null, message: '...'|null }
-});
-
-// Form validation events on .nds-form elements
-form.addEventListener('nds:formValidate', function(e) {
-// Fires after validation runs
-// e.detail: { valid: true|false, invalidFields: [...], errors: [...] }
-});
-
-form.addEventListener('nds:formValid', function(e) {
-// Fires when form passes validation on submit
-});
-
-form.addEventListener('nds:formInvalid', function(e) {
-// Fires when form fails validation on submit
-// e.detail: { invalidFields: [...], errors: [...] }
-});
-
-// Select dropdown change event on .nds-form-control
-formControl.addEventListener('nds:customselect:change', function(e) {
-// e.detail: { value: 'option1', text: 'Option 1' }
-});
-
-// Switch toggle event on .nds-switch-element
-switchElement.addEventListener('nds:switchChange', function(e) {
-// e.detail: { checked: true|false, value: '...', input: switchInputElement }
-});
-
-// Checkbox indeterminate state change on the checkbox element
-checkbox.addEventListener('nds:indeterminateChange', function(e) {
-// e.detail: { indeterminate: true|false }
-});
-
-// ── Dropmenu select-mode (prefix/suffix pickers) ────
-// Any .nds-dropmenu with data-select-name captures the picked value into
-// a hidden input and fires these two events.
-dropmenu.addEventListener('nds:dropmenu:selected', function(e) {
-// e.detail: { dropmenu, item, value }
-});
-
-// Hidden input change — use this if you only care about the new value
-hiddenInput.addEventListener('change', function(e) {
-// e.target.value holds the selected data-value
-});
-            </code>
-      </div>
-        </div>
-      </div>
-    </div>
+</div>
   </div>
 </section>
 
-<script>
-  function initPage() {
-    // Form Status API demo
-    var statusContainer = document.getElementById('status-demo-container');
-    if (statusContainer) {
-      document.getElementById('status-error-btn').addEventListener('click', function () {
-        NDS.Forms.setStatus({ element: statusContainer, status: 'error', message: 'This field is required' });
-      });
-      document.getElementById('status-help-btn').addEventListener('click', function () {
-        NDS.Forms.setStatus({ element: statusContainer, status: 'help', message: 'Use 3-20 characters, letters and numbers only' });
-      });
-      document.getElementById('status-neutral-btn').addEventListener('click', function () {
-        NDS.Forms.setStatus({ element: statusContainer, status: 'neutral', message: 'Additional information' });
-      });
-      document.getElementById('status-clear-btn').addEventListener('click', function () {
-        NDS.Forms.clearStatus(statusContainer);
-      });
-    }
+<section id="formsApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
 
-    // Loading state demo — flip data-state="loading" for 2s, then release.
-    var loadingContainer = document.getElementById('loading-demo-container');
-    var loadingBtn = document.getElementById('loading-toggle-btn');
-    if (loadingContainer && loadingBtn) {
-      loadingBtn.addEventListener('click', function () {
-        NDS.State.add(loadingContainer, 'loading');
-        setTimeout(function () { NDS.State.remove(loadingContainer, 'loading'); }, 2000);
-      });
-    }
+### Other Classes
+{: .nds-block-title}
 
-    // Permanent feedback demo
-    var permanentContainer = document.getElementById('permanent-demo-container');
-    if (permanentContainer) {
-      document.getElementById('permanent-error-btn').addEventListener('click', function () {
-        NDS.Forms.setStatus({ element: permanentContainer, status: 'error', message: 'Username is required' });
-      });
-      document.getElementById('permanent-clear-btn').addEventListener('click', function () {
-        NDS.Forms.clearStatus(permanentContainer);
-      });
-    }
+| Class | Element | Effect |
+|---|---|---|
+| `nds-form` | `<form>` | Turns on submit validation. It draws no box. On another element it is a marker only, and checks nothing |
+| `nds-form-actions` | a `<div>` after the fields | The row of form buttons, with a top margin. The margin is 0 when the row is the first child |
+| `nds-form-footer` | a `<div>` at the end of `.nds-form-container` | Holds the field's messages when it has `data-feedback-target`. It has no style of its own |
+| `nds-required` | `.nds-form-container` or `.nds-form-group` | The same as `data-required` |
+| `nds-clear` | a button in `.nds-form-action` | Empties the field. Write it with `hidden`: the script shows it while the field has a value |
+| `nds-toggle-password` | a button in `.nds-form-action` | Switches a password field between hidden and plain text. The script adds `show` to it while the text is plain |
+| `nds-number-decrement`, `nds-number-increment` | a button in `.nds-form-action` | Steps the value down or up. Also turns on the range check and the blur clamp |
+| `nds-phone` | a `type="tel"` input | Removes non-digits and any leading zero as the user types |
+| `nds-form-group` | the `<fieldset>` around a set of checkboxes, radios or switches | See [Checkbox](../components/checkbox), [Radio](../components/radio) and [Switch](../components/switch) |
+{: .nds-table .nds-responsive}
 
-  }
-  // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-ajax` | `form.nds-form` | The script stops the page from reloading after a passing submit. Send the request from `nds:formValid` |
+| `novalidate` | `form.nds-form` | The script sets it at start, so the browser shows no popups |
+| `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. It also sets or removes this attribute when the input's `required` changes, at the next edit or `syncState()` call |
+| `data-state` | `.nds-form-container` | Write `disabled` or `readonly`, or call `setState()`: the script sets that property on every input inside. `disabled` also disables the action buttons. The script writes them too when an input is disabled or readonly. The script sets `focus`, `active` and `typing` while the user is on the field, and removes them on blur and release. It sets `open` while a native select's list is open |
+| `data-state="loading"` | `.nds-form-container` or `.nds-form-group` | Set it yourself with `NDS.State.add()`, and remove it with `NDS.State.remove()`. Shows the spinner in place of the action buttons. Written in the HTML, it shows the spinner when the script starts |
+| `data-status` | `.nds-form-container` | The script sets it with each message: `error`, `help` or `neutral`. Only `error` draws the red outline. `clearStatus()` and any edit to the field remove it |
+| `data-message` | `.nds-form-container` | The script writes the current message text with `data-status`. `getStatus()` reads it, and `clearStatus()` removes it |
+| `data-feedback-target` | `.nds-form-container` | A CSS selector for the element inside the field that holds its messages |
+| `data-feedback-target` | an element inside `.nds-form-container`, usually `.nds-form-footer` | Messages go in it, instead of at the end of the container. A hidden one shows while a message is in it |
+| `hidden` | `.nds-form-container`, `.nds-form-group` or `.nds-form-action` | The script removes it at start. Write it to keep a field out of view until its state is set |
+| `data-permanent` | `.nds-feedback` in the feedback target | A message hides it instead of removing it. It comes back when the message clears |
+| `data-error-message` | the `<input>`, `<textarea>` or `<select>` | Replaces every message the field shows when a check fails |
+| `data-error-message` | `.nds-form-group`, or the container of a field that keeps its value in a hidden input (custom select, multiselect, tag input, upload) | The message for that field's own check |
+| `inputmode="numeric"` | the `<input>` | The script blocks a typed character that is not a digit |
+| `min`, `max`, `step` | the input of a number field | The range and the step of the minus and plus buttons |
+| `autofocus` | the `<input>`, `<textarea>` or `<select>` | The script focuses the field again at start, without a scroll |
+| `data-loading-slot` | a button in `.nds-form-action` | The button that shows the spinner while the field loads. Without one, the script adds one |
+| `data-target` | `.nds-auto-fill` | The `id` or `name` of the input that a suggestion chip fills. A click on an `.nds-item` writes its text in the input. See [Filter](../components/filter) |
+| `data-autofill-apply` | `.nds-auto-fill` | A chip click also sends Enter to the input, so the search runs |
+{: .nds-table .nds-responsive}
+
+### Validation Messages
+{: .nds-block-title}
+
+The checks are the browser's own: write these standard attributes on the input. The forms script shows the message in Arabic or English to match the page.
+
+| Check | Message |
+|---|---|
+| `required` | This field is required |
+| `type="email"` | Please enter a valid email address |
+| `type="url"` | Please enter a valid URL |
+| `minlength` | Input is too short (minimum N characters) |
+| `maxlength` | Input is too long (maximum N characters). The browser stops the user at the limit, so this message rarely shows |
+| `pattern` | Please match the requested format. The value must match the whole expression: `pattern="[0-9]{10}"` takes exactly ten digits. The message does not name the format, so add `data-error-message` |
+| `min`, `max` | Value must be at least N, or Value must be no more than N |
+| any other failure | Invalid input. A component that checks its own field, such as Date Picker, shows its own message |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--form-width` | `100%` | The width of `.nds-form-container`. Set it on the container |
+| `--input-size` | `40px` | The height of `.nds-form-control`. `nds-md` sets 32px, and this property has no effect there |
+| `--input-radius` | `var(--radius-sm)` | The corner radius of `.nds-form-control` and of its prefix and suffix buttons |
+| `--actions-margin-top` | `var(--spacing-2xl)` | The space above `.nds-form-actions` |
+{: .nds-table .nds-responsive}
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Forms.init()` | Starts every field and form on the page. It runs at page load |
+| `NDS.Forms.initializeContainer(el)` | Starts every field and form inside `el` |
+| `NDS.Forms.initForm(form)` | Turns on submit validation for one `<form class="nds-form">` |
+| `NDS.Forms.setStatus(options)` | Shows a message under a field. Options below. Returns `false` when the element is not in a field |
+| `NDS.Forms.clearStatus(el)` | Removes the field's message and status. A permanent message comes back |
+| `NDS.Forms.getStatus(el)` | Returns `{ status, message, isValid }`. `isValid` is `false` only for `error` |
+| `NDS.Forms.setState(el, name, add)` | Adds or removes (`add: false`) a state on the field. `'required'` sets `data-required` and the inputs' `required` |
+| `NDS.Forms.syncState(input)` | Updates the field after a script sets its value or `checked`. It fires no event |
+| `NDS.Forms.validateForm(el, options)` | Checks every visible field in the form that holds `el`, and returns `{ valid, invalidFields, errors }`. `options` is `{ showMessages, focusFirst }`, both `true` by default. Pass both: an object with one key turns the other off |
+| `NDS.Forms.validateCheckboxGroup(group)` | Checks a checkbox group's `data-required`, `data-min-checked` and `data-max-checked` |
+| `NDS.Forms.validateRadioGroup(group)` | Checks that a required radio group has a choice |
+| `NDS.Forms.validateOtpGroup(group)` | Checks that every OTP box has a digit |
+| `NDS.Forms.validateMultiselect(el)` | Checks a [Multiselect](../components/multiselect)'s required and count rules |
+| `NDS.Forms.validateTaginput(el)` | Checks that a required [Tag Input](../components/taginput) has a tag |
+| `NDS.Forms.initCheckboxGroupValidation(group)`, `initRadioGroupValidation(group)`, `initMultiselectValidation(el)` | Checks the group again on each change once it shows a message. `init()` does this for every group |
+| `NDS.Forms.setIndeterminate(checkbox, value)` | Sets a checkbox's mixed state. See [Checkbox](../components/checkbox) |
+{: .nds-table .nds-responsive}
+
+| Option | Default | Effect |
+|---|---|---|
+| `element` | — | The field's container, or any element inside it |
+| `status` | — | `error`, `help` or any other value, which shows as `neutral`. An empty value clears the field |
+| `message` | — | The text. An empty string removes the message and keeps the status |
+| `permanent` | `false` | The message stays as a hint, as `data-permanent` does |
+| `size`, `style`, `position` | `sm`, `outline`, `append` | Passed to `NDS.Feedback.create()`. See [Feedback](../components/feedback-icons) |
+{: .nds-table .nds-responsive}
+
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:statusChange` | the field's container, and it bubbles | `{ status, message }`. Both are `null` after `clearStatus()` |
+| `nds:formValidate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validateForm()`. Each error is `{ field, input, message }` |
+| `nds:formValid` | the form, and it bubbles | `{}`, when a submit passes |
+| `nds:formInvalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |
+| `nds:switchChange` | `.nds-switch`, and it bubbles | `{ checked, value, input }`. See [Switch](../components/switch) |
+| `nds:indeterminateChange` | the checkbox, and it bubbles | `{ indeterminate }`. See [Checkbox](../components/checkbox) |
+{: .nds-table .nds-responsive}
+
+<script type="text/html" id="forms-js" data-canon data-lang="js">
+var form = document.querySelector('#apply-form');
+
+// Send the request once every field passes (the form has data-ajax)
+form.addEventListener('nds:formValid', function () {
+  NDS.request(form.action, { method: 'POST', body: new FormData(form) });
+});
+
+// Fill a field from a script
+var email = document.querySelector('#applicant-email');
+email.value = 'name@example.com';
+NDS.Forms.syncState(email);
+
+// Mark a field required after load
+NDS.Forms.setState(email, 'required', true);
 </script>
+
+The full API is in the banner of `_js/nds-forms.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="formsRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Form Template](../templates/form-template): a full application form, with a phone field and submit validation.
+- [Contact Us Template](../templates/contact-us-template): a contact form with a phone field and a textarea.
+- [Create your account](../examples/registration): a sign-up form with email and password fields.
+- [Sign in](../examples/sign-in): a sign-in form with a password field.
+
+</div>
+  </div>
+</section>
