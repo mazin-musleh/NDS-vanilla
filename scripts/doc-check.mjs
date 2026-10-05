@@ -70,7 +70,7 @@ for (const md of pages) {
             const options = await page.$$eval(`${sheet} [data-builder-option]`, (els) => els.map((e) => e.getAttribute('data-builder-option')));
             const structures = options.filter((o) => /^(Structure|Example)\|/.test(o));
             const tap = (key) => page.$eval(`${sheet} [data-builder-option="${key.replace(/"/g, '\\"')}"]`, (e) => e.click()).then(() => page.waitForTimeout(250));
-            const enabled = (key) => page.$eval(`${sheet} [data-builder-option="${key.replace(/"/g, '\\"')}"]`, (e) => !e.disabled);
+            const enabled = (key) => page.$eval(`${sheet} [data-builder-option="${key.replace(/"/g, '\\"')}"]`, (e) => !e.hasAttribute('aria-disabled'));
             const reset = async () => { await page.$eval(`[data-builder-for="${id}"] [data-builder-reset]`, (e) => e.click()); await page.waitForTimeout(250); };
 
             // The states: the default, each structure, then each other option on the first
