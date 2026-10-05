@@ -25,6 +25,7 @@ module DocsCanon
               '.nds-divider.nds-doc-divider{margin-block-start:0;--divider-line-start:24px}' \
               '.nds-doc-view{position:absolute;inset-block-start:12px;inset-inline-end:12px;display:flex;gap:var(--spacing-md)}' \
               '.nds-doc-preview>[data-demo-slot]:not(.nds-flex){display:contents}' \
+              '[data-demo-slot]{align-items:center}' \
               '.nds-doc-preview .nds-form-actions+.nds-alert{margin-block-start:var(--spacing-2xl)}' \
               '.nds-doc-preview .nds-full-width{width:auto!important;margin-inline:calc(var(--_wrapper-padding,0px)*-1)}' \
               '.nds-doc-options{--panel-height:30svh}' \
