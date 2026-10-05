@@ -1619,7 +1619,7 @@
                 _wireManualNavClicks(container);
                 _wireCollapseWatch();
             }
-            return inst;
+            return inst.valid ? inst : null;
         },
         refresh: refreshAutoPagination,
         destroy: _destroyPaginationNav,

@@ -997,8 +997,10 @@
         init: initializeComponents,
         reinit: initializeComponents,
         create: (element) => {
+            if (element._ndsSwiper) return element._ndsSwiper;
             const instance = new NDSSwiper(element);
-            if (instance.valid) element._ndsSwiper = instance;
+            if (!instance.valid) return null;
+            element._ndsSwiper = instance;
             return instance;
         },
         // NDS.Init.destroy's second shape. The expando is underscore-prefixed and

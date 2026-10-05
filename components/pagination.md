@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "05/10/2026 - 03:23 PM"
 ---
 
 <section id="paginationOverview" class="nds-content-section nds-doc-overview">
@@ -532,7 +532,7 @@ After a page change, the script scrolls the content back into view when its top 
 | `NDS.Pagination.init()` | Starts every nav that has not started yet |
 | `NDS.Pagination.initAuto()` | Starts only the content navs (`data-auto-pagination`) |
 | `NDS.Pagination.reinit()` | Runs `init()` and `initAuto()`. Call it after you add a new nav, such as in server HTML |
-| `NDS.Pagination.create(nav)` | Starts one nav whose page buttons you wrote, and returns its instance. A data-driven or content nav starts with `reinit()` |
+| `NDS.Pagination.create(nav)` | Starts one nav whose page buttons you wrote, and returns its instance, or the instance it already has. Returns `null` when the nav has no page buttons. A data-driven or content nav starts with `reinit()` |
 | `NDS.Pagination.setPage(nav, page)` | Moves the current page and scrolls to the content, unless the nav has `data-pagination-no-scroll`. It fires no event |
 | `NDS.Pagination.setTotalPages(nav, total, page)` | Builds a written or data-driven nav again with a new page count. It keeps the current page, or the last page when the count drops below it. `page` goes to that page instead. It does nothing on a content nav |
 | `NDS.Pagination.refresh(content, { keepPage })` | Counts the pages of a `.nds-paged-content` again and goes to page 1. `keepPage: true` stays on the current page. Added and removed items need no call |

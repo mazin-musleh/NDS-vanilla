@@ -432,7 +432,9 @@
             }
 
             this.valid = true;
+            // Stamped here so a programmatic create() is skipped by the next sweep.
             this.root.ndsColumnToggle = this;
+            this.root.setAttribute('data-nds-columns-initialized', 'true');
             this.persist = !!this.table.id;
 
             this.abortController = new AbortController();
@@ -975,10 +977,7 @@
             if (root.closest('code, .code-example')) return;
             if (root.hasAttribute('data-nds-columns-initialized')) return;
 
-            const instance = new NDSColumnToggle(root); // constructor self-registers root.ndsColumnToggle when valid
-            if (instance.valid) {
-                root.setAttribute('data-nds-columns-initialized', 'true');
-            }
+            new NDSColumnToggle(root); // stamps and registers itself when valid
         });
     }
 
@@ -995,9 +994,16 @@
         init: initializeTables,
         reinit: initializeTables,
         recheckWidths: recheckAllWidths,
-        create: (table) => table.ndsTableControls || new NDSTables(table),
+        // The constructors publish their expando only on success → null on a bail.
+        create: (table) => {
+            if (!table.ndsTableControls) new NDSTables(table);
+            return table.ndsTableControls || null;
+        },
         createResponsive: (table) => table.ndsTableResponsive || new NDSResponsiveTable(table),
-        createColumnToggle: (root) => root.ndsColumnToggle || new NDSColumnToggle(root),
+        createColumnToggle: (root) => {
+            if (!root.ndsColumnToggle) new NDSColumnToggle(root);
+            return root.ndsColumnToggle || null;
+        },
         row: rowHandle,
         setColumnHidden,
         getCellText

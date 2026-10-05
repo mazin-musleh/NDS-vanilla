@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "05/10/2026 - 03:23 PM"
 ---
 
 <section id="swiperOverview" class="nds-content-section nds-doc-overview">
@@ -437,7 +437,7 @@ A swiper in the page starts by itself. The instance is on the element as `el._nd
 | Method | Effect |
 |---|---|
 | `NDS.Swiper.init()` | Starts every `.nds-swiper` that has not started. `reinit()` is the same |
-| `NDS.Swiper.create(el)` | Starts one swiper and returns its instance |
+| `NDS.Swiper.create(el)` | Starts one swiper and returns its instance, or the instance it already has. Returns `null` when the swiper has no wrapper or no slides |
 | `NDS.Swiper.destroy(el)` | Stops one swiper and puts its markup back as written. `NDS.Init.destroy()` calls it |
 | `instance.next()`, `instance.prev()` | Moves one page |
 | `instance.goTo(index)` | Moves to a slide |

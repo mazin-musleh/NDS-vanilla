@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/09/2026 - 09:11 PM"
+last_edit: "05/10/2026 - 03:23 PM"
 ---
 
 <!-- Basic Table Section -->
@@ -2066,6 +2066,7 @@ NDS.Tables.getCellText(tdElement);  // Returns string
 
 // ── Manual creation ──────────────────────────────────
 // Create a sortable/selectable controller for a specific table
+// (the same instance on a repeat call, null when the table has no thead or tbody)
 const table = document.querySelector('#myTable');
 const instance = NDS.Tables.create(table);
 
@@ -2078,7 +2079,8 @@ const responsive = NDS.Tables.createResponsive(table);
 NDS.Tables.setColumnHidden(table, 3, true);   // hide the 4th column
 NDS.Tables.setColumnHidden(table, 3, false);  // show it again
 
-// Wire a [data-columns-target] menu manually (auto-wired on init)
+// Wire a [data-columns-target] menu manually (auto-wired on init).
+// Returns null when the target table or [data-columns-list] is missing.
 NDS.Tables.createColumnToggle(document.querySelector('[data-columns-target]'));
 
 // setColumnHidden does not persist — only the menu writes the saved set.

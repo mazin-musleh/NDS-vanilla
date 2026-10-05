@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.6.0"
-updated: "1.7.0"
-last_edit: "27/09/2026 - 10:53 PM"
+updated: "1.12.x"
+last_edit: "05/10/2026 - 03:23 PM"
 ---
 
 <section id="switcherOverview" class="nds-content-section nds-doc-overview">
@@ -214,7 +214,7 @@ The [Tabs](../components/tabs) controller, `NDS.Tabs`, runs the content switcher
 | Method | Effect |
 |---|---|
 | `NDS.Tabs.init()` | Starts every switcher and tab set on the page that has not started yet. `reinit()` is the same |
-| `NDS.Tabs.create(element)` | Starts one switcher and returns its instance, or the instance it already has |
+| `NDS.Tabs.create(element)` | Starts one switcher and returns its instance, or the instance it already has. Returns `null` when the switcher has no tab list, tabs or panels |
 | `instance.switchTo(index)` | Opens a view by its position, from 0 |
 | `instance.getActiveTabIndex()` | Returns the position of the open button |
 | `instance.getActiveTab()`, `instance.getActivePanel()` | Return the open button and its panel |

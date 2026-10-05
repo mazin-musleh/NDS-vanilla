@@ -189,8 +189,10 @@
         init: initializeComponents,
         reinit: initializeComponents,
         create: (element) => {
+            if (element._ndsSideInfo) return element._ndsSideInfo;
             const instance = new NDSSideInfo(element);
-            if (instance.valid) element._ndsSideInfo = instance;
+            if (!instance.valid) return null;
+            element._ndsSideInfo = instance;
             return instance;
         },
         // NDS.Init.destroy's second shape — the underscore expando is invisible to the

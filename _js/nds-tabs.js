@@ -362,6 +362,10 @@
     NDS.Tabs = {
         init: initializeTabs,
         reinit: initializeTabs,
-        create: (container) => container.ndsTabs || new NDSTabs(container)
+        // The constructor publishes el.ndsTabs only on success → null on a bail.
+        create: (container) => {
+            if (!container.ndsTabs) new NDSTabs(container);
+            return container.ndsTabs || null;
+        }
     };
 })();

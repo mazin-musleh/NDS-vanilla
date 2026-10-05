@@ -453,6 +453,10 @@
     NDS.Tooltip = {
         init: initializeTooltips,
         reinit: initializeTooltips,
-        create: (el) => new NDSTooltip(el)
+        // The constructor publishes el.ndsTooltip only on success → null on a bail.
+        create: (el) => {
+            if (!el.ndsTooltip) new NDSTooltip(el);
+            return el.ndsTooltip || null;
+        }
     };
 })();

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 09:27 PM"
+last_edit: "05/10/2026 - 03:23 PM"
 ---
 
 <section id="sideinfoOverview" class="nds-content-section nds-doc-overview">
@@ -301,7 +301,7 @@ The `aside` shows where it is in the markup: after the content, it is on the end
 |---|---|
 | `NDS.Sideinfo.init()` | Starts each `.nds-sideinfo` on the page that has not started. It runs on page load |
 | `NDS.Sideinfo.reinit()` | The same as `init()` |
-| `NDS.Sideinfo.create(el)` | Starts one column and returns its instance. Call it once for each column |
+| `NDS.Sideinfo.create(el)` | Starts one column and returns its instance, or the instance it already has. Returns `null` when the column has no parent element. Call it once for each column |
 | `NDS.Sideinfo.destroy(el)` | Stops one column: it removes the listeners and `--nds-sideinfo-top`, and adds back the sticky classes the markup had. `NDS.Init.destroy()` calls it for each column in the element it releases |
 {: .nds-table .nds-responsive}
 

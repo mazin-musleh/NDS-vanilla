@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "05/10/2026 - 03:23 PM"
 ---
 
 <section id="tooltipOverview" class="nds-content-section nds-doc-overview">
@@ -258,7 +258,7 @@ Set these on `.nds-tooltip-balloon`, or on `:root` for every tooltip. The balloo
 | Method | Effect |
 |---|---|
 | `NDS.Tooltip.init()` | Starts every `.nds-tooltip` on the page that has not started yet. `reinit()` is the same |
-| `NDS.Tooltip.create(el)` | Starts one tooltip and returns its instance |
+| `NDS.Tooltip.create(el)` | Starts one tooltip and returns its instance, or the instance it already has. Returns `null` when it has no balloon and no `data-tooltip-title` or `data-tooltip-message` to build one |
 | `el.ndsTooltip.open()`, `.close()` | Opens or closes the balloon |
 | `el.ndsTooltip.destroy()` | Closes the balloon and removes the listeners. The tooltip can start again after it |
 {: .nds-table .nds-responsive}
