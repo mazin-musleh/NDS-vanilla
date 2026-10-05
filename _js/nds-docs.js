@@ -738,9 +738,11 @@
         // The body lays the demo out as the card does, over the whole screen: a longer demo scrolls in it.
         var cs = getComputedStyle(card), lay = ['display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap']
             .map(function (k) { return k + ':' + cs.getPropertyValue(k); }).join(';');
+        // data-preview-flush: the markup brings its own padding (a section), so it meets the screen edges.
+        var pad = document.getElementById(card.getAttribute('data-preview-of')).hasAttribute('data-preview-flush') ? 0 : GUTTER;
         // base target: a link opens its page in the window, not in the frame.
         f.srcdoc = '<!doctype html><html ' + root + '><head><base target="_top">' + document.head.innerHTML +
-            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + GUTTER + 'px;' + lay + ';justify-content:flex-start}</style>' +
+            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + pad + 'px;' + lay + ';justify-content:flex-start}</style>' +
             '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
     }
 
