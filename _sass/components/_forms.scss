@@ -430,6 +430,11 @@ fieldset {
             }
         }
 
+        // A loading spinner keeps the in-field size, in a suffix too.
+        >.nds-btn[data-state~="loading"] {
+            --btn-size: 32px;
+        }
+
         >*:not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
             --btn-height: 100%;
             --btn-height-min: var(--btn-height);
