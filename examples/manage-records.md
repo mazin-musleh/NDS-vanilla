@@ -160,7 +160,7 @@ hideFeedback: true
                 </div>
             </div>
             <div class="nds-block">
-                <table id="requestsTable" class="nds-table nds-sortable" data-export-name="service-requests">
+                <table id="requestsTable" class="nds-table" data-export-name="service-requests">
                     <thead>
                         <tr>
                             <th>
@@ -218,7 +218,7 @@ hideFeedback: true
                                     </div>
                                 </div>
                             </th>
-                            <th class="actions-column" data-export-skip>
+                            <th class="nds-actions-column" data-export-skip>
                                 <div class="nds-col-header">
                                     <span class="nds-label">Actions</span>
                                 </div>
@@ -250,7 +250,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-controls="detail-REQ-2026-118" aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -336,7 +336,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-controls="detail-REQ-2026-117" aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -426,7 +426,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -476,7 +476,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="rejected">Rejected</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -526,7 +526,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -576,7 +576,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -626,7 +626,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -676,7 +676,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="rejected">Rejected</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -726,7 +726,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -776,7 +776,7 @@ hideFeedback: true
                                     <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
                                 </span>
                             </td>
-                            <td class="actions-column">
+                            <td class="nds-actions-column">
                                 <div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">
                                     <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-expanded="false" aria-label="Toggle details">
                                         <i class="hgi hgi-stroke hgi-list-view"></i>
@@ -1059,7 +1059,7 @@ hideFeedback: true
             '<span class="nds-label" data-filter="status" data-filter-value="' + esc(record.status) + '">' + status.label + '</span>' +
           '</span>' +
         '</td>' +
-        '<td class="actions-column">' +
+        '<td class="nds-actions-column">' +
           '<div class="nds-flex" style="--gap: var(--spacing-xs); --align: center;">' +
             // No aria-controls: the sub row is built on demand, and the component
             // stamps the toggle with the real id once it exists. Naming an id that

@@ -335,7 +335,7 @@ hideFeedback: true
             </div>
             <div class="nds-block">
                 <div id="console_transactions_content">
-                    <table id="consoleTransactions" class="nds-table nds-compact nds-sortable" data-export-name="transactions">
+                    <table id="consoleTransactions" class="nds-table nds-compact" data-export-name="transactions">
                         <thead>
                             <tr>
                                 <th>
@@ -393,7 +393,7 @@ hideFeedback: true
                                         </div>
                                     </div>
                                 </th>
-                                <th class="actions-column" data-export-skip>
+                                <th class="nds-actions-column" data-export-skip>
                                     <div class="nds-col-header">
                                         <span class="nds-label">Action</span>
                                     </div>
@@ -440,7 +440,7 @@ hideFeedback: true
                                     </span>
                                     {% endif %}
                                 </td>
-                                <td class="actions-column">
+                                <td class="nds-actions-column">
                                     <div class="nds-dropmenu" data-portal>
                                         <button class="nds-btn nds-subtle nds-sm nds-icon-only nds-dropmenu-trigger" aria-label="Row actions">
                                             <i class="hgi hgi-stroke hgi-edit-02"></i>

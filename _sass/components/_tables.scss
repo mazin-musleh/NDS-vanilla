@@ -12,7 +12,6 @@
 
 .nds-table-wrapper {
     --_max-width: var(--max-width, 100%);
-    --mask-fade-distance: 48px;
 
     position: relative;
     width: 100%;
@@ -38,35 +37,6 @@
     }
 }
 
-// Scroll mask states (determined by JS) — opt-in via .nds-mask on the table
-.nds-table-wrapper[data-state~="has-more"][data-state~="masked"] {
-    mask-image:
-        linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
-        linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
-
-    &[data-state~="at-start"] {
-        mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
-    }
-
-    &[data-state~="at-end"] {
-        mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
-    }
-
-    @include ltr {
-        mask-image:
-            linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
-            linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
-
-        &[data-state~="at-start"] {
-            mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
-        }
-
-        &[data-state~="at-end"] {
-            mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
-        }
-    }
-}
-
 // ==============================================
 // BASE TABLE STYLES
 // ==============================================
@@ -81,6 +51,7 @@
     --_cell-padding-inline: var(--table-cell-padding-inline, var(--spacing-xl));
     --_sub-padding: var(--table-sub-padding, var(--spacing-xl));
     --_sub-background: var(--table-sub-background, var(--background-surface-sunken));
+    --_table-row-height: var(--table-row-height, 64px);
     width: 100%;
     background-color: var(--table-cell-border);
     border: 1px solid var(--table-cell-border);
@@ -140,7 +111,7 @@
         background-color: var(--_row-bg, var(--table-background-cell));
         color: var(--table-text-body);
         border-left: 1px solid var(--table-cell-border);
-        height: var(--_table-row-height, 64px);
+        height: var(--_table-row-height);
 
         &:last-child {
             border-right: none;
@@ -285,7 +256,7 @@
 
     // ── Actions & checkbox columns ──
 
-    .table-actions {
+    .nds-table-actions {
         display: flex;
         gap: var(--spacing-xs);
         align-items: center;
@@ -295,12 +266,12 @@
         }
     }
 
-    .actions-column {
+    .nds-actions-column {
         width: 1%;
     }
 
     :is(th, td):has(.nds-check-container),
-    .checkbox-column {
+    .nds-checkbox-column {
         width: 40px;
         text-align: center;
 
