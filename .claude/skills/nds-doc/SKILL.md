@@ -207,7 +207,7 @@ A short paragraph above the table explains any target that is not obvious (what 
 - `.cls` class · `[attr]` bare attribute · `[attr="v"]` attribute · `[data-state~="t"]` a token
 - `--prop: value` a custom property in `style` · `.prop = value` a JS property (checkbox `indeterminate`)
 - `canon #id` in Structure: swap the markup; elsewhere: insert that part
-- `remove` deletes the On element · `key: value` sets a `create()` option · `—` no change
+- `remove` deletes the On element · `key: value` sets a `create()` option, and `key.sub: value` one key inside an object option, so chips that share it stack · `—` no change
 
 **On element cell:**
 - A selector for the element the change goes on. A row whose element is not in the current markup is disabled, and its row label says why ("Needs Structure: Group", "Not on Structure: Progress").

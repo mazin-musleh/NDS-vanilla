@@ -12,7 +12,8 @@
  *              after it with "(after)"
  * `data-js="id"` on the base canon names its JS form, one create() call, shown in a JS code tab
  * beside the HTML one. JS rows target `create()`, or `create({ key: value })` to apply only
- * while that option is set:  key: value  set an option · canon #id  add a part's options.
+ * while that option is set:  key: value  set an option · a.b: value  set one key inside option a,
+ * so chips stack (line.area, line.dots) · canon #id  add a part's options.
  * A JS-only structure (data-lang="js", e.g. a toast) previews as a Run button.
  * data-preview="run" on an HTML canon does the same for markup that leaves the card (a FAB), with Clear.
  * data-preview="js" runs the JS tab after each render, for a component with no init (Sort).
@@ -78,7 +79,7 @@
         if ((m = s.match(/^(--[\w-]+)\s*:\s*(.+)$/))) return { kind: 'style', name: m[1], value: m[2] };
         if ((m = s.match(/^canon #([\w-]+)$/))) return { kind: 'structure', id: m[1] };
         if (s === 'remove') return { kind: 'remove' };
-        if ((m = s.match(/^([a-z]\w*)\s*:\s*(.+)$/i))) return { kind: 'js', name: m[1], value: m[2] };
+        if ((m = s.match(/^([a-z][\w.]*)\s*:\s*(.+)$/i))) return { kind: 'js', name: m[1], value: m[2] };
         return null;
     }
 
@@ -116,9 +117,17 @@
         }).join(',\n') + '\n' + call.tail;
     }
 
+    // `line.area` sets one key inside the `line` object, written on one line. No value removes the key.
     function jsSet(call, key, value) {
-        var e = call.entries.filter(function (x) { return x.key === key; })[0];
-        if (e) e.value = value; else call.entries.push({ key: key, value: value });
+        var dot = key.indexOf('.'), name = dot < 0 ? key : key.slice(0, dot);
+        var e = call.entries.filter(function (x) { return x.key === name; })[0];
+        if (dot >= 0) {
+            var sub = parseCall(e ? e.value : '{}');
+            jsSet(sub, key.slice(dot + 1), value);
+            value = sub.entries.length ? '{ ' + sub.entries.map(function (x) { return x.key + ': ' + x.value; }).join(', ') + ' }' : undefined;
+        }
+        if (value === undefined) call.entries = call.entries.filter(function (x) { return x !== e; });
+        else if (e) e.value = value; else call.entries.push({ key: name, value: value });
     }
 
     var isJs = function (target) { return /^create\(/.test(target || ''); };
@@ -220,7 +229,7 @@
             if (isJs(o.target) || root.entries) {
                 if (!isJs(o.target) || !root.entries) return;
                 var keys = op.kind === 'js' ? [op.name] : op.kind === 'insert' ? partOf(op.id).entries.map(function (e) { return e.key; }) : [];
-                root.entries = root.entries.filter(function (e) { return keys.indexOf(e.key) < 0; });
+                keys.forEach(function (k) { jsSet(root, k); });
                 return;
             }
             targets(root, o.target).forEach(function (el) {
@@ -463,6 +472,7 @@
             if (acts) acts.hidden = !slot.querySelector(RULES);
             dropAlert(slot.closest('form'));
             preview.ndsOut = out;
+            if (script.getAttribute('data-preview') === 'js') preview.ndsJs = js;
             frame(preview);
         }
 
@@ -690,8 +700,12 @@
     var GUTTER = 24, BEZEL = 12, RADIUS = 36;
     function frame(card) {
         // A plain card shows its canon as written; a builder's render keeps ndsOut current.
-        if (card.ndsOut == null) card.ndsOut = dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
+        var canon = document.getElementById(card.getAttribute('data-preview-of'));
+        if (card.ndsOut == null) card.ndsOut = dedent(canon.textContent);
         if (card.hasAttribute('data-preview-page')) return pageFrame(card);
+        // data-preview="js": the screen runs the JS tab too, in its own window.
+        if (card.ndsJs == null) card.ndsJs = canon.getAttribute('data-preview') === 'js' ? dedent(document.getElementById(canon.getAttribute('data-js')).textContent) : '';
+        var run = function (w) { if (card.ndsJs) new w.Function(card.ndsJs)(); };
         var w = card.getAttribute('data-screen'), dev = card.querySelector('.nds-doc-device'), f = dev && dev.firstChild;
         if (!w) { if (dev) dev.remove(); return; }
         // The card's dark goes on the frame's body, so the harness around the markup goes dark too.
@@ -702,6 +716,7 @@
             win.NDS.Init.destroy(slot);
             slot.innerHTML = card.ndsOut;
             win.NDS.Init.mount(slot);
+            run(win);
             theme(f.contentDocument);
             return;
         }
@@ -734,6 +749,7 @@
         var runtime = runtimeScripts(), root = rootAttrs();
         f.onload = function () {
             theme(f.contentDocument);
+            run(f.contentWindow);
             f.style.visibility = '';
         };
         // The body lays the demo out as the card does, over the whole screen: a longer demo scrolls in it.
