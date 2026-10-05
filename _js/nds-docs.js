@@ -840,7 +840,7 @@
     // keeps its own panel. Clear takes every copy away.
     function fillRun(card, box) {
         NDS.Init.destroy(box);
-        box.innerHTML = card.ndsRunCode || dedent(document.getElementById(card.getAttribute('data-builder-card')).textContent);
+        box.innerHTML = card.ndsRunCode || dedent(document.getElementById(card.getAttribute('data-preview-of')).textContent);
         box.querySelectorAll('[id]').forEach(function (el) {
             var id = el.id;
             box.querySelectorAll('*').forEach(function (x) {
@@ -851,7 +851,8 @@
     }
     var runs = 0;
     document.querySelectorAll('[data-demo-run]').forEach(function (bar) {
-        var card = bar.closest('[data-builder-card]'), held = card.querySelector('[data-demo-held]');
+        // data-preview-of: every card has it; data-builder-card only one with a Variants table.
+        var card = bar.closest('[data-preview-of]'), held = card.querySelector('[data-demo-held]');
         bar.querySelector('[data-run]').addEventListener('click', function () {
             var box = document.createElement('div');
             box.ndsRun = ++runs;
