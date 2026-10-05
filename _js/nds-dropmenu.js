@@ -267,7 +267,8 @@
             if (!scroll) return;
             const { signal } = this.abortController;
 
-            const items = () => this._ownItems(itemSelector);
+            // The scroll's items only: footer buttons (Apply, Reset) are .nds-dropmenu-item too.
+            const items = () => this._ownItems(itemSelector).filter(el => scroll.contains(el));
             const threshold = parseInt(attr, 10) || 0;
             if (threshold && items().length < threshold) return;
 
@@ -390,12 +391,12 @@
                 if (e.key === 'ArrowDown' || e.key === 'Enter') filter();
                 if (e.key === 'ArrowDown') {
                     e.preventDefault();
-                    this._ownFirst(itemSelector + ':not([hidden])')?.focus();
+                    items().find(el => !el.hidden)?.focus();
                     return;
                 }
                 if (e.key === 'Enter') {
                     e.preventDefault();
-                    this._ownFirst(itemSelector + ':not([hidden])')?.click();
+                    items().find(el => !el.hidden)?.click();
                 }
             }, { signal });
 
