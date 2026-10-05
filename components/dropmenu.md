@@ -22,7 +22,7 @@ A dropmenu is a `nds-dropmenu` wrapper that holds a trigger button (`nds-dropmen
 
 Pick another component when:
 
-- the choice is a field in a form: [Custom Select](../components/forms#customSelect)
+- the choice is a field in a form: [Custom Select](../components/custom-select)
 - the menu holds the site's main links: [Main Navigation](../ui-shell/mainnav)
 - the content needs more room, or steps: [Modal](../components/modal) or [Drawer](../components/drawer)
 - the element shows a short hint on hover: [Tooltip](../components/tooltip)
@@ -243,7 +243,7 @@ Every option goes on the `nds-dropmenu` wrapper, except Center items, which goes
 | Structure | Links | canon `#dm-links` | — | Links to other pages |
 | Structure | Row menu | canon `#dm-row` | — | The actions of one table row or card, behind a three-dot button. The hidden label names the row |
 | Structure | Settings | canon `#dm-settings` | — | Switches or checkboxes in a group, with a footer of buttons. Copy a checkbox group from [Checkbox](../components/checkbox) and a switch group from [Switch](../components/switch), and add `nds-dropmenu-group` to the `fieldset`. A click on a control never closes the menu |
-| Structure | Picker | canon `#dm-picker` | — | A button that picks one value, in a small slot: an input prefix or a per-page count. The value submits with the form. For a form field, use [Custom Select](../components/forms#customSelect) |
+| Structure | Picker | canon `#dm-picker` | — | A button that picks one value, in a small slot: an input prefix or a per-page count. The value submits with the form. For a form field, use [Custom Select](../components/custom-select) |
 | Structure | Lazy menu | canon `#dm-lazy` | — | The menu sits in a `<template>` and is built on the first click, so a long menu adds no markup at page load. Only for a menu that no other component reads: not Filter, Share or Multiselect. Search engines and the browser's find do not see the items until then |
 | Anchor | Center (default) | — | — | The menu centers under the trigger |
 | Anchor | Start | `[data-anchor="start"]` | `.nds-dropmenu` | The menu lines up with the trigger's start edge. For a wide trigger |

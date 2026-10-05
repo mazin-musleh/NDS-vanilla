@@ -229,11 +229,11 @@
 
 - title: "Custom Select"
   description: "Styled single-choice dropdown with custom option markup and a JS API, built on dropmenu"
-  use_when: "A styled single-choice dropdown built on Dropmenu, for any select a native one cannot style: custom option markup, icons or descriptions in options, and a JS API (NDS.CustomSelect.create, .setValue, .clear, plus a change event). Documented inside the Forms page. The default for any in-form choice field, whatever the option count — small fixed lists included. For type-ahead search use Autocomplete; for several choices use Multiselect; use Selects only when the dev, knowing this default, wants the browser's native control."
+  use_when: "A styled single-choice dropdown built on Dropmenu, for any select a native one cannot style: custom option markup, icons or descriptions in options, and a JS API (NDS.CustomSelect.create, .setValue, .clear, plus a change event). The default for any in-form choice field, whatever the option count — small fixed lists included. For type-ahead search use Autocomplete; for several choices use Multiselect; use Selects only when the dev, knowing this default, wants the browser's native control."
   icon: '<i class="hgi hgi-stroke hgi-arrow-down-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
-  url: "/components/forms.html#customSelect"
+  url: "/components/custom-select.html"
   js: _js/nds-customselect.js
   scss: _sass/components/_forms.scss
 
