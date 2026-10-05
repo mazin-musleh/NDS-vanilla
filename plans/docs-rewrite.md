@@ -306,7 +306,8 @@ This is a rewrite, not a conversion. Each page is written fresh from its SCSS, i
 - `components/themes.md`, `components/icons.md` and `components/accessibility.md`.
 - `ui-shell/head.md` — **DONE (2026-10-05).** The code is plain HTML in a Liquid `capture` (a `<script>` inside would end a canon), escaped into a `data-escaped` canon that `docs_canon.rb` unescapes before the code block. Agents read it in the `.md`. It is a hand copy of the served gate and head script, so `mkrelease.py verify()` compares both against `_site/index.html`.
 - `layout/section.md` — **DONE (2026-10-05).** One builder: Structure rows Standard, Title icon, No wrapper, Horizontal, Stacked, Breakout; groups Action (standard, float, dual), Float action, Image, Layout and Color. A dark color writes `data-theme="dark"` with its class. `nds-noBg` removed from the SCSS (no section used it); content spacing and block title knobs left to Prose and Block.
-- `components/filter.md` and `components/tables.md`: the largest pages.
+- `components/filter.md` — **Plan (owner 2026-10-05):** one builder over one card set that carries every facet (`category` text, `fee` number, `channel` value + label), so each group type is an option, not a Structure swap: Groups (any) Category / Fee range, Channel read-from-cards or fixed list (`data-filter-values`), Category type, and the surface parts (search, applied chips, suggestions, count, no menu). Form, AJAX, own request, `populateFilter()` and sort ownership go to Behavior with code-only canons.
+- `components/tables.md`: the largest page.
 - `components/chart.md`: 21 chart-only toggles (`['', '#demo-bar', 'chartBarDL', 'chart']`) that no Markup cell expresses.
 
 ### Phase 4: NDS IQ (parked, last)

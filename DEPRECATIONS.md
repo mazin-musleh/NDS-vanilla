@@ -28,6 +28,7 @@ surface the theme controls. Count spellings and you will deprecate half the syst
 | `.nds-green` **on a section or footer** | `.nds-primary` / `.nds-brand` | before 1.9 | `_sass/layout/_section.scss`, `_sass/components/_footer.scss` |
 | `.nds-gradient-green` | `.nds-gradient-primary` | before 1.9 | `_sass/layout/_section.scss`, `_sass/_variables-a11y.scss` |
 | `.nds-focus`, `.focus` | none — the field styles its own focus | before 1.9 | `_sass/components/_forms.scss` ("Legacy class support") |
+| `data-filter="tags"` **reading `.nds-card-tags` labels** (an item with no `tags` mark) | a `data-filter="tags"` mark on each tag label | before 1.9 | `_js/nds-filter.js` `collectFilterValues`, `_buildItemCache` (marked "Legacy .nds-card-tags fallback") |
 | `NDS.Filter` instance method `setSelectedTags(tags)` | `setFilterValues('tags', tags)` | before 1.9 | `_js/nds-filter.js` (marked "Legacy API for backward compatibility") |
 | `NDS.loadExtras()` | `NDS.loadBundle('extras')` | 1.1.0 | `_js/nds-loader.js` (marked "Back-compat shim … still calling the old extras-specific API") |
 | `data-open-on` **on a `.nds-drawer` or its `<li>`** | `data-state="open"` on the `<li>` and its `<ul>`, with `aria-expanded="true"` on the button | 1.12.x | `_js/nds-drawer.js` `getOpenOnValue`, `handleResize` |
@@ -92,6 +93,8 @@ then the loser moves to the table above.
   The back-compat payload now misleads: its `detail.columnIndex` carries the sort KEY, because
   the caller passes `key` into a parameter still named `columnIndex`. Renaming the field breaks
   the listeners the event exists for, so the survivor is an owner call, not an audit call.
+
+- **Filter's unprefixed and implicit hooks** (`_js/nds-filter.js`). `.filter-btn` is matched beside `.nds-filter-btn` and `[data-filter-btn]` (`_resolveFilterBtn`): no `nds-` prefix. `setupResetButton` also makes any button in `.nds-filter` with a class containing `refresh`, or holding a `nds-hgi-refresh` / `nds-hgi-refresh-ccw-02` icon, a reset button, where `data-filter-action="reset"` is the documented hook. Neither is marked legacy; decide whether both go at the major.
 
 ## Finding the next one
 
