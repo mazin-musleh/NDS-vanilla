@@ -2,366 +2,261 @@
 layout: page
 title: Icons
 hero_title: Icons - National Design System
-hero_description: "Two icon layers: the HugeIcons Stroke Rounded font for content, and an inline SVG set that components and chrome paint without waiting for a font."
+hero_description: "HugeIcons Stroke Rounded in two forms: a font with the whole set for page content, and a small set inside the NDS CSS that components show without waiting for the font."
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "23/09/2026 - 08:37 PM"
+last_edit: "05/10/2026 - 11:58 PM"
 ---
 
-<!-- Content icons -->
-<section id="iconsContent" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <div class="nds-section-action nds-wrap">
-                <a class="nds-btn nds-primary nds-md" href="https://hugeicons.com/icons/stroke-rounded" target="_blank">
-                    <span class="nds-label">Browse the full icon library</span>
-                </a>
-            </div>
-            <h2 class="nds-section-title">Content Icons</h2>
-            <p class="nds-section-description">For icons in your content. Add <code class="nds-inline-code lang-html">hgi hgi-stroke hgi-{name}</code>, where <code class="nds-inline-code lang-html">{name}</code> is the icon's name on <a class="nds-color" href="https://hugeicons.com/icons/stroke-rounded" target="_blank">hugeicons.com</a>. The font is build {{ site.data.hgi.build }}, with {{ site.data.hgi.icons }} icons.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Font Icon</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <i class="hgi hgi-stroke hgi-search-01" style="font-size: 32px"></i>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-icons-content-1" id="tab-icons-content-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-content-1"
-                                        aria-labelledby="tab-icons-content-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;i class="hgi hgi-stroke hgi-search-01" style="font-size: 32px"&gt;&lt;/i&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="iconsOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Icons in NDS are HugeIcons Stroke Rounded drawings, plus a few marks drawn for NDS. They come in two forms:
+
+- **Font icons** (`hgi hgi-stroke hgi-{name}`) hold the whole set: {{ site.data.hgi.icons }} icons in one font file, build {{ site.data.hgi.build }}. They are for page content. Find a name on [hugeicons.com](https://hugeicons.com/icons/stroke-rounded).
+- **UI icons** (`nds-icon nds-hgi-{name}`) are {{ site.data.content.icons.hgi | size }} of those drawings, copied into the NDS CSS as SVG. Components and page chrome use them. The UI set also holds the custom marks (`nds-icon nds-icon-{name}`), drawn for NDS because HugeIcons does not have them.
+
+NDS keeps its own SVG copies for three reasons:
+
+1. They load faster. They show as soon as the CSS loads, while the font loads after the page shows. A close button or a menu arrow never waits for the font.
+2. They stay the same when the font updates.
+3. NDS can change a drawing or improve how it looks, such as an arrow that flips with the reading direction.
+
+Pick another component when:
+
+- the icon sits in a tinted circle or square: [Featured Icons](../components/featured-icons)
+- the icon shows a status, such as success or error: [Feedback Icons](../components/feedback-icons)
+
+</div>
+  </div>
 </section>
 
-<!-- UI icons -->
-<section id="iconsUI" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">UI Icons</h2>
-            <p class="nds-section-description">For icons inside controls and chrome. These are inlined in the stylesheet as SVG masks, so a close button or a validation mark paints with its CSS instead of waiting on the font. The class is <code class="nds-inline-code lang-html">nds-icon</code> plus <code class="nds-inline-code lang-html">nds-hgi-{name}</code>, and only the names in the catalog below exist.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Inline SVG Icon</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <button class="nds-btn nds-secondary-outline">
-                                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                    <span class="nds-label">Search</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-icons-ui-1" id="tab-icons-ui-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-ui-1"
-                                        aria-labelledby="tab-icons-ui-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;button class="nds-btn nds-secondary-outline"&gt;
-  &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;span class="nds-label"&gt;Search&lt;/span&gt;
-&lt;/button&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="iconsMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+An icon is one `<i>` element. Where it goes in a component, such as before a label or inside a field, is on that component's page.
+
+<script type="text/html" id="icons-content" data-canon data-variants="iconsVariantsTable" data-demo-size="24px">
+<i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i>
+</script>
+<script type="text/html" id="icons-ui" data-canon>
+<i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+</script>
+
+<div class="nds-block nds-prose">
+<h3 class="nds-block-title" id="iconsCatalog">UI Icon Catalog</h3>
+<p>The {{ site.data.content.icons.hgi | size }} UI icons from HugeIcons. Click a tile to copy its classes. The list is <code class="nds-inline-code lang-js">_data/content/icons.yml</code>.</p>
+<div class="nds-grid nds-doc-icons">
+{%- for name in site.data.content.icons.hgi %}
+<button type="button" class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-copy-announce="{{ name }} class copied">
+  <i class="nds-icon {{ name }}" aria-hidden="true"></i>
+  <span class="nds-label">{{ name }}</span>
+</button>
+{%- endfor %}
+</div>
+</div>
+
+<div class="nds-block nds-prose">
+<h3 class="nds-block-title">Custom Marks</h3>
+<p>The {{ site.data.content.icons.custom | size }} marks drawn for NDS: the store logos, the riyal symbol, and marks that components paint, such as the avatar placeholder and the checkbox tick. A mark is not the HugeIcons glyph of the same name: <code class="nds-inline-code lang-html">nds-icon-riyal</code> and <code class="nds-inline-code lang-html">hgi-riyal</code> differ.</p>
+<div class="nds-grid nds-doc-icons">
+{%- for name in site.data.content.icons.custom %}
+<button type="button" class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-copy-announce="{{ name }} class copied">
+  <i class="nds-icon {{ name }}" aria-hidden="true"></i>
+  <span class="nds-label">{{ name }}</span>
+</button>
+{%- endfor %}
+</div>
+</div>
+
+</div>
+  </div>
 </section>
 
-<!-- UI icon catalog -->
-<section id="iconsCatalog" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">UI Icon Catalog</h2>
-            <p class="nds-section-description">The {{ site.data.content.icons.hgi | size | plus: site.data.content.icons.custom.size }} classes the inline layer answers to. Click a tile to copy its class. Some glyphs are drawn for the system, so a name it shares with the font is not the same drawing: <code class="nds-inline-code lang-html">nds-icon-riyal</code> and <code class="nds-inline-code lang-html">hgi-riyal</code> differ.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <h3 class="nds-block-title">Interface Glyphs</h3>
-                <div class="nds-grid nds-doc-icons">
-                    {%- for name in site.data.content.icons.hgi %}
-                    <button class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-copy-announce="{{ name }} class copied">
-                        <i class="nds-icon {{ name }}" aria-hidden="true"></i>
-                        <span class="nds-label">{{ name }}</span>
-                    </button>
-                    {%- endfor %}
-                </div>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Brand and Bespoke Marks</h3>
-                <p>Glyphs outside the HugeIcons set, so they carry an <code class="nds-inline-code lang-html">nds-icon-</code> name: the store logos, the Saudi riyal symbol, and the small marks components paint themselves, such as the avatar placeholder and the checkbox tick.</p>
-                <div class="nds-grid nds-doc-icons">
-                    {%- for name in site.data.content.icons.custom %}
-                    <button class="nds-btn nds-subtle nds-copy" data-copy="nds-icon {{ name }}" data-copy-announce="{{ name }} class copied">
-                        <i class="nds-icon {{ name }}" aria-hidden="true"></i>
-                        <span class="nds-label">{{ name }}</span>
-                    </button>
-                    {%- endfor %}
-                </div>
-            </div>
-        </div>
+<section id="iconsVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
     </div>
+    <div class="nds-section-body" markdown="1">
+
+Change the glyph name to the one you need: a font name from hugeicons.com, or a UI name from the catalog. Size and color go in the icon's `style`, or on a parent: the icon takes both from its text.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Font icon (default) | — | — | An icon from the font, for page content: cards, lists, feature grids and text |
+| Structure | UI icon | canon `#icons-ui` | — | An icon from the catalog, for controls and page chrome |
+| Glyph | Search (default) | `.nds-hgi-search-01` | `.nds-icon` | A sample glyph. Write the name you need |
+| Glyph | Next | `.nds-hgi-arrow-next-01` | `.nds-icon` | Points forward: left on an Arabic page, right on an English one |
+| Glyph | Back | `.nds-hgi-arrow-prev-01` | `.nds-icon` | Points back: right on an Arabic page, left on an English one |
+| Size | None (default) | — | — | The size of the text around it |
+| Size | 32px | `font-size: 32px;` | `i` | A larger icon. Set it on a parent to size the icon and its text together |
+| Size | 48px | `font-size: 48px;` | `i` | A large icon on its own, such as in an empty state |
+| Color | None (default) | — | — | The color of the text around it |
+| Color | Primary | `color: var(--icon-primary);` | `i` | The brand primary color |
+| Color | Success | `color: var(--icon-success);` | `i` | A success mark |
+| Color | Info | `color: var(--icon-info);` | `i` | An information mark |
+| Color | Warning | `color: var(--icon-warning);` | `i` | A warning mark |
+| Color | Error | `color: var(--icon-error);` | `i` | An error mark |
+{: #iconsVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
 </section>
 
-<!-- Sizing and color -->
-<section id="iconsSizing" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Sizing and Color</h2>
-            <p class="nds-section-description">Both layers behave like text: an icon is one em square and paints in the current text color, so it matches whatever it sits in. Change either with <code class="nds-inline-code lang-css">font-size</code> and <code class="nds-inline-code lang-css">color</code>, on the icon or on an ancestor.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Inherited Size and Color</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 16px"></i>
-                                <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 24px"></i>
-                                <i class="hgi hgi-stroke hgi-notification-02" style="font-size: 40px; color: var(--icon-primary)"></i>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-icons-sizing-1" id="tab-icons-sizing-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-icons-sizing-1"
-                                        aria-labelledby="tab-icons-sizing-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;i class="hgi hgi-stroke hgi-notification-02" style="font-size: 16px"&gt;&lt;/i&gt;
-&lt;i class="hgi hgi-stroke hgi-notification-02" style="font-size: 24px"&gt;&lt;/i&gt;
-&lt;i class="hgi hgi-stroke hgi-notification-02" style="font-size: 40px; color: var(--icon-primary)"&gt;&lt;/i&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="iconsBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Logical Arrows
+{: .nds-block-title}
+
+The next and back arrows follow the reading direction. `nds-hgi-arrow-next-01` points left on an Arabic page and right on an English one, and `nds-hgi-arrow-prev-01` points the other way. The `-01` arrows are chevrons, and the `-02` arrows have a shaft. The left, right, up and down arrows always point where their name says.
+
+### Glyph Swap
+{: .nds-block-title}
+
+An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token, `--nds-icon-{name}`. Set `--nds-icon` to a token in your CSS to change the glyph, with no change to the markup. Set it on the icon itself: the icon's own class sets it there, so a value on a parent does not reach it.
+
+</div>
+<script type="text/html" id="icons-swap" data-canon data-lang="css" data-preview="none">
+/* Show the "hide" eye while the toggle is pressed */
+.my-toggle[aria-pressed="true"] .nds-icon { --nds-icon: var(--nds-icon-view-off); }
+</script>
+  </div>
 </section>
 
-<!-- Built-in Features -->
-<section id="iconsFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-            <p class="nds-section-description">What you get from the class alone</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-hard-drive"></i>
-                            <span class="nds-label">Self-Hosted</span>
-                        </span>
-                        <p class="nds-item-desc">The font ships with the system and is served from your own domain. No third-party request, nothing to break if a CDN does.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-rocket-01"></i>
-                            <span class="nds-label">Off the Critical Path</span>
-                        </span>
-                        <p class="nds-item-desc">Icon styles and the font load after the page paints, so content never waits on glyphs.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-eye"></i>
-                            <span class="nds-label">Flash-Free Rendering</span>
-                        </span>
-                        <p class="nds-item-desc">Icons stay hidden until they can paint, so you never see a fallback box or a late shift in the layout.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-exchange-01"></i>
-                            <span class="nds-label">Direction-Aware Arrows</span>
-                        </span>
-                        <p class="nds-item-desc">Use <code class="nds-inline-code lang-html">nds-hgi-arrow-next-01</code> and <code class="nds-inline-code lang-html">nds-hgi-arrow-prev-01</code> for forward and back: they follow reading direction, so one class is correct in Arabic and English. The left and right classes stay literal.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-board"></i>
-                            <span class="nds-label">Color and Size Inheritance</span>
-                        </span>
-                        <p class="nds-item-desc">Icons follow the surrounding type and re-tint in dark mode with everything else.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-svg-01"></i>
-                            <span class="nds-label">Custom Marks</span>
-                        </span>
-                        <p class="nds-item-desc">Marks outside HugeIcons, such as the riyal symbol and the store badges, use the same classes.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section id="iconsFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
     </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-hard-drive"></i>
+            <span class="nds-label">Self-Hosted</span>
+          </span>
+          <p class="nds-item-desc">The font and the icon CSS ship with NDS and load from your own domain. No request goes to a third party.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-rocket-01"></i>
+            <span class="nds-label">Off the Critical Path</span>
+          </span>
+          <p class="nds-item-desc">The page never waits on an icon to show. The font loads after the page shows, and the UI icon CSS loads right after the main CSS.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-eye"></i>
+            <span class="nds-label">Flash-Free Rendering</span>
+          </span>
+          <p class="nds-item-desc">Icons stay hidden until they can paint, so a fallback box never shows. While the font loads, a font icon holds an empty box at its final size, so the layout does not move.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-paint-board"></i>
+            <span class="nds-label">Color and Size Inheritance</span>
+          </span>
+          <p class="nds-item-desc">An icon is a square one em wide, in the current text color. It matches the text around it with no extra class.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Usage Guidelines -->
-<section id="iconsGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use the <strong>font</strong> (<code class="nds-inline-code lang-html">hgi hgi-stroke hgi-{name}</code>) for content: cards, lists, feature grids, editorial copy</li>
-                    <li>Use the <strong>inline set</strong> (<code class="nds-inline-code lang-html">nds-icon nds-hgi-{name}</code>) for controls and chrome, where the icon must paint with the first frame</li>
-                    <li>Copy names exactly, numeric suffix included: <code class="nds-inline-code lang-html">hgi-arrow-left-01</code>, not <code class="nds-inline-code lang-html">hgi-arrow-left</code>. A name that does not exist renders nothing</li>
-                    <li>For a next or back affordance, use the logical arrows (<code class="nds-inline-code lang-html">nds-hgi-arrow-next-01</code>, <code class="nds-inline-code lang-html">nds-hgi-arrow-prev-01</code>). They mirror on LTR pages, so the same markup reads correctly in both directions. Reach for <code class="nds-inline-code lang-html">arrow-left</code> or <code class="nds-inline-code lang-html">arrow-right</code> only when you mean that literal direction</li>
-                    <li>Do not use the inline set for a one-off content icon. It is a fixed list every page carries, while the font already covers the catalog</li>
-                    <li>Size with <code class="nds-inline-code lang-css">font-size</code>, not width and height, and let color come from the surrounding text</li>
-                    <li>Add <code class="nds-inline-code lang-html">aria-hidden="true"</code> to an icon next to a label. On an icon-only control, put the <code class="nds-inline-code lang-html">aria-label</code> on the control</li>
-                    <li>Stay in one style. Only Stroke Rounded ships, and the other styles are not free</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Icon Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Layer</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">hgi hgi-stroke hgi-{name}</code></td><td>Font</td><td>Any glyph the font carries. <code class="nds-inline-code lang-html">hgi-stroke</code> is the family, <code class="nds-inline-code lang-html">hgi-{name}</code> the glyph</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-icon nds-hgi-{name}</code></td><td>Inline</td><td>A registered icon painted as an SVG mask. <code class="nds-inline-code lang-html">nds-icon</code> is the one em box, <code class="nds-inline-code lang-html">nds-hgi-{name}</code> the glyph</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-icon nds-icon-{name}</code></td><td>Inline</td><td>The bespoke marks: <code class="nds-inline-code lang-html">nds-icon-riyal</code>, <code class="nds-inline-code lang-html">nds-icon-quote</code>, <code class="nds-inline-code lang-html">nds-icon-apple</code>, <code class="nds-inline-code lang-html">nds-icon-google-play</code>, <code class="nds-inline-code lang-html">nds-icon-huawei</code></td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-css">--nds-icon</code></td><td>unset</td><td>The mask an <code class="nds-inline-code lang-html">.nds-icon</code> paints. Set it in CSS to swap the glyph without touching the markup</td></tr>
-                        <tr><td><code class="nds-inline-code lang-css">--nds-icon-{name}</code></td><td>SVG data URI</td><td>One token per inline icon, for example <code class="nds-inline-code lang-css">--nds-icon-eye</code>. Assign one to <code class="nds-inline-code lang-css">--nds-icon</code> rather than pasting an SVG</td></tr>
-                    </tbody>
-                </table>
-                <div class="nds-code">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy custom property example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <code class="lang-css code">/* Swap the glyph from CSS, no markup change */
-.my-toggle[aria-expanded="true"] .nds-icon { --nds-icon: var(--nds-icon-view-off); }</code>
-                </div>
-            </div>
-
-        </div>
+<section id="iconsPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use the font for icons in content: cards, lists, feature grids and text.
+- Use a UI icon in controls and page chrome. Check its name in the catalog first: no other UI names exist. Use the font for any other glyph.
+- A font icon works in a button, but a button's success or error status swaps only a UI icon. Use a UI icon in a button that shows a status.
+- Write a UI icon as an `<i>` element. Its CSS matches only `i.nds-icon`, so a `<span>` shows nothing.
+- Copy a name exactly, with its number: `hgi-arrow-left-01`, not `hgi-arrow-left`. A name that does not exist shows nothing.
+- Use the next and back arrows for forward and back. Use the left and right arrows only for a fixed direction, such as a map.
+- Size an icon with `font-size`, not `width` and `height`. Let its color come from the text around it.
+- Add `aria-hidden="true"` to an icon beside a label. An icon-only control still needs a name for screen readers: its component page shows how.
+- Take new font icons from the free Stroke Rounded style only. The other HugeIcons styles need a HugeIcons Pro license.
+
+</div>
+  </div>
 </section>
 
-<!-- License -->
-<section id="iconsLicense" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">License and Attribution</h2>
-            <p class="nds-section-description">The font is the free HugeIcons Stroke Rounded set, under the MIT License. The inline set mixes those glyphs with marks drawn for the system, which are MIT as part of NDS. Commercial use, modification, and redistribution are all permitted; the only condition is that the HugeIcons notice travels with the icons, and it is kept in the <code class="nds-inline-code lang-js">LICENSE</code> file. No credit line is needed on your pages.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <h3 class="nds-block-title">What Ships</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Asset</th><th>Source</th><th>License</th></tr></thead>
-                    <tbody>
-                        <tr><td>Stroke Rounded icon font</td><td>HugeIcons free set</td><td>MIT, Copyright (c) 2025 Hugeicons</td></tr>
-                        <tr><td>Inline icons taken from the font</td><td>HugeIcons free set</td><td>MIT, Copyright (c) 2025 Hugeicons</td></tr>
-                        <tr><td>Inline marks drawn for the system</td><td>National Design System</td><td>MIT, part of NDS</td></tr>
-                        <tr><td>Solid, bulk, duotone, twotone, sharp styles</td><td>Not included</td><td>Requires a HugeIcons Pro license</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Before You Add an Icon</h3>
-                <ul>
-                    <li>Take icons from the <strong>free Stroke Rounded</strong> style only. The paid styles carry a different license</li>
-                    <li>Download from <a class="nds-color" href="https://hugeicons.com/" target="_blank">hugeicons.com</a>, which holds the full catalog and every canonical name</li>
-                    <li>Pro terms are on the <a class="nds-color" href="https://hugeicons.com/license-agreement" target="_blank">HugeIcons license agreement</a> page</li>
-                    <li>The MIT grant covers using the icons in a product, not repackaging the set as an icon library</li>
-                </ul>
-            </div>
-        </div>
+<section id="iconsApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
     </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `hgi-stroke` | `<i>` | Sets the HugeIcons font. Write it with `hgi` before it, as every NDS page does |
+| `hgi-{name}` | `i.hgi-stroke` | The glyph: any name in the Stroke Rounded set |
+| `nds-icon` | `<i>` | A box one em square that paints the glyph as a mask in the text color |
+| `nds-hgi-{name}` | `i.nds-icon` | A UI glyph from HugeIcons. Only the names in the catalog above exist |
+| `nds-icon-{name}` | `i.nds-icon` | A mark drawn for NDS, such as `nds-icon-riyal` or `nds-icon-apple`. Two have other names: `nds-pilcrow-left` and `nds-pilcrow-right` |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--nds-icon` | set by the `nds-hgi-` or `nds-icon-` class | The mask an `nds-icon` paints. Set it to a token to change the glyph. See Glyph Swap above |
+| `--nds-icon-{name}` | an SVG data URI | One token per UI icon, such as `--nds-icon-view-off`. Use it as the value of `--nds-icon` |
+{: .nds-table .nds-responsive}
+
+### License
+{: .nds-block-title}
+
+The MIT License permits commercial use, changes and redistribution. The HugeIcons notice ships in the NDS `LICENSE` file, so it goes wherever the icons go. Your pages need no credit line.
+
+| Asset | Source | License |
+|---|---|---|
+| Stroke Rounded icon font | HugeIcons free set | MIT, Copyright (c) 2025 Hugeicons |
+| UI icons from HugeIcons | HugeIcons free set | MIT, Copyright (c) 2025 Hugeicons |
+| Marks drawn for NDS | National Design System | MIT, part of NDS |
+| Solid, bulk, duotone, twotone and sharp styles | Not included | A [HugeIcons Pro license](https://hugeicons.com/license-agreement) |
+{: .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="iconsRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Button](../components/button): an icon before, after or above the label, and icon-only buttons.
+- [Featured Icons](../components/featured-icons): a font icon in a tinted shape.
+- [Feedback Icons](../components/feedback-icons): status marks built from UI icons.
+
+</div>
+  </div>
 </section>
