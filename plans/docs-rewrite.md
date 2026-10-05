@@ -313,7 +313,7 @@ This is a rewrite, not a conversion. Each page is written fresh from its SCSS, i
   - Behavior: scroll wrapper and mask, sorting (→ Sort), selection (→ Selection), column menu (saving, locked columns), sub-rows (in the markup or on demand), loading, paging and filtering (→ Pagination, Filter). Sort and Selection facts their own pages hold are linked, not repeated.
   - v2 break: `table-actions`, `actions-column`, `checkbox-column` → `nds-table-actions`, `nds-actions-column`, `nds-checkbox-column`, no aliases, with a Migration line. `nds-mask` and `--mask-fade-distance` removed.
   - Dropped: `nds-sortable` (nothing reads it), "`--min-width` is calculated by JS" (it has no default).
-- `components/chart.md`: 21 chart-only toggles (`['', '#demo-bar', 'chartBarDL', 'chart']`) that no Markup cell expresses.
+- `components/chart.md` — **DONE (2026-10-05).** One builder on the JS twin (`data-preview="js"`, as Sort): the HTML is the empty `.nds-chart`, every row sets a `create()` option. Structure rows Bar, Line, Pie, Donut (pie and donut also swap `series` and `labels`). Line style chips stack, like the old toggles (owner 2026-10-05): a Markup cell `line.area: true` sets one key inside an object option (`nds-docs.js` `jsSet`). HTML attributes and crowded x labels go to Behavior.
 
 ### Phase 4: NDS IQ (parked, last)
 

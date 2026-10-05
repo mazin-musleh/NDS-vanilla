@@ -2,1275 +2,358 @@
 layout: page
 title: Chart
 hero_title: Chart - National Design System
-hero_description: Visualize data with bar, line, pie, and donut charts that render as pure SVG with built-in theming, tooltips, and responsive sizing
+hero_description: A bar, line, pie or donut chart that the script draws as SVG from your data
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/09/2026 - 12:00 AM"
+last_edit: "05/10/2026 - 04:22 PM"
 ---
 
-<!-- Bar Chart -->
-<section id="chartBar" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Bar Chart</h2>
-            <p class="nds-section-description">Grouped or stacked bars for comparing categories across series</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-bar", "chartBarDL", "chart"]'
-                                    data-chart-opt='{"dataLabels":{"show":true}}'
-                                    data-chart-opt-off='{"dataLabels":{"show":false}}'
-                                    data-code-on="dataLabels: { show: true }"
-                                    data-code-off="dataLabels: { show: false }">
-                                    <span class="nds-label">Data Labels</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-bar", "chartBarStack", "chart"]'
-                                    data-chart-opt='{"bar":{"stacked":true}}'
-                                    data-chart-opt-off='{"bar":{"stacked":false}}'
-                                    data-code-on="stacked: true,"
-                                    data-code-off="stacked: false,">
-                                    <span class="nds-label">Stacked</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-bar", "chartBarGrid", "chart"]'
-                                    data-chart-opt='{"grid":{"show":true}}'
-                                    data-chart-opt-off='{"grid":{"show":false}}'
-                                    data-code-on="grid:    { show: true }"
-                                    data-code-off="grid:    { show: false }">
-                                    <span class="nds-label">Grid</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-bar", "chartBarYAxis", "chart"]'
-                                    data-chart-opt='{"yaxis":{"show":true}}'
-                                    data-chart-opt-off='{"yaxis":{"show":false}}'
-                                    data-code-on="yaxis:   { show: true,"
-                                    data-code-off="yaxis:   { show: false,">
-                                    <span class="nds-label">Y-Axis</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div id="demo-bar" class="nds-chart"></div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chart-bar-html" id="tab-chart-bar-html">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-chart-bar-js" id="tab-chart-bar-js">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-bar-html"
-                                        aria-labelledby="tab-chart-bar-html">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div id="my-chart" class="nds-chart"&gt;&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-bar-js"
-                                        aria-labelledby="tab-chart-bar-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-js code">
-NDS.Chart.create('#my-chart', {
+<section id="chartOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+A chart is an empty `.nds-chart` element that the script fills with an SVG drawing, a legend and a tooltip. You give it the data in one of two ways: `data-chart-*` attributes, which the script reads at page load, or one `NDS.Chart.create()` call. Both take the same options.
+
+Pick another component when:
+
+- one number with a small trend line is the focus: [Metric](../components/metric).
+- users must read or compare exact values: [Tables](../components/tables).
+- the value is progress toward a target: [Progress](../components/progress).
+
+</div>
+  </div>
+</section>
+
+<section id="chartMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The JS tab is the `create()` call that draws the chart. To draw one with no script call, see HTML Attributes under Behavior.
+
+<script type="text/html" id="chart-demo" data-canon data-variants="chartVariantsTable" data-js="chart-js" data-preview="js">
+<div id="chart-root" class="nds-chart"></div>
+</script>
+<script type="text/html" id="chart-js" data-canon data-lang="js">
+NDS.Chart.create('#chart-root', {
   type: 'bar',
   series: [
-    { name: 'Completed', data: [12, 18, 15, 22, 28, 20] },
-    { name: 'In Progress', data: [8, 10, 14, 9, 12, 15] },
-    { name: 'Pending', data: [5, 7, 6, 4, 3, 8] },
+    { name: 'Completed', data: [120, 180, 150, 220, 280, 240] },
+    { name: 'In review', data: [50, 70, 60, 90, 75, 80] }
   ],
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  height: 350,                         // Chart height (px)
-  bar: {
-    stacked: false,                    // Stack series on top of each other
-    borderRadius: 6,                   // Corner radius for bar tops
-    gap: 0.3,                          // Gap between groups (0–1)
-  },
-  dataLabels: { show: true, format: '%' }, // Show values above bars (suffix)
-  grid:    { show: true },             // Horizontal gridlines
-  yaxis:   { show: true, title: '' },  // Y-axis labels &amp; title
-  xaxis:   { show: true, title: '' },  // X-axis labels &amp; title
-  legend:  { show: true, position: 'top' },
-  tooltip: { show: true },
-  // colors: ['#1B8354', '#54C08A'],   // Optional palette override
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
 });
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+</script>
 
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+  </div>
 </section>
 
-<!-- Line Chart -->
-<section id="chartLine" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Line Chart</h2>
-            <p class="nds-section-description">Smooth or straight lines for tracking trends over time, with optional area fill</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-line", "chartLineSmooth", "chart"]'
-                                    data-chart-opt='{"line":{"smooth":true}}'
-                                    data-chart-opt-off='{"line":{"smooth":false}}'
-                                    data-code-on="smooth: true,"
-                                    data-code-off="smooth: false,">
-                                    <span class="nds-label">Smooth</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-line", "chartLineDots", "chart"]'
-                                    data-chart-opt='{"line":{"dots":true}}'
-                                    data-chart-opt-off='{"line":{"dots":false}}'
-                                    data-code-on="dots: true,"
-                                    data-code-off="dots: false,">
-                                    <span class="nds-label">Dots</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-line", "chartLineArea", "chart"]'
-                                    data-chart-opt='{"line":{"area":true}}'
-                                    data-chart-opt-off='{"line":{"area":false}}'
-                                    data-code-on="area: true,"
-                                    data-code-off="area: false,">
-                                    <span class="nds-label">Area</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-line", "chartLineGrid", "chart"]'
-                                    data-chart-opt='{"grid":{"show":true}}'
-                                    data-chart-opt-off='{"grid":{"show":false}}'
-                                    data-code-on="grid:    { show: true }"
-                                    data-code-off="grid:    { show: false }">
-                                    <span class="nds-label">Grid</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-line", "chartLineCrosshair", "chart"]'
-                                    data-chart-opt='{"line":{"crosshair":true}}'
-                                    data-chart-opt-off='{"line":{"crosshair":false}}'
-                                    data-code-on="crosshair: true,"
-                                    data-code-off="crosshair: false,">
-                                    <span class="nds-label">Crosshair</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div id="demo-line" class="nds-chart"></div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chart-line-html" id="tab-chart-line-html">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-chart-line-js" id="tab-chart-line-js">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-line-html"
-                                        aria-labelledby="tab-chart-line-html">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div id="my-chart" class="nds-chart"&gt;&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-line-js"
-                                        aria-labelledby="tab-chart-line-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-js code">
-NDS.Chart.create('#my-chart', {
+<section id="chartVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+`#chart-js` is the `create()` call that draws the chart (`data-js` on the base canon). Every row sets an option of that call. `create({ type: 'line' })` means only a call with that option. A pie and a donut take one number per slice, so their Structure rows also replace `series` and `labels`. A key with a dot sets one key inside that option: `line.area: true` and `line.dots: false` write `line: { area: true, dots: false }`.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Structure | Bar (default) | — | — | Compares values across categories or periods. Each series is one bar per category |
+| Structure | Line | `type: 'line'` | `create()` | Shows a trend over time. Each series is one line |
+| Structure | Pie | `type: 'pie'` | `create()` | Shows the parts of a whole. Each slice shows its percentage |
+| Structure | Pie | `series: [420, 310, 180, 90]` | `create()` | The same choice: one number per slice |
+| Structure | Pie | `labels: ['Online', 'Mobile app', 'Service center', 'Phone']` | `create()` | The same choice: one name per slice |
+| Structure | Donut | `type: 'donut'` | `create()` | A pie with a hole in the middle. `donut.size` sets the hole |
+| Structure | Donut | `series: [420, 310, 180, 90]` | `create()` | The same choice: one number per slice |
+| Structure | Donut | `labels: ['Online', 'Mobile app', 'Service center', 'Phone']` | `create()` | The same choice: one name per slice |
+| Line style (any) | Straight | `line.smooth: false` | `create({ type: 'line' })` | Straight segments between the points. Without it, the lines curve |
+| Line style (any) | No dots (limit: 1 dots) | `line.dots: false` | `create({ type: 'line' })` | Hides the dot on each point. The crosshair still shows the dots at the point it snaps to |
+| Line style (any) | Area | `line.area: true` | `create({ type: 'line' })` | Fills the space under each line, fading to the bottom. Use it to stress volume |
+| Line style (any) | Last point (hint: A ring on the last point) | `line.spotlight: 'last'` | `create({ type: 'line' })` | Keeps a ring on the last point. `spotlight` also takes `'first'` or an index |
+| Line style (any) | Point tooltips (limit: 1 dots) (hint: A tooltip per dot, with no crosshair) | `line.crosshair: false` | `create({ type: 'line' })` | Each dot gets its own tooltip, and the crosshair is off. Needs the dots |
+| Axes | Shown (default) | — | `create({ type: 'bar' })` | Value labels on the y axis, category labels on the x axis |
+| Axes | Shown (default) | — | `create({ type: 'line' })` | The same, on a line chart |
+| Axes | Titles | `yaxis: { title: 'Requests' }` | `create({ type: 'bar' })` | Names what the numbers count and what the categories are |
+| Axes | Titles | `yaxis: { title: 'Requests' }` | `create({ type: 'line' })` | The same choice, on a line chart |
+| Axes | Titles | `xaxis: { title: 'Month' }` | `create({ type: 'bar' })` | The same choice: the x axis title |
+| Axes | Titles | `xaxis: { title: 'Month' }` | `create({ type: 'line' })` | The same choice: the x axis title, on a line chart |
+| Axes | No y axis | `yaxis: { show: false }` | `create({ type: 'bar' })` | Hides the value labels. Use it with Values, so the numbers still show |
+| Axes | No y axis | `yaxis: { show: false }` | `create({ type: 'line' })` | Hides the value labels. A line chart then shows its values only in the tooltip |
+| Stacked | Stacked (hint: One bar per category, series on top of each other) | `bar: { stacked: true }` | `create({ type: 'bar' })` | Stacks the series in one bar per category. Use it when the total matters as much as each part |
+| Values | Values (hint: The value above each bar) | `dataLabels: { show: true }` | `create({ type: 'bar' })` | Writes the value above each bar. A stacked bar shows its total |
+| No percentages | No percentages | `dataLabels: { show: false }` | `create({ type: 'pie' })` | Hides the percentage on each slice. The tooltip still shows it |
+| No percentages | No percentages | `dataLabels: { show: false }` | `create({ type: 'donut' })` | The same, on a donut |
+| Slice border | Slice border | `stroke: { show: true }` | `create({ type: 'pie' })` | A line between the slices |
+| Slice border | Slice border | `stroke: { show: true }` | `create({ type: 'donut' })` | The same, on a donut |
+| No grid | No grid | `grid: { show: false }` | `create({ type: 'bar' })` | Hides the horizontal grid lines |
+| No grid | No grid | `grid: { show: false }` | `create({ type: 'line' })` | The same, on a line chart |
+| No legend | No legend | `legend: { show: false }` | `create()` | Hides the legend. Keep it when the chart has more than one series or slice |
+| No tooltip | No tooltip | `tooltip: { show: false }` | `create()` | No tooltip on hover or tap |
+{: #chartVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="chartBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### HTML Attributes
+{: .nds-block-title}
+
+A chart can start with no script call. Write the data in `data-chart-type`, `data-chart-series` and `data-chart-labels`, and any other option in `data-chart-config` as JSON. Use it for data that is known when the page is built, and `create()` for data that changes after load.
+
+<script type="text/html" id="chart-html" data-canon>
+<div class="nds-chart"
+  data-chart-type="donut"
+  data-chart-series='[420, 310, 180, 90]'
+  data-chart-labels='["Online", "Mobile app", "Service center", "Phone"]'
+  data-chart-config='{"height": 260, "donut": {"size": 0.6}}'></div>
+</script>
+
+### Crowded Labels
+{: .nds-block-title}
+
+When the x axis labels do not fit side by side, the chart turns them 45 degrees. Set `xaxis.labelDecimate` to `true` to show every few labels flat instead, or to a number to show every Nth one. `xaxis.labelRotate` sets a fixed angle.
+
+<script type="text/html" id="chart-days" data-canon data-js="chart-days-js" data-preview="js">
+<div id="chart-days-root" class="nds-chart"></div>
+</script>
+<script type="text/html" id="chart-days-js" data-canon data-lang="js">
+NDS.Chart.create('#chart-days-root', {
   type: 'line',
   series: [
-    { name: 'Sessions', data: [10, 41, 35, 51, 49, 62, 69, 91, 80] },
-    { name: 'Page Views', data: [23, 42, 35, 27, 43, 22, 17, 31, 48] },
+    { name: 'Visits', data: [820, 940, 910, 1050, 1180, 760, 690, 1120, 1240, 1310, 1290, 1400, 980, 870, 1450, 1520, 1480, 1610, 1700, 1150, 1020, 1680, 1750, 1820, 1790, 1900, 1310, 1240, 1960, 2050] }
   ],
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-  height: 350,                         // Chart height (px)
-  line: {
-    smooth: true,                      // Catmull-Rom curves (false = straight)
-    dots: true,                        // Show data point circles
-    dotRadius: 4,                      // Dot radius (px)
-    width: 2,                          // Line stroke width (px)
-    area: false,                       // Fill area under lines
-  },
-  grid:    { show: true },             // Horizontal gridlines
-  yaxis:   { show: true, title: 'Active users' },
-  xaxis:   { show: true, title: 'Month' },
-  legend:  { show: true, position: 'top' },
-  tooltip: { show: true },
+  labels: Array.from({ length: 30 }, (_, i) => 'Sep ' + (i + 1)),
+  line: { dots: false, area: true },
+  xaxis: { labelDecimate: true }
 });
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Dense X-Axis Labels -->
-<section id="chartDenseLabels" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Dense X-Axis Labels</h2>
-            <p class="nds-section-description">Labels auto-rotate to 45&deg; when they would overlap. Opt into decimation to show only every Nth label for very dense time-series data</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-dense", "chartDenseDecimate", "chart"]'
-                                    data-chart-opt='{"xaxis":{"labelDecimate":"auto"}}'
-                                    data-chart-opt-off='{"xaxis":{"labelDecimate":false}}'
-                                    data-code-on="labelDecimate: 'auto',"
-                                    data-code-off="labelDecimate: false,">
-                                    <span class="nds-label">Decimate</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-dense", "chartDenseHorizontal", "chart"]'
-                                    data-chart-opt='{"xaxis":{"labelRotate":0}}'
-                                    data-chart-opt-off='{"xaxis":{"labelRotate":"auto"}}'
-                                    data-code-on="labelRotate:   0,"
-                                    data-code-off="labelRotate:   'auto',">
-                                    <span class="nds-label">Force Horizontal</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-dense", "chartDenseSmooth", "chart"]'
-                                    data-chart-opt='{"line":{"smooth":true}}'
-                                    data-chart-opt-off='{"line":{"smooth":false}}'
-                                    data-code-on="smooth: true,"
-                                    data-code-off="smooth: false,">
-                                    <span class="nds-label">Smooth</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-dense", "chartDenseDots", "chart"]'
-                                    data-chart-opt='{"line":{"dots":true}}'
-                                    data-chart-opt-off='{"line":{"dots":false}}'
-                                    data-code-on="dots: true,"
-                                    data-code-off="dots: false,">
-                                    <span class="nds-label">Dots</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-dense", "chartDenseArea", "chart"]'
-                                    data-chart-opt='{"line":{"area":true}}'
-                                    data-chart-opt-off='{"line":{"area":false}}'
-                                    data-code-on="area: true,"
-                                    data-code-off="area: false,">
-                                    <span class="nds-label">Area</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-dense", "chartDenseGrid", "chart"]'
-                                    data-chart-opt='{"grid":{"show":true}}'
-                                    data-chart-opt-off='{"grid":{"show":false}}'
-                                    data-code-on="grid:    { show: true }"
-                                    data-code-off="grid:    { show: false }">
-                                    <span class="nds-label">Grid</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-dense", "chartDenseCrosshair", "chart"]'
-                                    data-chart-opt='{"line":{"crosshair":true}}'
-                                    data-chart-opt-off='{"line":{"crosshair":false}}'
-                                    data-code-on="crosshair: true,"
-                                    data-code-off="crosshair: false,">
-                                    <span class="nds-label">Crosshair</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div id="demo-dense" class="nds-chart"></div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chart-dense-js" id="tab-chart-dense-js">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-dense-js"
-                                        aria-labelledby="tab-chart-dense-js">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-js code">
-NDS.Chart.create('#my-chart', {
-  type: 'line',
-  series: [{ name: 'Sessions', data: [/* 24 values */] }],
-  labels: ['Jan 23', 'Feb 23', /* … */, 'Dec 24'],
-  xaxis: {
-    labelRotate:   'auto',               // 'auto' | 0 | 45 | 90 | &lt;number&gt;
-    labelDecimate: false,                // false | true | 'auto' | &lt;number&gt;
-  },
-});
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Pie Chart -->
-<section id="chartPie" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Pie Chart</h2>
-            <p class="nds-section-description">Proportional segments for showing distribution of a whole</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-pie", "chartPieLabels", "chart"]'
-                                    data-chart-opt='{"dataLabels":{"show":true}}'
-                                    data-chart-opt-off='{"dataLabels":{"show":false}}'
-                                    data-code-on="dataLabels: { show: true }"
-                                    data-code-off="dataLabels: { show: false }">
-                                    <span class="nds-label">Labels</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-pie", "chartPieStroke", "chart"]'
-                                    data-chart-opt='{"stroke":{"show":true,"width":2}}'
-                                    data-chart-opt-off='{"stroke":{"show":false}}'
-                                    data-code-on="show: true,                       // Stroke between slices"
-                                    data-code-off="show: false,                      // Stroke between slices">
-                                    <span class="nds-label">Stroke</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div id="demo-pie" class="nds-chart" style="max-width: 400px;"></div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chart-pie-html" id="tab-chart-pie-html">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-chart-pie-js" id="tab-chart-pie-js">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-pie-html"
-                                        aria-labelledby="tab-chart-pie-html">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div id="my-chart" class="nds-chart"&gt;&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-pie-js"
-                                        aria-labelledby="tab-chart-pie-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-js code">
-// Pie: series are plain numbers, not objects
-NDS.Chart.create('#my-chart', {
-  type: 'pie',
-  series: [44, 55, 13, 43],
-  labels: ['Services', 'Products', 'Support', 'Other'],
-  height: 300,                         // Chart size (px)
-  startAngle: 0,                       // Starting angle (degrees)
-  stroke: {
-    show: false,                       // Stroke between slices
-    width: 2,                          // Stroke width
-    color: '#fff',                     // Stroke color
-  },
-  dataLabels: { show: true },           // Percentage labels on slices
-  legend:  { show: true, position: 'bottom' },
-  tooltip: { show: true },
-});
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Donut Chart -->
-<section id="chartDonut" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Donut Chart</h2>
-            <p class="nds-section-description">Pie chart with an inner hole for a cleaner look or center content</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                                    data-toggler='["", "#demo-donut", "chartDonutLabels", "chart"]'
-                                    data-chart-opt='{"dataLabels":{"show":true}}'
-                                    data-chart-opt-off='{"dataLabels":{"show":false}}'
-                                    data-code-on="dataLabels: { show: true }"
-                                    data-code-off="dataLabels: { show: false }">
-                                    <span class="nds-label">Labels</span>
-                                </button>
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-donut", "chartDonutStroke", "chart"]'
-                                    data-chart-opt='{"stroke":{"show":true,"width":2}}'
-                                    data-chart-opt-off='{"stroke":{"show":false}}'
-                                    data-code-on="show: true,                       // Stroke between slices"
-                                    data-code-off="show: false,                      // Stroke between slices">
-                                    <span class="nds-label">Stroke</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div id="demo-donut" class="nds-chart" style="max-width: 400px;"></div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chart-donut-html" id="tab-chart-donut-html">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-chart-donut-js" id="tab-chart-donut-js">
-                                            <span class="nds-tab-label">JS API</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-donut-html"
-                                        aria-labelledby="tab-chart-donut-html">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div id="my-chart" class="nds-chart"&gt;&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-donut-js"
-                                        aria-labelledby="tab-chart-donut-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-js code">
-// Donut: same as pie, with donut.size for inner hole
-NDS.Chart.create('#my-chart', {
-  type: 'donut',
-  series: [35, 25, 20, 20],
-  labels: ['Completed', 'In Progress', 'Review', 'Pending'],
-  height: 300,
-  donut: {
-    size: 0.5,                         // Inner hole ratio (0–1)
-  },
-  startAngle: 0,
-  stroke: {
-    show: false,                       // Stroke between slices
-    width: 2,
-    color: '#fff',
-  },
-  dataLabels: { show: true },
-  legend:  { show: true, position: 'bottom' },
-  tooltip: { show: true },
-});
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- HTML Init -->
-<section id="chartHtmlInit" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">HTML Initialization</h2>
-            <p class="nds-section-description">Charts can also be initialized declaratively using data attributes</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div id="demo-html-init" class="nds-chart"
-                                    data-chart-type="bar"
-                                    data-chart-series='[{"name":"Q1","data":[30,40,35]},{"name":"Q2","data":[50,30,45]}]'
-                                    data-chart-labels='["Jan","Feb","Mar"]'>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chart-html-1" id="tab-chart-html-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-html-1"
-                                        aria-labelledby="tab-chart-html-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div class="nds-chart"
-  data-chart-type="bar"
-  data-chart-series='[{"name":"Q1","data":[30,40,35]},{"name":"Q2","data":[50,30,45]}]'
-  data-chart-labels='["Jan","Feb","Mar"]'&gt;
-&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Theming -->
-<section id="chartTheming" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Theming</h2>
-            <p class="nds-section-description">Override CSS custom properties to customize chart colors without changing JavaScript options</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-action">
-                                <button class="nds-btn nds-subtle demo-toggle-btn"
-                                    data-toggler='["", "#demo-themed", "chartThemedDL", "chart"]'
-                                    data-chart-opt='{"dataLabels":{"show":true}}'
-                                    data-chart-opt-off='{"dataLabels":{"show":false}}'>
-                                    <span class="nds-label">Data Labels</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo">
-                                <div id="demo-themed" class="nds-chart" style="--chart-color-1: #6366F1; --chart-color-2: #A78BFA; --chart-color-3: #C4B5FD;"></div>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-chart-theme-html" id="tab-chart-theme-html">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-chart-theme-css" id="tab-chart-theme-css">
-                                            <span class="nds-tab-label">CSS</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-theme-html"
-                                        aria-labelledby="tab-chart-theme-html">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;div id="my-chart" class="nds-chart my-chart"&gt;&lt;/div&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-theme-css"
-                                        aria-labelledby="tab-chart-theme-css" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-css code">
-.my-chart {
-  --chart-color-1: #6366F1;
-  --chart-color-2: #A78BFA;
-  --chart-color-3: #C4B5FD;
-}
-                                    </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Built-in Features -->
-<section id="chartFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Charts with <code class="nds-inline-code lang-html">data-chart-*</code> attributes initialize on page load. Call <code class="nds-inline-code lang-js">NDS.Chart.init()</code> to re-scan after adding new chart elements dynamically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-resize-01"></i>
-                            <span class="nds-label">Responsive Sizing</span>
-                        </span>
-                        <p class="nds-item-desc">Charts resize automatically when their container width changes. No manual resize calls needed.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-customize"></i>
-                            <span class="nds-label">CSS Theming</span>
-                        </span>
-                        <p class="nds-item-desc">Override colors, grid, tooltips, and labels with CSS custom properties. Dark mode adapts automatically.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-analytics-up"></i>
-                            <span class="nds-label">Smart Scaling</span>
-                        </span>
-                        <p class="nds-item-desc">Automatic nice-number axis scaling, number formatting (K/M suffixes), and legend wrapping.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-printer"></i>
-                            <span class="nds-label">Print and Accessibility</span>
-                        </span>
-                        <p class="nds-item-desc">Tooltips hidden in print, transitions disabled for reduced-motion preference. SVG output includes ARIA labels for screen readers.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
-                            <span class="nds-label">Programmatic Control</span>
-                        </span>
-                        <p class="nds-item-desc">Create, update, and destroy charts with <code class="nds-inline-code lang-js">NDS.Chart.create()</code>. Options deep-merge on update for live reconfiguration.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Usage Guidelines -->
-<section id="chartGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Use <strong>bar charts</strong> for comparing discrete categories or tracking changes across periods. Use stacked mode when the total matters as much as individual values</li>
-                    <li>Use <strong>line charts</strong> for continuous data, trends, and time series. Enable area fill to emphasize volume over shape</li>
-                    <li>Use <strong>pie or donut charts</strong> for showing proportions of a whole. Keep to 6 or fewer segments so the chart stays readable</li>
-                    <li>Avoid pie charts when differences between segments are small. A bar chart makes small differences easier to compare</li>
-                    <li>For a headline number with a trend sparkline, use a <a class="nds-color" href="{{ 'components/metric' | relative_url }}">Metric</a> tile instead of a standalone chart</li>
-                    <li>Use HTML <code class="nds-inline-code lang-html">data-chart-*</code> attributes for static charts that don't change. Use the JS API for dynamic or user-driven data that updates after load</li>
-                    <li>Set axis titles (<code class="nds-inline-code lang-js">yaxis.title</code>, <code class="nds-inline-code lang-js">xaxis.title</code>) to label what the numbers represent. Without titles, the chart relies on the legend alone</li>
-                    <li>Override <code class="nds-inline-code lang-html">--chart-color-*</code> properties to match your project's brand palette. The default series colors are drawn from the primary brand family, so a custom palette recolors them with no override</li>
-                    <li>Charts auto-resize via ResizeObserver. No manual resize calls are needed when the container width changes</li>
-                    <li>X-axis labels auto-rotate to 45&deg; when they would overlap (<code class="nds-inline-code lang-js">xaxis.labelRotate: 'auto'</code> by default). For dense time-series, opt into <code class="nds-inline-code lang-js">xaxis.labelDecimate: 'auto'</code> to show only every Nth label instead</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Methods</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Method</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">NDS.Chart.create(el, opts)</code></td>
-                            <td>Create a chart on an element (accepts selector string or DOM element)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">NDS.Chart.init()</code></td>
-                            <td>Auto-initialize all <code class="nds-inline-code lang-html">.nds-chart</code> elements with data attributes</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">NDS.Chart.reinit()</code></td>
-                            <td>Alias for <code class="nds-inline-code lang-js">init()</code>: pick up any newly added <code class="nds-inline-code lang-html">.nds-chart</code> elements</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">chart.update(opts)</code></td>
-                            <td>Update chart with new options (merges with existing) and re-render</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">chart.render()</code></td>
-                            <td>Redraw the chart in place from its current options. Use it when a re-render emptied the element but kept it, so the instance survived. <code class="nds-inline-code lang-js">NDS.Chart.reinit()</code> does this for you on an empty root</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">chart.destroy()</code></td>
-                            <td>Remove chart, clean up listeners and observers</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Common Options</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Option</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">type</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">'bar'</code></td>
-                            <td><code class="nds-inline-code lang-js">'bar'</code>, <code class="nds-inline-code lang-js">'line'</code>, <code class="nds-inline-code lang-js">'pie'</code>, or <code class="nds-inline-code lang-js">'donut'</code></td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">series</code></td>
-                            <td>array</td>
-                            <td>required</td>
-                            <td>Data series. Objects with name/data for bar/line, numbers for pie/donut</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">labels</code></td>
-                            <td>array</td>
-                            <td>required</td>
-                            <td>Category labels for x-axis or pie slice names</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">height</code></td>
-                            <td>number</td>
-                            <td>350/300</td>
-                            <td>Chart height in pixels (350 for bar/line, 300 for pie/donut)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">colors</code></td>
-                            <td>array</td>
-                            <td>CSS vars</td>
-                            <td>Override color palette with hex/rgb values</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">legend.show</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Show/hide legend</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">legend.position</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">'top'</code>/<code class="nds-inline-code lang-js">'bottom'</code></td>
-                            <td><code class="nds-inline-code lang-js">'top'</code> for bar/line, <code class="nds-inline-code lang-js">'bottom'</code> for pie/donut</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">tooltip.show</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Show/hide hover tooltips</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">padding</code></td>
-                            <td>object</td>
-                            <td>auto</td>
-                            <td>Override plot padding per side: <code class="nds-inline-code lang-js">{ top, bottom, left, right }</code> in pixels. Defaults are picked from the axis layout (top 20, bottom 40, sides 20 or 55 depending on whether <code class="nds-inline-code lang-js">yaxis.show</code> is true). Set <code class="nds-inline-code lang-js">{ top: 0, bottom: 0, left: 0, right: 0 }</code> for edge-to-edge sparklines.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">direction</code></td>
-                            <td>string</td>
-                            <td>auto</td>
-                            <td><code class="nds-inline-code lang-js">'ltr'</code> or <code class="nds-inline-code lang-js">'rtl'</code> to force a reading direction. Default reads the chart's computed CSS direction, which honors any <code class="nds-inline-code lang-html">dir="..."</code> attribute or <code class="nds-inline-code lang-html">direction:</code> CSS rule on an ancestor.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Bar Options</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Option</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">bar.stacked</code></td>
-                            <td>boolean</td>
-                            <td>false</td>
-                            <td>Stack bars on top of each other</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">bar.borderRadius</code></td>
-                            <td>number</td>
-                            <td>6</td>
-                            <td>Corner radius for bar tops</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">bar.gap</code></td>
-                            <td>number</td>
-                            <td>0.3</td>
-                            <td>Gap ratio between groups (0-1)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">dataLabels.show</code></td>
-                            <td>boolean</td>
-                            <td>false</td>
-                            <td>Show value labels above bars</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">dataLabels.format</code></td>
-                            <td>string | function</td>
-                            <td>none</td>
-                            <td>Append a suffix to values: <code class="nds-inline-code lang-js">'%'</code> turns 75 into "75%". For custom logic, pass a function: <code class="nds-inline-code lang-js">v =&gt; v + ' SAR'</code>. Applied to data labels, Y-axis labels, and tooltips</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Line Options</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Option</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">line.smooth</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Smooth curves (Catmull-Rom) vs straight segments</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">line.dots</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Show data point dots</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">line.dotRadius</code></td>
-                            <td>number</td>
-                            <td>4</td>
-                            <td>Dot radius in pixels</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">line.width</code></td>
-                            <td>number</td>
-                            <td>3</td>
-                            <td>Line stroke width</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">line.area</code></td>
-                            <td>boolean</td>
-                            <td>false</td>
-                            <td>Fill area under lines</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">line.crosshair</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Vertical hover line that snaps to the nearest data point and enlarges its dot. Disable to fall back to per-dot hover tooltips.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">line.spotlight</code></td>
-                            <td>number | string</td>
-                            <td>none</td>
-                            <td>Persistent highlight on a single data point: numeric index, <code class="nds-inline-code lang-js">'first'</code>, or <code class="nds-inline-code lang-js">'last'</code>. Renders a translucent halo and enlarges the dot at that position. Used by the <a class="nds-color" href="{{ 'components/metric' | relative_url }}">Metric</a> tile to anchor the comparison value.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Axis Options (bar + line)</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Option</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">grid.show</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Show horizontal gridlines</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">yaxis.show</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Show y-axis value labels</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">yaxis.title</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">''</code></td>
-                            <td>Y-axis title (rendered vertically)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">xaxis.show</code></td>
-                            <td>boolean</td>
-                            <td>true</td>
-                            <td>Show x-axis category labels</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">xaxis.title</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">''</code></td>
-                            <td>X-axis title</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">xaxis.labelRotate</code></td>
-                            <td>string | number</td>
-                            <td><code class="nds-inline-code lang-js">'auto'</code></td>
-                            <td>Rotate x-axis labels when they would overlap. <code class="nds-inline-code lang-js">'auto'</code> picks 0&deg; or 45&deg; based on fit; pass an explicit number (e.g. <code class="nds-inline-code lang-js">45</code> or <code class="nds-inline-code lang-js">90</code>) to force an angle. Mirrored in RTL</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">xaxis.labelDecimate</code></td>
-                            <td>boolean | string | number</td>
-                            <td><code class="nds-inline-code lang-js">false</code></td>
-                            <td>Show only every Nth label to thin out dense axes (time-series). <code class="nds-inline-code lang-js">true</code> or <code class="nds-inline-code lang-js">'auto'</code> computes the step from available width; pass a number (e.g. <code class="nds-inline-code lang-js">3</code>) to force every-Nth</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Pie / Donut Options</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Option</th>
-                            <th>Type</th>
-                            <th>Default</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">donut.size</code></td>
-                            <td>number</td>
-                            <td>0.5</td>
-                            <td>Inner hole ratio (0-1, donut only)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">stroke.show</code></td>
-                            <td>boolean</td>
-                            <td>false</td>
-                            <td>Show stroke between slices</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">stroke.width</code></td>
-                            <td>number</td>
-                            <td>2</td>
-                            <td>Stroke width</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">stroke.color</code></td>
-                            <td>string</td>
-                            <td><code class="nds-inline-code lang-js">'#fff'</code></td>
-                            <td>Stroke color</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-js">startAngle</code></td>
-                            <td>number</td>
-                            <td>0</td>
-                            <td>Starting angle in degrees</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-chart-type</code></td>
-                            <td>Chart type: <code class="nds-inline-code lang-html">bar</code>, <code class="nds-inline-code lang-html">line</code>, <code class="nds-inline-code lang-html">pie</code>, or <code class="nds-inline-code lang-html">donut</code></td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-chart-series</code></td>
-                            <td>JSON array of series data. Objects with <code class="nds-inline-code lang-js">name</code> and <code class="nds-inline-code lang-js">data</code> for bar/line, plain numbers for pie/donut.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-chart-labels</code></td>
-                            <td>JSON array of category labels for x-axis or pie slice names.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-chart-config</code></td>
-                            <td>JSON object with full chart options. Overrides individual data attributes when both are present.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-color-1</code> to <code class="nds-inline-code lang-html">--chart-color-6</code></td>
-                            <td>Series color palette (6 colors, auto-wraps beyond 6)</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-grid-color</code></td>
-                            <td>Gridline color</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-text</code></td>
-                            <td>Axis label and title color</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-label</code></td>
-                            <td>Data label, legend, and tooltip text color</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-radius</code></td>
-                            <td>Tooltip border radius</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-area-opacity</code></td>
-                            <td>Area fill opacity for line charts</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-tooltip-bg</code></td>
-                            <td>Tooltip background color</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-tooltip-border</code></td>
-                            <td>Tooltip border color</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-pie-label-1</code> to <code class="nds-inline-code lang-html">--chart-pie-label-6</code></td>
-                            <td>Pie/donut percentage label color per slice</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">--chart-dot-fill</code></td>
-                            <td>Line chart dot fill color</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<script>
-function initPage() {
-
-    NDS.Chart.create('#demo-bar', {
-        type: 'bar',
-        series: [
-            { name: 'Completed', data: [12, 18, 15, 22, 28, 20] },
-            { name: 'In Progress', data: [8, 10, 14, 9, 12, 15] },
-            { name: 'Pending', data: [5, 7, 6, 4, 3, 8] },
-        ],
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        dataLabels: { show: false, format: '%' },
-    });
-
-    NDS.Chart.create('#demo-line', {
-        type: 'line',
-        series: [
-            { name: 'Sessions', data: [10, 41, 35, 51, 49, 62, 69, 91, 80] },
-            { name: 'Page Views', data: [23, 42, 35, 27, 43, 22, 17, 31, 48] },
-        ],
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-        yaxis: { title: 'Active users' },
-        xaxis: { title: 'Month' },
-    });
-
-    NDS.Chart.create('#demo-dense', {
-        type: 'line',
-        series: [
-            { name: 'Sessions', data: [42, 51, 38, 65, 72, 58, 49, 88, 95, 67, 71, 84, 52, 61, 78, 45, 92, 81, 56, 74, 89, 63, 77, 86] },
-        ],
-        labels: ['Jan 23', 'Feb 23', 'Mar 23', 'Apr 23', 'May 23', 'Jun 23', 'Jul 23', 'Aug 23', 'Sep 23', 'Oct 23', 'Nov 23', 'Dec 23',
-                 'Jan 24', 'Feb 24', 'Mar 24', 'Apr 24', 'May 24', 'Jun 24', 'Jul 24', 'Aug 24', 'Sep 24', 'Oct 24', 'Nov 24', 'Dec 24'],
-    });
-
-    NDS.Chart.create('#demo-pie', {
-        type: 'pie',
-        series: [44, 55, 13, 43],
-        labels: ['Services', 'Products', 'Support', 'Other'],
-    });
-
-    NDS.Chart.create('#demo-donut', {
-        type: 'donut',
-        series: [35, 25, 20, 20],
-        labels: ['Completed', 'In Progress', 'Review', 'Pending'],
-    });
-
-    NDS.Chart.create('#demo-themed', {
-        type: 'bar',
-        series: [
-            { name: 'Downloads', data: [28, 45, 62, 38, 55] },
-        ],
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-    });
-}
-// Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPage); else initPage();
 </script>
+
+</div>
+  </div>
+</section>
+
+<section id="chartFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">At page load the script draws every <code class="nds-inline-code lang-html">.nds-chart</code> that has a series in its attributes. Call <code class="nds-inline-code lang-js">NDS.Chart.init()</code> after you add charts to the page. It draws the new ones and redraws any chart that was emptied.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-resize-01"></i>
+            <span class="nds-label">Responsive Sizing</span>
+          </span>
+          <p class="nds-item-desc">The chart fills its container and redraws when the container width changes. It also redraws when <code class="nds-inline-code lang-html">dir</code> or <code class="nds-inline-code lang-html">lang</code> changes on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, so the axes follow the text direction.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-touch-interaction-01"></i>
+            <span class="nds-label">Line Crosshair</span>
+          </span>
+          <p class="nds-item-desc">On a line chart, a vertical line snaps to the nearest point, enlarges its dots, and one tooltip lists every series there. On a touch screen, a tap pins it and a second tap on the same point clears it. A vertical swipe still scrolls the page.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-analytics-up"></i>
+            <span class="nds-label">Smart Scaling</span>
+          </span>
+          <p class="nds-item-desc">The y axis steps are round numbers that cover the data. Values of 1,000 and more are shortened in the language of the browser, such as 1.2K. The legend wraps onto more lines when it runs out of width.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-customize"></i>
+            <span class="nds-label">CSS Theming</span>
+          </span>
+          <p class="nds-item-desc">Colors come from <code class="nds-inline-code lang-css">--chart-color-1</code> to <code class="nds-inline-code lang-css">--chart-color-6</code>, and the grid, text and tooltip have their own properties. Set them on the chart or on any parent.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-printer"></i>
+            <span class="nds-label">Print and Accessibility</span>
+          </span>
+          <p class="nds-item-desc">The SVG has <code class="nds-inline-code lang-html">role="img"</code> and an <code class="nds-inline-code lang-html">aria-label</code>. The tooltip is hidden in print, and the hover transitions are off when the user asks for reduced motion.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
+            <span class="nds-label">Programmatic Control</span>
+          </span>
+          <p class="nds-item-desc">Create, update and destroy a chart from your code. <code class="nds-inline-code lang-js">update()</code> merges the new options into the current ones and redraws.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="chartPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Use a bar chart to compare categories or periods, and a line chart for a trend over time.
+- Use a pie or donut only for the parts of a whole, with six slices or fewer. The colors repeat after six.
+- Use a bar chart instead of a pie when the slices are close in size. Bars make small differences easier to see.
+- Set axis titles that name what the numbers count. Without them, only the legend explains the chart.
+- Set `dataLabels.format` when the values have a unit, such as `%` or SAR.
+- Put a heading above the chart, and the key numbers in text or a [table](../components/tables) near it. The SVG label only says "Bar chart", "Line chart" or "Chart", and the chart has no keyboard access.
+- Call `destroy()` before you remove a chart in a single-page app. It removes the chart's observers and listeners.
+
+</div>
+  </div>
+</section>
+
+<section id="chartApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+Chart ships in the extras bundle, which the loader injects after first paint. A `create()` call before the bundle arrives still works, but returns a Promise instead of the instance. To get the instance at once, `await NDS.loadBundle('extras')` first.
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-chart-type` | `.nds-chart` | `bar`, `line`, `pie` or `donut`. Missing means `bar`. The script also writes the type here on every draw, so CSS picks the color order for that type. |
+| `data-chart-series` | `.nds-chart` | The series as JSON, the same value as the `series` option. Without a series, the script skips the element at page load. |
+| `data-chart-labels` | `.nds-chart` | The labels as JSON, the same value as the `labels` option. |
+| `data-chart-config` | `.nds-chart` | Any options as JSON. The three attributes above win over the same keys in it. |
+{: .nds-table .nds-responsive}
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+Set them on the chart or on any parent.
+
+| Property | Default | Controls |
+|---|---|---|
+| `--chart-color-1` to `--chart-color-6` | shades of the primary color, in an order for each type | The series or slice colors. The seventh series uses color 1 again. The `colors` option wins over them. |
+| `--chart-grid-color` | `--colors-neutral-100`, `--colors-neutral-700` in dark mode | The grid lines. |
+| `--chart-text` | `--text-primary-paragraph` | The axis labels and titles, and the crosshair. |
+| `--chart-label` | `--text-default` | The values above the bars, the legend and the tooltip text. |
+| `--chart-pie-label-1` to `--chart-pie-label-6` | `--text-oncolor-primary`, black on slices 3 and 4 | The percentage on each slice. Change it when you change its slice color. |
+| `--chart-dot-fill` | `--colors-base-white` | The inside of the line dots and the default slice border color. |
+| `--chart-area-opacity` | `0.15` | How strong the Area fill is at the top. |
+| `--chart-tooltip-bg` | `--background-menu` | The tooltip background. |
+| `--chart-tooltip-border` | `--border-neutral-secondary` | The tooltip border. |
+| `--chart-radius` | `--radius-md` | The tooltip corner radius. |
+{: .nds-table .nds-responsive}
+
+### Options
+{: .nds-block-title}
+
+| Option | Default | Effect |
+|---|---|---|
+| `type` | `'bar'` | `'bar'`, `'line'`, `'pie'` or `'donut'`. |
+| `series` | required | Bar and line: an array of `{ name, data }`, one per series. Pie and donut: an array of numbers, one per slice. |
+| `labels` | `1`, `2`, …, pie and donut `Item 1`, `Item 2`, … | Bar and line: the x axis categories. Pie and donut: the slice names. |
+| `height` | `350`, pie and donut `300` | The height in pixels. A pie or donut is at most this tall. |
+| `colors` | the `--chart-color-*` properties | An array of colors, used in order and repeated. |
+| `legend.show` | `true` | Shows the legend. |
+| `legend.position` | `'top'`, pie and donut `'bottom'` | `'top'` or `'bottom'`. |
+| `tooltip.show` | `true` | Shows the tooltip on hover or tap. |
+| `dataLabels.show` | `false`, pie and donut `true` | Bar: the value above each bar. Pie and donut: the percentage on each slice wider than 20 degrees. |
+| `dataLabels.format` | none | A string is added after the value (`'%'`). A function `v => …` returns the whole label. Bar and line only: it also formats the y axis and the tooltip. |
+| `direction` | the computed CSS direction | `'ltr'` or `'rtl'`. Forces the direction of the axes. |
+| `padding` | top `20`, bottom `40`, sides `20` | Bar and line: `{ top, bottom, left, right }` in pixels around the plot. The side with the y axis gets `55` while the axis shows. All `0` draws a chart edge to edge. |
+| `grid.show` | `true` | Bar and line: the horizontal grid lines. |
+| `yaxis.show` | `true` | Bar and line: the value labels. |
+| `yaxis.title` | `''` | Bar and line: the title beside the y axis. |
+| `xaxis.show` | `true` | Bar and line: the category labels. |
+| `xaxis.title` | `''` | Bar and line: the title under the x axis. |
+| `xaxis.labelRotate` | `'auto'` | `'auto'` turns the labels 45 degrees when they do not fit. A number sets a fixed angle. The angle is mirrored right to left. |
+| `xaxis.labelDecimate` | `false` | `true` or `'auto'` shows only as many labels as fit. A number shows every Nth label. |
+| `bar.stacked` | `false` | Stacks the series in one bar per category. |
+| `bar.borderRadius` | `6` | The radius of the bar tops. |
+| `bar.gap` | `0.3` | The space between categories, as a share of each category's width (0 to 1). |
+| `line.smooth` | `true` | Curved lines. `false` draws straight segments. |
+| `line.dots` | `true` | A dot on each point. |
+| `line.dotRadius` | `4` | The dot radius in pixels. |
+| `line.width` | `3` | The line width in pixels. |
+| `line.area` | `false` | Fills the space under each line. |
+| `line.crosshair` | `true` | The crosshair and its shared tooltip. `false` gives each dot its own tooltip. |
+| `line.spotlight` | none | `'first'`, `'last'` or an index. Keeps a ring on that point. |
+| `donut.size` | `0.5` | The hole, as a share of the radius (0 to 1). |
+| `stroke.show` | `false` | Pie and donut: a border between the slices. |
+| `stroke.width` | `2` | The border width. |
+| `stroke.color` | `var(--_chart-dot-fill)` | The border color. The default follows `--chart-dot-fill`. |
+| `startAngle` | `0` | Pie and donut: where the first slice starts, in degrees from the top. |
+{: .nds-table .nds-responsive}
+
+### Methods
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Chart.create(el, options)` | Draws a chart on an element or a selector, and returns the instance. A chart already on the element is destroyed first. Returns `null` when nothing matches. |
+| `NDS.Chart.init()` | Draws every `.nds-chart` with a series in its attributes that has no chart yet, and redraws a chart whose element was emptied. |
+| `NDS.Chart.reinit()` | The same as `init()`. |
+| `chart.update(options)` | Merges the options into the current ones and redraws. An array, such as `series` or `labels`, replaces the old one. |
+| `chart.render()` | Redraws from the current options. |
+| `chart.destroy()` | Empties the element, removes its observers and listeners, and deletes `el.ndsChart`. |
+{: .nds-table .nds-responsive}
+
+The instance is also on the element, as `el.ndsChart`. Chart fires no events.
+
+<script type="text/html" id="chart-api-js" data-canon data-lang="js">
+const chart = NDS.Chart.create('#requests-chart', {
+  type: 'line',
+  series: [{ name: 'Requests', data: [120, 180, 150, 220] }],
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  yaxis: { title: 'Requests' },
+  dataLabels: { format: (v) => v.toLocaleString() }
+});
+
+chart.update({ series: [{ name: 'Requests', data: [130, 175, 160, 240] }] });
+chart.destroy();
+</script>
+
+The full API is in the banner of `_js/nds-chart.js`.
+
+</div>
+  </div>
+</section>
+
+<section id="chartRelated" class="nds-content-section nds-doc-related">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Related</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- [Metric](../components/metric): a line chart with no axes inside a dashboard tile.
+- [KPIs Template](../templates/kpis-template): bar, line, pie and donut charts in a dashboard.
+- [Admin Console Demo](../examples/console-demo): charts on an admin overview page.
+
+</div>
+  </div>
+</section>
