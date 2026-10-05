@@ -77,6 +77,8 @@
         // A JSON value comes single-quoted, as the canon writes it: [data-filter-values='["a","b"]'].
         if ((m = s.match(/^\[([\w-]+)(?:="([^"]*)"|='([^']*)')?\]$/))) return { kind: 'attr', name: m[1], value: m[2] != null ? m[2] : m[3] != null ? m[3] : '' };
         if ((m = s.match(/^(--[\w-]+)\s*:\s*(.+)$/))) return { kind: 'style', name: m[1], value: m[2] };
+        // A CSS declaration ends in `;`, which tells it from a create() option (`key: value`).
+        if ((m = s.match(/^([a-z][a-z-]*)\s*:\s*([^;]+);$/))) return { kind: 'style', name: m[1], value: m[2].trim() };
         if ((m = s.match(/^canon #([\w-]+)$/))) return { kind: 'structure', id: m[1] };
         if (s === 'remove') return { kind: 'remove' };
         if ((m = s.match(/^([a-z][\w.]*)\s*:\s*(.+)$/i))) return { kind: 'js', name: m[1], value: m[2] };

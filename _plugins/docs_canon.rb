@@ -9,9 +9,13 @@ require 'cgi'
 
 module DocsCanon
   CANON_RE = %r{<script type="text/html"([^>]*)>(.*?)</script>}m
-  # Knobs only, scoped to the skeleton section classes (nds-doc-{name}).
+  # Knobs only, scoped to the skeleton section classes (nds-doc-{name}). `.nds-doc-icons`: the icon catalog's copy tiles.
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
               '.nds-doc-variants .nds-table{--min-width:900px}' \
+              '.nds-grid.nds-doc-icons{--max-col:4;--min-col:2;--row-gap:var(--spacing-lg);--col-gap:var(--spacing-lg)}' \
+              '.nds-grid.nds-doc-icons .nds-btn{--btn-width:100%;--btn-height:auto;--btn-gap:var(--spacing-md);--btn-FS:var(--typo-text-xs-FS);flex-direction:column;white-space:normal;padding-block:var(--spacing-2xl);word-break:break-word}' \
+              '.nds-grid.nds-doc-icons .nds-label{text-align:center;white-space:normal}' \
+              '.nds-grid.nds-doc-icons .nds-icon{font-size:24px}' \
               '[data-builder-group]{--divider-line-start:24px}' \
               '.nds-chip[data-builder-option][aria-disabled]{pointer-events:auto}' \
               '.nds-doc-grid{--_grid-line:color-mix(in srgb,var(--divider-color) 50%,transparent);background-image:linear-gradient(var(--_grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--_grid-line) 1px,transparent 1px);background-size:24px 24px;background-position:right 12px top 12px}' \
@@ -223,9 +227,11 @@ module DocsCanon
   # data-preview="run": the component leaves the card (a FAB docks at the screen edge), so the card
   # holds Run (or `data-run-label`) and Clear, as a toast's does. Runs mount in the held box (nds-docs.js).
   # `data-demo-width` on the canon fixes the slot's width, for a field that would stretch or shrink to its content.
-  def self.harness(src, kind, run = nil, width = nil)
+  # `data-demo-size` sets the slot's font-size, for parts that size in em (icons).
+  def self.harness(src, kind, run = nil, width = nil, size = nil)
     return %(<div class="nds-flex" data-demo-run><button type="button" class="nds-btn nds-primary nds-md" data-run><span class="nds-label">#{run}</span></button><button type="button" class="nds-btn nds-subtle nds-md" data-run-clear><span class="nds-label">Clear</span></button></div><div data-demo-held></div>) if run
-    slot = width ? %(<div data-demo-slot class="nds-flex nds-col" style="width:#{width};max-width:100%">) : '<div data-demo-slot>'
+    style = [("width:#{width};max-width:100%" if width), ("font-size:#{size}" if size)].compact.join(';')
+    slot = %(<div data-demo-slot#{' class="nds-flex nds-col"' if width}#{%( style="#{style}") unless style.empty?}>)
     # data-harness="stepper": Back and Next under the preview move the canon's root id. Preview only.
     if kind == 'stepper'
       ctl = ->(act, cls, label) { %(<button type="button" class="nds-btn #{cls} nds-md" data-stepper-control="#{act}" data-stepper-target="#{src[/\sid="([^"]+)"/, 1]}"><span class="nds-label">#{label}</span></button>) }
@@ -400,7 +406,7 @@ module DocsCanon
       end
       if preview || (builder && live)
         out << %(<div class="nds-divider nds-xl nds-doc-divider">Preview</div>\n) if table
-        demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
+        demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width'), attr(attrs, 'data-demo-size')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
         # data-preview="page": the code is a whole <body> (or a part of one), previewed as a page of its own in a frame (nds-docs.js).
         page = attr(attrs, 'data-preview') == 'page'
