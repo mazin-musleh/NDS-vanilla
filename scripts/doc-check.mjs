@@ -111,13 +111,15 @@ for (const md of pages) {
                         // The preview's width: a form harness's slot shrinks to its content.
                         const w = box.clientWidth;
                         inner.querySelectorAll('.nds-btn, .nds-chip, .nds-tag').forEach((el) => {
-                            // Full width by design: a vertical scroll-more's show-more button.
-                            if (el.closest('.nds-full, .nds-dropmenu-menu, .nds-card-actions, .nds-grid, [data-axis="vertical"] > .nds-show-more') || !el.offsetWidth) return;
+                            // Full width by design: a vertical scroll-more's show-more button, accordion and drawer rows.
+                            if (el.closest('.nds-full, .nds-dropmenu-menu, .nds-card-actions, .nds-grid, [data-axis="vertical"] > .nds-show-more, .nds-accordion, .nds-drawer') || !el.offsetWidth) return;
                             if (el.offsetWidth > w * 0.9) issues.push(`stretched: ${el.className}`);
                         });
                     }
                     (box || document).querySelectorAll(':disabled, [data-state~="disabled"], [aria-disabled="true"]').forEach((el) => {
-                        const label = el.querySelector('.nds-label'), icon = el.querySelector('i, .nds-icon');
+                        // Only icons on screen (a hidden clear button or a closed menu's option icon is never seen),
+                        // and not a field's feedback message, which keeps its status color.
+                        const label = el.querySelector('.nds-label'), icon = [...el.querySelectorAll('i, .nds-icon')].find((i) => i.getClientRects().length && !i.closest('.nds-feedback'));
                         if (!label || !icon) return;
                         const a = getComputedStyle(label).color, b = getComputedStyle(icon).color;
                         if (a !== b) issues.push(`disabled icon ${b} vs label ${a}: ${el.className}`);
