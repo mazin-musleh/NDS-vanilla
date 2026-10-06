@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 02:15 PM"
 ---
 
 <section id="codeOverview" class="nds-content-section nds-doc-overview">
@@ -170,6 +170,13 @@ The language of every structure comes from the `lang-*` class on its `<code>`. T
             <span class="nds-label">Syntax Highlighting</span>
           </span>
           <p class="nds-item-desc">HTML, CSS, JavaScript, Markdown and AI agent prompts get syntax colors. In an HTML block, the body of a <code class="nds-inline-code lang-html">&lt;style&gt;</code> or <code class="nds-inline-code lang-html">&lt;script&gt;</code> gets CSS or JavaScript colors.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-colors"></i>
+            <span class="nds-label">Color Swatches</span>
+          </span>
+          <p class="nds-item-desc">A CSS value that paints a color shows a small swatch before it: a hex, an <code class="nds-inline-code lang-css">rgb()</code>, or a <code class="nds-inline-code lang-css">var()</code> that resolves to a color. The swatch follows dark mode, and copy and text selection skip it.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

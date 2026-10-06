@@ -283,6 +283,18 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
     color: var(--_syntax-comment);
     font-style: italic;
   }
+
+  // The color swatch before a CSS color value: empty, so copy and selection skip it.
+  .nds-code-swatch {
+    display: inline-block;
+    inline-size: 0.75em;
+    block-size: 0.75em;
+    margin-inline-end: 0.35em;
+    border-radius: var(--radius-xs);
+    box-shadow: inset 0 0 0 1px var(--border-neutral-secondary);
+    vertical-align: -0.05em;
+    user-select: none;
+  }
 }
 
 

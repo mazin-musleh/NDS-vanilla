@@ -17,6 +17,8 @@
  *   - There is no reinit(): a block is highlighted once. Call reprocessCodeElement() after
  *     you change its content.
  *   - The copy button in the action bar belongs to nds-copy (.nds-copy), not to this file.
+ *   - A CSS value that paints a color (a literal, or a var() that resolves to one on :root)
+ *     gets an empty `.nds-code-swatch` span before it. Copy reads textContent, so it skips it.
  */
 /**
  * National Design System - Code Processing JavaScript
@@ -232,9 +234,30 @@
         for (let i = 0; i < tokens.length; i++) {
             const t = tokens[i];
             const esc = NDS.escapeHtml(t.value);
+            if (t.type === 'value') {
+                const ws = t.value.match(/^\s*/)[0];
+                const sw = swatch(t.value);
+                if (sw) { html += ws + sw + '<span class="nds-syntax-value">' + esc.slice(ws.length) + '</span>'; continue; }
+            }
             html += t.type ? '<span class="nds-syntax-' + t.type + '">' + esc + '</span>' : esc;
         }
         return html;
+    }
+
+    // A CSS value that paints a color gets a swatch before it, as the browser inspector shows
+    // one. An empty span, so copy and selection skip it. A `var(--x)` is resolved on :root to
+    // decide; the swatch reads the var itself, so it follows dark mode.
+    const COLOR_START = /^(#|rgb|hsl|hwb|lab|lch|oklab|oklch|color\(|color-mix\(|var\(--[\w-]+\)$)/;
+    const NOT_A_PAINT = /^(inherit|initial|unset|revert|currentcolor|transparent)$/i;
+    let rootStyle;
+    function swatch(value) {
+        const v = value.trim();
+        if (!COLOR_START.test(v) || typeof CSS === 'undefined' || !CSS.supports) return '';
+        const name = v.match(/^var\((--[\w-]+)\)$/);
+        rootStyle = rootStyle || getComputedStyle(document.documentElement);
+        const paint = name ? rootStyle.getPropertyValue(name[1]).trim() : v;
+        if (!paint || NOT_A_PAINT.test(paint) || !CSS.supports('color', paint)) return '';
+        return '<span class="nds-code-swatch" style="background:' + NDS.escapeHtml(v) + '" aria-hidden="true"></span>';
     }
 
     // Split a flat token stream into per-line token arrays. Any token that spans a
@@ -454,6 +477,16 @@
             // Rule context: selector / at-rule prelude up to '{' or statement ';'.
             const j = scanCss(source, i, '{};');
             const delim = source.charAt(j);
+            // A bare `name: value;` outside any block (a doc snippet) is a declaration, not a selector.
+            const colon = delim === ';' && !source.slice(i, j).trim().startsWith('@') ? source.indexOf(':', i) : -1;
+            if (colon > -1 && colon < j) {
+                emitCssRun(tokens, source, i, colon, 'property');
+                tokens.push({ type: null, value: ':' });
+                emitCssRun(tokens, source, colon + 1, j, 'value');
+                tokens.push({ type: null, value: ';' });
+                i = j + 1;
+                continue;
+            }
             emitCssRun(tokens, source, i, j, delim === '' ? null : 'selector');
             if (delim === '{') {
                 tokens.push({ type: null, value: '{' });
