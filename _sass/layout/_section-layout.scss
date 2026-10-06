@@ -35,7 +35,6 @@
     --_section-description-LH-base: var(--typo-text-lg-LH);
     --_section-description-LH: var(--section-description-LH, var(--_section-description-LH-base));
     --_section-description-MB: var(--section-description-MB, var(--spacing-2xl));
-    --_section-image-MB: var(--section-image-MB, var(--spacing-2xl));
 
     width: 100%;
     padding-block: var(--_section-padding-block-start) var(--_section-padding-block-end);
