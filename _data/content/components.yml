@@ -882,8 +882,8 @@
   scss: _sass/components/_toc.scss
 
 - title: "Tokens"
-  description: "Every CSS custom property in the system: palette, primitive scales, semantic meanings, and component dials to reference and override"
-  use_when: "Every CSS custom property in the system: palette, primitive scales, semantic meanings, and component dials. Read this before writing any hardcoded colour, spacing, or radius value."
+  description: "The CSS custom properties behind NDS: the color palette, size scales, semantic meanings and component tokens, with a preview of each"
+  use_when: "The CSS custom properties behind NDS: the color palette, size scales, semantic meanings and component tokens. Read this before writing any hardcoded colour, spacing, or radius value."
   icon: '<i class="hgi hgi-stroke hgi-cube"></i>'
   category: "Foundations"
   tags: ["CSS"]

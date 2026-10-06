@@ -70,7 +70,7 @@ def check(path):
     # A Structure canon replaces the base, so it may reuse the base's ids (the root a shared JS call names).
     # So may a part on a (default) row: it is a copy of what the base already carries.
     alts = {m for _, a, _ in canons if attr(a, 'data-variants')
-            for r in (table(src, attr(a, 'data-variants')) or []) if len(r) == 5 and (r[0] in ('Structure', 'Example') or '(default)' in r[1])
+            for r in (table(src, attr(a, 'data-variants')) or []) if len(r) == 5 and (r[0] in ('Structure', 'Example', 'Pack') or '(default)' in r[1])
             for m in re.findall(r'canon `?#([\w-]+)', r[2])}
     base_ids = {i for _, a, b in canons if attr(a, 'data-variants') for i in re.findall(r'\sid="([^"]+)"', b)}
     ids = {}
@@ -79,8 +79,9 @@ def check(path):
         for bad, why in (('{{', 'Liquid'), ('{%', 'Liquid'), ('&lt;', 'escaped markup'), ('<form', 'a <form>'), ('id="demo-', 'a demo- id')):
             # data-form: the form is the component's own markup (user feedback validates its form).
             # data-escaped: the body is a Liquid capture of code that holds </script> (the document head).
+            # data-generated: the body is build output (the token catalog's packs).
             if bad in body and not (bad == '<form' and attr(attrs, 'data-form') is not None) \
-                    and not (bad in ('{{', '{%') and attr(attrs, 'data-escaped') is not None):
+                    and not (bad in ('{{', '{%') and (attr(attrs, 'data-escaped') is not None or attr(attrs, 'data-generated') is not None)):
                 errs.append(f'canon #{cid}: {why}')
         for i in [cid] + [i for i in re.findall(r'\sid="([^"]+)"', body) if cid not in alts or i not in base_ids]:
             ids[i] = ids.get(i, 0) + 1
@@ -109,7 +110,7 @@ def check(path):
         # `(not: x)` turns a row off on the structures marked `(id: x)`, so their canons may carry it.
         struct_of = {}
         for r in rows:
-            if len(r) == 5 and r[0] in ('Structure', 'Example'):
+            if len(r) == 5 and r[0] in ('Structure', 'Example', 'Pack'):
                 sid = re.search(r'\(id:\s*([\w-]+)\)', r[1])
                 ref = re.search(r'canon `?#([\w-]+)', r[2])
                 if sid:

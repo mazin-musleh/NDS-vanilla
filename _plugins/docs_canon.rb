@@ -9,13 +9,23 @@ require 'cgi'
 
 module DocsCanon
   CANON_RE = %r{<script type="text/html"([^>]*)>(.*?)</script>}m
-  # Knobs only, scoped to the skeleton section classes (nds-doc-{name}). `.nds-doc-icons`: the icon catalog's copy tiles.
+  # Knobs only, scoped to the skeleton section classes (nds-doc-{name}). `.nds-doc-icons`: the icon catalog's copy tiles. `.nds-doc-swatch`, `-bar`, `-sample`, `-ramps`: the token catalog's previews.
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
               '.nds-doc-variants .nds-table{--min-width:900px}' \
               '.nds-grid.nds-doc-icons{--max-col:4;--min-col:2;--row-gap:var(--spacing-lg);--col-gap:var(--spacing-lg)}' \
               '.nds-grid.nds-doc-icons .nds-btn{--btn-width:100%;--btn-height:auto;--btn-gap:var(--spacing-md);--btn-FS:var(--typo-text-xs-FS);flex-direction:column;white-space:normal;padding-block:var(--spacing-2xl);word-break:break-word}' \
               '.nds-grid.nds-doc-icons .nds-label{text-align:center;white-space:normal}' \
               '.nds-grid.nds-doc-icons .nds-icon{font-size:24px}' \
+              '.nds-doc-swatch{display:inline-block;inline-size:40px;block-size:24px;border-radius:var(--radius-sm);box-shadow:inset 0 0 0 1px var(--border-neutral-secondary);vertical-align:middle}' \
+              '.nds-doc-radius{background:var(--background-primary-light);box-shadow:inset 0 0 0 1px var(--border-primary)}' \
+              '.nds-doc-shadow{background:var(--background-card)}' \
+              '.nds-doc-bar{display:inline-block;block-size:12px;background:var(--background-primary);vertical-align:middle}' \
+              '.nds-doc-sample{white-space:nowrap}' \
+              '.nds-doc-table{inline-size:100%;min-inline-size:0}' \
+              '.nds-doc-ramps{display:grid;gap:var(--spacing-xl);inline-size:100%}' \
+              '.nds-doc-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:var(--spacing-xs);margin-block-start:var(--spacing-xs)}' \
+              '.nds-doc-step{display:grid;gap:var(--spacing-xxs);text-align:center;font-size:var(--typo-text-xs-FS)}' \
+              '.nds-doc-step .nds-doc-swatch{inline-size:100%}' \
               '[data-builder-group]{--divider-line-start:24px}' \
               '.nds-chip[data-builder-option][aria-disabled]{pointer-events:auto}' \
               '.nds-doc-grid{--_grid-line:color-mix(in srgb,var(--divider-color) 50%,transparent);background-image:linear-gradient(var(--_grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--_grid-line) 1px,transparent 1px);background-size:24px 24px;background-position:right 12px top 12px}' \
@@ -50,8 +60,8 @@ module DocsCanon
     kind || 'html'
   end
 
-  # The group whose rows swap the whole markup. A reference page (grid) names it Example.
-  def self.structure?(group) = %w[Structure Example].include?(group)
+  # The group whose rows swap the whole markup. A reference page (grid) names it Example; the token catalog, Pack.
+  def self.structure?(group) = %w[Structure Example Pack].include?(group)
 
   def self.attr(attrs, name)
     m = attrs.match(/(?:\A|\s)#{Regexp.escape(name)}(?:="([^"]*)")?(?=\s|\z)/)
@@ -415,7 +425,10 @@ module DocsCanon
         out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(attr(attrs, 'data-preview') != 'run' && attr(attrs, 'data-screens') != 'none') unless stage_panel}#{demo}\n</div>\n)
         out << "#{stage_panel}\n" if stage_panel
       end
-      # data-code="none": a behavior demo, shown with no code.
+      # data-code="none": a behavior demo, shown with no code. A builder whose twin is CSS shows the twin
+      # alone: the preview is a picture of the code (the token catalog).
+      next out << code_block('css', js) if builder && twin&.first == 'css' && attr(attrs, 'data-code') != 'none'
+
       out << (js ? code_tabs(id, src, js, [attr(attrs, 'data-tab-label'), twin[2]], twin[0]) : code_block(lang, src)) unless attr(attrs, 'data-code') == 'none'
       out
     end

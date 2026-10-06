@@ -28,8 +28,6 @@ A doc page has two readers. **People** browse it, try options in the builder and
 | `layout/grid.md` | a reference page: one `Example` group of whole examples |
 | `core/refresh.md` | an info page: a `Usage` section of code-only canons, no preview |
 
-**Parked, never convert without their own plan:** `components/tokens.md`, `components/accessibility.md`.
-
 ---
 
 ## Phase 1: Resolve
@@ -163,6 +161,8 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
   - **Part:** a small block that a row inserts, such as an icon or an actions row.
   - **JS:** `data-lang="js"`. `data-js="{id}"` on the base names its JS twin: the same component as one `create()` call, shown in a JS tab. `data-tab-label` on either canon renames its tab, and a twin with no `data-lang` shows as HTML (the head's Head and JS Library tabs). A JS-only structure (a toast) previews as a Run button that runs the code shown.
   - **Code-only:** `data-preview="none"`, for `<head>` and JS examples.
+  - **CSS twin:** a builder whose `data-js` twin is `data-lang="css"` shows that CSS alone as its code, and each Structure (or `Pack`) canon shows its own twin. The preview is a picture of the code (the token packs, `components/tokens.md`).
+  - **Generated:** `data-generated`, for a canon whose body is build output: one Liquid output tag, such as `{{ site.data.tokens.packs.spacing.html }}`. `check-docs.py` allows the Liquid there.
   - **Run:** `data-preview="run"`, for markup that leaves the card (a FAB docks at the screen edge). The card holds Run (`data-run-label` renames it), which adds a copy of the code shown, and Clear. A choice rebuilds the last copy added.
   - **Panel:** `data-preview="panel"`, for markup that needs a page around it (a TOC over a long article, a shell). The card holds Preview (`data-run-label` renames it), which opens a tall, resizable bottom panel with the code shown mounted in it. The panel body zeroes `--nds-nav-height`, so sticky parts pin to its top. Add `data-preview-flush` when the markup brings its own padding (a section): the body gets `nds-flush`. Closing it removes the copy.
   - **Page:** `data-preview="page"`, for a canon that is a whole `<body>` (Page Layout), or a page part that must not share the doc page (the top bar: its ids would clash with the page's own). The preview is a page of its own in a frame, Desktop at 1280px wide scaled to fit, with the header and footer left out. Desktop is a plain frame with no device around it; Tablet and Phone show a device. A whole-body canon's rows can target `body`. A part's code is the part alone. `data-preview-height="360"` (page px at 1280 wide) sets its Desktop frame height, 800 without it: make it fit the tallest open state (a menu, a panel).
@@ -201,7 +201,7 @@ A short paragraph above the table explains any target that is not obvious (what 
 - `Group (any)` (Validation (any)) is a row of on/off chips: each turns on and off by itself, so any mix stacks with no combo rows. Use it for parts that add up (password rules). The row label drops `(any)`.
 - **A default part:** a `(default)` row whose Markup is `canon #part` says the canon carries a copy of that part. The builder takes the copy out (found by its markup, so write the part exactly as the canon has it) and puts every part that is on back in table order, so any mix keeps one order. Its ids may repeat the base's. With `(any)`, parts toggle one by one (the top bar's widgets).
 - **Two rows with the same Group and Option are one choice** that makes both changes. Tell agents to write both.
-- `Structure` (or `Example` on a reference page) rows swap the whole markup: `canon #id` and `—` in On element.
+- `Structure` (or `Example` on a reference page, `Pack` on the tokens page) rows swap the whole markup: `canon #id` and `—` in On element.
 - **Option markers:** `(hint: text)` is the chip's tooltip. `(limit: 2 widgets)` caps the chips that share it: once two are on, the others stay off and their tooltip says "Up to 2 widgets" (the top bar's DGA limit). A limit of 1 makes the chips exclusive, and the tooltip names the other one: "Not with Desktop: Start side". `(demo: + size-sm)` also turns on the row marked `(id: size-sm)`, for a demo that only shows with it. It goes by id, never by name, so a translated page keeps working. Mark every row of that choice with the id. A row can carry several `demo` markers. `(not: home, minimal)` turns the option off while a Structure row marked `(id: home)` or `(id: minimal)` is chosen: use it when that structure has no class of its own for a `:not()` target, and when its canon already carries the option (`check-docs.py` then allows it). `A + B` is a combo row: its group becomes multi-select, and both chips on use the combo's markup.
 
 **Markup cell** (CSS selector syntax):
@@ -290,7 +290,7 @@ Links to the examples and templates that use the component, each with what it sh
 
 ### No Docs CSS
 
-Build the page only from NDS components. If the page looks wrong, the gap is in a component: fix its SCSS. The only doc styling is what `_plugins/docs_canon.rb` writes: the features grid knobs, the Variants table width, the preview frame, the Preview divider, the form harness's alert gap, the prose column width, and the Dark mode toggle hidden on a dark site.
+Build the page only from NDS components. If the page looks wrong, the gap is in a component: fix its SCSS. The only doc styling is what `_plugins/docs_canon.rb` writes: the features grid knobs, the Variants table width, the preview frame, the Preview divider, the form harness's alert gap, the token catalog's swatches, the prose column width, and the Dark mode toggle hidden on a dark site.
 
 ### Registration (new pages only)
 

@@ -29,8 +29,8 @@
     'use strict';
 
     var VOID = /^(area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
-    // The group whose rows swap the whole markup. A reference page (grid) names it Example.
-    var STRUCT = /^(Structure|Example)$/;
+    // The group whose rows swap the whole markup. A reference page (grid) names it Example; the token catalog, Pack.
+    var STRUCT = /^(Structure|Example|Pack)$/;
     // Markup that a form harness can fail on (docs_canon.rb RULE_RE is the same list).
     var RULES = '[data-required], [data-strict], .nds-required, [data-min-checked], [data-max-checked], [required], [pattern], [minlength], [min], [max], [type="email"], [type="url"], .nds-date-input, .nds-time-input';
 
@@ -282,12 +282,15 @@
     function wire(bar) {
         var script = document.getElementById(bar.getAttribute('data-builder-for'));
         var jsEl = script.hasAttribute('data-js') ? document.getElementById(script.getAttribute('data-js')) : null;
+        // A CSS twin (the token catalog) is the code itself, not a create() call: each structure shows its own.
+        var cssTwin = !!jsEl && jsEl.getAttribute('data-lang') === 'css';
+        if (cssTwin) jsEl = null;
         // The build writes the options, the Preview divider, the preview and the code right after the canon.
         // The options sit inline or in a panel (4 rows or more).
         var sheet = script.nextElementSibling;
         var preview = sheet.nextElementSibling.nextElementSibling;
         var block = preview.nextElementSibling;
-        var codeHtml = block.querySelector('code.lang-html'), codeJs = block.querySelector('code.lang-js');
+        var codeHtml = block.querySelector('code.lang-html'), codeJs = block.querySelector('code.lang-js'), codeCss = cssTwin && block.querySelector('code.lang-css');
         var tabHtml = block.querySelector('[role="tab"][aria-controls$="-html"]');
         var reset = bar.querySelector('[data-builder-reset]');
         var controls = function () { return Array.prototype.slice.call(sheet.querySelectorAll('[data-builder-option]')); };
@@ -406,7 +409,8 @@
             if (dark) Array.prototype.forEach.call(whole ? [pristine.body] : page ? pristine.body.children : pristine.children, function (el) { el.setAttribute('data-theme', 'dark'); });
 
             var out = whole ? serialize(pristine.documentElement).replace(/^<head><\/head>/, '') : page ? serialize(pristine.body) : html ? serialize(pristine) : '', js = call ? printCall(call) : '';
-            [[codeHtml, out], [codeJs, js]].forEach(function (pair) {
+            var css = codeCss ? dedent(document.getElementById(srcEl.getAttribute('data-js')).textContent) : '';
+            [[codeHtml, out], [codeJs, js], [codeCss, css]].forEach(function (pair) {
                 if (!pair[0] || !pair[1]) return;
                 pair[0].textContent = pair[1];
                 if (pair[0].dataset.ndsCodeInitialized) NDS.Code.reprocessCodeElement(pair[0]);
