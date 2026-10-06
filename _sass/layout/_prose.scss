@@ -107,12 +107,12 @@
     // a table column shrink below its words next to nowrap code ("Componen t").
     overflow-wrap: break-word;
 
+    @include prose-flow;
+
     // A long URL from a CMS is a link: `anywhere` lets a table cell holding one shrink.
     :where(a) {
         overflow-wrap: anywhere;
     }
-
-    @include prose-flow;
 
     // Flowing-citation tier; the featured pull-quote card is .nds-quote
     // (components/_quote.scss) — same border token family by design

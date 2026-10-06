@@ -59,11 +59,14 @@ module NDS
       packs = PACKS.to_h do |id, label, tier, _|
         rows = lights.select { |d| pack_of(d) == id }
         [id, { 'label' => label, 'tier' => tier, 'count' => rows.size,
-               'html' => preview(id, rows), 'css' => css(rows, darks) }]
+               'html' => preview(id, rows, darks), 'css' => css(rows, darks) }]
       end
       # One table per component, for its own doc page: `site.data.tokens.components.button.html`.
+      # Its swatches paint each mode's resolved palette value, so the table needs no dark area.
+      light = lights.to_h { |d| [d[:name], d[:value]] }
+      chains = { light: light, dark: light.merge(darks.transform_values { |d| d[:value] }) }
       components = lights.select { |d| d[:file] == COMPONENTS }.group_by { |d| d[:group] }
-                         .to_h { |g, rows| [g, { 'count' => rows.size, 'html' => table(rows, darks) }] }
+                         .to_h { |g, rows| [g, { 'count' => rows.size, 'html' => table(rows, darks, chains) }] }
       site.data['tokens'] = { 'packs' => packs, 'components' => components }
     end
 
@@ -133,11 +136,11 @@ module NDS
       "#{sel} {\n#{body.join("\n")}\n}"
     end
 
-    # A specimen for the primitives, the palette and the shadows: each token shown as what it
-    # paints, under its name and value, with a copy button. A semantic or component token paints
-    # a palette color by meaning, which a swatch cannot show: those packs show their code alone
-    # (owner call 2026-10-06).
-    def preview(id, rows)
+    # A specimen per pack: each token shown as what it paints, under its name and value, with a
+    # copy button. A semantic swatch reads the live token, so the card's Dark toggle (a dark area)
+    # repaints it with the dark value. The component pack shows its code alone: each component
+    # page prints its own table (owner call 2026-10-06).
+    def preview(id, rows, darks)
       case id
       when 'spacing'              then ruler(rows)
       when 'radius'               then tiles(rows) { |d| %(<span class="nds-doc-swatch nds-doc-radius" style="border-radius: var(#{d[:name]})"></span>) }
@@ -145,6 +148,7 @@ module NDS
       when 'font'                 then font_specimen(rows)
       when 'shell'                then tiles(rows)
       when 'brand', 'fixed'       then ramps(rows)
+      when 'background', 'text', 'border', 'icon', 'controls' then tiles(rows, darks) { |d| sample(d) }
       when 'shadow'               then %(<div class="nds-doc-elevation">\n#{tiles(rows, value: false) { |d| %(<span class="nds-doc-swatch nds-doc-shadow" style="box-shadow: var(#{d[:name]})"></span>) }}\n</div>)
       else ''
       end
@@ -157,11 +161,12 @@ module NDS
     end
 
     def value(d) = %(<span class="nds-doc-value">#{h(d[:value])}</span>)
+    def dark(d, darks) = darks[d[:name]] ? %(<span class="nds-doc-value">dark #{h(darks[d[:name]][:value])}</span>) : ''
 
-    # One tile per token: its picture (when the block draws one) over its name and value.
-    def tiles(rows, value: true, &pic)
+    # One tile per token: its picture (when the block draws one) over its name, value and dark value.
+    def tiles(rows, darks = {}, value: true, &pic)
       items = rows.map do |d|
-        %(  <div class="nds-doc-tile">#{pic&.call(d)}#{label(d)}#{value(d) if value}</div>)
+        %(  <div class="nds-doc-tile">#{pic&.call(d)}#{label(d)}#{value(d) if value}#{dark(d, darks)}</div>)
       end
       %(<div class="nds-doc-tiles">\n#{items.join("\n")}\n</div>)
     end
@@ -215,13 +220,17 @@ module NDS
 
     # A component page's table: token, a preview and value. A dark value sits under the light one:
     # a fourth column is pushed past the page's edge.
-    def table(rows, darks)
-      shown = rows.map { |d| [d, sample(d)] }
+    def table(rows, darks, chains)
+      shown = rows.map { |d| [d, sample(d, chains)] }
       any = shown.any? { |_, s| s }
-      head = ['Token', ('Preview' if any), 'Value'].compact
+      head = ['<th>Token</th>', ('<th data-align="center">Preview</th>' if any), '<th>Value</th>'].compact.join
       body = shown.map do |d, s|
         value = code(d[:value])
-        value += %(<br><small>dark #{code(darks[d[:name]][:value])}</small>) if darks[d[:name]]
+        # A token with no dark rule of its own still changes when the token it reads does:
+        # the line then shows what it paints in dark.
+        dark = darks[d[:name]]&.[](:value)
+        dark ||= %i[light dark].map { |m| resolve("var(#{d[:name]})", chains[m]) }.then { |l, k| k if k != l }
+        value += %(<br><small>Dark mode #{code(dark)}</small>) if dark
         cells = [code(d[:name]), (s.to_s if any), value].compact
         %(    <tr>#{cells.map { |c| "<td>#{c}</td>" }.join}</tr>)
       end
@@ -230,10 +239,13 @@ module NDS
 
     # The scroll box is written here, so the doc can keep it at the card's width.
     def grid(head, body)
-      %(<div class="nds-table-wrapper nds-doc-table">\n<table class="nds-table nds-compact">\n  <thead>\n    <tr>#{head.map { |c| "<th>#{c}</th>" }.join}</tr>\n  </thead>\n  <tbody>\n#{body.join("\n")}\n  </tbody>\n</table>\n</div>)
+      %(<div class="nds-table-wrapper nds-doc-table">\n<table class="nds-table nds-compact">\n  <thead>\n    <tr>#{head}</tr>\n  </thead>\n  <tbody>\n#{body.join("\n")}\n  </tbody>\n</table>\n</div>)
     end
 
-    def sample(d)
+    # A color swatch reads the live token, so a dark area repaints it. With `chains` it paints
+    # the resolved light value instead, and a second swatch the dark one when it differs: the
+    # palette never changes with the mode, so both hold on a dark site.
+    def sample(d, chains = nil)
       n = d[:name]
       case n
       when /\A--shadow-/      then %(<span class="nds-doc-swatch nds-doc-shadow" style="box-shadow: var(#{n})"></span>)
@@ -241,8 +253,23 @@ module NDS
       when /\A--radius-/      then %(<span class="nds-doc-swatch nds-doc-radius" style="border-radius: var(#{n})"></span>)
       when /\A--nds-font-/    then %(<span class="nds-doc-sample" style="font-family: var(#{n})">Aa أب</span>)
       when /\A--font-weight-/ then %(<span class="nds-doc-sample" style="font-weight: var(#{n})">Aa أب</span>)
-      else %(<span class="nds-doc-swatch" style="background: var(#{n})"></span>) if d[:value].match?(COLOR)
+      else
+        return unless d[:value].match?(COLOR)
+        return %(<span class="nds-doc-swatch" style="background: var(#{n})"></span>) unless chains
+
+        light, dark = %i[light dark].map { |m| resolve("var(#{n})", chains[m]) }
+        # The tooltip root wraps the swatch: an empty root would get a help icon instead.
+        swatch = ->(v, mode) { %(<span class="nds-tooltip" data-tooltip-message="#{mode}" data-tooltip-hover="500"><span class="nds-doc-swatch" style="background: #{h(v)}"></span></span>) }
+        # Stacked like the values beside them: light over dark.
+        swatch[light, 'Light mode'] + (dark == light ? '' : '<br>' + swatch[dark, 'Dark mode'])
       end
+    end
+
+    # Follows `var(--a)` aliases down to a palette token or a literal. A palette token stays
+    # a reference: a brand theme re-binds it at runtime.
+    def resolve(value, map)
+      value = map[$1] while value =~ /\Avar\((--(?!colors-)[\w-]+)\)\z/ && map[$1]
+      value
     end
   end
 end

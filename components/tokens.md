@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.5.0"
-last_edit: "06/10/2026 - 11:45 AM"
+last_edit: "06/10/2026 - 05:42 PM"
 ---
 
 <section id="tokensOverview" class="nds-content-section nds-doc-overview">
@@ -42,7 +42,7 @@ Pick another page when:
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Pick a pack. A size, a font, a palette ramp or a shadow previews as what it paints, with its name, its value and a button that copies the token. A semantic or component token paints a palette color by meaning, which a swatch cannot show: those packs show their code alone, with the dark rule under the light one.
+Pick a pack. Each token previews as what it paints, with its name, its value and a button that copies the token. A semantic swatch reads the live token: press Dark on the card, and it repaints with the dark value listed under it. The component pack shows its code alone, with the dark rule under the light one: each component's page lists its own tokens.
 
 The code is the pack as the NDS CSS declares it. To override tokens, copy it into your stylesheet and keep only the lines you change.
 
@@ -113,31 +113,31 @@ The code is the pack as the NDS CSS declares it. To override tokens, copy it int
 <script type="text/html" id="tokens-fixed-css" data-canon data-generated data-lang="css">
 {{ site.data.tokens.packs.fixed.css }}
 </script>
-<script type="text/html" id="tokens-background" data-canon data-generated data-preview="none" data-js="tokens-background-css">
+<script type="text/html" id="tokens-background" data-canon data-generated data-js="tokens-background-css">
 {{ site.data.tokens.packs.background.html }}
 </script>
 <script type="text/html" id="tokens-background-css" data-canon data-generated data-lang="css">
 {{ site.data.tokens.packs.background.css }}
 </script>
-<script type="text/html" id="tokens-text" data-canon data-generated data-preview="none" data-js="tokens-text-css">
+<script type="text/html" id="tokens-text" data-canon data-generated data-js="tokens-text-css">
 {{ site.data.tokens.packs.text.html }}
 </script>
 <script type="text/html" id="tokens-text-css" data-canon data-generated data-lang="css">
 {{ site.data.tokens.packs.text.css }}
 </script>
-<script type="text/html" id="tokens-border" data-canon data-generated data-preview="none" data-js="tokens-border-css">
+<script type="text/html" id="tokens-border" data-canon data-generated data-js="tokens-border-css">
 {{ site.data.tokens.packs.border.html }}
 </script>
 <script type="text/html" id="tokens-border-css" data-canon data-generated data-lang="css">
 {{ site.data.tokens.packs.border.css }}
 </script>
-<script type="text/html" id="tokens-icon" data-canon data-generated data-preview="none" data-js="tokens-icon-css">
+<script type="text/html" id="tokens-icon" data-canon data-generated data-js="tokens-icon-css">
 {{ site.data.tokens.packs.icon.html }}
 </script>
 <script type="text/html" id="tokens-icon-css" data-canon data-generated data-lang="css">
 {{ site.data.tokens.packs.icon.css }}
 </script>
-<script type="text/html" id="tokens-controls" data-canon data-generated data-preview="none" data-js="tokens-controls-css">
+<script type="text/html" id="tokens-controls" data-canon data-generated data-js="tokens-controls-css">
 {{ site.data.tokens.packs.controls.html }}
 </script>
 <script type="text/html" id="tokens-controls-css" data-canon data-generated data-lang="css">
@@ -167,7 +167,7 @@ The code is the pack as the NDS CSS declares it. To override tokens, copy it int
     </div>
     <div class="nds-section-body" markdown="1">
 
-Each pack is a set of tokens. A primitive, palette or shadow pack previews each token as what it paints: a ruler, a type specimen, swatches. A color pack shows its code alone. The code is the pack's rules from the NDS CSS.
+Each pack is a set of tokens. A pack previews each token as what it paints: a ruler, a type specimen, swatches that follow the mode. The component pack shows its code alone. The code is the pack's rules from the NDS CSS.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
