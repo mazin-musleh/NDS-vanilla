@@ -83,6 +83,9 @@
   // Pressed state for toolbar toggles — aria-pressed is standard ARIA; NDS buttons don't style it natively.
   .nds-toolbar .nds-btn[aria-pressed="true"] { background: var(--form-field-background-darker); }
 
+  // Disabled, the toolbar's buttons match the label, as a field's own buttons do (_forms.scss).
+  .nds-toolbar .nds-btn { --btn-color-disabled: var(--icon-default-disabled); }
+
   // Popover width via the dropmenu's own knob (the filter/date-picker
   // pattern); min() keeps it inside small viewports.
   [data-editor-link-dropmenu],
