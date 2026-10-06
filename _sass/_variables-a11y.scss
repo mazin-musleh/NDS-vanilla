@@ -5,9 +5,8 @@
 // is a `data-a11y~="<name>"` token on <html>; modes compose. Visual
 // filters apply directly to :root. Cosmetic mods (text, highlights,
 // motor) scope through `body[class] > :is(header, main, footer)` so
-// the panel/FAB/cookie/mask stay untouched. Selectors match at first
-// paint — the inline FOUC guard in head-inline-scripts.html covers
-// every mode.
+// the panel/FAB/cookie/mask stay untouched. No pre-paint guard: init()
+// applies saved modes once the bundle loads.
 
 // ----------------------------------------------
 // Visual filters — applied directly to :root for a single document-wide

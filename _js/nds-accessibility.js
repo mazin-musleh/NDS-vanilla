@@ -8,8 +8,8 @@
  *                                              to fall back to the page's [data-accessibility-toggle]
  *   NDS.Accessibility.toggleMode(id)          turn one mode on or off
  *   NDS.Accessibility.setVisualFilter(id)     apply a colour-vision filter
- *   NDS.Accessibility.cycleSetting(id)        step a graded setting to its next tier
- *   NDS.Accessibility.reset()                 back to defaults (asks for confirmation)
+ *   NDS.Accessibility.cycleSetting(key, values) step a graded setting to its next value
+ *   NDS.Accessibility.reset()                 back to defaults at once (only the button confirms)
  *   NDS.Accessibility.state                   a deep CLONE of the saved state — read-only
  *   NDS.Accessibility.ready                   true once the panel is built AND wired; false
  *                                             while the bundle loads or the panel builds
@@ -20,7 +20,7 @@
  *   (the panel markup lives in this file, not the page HTML — built into a
  *   <template> and pulled out on arm by the id the FAB's data-panel-toggle names)
  *   data-a11y-mode · data-a11y-visual · data-a11y-setting · data-a11y-value
- *   data-a11y-exclude-token   opt a subtree out of a mode's token overrides
+ *   data-a11y-exclude-token   tile removed when the locale's exclude_controls lists it
  *   data-armed                the panel gate (see below)
  *   written on <html>: data-a11y — the token list of active modes
  * Gotchas:
@@ -1502,9 +1502,7 @@
         });
 
         // Localize FAB + panel from assets/i18n/accessibility/{lang}.json.
-        // Fire-and-forget so open/close stays responsive on slow networks; on
-        // EN pages the load short-circuits (no fetch) and applyComponentI18n
-        // is called with null, becoming a no-op.
+        // Fire-and-forget so open/close stays responsive on slow networks.
         NDS.i18n.load('accessibility', [toggleBtn, panel]).then(applyComponentI18n);
 
         syncUI();
