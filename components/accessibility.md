@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 08:10 AM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="accessibilityOverview" class="nds-content-section nds-doc-overview">
@@ -74,6 +74,7 @@ The FAB ships `hidden`, and the FAB script shows it once it is docked. A new pag
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### Triggers
+{: .nds-block-title}
 
 Any button with `data-accessibility-toggle` and `data-panel-toggle` opens the panel, as the FAB does. The first attribute builds the panel on the first press, with a spinner on the button for about one second. The second opens and closes the panel after that. To open it from your own code, call `NDS.Accessibility.open()`, as in the API.
 
@@ -85,14 +86,17 @@ Any button with `data-accessibility-toggle` and `data-panel-toggle` opens the pa
 </script>
 
 ### Panel Position
+{: .nds-block-title}
 
 The panel slides in from the end edge, and the FAB docks there too. To move both, set `data-fab-pos` and `data-panel-side` to the same side on the FAB. The FAB docks before the panel exists, so `auto` cannot follow the panel's side. The first button pressed builds the panel on its own `data-panel-side`, so give every trigger the same value. A custom panel uses the `data-panel-side` on its `<aside>`.
 
 ### Loading
+{: .nds-block-title}
 
 The script loads at page load only for a visitor with saved settings, so their modes apply without a press. Its CSS loads with it, so the page can show without the saved modes for a moment. To stop that flash, add `<link rel="stylesheet" href="assets/css/nds-accessibility.min.css">` in `<head>`, after the main stylesheet. A preload does not stop it. The link blocks the first paint for every visitor.
 
 ### Custom Panel
+{: .nds-block-title}
 
 To change the panel, put your own copy in a `<template class="nds-panel-template">` on every page that has the FAB. It replaces the panel the script builds. The copy below is that panel, with its English text. The language file still writes the text of every element that keeps a `data-i18n`, `data-i18n-attr`, `data-i18n-name`, `data-i18n-desc` or `data-i18n-label` attribute. Remove the attribute to keep your own text.
 
@@ -428,6 +432,16 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
 </template>
 </script>
 
+### Removal
+{: .nds-block-title}
+
+To remove the panel from a page, delete its FAB and every other `data-accessibility-toggle` button. With none on the page, nothing of the panel loads, even for a visitor with saved settings.
+
+### Text
+{: .nds-block-title}
+
+The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`. To use your own text, set `window.NDS_I18N.accessibility` before the NDS scripts. It replaces the file, and a key it leaves out shows in English. Copy every key from `en.json`.
+
 </div>
   </div>
 </section>
@@ -578,6 +592,19 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
 | `data-a11y` | `<html>` | The script writes the tokens that are on, separated by spaces. See Tokens on `<html>` |
 {: .nds-table .nds-responsive}
 
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--user-font-scale` | `1` | The scale of every `--typo-*` token. The `font-step-*` tokens set it |
+| `--user-line-height` | `normal` | The line height of body text. The script writes it on `<html>` |
+| `--user-letter-spacing` | `0` | The letter spacing of body text. The script writes it on `<html>` |
+| `--user-word-spacing` | `0` | The word spacing of body text. The script writes it on `<html>` |
+{: .nds-table .nds-responsive}
+
+The panel's width and top come from [Panels](../components/panels). The FAB's distance from the edge comes from [FAB](../components/fab).
+
 ### Modes
 {: .nds-block-title}
 
@@ -620,19 +647,6 @@ CSS reads these tokens with `[data-a11y~="…"]`. A mode writes the tokens of th
 
 The text and highlight rules reach only the page's `header`, `main` and `footer`, so the panel and the FAB keep their look.
 
-### CSS Custom Properties
-{: .nds-block-title}
-
-| Property | Default | Controls |
-|---|---|---|
-| `--user-font-scale` | `1` | The scale of every `--typo-*` token. The `font-step-*` tokens set it |
-| `--user-line-height` | `normal` | The line height of body text. The script writes it on `<html>` |
-| `--user-letter-spacing` | `0` | The letter spacing of body text. The script writes it on `<html>` |
-| `--user-word-spacing` | `0` | The word spacing of body text. The script writes it on `<html>` |
-{: .nds-table .nds-responsive}
-
-The panel's width and top come from [Panels](../components/panels). The FAB's distance from the edge comes from [FAB](../components/fab).
-
 ### Reading Mask Keyboard
 {: .nds-block-title}
 
@@ -645,16 +659,6 @@ The panel's width and top come from [Panels](../components/panels). The FAB's di
 {: .nds-table .nds-responsive}
 
 The toolbar's size buttons change the band's height in 40px steps, from 40px to 320px.
-
-### Removal
-{: .nds-block-title}
-
-To remove the panel from a page, delete its FAB and every other `data-accessibility-toggle` button. With none on the page, nothing of the panel loads, even for a visitor with saved settings.
-
-### Text
-{: .nds-block-title}
-
-The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`. To use your own text, set `window.NDS_I18N.accessibility` before the NDS scripts. It replaces the file, and a key it leaves out shows in English. Copy every key from `en.json`.
 
 ### JavaScript
 {: .nds-block-title}

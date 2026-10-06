@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="radioOverview" class="nds-content-section nds-doc-overview">
@@ -92,14 +92,35 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 | Size | SM (default) | — | — | 16px tile. Dense forms and tables |
 | Size | MD | `.nds-md` | `.nds-radio-container` | 20px tile. Most forms |
 | Size | LG | `.nds-lg` | `.nds-radio-container` | 24px tile. Touch-first screens |
-| Color | Neutral | `.nds-neutral` | `.nds-radio` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked |
-| Checked | Checked (default) | `[checked]` | `#radio-1` | This option is chosen when the page loads. Put it on one option of a group only. Leave every option unchecked when the user must decide |
+| Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-radio` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked |
+| Checked | Checked (default) (id: checked) | `[checked]` | `#radio-1` | This option is chosen when the page loads. Put it on one option of a group only. Leave every option unchecked when the user must decide |
 | Required | Required (hint: Turn Checked off: the user must then pick an option) | `[data-required]` | `.nds-radio-group` | The user must pick an option before the form submits. A required mark shows before the legend. Use it with no option checked |
 | Disabled | Disabled | `[disabled]` | `.nds-radio` | The user cannot pick these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-radio-container` | The group shows its value but cannot change, by pointer or by keyboard. Put it on every option's container. The tile outline takes the disabled color, and the fill stays |
 | Layout | Row | `.nds-rowView` | `.nds-radio-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #radioVariantsTable .nds-table .nds-responsive}
+
+</div>
+  </div>
+</section>
+
+<section id="radioBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Readonly
+{: .nds-block-title}
+
+`data-state~="readonly"` on each option's container shows the value and stops the change, by pointer or by keyboard. The fill keeps its color, so the choice stays readable.
+
+### Required Group
+{: .nds-block-title}
+
+`data-required` on the group makes the user pick an option. The form checks it on submit, and once it shows an error, each change checks it again. Call `NDS.Forms.clearStatus(group)` to clear it.
 
 </div>
   </div>
@@ -121,13 +142,6 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-            <span class="nds-label">Group Validation</span>
-          </span>
-          <p class="nds-item-desc">A required group is checked on submit. Once it shows an error, each change checks it again. Call <code class="nds-inline-code lang-js">NDS.Forms.clearStatus(group)</code> to clear it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-cursor-02"></i>
             <span class="nds-label">Visual Feedback</span>
           </span>
@@ -135,17 +149,10 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-lock"></i>
-            <span class="nds-label">Readonly Lock</span>
-          </span>
-          <p class="nds-item-desc">A readonly option shows its value and cannot change, by pointer or by keyboard. Its fill keeps its color, so the choice stays readable.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-layout-01"></i>
             <span class="nds-label">Responsive Layout</span>
           </span>
-          <p class="nds-item-desc">Options stack in a column, or sit in a row with <code class="nds-inline-code lang-html">nds-rowView</code>. On a phone, the gaps between a radio, its label and the next option are smaller.</p>
+          <p class="nds-item-desc">On a phone, the gaps between a radio, its label and the next option are smaller.</p>
         </div>
       </div>
     </div>

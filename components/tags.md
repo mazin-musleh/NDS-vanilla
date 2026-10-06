@@ -2,13 +2,13 @@
 layout: page
 title: Tags
 hero_title: Tags - National Design System
-hero_description: Small read-only labels for categories, status, and metadata.
+hero_description: A tag is a small read-only label for a category, a status or metadata
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="tagOverview" class="nds-content-section nds-doc-overview">
@@ -82,7 +82,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 | Structure | Standard (default) | — | — | One tag for a category or metadata |
 | Structure | Status | canon `#tag-status` | — | One tag for the state of an item, with a dot before the label |
 | Structure | Group | canon `#tag-group` | — | Several tags in a row that wraps, with an even gap |
-| Color | Neutral (default) | — | — | For general labels. `.nds-neutral` and `.nds-gray` give the same look |
+| Color | Neutral (default) | — | — | For general labels |
 | Color | Green | `.nds-green` | `.nds-tag:not([data-status])` | Pick the color by meaning |
 | Color | Blue | `.nds-blue` | `.nds-tag:not([data-status])` | Pick the color by meaning |
 | Color | Yellow | `.nds-yellow` | `.nds-tag:not([data-status])` | Pick the color by meaning |
@@ -179,6 +179,14 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
       <h2 class="nds-section-title">API</h2>
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-status` | `.nds-tag` | `neutral`, `success`, `info`, `warning`, `error` or `critical` makes a status tag: a dot before the label and fully round ends. It ignores the color classes. `critical` gives the Error look: keep it for system-level alerts |
+{: .nds-table .nds-responsive}
 
 ### Other Classes
 {: .nds-block-title}

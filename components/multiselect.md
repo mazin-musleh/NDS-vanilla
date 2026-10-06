@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="multiselectOverview" class="nds-content-section nds-doc-overview">
@@ -215,6 +215,9 @@ A row on `.nds-check-container` changes every option row. A Reset or Apply row i
 | State | None (default) | — | — | The user can change the options |
 | State | Disabled | `[data-state~="disabled"]` | `.nds-multiselect` | The user cannot open the menu or remove a chip |
 | State | Read-only | `[data-state~="readonly"]` | `.nds-multiselect` | The menu opens and shows the options, but the user cannot change them or remove a chip |
+| Validation (any) | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-multiselect` | At least one option must be checked before the form submits. Say the rule in the label |
+| Validation (any) | At least 2 (hint: Press Validate with one option checked) | `[data-min-checked="2"]` | `.nds-multiselect` | At least 2 options must be checked. Say the rule in the label |
+| Validation (any) | At most 3 (hint: Check four options, then press Validate) | `[data-max-checked="3"]` | `.nds-multiselect` | No more than 3 options may be checked. Say the rule in the label |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #multiselectVariantsTable .nds-table .nds-responsive}
 

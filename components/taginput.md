@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 12:45 AM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="taginputOverview" class="nds-content-section nds-doc-overview">
@@ -87,7 +87,7 @@ Prefilled tags inserts two hidden inputs right after the text box `#taginput-ski
 | Chip color | Neutral | `[data-chip-class="nds-neutral nds-sm"]` | `.nds-taginput` | Chips in the neutral color, for tags that are not a brand action |
 | State (any) | Disabled (demo: + prefilled) | `[data-state~="disabled"]` | `.nds-taginput:not([data-state~="readonly"])` | The user cannot type or remove a chip, and the tags do not post. Not with Read-only |
 | State (any) | Read-only (demo: + prefilled) | `[data-state~="readonly"]` | `.nds-taginput:not([data-state~="disabled"])` | The user sees the tags but cannot change them. The tags post. Not with Disabled |
-| State (any) | Required (hint: Press Validate with no tags) | `[data-required]` | `.nds-taginput` | The form needs at least one tag. See Validation |
+| Validation | Required (hint: Press Validate with no tags) | `[data-required]` | `.nds-taginput` | The form needs at least one tag. See Validation |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #taginputVariantsTable .nds-table .nds-responsive}
 

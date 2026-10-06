@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="tooltipOverview" class="nds-content-section nds-doc-overview">
@@ -90,6 +90,10 @@ Pick another component when:
 | Open on | Click (default) | — | `.nds-tooltip:not(.nds-btn)` | A click, a tap, or Enter on the trigger opens and closes the balloon |
 | Open on | Hover | `[data-tooltip-hover]` | `.nds-tooltip` | The balloon opens 120ms after the mouse enters, and on keyboard focus. Use it on a link or a button |
 | Open on | Hover after 500ms (id: hover-500) | `[data-tooltip-hover="500"]` | `.nds-tooltip` | The same, with a longer wait. Use it in a row of icon buttons, so a passing mouse opens nothing |
+| Status | Info | `[data-tooltip-status="info"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the info status. Auto structure only |
+| Status | Success | `[data-tooltip-status="success"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the success status. Auto structure only |
+| Status | Warning | `[data-tooltip-status="warning"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the warning status. Auto structure only |
+| Status | Error | `[data-tooltip-status="error"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the error status. Auto structure only |
 {: #tooltipVariantsTable .nds-table .nds-responsive}
 
 </div>

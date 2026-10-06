@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="tocOverview" class="nds-content-section nds-doc-overview">
@@ -151,7 +151,7 @@ You write the links. Nest a `<ul>` inside an `<li>` for each level.
 ### Auto-built List
 {: .nds-block-title}
 
-`data-toc-source` on `.nds-toc` names the container to read, as a CSS selector. At init, the script replaces the list with a link to each heading in it, nested by level. `data-toc-levels` picks the levels, such as `h2` for a flat list. The script builds the list once. After the headings change, call `NDS.Toc.destroy(toc)`, then `NDS.Toc.create(toc)`.
+`data-toc-source` on `.nds-toc` names the container to read, as a CSS selector. At init, the script replaces the list with a link to each heading in it, nested by level. `data-toc-levels` picks the levels, such as `h2` for a flat list. The script builds the list once. After the headings change, call `NDS.Toc.destroy(toc)`, then `NDS.Toc.create(toc)`. A heading with no `id` gets one made from its text, Arabic included, so its link works. Until the list fills in, it keeps the height of `--toc-skeleton-rows` links, so the content under it does not move.
 
 ### Manual List
 {: .nds-block-title}
@@ -196,20 +196,6 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
             <span class="nds-label">Nested Levels</span>
           </span>
           <p class="nds-item-desc">Each nested list is indented, with a line along it, so the reader sees each section's level at a glance.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-anchor"></i>
-            <span class="nds-label">Heading Anchors</span>
-          </span>
-          <p class="nds-item-desc">In an auto-built list, a heading with no <code class="nds-inline-code lang-html">id</code> gets one made from its text, Arabic included, so its link works.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-ruler"></i>
-            <span class="nds-label">Reserved Height</span>
-          </span>
-          <p class="nds-item-desc">Until an auto-built list fills in, it keeps the height of <code class="nds-inline-code lang-css">--toc-skeleton-rows</code> links, so the content under it does not move.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -259,7 +245,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
 | `nds-toc-head` | `<div>` | The head: a label and the title. Optional |
 | `nds-toc-title` | the heading in the head | The page title, in larger semibold type |
 | `nds-lined` | `.nds-drawer` | Required. The line along each nested list |
-| `nds-loading` | `.nds-toc` | The link labels show as pulsing bars. Use it while the page loads the content. `data-state="loading"` does the same |
+| `nds-loading` | `.nds-toc` | The link labels show as pulsing bars. Use it while the page loads the content |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -269,6 +255,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
 |---|---|---|
 | `data-toc-source` | `.nds-toc` | A CSS selector for the container whose headings build the list. It replaces the list you write |
 | `data-toc-levels` | `.nds-toc` | The heading levels to list, comma-separated. Default `h2,h3,h4` |
+| `data-state="loading"` | `.nds-toc` | The same as `nds-loading`, for a script that already sets states |
 | `data-state="active"` | `<li>` and its link | Set by the script on the link to the current section |
 {: .nds-table .nds-responsive}
 

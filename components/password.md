@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="passwordOverview" class="nds-content-section nds-doc-overview">
@@ -189,19 +189,19 @@ A Min length choice sets `minlength` on the input and swaps the length chip for 
 | Structure | New password (default) | — | — | One field with its rule chips, for sign-up or a password reset |
 | Structure | Confirm (hint: A retype field that must match the first) | canon `#password-confirm` | — | A new password and a retype field. The retype field's chip checks that the two values match |
 | Min length | 10 | `[minlength="10"]` | `#new-password` | A longer minimum, for an account that holds sensitive data |
-| Min length | 10 | `[minlength="10"]` | `#first-password` | The same, on the first field of Confirm |
-| Min length | 10 | canon `#password-length-10` | `[data-rule="length"]` (after) | The length chip with the new number |
-| Min length | 10 | remove | `[data-rule="length"]:first-child` | Removes the old length chip |
-| Min length | 8 (default) | — | — | The length rule's minimum, in `minlength` on the input and in the length chip's text |
-| Min length | 6 | `[minlength="6"]` | `#new-password` | A shorter minimum. Pair it with more rules |
-| Min length | 6 | `[minlength="6"]` | `#first-password` | The same, on the first field of Confirm |
-| Min length | 6 | canon `#password-length-6` | `[data-rule="length"]` (after) | The length chip with the new number |
-| Min length | 6 | remove | `[data-rule="length"]:first-child` | Removes the old length chip |
-| Min length | 4 | `[minlength="4"]` | `#new-password` | A very short minimum, such as a PIN-style password. Pair it with more rules |
 | Min length | 4 | `[minlength="4"]` | `#first-password` | The same, on the first field of Confirm |
 | Min length | 4 | canon `#password-length-4` | `[data-rule="length"]` (after) | The length chip with the new number |
 | Min length | 4 | remove | `[data-rule="length"]:first-child` | Removes the old length chip |
 | Validation (any) | Capital letter | canon `#password-rule-upper` | `#new-password-rules` | The password needs one letter from A to Z |
+| Min length | 6 | `[minlength="6"]` | `#first-password` | The same, on the first field of Confirm |
+| Min length | 6 | canon `#password-length-6` | `[data-rule="length"]` (after) | The length chip with the new number |
+| Min length | 6 | remove | `[data-rule="length"]:first-child` | Removes the old length chip |
+| Min length | 4 | `[minlength="4"]` | `#new-password` | A very short minimum, such as a PIN-style password. Pair it with more rules |
+| Min length | 6 | `[minlength="6"]` | `#new-password` | A shorter minimum. Pair it with more rules |
+| Min length | 10 | `[minlength="10"]` | `#first-password` | The same, on the first field of Confirm |
+| Min length | 10 | canon `#password-length-10` | `[data-rule="length"]` (after) | The length chip with the new number |
+| Min length | 10 | remove | `[data-rule="length"]:first-child` | Removes the old length chip |
+| Min length | 8 (default) | — | — | The length rule's minimum, in `minlength` on the input and in the length chip's text |
 | Validation (any) | Capital letter | canon `#password-rule-upper` | `#first-password-rules` | The same, on the first field of Confirm |
 | Validation (any) | Small letter | canon `#password-rule-lower` | `#new-password-rules` | The password needs one letter from a to z |
 | Validation (any) | Small letter | canon `#password-rule-lower` | `#first-password-rules` | The same, on the first field of Confirm |
@@ -345,13 +345,13 @@ The chip is optional. Without it, leave out `.nds-password-rules` and the input'
 |---|---|---|
 | `data-rule` | `.nds-password-rules > .nds-feedback` | The rule the chip checks: `length`, `upper`, `lower`, `digit`, `special` or `match`. Another name needs `data-rule-pattern` or `addRule()`. Without one, the chip stays neutral and is not counted |
 | `data-rule-pattern` | `.nds-password-rules > .nds-feedback` | A regular expression the value must match. It wins over a built-in rule with the same name |
+| `data-status` | `.nds-password-rules > .nds-feedback` | Write `neutral`. The script sets `success` or `error` on each keystroke |
+
+| `data-permanent` | `.nds-password-rules > .nds-feedback` | A validation message hides the chip instead of removing it. The chip comes back when the message clears. Without it, the first error removes the chips for good |
 | `data-password-match` | `.nds-password` | A CSS selector for the first password input. It makes the field a retype field. The script reads it once at start. When the first field is added later, call `NDS.Password.destroy()` and then `NDS.Password.create()` on the retype field |
 | `minlength` | the `<input>` | The length rule's minimum. The default is 8 |
-| `data-status` | `.nds-password-rules > .nds-feedback` | Write `neutral`. The script sets `success` or `error` on each keystroke |
-| `data-permanent` | `.nds-password-rules > .nds-feedback` | A validation message hides the chip instead of removing it. The chip comes back when the message clears. Without it, the first error removes the chips for good |
 | `data-password-strength` | `.nds-password` | Written by the script: the number of passing chips, 0 while the field is empty. Style a bar from it, such as `.nds-password[data-password-strength="5"] .my-bar { width: 100%; }` |
 {: .nds-table .nds-responsive}
-
 ### JavaScript
 {: .nds-block-title}
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -77,6 +77,11 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 | Picker | Year (hint: A grid of years, for a graduation year) | `[data-format="YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of years, for a year such as a graduation year. Not with Range. See Date Format |
 | Picker | Year (hint: A grid of years, for a graduation year) | `[placeholder="YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
 | Clear button | Clear button | `[data-clearable]` | `.nds-date-picker:not(.dateRange)` | Adds Clear to the calendar. Range has it already. See Clear Button |
+| Size | LG (default) | — | — | 40px high. It needs no class |
+| Size | MD | `.nds-md` | `.nds-form-container` | 32px high, with smaller text, for a table filter or a side panel |
+| Style | Outline (default) | — | — | A border on the page background |
+| Style | Lighter (hint: Light fill and no border) | `.nds-lighter` | `.nds-form-container` | A light fill and no border, for a field on a white card |
+| Style | Darker (hint: Darker fill and no border) | `.nds-darker` | `.nds-form-container` | A darker fill and no border, for a field on a gray surface |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-date-picker:not([data-state~="readonly"])` | The user cannot type or open the calendar, and the date does not post. Not with Read-only |
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-date-picker:not([data-state~="disabled"])` | The user sees the date but cannot change it. The date posts. Not with Disabled |
 | State (any) | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-date-picker` | The form needs a date. See Validation |

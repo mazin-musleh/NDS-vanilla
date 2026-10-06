@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="heroOverview" class="nds-content-section nds-doc-overview">
@@ -292,9 +292,9 @@ The structures are the shapes the site uses. For another mix of the head parts, 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Sub hero (default) | — | — | The top of most pages: the breadcrumb, Share beside the title, the title and a description |
-| Structure | Service (id: service) (hint: A service page: a main button, Share and tags) | `canon #hero-service` | — | A service page: a main button and Share beside the title, and tags under it. Write `nds-aside` too when the page has a side info column |
+| Structure | Service (hint: A service page: a main button, Share and tags) | `canon #hero-service` | — | A service page: a main button and Share beside the title, and tags under it. Write `nds-aside` too when the page has a side info column |
 | Structure | Profile (id: profile) (hint: A page about one person, with an avatar) | `canon #hero-profile` | — | A page about one person or entity: a flat hero with an [Avatar](../components/avatar) before the name, and Share beside the head |
-| Structure | Main hero (id: main) (hint: The home page slider of full-width images) | `canon #hero-main` | — | The home page: a slider of full-width images, each with a title and a button |
+| Structure | Main hero (hint: The home page slider of full-width images) | `canon #hero-main` | — | The home page: a slider of full-width images, each with a title and a button |
 | Background | Tint (default) (not: profile) (hint: A light brand tint with an inner shadow) | — | `.nds-hero-section.nds-sub` | A light tint of the brand primary, with a shadow inside its edges |
 | Background | Image (not: profile) | `--hero-image: url('../assets/img/riyadhcenter_ai.webp')` | `.nds-hero-section.nds-sub` | A photo on the end side, which fades into the tint toward the title. For a page with its own photo |
 | Background | Flat (not: profile) (hint: The page background, with no tint, shadow or image) | `.nds-flat` | `.nds-hero-section.nds-sub` | The page background, with no tint, shadow or image. For an article or a form, where the content starts right under the title |

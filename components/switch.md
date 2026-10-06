@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="switchOverview" class="nds-content-section nds-doc-overview">
@@ -35,7 +35,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="switch-single" data-canon data-variants="switchVariantsTable">
+<script type="text/html" id="switch-single" data-canon data-variants="switchVariantsTable" data-harness="form">
 <div class="nds-form-container nds-switch-container">
   <div class="nds-form-header" data-feedback-target>
     <label for="switch-1">
@@ -115,6 +115,8 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
+Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a page it goes on the switch you mean.
+
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Single (default) | — | — | One setting on its own |
@@ -123,7 +125,11 @@ Pick another component when:
 | Size | MD (default) | — | — | 48×24px track, 16px thumb. Most forms |
 | Size | LG | `.nds-lg` | `.nds-switch-container` | 56×28px track, 20px thumb. Touch-first screens |
 | Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-switch` | The on state uses the neutral color, not the primary color. Use it when the setting is not a brand action. The color shows only when the switch is on, so the demo also turns on Checked |
-| Checked | Checked (id: checked) | `[checked]` | `.nds-switch-input` | The switch is on when the page loads |
+| Checked | Checked (id: checked) | `[checked]` | `#switch-1` | The switch is on when the page loads |
+| Checked | Checked (id: checked) | `[checked]` | `#switch1` | The same, on the first switch of a group |
+| Validation (any) | Required (hint: Press Validate with every switch off) | `[data-required]` | `.nds-switch-group` | At least one switch must be on before the form submits. Group only |
+| Validation (any) | At least 2 (hint: Press Validate with one switch on) | `[data-min-checked="2"]` | `.nds-switch-group` | At least 2 switches must be on. Group only. Say the rule in the legend |
+| Validation (any) | At most 2 (hint: Turn on all three switches, then press Validate) | `[data-max-checked="2"]` | `.nds-switch-group` | No more than 2 switches may be on. Group only. Say the rule in the legend |
 | Disabled | Disabled | `[disabled]` | `.nds-switch-input` | The user cannot change the setting now |
 | Layout | Row | `.nds-rowView` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
@@ -167,13 +173,6 @@ Pick another component when:
             <span class="nds-label">Visual Feedback</span>
           </span>
           <p class="nds-item-desc">A ripple grows around the track on hover. The thumb widens while the track is pressed, and slides to the other end when the switch toggles.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-right"></i>
-            <span class="nds-label">RTL Direction</span>
-          </span>
-          <p class="nds-item-desc">The thumb moves toward the end of the line. In Arabic the on position is on the left.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

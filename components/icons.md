@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="iconsOverview" class="nds-content-section nds-doc-overview">
@@ -132,11 +132,12 @@ The next and back arrows follow the reading direction. `nds-hgi-arrow-next-01` p
 
 An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token, `--nds-icon-{name}`. Set `--nds-icon` to a token in your CSS to change the glyph, with no change to the markup. Set it on the icon itself: the icon's own class sets it there, so a value on a parent does not reach it.
 
-</div>
 <script type="text/html" id="icons-swap" data-canon data-lang="css" data-preview="none">
 /* Show the "hide" eye while the toggle is pressed */
 .my-toggle[aria-pressed="true"] .nds-icon { --nds-icon: var(--nds-icon-view-off); }
 </script>
+
+</div>
   </div>
 </section>
 

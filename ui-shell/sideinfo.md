@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="sideinfoOverview" class="nds-content-section nds-doc-overview">
@@ -143,14 +143,12 @@ The width is not in the builder: see `--nds-sideinfo-width` in the API.
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Sticky (any) | Desktop (default) (hint: At 960px and wider, the column stays in view while the content scrolls) | `.nds-sticky` | `.nds-sideinfo` | At 960px and wider, the column stays in view below the main navigation while the content scrolls. Turn it off for a short page |
-| Sticky (any) | Small screens (hint: Below 960px, the column stays in view as a strip across the screen) | `.nds-sticky-md` | `.nds-sideinfo.nds-top` | Below 960px, the column stays in view as a strip across the screen, below the main navigation. Needs the column above the content. For a short column, such as a progress dial |
+| Sticky (any) | Strip on small screens (hint: Below 960px, the column stays in view as a strip across the screen) | `.nds-sticky-md` | `.nds-sideinfo.nds-top` | Below 960px, the column stays in view as a strip across the screen, below the main navigation. Needs the column above the content. For a short column, such as a progress dial |
 | Small screens | Above the content (default) | `.nds-top` | `.nds-sideinfo` | Below 960px, the column moves above the content |
 | Small screens | Under the content | — | `.nds-sideinfo:not(.nds-reverse)` | Below 960px, the column stays under the content, and scrolls away with it. It cannot be sticky there. Not with Start side |
 | Start side | Start side (hint: The column moves to the start side of the row) (limit: 1 position) | `.nds-reverse` | `.nds-sideinfo` | The column moves to the start side of the row, and above the content below 960px. For a table of contents, write the `aside` first in the markup instead. Not with Beside the title |
 | Beside the title | Beside the title (hint: On desktops, the column moves up beside the page title) (limit: 1 position) | `.nds-aside` | `.nds-hero-section.nds-sub` | At 960px and wider, the column moves up beside the page title, on the end side. For a column about the whole page, in the first section. Not with Start side |
 | More cards | More cards (hint: A second card under the first) | canon `#sideinfo-more` | `.nds-sideinfo` | A second card in the column, under the first |
-| Card stroke | Card stroke (default) | `.nds-stroke` | `.nds-card` | A border around the card. It goes on the card, never on the `aside` |
-| Card shadow | Card shadow (default) | `.nds-shadow` | `.nds-card` | A shadow under the card. It goes on the card, never on the `aside` |
 {: #sideinfoVariantsTable .nds-table .nds-responsive}
 
 </div>

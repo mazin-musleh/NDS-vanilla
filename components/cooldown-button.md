@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/09/2026 - 08:01 AM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="cooldownOverview" class="nds-content-section nds-doc-overview">
@@ -34,12 +34,38 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="cooldown-base" data-canon>
+<script type="text/html" id="cooldown-base" data-canon data-variants="cooldownVariantsTable">
 <button type="button" class="nds-btn nds-secondary nds-cooldown" data-cooldown="15" data-cooldown-label="Resend in {s}s" data-resend-label="Resend">
   <span class="nds-label">Send code</span>
 </button>
 </script>
     </div>
+  </div>
+</section>
+
+<section id="cooldownVariants" class="nds-content-section nds-doc-variants" hidden>
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Variants</h2>
+    </div>
+    <div class="nds-section-body" markdown="1">
+
+The variants and sizes are the [Button](../components/button) ones. The cooldown attributes are sample content: set the seconds and the labels in the markup.
+
+| Group | Option | Markup | On element | Use |
+|---|---|---|---|---|
+| Variant | Primary | `.nds-primary` | `.nds-btn` | The main action in a view. Use one per view |
+| Variant | Neutral | `.nds-neutral` | `.nds-btn` | A strong action next to the primary one |
+| Variant | Secondary (default) | `.nds-secondary` | `.nds-btn` | A supporting action, with a light fill |
+| Variant | Secondary outline | `.nds-secondary-outline` | `.nds-btn` | A supporting action, with a border and no fill |
+| Variant | Subtle | `.nds-subtle` | `.nds-btn` | A low-emphasis action. The fill shows on hover |
+| Variant | Transparent | `.nds-transparent` | `.nds-btn` | The lowest emphasis. No fill in any state |
+| Size | LG (default) | — | — | 40px high. It needs no class |
+| Size | MD | `.nds-md` | `.nds-btn` | 32px high |
+| Size | SM | `.nds-sm` | `.nds-btn` | 24px high |
+{: #cooldownVariantsTable .nds-table .nds-responsive}
+
+</div>
   </div>
 </section>
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 07:28 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="placeholderOverview" class="nds-content-section nds-doc-overview">
@@ -54,7 +54,7 @@ Pick another component when:
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Size | Default (default) | — | — | Most regions: a panel body, a card, a page section |
+| Size | MD (default) | — | — | Most regions: a panel body, a card, a page section |
 | Size | SM | `.nds-sm` | `.nds-content-placeholder` | Tight regions, such as a [Toolbar](../components/toolbar) slot. The text drops to the `2xs` size and the box is at least 40px tall, the height of a default button |
 | Size | LG | `.nds-lg` | `.nds-content-placeholder` | Large regions, where the default text looks too small. The text grows to the `sm` size |
 {: #placeholderVariantsTable .nds-table .nds-responsive}

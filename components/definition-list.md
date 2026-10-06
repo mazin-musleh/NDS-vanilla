@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="dlOverview" class="nds-content-section nds-doc-overview">
@@ -145,10 +145,12 @@ The Layout, Style, Size and Loading rows go on the list. The two Cards rows are 
 | Layout | Stacked (default) | — | — | Each value under its title, for long values |
 | Layout | Table | `.nds-tableView` | `.nds-definition-list` | Titles in one column and values in the next, aligned across every item |
 | Layout | Table on phones (hint: Below 600px only) | `.nds-tableView-sm` | `.nds-definition-list` | The table layout below 600px only. Stacked on wider screens |
-| Layout | Table on tablets (hint: From 600px to 959px only) | `.nds-tableView-md` | `.nds-definition-list` | The table layout from 600px to 959px only. Add `nds-tableView-lg` too for tablets and wider |
+| Layout | Table on tablets (hint: From 600px to 959px only) | `.nds-tableView-md` | `.nds-definition-list` | The table layout from 600px to 959px only. Stacked on other screens |
+| Layout | Table on tablets and up (hint: From 600px up) | `.nds-tableView-md` | `.nds-definition-list` | The table layout from 600px up. Stacked on phones |
+| Layout | Table on tablets and up (hint: From 600px up) | `.nds-tableView-lg` | `.nds-definition-list` | The same |
 | Layout | Table on desktops (hint: From 960px up) | `.nds-tableView-lg` | `.nds-definition-list` | The table layout from 960px up. Stacked on smaller screens |
 | Layout | Row (hint: Title and value on one line that wraps) | `.nds-rowView` | `.nds-definition-list` | Each title and value on one row that wraps, with no shared columns. For compact card details |
-| Layout | Grid | `.nds-grid` | `.nds-definition-list` | Items in columns. `--max-col`, `--mid-col` and `--min-col` set the columns, see [Grid](../layout/grid) |
+| Grid | Grid | `.nds-grid` | `.nds-definition-list:not(.nds-tableView):not(.nds-tableView-sm):not(.nds-tableView-md):not(.nds-tableView-lg)` | Items in columns. `--max-col`, `--mid-col` and `--min-col` set the columns, see [Grid](../layout/grid) |
 | Style | Plain (default) | — | — | No lines between items |
 | Style | Divided | `.nds-divided` | `.nds-definition-list` | A line between items. In a table layout, the lines span both columns |
 | Style | Cards | `.nds-card` | `.nds-definition-item` | Each item in its own card |

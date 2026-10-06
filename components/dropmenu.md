@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="dropmenuOverview" class="nds-content-section nds-doc-overview">
@@ -400,22 +400,23 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-select-name` | `.nds-dropmenu` | Makes the dropmenu a picker. A hidden input with this name holds the picked value, and fires `change` when it changes |
-| `data-value` | `.nds-dropmenu-item` | The value the item picks. An item without it picks nothing |
 | `data-select-value` | `.nds-dropmenu` | The value picked at load. It wins over an item with `data-state="selected"` |
-| `data-trigger-label` | `.nds-dropmenu-item` | A short label for the trigger when the item is picked, such as "+966" for "Saudi Arabia (+966)". The default is the item's `.nds-label` |
 | `data-required` | `.nds-dropmenu[data-select-name]` | The form does not submit until a value is picked. The error shows on the field that holds the picker |
 | `data-search` | `.nds-dropmenu` | Adds a search box. `data-search="20"` adds it only when the menu has 20 items or more |
 | `data-search-empty` | `.nds-dropmenu` | The text shown when nothing matches. The default is "No results" |
-| `data-search-value` | `.nds-dropmenu-item` | More words the item is found by |
-| `data-search-item` | an item or a row in the menu | `data-search-item` makes a row that is not a `.nds-dropmenu-item` searchable. `data-search-item="false"` keeps an item always in view |
-| `data-no-auto-close` | `.nds-dropmenu-item` | A click on the item keeps the menu open |
-| `data-dropmenu-primary` | `.nds-dropmenu-item` | Enter on a control that is not a button or a link clicks the first item with this attribute |
 | `data-anchor`, `data-anchor-cursor` | `.nds-dropmenu` | Where the menu lines up with the trigger. See Anchor in the builder |
 | `data-portal`, `data-no-portal` | `.nds-dropmenu` | Whether the menu moves to `<body>`. See Portal in the builder |
 | `data-delay` | `.nds-dropmenu` | The first open waits this many milliseconds and fires `nds:dropmenu:prepare`. The attribute is removed after it, so later opens are immediate |
 | `data-dropmenu-no-click` | `.nds-dropmenu` | The trigger does not open the menu. A script opens it |
 | `data-dropmenu-no-keys` | `.nds-dropmenu` | Turns off the arrow, Home, End and Tab keys, for a component with its own keyboard. Escape still closes the menu |
 | `data-state` | `.nds-dropmenu`, trigger, menu, `.nds-dropmenu-item` | The script writes `open` on the wrapper, the trigger and the menu, and `selected` on the picked item. An item with `active` gets focus first when the menu opens from the keyboard |
+| `data-position-vertical` | `.nds-dropmenu`, `.nds-dropmenu-menu` | The script writes `top` when the menu opens above the trigger, and removes it on close. Do not set it yourself |
+| `data-value` | `.nds-dropmenu-item` | The value the item picks. An item without it picks nothing |
+| `data-trigger-label` | `.nds-dropmenu-item` | A short label for the trigger when the item is picked, such as "+966" for "Saudi Arabia (+966)". The default is the item's `.nds-label` |
+| `data-search-value` | `.nds-dropmenu-item` | More words the item is found by |
+| `data-search-item` | an item or a row in the menu | `data-search-item` makes a row that is not a `.nds-dropmenu-item` searchable. `data-search-item="false"` keeps an item always in view |
+| `data-no-auto-close` | `.nds-dropmenu-item` | A click on the item keeps the menu open |
+| `data-dropmenu-primary` | `.nds-dropmenu-item` | Enter on a control that is not a button or a link clicks the first item with this attribute |
 {: .nds-table .nds-responsive}
 
 ### Keyboard

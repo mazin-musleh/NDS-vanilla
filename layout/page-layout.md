@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="pageLayoutOverview" class="nds-content-section nds-doc-overview">
@@ -31,8 +31,6 @@ Each shape in the builder below is the markup of a live page. Open the page to s
 | Minimal | Sign in and other focused steps | `minimal` | [Sign In](../examples/sign-in) |
 | Console | An admin or back-office page | `console` | [Console](../examples/console-demo) |
 {: .nds-table .nds-responsive}
-
-Copy the whole `<body>` of a live page's built HTML once for each chrome, for the real header, footer and script tags. The canons on this page leave the header and footer empty.
 
 Pick another page when:
 
@@ -470,6 +468,7 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 | Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `.nds-wSideInfo` | `.nds-content-layout` | A service page: facts such as the fee and the duration beside the first section's text |
 | Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `.nds-aside` | `.nds-hero-section.nds-sub` | Narrows the hero title, so the side info moves up beside it on a desktop. Written with `nds-wSideInfo` |
 | Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `canon #layout-sideinfo` | `.nds-content` (start) | The first section, which holds the text and the side info. Write the service description in it, not in a second section. Written with `nds-wSideInfo` |
+| Hero | Flat hero (not: article, minimal, home) (hint: No background or shadow, so the text starts right under the title) | `.nds-flat` | `.nds-hero-section.nds-sub` | A page with long text. The hero loses its background and shadow |
 | Card view | Card view (not: home, article, minimal) (hint: Each section shows as a raised card) | `.nds-cardView` | `.nds-content-layout` | Each section shows as a raised card, for record and profile pages. |
 | Stripe | Stripe (id: stripe) (not: article, minimal) | `.nds-stripe` | `.nds-content:not(.nds-cardView .nds-content)` | Every second section gets the stripe color, from the second one |
 | Odd | Odd (hint: The stripe starts on the first section) | `.nds-odd` | `.nds-content.nds-stripe:not(.nds-cardView .nds-content)` | The stripe starts on the first section. Needs Stripe |

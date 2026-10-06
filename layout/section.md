@@ -2,13 +2,13 @@
 layout: page
 title: Section
 hero_title: Section - National Design System
-hero_description: A section is one titled block of page content, with an optional action, image and background color.
+hero_description: A section is one titled block of page content, with an optional action, image and background color
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="sectionOverview" class="nds-content-section nds-doc-overview">
@@ -338,13 +338,6 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
             <span class="nds-label">Fluid Typography</span>
           </span>
           <p class="nds-item-desc">The title and the subtitle sizes scale between phone and desktop. The title, subtitle and description stop at 720px wide, for a readable line length.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Phone Layout</span>
-          </span>
-          <p class="nds-item-desc">Below 600px a standard action takes its own row, and each button is full width.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

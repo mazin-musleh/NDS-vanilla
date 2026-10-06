@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="emptyOverview" class="nds-content-section nds-doc-overview">
@@ -101,7 +101,7 @@ The Message and Icon rows go on the element that carries `nds-empty`, whatever i
 ### Live Updates
 {: .nds-block-title}
 
-The placeholder goes away when an item is added, and comes back when the last item is removed. A new `data-empty-message` or `data-empty-icon` value shows at once.
+Add and remove items to watch the placeholder.
 
 <script type="text/html" id="empty-live" data-canon data-code="none">
 <div class="nds-flex nds-col">
@@ -168,6 +168,13 @@ In a table, the placeholder is one row with one cell across every column. The sc
             <span class="nds-label">Arabic and English Text</span>
           </span>
           <p class="nds-item-desc">The default message follows the page <code class="nds-inline-code lang-html">lang</code>: «لا يوجد محتوى» in Arabic, and "No content to show" in any other language.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-refresh"></i>
+            <span class="nds-label">Live Updates</span>
+          </span>
+          <p class="nds-item-desc">The placeholder goes away when an item is added, and comes back when the last item is removed. A new <code class="nds-inline-code lang-html">data-empty-message</code> or <code class="nds-inline-code lang-html">data-empty-icon</code> value shows at once.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="feedbackOverview" class="nds-content-section nds-doc-overview">
@@ -90,11 +90,11 @@ NDS.Feedback.create({
 | Status | Neutral | `status: 'neutral'` | `create()` | The same, in JavaScript |
 | Status | Help | `[data-status="help"]` | `.nds-feedback` | Help text. Gray, with a question mark |
 | Status | Help | `status: 'help'` | `create()` | The same, in JavaScript |
-| Size | Small (default) | `.nds-sm` | `.nds-feedback` | A 16px icon, for a message in a form or in text |
-| Size | Medium | `.nds-md` | `.nds-feedback` | A 24px icon and larger text, for a status that stands alone |
-| Size | Medium | `size: 'md'` | `create()` | The same, in JavaScript |
-| Size | Large | `.nds-lg` | `.nds-feedback` | A 32px icon and large text, for the main status of a page or a panel |
-| Size | Large | `size: 'lg'` | `create()` | The same, in JavaScript |
+| Size | SM (default) | `.nds-sm` | `.nds-feedback` | A 16px icon, for a message in a form or in text |
+| Size | MD | `.nds-md` | `.nds-feedback` | A 24px icon and larger text, for a status that stands alone |
+| Size | MD | `size: 'md'` | `create()` | The same, in JavaScript |
+| Size | LG | `.nds-lg` | `.nds-feedback` | A 32px icon and large text, for the main status of a page or a panel |
+| Size | LG | `size: 'lg'` | `create()` | The same, in JavaScript |
 | Style | Outline (default) | `.nds-outline` | `.nds-feedback` | The icon drawn as a line in the status color |
 | Style | Solid | — | — | A filled disc in the status color, with a white symbol. It is the look with no style class, and it is stronger than outline |
 | Style | Solid | `style: ''` | `create()` | The same, in JavaScript |
@@ -173,7 +173,7 @@ A permanent message is a hint that stays in place, such as "Use 8 characters or 
 - Keep the message to one short sentence.
 - Use an icon alone only where the text around it already says the status. The icon has no text for screen readers.
 - Add a message from a script with `NDS.Feedback.create()`, not with your own markup, so a screen reader reads it.
-- Use Small in forms and in text. Use Medium for a status that stands alone, and Large for the main status of a page or a panel.
+- Use SM in forms and in text. Use MD for a status that stands alone, and LG for the main status of a page or a panel.
 - Keep Solid and Ring for a status that must stand out. Outline suits most messages.
 
 </div>

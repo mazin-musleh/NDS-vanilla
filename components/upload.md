@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="uploadOverview" class="nds-content-section nds-doc-overview">
@@ -238,24 +238,10 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-file-validation"></i>
-            <span class="nds-label">Client-side Validation</span>
-          </span>
-          <p class="nds-item-desc">Each file is checked for size, extension and type before it is listed. A file that fails stays in the list with the reason, and it is never uploaded.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-shield-01"></i>
             <span class="nds-label">Security</span>
           </span>
           <p class="nds-item-desc">The script removes path parts, control characters and leading dots from each file name before it shows or sends it. It cuts the name to 255 characters.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-refresh"></i>
-            <span class="nds-label">Upload Lifecycle</span>
-          </span>
-          <p class="nds-item-desc">Each file has a status: ready, uploading, processing, complete or error. Its row shows the status with a progress ring, a check mark or a cross.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

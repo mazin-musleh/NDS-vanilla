@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="avatarOverview" class="nds-content-section nds-doc-overview">
@@ -80,6 +80,15 @@ Pick another component when:
   <img src="../docs-assets/img/avatar2.webp" alt="Noura Al-Qahtani">
 </button>
 </script>
+<script type="text/html" id="avatar-content-photo" data-canon>
+<img src="../docs-assets/img/avatar2.webp" alt="Noura Al-Qahtani">
+</script>
+<script type="text/html" id="avatar-content-initials" data-canon>
+<span class="nds-label">NQ</span>
+</script>
+<script type="text/html" id="avatar-content-icon" data-canon>
+<i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
+</script>
 <script type="text/html" id="avatar-group" data-canon>
 <div class="nds-avatar-group nds-stacked nds-xl">
   <div class="nds-avatar">
@@ -110,7 +119,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-The Link, Menu trigger and Button structures take any of the three contents: a photo, initials or an icon. Each size has two rows: the first sizes a single avatar, the second a group. Make the change that fits the markup. A row on `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` changes a single avatar only, not one inside a group. `:has(> img)` means the avatar holds a photo.
+The Link, Menu trigger and Button structures take any of the three contents: a photo, initials or an icon. The Content chips swap it, and a chip is off when the avatar already holds that content. Each size has two rows: the first sizes a single avatar, the second a group. Make the change that fits the markup. A row on `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` changes a single avatar only, not one inside a group. `:has(> img)` means the avatar holds a photo.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -135,6 +144,15 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
 | Size | 2XL | `.nds-2xl` | `.nds-avatar-group` | The same size for every avatar in the group, 12px apart |
 | Size | 3XL | `.nds-3xl` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 120px with a 4px ring, for a profile header |
 | Size | 3XL | `.nds-3xl` | `.nds-avatar-group` | The same size and ring for every avatar in the group, 14px apart |
+| Content | Photo | canon `#avatar-content-photo` | `:is(a, button).nds-avatar:not(:has(> img))` | A photo. The `alt` text names the person. Link, Menu trigger and Button only |
+| Content | Photo | `remove` | `:is(a, button).nds-avatar > .nds-label` | Takes out the content it replaces |
+| Content | Photo | `remove` | `:is(a, button).nds-avatar > .nds-icon` | Takes out the content it replaces |
+| Content | Initials | canon `#avatar-content-initials` | `:is(a, button).nds-avatar:not(:has(> .nds-label))` | Two letters from the name, when there is no photo. Link, Menu trigger and Button only |
+| Content | Initials | `remove` | `:is(a, button).nds-avatar > img` | Takes out the content it replaces |
+| Content | Initials | `remove` | `:is(a, button).nds-avatar > .nds-icon` | Takes out the content it replaces |
+| Content | Icon | canon `#avatar-content-icon` | `:is(a, button).nds-avatar:not(:has(> .nds-icon))` | A person icon, for an anonymous user or a system account. Link, Menu trigger and Button only |
+| Content | Icon | `remove` | `:is(a, button).nds-avatar > img` | Takes out the content it replaces |
+| Content | Icon | `remove` | `:is(a, button).nds-avatar > .nds-label` | Takes out the content it replaces |
 | Square | Square | `.nds-square` | `.nds-avatar` | Rounded corners in place of a circle, for an organization or a service account. In a group, give it to every avatar |
 | Image border | Image border (hint: A thin dark line inside the photo edge) | `.nds-image-border` | `.nds-avatar:has(> img)` | A thin dark line inside the edge of the photo, so a light photo stays apart from a light page |
 | Stacked | Stacked (default) (hint: The avatars overlap) | `.nds-stacked` | `.nds-avatar-group` | The avatars overlap. Leave it out to space them apart by the group gap. Each stacked avatar has a ring in the border color. The ring is 1px at XS and SM, 2px at MD and LG, and 4px at XL and larger. At 3XL it replaces the border, so the photo keeps its full size |

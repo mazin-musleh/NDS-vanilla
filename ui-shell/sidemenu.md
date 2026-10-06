@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="sidemenuOverview" class="nds-content-section nds-doc-overview">
@@ -373,6 +373,8 @@ The Small screens options change the menu below 960px only.
 | Structure | Three levels | canon `#sidemenu-grouped` | — | Groups inside a group. Use it only when one group holds many pages |
 | Small screens | Slide-in (default) (hint: Below 960px, the menu slides in from the side) | — | — | Below 960px, the menu slides in from the side over the page. Fits a long list |
 | Small screens | Top bar (hint: Below 960px, a bar above the content opens the menu) | `.nds-top` | `.nds-sidemenu` | Below 960px, a bar above the content shows the current page, and the menu drops down from it. Fits a short list |
+| Peek button | Peek (default) (hint: The button hides at the screen edge until the mouse comes near) | `.nds-peek` | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | In slide-in mode, the button stays mostly hidden at the screen edge. Not in top bar mode |
+| Peek button | Full button (hint: The button stays in full view) | — | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | The button stays in full view at the screen edge |
 | Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
 | Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list` | 24 more links. Shows how the list scrolls when it is taller than the screen |
 {: #sidemenuVariantsTable .nds-table .nds-responsive}
@@ -493,14 +495,6 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
       <h2 class="nds-section-title">API</h2>
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
-
-### Other Classes
-{: .nds-block-title}
-
-| Class | Element | Effect |
-|---|---|---|
-| `nds-peek` | `button.nds-sidemenu-toggle` | Keeps the button mostly hidden until the mouse is near. It has no effect in top bar mode. See Peek Button under Behavior |
-{: .nds-table .nds-responsive}
 
 ### Data Attributes
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="customSelectOverview" class="nds-content-section nds-doc-overview">
@@ -134,7 +134,7 @@ Pick another component when:
 | Saved value | Saved value (not: rich) (hint: The field opens with Makkah picked) | `[value="makkah"]` | `.nds-select-value` | The field opens with Makkah picked. See Saved Value |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-select:not([data-state~="readonly"])` | The user cannot open the list, and the value does not post. Not with Read-only |
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-select:not([data-state~="disabled"])` | The user sees the value but cannot change it. The value posts. Not with Disabled |
-| State (any) | Required (hint: Press Validate with no option picked) | `[data-required]` | `.nds-select` | The form needs a pick. It does not submit while the field is empty |
+| Validation | Required (hint: Press Validate with no option picked) | `[data-required]` | `.nds-select` | The form needs a pick. It does not submit while the field is empty |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Text Fields](../components/forms) |
 {: #customSelectVariantsTable .nds-table .nds-responsive}
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "02/10/2026 - 10:19 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="blockOverview" class="nds-content-section nds-doc-overview">
@@ -121,13 +121,6 @@ Pick another component when:
           </span>
           <p class="nds-item-desc">A block needs no parent: it keeps the same gap in a section body, a card or a grid column.</p>
         </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-artboard"></i>
-            <span class="nds-label">Container Query Opt-In</span>
-          </span>
-          <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-cq</code> to a block, and a <a href="../layout/grid">grid</a> inside it follows the block's width. It is opt-in, because it traps <code class="nds-inline-code lang-css">position: fixed</code> children, such as a modal or a dropmenu, inside the block.</p>
-        </div>
       </div>
     </div>
   </div>
@@ -168,7 +161,7 @@ Pick another component when:
 |---|---|---|
 | `nds-block` | Any element | Full width, with a 32px gap below. No gap on the last child |
 | `nds-block-title` | A heading at the top of a block | The block's title. No gap below it when it is the last child |
-| `nds-cq` | `.nds-block` | Makes a grid inside follow the block's width. See [Grid](../layout/grid) |
+| `nds-cq` | `.nds-block` | Makes a grid inside follow the block's width. Opt-in, because it traps `position: fixed` children, such as a modal or a dropmenu, inside the block. See [Grid](../layout/grid) |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 lang: en
 direction: ltr
 ---
@@ -141,6 +141,10 @@ Every option goes on the `nds-panel` element, except Resizable, which has two ro
 | Side | Right (hint: Stays on the right in every language) | `[data-panel-side="right"]` | `.nds-panel` | Always slides in from the right, in every language |
 | Side | Top | `[data-panel-side="top"]` | `.nds-panel` | A full-width sheet below the header |
 | Side | Bottom | `[data-panel-side="bottom"]` | `.nds-panel` | A full-width sheet that rises from the bottom. For actions on a phone |
+| Size | MD (default) | — | — | The default size: 420px wide, 60svh high |
+| Size | SM | `[data-panel-size="sm"]` | `.nds-panel` | Three quarters of the default size. For a short list of settings |
+| Size | LG | `[data-panel-size="lg"]` | `.nds-panel` | A third larger than the default |
+| Size | XL | `[data-panel-size="xl"]` | `.nds-panel` | Three quarters larger than the default. For wide content |
 | Modal | Modal (hint: Dims the page and keeps focus in the panel) | `[data-panel-modal]` | `.nds-panel` | Dims the page, stops it from scrolling and keeps focus in the panel. For a panel the user must finish first |
 | Static | Static (hint: Escape and a click outside do not close it) | `[data-panel-static]` | `.nds-panel` | Escape and a click outside do not close the panel. For a panel with a form the user could lose |
 | Full width | Full width (hint: Top and bottom sheets) | `--panel-content-width: 100%` | `.nds-panel:is([data-panel-side="top"], [data-panel-side="bottom"])` | The sheet's content spans the full width, not the page's content width. For a wide table or a row of media |

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="checkboxOverview" class="nds-content-section nds-doc-overview">
@@ -134,6 +134,32 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
   </div>
 </section>
 
+<section id="checkboxBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Readonly
+{: .nds-block-title}
+
+`data-state~="readonly"` on the container shows the value and stops the change, by pointer or by keyboard. The tile shows a border only, and a checked tile keeps its mark, so the answer stays readable.
+
+### Group Rules
+{: .nds-block-title}
+
+`data-required`, `data-min-checked` and `data-max-checked` on the group set how many options must be checked. Once the group shows an error, each change checks the rules again.
+
+### Indeterminate
+{: .nds-block-title}
+
+`NDS.Forms.setIndeterminate()` shows a dash, for a "select all" checkbox. A click by the user clears it. Each change fires `nds:indeterminateChange`.
+
+</div>
+  </div>
+</section>
+
 <section id="checkboxFeatures" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
@@ -150,31 +176,10 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-minus-sign"></i>
-            <span class="nds-label">Indeterminate State</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code> shows a dash, for a "select all" checkbox. A click by the user clears it. Each change fires <code class="nds-inline-code lang-js">nds:indeterminateChange</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-            <span class="nds-label">Group Validation</span>
-          </span>
-          <p class="nds-item-desc">Set a minimum and a maximum number of checked options with <code class="nds-inline-code lang-html">data-min-checked</code> and <code class="nds-inline-code lang-html">data-max-checked</code>. Once the group shows an error, each change checks it again.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-lock"></i>
-            <span class="nds-label">Readonly Lock</span>
-          </span>
-          <p class="nds-item-desc">A readonly checkbox shows its value and cannot change, by pointer or by keyboard. A checked tile keeps its mark, so the answer stays readable.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-layout-01"></i>
             <span class="nds-label">Responsive Layout</span>
           </span>
-          <p class="nds-item-desc">Options stack in a column, or sit in a row with <code class="nds-inline-code lang-html">nds-rowView</code>. On a phone, the gaps between a checkbox, its label and the next option are smaller.</p>
+          <p class="nds-item-desc">On a phone, the gaps between a checkbox, its label and the next option are smaller.</p>
         </div>
       </div>
     </div>

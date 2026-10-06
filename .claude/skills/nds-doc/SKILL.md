@@ -40,7 +40,7 @@ A doc page has two readers. **People** browse it, try options in the builder and
 |---|---|---|
 | Component | most of `components/`, `utilities/` | options you combine: Structure plus modifier groups |
 | Shell | `ui-shell/` (mainnav, footer, topbar, sidemenu, hero) | a part canon in a frame (`data-preview="page"`), at every screen size |
-| Reference | `layout/` (grid, flex) | one `Example` group of whole examples, never mixed toggles |
+| Reference | `layout/` (grid) | one `Example` group of whole examples, never mixed toggles. A layout whose options combine freely (flex: direction, gap, align) is a Component builder |
 | Info | `core/`, `ui-shell/header` | none. Explains how something works: a `Usage` section with code-only canons (`data-preview="none"`). A page that only composes parts with their own pages (the header) shows each part's root with a comment linking that page, never the parts' markup again |
 
 ---

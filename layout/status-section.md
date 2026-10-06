@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.10.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 05:57 AM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="statusOverview" class="nds-content-section nds-doc-overview">
@@ -102,6 +102,7 @@ Pick another component when:
 | Status | Error (not: illustration) | `[data-status="error"]` | `.nds-status-section` | The work failed. Red title, cross |
 | Status | Critical (not: illustration) | `[data-status="critical"]` | `.nds-status-section` | A failure the user must act on now. Red title, exclamation mark |
 | Status | Help (not: illustration) | `[data-status="help"]` | `.nds-status-section` | A pointer to help. The title keeps its own color, and the chip shows a question mark |
+| Chip | Outline | `.nds-outline` | `.nds-feedback` | The chip shows an outlined icon instead of a solid disc. The ring stays |
 | Second action | Second action | canon `#status-second-action` | `.nds-section-action` | A second way out beside the main one, such as Try Again |
 {: #statusVariantsTable .nds-table .nds-responsive}
 
@@ -129,13 +130,6 @@ Pick another component when:
             <span class="nds-label">Height Fill</span>
           </span>
           <p class="nds-item-desc">In the page layout, the section grows to fill the height the other sections leave, and it centers its content in that height. A short message on its own page sits in the middle of the screen.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">One Status Attribute</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">data-status</code> on the section colors both the title and the chip. The chip carries no status of its own.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -181,7 +175,7 @@ Pick another component when:
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-status` | the `.nds-status-section` element | `success`, `info`, `warning`, `error`, `critical` or `help`. Sets the title color, and the icon and colors of the feedback chip inside the section. `error` and `critical` both color the title red. `help` leaves the title color as it is. Leave it out on a section with an illustration |
+| `data-status` | the `.nds-status-section` element | `success`, `info`, `warning`, `error`, `critical` or `help`. Sets the title color, and the icon and colors of the feedback chip inside the section. `error` and `critical` both color the title red. `help` leaves the title color as it is. The chip carries no status of its own. Leave it out on a section with an illustration |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

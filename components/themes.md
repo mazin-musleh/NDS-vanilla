@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 10:20 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="themesOverview" class="nds-content-section nds-doc-overview">
@@ -329,13 +329,6 @@ A theme menu option can load a stylesheet theme too. `data-theme-css` on the opt
             <span class="nds-label">Light and Dark</span>
           </span>
           <p class="nds-item-desc">Every theme and custom palette has a dark mode, and every toggle on the page follows each change.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-link-04"></i>
-            <span class="nds-label">Shareable Link</span>
-          </span>
-          <p class="nds-item-desc">A link with <code class="nds-inline-code lang-html">?theme=</code> opens the page in that theme. See Theme Menu.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

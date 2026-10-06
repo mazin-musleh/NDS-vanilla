@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 07:47 AM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="cookiesOverview" class="nds-content-section nds-doc-overview">
@@ -293,6 +293,15 @@ The close button stores no choice. The panel then does not open by itself for 30
       <h2 class="nds-section-title">API</h2>
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
+
+### Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-cookies-view` | a `div` in the panel | One view of the panel: it holds that view's header and body. The script shows one at a time |
+| `nds-cookies` | `.nds-panel` | Marks the consent panel. It has no style of its own |
+{: .nds-table .nds-responsive}
 
 ### Data Attributes
 {: .nds-block-title}

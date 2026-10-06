@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="sortOverview" class="nds-content-section nds-doc-overview">
@@ -395,26 +395,7 @@ Sort ships in the delegated bundle, which the loader injects after first paint. 
 | `data-sort-{key}` | item | The value the default `accessor` sorts by for that key. |
 {: .nds-table .nds-responsive}
 
-### Options
-{: .nds-block-title}
-
-| Option | Default | Effect |
-|---|---|---|
-| `items` | required | The elements to move. A selector, a NodeList, an array or a function that returns them. A function is called on every sort. |
-| `triggers` | required | The elements that start a sort. Same forms as `items`. Triggers inside a portaled dropmenu are found. |
-| `reorderIn` | the parent of the first item | The element the items are appended into. |
-| `mode` | `'direct'` | `'direct'` or `'cycle'`. |
-| `a11y` | `'pressed'` | `'pressed'` writes `aria-pressed` and `data-state="selected"` on the active trigger. `'sort'` writes `aria-sort` on `a11yTarget` and `data-state="active"` on the trigger. `'none'` writes nothing. |
-| `a11yTarget` | the closest `th` | A function from a trigger to the element that carries `aria-sort`. |
-| `accessor` | reads `data-sort-{key}` | A function `(item, key) => value` that returns the raw value. |
-| `keyFrom` | reads `data-sort` | A function from a trigger to its key. An empty key restores the original order. |
-| `types` | `{}` | The type of a key: `'number'`, `'date'` or `'string'`. Replaces detection for that key. |
-| `initialState` | `null` | `{ key, dir }`. Records the state without moving items. |
-| `urlSync` | `false` | `{ keyParam, dirParam }`. Reads and writes the query string. |
-| `onChange` | none | A function `({ key, dir, orderedItems, state })`, called after every sort and before the event. |
-{: .nds-table .nds-responsive}
-
-### Methods
+### JavaScript
 {: .nds-block-title}
 
 | Method | Effect |
@@ -431,8 +412,23 @@ Sort ships in the delegated bundle, which the loader injects after first paint. 
 | `sort.destroy()` | Removes the listeners. |
 {: .nds-table .nds-responsive}
 
-### Events
-{: .nds-block-title}
+The `create()` options:
+
+| Option | Default | Effect |
+|---|---|---|
+| `items` | required | The elements to move. A selector, a NodeList, an array or a function that returns them. A function is called on every sort. |
+| `triggers` | required | The elements that start a sort. Same forms as `items`. Triggers inside a portaled dropmenu are found. |
+| `reorderIn` | the parent of the first item | The element the items are appended into. |
+| `mode` | `'direct'` | `'direct'` or `'cycle'`. |
+| `a11y` | `'pressed'` | `'pressed'` writes `aria-pressed` and `data-state="selected"` on the active trigger. `'sort'` writes `aria-sort` on `a11yTarget` and `data-state="active"` on the trigger. `'none'` writes nothing. |
+| `a11yTarget` | the closest `th` | A function from a trigger to the element that carries `aria-sort`. |
+| `accessor` | reads `data-sort-{key}` | A function `(item, key) => value` that returns the raw value. |
+| `keyFrom` | reads `data-sort` | A function from a trigger to its key. An empty key restores the original order. |
+| `types` | `{}` | The type of a key: `'number'`, `'date'` or `'string'`. Replaces detection for that key. |
+| `initialState` | `null` | `{ key, dir }`. Records the state without moving items. |
+| `urlSync` | `false` | `{ keyParam, dirParam }`. Reads and writes the query string. |
+| `onChange` | none | A function `({ key, dir, orderedItems, state })`, called after every sort and before the event. |
+{: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
 |---|---|---|

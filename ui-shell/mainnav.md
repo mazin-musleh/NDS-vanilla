@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="mainnavOverview" class="nds-content-section nds-doc-overview">
@@ -471,7 +471,8 @@ The canon carries the Services dropdown, the search action and the language acti
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Brand | Logo and name (default) | — | — | The logo, the site name and the slogan. Leave the slogan out when the name says enough |
+| Brand | Logo and name (default) | — | — | The logo, the site name and the slogan |
+| Brand | Without slogan | `remove` | `.nds-brand-slogan` | The logo and the name, with no slogan. Pick it when the name says enough |
 | Brand | Logo only | `remove` | `.nds-brand-name` | Only the logo. Pick it when the logo carries the site name. Keep the logo's `alt` text |
 | Dropdowns (any) | Columns (default) | canon `#mainnav-columns` | `.nds-nav-primary` | A menu of titled columns, `.nds-nav-columns`. Pick it to group many pages by topic. `nds-multi-col` spreads one long list over 3 columns |
 | Dropdowns (any) | Row list | canon `#mainnav-rows` | `.nds-nav-primary` | A menu of one row of links, `.nds-nav-row`. Pick it for a short flat list |

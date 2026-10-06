@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.2.0"
-updated: "1.5.0"
-last_edit: "06/10/2026 - 07:08 PM"
+updated: "1.12.x"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="tokensOverview" class="nds-content-section nds-doc-overview">
@@ -175,10 +175,12 @@ Pick another page when:
     <div class="nds-section-body nds-prose" markdown="1">
 
 ### Knobs
+{: .nds-block-title}
 
 A knob styles one element, such as `--btn-size`. It is undefined by default, and the component falls back to its own value. Set it in the element's `style` or on a class. A knob set on a wrapper reaches every component inside.
 
 ### Resolution Chain
+{: .nds-block-title}
 
 A painted value goes down a chain from a knob to the palette. Change any token in the chain, and everything above it follows.
 
@@ -194,10 +196,12 @@ A painted value goes down a chain from a knob to the palette. Change any token i
 </script>
 
 ### Dark Mode
+{: .nds-block-title}
 
 `data-theme="dark"` on `<html>` switches the semantic and component tokens to their dark values. On any other element, it makes that element a dark area: both tiers are declared again on it, with dark values. Some components also have dark rules of their own. Switching and saving the mode is on the [Themes](../components/themes) page.
 
 ### Override Scope
+{: .nds-block-title}
 
 A token that reads another token takes its value where it is declared. The semantic and component tokens are declared at `:root`, so they read the palette there. A palette token set on a wrapper does not change them. On a wrapper, set the token that the component reads.
 

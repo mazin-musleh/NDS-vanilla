@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="chipOverview" class="nds-content-section nds-doc-overview">
@@ -231,6 +231,8 @@ chips.appendChild(NDS.buildChip('Riyadh', {
   onRemove: function (e) { e.currentTarget.remove(); }
 }));
 </script>
+
+The full API is in the banner of `_js/nds-core.js`.
 
 </div>
   </div>

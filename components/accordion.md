@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="accordionOverview" class="nds-content-section nds-doc-overview">
@@ -147,7 +147,7 @@ The first item is open in the markup: its button has `aria-expanded="true"` and 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Text (default) | — | — | A title on each button. For most lists, such as questions and answers |
-| Structure | Leading icons | canon #accordion-icons | — | An icon before each title, for topics that people find faster by picture. Give every item an icon, or none |
+| Structure | Leading icons | canon `#accordion-icons` | — | An icon before each title, for topics that people find faster by picture. Give every item an icon, or none |
 | Size | LG (default) | — | — | 56px headings, for page content. It needs no class |
 | Size | MD | `.nds-md` | `.nds-accordion` | 48px headings, for a side column or a card |
 | Size | SM | `.nds-sm` | `.nds-accordion` | 40px headings, for a dense list in a panel or a filter |
@@ -286,6 +286,7 @@ By default, one item is open at a time. When a person opens an item, the open on
 |---|---|---|
 | `aria-expanded="true"` and `data-state="open"` | `.nds-accordion-btn` | Opens the item at load. The script reads `aria-expanded`. `data-state` turns the arrow before the script runs |
 | `data-state="open"` | `.nds-accordion-collapse` | Shows the panel at load, before the script runs. Set it with the two attributes above |
+| `data-state="always-open"` | `.nds-accordion` | Several items can stay open at once. Without it, opening one item closes the others. Set it yourself |
 | `data-state="loading"` | `.nds-accordion` | The same as `nds-loading`, for a script that already sets states |
 {: .nds-table .nds-responsive}
 

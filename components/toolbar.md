@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.6.0"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="toolbarOverview" class="nds-content-section nds-doc-overview">
@@ -81,8 +81,7 @@ The dashed boxes are [Content Placeholder](../utilities/content-placeholder) ite
 |---|---|---|---|---|
 | Structure | One line (default) | — | — | Items at the start and at the end. They wrap onto a new line when they do not fit |
 | Structure | Rows (hint: Each row takes a line of its own) | canon `#toolbar-rows` | — | Each `nds-bar-row` takes a line of its own. Use it when the bar needs more than one line, or to keep some items together on one line at every width |
-| Margin | Default (default) | — | — | No space above the bar, and `var(--spacing-4xl)` below it |
-| Margin | None | `--toolbar-margin-block: 0` | `.nds-toolbar` | No space above or below the bar. Use it when the parent, such as a card, already sets the space |
+| Margin | No margin | `--toolbar-margin-block: 0` | `.nds-toolbar` | No space above or below the bar. Use it when the parent, such as a card, already sets the space |
 {: #toolbarVariantsTable .nds-table .nds-responsive}
 
 </div>

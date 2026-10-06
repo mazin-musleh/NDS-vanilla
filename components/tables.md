@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "06/10/2026 - 10:17 PM"
 ---
 
 <section id="tableOverview" class="nds-content-section nds-doc-overview">
@@ -516,6 +516,7 @@ Every option goes on the outer `<table>`, never on a table in a sub-row.
 | Interactive | Interactive (hint: Rows highlight on hover) | `.nds-interactive` | `#tbl-rec-requests` | |
 | Center | Center (hint: Cell text is centered) | `.nds-center` | `#tbl-requests` | Centers the text in every cell. For short values, such as a score sheet |
 | Center | Center (hint: Cell text is centered) | `.nds-center` | `#tbl-rec-requests` | |
+| Sub-rows | Several open (hint: Detail rows stay open together) | `[data-state~="always-open"]` | `#tbl-rec-requests` | Opens more than one detail row at a time. Records only |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-requests` | Shows skeleton bars in place of the cells while new rows load. `data-state="loading"` does the same |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-rec-requests` | |
 {: #tableVariantsTable .nds-table .nds-responsive}
