@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 11:32 AM"
+last_edit: "06/10/2026 - 06:27 PM"
 ---
 
 <section id="tooltipOverview" class="nds-content-section nds-doc-overview">
@@ -252,7 +252,7 @@ Set these on `.nds-tooltip-balloon`, or on `:root` for every tooltip. The balloo
 ### Tokens
 {: .nds-block-title}
 
-The theme-wide tokens of the tooltip. Set one at `:root`, or on a wrapper to reach every tooltip inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+Set a token at `:root`, or on a wrapper to reach every tooltip inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
 {{ site.data.tokens.components.tooltip.html }}
 

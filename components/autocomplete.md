@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 11:32 AM"
+last_edit: "06/10/2026 - 06:27 PM"
 ---
 
 <section id="autocompleteOverview" class="nds-content-section nds-doc-overview">
@@ -227,7 +227,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 ### Tokens
 {: .nds-block-title}
 
-The theme-wide tokens of the autocomplete. Set one at `:root`, or on a wrapper to reach every autocomplete inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token. The highlight is the background of the matched text in a suggestion.
+Set a token at `:root`, or on a wrapper to reach every autocomplete inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The highlight is the background of the matched text in a suggestion.
 
 {{ site.data.tokens.components.autocomplete.html }}
 

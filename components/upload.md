@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 11:32 AM"
+last_edit: "06/10/2026 - 06:27 PM"
 ---
 
 <section id="uploadOverview" class="nds-content-section nds-doc-overview">
@@ -345,7 +345,7 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
 ### Tokens
 {: .nds-block-title}
 
-The theme-wide tokens of the upload. Set one at `:root`, or on a wrapper to reach every upload inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token. The active drop zone background shows while a file is dragged over it.
+Set a token at `:root`, or on a wrapper to reach every upload inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The active drop zone background shows while a file is dragged over it.
 
 {{ site.data.tokens.components.upload.html }}
 

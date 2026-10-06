@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.5.0"
-last_edit: "06/10/2026 - 05:42 PM"
+last_edit: "06/10/2026 - 07:08 PM"
 ---
 
 <section id="tokensOverview" class="nds-content-section nds-doc-overview">
@@ -18,10 +18,10 @@ last_edit: "06/10/2026 - 05:42 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A token is a CSS custom property that NDS defines at `:root`, in four tiers. Each tier reads from the one below it, so a change low in the chain reaches everything above it. Dark mode changes the semantic and component tiers only.
+A token is a CSS custom property that NDS defines at `:root`, in four tiers. Semantic tokens read the palette. Component tokens read a semantic or a palette token. A change low in the chain reaches every token that reads it.
 
 - **Palette**: the raw colors, such as `--colors-primary-600`. A theme replaces the four brand ramps. Base, the alphas and the status hues stay fixed.
-- **Primitives**: the sizes, such as `--spacing-xl`: spacing, radius, typography, the page shell, the transition and the font.
+- **Primitives**: the sizes, such as `--spacing-xl`: spacing, radius, typography, the font, the page shell and the transition.
 - **Semantic**: one meaning each, system-wide, such as `--text-error`. The value is a palette token.
 - **Component**: one component's own dial, such as `--button-background-primary-default`. The value is a semantic or palette token.
 
@@ -40,32 +40,21 @@ Pick another page when:
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
-    <div class="nds-section-body nds-prose" markdown="1">
-
-Pick a pack. Each token previews as what it paints, with its name, its value and a button that copies the token. A semantic swatch reads the live token: press Dark on the card, and it repaints with the dark value listed under it. The component pack shows its code alone, with the dark rule under the light one: each component's page lists its own tokens.
-
-The code is the pack as the NDS CSS declares it. To override tokens, copy it into your stylesheet and keep only the lines you change.
-
+    <div class="nds-section-body">
 {% comment %} Agents: each pack is generated at build time by _plugins/tokens_data.rb. Read the names and values in _sass/themes/_dga.scss, _sass/tokens/_primitives.scss, _sass/tokens/_semantic.scss and _sass/tokens/_components.scss. {% endcomment %}
-{%- assign _dev_target = site.version | remove: "-dev" %}
-{%- if site.version != site.latest_release and page.updated == _dev_target %}
-
-<div class="nds-alert nds-card nds-inline" data-status="info" role="alert">
-  <span class="nds-feedback nds-alert-icon">
-    <span class="nds-feedback-icon">
-      <i class="nds-icon" aria-hidden="true"></i>
-    </span>
-  </span>
-  <div class="nds-alert-content">
-    <div class="nds-alert-text">
-      <span class="nds-alert-title">Documentation preview</span>
-      <p class="nds-alert-description">This page runs ahead of the current release (v{{ site.latest_release }}). It can list tokens that the published CSS does not have yet.</p>
-    </div>
-  </div>
-</div>
-{%- endif %}
-
-<script type="text/html" id="tokens-spacing" data-canon data-generated data-variants="tokensVariantsTable" data-js="tokens-spacing-css">
+<script type="text/html" id="tokens-brand" data-canon data-generated data-variants="tokensVariantsTable" data-js="tokens-brand-css">
+{{ site.data.tokens.packs.brand.html }}
+</script>
+<script type="text/html" id="tokens-brand-css" data-canon data-generated data-lang="css">
+{{ site.data.tokens.packs.brand.css }}
+</script>
+<script type="text/html" id="tokens-fixed" data-canon data-generated data-js="tokens-fixed-css">
+{{ site.data.tokens.packs.fixed.html }}
+</script>
+<script type="text/html" id="tokens-fixed-css" data-canon data-generated data-lang="css">
+{{ site.data.tokens.packs.fixed.css }}
+</script>
+<script type="text/html" id="tokens-spacing" data-canon data-generated data-js="tokens-spacing-css">
 {{ site.data.tokens.packs.spacing.html }}
 </script>
 <script type="text/html" id="tokens-spacing-css" data-canon data-generated data-lang="css">
@@ -95,59 +84,47 @@ The code is the pack as the NDS CSS declares it. To override tokens, copy it int
 <script type="text/html" id="tokens-font-css" data-canon data-generated data-lang="css">
 {{ site.data.tokens.packs.font.css }}
 </script>
-<script type="text/html" id="tokens-shell" data-canon data-generated data-js="tokens-shell-css">
-{{ site.data.tokens.packs.shell.html }}
-</script>
-<script type="text/html" id="tokens-shell-css" data-canon data-generated data-lang="css">
-{{ site.data.tokens.packs.shell.css }}
-</script>
-<script type="text/html" id="tokens-brand" data-canon data-generated data-js="tokens-brand-css">
-{{ site.data.tokens.packs.brand.html }}
-</script>
-<script type="text/html" id="tokens-brand-css" data-canon data-generated data-lang="css">
-{{ site.data.tokens.packs.brand.css }}
-</script>
-<script type="text/html" id="tokens-fixed" data-canon data-generated data-js="tokens-fixed-css">
-{{ site.data.tokens.packs.fixed.html }}
-</script>
-<script type="text/html" id="tokens-fixed-css" data-canon data-generated data-lang="css">
-{{ site.data.tokens.packs.fixed.css }}
-</script>
-<script type="text/html" id="tokens-background" data-canon data-generated data-js="tokens-background-css">
-{{ site.data.tokens.packs.background.html }}
-</script>
-<script type="text/html" id="tokens-background-css" data-canon data-generated data-lang="css">
-{{ site.data.tokens.packs.background.css }}
-</script>
-<script type="text/html" id="tokens-text" data-canon data-generated data-js="tokens-text-css">
-{{ site.data.tokens.packs.text.html }}
-</script>
-<script type="text/html" id="tokens-text-css" data-canon data-generated data-lang="css">
-{{ site.data.tokens.packs.text.css }}
-</script>
-<script type="text/html" id="tokens-border" data-canon data-generated data-js="tokens-border-css">
-{{ site.data.tokens.packs.border.html }}
-</script>
-<script type="text/html" id="tokens-border-css" data-canon data-generated data-lang="css">
-{{ site.data.tokens.packs.border.css }}
-</script>
-<script type="text/html" id="tokens-icon" data-canon data-generated data-js="tokens-icon-css">
-{{ site.data.tokens.packs.icon.html }}
-</script>
-<script type="text/html" id="tokens-icon-css" data-canon data-generated data-lang="css">
-{{ site.data.tokens.packs.icon.css }}
-</script>
-<script type="text/html" id="tokens-controls" data-canon data-generated data-js="tokens-controls-css">
-{{ site.data.tokens.packs.controls.html }}
-</script>
-<script type="text/html" id="tokens-controls-css" data-canon data-generated data-lang="css">
-{{ site.data.tokens.packs.controls.css }}
-</script>
 <script type="text/html" id="tokens-shadow" data-canon data-generated data-js="tokens-shadow-css">
 {{ site.data.tokens.packs.shadow.html }}
 </script>
 <script type="text/html" id="tokens-shadow-css" data-canon data-generated data-lang="css">
 {{ site.data.tokens.packs.shadow.css }}
+</script>
+<script type="text/html" id="tokens-shell" data-canon data-generated data-preview="none" data-js="tokens-shell-css">
+{{ site.data.tokens.packs.shell.html }}
+</script>
+<script type="text/html" id="tokens-shell-css" data-canon data-generated data-lang="css">
+{{ site.data.tokens.packs.shell.css }}
+</script>
+<script type="text/html" id="tokens-background" data-canon data-generated data-preview="none" data-js="tokens-background-css">
+{{ site.data.tokens.packs.background.html }}
+</script>
+<script type="text/html" id="tokens-background-css" data-canon data-generated data-lang="css">
+{{ site.data.tokens.packs.background.css }}
+</script>
+<script type="text/html" id="tokens-text" data-canon data-generated data-preview="none" data-js="tokens-text-css">
+{{ site.data.tokens.packs.text.html }}
+</script>
+<script type="text/html" id="tokens-text-css" data-canon data-generated data-lang="css">
+{{ site.data.tokens.packs.text.css }}
+</script>
+<script type="text/html" id="tokens-border" data-canon data-generated data-preview="none" data-js="tokens-border-css">
+{{ site.data.tokens.packs.border.html }}
+</script>
+<script type="text/html" id="tokens-border-css" data-canon data-generated data-lang="css">
+{{ site.data.tokens.packs.border.css }}
+</script>
+<script type="text/html" id="tokens-icon" data-canon data-generated data-preview="none" data-js="tokens-icon-css">
+{{ site.data.tokens.packs.icon.html }}
+</script>
+<script type="text/html" id="tokens-icon-css" data-canon data-generated data-lang="css">
+{{ site.data.tokens.packs.icon.css }}
+</script>
+<script type="text/html" id="tokens-controls" data-canon data-generated data-preview="none" data-js="tokens-controls-css">
+{{ site.data.tokens.packs.controls.html }}
+</script>
+<script type="text/html" id="tokens-controls-css" data-canon data-generated data-lang="css">
+{{ site.data.tokens.packs.controls.css }}
 </script>
 <script type="text/html" id="tokens-component" data-canon data-generated data-preview="none" data-js="tokens-component-css">
 {{ site.data.tokens.packs.component.html }}
@@ -167,24 +144,22 @@ The code is the pack as the NDS CSS declares it. To override tokens, copy it int
     </div>
     <div class="nds-section-body" markdown="1">
 
-Each pack is a set of tokens. A pack previews each token as what it paints: a ruler, a type specimen, swatches that follow the mode. The component pack shows its code alone. The code is the pack's rules from the NDS CSS.
-
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Pack | Spacing (default) (hint: Primitive tokens) | — | — | Gaps, padding and margins, on a 4px grid |
+| Pack | Brand colors (default) (hint: Palette tokens) | — | — | The four brand ramps, which a theme replaces. Read them through a semantic token when one has the meaning |
+| Pack | Fixed colors (hint: Palette tokens) | canon `#tokens-fixed` | — | Black, white, the white and black alphas, and the status ramps. A theme does not change them |
+| Pack | Spacing (hint: Primitive tokens) | canon `#tokens-spacing` | — | Gaps, padding and margins, on a 4px grid |
 | Pack | Radius (hint: Primitive tokens) | canon `#tokens-radius` | — | Corner radius |
 | Pack | Typography (hint: Primitive tokens) | canon `#tokens-typography` | — | The fixed sizes: font size (`-FS`) and line height (`-LH`). Use each FS with its LH |
 | Pack | Fluid typography (hint: Primitive tokens) | canon `#tokens-fluid` | — | The sizes that grow with the screen width, between a minimum and a maximum. The display sizes add the space below (`-MB`) |
 | Pack | Font (hint: Primitive tokens) | canon `#tokens-font` | — | The font family and the four font weights |
+| Pack | Shadow (hint: Semantic tokens) | canon `#tokens-shadow` | — | Shadows from `xs` to `3xl`, a top shadow and an inset shadow |
 | Pack | Layout & shell (hint: Primitive tokens) | canon `#tokens-shell` | — | The page shell sizes, the content width and the transition |
-| Pack | Brand colors (hint: Palette tokens) | canon `#tokens-brand` | — | The four brand ramps, which a theme replaces. Read them through a semantic token when one has the meaning |
-| Pack | Base, status & alpha (hint: Palette tokens) | canon `#tokens-fixed` | — | Black, white, the white and black alphas, and the status ramps. A theme does not change them |
 | Pack | Background (hint: Semantic tokens) | canon `#tokens-background` | — | Surface colors by meaning: page, card, menu, overlay, brand and status fills |
 | Pack | Text (hint: Semantic tokens) | canon `#tokens-text` | — | Text colors by meaning: body, display, brand, status, on a colored fill, disabled |
 | Pack | Border & focus (hint: Semantic tokens) | canon `#tokens-border` | — | Border colors by meaning, the divider and the focus ring |
 | Pack | Icon (hint: Semantic tokens) | canon `#tokens-icon` | — | Icon colors by meaning, with their light fills and rings |
 | Pack | Controls (hint: Semantic tokens) | canon `#tokens-controls` | — | The fills that checkbox, radio, switch and slider share |
-| Pack | Shadow (hint: Semantic tokens) | canon `#tokens-shadow` | — | Shadows from `xs` to `3xl`, a top shadow and an inset shadow |
 | Pack | Component (hint: Component tokens) | canon `#tokens-component` | — | Each component's own tokens, under its name. Set them to restyle that component alone. Each component's page lists its own |
 {: #tokensVariantsTable .nds-table .nds-responsive}
 
@@ -203,30 +178,6 @@ Each pack is a set of tokens. A pack previews each token as what it paints: a ru
 
 A knob styles one element, such as `--btn-size`. It is undefined by default, and the component falls back to its own value. Set it in the element's `style` or on a class. A knob set on a wrapper reaches every component inside.
 
-### Dark Mode
-
-`data-theme="dark"` on `<html>` switches the semantic and component tokens to their dark values. On any other element, it makes that element a dark area: both tiers are declared again on it, with dark values. Some components also have dark rules of their own. Switching and saving the mode is on the [Themes](../components/themes) page.
-
-### Override Scope
-
-A token that reads another token takes its value where it is declared. The semantic and component tokens are declared at `:root`, so they read the palette there. A palette token set on a wrapper does not change them. On a wrapper, set the token that the component reads.
-
-To change a token on every page, set it in your own stylesheet, loaded after `nds-main.min.css`. Repeat both NDS selectors: a dark area declares every token again with the NDS values, so a plain `:root` rule does not reach it. Give the override a dark value too, or dark mode shows the NDS one.
-
-<script type="text/html" id="tokens-override" data-canon data-lang="css" data-preview="none">
-/* Light mode. Dark areas match too, which keeps your value there for a token with no dark value */
-:root,
-[data-theme~="dark"]:not(:root) {
-  --background-card: #fffdf5;
-}
-
-/* Dark mode and dark areas. This rule comes last, so a dark area takes its value */
-:root[data-theme~="dark"],
-[data-theme~="dark"]:not(:root) {
-  --background-card: #26221a;
-}
-</script>
-
 ### Resolution Chain
 
 A painted value goes down a chain from a knob to the palette. Change any token in the chain, and everything above it follows.
@@ -242,6 +193,30 @@ A painted value goes down a chain from a knob to the palette. Change any token i
 --controls-primary-checked: var(--colors-primary-600);          /* semantic token */
 </script>
 
+### Dark Mode
+
+`data-theme="dark"` on `<html>` switches the semantic and component tokens to their dark values. On any other element, it makes that element a dark area: both tiers are declared again on it, with dark values. Some components also have dark rules of their own. Switching and saving the mode is on the [Themes](../components/themes) page.
+
+### Override Scope
+
+A token that reads another token takes its value where it is declared. The semantic and component tokens are declared at `:root`, so they read the palette there. A palette token set on a wrapper does not change them. On a wrapper, set the token that the component reads.
+
+To change a token on every page, set it in your own stylesheet, loaded after `nds-main.min.css`. Repeat both NDS selectors: a dark area declares every token again with the NDS values, so a plain `:root` rule does not reach it. Give the override a dark value too, or dark mode shows the NDS one. A pack's code has both rules: copy it and keep only the lines you change.
+
+<script type="text/html" id="tokens-override" data-canon data-lang="css" data-preview="none">
+/* Light mode. Dark areas match too, which keeps your value there for a token with no dark value */
+:root,
+[data-theme~="dark"]:not(:root) {
+  --background-card: #fffdf5;
+}
+
+/* Dark mode and dark areas. This rule comes last, so a dark area takes its value */
+:root[data-theme~="dark"],
+[data-theme~="dark"]:not(:root) {
+  --background-card: #26221a;
+}
+</script>
+
 </div>
   </div>
 </section>
@@ -253,20 +228,6 @@ A painted value goes down a chain from a knob to the palette. Change any token i
     </div>
     <div class="nds-section-body">
       <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-file-sync"></i>
-            <span class="nds-label">Packs From the Source</span>
-          </span>
-          <p class="nds-item-desc">The build reads each pack from the token source: its names, values, dark values and rules. The packs show what the CSS ships.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-moon-02"></i>
-            <span class="nds-label">Dark Values</span>
-          </span>
-          <p class="nds-item-desc">The semantic and component tiers each have a dark block. A style that reads them changes with the mode and needs no dark rule of its own.</p>
-        </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
             <i class="hgi hgi-stroke hgi-text-font"></i>

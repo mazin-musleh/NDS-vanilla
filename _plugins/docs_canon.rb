@@ -25,6 +25,10 @@ module DocsCanon
               '.nds-doc-ramps{display:grid;gap:var(--spacing-xl);inline-size:100%}' \
               '.nds-doc-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:var(--spacing-xs);margin-block-start:var(--spacing-xs)}' \
               '.nds-doc-step{display:grid;gap:var(--spacing-xxs);text-align:center;font-size:var(--typo-text-xs-FS)}' \
+              'button.nds-doc-swatch{display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;cursor:pointer;font-size:16px;color:var(--colors-base-black)}' \
+              'button.nds-doc-swatch:is(:hover,:focus-visible,[data-status]){--_swatch-mark:1}' \
+              'button.nds-doc-swatch .nds-icon{opacity:var(--_swatch-mark,0)}' \
+              '.nds-doc-swatch.nds-doc-ondark.nds-copy{color:var(--colors-base-white)}' \
               '.nds-doc-step .nds-doc-swatch{inline-size:100%}' \
               '.nds-doc-name{display:inline-flex;align-items:center;gap:var(--spacing-xs);font-size:var(--typo-text-sm-FS);line-height:var(--typo-text-sm-LH);font-weight:var(--font-weight-medium);color:var(--text-display);overflow-wrap:anywhere}' \
               '.nds-doc-name .nds-btn{--btn-size:24px}' \

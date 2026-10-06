@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 11:32 AM"
+last_edit: "06/10/2026 - 06:27 PM"
 lang: en
 direction: ltr
 ---
@@ -591,7 +591,7 @@ The checks are the browser's own: write these standard attributes on the input. 
 ### Tokens
 {: .nds-block-title}
 
-The theme-wide tokens of the field. Set one at `:root`, or on a wrapper to reach every field inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+Set a token at `:root`, or on a wrapper to reach every field inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
 {{ site.data.tokens.components.forms.html }}
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 11:32 AM"
+last_edit: "06/10/2026 - 06:27 PM"
 ---
 
 <section id="sliderOverview" class="nds-content-section nds-doc-overview">
@@ -233,7 +233,7 @@ The script writes `--slider-fill-start` and `--slider-fill-end` on `.nds-slider-
 ### Tokens
 {: .nds-block-title}
 
-The theme-wide tokens of the slider. Set one at `:root`, or on a wrapper to reach every slider inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token. The hovered thumb color also shows on keyboard focus.
+Set a token at `:root`, or on a wrapper to reach every slider inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The hovered thumb color also shows on keyboard focus.
 
 {{ site.data.tokens.components.slider.html }}
 
