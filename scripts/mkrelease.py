@@ -168,6 +168,12 @@ def verify(out, version):
     if tails.returncode:
         sys.exit('check-data-state-tails.py failed:\n' + tails.stdout + tails.stderr)
 
+    # Dangling var(), dead fallbacks, duplicate declarations: invisible until a mode breaks.
+    css = subprocess.run('python scripts/check-css.py', cwd=ROOT,
+                         shell=True, capture_output=True, text=True)
+    if css.returncode:
+        sys.exit('check-css.py failed:\n' + css.stdout + css.stderr)
+
     # A pack's inline <style> wins over its fresh .min.css, so a pack not rebuilt
     # after an SCSS change ships the old look.
     packs = subprocess.run('python scripts/check-event-css.py', cwd=ROOT,

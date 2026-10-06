@@ -142,7 +142,7 @@ Two tiers — direct-named single-file audits behave differently from full-tree 
 
 **Excluded always (no direct-named carve-out):**
 
-- `_js/nds-showcase.js` — demo-page wiring, not a shipped component (its SCSS counterpart `_sass/_showcase.scss` is likewise Tier-1-excluded in `nds-css-audit`).
+- `_js/nds-showcase.js` — demo-page wiring, not a shipped component.
 - Any `.min.js` file.
 
 ---
