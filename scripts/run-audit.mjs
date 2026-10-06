@@ -24,9 +24,9 @@ page.on('console', (msg) => {
 });
 
 await page.goto(`${BASE}/${PAGE}`, { waitUntil: 'networkidle' });
-// The icon check reads ::before masks — wait for the icons CSS stamp so a
+// The icon check reads ::before masks — wait for the icons sheet to apply so a
 // manual run can't race it into false icon warnings.
-await page.waitForFunction(() => document.documentElement.hasAttribute('data-nds-icons-loaded'), null, { timeout: 8000 }).catch(() => {});
+await page.waitForFunction(() => [...document.querySelectorAll('link[href*="nds-icons.min.css"]')].some((l) => l.sheet), null, { timeout: 8000 }).catch(() => {});
 
 console.log(`page: ${PAGE}`);
 // A pre-split runtime (≤1.8.1) has no NDS.Audit stub and its manifest names no

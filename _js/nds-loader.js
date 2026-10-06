@@ -3,375 +3,215 @@
  * Methods:
  *   NDS.Init.initialize()      run the full init pass (called automatically on DOM ready)
  *   NDS.Init.components        the component registry: {name, selector, init, critical}
- *                              (+ optional lazy() — arm this component's trigger
- *                              instead of fetching its bundle; the lazy stub
- *                              fetches it when the trigger calls the namespace.
- *                              Needs its OWN bundle, or a sibling pulls it anyway.
- *                              + optional eager() to opt an instance back in, e.g.
- *                              a visitor whose persisted state must apply at load;
- *                              + optional refresh — the NDS.Init.refresh hook for a
- *                              component that drives a container from outside it;
- *                              + optional destroyEach/destroySelector — the
- *                              NDS.Init.destroy hook for a component that keeps no
- *                              element backref and tears down from its namespace)
+ *                              (init defaults to NDS[name].init(); selector null = every page;
+ *                              + optional lazy() — arm the trigger instead of fetching the
+ *                              bundle, which needs its OWN bundle or a sibling pulls it anyway;
+ *                              + optional eager() to opt an instance back in;
+ *                              + optional refresh(root) — owner hook for NDS.Init.refresh;
+ *                              + optional destroy(root) / destroyEach / destroySelector —
+ *                              NDS.Init.destroy hooks for components with no element backref)
  *   NDS.Init.config            the resolved config
- *   NDS.Init.audit()           run the debug audits by hand (see nds-audit.js: lang/dir,
- *                              unregistered inline icons, unclaimed filter and paged
- *                              containers, unmarked current-page nav link, submit-typed
- *                              stepper controls). First call loads the audit bundle on
- *                              demand and returns a promise; later calls are synchronous.
- *   NDS.Init.refresh(el)       tell every live component that el's contents changed —
- *                              the one call after you add/remove/replace rows or cards.
- *                              Pass the container whose CHILDREN changed; omit it for
- *                              the whole document
- *   NDS.Init.mount(el)         el's markup is NEW to the page (built or fetched after
- *                              the detection pass): load the bundles its own content
- *                              needs, then init them against it → Promise. refresh()
- *                              skips a namespace whose bundle never arrived; mount()
- *                              fetches it
- *   NDS.Init.destroy(el)       tear down every component instance inside el before the
- *                              container itself goes away — the one call on unmount.
+ *   NDS.Init.audit()           run the debug audits (nds-audit.js). First call loads the
+ *                              audit bundle and returns a promise; later calls are synchronous.
+ *   NDS.Init.refresh(el)       el's CHILDREN changed (rows/cards added or removed) — re-scan
+ *                              every live component. Omit el for the whole document
+ *   NDS.Init.mount(el)         el's markup is NEW to the page: load the bundles its content
+ *                              needs, then init them against it → Promise
+ *   NDS.Init.destroy(el)       tear down every instance inside el before it leaves the page.
  *                              Returns how many instances it destroyed
- *   NDS.loadBundle(name)       load one injected bundle on demand, then call that
- *                              component's init() → Promise
- *   NDS.loadExtras()           back-compat shim for loadBundle('extras')
+ *   NDS.loadBundle(name)       load one injected bundle on demand → Promise
  * Events:
  *   (none)
  * Hooks (window globals — set these BEFORE the bundle loads):
- *   window.NDSInitConfig   {autoInitialize, disableAll, enableLogging, enableTiming}
+ *   window.NDSInitConfig   {autoInitialize, disableAll, enableLogging, enableTiming, initBudgetMs}
  *   window.NDSAssetBase    override the directory the injected bundles load from
  *   window.__NDS_BUNDLES   the build-generated bundle manifest — never hand-write it
  *   written by the loader: data-nds-loaded on <html> — the reveal stamp, set once the
  *                          main CSS has applied; data-paged-split on each .nds-paged-content
  *                          at init (items past its --per-page, else 6, get hidden);
  *                          data-swiper-preset on each swiper, with --slides and the
- *                          peek state its init will pick (skeleton row = final row),
- *                          and data-swiper-single when its slides fit one page; in RTL
- *                          each multi-page track is pinned to scrollLeft 0 after the
- *                          stamp (WebKit lands a newly overflowing RTL track at its end)
+ *                          peek state its init will pick, and data-swiper-single when its
+ *                          slides fit one page; in RTL each multi-page track is pinned to
+ *                          scrollLeft 0 after the stamp (WebKit lands it at its end)
  * Gotchas:
- *   - nds-main.min.js is a defer script and GATES the page reveal; every other bundle
- *     is injected after the reveal or pulled on demand, and never gates anything.
- *   - A component whose bundle has not arrived still answers: the loader installs a lazy
- *     stub, so NDS.X.method() triggers the load instead of throwing.
- *   - After injecting content, reach for NDS.Init.refresh(container) — one call, and
- *     no component can be silently forgotten. NDS.Init.initialize() re-sweeps and
- *     re-tags the whole page; a single component's own reinit() is fine when you are
- *     certain it is the only one affected.
- *   - NDS.Init.refresh() skips any component whose bundle has not loaded. That is
- *     correct, not a gap: it has initialized nothing yet, and it scans the new DOM
- *     when it arrives. Touching the stub would force the bundle to load instead.
- *   - Removing a container is NOT the same as changing its contents. refresh() re-scans
- *     what is still there; destroy() releases what is about to leave. A server-rendered
- *     page never needs destroy() — nothing unmounts — but a framework route that swaps
- *     views does, or every instance keeps its listeners and observers alive.
+ *   - nds-main.min.js is a defer script and GATES the reveal; every other bundle is
+ *     injected after it or pulled on demand.
+ *   - A component whose bundle has not arrived answers through a lazy stub: a method
+ *     call loads the bundle and returns a Promise. A synchronous READ gets a truthy
+ *     stub, so main-bundle code that reads an API synchronously keeps it in main.
+ *   - refresh() skips a stubbed namespace on purpose — it scans the DOM when it lands.
+ *     Content built after detection needs mount(), which fetches the bundle.
+ *   - refresh() re-scans what stays; destroy() releases what leaves. A framework route
+ *     that swaps views needs destroy(), or every instance keeps its listeners alive.
  *   - Bundle membership is generated by the build. Never hardcode it in JS.
  */
-// NDS Unified Initialization System
 (() => {
     'use strict';
 
-    // Component registry. Array order = init order WITHIN each tier — the
-    // partition (see initializeNDS) splits this list into critical / deferred /
-    // per-injected-bundle buckets that run in sequence: critical batches →
-    // deferred idle drain → each bundle's group on arrival. Reordering changes
-    // order only among same-tier components.
-    //
-    // Standard component API contract:
-    //   Factory components (per-element):  init(), reinit(), create(el)
-    //   Singleton components (one global): init() + component-specific methods
-    //   Utility/API components:            init() + utility methods
-    //
-    // All components live under the NDS.* namespace (e.g. NDS.Modal, NDS.Accordion)
-    // Form sub-systems are grouped: NDS.Forms, NDS.Upload, NDS.OTP
-    // Core utilities: NDS.Theme, NDS.debounce, NDS.onDOMAdd, etc.
-    // Pre-boot window globals (set before this bundle loads, so they live on
-    // window, not NDS): window.NDSInitConfig (init config), window.NDSAssetBase
-    // (asset-dir override), window.__NDS_BUNDLES (build-generated bundle manifest).
+    // Array order = init order within each tier (critical → deferred idle drain →
+    // each injected bundle's group on arrival). `name` must equal the NDS namespace:
+    // it keys the default init and the build manifest lookup.
+    // Each `critical` / deferred note says why the component is safe (or not) to init late.
     const COMPONENTS = [
         {
             name: 'Mainnav',
             selector: '.nds-main-nav',
-            init: () => NDS.Mainnav?.init?.(),
-            // An owner hook, not a scanner: the nav resolves its own markup, and the
-            // container a consumer passes is usually the view INSIDE the chrome, which no
-            // selector test against `.nds-main-nav` would ever match. reinit() re-resolves
-            // and rewires, which is what a nav mounted after the bundle (or replaced by a
-            // route change) needs — a plain init() would no-op on the stale guard.
+            // Owner hook: the container passed is usually the view INSIDE the chrome, and
+            // a plain init() would no-op on the stale guard after a route change.
             refresh: () => NDS.Mainnav?.reinit?.(),
         },
         {
-            // Deferred: the saved theme is stamped pre-paint by the inline FOUC
-            // script (head-inline-scripts.html) and critical-inline CSS paints the
-            // [data-theme="dark"] body/hero bg, so first paint is correct with no JS.
-            // init() only syncs toggle-widget UI (icon/checkbox/aria) and wires the
-            // toggle — no page-color repaint; theme application fires on interaction.
+            // Deferred: the inline head script stamps the saved theme pre-paint; init only syncs the toggle UI.
             name: 'Theme',
             selector: '[data-theme-toggle], #ndsThemeToggle, [data-theme-value]',
-            init: () => NDS.Theme?.init?.(),
         },
         {
-            // Critical: init un-hides [hidden] FOUC-guard form wrappers and reveals
-            // the .nds-clear button on pre-filled fields — first-paint writes that
-            // CLS if deferred (forms have no own skeleton; the content-layout gate
-            // hides them until reveal). Init is cold (no layout reads).
+            // Critical: init un-hides [hidden] form wrappers and reveals .nds-clear on pre-filled fields (CLS if late).
             name: 'Forms',
             selector: '.nds-form-control',
-            init: () => NDS.Forms?.init?.(),
             critical: true,
         },
         {
-            // Deferred but stays in MAIN (no bundle): init() restores pre-selected
-            // labels, which are JS-derived from the option text. A delegated/extras
-            // bundle loads after the critical pass, so a pre-filled select would flash
-            // empty until then on slow links — keep the code in main so the restore
-            // runs on the local idle pass. Each select's NDS.Dropmenu builds lazily
-            // on first focusin; forms doesn't reach in, so no critical→deferred dependency.
+            // Deferred but in main: init restores JS-derived labels, which would flash empty behind a bundle fetch.
             name: 'CustomSelect',
             selector: '.nds-select-input',
-            init: () => NDS.CustomSelect?.init?.(),
         },
         {
-            // Extras, beside date-picker: the field itself is authored markup and
-            // paints complete with no JS — only the panel is generated, and it is
-            // built on first open. A click in the pre-bundle gap no-ops and works
-            // on the next one.
+            // Extras: the field paints complete with no JS; the panel is built on first open.
             name: 'TimePicker',
             selector: '.nds-time-input',
-            init: () => NDS.TimePicker?.init?.(),
         },
         {
-            // Deferred: input wiring fires on user typing — no first-paint
-            // visual. The input[autofocus] restore is opt-in; pages that
-            // ship autofocus on an OTP input will see the restore delayed
-            // by one idle slot. Acceptable for the common case.
+            // Deferred: input wiring fires on typing; an autofocus restore lands one idle slot later.
             name: 'OTP',
             selector: '.nds-otp-group',
-            init: () => NDS.OTP?.init?.(),
         },
         {
-            // Deferred: rule chips are server-rendered at data-status="neutral"
-            // (matches empty state — no CLS), and validity is only consulted at
-            // submit. Ships in the delegated bundle — init's check() recomputes
-            // from the current value, so keystrokes in the pre-bundle gap recover.
+            // Deferred: chips ship at data-status="neutral"; init's check() recomputes from the current value.
             name: 'Password',
             selector: '.nds-form-container.nds-password',
-            init: () => NDS.Password?.init?.(),
         },
         {
             name: 'Tabs',
             selector: '.nds-tabs',
-            init: () => NDS.Tabs?.init?.(),
         },
         {
-            // Deferred: init reparents the table into .nds-table-wrapper (the
-            // overflow-x scroll container) + wires sort/select. The reparent is
-            // layout-neutral (wrapper adds overflow only, no box-size change), so
-            // it forces no reflow and measured ~0 CLS in the delegated bundle —
-            // safe to load late. Sort/select clicks in the pre-bundle gap no-op
-            // and recover on the next click.
+            // Deferred: the wrapper reparent is layout-neutral; clicks in the gap no-op and recover.
+            // No refresh hook on purpose: re-applying a sort would re-order a server-sorted page by cell text.
             name: 'Tables',
             selector: '.nds-table',
-            // No refresh hook on purpose. Re-applying an active sort here was tried
-            // and REVERTED: NDS.Sort's accessor falls back to cell TEXT, so it always
-            // has a value to sort by, and a server-sorted page (server ordered all
-            // 500 rows, returned 20) would be silently re-ordered client-side by the
-            // rendered text. Sub-rows read the DOM live, so scanning
-            // for new tables via init() is all this needs. A client-side list that
-            // wants late rows folded into an active sort calls NDS.Sort's own
-            // refresh() — an explicit choice, not a default that corrupts servers.
-            init: () => NDS.Tables?.init?.(),
         },
         {
-            // Deferred: default-open panels now ship data-state="open" in markup
-            // (button + collapse), so CSS paints them expanded with no JS — the
-            // :not([data-nds-accordion-initialized]) rule suppresses the load
-            // transition, so there's no collapsed→open animation or CLS. init()
-            // only reconciles state + wires clicks; rides the delegated bundle.
-            // Header clicks in the pre-bundle gap no-op and recover on the next click.
+            // Deferred: default-open panels ship data-state="open", so CSS paints them with no JS.
             name: 'Accordion',
             selector: '.nds-accordion',
-            init: () => NDS.Accordion?.init?.(),
         },
         {
-            // Delegated: pre-init paint is CSS-owned, keyed on the stepper's
-            // OWN stamp (_stepper.scss skeleton: title/description bars +
-            // circle fills; radial force-shows its first step, which would
-            // otherwise paint EMPTY without JS data-state stamping). Init
-            // landing after the reveal swaps placeholders for the stamped
-            // states in place. The layout is CSS alone, so it never waits on init.
+            // Delegated: the skeleton is keyed on the stepper's own stamp; layout is CSS alone.
             name: 'Stepper',
             selector: '.nds-stepper',
-            init: () => NDS.Stepper?.init?.(),
         },
         {
-            // Delegated: pre-init paint is CSS-owned, keyed on the swiper's
-            // OWN stamp (crit: hero collapses to slide 1; non-hero pins a
-            // clipped card-width slide row; _swiper.scss reserves the
-            // [hidden] nav row) — so init landing after the reveal releases
-            // into reserved space, no track re-expansion. Hero LCP is the
-            // slide-1 image, painted from markup regardless of JS. The
-            // foundation-day slide injector handles the init race in both
-            // directions (reinit only after the stamp).
+            // Delegated: crit + presetSwipers reserve the final row, so init releases into reserved space.
             name: 'Swiper',
             selector: '.nds-swiper',
-            init: () => NDS.Swiper?.init?.(),
             destroyEach: true,
         },
         {
             name: 'Upload',
             selector: '.nds-file-upload',
-            init: () => NDS.Upload?.init?.(),
         },
         {
-            // Deferred + self-contained: the Web Speech engine + button live in
-            // nds-voice-input.js, consumed by nothing else. Interaction-driven
-            // (recognition starts on click), so a late wire lands before the click.
+            // Deferred: recognition starts on click, so a late wire lands first.
             name: 'VoiceInput',
             selector: '.nds-voice-input',
-            init: () => NDS.VoiceInput?.init?.(),
         },
         {
-            // Critical: init un-hides the [hidden] mobile toggle and fills its
-            // collapsed label from the server-rendered active item. Deferral = toggle
-            // CLS + a hidden nav affordance until the idle pass.
+            // Critical: init un-hides the mobile toggle and fills its label (CLS if late).
             name: 'Sidemenu',
             selector: '.nds-sidemenu',
-            init: () => NDS.Sidemenu?.init?.(),
             critical: true,
         },
         {
-            // Critical: the hero-aside variant paints the panel at a -180px
-            // placeholder (--nds-sideinfo-top fallback); init's first updatePosition
-            // writes the measured hero-head offset. Deferral lands that correction
-            // post-reveal = vertical jump of an above-the-fold aside (CLS). Cold-init
-            // (first measure rides the onElementResize initial callback).
+            // Critical: the hero-aside variant jumps from its -180px placeholder if positioned late.
             name: 'Sideinfo',
             selector: '.nds-sideinfo',
-            init: () => NDS.Sideinfo?.init?.(),
             destroyEach: true,
             critical: true,
         },
         {
-            // Critical: initActiveStates expands the active-page path at init so
-            // the current page is visible without a manual expand (ease of
-            // use). The server marks the active leaf but paints its ancestors
-            // collapsed, so deferral would pop the path open post-paint
-            // (CLS) and hide the active item. Init is cold (no layout reads).
+            // Critical: init expands the active-page path; late = the path pops open post-paint.
             name: 'Drawer',
             selector: '.nds-drawer',
-            init: () => NDS.Drawer?.init?.(),
             destroyEach: true,
             critical: true,
         },
         {
-            // Critical: data-toc-source TOCs build their list from page headings at
-            // init (populate → replaceChildren), a structural height change that
-            // CLSs if it lands after the critical pass — and the list count is
-            // arbitrary, so no CSS skeleton can reserve the slot. Ships in main so
-            // it wires in the first burst; init does no layout reads (the measuring
-            // pass is deferred to onIdle), so it adds no forced reflow.
+            // Critical: data-toc-source builds the list at init; its height is unknown, so no skeleton can reserve it.
             name: 'Toc',
             selector: '.nds-toc',
-            init: () => NDS.Toc?.init?.(),
             destroyEach: true,
             critical: true,
         },
         {
-            // Critical: the overflow affordance (has-more edge-mask + sticky
-            // show-more button) is applied via the onElementResize initial
-            // callback, which the critical pass front-loads. Deferral would pop
-            // it in post-reveal (CLS) for above-the-fold overflow content (e.g.
-            // tab bars in nds-tabs). Init is cold — no synchronous layout reads
-            // (the first measure runs in the ResizeObserver callback).
+            // Critical: the overflow affordance would pop in post-reveal on above-the-fold tab bars.
             name: 'ScrollMore',
             selector: '.nds-scroll-more',
-            init: () => NDS.ScrollMore?.init?.(),
             destroyEach: true,
             critical: true,
         },
         {
-            // Deferred: progress animations are cosmetic on-scroll work.
+            // Deferred: cosmetic on-scroll animation.
             name: 'Progress',
             selector: '.nds-progress-circle, .nds-progress-bar',
-            init: () => NDS.Progress?.init?.(),
         },
         {
-            // Deferred: counter animations are cosmetic on-scroll work.
+            // Deferred: cosmetic on-scroll animation.
             name: 'Numbers',
             selector: '.nds-number-format, .nds-counter-value',
-            init: () => NDS.Numbers?.init?.(),
         },
         {
-            // Documentation-only highlighter, so it rides extras and never gates the
-            // reveal — consumer sites render no code blocks and fetch nothing.
-            // Delegate-safe: _code.scss paints the box, reserves the line-number
-            // gutter and colours inline code with no JS at all, so a late init adds
-            // only token colour + line digits and can't shift layout.
-            // `.nds-code` alone is enough: every .code-example is a tab panel inside
-            // it, and inline code needs no JS. Avoids bare `code` so detection
-            // doesn't sweep every <code> on docs pages.
+            // Docs-only, own bundle: _code.scss paints the box and gutter with no JS.
+            // `.nds-code`, not bare `code`, so detection doesn't sweep every inline <code>.
             name: 'Code',
             selector: '.nds-code',
-            init: () => NDS.Code?.init?.(),
         },
         {
             name: 'Copy',
             selector: '.nds-copy',
-            init: () => NDS.Copy?.init?.(),
         },
-        // Note: showcase is intentionally NOT registered here. Like accessibility,
-        // it ships as its own defer bundle (nds-showcase.min.js) and self-boots.
-        // The loader's init is decoupled from DOMContentLoaded, so registering it
-        // would risk init() running before that sibling bundle has executed.
+        // Showcase is not registered: it self-boots from its own defer tag, which may run after this init.
         {
+            // nds-tables starts it for a table's header select-all, stamped after detection.
             name: 'Selection',
-            // nds-tables starts it for a table's header select-all, which it stamps after detection.
             selector: '[data-selection-target]',
-            // NDS.Init.refresh hook: counters and select-all boxes live OUTSIDE the list
-            // they count, so the mutated container never matches the selector.
+            // Owner hook: counters and select-all boxes live OUTSIDE the list they count.
             refresh: () => NDS.Selection?.refresh?.(),
-            init: () => NDS.Selection?.init?.(),
         },
         {
             name: 'Share',
             selector: '.nds-share',
-            init: () => NDS.Share?.init?.(),
         },
         {
-            // Detection-only: presence of a [data-export] button loads the
-            // extras bundle; export's init wires the delegated click handler.
+            // Detection-only: a [data-export] button loads the bundle; init wires the delegated click.
             name: 'Export',
             selector: '[data-export]',
-            init: () => NDS.Export?.init?.(),
         },
         {
             name: 'DatePicker',
             selector: '.nds-date-input',
-            init: () => NDS.DatePicker?.init?.(),
         },
         {
-            // Critical: NDS.Link.init() tags external links with no layout reads
-            // (guards are hostname/classList only), so it forces no reflow and is
-            // safe before first paint — above-the-fold external badges are present
-            // on the first frame (no pop-in CLS). NOTE: keep it layout-read-free;
-            // an earlier getBoundingClientRect viewport-partition forced a full
-            // page layout here (~110ms@6.6x on index) and had to be removed.
+            // Critical: tags external links with no layout reads. Keep it read-free — a
+            // getBoundingClientRect here once forced a full layout (~110ms@6.6x).
             name: 'Link',
             selector: null,
-            init: () => NDS.Link?.init?.(),
-            universal: true,
             critical: true,
         },
         {
-            // Lazy like Accessibility, and on every page: the panel markup lives in the bundle,
-            // so a visitor with a stored choice fetches nothing. The consent itself is
-            // NDS.Cookies in main, applied at load.
+            // Lazy, every page: a visitor with a stored choice fetches nothing. Consent itself is NDS.Cookies in main.
             name: 'CookieConsent',
             selector: null,
-            universal: true,
-            init: () => NDS.CookieConsent?.init?.(),
-            // The stub fetches the bundle on the first press and replays open().
             lazy: () => {
                 document.addEventListener('click', (e) => {
                     const btn = e.target.closest('[data-cookies-toggle]');
@@ -383,127 +223,70 @@
             eager: () => !NDS.Cookies.getConsent() && !NDS.Cookies.get('cookieConsentDismissed'),
         },
         {
-            // Deferred + self-contained: nothing consumes NDS.Rating and the stars
-            // paint from markup/CSS — click-to-rate wiring lands before interaction.
+            // Deferred: stars paint from markup; nothing else reads NDS.Rating.
             name: 'Rating',
             selector: '.nds-rating',
-            init: () => NDS.Rating?.init?.(),
         },
         {
-            // Deferred: native <input type="range"> is interactive and a11y-correct
-            // with no JS — init only paints the gradient fill (CSS var) and updates
-            // the value <output>. Clicks/drags in the pre-bundle gap update value
-            // natively; the fill repaints on the first `input` after the delegated
-            // bundle lands.
+            // Deferred: the native range works with no JS; init only paints the fill and <output>.
             name: 'Slider',
             selector: '.nds-slider',
-            init: () => NDS.Slider?.init?.(),
             destroyEach: true,
-            // The init stamp and the resize subscription live on the CONTAINER, not on
-            // the .nds-slider input the scan finds, and destroy() takes the stamped one.
+            // The stamp and resize subscription live on the container, not the scanned input.
             destroySelector: '.nds-slider-container',
         },
         {
-            // Deferred: the collapsed clamp is pure CSS (_utilities.scss base
-            // max-height/overflow, server-rendered + in main), so the box paints
-            // correctly with no JS. init() is registration-only; the height read +
-            // "show more" button + 'expandable' stamp run from the ResizeObserver's
-            // first delivery (post-reveal in either tier) and are layout-neutral
-            // (absolute button + paint-only mask) — no expand↔collapse height swap.
+            // Deferred: the collapsed clamp is pure CSS; the measure runs in the ResizeObserver.
             name: 'Expandable',
             selector: '.nds-expandable',
-            init: () => NDS.Expandable?.init?.(),
         },
         {
-            // Delegated: pre-init paint is CSS-owned, keyed on the breadcrumb's
-            // OWN stamp — crit shapes 6+ trails to the post-collapse geometry
-            // (first + 40px ellipsis stand-in + last two), main bars the labels,
-            // so init landing after the reveal swaps in place (verified box-
-            // identical). The ellipsis dropdown uses Dropmenu from main —
-            // present long before this drains.
+            // Delegated: crit shapes 6+ trails to the post-collapse geometry, so init swaps in place.
             name: 'Breadcrumb',
             selector: '.nds-breadcrumb-nav',
-            init: () => NDS.Breadcrumb?.init?.(),
         },
         {
             name: 'Dropmenu',
             selector: '.nds-dropmenu',
-            init: () => NDS.Dropmenu?.init?.(),
         },
         {
             name: 'Tooltip',
             selector: '.nds-tooltip',
-            init: () => NDS.Tooltip?.init?.(),
         },
         {
-            // Critical: pre-selected chips are JS-built at init (server markup
-            // ships the chip track empty) and grow the field height, which has
-            // no reserved space in CSS — deferral would inject them post-reveal
-            // (CLS). The empty case is stable, but registration can't know which.
+            // Critical: pre-selected chips are JS-built and grow the field (CLS if late).
             name: 'Multiselect',
             selector: '.nds-multiselect',
-            init: () => NDS.Multiselect?.init?.(),
             critical: true,
         },
         {
-            // Critical twice over: restored chips are JS-built at init (CLS
-            // if deferred, like Multiselect), AND typing is the primary
-            // interaction — in a pre-bundle gap Enter native-submits the
-            // form (destructive, not a recoverable no-op; the OTP rule).
-            // Stays eager even if the chips ever become server-rendered.
+            // Critical: restored chips CLS if late, and in a pre-bundle gap Enter native-submits the form.
             name: 'TagInput',
             selector: '.nds-taginput',
-            init: () => NDS.TagInput?.init?.(),
             critical: true,
         },
         {
-            // Deferred: results fetch on user typing — no first-paint visual.
+            // Deferred: results fetch on typing.
             name: 'Autocomplete',
             selector: '.nds-form-container[data-url]',
-            init: () => NDS.Autocomplete?.init?.(),
         },
         {
-            // Deferred: adopts a standard textarea field at init — editable and
-            // toolbar are generated (data-editor-toolbar); the pre-init skeleton
-            // in _editor.scss holds the field until the stamp lands.
+            // Own bundle: the _editor.scss skeleton holds the field until the stamp lands.
             name: 'Editor',
             selector: '.nds-editor',
-            init: () => NDS.Editor?.init?.(),
         },
         {
-            // Delegated: crit CSS holds each filter target container
-            // ([data-filter-items]) hidden until init stamps
-            // data-nds-filter-initialized on it — the data-nds-loaded pattern,
-            // per container — so a URL-active filter (?name=value) never
-            // flashes the unfiltered list: the stamp lands after
-            // applyUrlParams() has settled the filtered state. Registered
-            // BEFORE Pagination — drainList inits in registry order, so
-            // applyUrlParams() stamps data-filtered before Pagination's
-            // filter-aware item read, same invariant as the old critical pass.
-            // Gate on [data-filter-target] (not .nds-filter): a filter is defined
-            // by its target link, so it must init even when there's no .nds-filter
-            // dropdown (e.g. a search-only filter).
+            // Delegated: crit hides each [data-filter-items] until its own stamp, which lands after
+            // applyUrlParams(), so a URL filter never flashes the full list. MUST stay before Pagination:
+            // it stamps data-filtered before Pagination reads items. Keyed on the target, not
+            // .nds-filter, so a search-only filter still inits.
             name: 'Filter',
             selector: '[data-filter-target]',
-            init: () => NDS.Filter?.init?.(),
-            // NDS.Init.refresh hook: a filter is keyed by its data-filter-target, and
-            // its UI usually sits outside the list — nothing about the mutated
-            // container resolves the instance, which is why the manual call needed
-            // getByTarget() first. Miss it and rows added at runtime never filter.
+            // Owner hook: a filter is keyed by its target and its UI sits outside the list.
             refresh: (root) => NDS.Filter?.refresh?.(root),
         },
         {
-            // Delegated: pre-init paint is covered by CSS — the
-            // data-paged-initialized skeleton (crit) shows the first 6 items,
-            // readPerPage's default, or exactly the first page where the
-            // init-time split (presplitPaged) read an inline --per-page — and
-            // _pagination.scss reserves the empty nav's row height, so init
-            // landing after the reveal inserts the list without shifting
-            // content. Bounded known shifts: a media-query-only --per-page;
-            // manual >5-page lists collapse to the ellipsis post-reveal. Registered AFTER Filter so
-            // a URL-active filter has stamped data-filtered before this paint;
-            // Filter's refresh call during its init lands before this nav's
-            // setup and is skipped (refreshAutoPagination's pre-init guard).
+            // Delegated: crit shows the first page (presplitPaged) and _pagination.scss reserves the nav row.
             name: 'Pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
@@ -512,119 +295,72 @@
         {
             name: 'Ipv',
             selector: '.nds-ipv-thumbnail',
-            init: () => NDS.Ipv?.init?.(),
         },
         {
             name: 'Modal',
-            // A modal may ship inert in a <template class="nds-modal-template">
-            // — that class keeps this presence gate true, so init binds the
-            // delegated triggers and the first click can pull it in via NDS.fromTemplate.
+            // .nds-modal-template keeps the gate true for a modal shipped inert in a <template>.
             selector: '.nds-modal, .nds-modal-template',
-            init: () => NDS.Modal?.init?.(),
-            // Not a per-element teardown: its listeners are delegated on document and
-            // belong to the page. This releases the OPEN state — backdrop and scroll lock —
-            // which would otherwise outlive the markup with nothing left to close it.
+            // Listeners are delegated on document; this releases the OPEN state (backdrop, scroll lock).
             destroy: (root) => NDS.Modal?.destroy?.(root),
         },
         {
             name: 'Alert',
             selector: '.nds-alert',
-            init: () => NDS.Alert?.init?.(),
         },
         {
-            // Delegated: the panel ships [hidden], so markup + CSS paint it
-            // correctly with the JS deleted — zero first paint, zero CLS.
-            // Toggle clicks in the pre-bundle gap no-op and recover on the
-            // next click (the Tabs/Tables/Accordion precedent).
+            // Delegated: the panel ships [hidden]; toggle clicks in the gap no-op and recover.
             name: 'Panel',
-            // .nds-panel-template — same template story as Modal above.
             selector: '.nds-panel, .nds-panel-template',
-            init: () => NDS.Panel?.init?.(),
             destroyEach: true,
         },
         {
             name: 'UserFeedback',
             selector: '.nds-user-feedback',
-            init: () => NDS.UserFeedback?.init?.(),
         },
         {
             name: 'Chart',
             selector: '.nds-chart',
-            init: () => NDS.Chart?.init?.(),
         },
         {
-            // Critical: init() BUILDS the placeholder DOM (icon + message) into empty
-            // containers — it isn't server-rendered. Deferral injects it post-reveal = CLS.
+            // Critical: init BUILDS the placeholder into empty containers (CLS if late).
             name: 'Empty',
             selector: '.nds-empty',
-            init: () => NDS.Empty?.init?.(),
             critical: true,
         },
         {
-            // Critical: enforces single-submit. A click in the deferred gap would
-            // bypass the cooldown.
+            // Critical: a click in the deferred gap would bypass the single-submit cooldown.
             name: 'CooldownButton',
             selector: '.nds-cooldown',
-            init: () => NDS.CooldownButton?.init?.(),
             critical: true,
         },
         {
-            // Delegated: routing moves each .nds-fab into its edge dock. A FAB is
-            // non-critical chrome, so it rides the delegated bundle alongside the
-            // panels it toggles (both appear together — no visible-but-dead FAB in
-            // the pre-panel gap). Pre-route flash is prevented by the FAB's own
-            // `hidden` attribute (the universal [hidden] rule in _fold.scss);
-            // register() strips it once docked. Cold init — appendChild plus
-            // pooled observers, no layout reads.
+            // Delegated beside the panels it toggles; its own `hidden` prevents a pre-dock flash.
             name: 'Fab',
             selector: '.nds-fab, .nds-fab-dock',
-            init: () => NDS.Fab?.init?.(),
+            // Docked FABs left root for <body>, so only the component knows which belong to the view.
             destroy: (root) => NDS.Fab?.destroy?.(root),
         },
-        // Topbar widgets — placed last because they're non-critical chrome
-        // (digital stamp, clock, hijri date, weather, city). Their updates are
-        // interaction- or network-bound anyway; ordering them after interactive
-        // components (modal, tooltip, filter, pagination…) keeps the early init
-        // chain focused on what the user can click.
+        // Topbar widgets last: non-critical chrome, network- or interaction-bound.
         {
-            // Standalone trust-banner disclosure. First paint is correct with JS
-            // deleted (panel ships [hidden]; CSS owns the expand), so it rides the
-            // delegated bundle. Decoupled from Mainnav — mutual exclusion with the
-            // nav comes from each surface's own outside-click handler.
+            // Delegated: the panel ships [hidden]; CSS owns the expand.
             name: 'DigitalStamp',
             selector: '.nds-digitalStamp-tab',
-            init: () => NDS.DigitalStamp?.init?.(),
         },
         {
             name: 'CityWeather',
             selector: '#nds-weatherInfo, #nds-cityName',
-            init: () => NDS.CityWeather?.init?.(),
         },
         {
             name: 'TimeDate',
             selector: '#nds-date, #nds-realTimeClock',
-            init: () => NDS.TimeDate?.init?.(),
         },
         {
-            // The FAB is on every page but most visitors never open the panel,
-            // so this one is `lazy`: present, armed, but not fetched until a
-            // press. eager() opts a returning visitor back in — their saved
-            // modes have to apply at load, not after they press something.
-            // Dropping the bundle file is still a safe opt-out: loadBundle
-            // resolves on error, and the stubbed call only warns.
+            // Lazy: the FAB is on every page but most visitors never open the panel.
+            // eager() opts a returning visitor in, so their saved modes apply at load.
             name: 'Accessibility',
             selector: '[data-accessibility-toggle]',
-            init: () => NDS.Accessibility?.init?.(),
-            // Arms its own trigger; the lazy stub fetches the bundle on the
-            // first press and replays the call. Capture, because the FAB is
-            // also a [data-panel-toggle] and Panel must not act on a press
-            // whose bundle has not arrived — it would find no panel at all.
-            // The ready check reads __ndsStub FIRST: every property read on a
-            // stub returns a truthy function, so a bare .ready would hand the
-            // very first press to a bundle that is not there. Repeat presses
-            // during the fetch are dropped by the component's own _arming
-            // guard. The `loading` stamp covers the download, which the
-            // component cannot see; armedThen() clears it.
+            // Capture, so Panel (the FAB is also a [data-panel-toggle]) never acts before the bundle.
+            // Read __ndsStub FIRST: every property on a stub is a truthy function, so a bare .ready lies.
             lazy: (bundle) => {
                 document.addEventListener('click', (e) => {
                     const btn = e.target.closest('[data-accessibility-toggle]');
@@ -633,10 +369,7 @@
                     if (ns && !ns.__ndsStub && ns.ready) return;
                     e.stopPropagation();
                     NDS.State?.add?.(btn, 'loading');
-                    // Explicit, though toggle() would pull it too: this starts the
-                    // paired stylesheet with the script rather than after it, and
-                    // it is the only request a consumer who inlined this bundle
-                    // gets — for them toggle() calls straight into real code.
+                    // Explicit so the paired stylesheet starts with the script, not after it.
                     NDS.loadBundle(bundle);
                     NDS.Accessibility.toggle(btn);
                 }, true);
@@ -644,13 +377,10 @@
             eager: () => { try { return !!localStorage.getItem('nds-a11y'); } catch (e) { return false; } },
         },
     ];
+    for (const c of COMPONENTS) c.init ||= () => NDS[c.name]?.init?.();
 
-    // Cross-batch yielding. Prefers scheduler.yield() (Chrome 129+) so the
-    // browser can preempt for input/paint between batches; falls back to a
-    // shared MessageChannel — allocated once per page lifetime instead of
-    // per initializeNDS() call so reinit-heavy consumers (SPA route changes)
-    // don't leak channels. FIFO queue handles overlapping init chains
-    // (reinit fired while a previous chain is still draining).
+    // scheduler.yield() lets input/paint preempt between batches; the fallback channel
+    // is allocated once per page so SPA reinits don't leak channels.
     const _yieldChannel = new MessageChannel();
     const _yieldQueue = [];
     _yieldChannel.port1.onmessage = () => {
@@ -661,16 +391,9 @@
         ? (cb) => scheduler.yield().then(cb)
         : (cb) => { _yieldQueue.push(cb); _yieldChannel.port2.postMessage(null); };
 
-    // rIC fallback for older Safari (<18). Deadline counts down a real 5ms
-    // slot so drainList yields like native rIC instead of running every
-    // idle component in one macrotask. Fidelity gap: unlike native rIC this
-    // fires ~immediately (setTimeout 1ms), NOT at true idle — so on those
-    // engines deferred components init right after the critical pass, competing with
-    // the post-load window (the 5ms slot still caps each task). The {timeout}
-    // arg is ignored (didTimeout stays false): setTimeout always fires, so no
-    // timeout-forced run is needed.
-    // The slot starts when the callback FIRES: timed from scheduling, a nested
-    // setTimeout's 4ms clamp left ≤1ms, drain ran nothing and re-queued forever.
+    // ponytail: rIC fallback for Safari fires almost at once, not at true idle; the 5ms slot
+    // still caps each task. The slot starts when the callback FIRES — timed from scheduling,
+    // setTimeout's 4ms clamp left ≤1ms and drain re-queued forever.
     const scheduleIdle = window.requestIdleCallback ||
         ((cb) => setTimeout(() => {
             const start = performance.now();
@@ -680,13 +403,8 @@
             });
         }, 1));
 
-    // Asset base + version derived from the loader's own <script>. nds-loader.js
-    // is bundled last into nds-main.min.js, so during this IIFE's synchronous
-    // eval document.currentScript IS the main bundle's element. Captured here at
-    // eval time — currentScript is null inside the async callbacks below. Sibling
-    // bundles reuse main's origin (so they pass a consumer's CSP 'self'/host
-    // allowlist for free — no new origin) and its ?ver= cache-bust. Fallbacks:
-    // find the main script by src, then a window.NDSAssetBase override.
+    // Captured at eval: currentScript is main's own tag here and null in any callback.
+    // Siblings reuse main's origin (passes a CSP host allowlist) and its ?ver= cache-bust.
     const SELF = document.currentScript ||
         [...document.scripts].find((s) => /nds-main(\.min)?\.js/.test(s.src));
     const ASSET = (() => {
@@ -698,24 +416,13 @@
     })();
     const bundleUrl = (file) => ASSET.dir + file + ASSET.ver;
 
-    // Injected (non-main) bundles + the namespaces each ships, generated by the
-    // build from the actual bundle file lists and prepended to this bundle as
-    // window.__NDS_BUNDLES = { delegated: { file, ns:[...] }, extras: {...} }.
-    // Bundle membership (location) is owned entirely by the build — the loader and
-    // the component registry never hardcode it. Each injected bundle loads after
-    // the critical pass (never a render-blocking <script defer>), so its download
-    // never gates the reveal.
+    // Build-generated: { delegated: { file, ns:[...], css?:[...] }, ... }.
     const MAP = window.__NDS_BUNDLES || {};
-    // namespace → bundle name, for the lazy stubs + the partition's location lookup.
     const nsToBundle = {};
     for (const b in MAP) for (const ns of (MAP[b].ns || [])) nsToBundle[ns] = b;
 
-    // Trusted Types passthrough for script.src — a TrustedScriptURL sink when
-    // require-trusted-types-for 'script' is enforced and no default policy exists.
-    // Same-origin, known filenames only. try/catch: a consumer's trusted-types
-    // directive may not allowlist this policy name (then we fall back to a string,
-    // which their default policy handles, or the assignment throws and the bundle
-    // is simply skipped — inits no-op via ?.).
+    // Trusted Types sink for script.src. A policy name the consumer did not allowlist
+    // falls back to a plain string for their default policy.
     let _ttPolicy;
     if (window.trustedTypes && trustedTypes.createPolicy) {
         try {
@@ -723,36 +430,17 @@
         } catch (e) { /* policy name not allowed — fall back to plain string */ }
     }
 
-    // The deferred main CSS link, whose folder holds every other NDS sheet in every
-    // build — not the JS directory, which a consumer's bundler may put somewhere
-    // else entirely. Marker first, filename second: the marker sits on the
-    // stylesheet link the head script injected (it moves the marker off the
-    // preload, which never gets a `.sheet`). The filename fallback keeps a pre-1.7
-    // head — and anyone fingerprinting their asset names — working. Two queries,
-    // not a comma list: a comma list
-    // resolves by document order, and the main CSS preload (same filename,
-    // earlier in head) would win.
+    // The CSS folder, not the JS one, which a consumer's bundler may move. Marker first
+    // (the preload never gets a `.sheet`); two queries, because a comma list resolves by
+    // document order and the earlier preload would win.
     function mainCssLink() {
         return document.querySelector('link[data-nds-defer="main"]')
             || document.querySelector('link[href*="nds-main.min.css"]');
     }
 
-    // Add one of our sheets next to the main one. Used for the icon sheets and
-    // for a bundle's paired stylesheet (the `css` field in the build manifest),
-    // which loadBundle requests alongside the script so the two download in
-    // parallel instead of the sheet waiting for the script to run.
-    //
-    // Sheets load from here rather than an inline head script so a strict CSP
-    // needs no extra grant: this bundle is already an allowed origin, while an
-    // inline script needs the consumer's nonce or hash.
-    //
-    // Dedupe by PATHNAME over link elements: a self-hosting consumer, or a page
-    // that hand-links the sheet, will not match our ?ver byte for byte, and
-    // document.styleSheets has no entry for a sheet still downloading — missing
-    // it either way injects a duplicate.
-    //
-    // Falls back to the JS directory when main's sheet is absent (a consumer who
-    // inlined it), which is the best guess available and still same-origin.
+    // Loaded from this bundle, not an inline script, so a strict CSP needs no extra grant.
+    // Dedupe by pathname over stylesheet links: a self-hosted sheet won't match our ?ver,
+    // and document.styleSheets misses one still downloading.
     function addSheet(name) {
         const main = mainCssLink();
         const url = main
@@ -760,8 +448,6 @@
             : ASSET.dir.replace(/\/js\/?$/, '/css/') + name + ASSET.ver;
         let path;
         try { path = new URL(url, location.href).pathname; } catch (e) { return null; }
-        // Stylesheet links only. A preload does not APPLY anything, so matching one
-        // would skip the link that actually styles the page.
         const dup = [...document.querySelectorAll('link[rel="stylesheet"]')]
             .some((l) => { try { return new URL(l.href, location.href).pathname === path; } catch (e) { return false; } });
         if (dup) return null;
@@ -772,34 +458,20 @@
         return l;
     }
 
-    // Loads an injected bundle once and resolves when it's ready. Idempotent —
-    // returns the in-flight/settled promise on repeat calls, so the auto-load
-    // (when a present component needs it, see below) and the public
-    // NDS.loadBundle() (for content injected after load) share one fetch.
-    // Resolves on load OR error so callers never hang; after a missing/blocked
-    // bundle, calls reach the lazy stub, which re-fetches once, then warns. Skips injection when a <script> for the bundle
-    // already exists — a consumer under a no-injection CSP can self-host it with
-    // their own nonce/integrity and the loader still drives init. Propagates
-    // main's nonce so it passes nonce-only policies without 'strict-dynamic'.
-    // Usage for dynamic content: await NDS.loadBundle('extras'); NDS.Chart.init();
+    // Idempotent; resolves on load OR error so callers never hang. A failed fetch is
+    // removed and uncached, so the lazy stub can retry once.
     const _bundlePromises = {};
     function loadBundle(name) {
         if (_bundlePromises[name]) return _bundlePromises[name];
         const file = MAP[name] && MAP[name].file;
-        // The bundle's own sheets, requested BEFORE any early return below so a
-        // self-hosted or inlined consumer — whose script fetch short-circuits —
-        // still gets its styles. Ahead of the script for the same reason: the two
-        // download in parallel instead of the sheet waiting on the script to run.
-        // Manifest order is append order, which is cascade order.
+        // Sheets first, before any early return: a self-hosted or inlined bundle still needs them.
         if (MAP[name]) for (const sheet of MAP[name].css || []) addSheet(sheet);
         if (!file || !ASSET.dir) return (_bundlePromises[name] = Promise.resolve());
+        // Self-hosted under a no-injection CSP: their own <script> tag, our init.
         if ([...document.scripts].some((s) => s.src && s.src.includes(file))) {
             return (_bundlePromises[name] = Promise.resolve());
         }
-        // Already ran, with no <script src> to prove it: a consumer may inline a
-        // bundle or concatenate it into their own build, where the src check
-        // above finds nothing and we would fetch a second copy and execute it
-        // over the first. Every namespace being real (not a stub) is the tell.
+        // Inlined or concatenated into the consumer's build: every namespace already real.
         const bundleNs = MAP[name].ns || [];
         if (bundleNs.length && bundleNs.every((n) => NDS[n] && !NDS[n].__ndsStub)) {
             return (_bundlePromises[name] = Promise.resolve());
@@ -813,34 +485,17 @@
             s.onload = resolve;
             s.onerror = () => {
                 console.warn(`[NDS] bundle '${name}' failed to load (${url})`);
-                // Remove the failed <script> + drop the cache so a later loadBundle()/lazy-stub call can retry a transient failure (else the present-script guard above short-circuits re-injection on the lingering failed element).
                 s.remove();
                 delete _bundlePromises[name];
                 resolve();
             };
-            // Body, not head: injection happens post-reveal, so the DOM is parsed
-            // and a body-tail script is where a deferred bundle belongs. Falls back
-            // to head for the sync-in-<head> case, where body doesn't exist yet.
             (document.body || document.head).appendChild(s);
         });
         return _bundlePromises[name];
     }
 
-    // Transparent lazy stubs: expose each injected namespace BEFORE its bundle
-    // loads, so existing public usage (e.g. NDS.Chart.create(...)) keeps working
-    // unchanged — the call triggers the right bundle (resolved from the build
-    // manifest; nothing is hardcoded in consumer code) and runs once it's ready.
-    // The bundle overwrites the stub when it executes, so every post-load call is
-    // the native, synchronous object; the stub only bridges calls made before the
-    // bundle arrives. A method invoked while stubbed returns a Promise (resolves
-    // after load) — fine for fire-and-forget calls. If the bundle is missing the
-    // call no-ops with a warning (the __ndsStub guard stops it recursing).
-    // LIMIT: the stub bridges fire-and-forget METHOD CALLS only — a synchronous
-    // read (a property value, or a boolean-returning call used in a condition
-    // like `if (NDS.X.isActive())`) gets the always-truthy stub function/Promise
-    // during the pre-bundle gap and silently takes the wrong branch. A component
-    // whose API is read synchronously by main-bundle code (e.g. mainnav reads
-    // NDS.Backdrop.isActive()) must therefore stay in main, not be delegated.
+    // Lazy stubs: NDS.X.method() before its bundle arrives loads it and replays the call
+    // (returning a Promise). The bundle overwrites the stub when it runs.
     for (const ns in nsToBundle) {
         if (NDS[ns]) continue;
         const bundle = nsToBundle[ns];
@@ -853,10 +508,7 @@
                     if (real && !real.__ndsStub && typeof real[prop] === 'function') {
                         return real[prop](...args);
                     }
-                    // Two distinct failures: the bundle landed but the namespace has
-                    // no such method (caller error — name the real surface), vs the
-                    // bundle never arrived. The old single message blamed the bundle
-                    // for both, sending consumers down the wrong path.
+                    // Caller error (no such method) vs a bundle that never arrived.
                     if (real && !real.__ndsStub) {
                         console.warn(`[NDS] ${ns}.${String(prop)} is not a method of NDS.${ns} — its surface: ${Object.keys(real).join(', ')}`);
                     } else {
@@ -867,24 +519,15 @@
         });
     }
 
-    // Split every not-yet-paginated container at its inline --per-page (else
-    // the crit default of 6, matching readPerPage), so the skeleton shows
-    // exactly the first page: hide the items past it and stamp
-    // data-paged-split, which steps the crit "first 6" rule aside and releases
-    // the crit hold on skeleton-drawing containers. Runs first thing at init,
-    // not at the reveal: main CSS can land before this bundle, and a skeleton
-    // painted at the crit count then jumped to --per-page at the reveal.
-    // Pagination (delegated) rewrites hidden at init. Inline only — a computed
-    // read would force a recalc.
+    // Hide items past each container's inline --per-page (else crit's 6) at init, not at
+    // the reveal: main CSS can land first, and the skeleton jumped from 6 to --per-page.
+    // Inline only — a computed read would force a recalc.
     function presplitPaged() {
         document.querySelectorAll('.nds-paged-content:not([data-paged-initialized], [data-paged-split])').forEach(c => {
-            // readPerPage's rule: a negative value would index items[-1] and throw before the reveal.
+            // A negative value would index items[-1] and throw before the reveal.
             const v = parseInt(c.style.getPropertyValue('--per-page'), 10);
             const n = v > 0 ? v : 6;
-            // Pagination's _pagedItems minus its [data-filtered] skip: a tbody
-            // counts its own rows only (sub-rows ride their parent). Nothing
-            // carries data-filtered here — only nds-filter.js writes it, and it
-            // ships delegated, long after this runs.
+            // Pagination's _pagedItems: a tbody counts its own rows only (sub-rows ride their parent).
             const items = c.tagName === 'TBODY'
                 ? Array.from(c.children).filter(el => el.classList.contains('nds-page-item') && !el.classList.contains('nds-sub'))
                 : c.querySelectorAll('.nds-page-item');
@@ -903,10 +546,6 @@
         const startTime = performance.now();
         presplitPaged();
 
-        // Partition buckets. The init-loop closures capture these bindings; all
-        // are assigned (below) before initCriticalBatch runs. Injected-bundle
-        // groups init in their own pass once each bundle loads — see
-        // initCriticalBatch.
         let criticalComponents, deferredComponents, injectedGroups;
 
         const runInit = (component) => {
@@ -924,56 +563,42 @@
             }
         };
 
-        // Stamp data-nds-loaded — the reveal — only once main CSS has applied.
-        // The reveal rules are main-gated, so nothing paints before then; pinning
-        // the stamp to main keeps data-nds-loaded honest ("styled + inited"), and
-        // lets _section.scss gate off-screen content-visibility on
-        // :not([data-nds-loaded]) (cv covers the reveal layout, drops at the
-        // stamp) and the scroll restore key off the same signal — no extra flag.
-        // main.css is the deferred <link>; .sheet is set once applied, else wait
-        // for its load. window.load is the backstop so the reveal can't hang.
+        // The reveal: stamp data-nds-loaded only once main CSS has applied, so the stamp
+        // means "styled + inited". window.load is the backstop so the reveal can't hang.
         function stampWhenStyled() {
             const root = document.documentElement;
             const main = mainCssLink();
-            // Size every not-yet-initialized swiper's skeleton row to the
-            // slides-per-view its init will pick — same attributes, same breakpoints
-            // as nds-swiper.js — so init moves nothing. Writes --slides plus the
-            // peek state and stamps data-swiper-preset, which releases crit's
-            // pre-init guards (card-width pin, hero first-slide collapse): main
-            // CSS has applied by now, so its formula sizes the track from here on.
+            // Size each swiper's skeleton row to what nds-swiper.js will pick (same knobs,
+            // same breakpoints), so init moves nothing. The stamp releases crit's guards.
             const presetSwipers = () => {
                 const tier = matchMedia(NDS.breakpoints.desktop).matches ? 'max'
                     : matchMedia(NDS.breakpoints.tablet).matches ? 'mid' : 'min';
                 const tracks = [];
                 document.querySelectorAll('.nds-swiper:not([data-nds-swiper-initialized], [data-swiper-preset])').forEach(s => {
-                    // Inline knob first (CSS already sized the row from it), the
-                    // deprecated bare attribute second — only JS can read that one.
+                    // Inline knob first, the deprecated bare attribute second.
                     const knob = (prop, attr) => parseInt(s.style.getPropertyValue(prop)) || parseInt(s.getAttribute(attr)) || 0;
-                    // A spotlight is one per view, as nds-swiper.js reads it.
                     const per = s.classList.contains('nds-spotlight') ? 1 : knob(`--${tier}-slides`, 'slides-' + tier) || 1;
                     const peek = knob('--peek', 'peek');
-                    // Own slides only, as nds-swiper.js counts them: a swiper nested in a slide must not add pages.
+                    // Own slides only: a swiper nested in a slide must not add pages.
                     const w = s.querySelector('.nds-swiper-wrapper');
                     const pages = Math.ceil((w ? w.querySelectorAll(':scope > .nds-swiper-slide').length : 0) / per);
                     s.style.setProperty('--slides', per);
                     if (peek && s.hasAttribute('peek')) s.style.setProperty('--peek', `${peek}px`);
                     s.toggleAttribute('data-swiper-peek', peek > 0 && pages > 1);
-                    // One page: init keeps the nav hidden, so its reserve (_swiper.scss) goes now, not then.
+                    // One page: init keeps the nav hidden, so its reserve goes now.
                     s.toggleAttribute('data-swiper-single', pages <= 1);
                     s.setAttribute('data-swiper-preset', '');
                     if (pages > 1 && NDS.isRTL) tracks.push(w);
                 });
                 return tracks;
             };
-            // Idempotent: three listeners race to get here and only one may inject.
+            // Idempotent: three listeners race to get here.
             const done = () => {
                 if (root.hasAttribute('data-nds-loaded')) return;
                 const tracks = presetSwipers();
                 root.setAttribute('data-nds-loaded', '');
-                // WebKit RTL: a track that first overflows in the reveal layout (crit pinned
-                // its slides narrower) lands scrolled to its END. Pin the start after that
-                // layout — the first write forces the reveal's own recalc early, not a new
-                // one. Same double write as the hero reveal in nds-swiper.js.
+                // WebKit RTL lands a newly overflowing track at its END; the first write
+                // rides the reveal's own recalc. Same double write as nds-swiper.js.
                 tracks.forEach(w => {
                     if (!w) return;
                     w.style.scrollBehavior = 'auto';
@@ -987,21 +612,15 @@
                 addSheet('nds-icons.min.css'); // no-op once requested; covers a main CSS error
                 loadHgiSheet();
             };
-            // Already applied? `.sheet` is set once the CSSOM attaches. Catching this
-            // here matters: a load event that already fired before these listeners
-            // attach must not strand the reveal on the window.load backstop, which
-            // waits on every subresource — images, fonts, iframes.
+            // A load event that already fired must not strand the reveal on window.load.
             if (!main || main.sheet) { done(); return; }
             main.addEventListener('load', done, { once: true });
             main.addEventListener('error', done, { once: true });
             window.addEventListener('load', done, { once: true });
         }
 
-        // The icon tokens sit on :root, and an inherited var that changes after the
-        // reveal restyles the whole tree. Requested the moment main CSS applies, the
-        // sheet has the critical pass to arrive, so its write rides the reveal's own
-        // pass (or a small pre-reveal one under the content-visibility gate). No
-        // onload stamp: its :root block flips the icon gate itself (_sass/_icons.scss).
+        // Icon tokens sit on :root, so a late write restyles the whole tree. Requested as
+        // main CSS applies, they arrive during the critical pass and ride the reveal's recalc.
         function loadIconTokens(main) {
             if (!main) return;
             const go = () => addSheet('nds-icons.min.css');
@@ -1009,24 +628,18 @@
             else main.addEventListener('load', go, { once: true });
         }
 
-        // HGI rides behind the reveal stamp so its font fetch never competes inside
-        // the LCP window. Both faces land before the reveal (crit and main CSS), so landing this
-        // sheet rebuilds no font cache.
+        // After the reveal, so the font fetch stays out of the LCP window.
         function loadHgiSheet() {
             if (document.fonts) {
-                // Safari never loads a fallback face on its own while the primary is still
-                // loading, so hgi-blank is loaded by hand, before any icon renders.
+                // Safari won't load the fallback face while the primary is loading.
                 document.fonts.load('1em "hgi-blank"', '\u{F0000}').catch(() => {});
-                // Start the woff2 now, beside the sheet: icons that all start hidden
-                // (a closed tab panel) would otherwise never start the fetch.
+                // Icons that all start hidden (a closed tab panel) would never start the fetch.
                 document.fonts.load('1em "hgi-stroke-rounded"', '\u{F0000}').catch(() => {});
             }
             addSheet('hgi-rounded-stroke-min.css');
         }
 
-        // Critical pass (the reveal checklist): time-sliced. Small inits share a
-        // task; a heavy init lands alone. Yields when the per-batch budget is
-        // exceeded.
+        // Critical pass: time-sliced, yields once the per-batch budget is spent.
         let criticalIndex = 0;
         function initCriticalBatch() {
             const batchStart = performance.now();
@@ -1039,31 +652,21 @@
             if (criticalIndex < criticalComponents.length) {
                 yieldToBrowser(initCriticalBatch);
             } else {
-                // Checklist complete. Deferred components whose code is already in
-                // main drain in idle slots immediately — never gated on an
-                // injected-bundle fetch (or on the reveal stamp below).
+                // Main's deferred list never waits on a bundle fetch or the reveal.
                 if (deferredComponents.length) drainList(deferredComponents, logAllDone);
                 else logAllDone();
 
-                // Injected-bundle components init in their own pass once that
-                // bundle arrives, so a (low-priority) download never delays the
-                // main idle drain above. loadBundle resolves on load OR error; on
-                // error each init hits the lazy stub, which re-fetches once, then warns.
+                // Each bundle's group inits on its own arrival.
                 for (const name in injectedGroups) {
                     const group = injectedGroups[name];
                     loadBundle(name).then(() => drainList(group));
                 }
 
-                // Hand the critical-CSS skeletons off to the now-styled
-                // components — but only once main CSS has actually applied.
                 stampWhenStyled();
             }
         }
 
-        // Idle-slot drain: runs a component list across idle slots, as many as
-        // fit each slot. Self-schedules until the list is exhausted; the timeout
-        // ensures it still runs if the page never goes idle. Shared by the
-        // deferred list and each injected-bundle group (each gets its own index/onDone).
+        // Runs a list across idle slots; the timeout covers a page that never idles.
         function drainList(list, onDone) {
             let i = 0;
             function drain(deadline) {
@@ -1087,41 +690,27 @@
             }
         }
 
-        // Run detection + the critical pass directly — no rAF. The page is CSS-
-        // hidden behind the critical-CSS skeleton until the critical pass stamps
-        // data-nds-loaded, so there's nothing visible to protect with a pre-
-        // paint frame: the rAF only pushed the reveal back a frame and froze
-        // init entirely in a hidden tab (rAF never fires for a hidden document,
-        // so a background-opened tab would never initialize). We already run off
-        // the eval/DCL task via the setTimeout(0) kickoff below; detection's
-        // per-component querySelector (fast path: short-circuits at first match)
-        // joins the first critical batch's wall clock.
-        // Source order (registry above) is priority order; push preserves it.
+        // No rAF before detection: the page is hidden until the reveal anyway, and rAF
+        // never fires in a background tab, which would never initialize.
         criticalComponents = [];
         deferredComponents = [];
         injectedGroups = {};
         for (const c of COMPONENTS) {
-            const present = c.universal || (c.selector && document.querySelector(c.selector));
+            const present = !c.selector || document.querySelector(c.selector);
             if (!present) continue;
             if (c.critical) {
-                criticalComponents.push(c);                          // on the checklist → ships in main
+                criticalComponents.push(c);
                 continue;
             }
-            const bundle = nsToBundle[c.name];                   // location from the build manifest
-            // Interaction-gated: on the page, but its bundle is not fetched
-            // until the component's own trigger fires. Armed even when eager —
-            // that bundle is still in flight for a moment, and a press in the
-            // gap must not reach a half-wired page.
+            const bundle = nsToBundle[c.name];
+            // Armed even when eager: a press while that bundle is in flight must not reach a half-wired page.
             if (c.lazy) c.lazy(bundle);
             if (bundle && c.lazy && !c.eager?.()) continue;      // armed only — nothing loads yet
-            if (bundle) (injectedGroups[bundle] ||= []).push(c); // deferred → injected bundle
-            else deferredComponents.push(c);                     // deferred → already in main
+            if (bundle) (injectedGroups[bundle] ||= []).push(c);
+            else deferredComponents.push(c);                     // code already in main
         }
 
-        // Kick off each needed bundle now so its (low-priority) download
-        // overlaps the critical pass. loadBundle is idempotent; its components
-        // init in a per-bundle pass once it lands (see initCriticalBatch) — the
-        // fetch never gates the reveal.
+        // Start downloads now so they overlap the critical pass.
         for (const name in injectedGroups) loadBundle(name);
         loadIconTokens(mainCssLink());
 
@@ -1141,114 +730,44 @@
         scheduleDebugAudits();
     }
 
-    // ── Debug-build audits (CONFIG.enableLogging only) ─────────────────────
-    // The checks live in nds-audit.js, its own build-owned bundle that is
-    // NEVER auto-injected: this schedule (flag-gated) and NDS.Init.audit()
-    // pull it through the NDS.Audit lazy stub, so production pages that never
-    // ask for it download zero audit bytes. Scheduling stays here — the loader
-    // owns scheduling, the module only implements the checks.
-    // Runs 3s after the deferred icons CSS lands so injected bundles have
-    // initialized and mask rules are computable.
+    // enableLogging only: 3s after window load, so injected bundles have initialized and
+    // icon masks are computable. Pulls nds-audit.min.js through the lazy stub.
     function scheduleDebugAudits() {
         if (!CONFIG.enableLogging) return;
-        // Icons CSS is loader-deferred; poll for its stamp (capped) rather than
-        // holding an observer open. Debug builds only, so the poll is free.
-        let tries = 0;
-        const timer = setInterval(() => {
-            const iconsReady = document.documentElement.hasAttribute('data-nds-icons-loaded');
-            if (iconsReady || ++tries > 20) {
-                clearInterval(timer);
-                setTimeout(() => NDS.Audit.run(), 3000);
-            }
-        }, 500);
+        const run = () => setTimeout(() => NDS.Audit.run(), 3000);
+        if (document.readyState === 'complete') run();
+        else window.addEventListener('load', run, { once: true });
     }
 
-    // Configuration options
-    // Merge defaults with optional global/window overrides and HTML data-attributes
-    // To enable performance monitoring, set window.NDSInitConfig = { enableTiming: true, enableLogging: true }
-    // Note: NDSInitConfig uses window.* because it's set BEFORE the bundle loads (NDS namespace doesn't exist yet)
+    // window.NDSInitConfig wins over the <html> data-attributes.
     const rootEl = document.documentElement;
-    const attrAutoInit = rootEl?.getAttribute('data-nds-auto-init');
-    const attrDisableAll = rootEl?.getAttribute('data-nds-disable-all');
+    const attrAutoInit = rootEl.getAttribute('data-nds-auto-init');
+    const attrDisableAll = rootEl.getAttribute('data-nds-disable-all');
     const GLOBAL = window.NDSInitConfig || {};
 
     const CONFIG = {
-        // Per-batch budget: critical components init in a tight loop until this
-        // many ms elapse, then yield. Keep below ~40 to stay clear of TBT's
-        // 50ms long-task threshold even on throttled CPUs.
+        // Below ~40 keeps clear of TBT's 50ms long-task threshold on throttled CPUs.
         initBudgetMs: GLOBAL.initBudgetMs ?? 5,
         enableLogging: GLOBAL.enableLogging ?? false,
         enableTiming: GLOBAL.enableTiming ?? false,
-        // When false, prevents automatic initialization on DOM ready
         autoInitialize: GLOBAL.autoInitialize ?? (attrAutoInit != null ? attrAutoInit !== 'false' : true),
-        // When true, disables initializing any component (manual calls still respected if caller overrides)
         disableAll: GLOBAL.disableAll ?? (attrDisableAll != null ? attrDisableAll === 'true' : false),
     };
 
-    // On-demand bundle loader for content injected after page load:
-    //   await NDS.loadBundle('extras'); NDS.Chart.init();
-    // Cheaper than re-running NDS.Init.initialize() (no full re-sweep / re-tag).
     NDS.loadBundle = loadBundle;
-    // Back-compat shim for consumers of the built bundle still calling the old
-    // extras-specific API.
-    NDS.loadExtras = () => loadBundle('extras');
 
-    // One entry point for "the contents of this container changed" — the call a
-    // consumer makes after adding, removing or replacing rows/cards/items.
-    //
-    // Without it every CRUD screen hand-writes the same block, and each component
-    // takes a different argument: Pagination the CONTENT element (not the nav),
-    // Filter an instance resolved by target id, Selection and Tables nothing at
-    // all. Every omission fails SILENTLY — miss Filter and new rows never filter,
-    // miss Pagination and the record count lies, miss Selection and "N selected"
-    // goes stale. Nothing warns. This walks the registry instead, so a component
-    // is refreshed because it is REGISTERED, not because the caller remembered it.
-    //
-    // Two kinds of component, split by whether its registry entry declares refresh():
-    //   - owners (Selection, Filter) drive the container from OUTSIDE it, so a selector
-    //     test against the container would miss them entirely. Their refresh resolves
-    //     what they own from/around root itself. An owner's refresh runs INSTEAD of its
-    //     init, so each one must claim surfaces that did not exist at page load too —
-    //     both do, and both say so at their own hook.
-    //   - scanners (everything else) own elements INSIDE it — a selector hit means
-    //     re-running the registry's own init(), which is idempotent via each
-    //     component's init sentinel, so re-scanning costs a query and nothing else.
-    //     `universal` components (selector: null — Link) always qualify:
-    //     they have no selector to test, and the init partition treats them the same way.
-    //
-    // The opt-in is a REGISTRY field, deliberately not a plain `NDS.X.refresh` probe.
-    // Several namespaces already ship a refresh() with its own settled meaning, and
-    // calling those blind would change behaviour: NDS.Pagination.refresh(content)
-    // resets to page 1 (filter semantics — right for a filter change, wrong after a
-    // row edit, which must hold the user's place), and NDS.Empty.refresh(el) wants
-    // the .nds-empty element itself. Declaring the hook here keeps each component's
-    // public API meaning exactly what it meant before.
-    //
-    // Pagination and Empty are absent on purpose — both already self-heal. Pagination
-    // re-paginates on any .nds-page-item add/remove with {keepPage: true}
-    // (_wireAutoRefreshWatch), and Empty re-evaluates via onChildrenChange. They fall
-    // to the scanner path, where their own init sentinel makes the call a no-op.
-    //
-    // SERVER-DRIVEN LISTS ARE NOT TOUCHED, by construction rather than by a flag:
-    //   - manual/server pagination navs (data-total-pages, updateRecords) never carry
-    //     the auto stamp, so both the scanner init() and the auto-refresh watcher
-    //     no-op on them — the server's page count and record slots stand.
-    //   - AJAX-mode filters are skipped inside NDS.Filter.refresh (see its comment).
-    //   - no component here re-sorts, re-pages or re-filters a result set the server
-    //     produced. The walk only wires up markup and recounts what is in the DOM.
-    //
-    // Registry order is init order, and it is load-bearing here too: Selection
-    // recounts before Filter re-resolves its item set.
-    //
-    // A stubbed namespace is SKIPPED, never touched: reading a property off the lazy
-    // stub would force its bundle to load, and a bundle that never arrived has
-    // initialized nothing, so it has nothing stale to refresh — it will scan the new
-    // DOM whenever it does land.
-    //
-    // ponytail: scanners re-scan the whole document, not just the container, because
-    // only Filter's initializeX() takes a scope. That is exactly today's reinit() cost, so this
-    // is never a regression — give the scan camp a scope argument only if a large
-    // page measures slow.
+    // "This container's contents changed." Walks the registry, so a component is
+    // refreshed because it is REGISTERED, not because the caller remembered it.
+    //   - owners (a `refresh` hook) drive the container from outside it; their hook runs
+    //     INSTEAD of init and must claim surfaces that did not exist at load.
+    //   - scanners re-run init(), idempotent via each component's sentinel.
+    // The hook is a registry field, never a probe of NDS.X.refresh: Pagination's own
+    // refresh() resets to page 1 and Empty's wants the element itself. Pagination and
+    // Empty self-heal through their own observers, so they scan.
+    // Server-driven lists are untouched: manual navs carry no auto stamp and AJAX filters
+    // skip their refresh. Registry order holds: Selection recounts before Filter.
+    // ponytail: scanners re-scan the whole document, the same cost as reinit(); give
+    // them a scope argument only if a large page measures slow.
     function refreshContainer(container) {
         const root = container || document;
         for (const component of COMPONENTS) {
@@ -1257,77 +776,45 @@
             try {
                 if (component.refresh) component.refresh(root);
                 // matches() covers a root that IS the component (a panel pulled from a template).
-                else if (component.universal || root === document || root.matches?.(component.selector) || root.querySelector?.(component.selector)) component.init();
+                else if (!component.selector || root === document || root.matches?.(component.selector) || root.querySelector?.(component.selector)) component.init();
             } catch (error) {
                 console.warn(`[NDS:refresh] ${component.name} failed:`, error);
             }
         }
     }
 
-    // The mirror of refreshContainer: "this container is going away". refresh() re-scans
-    // what stays, destroy() releases what leaves. A server-rendered page never needed it,
-    // because nothing unmounts — but a framework route that swaps views leaves every
-    // listener, observer and pooled subscriber a component registered alive with nothing
-    // to point at, and each leak is silent.
-    //
-    // Generic by CONVENTION, not by a registry field, which is what makes it free for
-    // components that do not exist yet: a component stores its instance as an `nds{Name}`
-    // backref on the element it claims, and canon gives every instance a no-arg destroy()
-    // that releases its own listeners, sentinel stamps and registry entries (NDSFilter's
-    // is the reference). Removing the stamps is what lets a later refresh() re-claim the
-    // same markup, so destroy is not one-way.
-    //
-    // Instances are destroyed in DOM order, each in its own try, because one component may
-    // own another (a filter destroys the sort it created) and the owned one may already be
-    // gone by the time the walk reaches it. Canon destroys are idempotent, so a second call
-    // is a no-op rather than a throw — the try is for the components that are not yet.
-    //
-    // Only what is INSIDE root is reached. A component driving the container from outside
-    // it (a filter toolbar that is a sibling of the grid) is destroyed when the ancestor
-    // holding both is destroyed — pass the unmounting view's root, not the list element.
-    //
-    // ponytail: walks every element in the subtree, because CSS has no attribute-prefix
-    // selector for the data-nds-*-initialized stamps and the backref is a JS property.
-    // Destroy runs at navigation rate on a subtree, not on a hot path; index the instances
-    // only if a very large container measures slow.
+    // "This container is going away." Three shapes:
+    //   1. backref convention: an `nds{Name}` instance on the element with a no-arg
+    //      destroy() that also drops its stamps, so a later refresh() can re-claim it.
+    //   2. `destroy(root)` hook: the component moved its elements out of root (Fab).
+    //   3. `destroyEach`: no backref; NDS.X.destroy(el) per selector match. Declared,
+    //      never probed — NDS.Slider.destroy() with no argument releases every slider.
+    // Only what is INSIDE root is reached: pass the view's root, not the list.
+    // ponytail: walks every element in the subtree (stamps have no prefix selector);
+    // index instances only if a very large container measures slow.
     function destroyContainer(container) {
         const root = container || document;
         let destroyed = 0;
         for (const el of [root, ...root.querySelectorAll('*')]) {
             if (el.nodeType !== 1) continue;
             for (const key of Object.keys(el)) {
-                // Backrefs only. Sibling expandos hold booleans and handler flags,
-                // which have no destroy() and are released with the element itself.
+                // Backrefs only; sibling expandos hold flags with no destroy().
                 if (!key.startsWith('nds') || typeof el[key]?.destroy !== 'function') continue;
                 const instance = el[key];
                 try {
                     instance.destroy();
                     destroyed++;
-                    // Drop the backref here rather than trusting each destroy() to do it:
-                    // several clear their own, several do not, and a surviving backref
-                    // hands the next reader a dead instance. Guarded by identity, so a
-                    // destroy() that re-initialized the element keeps ITS instance.
+                    // Not every destroy() clears its backref; identity-guarded in case it re-initialized.
                     if (el[key] === instance) delete el[key];
                 } catch (error) {
                     console.warn(`[NDS:destroy] ${key} failed:`, error);
                 }
             }
         }
-        // Second shape: a component that keeps no element backref and exposes teardown on
-        // its namespace instead (NDS.Drawer.destroy(el)). The walk above cannot see those,
-        // so their registry entry opts in with destroyEach and the selector already there
-        // names the elements to hand over. Declared, never probed — the same reason the
-        // refresh hook is a registry field: NDS.Slider.destroy() with NO argument releases
-        // every slider on the page, so guessing the signature would reach outside root.
         for (const component of COMPONENTS) {
             const ns = NDS[component.name];
             if (!ns || ns.__ndsStub) continue;
 
-            // Third shape, and the reason it exists: a component that MOVED its element out
-            // of the container (Fab docks to <body>). No scan of root can find it any more,
-            // so only the component knows which of its elements belong to this view. Its
-            // hook takes root and returns how many it released — the mirror of an owner's
-            // refresh hook, and just as deliberately a registry field.
             if (component.destroy) {
                 try {
                     destroyed += component.destroy(root) || 0;
@@ -1338,15 +825,12 @@
             }
 
             if (!component.destroyEach || typeof ns.destroy !== 'function') continue;
-            // destroySelector for the components whose stamp and teardown target is not
-            // the element the scan initializes from (Slider: input scanned, container stamped).
             const selector = component.destroySelector || component.selector;
             const owned = [...root.querySelectorAll(selector)];
             if (root.matches?.(selector)) owned.unshift(root);
             for (const el of owned) {
-                // Count only a destroy that released a stamp: it no-ops on an element never
-                // initialized, already released by the backref walk above, or stamped for
-                // paint alone (an empty TOC).
+                // Count only a destroy that released a stamp (not one already released above,
+                // never initialized, or stamped for paint alone).
                 const stamps = () => el.getAttributeNames().filter((n) => n.startsWith('data-nds-') && n.endsWith('-initialized')).length;
                 const before = stamps();
                 try {
@@ -1361,18 +845,8 @@
         return destroyed;
     }
 
-    // Expose global API immediately
-    // A container whose markup is NEW to the page — built or fetched after the
-    // one-time detection pass, so nothing ever scanned it. Loads only the bundles
-    // its OWN content needs, then inits them against it.
-    //
-    // refresh() alone is not enough here: it skips a stubbed namespace on purpose,
-    // which is right for content that was present during detection (that bundle
-    // will scan it on arrival) and wrong for content built afterwards, which
-    // nothing revisits. Asking for every bundle in the manifest is not the answer
-    // either — that drags in extras, and audit, which must never be auto-injected.
-    // The registry knows which components the markup actually contains and the
-    // build manifest knows where each one lives; nothing is hardcoded.
+    // Markup built after detection: load only the bundles its own content needs, then
+    // refresh. Loading every bundle would drag in audit, which must never auto-inject.
     function mountContainer(container) {
         const root = container || document;
         const needed = new Set();
@@ -1389,24 +863,16 @@
         initialize: initializeNDS,
         components: COMPONENTS,
         config: CONFIG,
-        // On-demand run of the debug audits (nds-audit.js) — callable from any
-        // console or test harness regardless of the enableLogging flag, which
-        // only controls the automatic post-init sweep. The first call loads the
-        // audit bundle through the NDS.Audit lazy stub and returns a promise;
-        // later calls run synchronously.
+        // Works regardless of enableLogging, which only controls the automatic sweep.
         audit: () => NDS.Audit.run(),
         refresh: refreshContainer,
         mount: mountContainer,
         destroy: destroyContainer,
     };
 
-    // Initialize when ready (if enabled). main runs as a defer script, so when
-    // this executes the DOM is already fully parsed (readyState 'interactive') —
-    // we do NOT wait for DOMContentLoaded, because DCL also waits for every OTHER
-    // defer script (showcase, accessibility, page custom_js) to download + execute,
-    // which would let them gate the reveal. Kicking off via a macrotask starts the
-    // reveal off main alone, off main's eval task. Only the rare sync-in-<head>
-    // case (readyState 'loading', DOM not yet parsed) waits for DCL.
+    // Not DOMContentLoaded: DCL also waits for every OTHER defer script, which would let
+    // them gate the reveal. Main is a defer script, so the DOM is parsed here already;
+    // only the rare sync-in-<head> case waits.
     if (CONFIG.autoInitialize) {
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initializeNDS);

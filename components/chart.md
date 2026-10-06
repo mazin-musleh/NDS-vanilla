@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "06/10/2026 - 11:05 PM"
 ---
 
 <section id="chartOverview" class="nds-content-section nds-doc-overview">
@@ -234,7 +234,7 @@ NDS.Chart.create('#chart-days-root', {
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Chart ships in the extras bundle, which the loader injects after first paint. A `create()` call before the bundle arrives still works, but returns a Promise instead of the instance. To get the instance at once, `await NDS.loadBundle('extras')` first.
+Chart ships in its own bundle, which the loader injects after first paint. A `create()` call before the bundle arrives still works, but returns a Promise instead of the instance. To get the instance at once, `await NDS.loadBundle('chart')` first.
 
 ### Data Attributes
 {: .nds-block-title}

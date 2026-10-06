@@ -43,9 +43,12 @@ const report = await page.evaluate(async () => {
 
     ok('NDS.Init.destroy is exposed', typeof NDS.Init.destroy === 'function', typeof NDS.Init.destroy);
 
-    const srcToolbar = document.querySelector('#basicFilter .nds-toolbar');
-    const srcGrid = document.getElementById('basicFilterCards');
-    if (!srcToolbar || !srcGrid) return [{ name: 'fixture present', pass: false, detail: '#basicFilter markup not found' }];
+    // The page's canon block (#filter-bar): toolbar + list, as markup text.
+    const tpl = document.createElement('template');
+    tpl.innerHTML = document.getElementById('filter-bar')?.textContent || '';
+    const srcToolbar = tpl.content.querySelector('.nds-toolbar');
+    const srcGrid = tpl.content.getElementById('flt-items');
+    if (!srcToolbar || !srcGrid) return [{ name: 'fixture present', pass: false, detail: '#filter-bar canon block not found' }];
 
     // A whole view: toolbar and grid together, the shape a framework route unmounts.
     const host = document.createElement('div');
@@ -55,7 +58,7 @@ const report = await page.evaluate(async () => {
         el.removeAttribute('data-nds-filter-initialized');
         el.removeAttribute('data-paged-initialized');
     });
-    const grid = host.querySelector('#basicFilterCards');
+    const grid = host.querySelector('#flt-items');
     grid.id = 'destroyView';
     grid.removeAttribute('data-auto-pagination');
     document.body.appendChild(host);
@@ -67,6 +70,12 @@ const report = await page.evaluate(async () => {
         .flatMap(el => Object.keys(el).filter(k => k.startsWith('nds') && typeof el[k]?.destroy === 'function'));
 
     const before = backrefs();
+    // destroyEach components keep no backref (the filter's fee slider); destroy() counts them by stamp.
+    const eachOwned = NDS.Init.components
+        .filter((c) => c.destroyEach && c.selector)
+        .flatMap((c) => [...host.querySelectorAll(c.destroySelector || c.selector)])
+        .filter((el) => !Object.keys(el).some((k) => k.startsWith('nds') && typeof el[k]?.destroy === 'function')
+            && el.getAttributeNames().some((n) => n.startsWith('data-nds-') && n.endsWith('-initialized')));
     ok('setup: the view holds live instances', before.length > 0, before.join(', ') || 'none');
     ok('setup: filter claimed the view', !!NDS.Filter.getByTarget('destroyView'));
     ok('setup: init stamps present', host.querySelectorAll('[data-nds-filter-initialized]').length > 0,
@@ -75,7 +84,8 @@ const report = await page.evaluate(async () => {
     const count = NDS.Init.destroy(host);
     await settle();
 
-    ok('destroy reports what it released', count === before.length, `returned ${count}, found ${before.length}`);
+    ok('destroy reports what it released', count === before.length + eachOwned.length,
+        `returned ${count}, found ${before.length} backref + ${eachOwned.length} stamped`);
     ok('no instance left behind', backrefs().length === 0, backrefs().join(', ') || 'clean');
     ok('deregistered from the filter target map', NDS.Filter.getByTarget('destroyView') === null,
         NDS.Filter.getByTarget('destroyView')?.targetId || 'null');
@@ -135,7 +145,7 @@ await records.setViewportSize({ width: 1400, height: 1000 });
 await records.goto(`${BASE}/examples/manage-records.html`, { waitUntil: 'networkidle' });
 await records.evaluate(() => Promise.all([
     window.NDS.loadBundle('delegated').catch(() => {}),
-    window.NDS.loadBundle('extras').catch(() => {}),
+    ...['extras', 'editor', 'chart', 'code'].map((b) => window.NDS.loadBundle(b).catch(() => {})),
 ]));
 await new Promise((r) => setTimeout(r, 1500));
 
@@ -252,6 +262,9 @@ const pageList = (dir) => readdirSync(new URL(`../${dir}/`, import.meta.url))
     .filter((f) => f.endsWith('.md'))
     .map((f) => `${dir}/${f.replace(/\.md$/, '.html')}`);
 const PAGES = [...pageList('components'), ...pageList('examples'), 'index.html', 'playground.html'];
+// Instances a page SCRIPT made with create(): refresh() re-runs registry inits only, so the
+// script that made one re-makes it. ponytail: drop sort.html when Sort gets its markup API (TODO.md).
+const SCRIPT_CREATED = { 'components/sort.html': ['ndsSort'] };
 
 const results = [];
 const queue = [...PAGES];
@@ -260,7 +273,7 @@ async function sweepOne(tab, errs, path) {
     await tab.goto(`${BASE}/${path}`, { waitUntil: 'networkidle' });
     await tab.evaluate(() => Promise.all([
         window.NDS.loadBundle('delegated').catch(() => {}),
-        window.NDS.loadBundle('extras').catch(() => {}),
+        ...['extras', 'editor', 'chart', 'code'].map((b) => window.NDS.loadBundle(b).catch(() => {})),
     ]));
     await new Promise((r) => setTimeout(r, 900));
 
@@ -320,7 +333,7 @@ const culprits = (pick, label) => {
 };
 report.push(
     culprits((r) => r.leftKinds, `sweep: ${PAGES.length} pages, destroy released every instance`),
-    culprits((r) => r.missing.map((k) => `${k} (${r.path})`), 'sweep: every destroyed component mounts again'),
+    culprits((r) => r.missing.filter((k) => !SCRIPT_CREATED[r.path]?.includes(k)).map((k) => `${k} (${r.path})`), 'sweep: every destroyed component mounts again'),
     culprits((r) => r.errors.map((e) => `${r.path}: ${e}`), 'sweep: teardown threw on no page'),
 );
 

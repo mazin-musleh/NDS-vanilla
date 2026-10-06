@@ -59,7 +59,7 @@ const settle = async (page) => {
         const u = req.url();
         if (u.includes('nds-accessibility.min.css')) { css.push(u); tCss ||= Date.now(); }
         if (u.includes('nds-accessibility.min.js')) { js.push(u); tJs ||= Date.now(); }
-        const other = u.match(/nds-(delegated|extras|audit)\.min\.js/);
+        const other = u.match(/nds-(?!main\.|accessibility\.)([a-z-]+)\.min\.js/);
         if (pressed && other) afterPress.push(other[1]);
     });
     await page.goto(URL, { waitUntil: 'networkidle' });
@@ -81,8 +81,8 @@ const settle = async (page) => {
     note(gap !== null && gap < 50, 'the paired sheet starts with the bundle, not after it',
          gap === null ? 'one of them never fetched' : `+${gap}ms after the js, press+${tJs - t0}ms`);
 
-    // audit is never auto-injected, by contract; extras is page-gated. Arming the
-    // panel is not a reason to fetch either.
+    // audit is never auto-injected, by contract; the rest are page-gated. Arming the
+    // panel is not a reason to fetch any of them.
     const strays = [...new Set(afterPress)].filter((b) => b !== 'delegated');
     note(strays.length === 0, 'the press pulls no bundle the panel does not need', strays.join(', '));
     // ...and the bundles it DOES need still land: the panel's own accordion is

@@ -13,7 +13,8 @@
 //   examples/manage-records.html  eight components over one <tbody> — where the
 //                                 finding came from. Rows are CLONED from the page's
 //                                 own and mutated, so the harness cannot drift from canon.
-//   components/pagination.html    live data-driven navs (data-total-pages) — the
+//   components/pagination.html    the data-driven nav (data-total-pages) from its
+//                                 #pg-data canon block, mounted live — the
 //                                 server-pagination shape.
 //
 //   node scripts/check-refresh.mjs [baseUrl]
@@ -39,7 +40,7 @@ async function open(path) {
     await page.goto(`${BASE}${path}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => Promise.all([
         window.NDS.loadBundle('delegated').catch(() => {}),
-        window.NDS.loadBundle('extras').catch(() => {}),
+        ...['extras', 'editor', 'chart', 'code'].map((b) => window.NDS.loadBundle(b).catch(() => {})),
     ]));
     await new Promise((r) => setTimeout(r, 1200));
     return page;
@@ -149,15 +150,15 @@ report.push(...await recordsPage.evaluate(async () => {
     ok('no gaps — every component with an element inside the container was reached',
         gaps.length === 0, gaps.length ? `missed: ${gaps.join(', ')}` : `reached: ${shouldScan.join(', ')}`);
 
-    // `universal` components (selector: null — Link) have no selector to
+    // Universal components (selector: null — Link) have no selector to
     // test and are meant to run on every pass, exactly as the init partition treats
     // them. They are not strays.
-    const outside = live.filter((c) => !c.refresh && !c.universal && !tbody.querySelector(c.selector)).map((c) => c.name);
+    const outside = live.filter((c) => !c.refresh && c.selector && !tbody.querySelector(c.selector)).map((c) => c.name);
     const strays = got.filter((n) => outside.includes(n));
     ok('no strays — components with nothing in the container were left alone',
         strays.length === 0, strays.length ? `touched: ${strays.join(', ')}` : `${outside.length} skipped`);
 
-    const universals = live.filter((c) => c.universal).map((c) => c.name);
+    const universals = live.filter((c) => !c.selector).map((c) => c.name);
     ok('universal components (no selector) still run under a scoped refresh',
         universals.every((n) => got.includes(n)),
         universals.length ? `${universals.join(', ')} reached` : 'none registered');
@@ -373,8 +374,18 @@ report.push(...await pagPage.evaluate(async () => {
     const ok = (name, pass, detail = '') => out.push({ name, pass, detail: String(detail) });
     const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    const navs = [...document.querySelectorAll('.nds-pagination[data-total-pages]')];
-    if (!navs.length) return [{ name: 'data-driven navs present', pass: false, detail: 'none found' }];
+    // The page's canon block (#pg-data) holds the data-driven nav as markup text; mount it live.
+    const tpl = document.createElement('template');
+    tpl.innerHTML = document.getElementById('pg-data')?.textContent || '';
+    const host = document.createElement('div');
+    host.append(tpl.content);
+    document.body.appendChild(host);
+    await NDS.Init.mount(host);
+    await wait(300);
+    const navs = [...host.querySelectorAll('.nds-pagination[data-total-pages]')];
+    if (!navs.length || !navs.every((n) => n.querySelector('.nds-pagination-item'))) {
+        return [{ name: 'data-driven navs present', pass: false, detail: navs.length ? 'mounted but not rendered' : '#pg-data canon block not found' }];
+    }
 
     let changes = 0;
     document.addEventListener('nds:pagination:change', () => { changes++; }, true);
