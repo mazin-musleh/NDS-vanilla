@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="gridOverview" class="nds-content-section nds-doc-overview">
@@ -142,12 +142,12 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 |---|---|---|---|---|
 | Example | Equal columns (default) | — | — | Every child gets an equal column, all in one row. For a short, fixed set of items |
 | Example | Columns per screen | canon `#grid-columns` | — | A set number of equal columns, with fewer on tablets and phones. `--mid-col` and `--min-col` fall back to the next larger value |
-| Example | Minimum width | canon `#grid-min-width` | — | As many columns as fit at a minimum width. It needs no values for smaller screens. Do not add a column count, which then overflows |
+| Example | Minimum width (hint: As many columns as fit; the rest wrap) | canon `#grid-min-width` | — | As many columns as fit at a minimum width. It needs no values for smaller screens. Do not add a column count, which then overflows |
 | Example | Main and side | canon `#grid-main-side` | — | Columns of different widths, set with a `grid-template-columns` value. `--mid-track: 1fr` stacks them below 960px |
 | Example | Fixed side column | canon `#grid-fixed-side` | — | A side column at a set width and a main column that takes the rest |
 | Example | Gaps | canon `#grid-gaps` | — | Row and column gaps set apart. `--gap` sets both |
 | Example | Centered items | canon `#grid-center` | — | Children at their own width, in the middle of their columns. The text inside is centered too |
-| Example | Container width | canon `#grid-container` | — | A grid inside an `nds-cq` element follows that element's width, not the screen's. The same grid shows more columns in a wide column than in a narrow one. The container steps are 768px and 480px |
+| Example | Container width (hint: The grid follows its parent's width, not the screen's) | canon `#grid-container` | — | A grid inside an `nds-cq` element follows that element's width, not the screen's. The same grid shows more columns in a wide column than in a narrow one. The container steps are 768px and 480px |
 {: #gridVariantsTable .nds-table .nds-responsive}
 
 </div>

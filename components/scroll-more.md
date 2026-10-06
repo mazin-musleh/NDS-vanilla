@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 07:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="scrollMoreOverview" class="nds-content-section nds-doc-overview">
@@ -153,7 +153,7 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
 | Structure | Horizontal row | canon `#sm-row` | — | A row of buttons or chips with a set width. The button stands at the row's end, with its label written sideways |
 | Structure | Card track | canon `#sm-cards` | — | A row of cards wider than its container. The wrapper stops at the container's width, and the cards scroll inside it |
 | Divided | Divided | `.nds-divided` | `.nds-scroll-more` | A hairline between the content and the button, shown while the content overflows |
-| Snap | Snap (hint: For card tracks) | `.nds-snap` | `.nds-scroll-more` | Each item's start snaps to the edge of the scrolling area |
+| Snap | Snap (hint: Each click and drag stops at the start of an item) | `.nds-snap` | `.nds-scroll-more` | Each item's start snaps to the edge of the scrolling area |
 | Gap | Gap | `--scroll-gap: var(--spacing-md)` | `.nds-scroll-more` | Space between the content and the button. With Divided, the hairline sits in the gap |
 {: #smVariantsTable .nds-table .nds-responsive}
 

@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 lang: en
 direction: ltr
 ---
@@ -277,16 +277,16 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | Structure | Phone (id: phone) (demo: + affix-solid) | canon `#field-phone` | — | A Saudi mobile number after a fixed `+966` |
 | Structure | Phone with country (id: phone-country) | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name` |
 | Structure | Textarea (id: textarea) | canon `#field-textarea` | — | Several lines of text, such as a message |
-| Structure | Select (id: select) | canon `#field-select` | — | A native `<select>`, for the phone's own picker. For a choice in a form, use [Custom Select](../components/custom-select) |
+| Structure | Select (id: select) (hint: The browser's own list) | canon `#field-select` | — | A native `<select>`, for the phone's own picker. For a choice in a form, use [Custom Select](../components/custom-select) |
 | Size | LG (default) | — | — | 40px high. It needs no class |
 | Size | MD | `.nds-md` | `.nds-form-container` | 32px high, with smaller text, for a table filter or a side panel |
 | Style | Outline (default) | — | — | A border on the page background |
-| Style | Lighter | `.nds-lighter` | `.nds-form-container` | A light fill and no border, for a field on a white card |
-| Style | Darker | `.nds-darker` | `.nds-form-container` | A darker fill and no border, for a field on a gray surface |
+| Style | Lighter (hint: Light fill and no border) | `.nds-lighter` | `.nds-form-container` | A light fill and no border, for a field on a white card |
+| Style | Darker (hint: Darker fill and no border) | `.nds-darker` | `.nds-form-container` | A darker fill and no border, for a field on a gray surface |
 | Affix (any) | Prefix (not: textarea, select, number, phone, phone-country) | canon `#field-prefix` | `.nds-form-control` (start) | Fixed text before the value, such as a currency or `https://` |
 | Affix (any) | Suffix (not: textarea, select, number, phone, phone-country) | canon `#field-suffix` | `input` (after) | Fixed text after the value, such as a unit or a domain |
 | Affix style | Subtle (default) | `.nds-subtle` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on the field's own background: text, the number buttons and the country picker |
-| Affix style | Solid (id: affix-solid) | `.nds-secondary` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on a light fill, set apart from the value |
+| Affix style | Solid (id: affix-solid) (hint: Light fill behind the prefix or suffix) | `.nds-secondary` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on a light fill, set apart from the value |
 | Affix size | LG (default) | — | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The affix button's default padding. It needs no class |
 | Affix size | MD (id: affix-md) | `.nds-md` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | Smaller prefix and suffix buttons, with smaller text |
 | State | None (default) | — | — | The user can type |
@@ -294,8 +294,8 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | State | Readonly | `[data-state~="readonly"]` | `.nds-form-container:not(.nds-select)` | The value shows and submits, and the user cannot change it. Not on a select: the browser ignores `readonly` there |
 | State | Loading | `[data-state~="loading"]` | `.nds-form-container:not(.nds-select)` | A spinner in place of the action buttons, while a script checks the value. Set it with `NDS.State.add()` and remove it when the check ends |
 | Required | Required | `[data-required]` | `.nds-form-container` | A red asterisk before the label. An empty field blocks the submit |
-| Info | Info | canon `#field-info` | `label` | A line of help text under the label |
-| Hint | Hint | canon `#field-hint` | `.nds-form-container` | A hint under the field that stays. A validation message takes its place while it shows |
+| Info | Info (hint: Help text under the label) | canon `#field-info` | `label` | A line of help text under the label |
+| Hint | Hint (hint: A message that stays under the field) | canon `#field-hint` | `.nds-form-container` | A hint under the field that stays. A validation message takes its place while it shows |
 {: #formsVariantsTable .nds-table .nds-responsive}
 
 </div>

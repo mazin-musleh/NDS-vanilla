@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 07:02 AM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="helpersOverview" class="nds-content-section nds-doc-overview">
@@ -74,7 +74,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Class (any) | Center | `.nds-center` | `#helpers-card` | Centers the text in an element and everything inside it. On a card it centers the content, not the card |
-| Class (any) | Flush | `.nds-flush` | `#helpers-card` | Removes a component's own padding, margin, border and corner radius when the frame around it gives them. Here the card loses its border and padding, so its content sits straight on the page |
+| Class (any) | Flush (hint: Removes padding, margin, border and corner radius) | `.nds-flush` | `#helpers-card` | Removes a component's own padding, margin, border and corner radius when the frame around it gives them. Here the card loses its border and padding, so its content sits straight on the page |
 | Class (any) | LTR | `.nds-ltr` | `#helpers-number` | A request number, phone number, IBAN, email address or URL inside Arabic text. Without it, the hyphens and the plus sign move to the wrong end |
 | Class (any) | LTR | `.nds-ltr` | `#helpers-phone` | The phone number. Written with the first |
 | Class (any) | Brand Color | `.nds-color-primary` | `#helpers-number` | Text that is not a link, in the brand text color: a figure, a term, a status word |

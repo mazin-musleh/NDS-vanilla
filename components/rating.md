@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="ratingOverview" class="nds-content-section nds-doc-overview">
@@ -110,7 +110,7 @@ Pick another component when:
 | Size | LG | `.nds-lg` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 48px stars, 40px on phones. A featured review or a hero |
 | Style | Brand | `.nds-brand` | `.nds-rating` | Stars in the brand primary color, not the secondary color |
 | Value | Empty | `[data-rating="0"]` | `.nds-rating` | No star is filled. The start of a new vote |
-| Value | Whole | `[data-rating="4"]` | `.nds-rating` | A whole number fills that many stars |
+| Value | Whole (hint: 4 of 5 stars, no half star) | `[data-rating="4"]` | `.nds-rating` | A whole number fills that many stars |
 | Value | Half star (default) | — | — | A decimal of .3 or more fills half of the next star |
 | State (any) | Loading | `.nds-loading` | `.nds-rating` | The stars pulse as placeholders while the score loads |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-rating:has(> button):not(.nds-dropmenu .nds-rating)` | The user cannot pick a score now. Interactive only |

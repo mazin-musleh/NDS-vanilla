@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -72,10 +72,10 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 | Calendar | Gregorian (default) | — | — | The calendar shows Gregorian months |
 | Calendar | Hijri | `.nds-hijri` | `.nds-date-picker` | The calendar shows Hijri months, and the field holds a Hijri date. See Hijri Calendar |
 | Picker | Day (default) | — | — | The calendar shows a grid of days. The field holds `DD/MM/YYYY` |
-| Picker | Month | `[data-format="MM/YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of months, for a month such as a card expiry. Not with Range. See Date Format |
-| Picker | Month | `[placeholder="MM/YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
-| Picker | Year | `[data-format="YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of years, for a year such as a graduation year. Not with Range. See Date Format |
-| Picker | Year | `[placeholder="YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
+| Picker | Month (hint: A grid of months, for a card expiry) | `[data-format="MM/YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of months, for a month such as a card expiry. Not with Range. See Date Format |
+| Picker | Month (hint: A grid of months, for a card expiry) | `[placeholder="MM/YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
+| Picker | Year (hint: A grid of years, for a graduation year) | `[data-format="YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of years, for a year such as a graduation year. Not with Range. See Date Format |
+| Picker | Year (hint: A grid of years, for a graduation year) | `[placeholder="YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
 | Clear button | Clear button | `[data-clearable]` | `.nds-date-picker:not(.dateRange)` | Adds Clear to the calendar. Range has it already. See Clear Button |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-date-picker:not([data-state~="readonly"])` | The user cannot type or open the calendar, and the date does not post. Not with Read-only |
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-date-picker:not([data-state~="disabled"])` | The user sees the date but cannot change it. The date posts. Not with Disabled |

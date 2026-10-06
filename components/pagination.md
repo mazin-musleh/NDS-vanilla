@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 03:23 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="paginationOverview" class="nds-content-section nds-doc-overview">
@@ -326,8 +326,8 @@ Every option goes on the `nds-pagination` nav. Pages and Page links work only on
 | Size | MD | `.nds-md` | `.nds-pagination` | 32px buttons |
 | Size | SM | `.nds-sm` | `.nds-pagination` | 24px buttons, for a dense screen |
 | Pages | 12 (default) | `[data-total-pages="12"]` | `.nds-pagination[data-total-pages]` | The page count. The script builds the buttons from it |
-| Pages | 2000 | `[data-total-pages="2000"]` | `.nds-pagination[data-total-pages]` | A large count, with page 1000 current. The menu of hidden pages gets a jump box |
-| Pages | 2000 | `[data-active-page="1000"]` | `.nds-pagination[data-total-pages]` | |
+| Pages | 2000 (hint: 2000 pages, with page 1000 open) | `[data-total-pages="2000"]` | `.nds-pagination[data-total-pages]` | A large count, with page 1000 current. The menu of hidden pages gets a jump box |
+| Pages | 2000 (hint: 2000 pages, with page 1000 open) | `[data-active-page="1000"]` | `.nds-pagination[data-total-pages]` | Sets the current page to 1000. It is the same choice as the row above: write both attributes |
 | Page links | Page links (hint: Links in place of buttons, one URL per page) | `[data-page-url="?page={page}"]` | `.nds-pagination[data-total-pages]` | The script builds `<a href>` links in place of buttons, for a server that renders each page. `{page}` becomes the page number |
 | URL sync | URL sync (hint: Keeps the page number in the address) | `[data-page-param]` | `.nds-pagination` | Keeps the current page in the address as `?page=N`, so a reload or a shared link opens the same page |
 | No scroll | No scroll (hint: A page change does not scroll back to the content) | `[data-pagination-no-scroll]` | `.nds-pagination` | A page change does not scroll back to the content. Your script calls `NDS.Pagination.scrollToContent()` when it wants the scroll |

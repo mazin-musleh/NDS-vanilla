@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="feedbackOverview" class="nds-content-section nds-doc-overview">
@@ -78,8 +78,8 @@ NDS.Feedback.create({
 | Structure | Icon only | `message: ''` | `create()` | The same, in JavaScript: leave out `message` |
 | Status | Error (default) | `[data-status="error"]` | `.nds-feedback` | Something failed or is wrong |
 | Status | Error (default) | `status: 'error'` | `create()` | The same, in JavaScript |
-| Status | Critical | `[data-status="critical"]` | `.nds-feedback` | A severe error. Error colors with an exclamation mark |
-| Status | Critical | `status: 'critical'` | `create()` | The same, in JavaScript |
+| Status | Critical (hint: Error colors with an exclamation mark) | `[data-status="critical"]` | `.nds-feedback` | A severe error. Error colors with an exclamation mark |
+| Status | Critical (hint: Error colors with an exclamation mark) | `status: 'critical'` | `create()` | The same, in JavaScript |
 | Status | Success | `[data-status="success"]` | `.nds-feedback` | A confirmation |
 | Status | Success | `status: 'success'` | `create()` | The same, in JavaScript |
 | Status | Warning | `[data-status="warning"]` | `.nds-feedback` | A risk the user should know about |

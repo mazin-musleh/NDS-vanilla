@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="swiperOverview" class="nds-content-section nds-doc-overview">
@@ -217,10 +217,10 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | Structure | Cards (default) | — | — | A row of cards or images, several on a page. The usual swiper |
 | Structure | Hero (demo: + per-1) | canon `#swiper-hero` | — | Full-width slides with a background image, one at a time, at the top of a page |
 | Structure | Spotlight (demo: + per-1) (hint: One slide at full size, smaller ones at its sides) | canon `#swiper-spotlight` | — | One slide in the middle at full size, with smaller slides at its sides. For a set of images or cards the user looks at one by one |
-| Per view | 3 · 2 · 1 (default) | — | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | 3 slides on a desktop, 2 on a tablet, 1 on a phone |
-| Per view | 4 · 3 · 2 | `--max-slides: 4` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Smaller items, such as logos or short cards |
-| Per view | 4 · 3 · 2 | `--mid-slides: 3` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a tablet |
-| Per view | 4 · 3 · 2 | `--min-slides: 2` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a phone |
+| Per view | 3 · 2 · 1 (default) (hint: Slides on desktop, tablet and phone) | — | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | 3 slides on a desktop, 2 on a tablet, 1 on a phone |
+| Per view | 4 · 3 · 2 (hint: Slides on desktop, tablet and phone) | `--max-slides: 4` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Smaller items, such as logos or short cards |
+| Per view | 4 · 3 · 2 (hint: Slides on desktop, tablet and phone) | `--mid-slides: 3` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a tablet |
+| Per view | 4 · 3 · 2 (hint: Slides on desktop, tablet and phone) | `--min-slides: 2` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a phone |
 | Per view | 1 (id: per-1) | `--max-slides: 1` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | One slide at every width, such as an image gallery |
 | Per view | 1 (id: per-1) | `--mid-slides: 1` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | The same, on a tablet |
 | Per view | 1 (id: per-1) | — | `.nds-swiper.nds-hero` | A hero always shows one slide. It needs no knob |

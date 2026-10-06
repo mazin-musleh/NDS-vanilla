@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 07:49 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="exportOverview" class="nds-content-section nds-doc-overview">
@@ -246,10 +246,10 @@ A Scope option goes on every export button of the list. The Column hide target i
 |---|---|---|---|---|
 | Structure | Table (default) | — | — | A `<table>` or `.nds-table`. The script reads its header and body rows as they are |
 | Structure | Cards | canon `#export-cards` | — | Any list that is not a table: cards, a definition list. Mark the rows with `data-export-rows` and each field with `data-export-field` |
-| Scope | Auto (default) | — | — | The selected rows when any row is selected, else every row |
+| Scope | Auto (default) (hint: Selected rows if any are selected, else every row) | — | — | The selected rows when any row is selected, else every row |
 | Scope | Selected | `[data-export-scope="selected"]` | `[data-export]` | Only the selected rows. With nothing selected, the file has only the header |
 | Scope | All | `[data-export-scope="all"]` | `[data-export]` | Every row, selected or not |
-| Column hide | Column hide (hint: Hidden columns excluded from export) | canon `#export-columns` | `.nds-bar-end:has([data-export-target="#export-orders"])` (start) | The [Tables](../components/tables) column menu. A column the user hides drops out of the file |
+| Column hide | Column hide (hint: Adds a Columns menu, and hidden columns stay out of the file) | canon `#export-columns` | `.nds-bar-end:has([data-export-target="#export-orders"])` (start) | The [Tables](../components/tables) column menu. A column the user hides drops out of the file |
 {: #exportVariantsTable .nds-table .nds-responsive}
 
 </div>

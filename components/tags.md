@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="tagOverview" class="nds-content-section nds-doc-overview">
@@ -87,17 +87,17 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 | Color | Blue | `.nds-blue` | `.nds-tag:not([data-status])` | Pick the color by meaning |
 | Color | Yellow | `.nds-yellow` | `.nds-tag:not([data-status])` | Pick the color by meaning |
 | Color | Red | `.nds-red` | `.nds-tag:not([data-status])` | Pick the color by meaning |
-| Color | On color | `.nds-oncolor` | `.nds-tag:not([data-status])` | The DGA white look for a standard tag on a deep primary or dark background. It replaces the color classes. A status tag keeps its colors: give the dark surface `data-theme="dark"` instead |
+| Color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-tag:not([data-status])` | The DGA white look for a standard tag on a deep primary or dark background. It replaces the color classes. A status tag keeps its colors: give the dark surface `data-theme="dark"` instead |
 | Status | Neutral (default) | — | — | A state with no meaning of its own, such as submitted or draft |
 | Status | Success | `[data-status="success"]` | `.nds-tag[data-status]` | A good result, such as approved or complete |
 | Status | Info | `[data-status="info"]` | `.nds-tag[data-status]` | A state to note, such as in review |
 | Status | Warning | `[data-status="warning"]` | `.nds-tag[data-status]` | A state that needs action soon, such as expiring |
 | Status | Error | `[data-status="error"]` | `.nds-tag[data-status]` | A failed or blocked state, such as rejected |
-| Status | Critical | `[data-status="critical"]` | `.nds-tag[data-status]` | The same look as Error. Keep it for system-level alerts |
+| Status | Critical (hint: The same look as Error) | `[data-status="critical"]` | `.nds-tag[data-status]` | The same look as Error. Keep it for system-level alerts |
 | Style | Light (default) | — | — | A light fill in the tag's color |
 | Style | Outline | `.nds-outline` | `.nds-tag:not([data-status])` | No fill and a darker border, for a quieter standard tag |
-| Style | Inverted | `.nds-inverted` | `.nds-tag[data-status]` | A solid fill in the status color and light text, for a status that must stand out |
-| Style | Ghost | `.nds-ghost` | `.nds-tag[data-status]` | No fill, no border and neutral text beside the colored dot, for a quiet status |
+| Style | Inverted (hint: A solid fill with light text) | `.nds-inverted` | `.nds-tag[data-status]` | A solid fill in the status color and light text, for a status that must stand out |
+| Style | Ghost (hint: No fill and no border) | `.nds-ghost` | `.nds-tag[data-status]` | No fill, no border and neutral text beside the colored dot, for a quiet status |
 | Size | MD (default) | — | — | 32px high. It needs no class |
 | Size | SM | `.nds-sm` | `.nds-tag` | 24px high, for cards and table rows |
 | Size | XS | `.nds-xs` | `.nds-tag` | 20px high, for dense lists |

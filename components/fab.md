@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 lang: en
 direction: ltr
 ---
@@ -107,10 +107,10 @@ Variant and Size have two rows. On a single FAB, the class goes on the FAB butto
 |---|---|---|---|---|
 | Structure | Button (default) (demo: + size-lg) | — | — | One button. The usual FAB |
 | Structure | Group (demo: + subtle) (demo: + size-sm) | canon `#fab-group` | — | Related actions, such as a set of share buttons. The group docks as one item, and the toggle is one of its buttons |
-| Edge | End (default) (demo: + vertical) | — | — | The end edge of the reading direction: the left in Arabic, the right in English |
-| Edge | Start (demo: + vertical) | `[data-panel-side="start"]` | `.nds-panel` | The start edge of the reading direction |
-| Edge | Left (demo: + vertical) | `[data-panel-side="left"]` | `.nds-panel` | The left edge in every language |
-| Edge | Right (demo: + vertical) | `[data-panel-side="right"]` | `.nds-panel` | The right edge in every language |
+| Edge | End (default) (demo: + vertical) (hint: Follows the reading direction) | — | — | The end edge of the reading direction: the left in Arabic, the right in English |
+| Edge | Start (demo: + vertical) (hint: Follows the reading direction) | `[data-panel-side="start"]` | `.nds-panel` | The start edge of the reading direction |
+| Edge | Left (demo: + vertical) (hint: Stays on the left in every language) | `[data-panel-side="left"]` | `.nds-panel` | The left edge in every language |
+| Edge | Right (demo: + vertical) (hint: Stays on the right in every language) | `[data-panel-side="right"]` | `.nds-panel` | The right edge in every language |
 | Edge | Bottom (demo: + horizontal) | `[data-panel-side="bottom"]` | `.nds-panel` | The middle of the bottom edge. The panel is a sheet that rises from the bottom |
 | Variant | Primary (default) | `.nds-primary` | `.nds-btn.nds-fab` | The main action on the page |
 | Variant | Primary (default) | `.nds-primary` | `.nds-fab > .nds-btn` | The same, on each button of a group |

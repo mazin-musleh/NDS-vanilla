@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="btnOverview" class="nds-content-section nds-doc-overview">
@@ -123,7 +123,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Content | Icon only | canon `#btn-icon` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis):not(:has(> .nds-avatar))` (start) | A square button with only the icon |
 | Content | Icon only | `.nds-icon-only` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | The same. Keep the label: it is hidden on screen and names the button for screen readers. On a user button, it shows only the photo |
 | Built-in icon | None (default) | — | — | No drawn icon |
-| Built-in icon | Menu | `.nds-menu-btn` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | A chevron after the label. It turns when the button has `data-state~="open"` or `aria-expanded="true"`, which the [Dropmenu](../components/dropmenu) sets |
+| Built-in icon | Menu (hint: A chevron after the label, for a button that opens a menu) | `.nds-menu-btn` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | A chevron after the label. It turns when the button has `data-state~="open"` or `aria-expanded="true"`, which the [Dropmenu](../components/dropmenu) sets |
 | Built-in icon | Next | `.nds-next` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | An arrow that points forward in the reading direction |
 | Built-in icon | Previous | `.nds-prev` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | An arrow that points back in the reading direction. The arrow comes before the label |
 | Built-in icon | Up | `.nds-up` | `.nds-btn:not(.nds-progress):not(.nds-ellipsis)` | An arrow that points up |
@@ -135,20 +135,20 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | State | Loading | `.nds-loading` | `.nds-btn:first-child:not(.nds-progress)` | A spinner replaces the content while a request runs. The button keeps its width. In JavaScript, call `NDS.State.add(btn, 'loading')` |
 | State | Loading | `[disabled]` | `.nds-btn:first-child:not(.nds-progress)` | The same. `disabled` stops a second press, and a loading button keeps its colors |
 | Ring | Countdown (default) | `--progress-duration: 4000ms` | `.nds-progress` | The ring fills once over this time |
-| Ring | Fixed value | `.nds-progress-static` | `.nds-progress` | The ring shows a fixed part, such as upload progress |
-| Ring | Fixed value | `--progress-value: 25` | `.nds-progress` | The same. The value is a percentage, from 0 to 100 |
+| Ring | Fixed value (hint: The ring shows a set percentage, not a countdown) | `.nds-progress-static` | `.nds-progress` | The ring shows a fixed part, such as upload progress |
+| Ring | Fixed value (hint: The ring shows a set percentage, not a countdown) | `--progress-value: 25` | `.nds-progress` | The same. The value is a percentage, from 0 to 100 |
 | Direction | Horizontal (default) | — | — | The buttons sit in a row, or the three dots of a More button |
 | Direction | Vertical | `.nds-vertical` | `.nds-btn-group` | The buttons stack in a column. The top and bottom keep the rounded corners |
 | Direction | Vertical | `.nds-vertical` | `.nds-btn.nds-ellipsis` | On a More button, the three dots stand in a column, for a menu at the end of a row or a card |
 | Seamless | Seamless (hint: No divider between the buttons) | `.nds-seamless` | `.nds-btn-group` | No divider between the buttons. For subtle icon buttons that read as one set of tools |
-| Destructive | Destructive (hint: Not with Neutral) | `.nds-destructive` | `.nds-btn:not(.nds-neutral)` | Error colors, for delete, remove or any action that cannot be undone. It works with every variant except neutral |
-| On color | On color | `.nds-oncolor` | `.nds-btn` | For a button on a deep primary or dark background |
+| Destructive | Destructive (hint: Error colors for delete and remove) | `.nds-destructive` | `.nds-btn:not(.nds-neutral)` | Error colors, for delete, remove or any action that cannot be undone. It works with every variant except neutral |
+| On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-btn` | For a button on a deep primary or dark background |
 | Indicator | Indicator (hint: A bar at the bottom edge on hover and when selected) | `.nds-indicator` | `.nds-btn` | A bar at the bottom edge. It shows on hover, focus and the selected state, as in a tab or a menu bar |
-| Circle | Circle (hint: Not in a group) | `.nds-circle` | `.nds-btn:not(.nds-btn-group > .nds-btn)` | Round ends. An icon-only button becomes a circle. No effect in a group, which owns its corners |
+| Circle | Circle (hint: Round ends) | `.nds-circle` | `.nds-btn:not(.nds-btn-group > .nds-btn)` | Round ends. An icon-only button becomes a circle. No effect in a group, which owns its corners |
 | Full width | Full width | `.nds-full` | `.nds-btn:not(.nds-btn-group > .nds-btn)` | Fills the width of its container, with the content centered |
 | Full width | Full width | `.nds-full` | `.nds-btn-group` | On a group, the group fills the width and its buttons share it equally. Put it on the group, not on its buttons |
-| Primary text | Primary text (hint: Transparent only) | `.nds-color` | `.nds-transparent:not(.nds-destructive):not(.nds-oncolor)` | The text takes the brand primary color, and goes back to the default color on hover |
-| Badge | Badge (hint: Needs an icon) | canon `#btn-badge` | `i.nds-icon` | A count over the corner of the icon. It goes inside the `<i>` icon element, never beside it. The icon is `aria-hidden`, so screen readers skip the count: put it in the label too |
+| Primary text | Primary text (hint: Brand-color text, no fill) | `.nds-color` | `.nds-transparent:not(.nds-destructive):not(.nds-oncolor)` | The text takes the brand primary color, and goes back to the default color on hover |
+| Badge | Badge (hint: A count over the icon corner) | canon `#btn-badge` | `i.nds-icon` | A count over the corner of the icon. It goes inside the `<i>` icon element, never beside it. The icon is `aria-hidden`, so screen readers skip the count: put it in the label too |
 {: #btnVariantsTable .nds-table .nds-responsive}
 
 </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="dropmenuOverview" class="nds-content-section nds-doc-overview">
@@ -246,8 +246,8 @@ Every option goes on the `nds-dropmenu` wrapper, except Center items, which goes
 | Structure | Picker | canon `#dm-picker` | — | A button that picks one value, in a small slot: an input prefix or a per-page count. The value submits with the form. For a form field, use [Custom Select](../components/custom-select) |
 | Structure | Lazy menu | canon `#dm-lazy` | — | The menu sits in a `<template>` and is built on the first click, so a long menu adds no markup at page load. Only for a menu that no other component reads: not Filter, Share or Multiselect. Search engines and the browser's find do not see the items until then |
 | Anchor | Center (default) | — | — | The menu centers under the trigger |
-| Anchor | Start | `[data-anchor="start"]` | `.nds-dropmenu` | The menu lines up with the trigger's start edge. For a wide trigger |
-| Anchor | End | `[data-anchor="end"]` | `.nds-dropmenu` | The menu lines up with the trigger's end edge |
+| Anchor | Start (hint: The menu lines up with the trigger's start edge) | `[data-anchor="start"]` | `.nds-dropmenu` | The menu lines up with the trigger's start edge. For a wide trigger |
+| Anchor | End (hint: The menu lines up with the trigger's end edge) | `[data-anchor="end"]` | `.nds-dropmenu` | The menu lines up with the trigger's end edge |
 | Anchor | Cursor (hint: Opens under the pointer, like a context menu) | `[data-anchor-cursor]` | `.nds-dropmenu` | The menu opens under the pointer, like a context menu. A keyboard or script open centers it |
 | Portal | Auto (default) | — | — | The menu moves to `<body>` only when an ancestor would clip it |
 | Portal | Always (hint: The menu moves to the page body when it opens) | `[data-portal]` | `.nds-dropmenu` | The menu always moves to `<body>` when it opens |

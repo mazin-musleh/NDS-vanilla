@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="multiselectOverview" class="nds-content-section nds-doc-overview">
@@ -194,7 +194,7 @@ A row on `.nds-check-container` changes every option row. A Reset or Apply row i
 | Menu button (any) | Label only (limit: 1 button content) | remove | `.nds-dropmenu-trigger:has(.nds-label) > .nds-icon` | Removes the icon |
 | Menu button (any) | Solid | canon `#multiselect-trigger-solid` | `[data-multiselect-dropmenu]` (start) | A filled button that stands out from the field |
 | Menu button (any) | Solid | remove | `.nds-dropmenu-trigger.nds-subtle` | Removes the subtle button |
-| Menu button (any) | MD | `.nds-md` | `.nds-dropmenu-trigger` | A 32px button with a smaller word and icon |
+| Menu button (any) | MD (hint: A smaller 32px menu button) | `.nds-md` | `.nds-dropmenu-trigger` | A 32px button with a smaller word and icon |
 | Menu options | None (default) | — | — | No buttons and no search. Each check commits at once |
 | Menu options | Reset (hint: Unchecks every option) | canon `#multiselect-footer-reset` | `.nds-dropmenu-menu` | A button that unchecks every option. See Reset Button |
 | Menu options | Apply (hint: Checks wait until Apply) | canon `#multiselect-footer-apply` | `.nds-dropmenu-menu` | Checks wait in the menu until the user presses Apply. See Apply Button |

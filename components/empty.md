@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/09/2026 - 05:11 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="emptyOverview" class="nds-content-section nds-doc-overview">
@@ -83,8 +83,8 @@ The Message and Icon rows go on the element that carries `nds-empty`, whatever i
 | Structure | List | canon `#empty-list` | — | A `<ul>` or an `<ol>`. The placeholder is an `<li>`, so the list stays valid |
 | Structure | Table | canon `#empty-table` | — | `nds-empty` on the `<table>`. The script adds a `<tbody>` when the table has none |
 | Structure | Table body | canon `#empty-tbody` | — | `nds-empty` on one `<tbody>`, for a table with more than one body |
-| Message | Message | `[data-empty-message="No requests match your search"]` | `.nds-empty` | Replaces the default text. Say why the container is empty, or what the user can do next |
-| Icon | Icon | `[data-empty-icon="nds-icon nds-hgi-search-01"]` | `.nds-empty` | Replaces the default icon. The value is the whole `class` of the icon, from any icon set |
+| Message | Message (hint: Replaces the default text) | `[data-empty-message="No requests match your search"]` | `.nds-empty` | Replaces the default text. Say why the container is empty, or what the user can do next |
+| Icon | Icon (hint: Replaces the default icon) | `[data-empty-icon="nds-icon nds-hgi-search-01"]` | `.nds-empty` | Replaces the default icon. The value is the whole `class` of the icon, from any icon set |
 {: #emptyVariantsTable .nds-table .nds-responsive}
 
 </div>

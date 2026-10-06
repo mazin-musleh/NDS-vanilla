@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="tabsOverview" class="nds-content-section nds-doc-overview">
@@ -223,13 +223,13 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | Size | MD (default) | — | — | 40px tabs. It needs no class |
 | Size | LG | `.nds-lg` | `.nds-tabs` | 48px tabs, for a larger touch target |
 | Card | None (default) | — | — | No container |
-| Card | Whole set | `.nds-card` | `.nds-tabs` | The tabs and the panels in one card, for a page area that already has a background |
-| Card | Whole set | `.nds-stroke` | `.nds-tabs` | The same: gives the card its border |
-| Card | Whole set | `.nds-shadow` | `.nds-tabs` | The same: gives the card its shadow |
-| Card | Panel only | `.nds-card` | `.nds-tab-content` | Only the panels in a card, under a plain tab row |
-| Card | Panel only | `.nds-stroke` | `.nds-tab-content` | The same: gives the card its border |
-| Card | Panel only | `.nds-shadow` | `.nds-tab-content` | The same: gives the card its shadow |
-| Divided | Divided | `.nds-divided` | `.nds-tabs` | A line between the tabs and the panels: under the row, or beside a vertical list |
+| Card | Whole set (hint: Tabs and panels in one card) | `.nds-card` | `.nds-tabs` | The tabs and the panels in one card, for a page area that already has a background |
+| Card | Whole set (hint: Tabs and panels in one card) | `.nds-stroke` | `.nds-tabs` | The same: gives the card its border |
+| Card | Whole set (hint: Tabs and panels in one card) | `.nds-shadow` | `.nds-tabs` | The same: gives the card its shadow |
+| Card | Panel only (hint: Only the panels in a card) | `.nds-card` | `.nds-tab-content` | Only the panels in a card, under a plain tab row |
+| Card | Panel only (hint: Only the panels in a card) | `.nds-stroke` | `.nds-tab-content` | The same: gives the card its border |
+| Card | Panel only (hint: Only the panels in a card) | `.nds-shadow` | `.nds-tab-content` | The same: gives the card its shadow |
+| Divided | Divided (hint: A line between the tabs and the panels) | `.nds-divided` | `.nds-tabs` | A line between the tabs and the panels: under the row, or beside a vertical list |
 | Center | Center | `.nds-center` | `.nds-tab-list:not(.nds-vertical .nds-tab-list)` | Horizontal only. Centers a horizontal tab row while every tab fits. A row that scrolls starts at the edge |
 | Loading | Loading | `.nds-loading` | `.nds-tabs` | Gray bars in place of the labels and the panel content while the data loads. On `.nds-tab-list` it bars the labels only |
 {: #tabsVariantsTable .nds-table .nds-responsive}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="sectionOverview" class="nds-content-section nds-doc-overview">
@@ -230,14 +230,14 @@ The standard action goes right after the head. The float action goes first in th
 | Structure | Standard (default) (id: standard) | — | — | A wrapper that holds the head and the body. Start here |
 | Structure | Title icon (id: icon) | canon `#section-icon` | — | A [featured icon](../components/featured-icons) before the title text. Wrap the text in a `<span>` |
 | Structure | Horizontal (id: horizontal) | canon `#section-horizontal` | — | The head beside the body on a desktop. The action goes in the head, after the description |
-| Structure | Stacked (id: stacked) | canon `#section-stacked` | — | Several wrappers in one section, on one background |
+| Structure | Stacked (id: stacked) (hint: Several titled parts in one section) | canon `#section-stacked` | — | Several wrappers in one section, on one background |
 | Structure | Profile (id: profile) | canon `#section-profile` | — | A person: a photo in `nds-section-image`, the name as the title, the role, a contact action and the details in a [definition list](../components/definition-list) |
-| Structure | Breakout (id: breakout) | canon `#section-breakout` | — | A body after the wrapper, with `nds-max-width`, that runs to the section edges. For a swiper or a wide image |
+| Structure | Breakout (id: breakout) (hint: A body that runs to the section edges) | canon `#section-breakout` | — | A body after the wrapper, with `nds-max-width`, that runs to the section edges. For a swiper or a wide image |
 | Action | None (default) | — | — | No action |
 | Action | Standard (not: horizontal, stacked, profile, breakout) | canon `#section-action` | `.nds-section-head` (after) | Beside the head on a desktop. On a phone it takes its own row, and each button is full width |
-| Action | Float (not: horizontal, stacked, profile, breakout) | canon `#section-float-action` | `.nds-section-head` (start) | In the head, first. It sits in the end corner, and the title and the description wrap around it |
-| Action | Dual (not: horizontal, stacked, profile, breakout) | canon `#section-float-action` | `.nds-section-head` (start) | A float action and a standard action. The standard action then takes its own row |
-| Action | Dual (not: horizontal, stacked, profile, breakout) | canon `#section-action-secondary` | `.nds-section-head` (after) | A float action and a standard action. The standard action then takes its own row |
+| Action | Float (not: horizontal, stacked, profile, breakout) (hint: In the end corner of the head, beside the title) | canon `#section-float-action` | `.nds-section-head` (start) | In the head, first. It sits in the end corner, and the title and the description wrap around it |
+| Action | Dual (not: horizontal, stacked, profile, breakout) (hint: A float action and a standard action together) | canon `#section-float-action` | `.nds-section-head` (start) | A float action and a standard action. The standard action then takes its own row |
+| Action | Dual (not: horizontal, stacked, profile, breakout) (hint: A float action and a standard action together) | canon `#section-action-secondary` | `.nds-section-head` (after) | A float action and a standard action. The standard action then takes its own row |
 | Float action (any) | Icon only on phones (not: horizontal, stacked, profile, breakout) | `.nds-minimal` | `.nds-section-action:first-child` | Hides the button labels below 600px. Each button needs an icon. The label stays as the accessible name |
 | Float action (any) | Own row on phones (not: horizontal, stacked, profile, breakout) | `.nds-wrap` | `.nds-section-action:first-child` | Moves the float action under the description below 600px |
 | Image | Image (not: horizontal, stacked, profile) | canon `#section-image` | `.nds-section-wrapper` (start) | A small image before the head. Set its size with `width` and `height`. The head centers on it. For a person, use an avatar: see Profile |
@@ -250,7 +250,7 @@ The standard action goes right after the head. The float action goes first in th
 | Color | Neutral | `.nds-neutral` | `.nds-content-section` | A dark neutral background |
 | Color | Neutral | `[data-theme="dark"]` | `.nds-content-section` | The components inside take their dark-mode colors |
 | Color | Brand | `.nds-brand` | `.nds-content-section` | A light brand tint with an inset shadow |
-| Color | Ghost | `.nds-ghost` | `.nds-content-section` | No background, border or shadow, in every layout |
+| Color | Ghost (hint: No background, border or shadow) | `.nds-ghost` | `.nds-content-section` | No background, border or shadow, in every layout |
 {: #sectionVariantsTable .nds-table .nds-responsive}
 
 </div>

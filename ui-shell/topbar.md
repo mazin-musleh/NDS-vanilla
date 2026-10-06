@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 12:13 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="topbarOverview" class="nds-content-section nds-doc-overview">
@@ -211,7 +211,7 @@ Two choices change two places, so write both of their rows. Weather changes the 
 | Weather (any) | Hide on phone (default) (hint: Below 600px) | `[data-hidden~="sm"]` | `#nds-weatherInfo` |  |
 | Weather (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-cityName` | Hides the city and the weather from 600px to 959px |
 | Weather (any) | Hide on tablet (hint: 600px to 959px) | `[data-hidden~="md"]` | `#nds-weatherInfo` |  |
-| Dark mode (any) | Show (default) | canon `#topbar-dark` | `.nds-topbar-info` | The dark mode button, last in the row |
+| Dark mode (any) | Show (default) (hint: The dark mode button in the bar) | canon `#topbar-dark` | `.nds-topbar-info` | The dark mode button, last in the row |
 {: #topbarVariantsTable .nds-table .nds-responsive}
 
 </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 11:17 AM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="customSelectOverview" class="nds-content-section nds-doc-overview">
@@ -131,7 +131,7 @@ Pick another component when:
 | Style | Outline (default) | — | — | A border on the page background |
 | Style | Lighter | `.nds-lighter` | `.nds-form-container` | A light fill and no border, for a field on a white card |
 | Style | Darker | `.nds-darker` | `.nds-form-container` | A darker fill and no border, for a field on a gray surface |
-| Saved value | Saved value (not: rich) | `[value="makkah"]` | `.nds-select-value` | The field opens with Makkah picked. See Saved Value |
+| Saved value | Saved value (not: rich) (hint: The field opens with Makkah picked) | `[value="makkah"]` | `.nds-select-value` | The field opens with Makkah picked. See Saved Value |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-select:not([data-state~="readonly"])` | The user cannot open the list, and the value does not post. Not with Read-only |
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-select:not([data-state~="disabled"])` | The user sees the value but cannot change it. The value posts. Not with Disabled |
 | State (any) | Required (hint: Press Validate with no option picked) | `[data-required]` | `.nds-select` | The form needs a pick. It does not submit while the field is empty |

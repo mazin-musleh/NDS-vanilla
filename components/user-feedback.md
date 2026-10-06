@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/09/2026 - 12:45 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 hideFeedback: true
 ---
 
@@ -287,7 +287,7 @@ Each structure is the whole page section, form included. Submit validates the fo
 | Structure | Survey (default) | — | — | A Yes or No question about the page, with reasons for each answer. Content pages |
 | Structure | Rating | canon `#uf-rating` | — | A star score for a service, with a comment. Service pages |
 | Statistic | No statistic | remove | `.nds-user-feedback-statistic` | Leave it out when you have no real numbers to show |
-| Memory | Ask every visit | `[data-no-persist]` | `.nds-user-feedback` | No cookie: the widget asks again on every visit |
+| Memory | Ask every visit (hint: No cookie saves the answer) | `[data-no-persist]` | `.nds-user-feedback` | No cookie: the widget asks again on every visit |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #userFeedbackVariantsTable .nds-table .nds-responsive}
 

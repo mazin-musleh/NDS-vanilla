@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="stepperOverview" class="nds-content-section nds-doc-overview">
@@ -126,13 +126,13 @@ Every class goes on `.nds-stepper`. The Layout row sets the desktop layout. Phon
 |---|---|---|---|---|
 | Layout | Horizontal (default) | — | — | The steps in a row, start to end. Every title must fit its column |
 | Layout | Vertical | `.nds-vertical` | `.nds-stepper` | The steps in a column. For a step with long content or buttons, or a narrow column |
-| Layout | Radial | `.nds-radial` | `.nds-stepper` | The current step only, beside the ring. For a narrow space, such as a side column |
-| Phone layout | Same (default) | — | — | The Layout choice on phones: narrower than 600px |
+| Layout | Radial (hint: The current step only, beside a progress ring) | `.nds-radial` | `.nds-stepper` | The current step only, beside the ring. For a narrow space, such as a side column |
+| Phone layout | Same (default) (hint: Uses the Layout choice) | — | — | The Layout choice on phones: narrower than 600px |
 | Phone layout | Horizontal | `.nds-horizontal-sm` | `.nds-stepper.nds-vertical` | A row on phones: narrower than 600px |
 | Phone layout | Horizontal | `.nds-horizontal-sm` | `.nds-stepper.nds-radial` | A row on phones: narrower than 600px |
 | Phone layout | Vertical | `.nds-vertical-sm` | `.nds-stepper:not(.nds-vertical)` | A column on phones: narrower than 600px |
 | Phone layout | Radial | `.nds-radial-sm` | `.nds-stepper:not(.nds-radial)` | The ring on phones: narrower than 600px |
-| Tablet layout | Same (default) | — | — | The Layout choice on tablets: 600px to 959px |
+| Tablet layout | Same (default) (hint: Uses the Layout choice) | — | — | The Layout choice on tablets: 600px to 959px |
 | Tablet layout | Horizontal | `.nds-horizontal-md` | `.nds-stepper.nds-vertical` | A row on tablets: 600px to 959px |
 | Tablet layout | Horizontal | `.nds-horizontal-md` | `.nds-stepper.nds-radial` | A row on tablets: 600px to 959px |
 | Tablet layout | Vertical | `.nds-vertical-md` | `.nds-stepper:not(.nds-vertical)` | A column on tablets: 600px to 959px |

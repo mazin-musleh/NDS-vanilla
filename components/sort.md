@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.7.0"
-last_edit: "03/10/2026 - 06:51 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="sortOverview" class="nds-content-section nds-doc-overview">
@@ -259,7 +259,7 @@ onChange: ({ key, dir }) => {
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Direct (default) | — | — | A dropmenu of sort choices in a [Toolbar](../components/toolbar). Each item fixes one key and one direction |
+| Structure | Direct (default) (hint: Each menu item sets one key and one direction) | — | — | A dropmenu of sort choices in a [Toolbar](../components/toolbar). Each item fixes one key and one direction |
 | Structure | Cycle (demo: + icons) (hint: Each click steps through up, down and the original order) | canon `#sort-cycle` | — | One button per key. Each click steps its key through ascending, descending and the original order |
 | Structure | Cycle (demo: + icons) (hint: Each click steps through up, down and the original order) | `mode: 'cycle'` | `create()` | The same, in JavaScript |
 | Direction icons | Direction icons (id: icons) (hint: Each icon shows the order in use) | canon `#sort-js-icons` | `create({ mode: 'cycle' })` | `onChange` swaps each button's icon to show the key and direction in use |

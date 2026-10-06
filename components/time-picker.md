@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 10:16 AM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="timePickerOverview" class="nds-content-section nds-doc-overview">
@@ -79,8 +79,8 @@ A Format or Seconds choice changes two elements: write `data-format` on `.nds-ti
 | Minute step | 15 minutes | `[data-step="15"]` | `.nds-time-picker` | The Minute list shows 00, 15, 30 and 45. See Minute Step |
 | Minute step | 30 minutes | `[data-step="30"]` | `.nds-time-picker` | The Minute list shows 00 and 30. See Minute Step |
 | Bounds | None (default) | — | — | The user can pick any time |
-| Bounds | Working hours | `[data-min-time="09:00"]` | `.nds-time-input` | The user can pick a time from 09:00 to 17:30 only. See Time Bounds |
-| Bounds | Working hours | `[data-max-time="17:30"]` | `.nds-time-input` | |
+| Bounds | Working hours (hint: Only 09:00 to 17:30 can be picked) | `[data-min-time="09:00"]` | `.nds-time-input` | The user can pick a time from 09:00 to 17:30 only. See Time Bounds |
+| Bounds | Working hours (hint: Only 09:00 to 17:30 can be picked) | `[data-max-time="17:30"]` | `.nds-time-input` | |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-time-picker:not([data-state~="readonly"])` | The user cannot type or open the panel, and the time does not post. Not with Read-only |
 | State (any) | Read-only | `[data-state~="readonly"]` | `.nds-time-picker:not([data-state~="disabled"])` | The user sees the time but cannot change it. The time posts. Not with Disabled |
 | State (any) | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-time-picker` | The form needs a time. It does not submit while the field is empty |

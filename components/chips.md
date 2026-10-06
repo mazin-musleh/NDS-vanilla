@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="chipOverview" class="nds-content-section nds-doc-overview">
@@ -95,7 +95,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 | Selected | Selected | `[aria-pressed="true"]` | `.nds-chip:first-child` | The same. It tells screen readers the chip is on. Give the other chips of a choice `aria-pressed="false"` |
 | Disabled | Disabled | `[disabled]` | `.nds-chip` | The user cannot pick these chips now. Put it on one chip to disable one |
 | Rounded | Rounded | `.nds-rounded` | `.nds-chip` | Fully round ends |
-| On color | On color | `.nds-oncolor` | `.nds-chip` | For chips on a deep primary or dark background |
+| On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-chip` | For chips on a deep primary or dark background |
 | Center | Center (hint: Group only) | `.nds-center` | `.nds-chips` | Centers the chips in their row |
 {: #chipVariantsTable .nds-table .nds-responsive}
 

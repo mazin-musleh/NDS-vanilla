@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 11:35 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="shareOverview" class="nds-content-section nds-doc-overview">
@@ -191,12 +191,12 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
 | Icon Only Trigger | Icon Only Trigger (hint: Hide the trigger's label) | `.nds-tooltip` | `.nds-dropmenu-trigger` | The tooltip that names the hidden label |
 | Icon Only Trigger | Icon Only Trigger (hint: Hide the trigger's label) | `[data-tooltip-hover="500"]` | `.nds-dropmenu-trigger` | Opens the tooltip on hover, so a click still opens the menu |
 | Icon Only Trigger | Icon Only Trigger (hint: Hide the trigger's label) | `[title="Share Page"]` | `.nds-dropmenu-trigger` | The tooltip text: the same words as the `aria-label` |
-| Custom Target (any) | Facebook (hint: Share on Facebook) | canon `#share-facebook-item` | `.nds-dropmenu-menu` | A target added with `data-share-href`, as a menu item |
-| Custom Target (any) | Facebook (hint: Share on Facebook) | canon `#share-facebook-button` | `.nds-share-copy:not(.nds-dropmenu-item):not(.nds-icon-only)` (after) | The same target as a button in the Inline row |
-| Custom Target (any) | Facebook (hint: Share on Facebook) | canon `#share-facebook-icon` | `.nds-share-copy.nds-icon-only` (after) | The same target as an icon-only button in Inline Icons |
-| Custom Target (any) | Telegram (hint: Share on Telegram) | canon `#share-telegram-item` | `.nds-dropmenu-menu` | A target added with `data-share-href`, as a menu item |
-| Custom Target (any) | Telegram (hint: Share on Telegram) | canon `#share-telegram-button` | `.nds-share-copy:not(.nds-dropmenu-item):not(.nds-icon-only)` (after) | The same target as a button in the Inline row |
-| Custom Target (any) | Telegram (hint: Share on Telegram) | canon `#share-telegram-icon` | `.nds-share-copy.nds-icon-only` (after) | The same target as an icon-only button in Inline Icons |
+| Custom Target (any) | Facebook (hint: Adds a button that uses data-share-href) | canon `#share-facebook-item` | `.nds-dropmenu-menu` | A target added with `data-share-href`, as a menu item |
+| Custom Target (any) | Facebook (hint: Adds a button that uses data-share-href) | canon `#share-facebook-button` | `.nds-share-copy:not(.nds-dropmenu-item):not(.nds-icon-only)` (after) | The same target as a button in the Inline row |
+| Custom Target (any) | Facebook (hint: Adds a button that uses data-share-href) | canon `#share-facebook-icon` | `.nds-share-copy.nds-icon-only` (after) | The same target as an icon-only button in Inline Icons |
+| Custom Target (any) | Telegram (hint: Adds a button that uses data-share-href) | canon `#share-telegram-item` | `.nds-dropmenu-menu` | A target added with `data-share-href`, as a menu item |
+| Custom Target (any) | Telegram (hint: Adds a button that uses data-share-href) | canon `#share-telegram-button` | `.nds-share-copy:not(.nds-dropmenu-item):not(.nds-icon-only)` (after) | The same target as a button in the Inline row |
+| Custom Target (any) | Telegram (hint: Adds a button that uses data-share-href) | canon `#share-telegram-icon` | `.nds-share-copy.nds-icon-only` (after) | The same target as an icon-only button in Inline Icons |
 | Custom Target (any) | Email (hint: Open the mail app with the link) | canon `#share-email-item` | `.nds-dropmenu-menu` | A target added with `data-share-href`, as a menu item |
 | Custom Target (any) | Email (hint: Open the mail app with the link) | canon `#share-email-button` | `.nds-share-copy:not(.nds-dropmenu-item):not(.nds-icon-only)` (after) | The same target as a button in the Inline row |
 | Custom Target (any) | Email (hint: Open the mail app with the link) | canon `#share-email-icon` | `.nds-share-copy.nds-icon-only` (after) | The same target as an icon-only button in Inline Icons |

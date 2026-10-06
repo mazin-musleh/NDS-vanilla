@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 05:05 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="mainnavOverview" class="nds-content-section nds-doc-overview">
@@ -482,12 +482,12 @@ The canon carries the Services dropdown, the search action and the language acti
 | Actions (any) | User (limit: 1 account) | canon `#mainnav-user` | `.nds-nav-actions` | The signed-in person's avatar, with a small `nds-fit` menu of account links |
 | Actions (any) | Language (default) | canon `#mainnav-language` | `.nds-nav-actions` | A link to the page in the other language. Its label is the other language's name |
 | Actions (any) | Call to action | canon `#mainnav-cta` | `.nds-nav-actions` | A filled button for the one task the site steers people to, such as an application. Its label shows at every width. Use one at most |
-| Pinned on Small Screens (any) | Search (default) | `.nds-pinned` | `.nds-search` | Search stays in the bar below 960px |
-| Pinned on Small Screens (any) | Notifications | `.nds-pinned` | `#nav-notifications` | Notifications stay in the bar below 960px |
-| Pinned on Small Screens (any) | Guest | `.nds-pinned` | `#nav-guest` | Sign in stays in the bar below 960px |
-| Pinned on Small Screens (any) | User | `.nds-pinned` | `#nav-user` | The avatar stays in the bar below 960px |
-| Pinned on Small Screens (any) | Language | `.nds-pinned` | `#nav-language` | Language stays in the bar below 960px |
-| Pinned on Small Screens (any) | Call to action | `.nds-pinned` | `#nav-cta` | The button stays in the bar below 960px, first in the row |
+| Pinned on Small Screens (any) | Search (default) (hint: Stays in the bar below 960px) | `.nds-pinned` | `.nds-search` | Search stays in the bar below 960px |
+| Pinned on Small Screens (any) | Notifications (hint: Stays in the bar below 960px) | `.nds-pinned` | `#nav-notifications` | Notifications stay in the bar below 960px |
+| Pinned on Small Screens (any) | Guest (hint: Stays in the bar below 960px) | `.nds-pinned` | `#nav-guest` | Sign in stays in the bar below 960px |
+| Pinned on Small Screens (any) | User (hint: Stays in the bar below 960px) | `.nds-pinned` | `#nav-user` | The avatar stays in the bar below 960px |
+| Pinned on Small Screens (any) | Language (hint: Stays in the bar below 960px) | `.nds-pinned` | `#nav-language` | Language stays in the bar below 960px |
+| Pinned on Small Screens (any) | Call to action (hint: Stays in the bar below 960px) | `.nds-pinned` | `#nav-cta` | The button stays in the bar below 960px, first in the row |
 {: #mainnavVariantsTable .nds-table .nds-responsive}
 
 </div>

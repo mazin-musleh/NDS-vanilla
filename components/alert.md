@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.11.0"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="alertOverview" class="nds-content-section nds-doc-overview">
@@ -150,7 +150,7 @@ actions: [
 | Structure | Standard (default) | — | — | A title and a description, with the stripe on the start edge. On a phone, it stacks and the stripe moves to the top |
 | Structure | Inline | canon `#alert-inline` | — | One line, with a thin stripe at the bottom and a solid icon. Always tinted. Actions go to the end of the line |
 | Structure | Inline | `display: 'inline'` | `create()` | The same, in JavaScript |
-| Structure | Toast | canon `#alert-toast` | — | Floats at a corner of the screen, so it needs no `target`. `duration` closes it after that many ms; `0` keeps it until the user closes it. A toast is made only with JavaScript: its timer and placement need the script |
+| Structure | Toast (hint: Floats over the page and can close itself) | canon `#alert-toast` | — | Floats at a corner of the screen, so it needs no `target`. `duration` closes it after that many ms; `0` keeps it until the user closes it. A toast is made only with JavaScript: its timer and placement need the script |
 | Status | Info (default) | `[data-status="info"]` | `.nds-alert` | Neutral news or an update |
 | Status | Info (default) | `variant: 'info'` | `create()` | The same, in JavaScript |
 | Status | Success | `[data-status="success"]` | `.nds-alert` | A confirmation |
@@ -176,16 +176,16 @@ actions: [
 | Shadow | Shadow | `shadow: true` | `create():not({ display: 'toast' })` | The same, in JavaScript. A toast has a shadow by default |
 | Color | Color (hint: Tints the background with the status color) | `.nds-color` | `.nds-alert:not(.nds-inline)` | Tints the background with the status color. Use it in dense layouts, where the stripe alone does not stand out. No effect on inline, which is always tinted |
 | Color | Color (hint: Tints the background with the status color) | `color: true` | `create():not({ display: 'inline' })` | The same, in JavaScript |
-| Position | Top (default) | — | `create({ display: 'toast' })` | At the top, on the end side, below the sticky header |
+| Position | Top (default) (hint: At the top, on the end side) | — | `create({ display: 'toast' })` | At the top, on the end side, below the sticky header |
 | Position | Top start | `position: 'top-start'` | `create({ display: 'toast' })` | Top, on the start side. `-start` and `-end` follow the text direction |
 | Position | Top end | `position: 'top-end'` | `create({ display: 'toast' })` | The same as Top |
-| Position | Top left | `position: 'top-left'` | `create({ display: 'toast' })` | Top left in every direction |
-| Position | Top right | `position: 'top-right'` | `create({ display: 'toast' })` | Top right in every direction |
-| Position | Bottom | `position: 'bottom'` | `create({ display: 'toast' })` | At the bottom, on the end side |
+| Position | Top left (hint: Stays on the left in every direction) | `position: 'top-left'` | `create({ display: 'toast' })` | Top left in every direction |
+| Position | Top right (hint: Stays on the right in every direction) | `position: 'top-right'` | `create({ display: 'toast' })` | Top right in every direction |
+| Position | Bottom (hint: At the bottom, on the end side) | `position: 'bottom'` | `create({ display: 'toast' })` | At the bottom, on the end side |
 | Position | Bottom start | `position: 'bottom-start'` | `create({ display: 'toast' })` | Bottom, on the start side |
 | Position | Bottom end | `position: 'bottom-end'` | `create({ display: 'toast' })` | The same as Bottom |
-| Position | Bottom left | `position: 'bottom-left'` | `create({ display: 'toast' })` | Bottom left in every direction |
-| Position | Bottom right | `position: 'bottom-right'` | `create({ display: 'toast' })` | Bottom right in every direction |
+| Position | Bottom left (hint: Stays on the left in every direction) | `position: 'bottom-left'` | `create({ display: 'toast' })` | Bottom left in every direction |
+| Position | Bottom right (hint: Stays on the right in every direction) | `position: 'bottom-right'` | `create({ display: 'toast' })` | Bottom right in every direction |
 {: #alertVariantsTable .nds-table .nds-responsive}
 
 </div>

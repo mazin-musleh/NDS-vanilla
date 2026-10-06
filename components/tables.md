@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="tableOverview" class="nds-content-section nds-doc-overview">
@@ -508,14 +508,14 @@ Every option goes on the outer `<table>`, never on a table in a sub-row.
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Standard (default) | — | — | A plain table. The script adds the scroll box and nothing else |
-| Structure | Records (hint: The full records screen) | canon `#tbl-records` | — | The records screen most services need: a count, per page, a column menu, export, search, filter, sort buttons, row checkboxes, detail rows, a row menu and pages. Start from it and delete the parts you do not need |
+| Structure | Records (hint: Adds search, filter, sort, selection, pages and detail rows) | canon `#tbl-records` | — | The records screen most services need: a count, per page, a column menu, export, search, filter, sort buttons, row checkboxes, detail rows, a row menu and pages. Start from it and delete the parts you do not need |
 | Density | Standard (default) | — | — | 64px rows, for cells with tags, buttons or two lines |
 | Density | Compact | `.nds-compact` | `#tbl-requests` | 48px rows, for dense data with one line in each cell |
 | Density | Compact | `.nds-compact` | `#tbl-rec-requests` | |
 | Interactive | Interactive (hint: Rows highlight on hover) | `.nds-interactive` | `#tbl-requests` | Highlights the row under the pointer. Use it only when a row does something: it opens, selects or links |
 | Interactive | Interactive (hint: Rows highlight on hover) | `.nds-interactive` | `#tbl-rec-requests` | |
-| Center | Center | `.nds-center` | `#tbl-requests` | Centers the text in every cell. For short values, such as a score sheet |
-| Center | Center | `.nds-center` | `#tbl-rec-requests` | |
+| Center | Center (hint: Cell text is centered) | `.nds-center` | `#tbl-requests` | Centers the text in every cell. For short values, such as a score sheet |
+| Center | Center (hint: Cell text is centered) | `.nds-center` | `#tbl-rec-requests` | |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-requests` | Shows skeleton bars in place of the cells while new rows load. `data-state="loading"` does the same |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-rec-requests` | |
 {: #tableVariantsTable .nds-table .nds-responsive}

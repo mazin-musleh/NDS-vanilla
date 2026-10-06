@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 02:41 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="dividerOverview" class="nds-content-section nds-doc-overview">
@@ -102,7 +102,7 @@ A Spacing class sets the space above and below a line, or before and after a ver
 | Label position | Custom | `--divider-line-start: 24px` | `div.nds-divider:not(.nds-vertical)` | The line before the label is at most 24px long, and the other line takes the rest. Set any length or percentage in the `style` attribute. `--divider-line-end` does the same from the end |
 | Color | Default (default) | — | — | A faint gray line. Dark mode makes it a faint white line |
 | Color | Primary | `.nds-primary` | `.nds-divider` | A brand primary line |
-| On color | On color | `.nds-oncolor` | `.nds-divider` | For a divider on a deep primary or dark background: a faint white line and a white label. With Primary, the line is the same white as the label |
+| On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-divider` | For a divider on a deep primary or dark background: a faint white line and a white label. With Primary, the line is the same white as the label |
 | Thick | Thick | `--divider-size: 2px` | `.nds-divider` | A 2px line instead of 1px. Set it in the `style` attribute: there is no class for it |
 {: #dividerVariantsTable .nds-table .nds-responsive}
 

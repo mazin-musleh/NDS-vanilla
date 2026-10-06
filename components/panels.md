@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 lang: en
 direction: ltr
 ---
@@ -135,10 +135,10 @@ Every option goes on the `nds-panel` element, except Resizable, which has two ro
 | Structure | Lazy panel | canon `#panel-lazy` | — | The panel sits in a `<template>` and joins the page on the first click. For a large panel that most users never open |
 | Resize | Resizable (hint: Buttons make the panel smaller or larger) | canon `#panel-resize` | `.nds-panel-action` | Minus, plus and close buttons in one group make the panel smaller or larger. For content the user may want to see wider |
 | Resize | Resizable (hint: Buttons make the panel smaller or larger) | remove | `.nds-panel-action > .nds-btn[data-panel-close]` | The group holds its own close button, so the lone one goes |
-| Side | End (default) | — | — | Slides in from the end edge of the reading direction: the left in Arabic, the right in English |
-| Side | Start | `[data-panel-side="start"]` | `.nds-panel` | Slides in from the start edge of the reading direction |
-| Side | Left | `[data-panel-side="left"]` | `.nds-panel` | Always slides in from the left, in every language |
-| Side | Right | `[data-panel-side="right"]` | `.nds-panel` | Always slides in from the right, in every language |
+| Side | End (default) (hint: Follows the reading direction) | — | — | Slides in from the end edge of the reading direction: the left in Arabic, the right in English |
+| Side | Start (hint: Follows the reading direction) | `[data-panel-side="start"]` | `.nds-panel` | Slides in from the start edge of the reading direction |
+| Side | Left (hint: Stays on the left in every language) | `[data-panel-side="left"]` | `.nds-panel` | Always slides in from the left, in every language |
+| Side | Right (hint: Stays on the right in every language) | `[data-panel-side="right"]` | `.nds-panel` | Always slides in from the right, in every language |
 | Side | Top | `[data-panel-side="top"]` | `.nds-panel` | A full-width sheet below the header |
 | Side | Bottom | `[data-panel-side="bottom"]` | `.nds-panel` | A full-width sheet that rises from the bottom. For actions on a phone |
 | Modal | Modal (hint: Dims the page and keeps focus in the panel) | `[data-panel-modal]` | `.nds-panel` | Dims the page, stops it from scrolling and keeps focus in the panel. For a panel the user must finish first |

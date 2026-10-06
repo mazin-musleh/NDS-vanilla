@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="avatarOverview" class="nds-content-section nds-doc-overview">
@@ -136,8 +136,8 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
 | Size | 3XL | `.nds-3xl` | `.nds-avatar:not(.nds-avatar-group > .nds-avatar)` | 120px with a 4px ring, for a profile header |
 | Size | 3XL | `.nds-3xl` | `.nds-avatar-group` | The same size and ring for every avatar in the group, 14px apart |
 | Square | Square | `.nds-square` | `.nds-avatar` | Rounded corners in place of a circle, for an organization or a service account. In a group, give it to every avatar |
-| Image border | Image border | `.nds-image-border` | `.nds-avatar:has(> img)` | A thin dark line inside the edge of the photo, so a light photo stays apart from a light page |
-| Stacked | Stacked (default) | `.nds-stacked` | `.nds-avatar-group` | The avatars overlap. Leave it out to space them apart by the group gap. Each stacked avatar has a ring in the border color. The ring is 1px at XS and SM, 2px at MD and LG, and 4px at XL and larger. At 3XL it replaces the border, so the photo keeps its full size |
+| Image border | Image border (hint: A thin dark line inside the photo edge) | `.nds-image-border` | `.nds-avatar:has(> img)` | A thin dark line inside the edge of the photo, so a light photo stays apart from a light page |
+| Stacked | Stacked (default) (hint: The avatars overlap) | `.nds-stacked` | `.nds-avatar-group` | The avatars overlap. Leave it out to space them apart by the group gap. Each stacked avatar has a ring in the border color. The ring is 1px at XS and SM, 2px at MD and LG, and 4px at XL and larger. At 3XL it replaces the border, so the photo keeps its full size |
 {: #avatarVariantsTable .nds-table .nds-responsive}
 
 </div>

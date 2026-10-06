@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="pageLayoutOverview" class="nds-content-section nds-doc-overview">
@@ -467,12 +467,12 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 | Side column | None (default) | — | — | No side column |
 | Side column | Side menu (not: home, article, minimal, console) | `.nds-wSideMenu` | `.nds-content-layout` | A menu of the pages in this part of the site, beside the content on a desktop |
 | Side column | Side menu (not: home, article, minimal, console) | `canon #layout-sidemenu` | `.nds-content-layout` (start) | The side menu aside. Written with `nds-wSideMenu` |
-| Side column | Side info (not: home, article, minimal, console) | `.nds-wSideInfo` | `.nds-content-layout` | A service page: facts such as the fee and the duration beside the first section's text |
-| Side column | Side info (not: home, article, minimal, console) | `.nds-aside` | `.nds-hero-section.nds-sub` | Narrows the hero title, so the side info moves up beside it on a desktop. Written with `nds-wSideInfo` |
-| Side column | Side info (not: home, article, minimal, console) | `canon #layout-sideinfo` | `.nds-content` (start) | The first section, which holds the text and the side info. Write the service description in it, not in a second section. Written with `nds-wSideInfo` |
-| Card view | Card view (not: home, article, minimal) | `.nds-cardView` | `.nds-content-layout` | Each section shows as a raised card, for record and profile pages. |
+| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `.nds-wSideInfo` | `.nds-content-layout` | A service page: facts such as the fee and the duration beside the first section's text |
+| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `.nds-aside` | `.nds-hero-section.nds-sub` | Narrows the hero title, so the side info moves up beside it on a desktop. Written with `nds-wSideInfo` |
+| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `canon #layout-sideinfo` | `.nds-content` (start) | The first section, which holds the text and the side info. Write the service description in it, not in a second section. Written with `nds-wSideInfo` |
+| Card view | Card view (not: home, article, minimal) (hint: Each section shows as a raised card) | `.nds-cardView` | `.nds-content-layout` | Each section shows as a raised card, for record and profile pages. |
 | Stripe | Stripe (id: stripe) (not: article, minimal) | `.nds-stripe` | `.nds-content:not(.nds-cardView .nds-content)` | Every second section gets the stripe color, from the second one |
-| Odd | Odd | `.nds-odd` | `.nds-content.nds-stripe:not(.nds-cardView .nds-content)` | The stripe starts on the first section. Needs Stripe |
+| Odd | Odd (hint: The stripe starts on the first section) | `.nds-odd` | `.nds-content.nds-stripe:not(.nds-cardView .nds-content)` | The stripe starts on the first section. Needs Stripe |
 {: #pageLayoutVariantsTable .nds-table .nds-responsive}
 
 </div>

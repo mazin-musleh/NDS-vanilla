@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="cardOverview" class="nds-content-section nds-doc-overview">
@@ -247,10 +247,10 @@ Pick another component when:
 | Value | Sale price | canon `#card-value-sale` | `.nds-card-text` (after) | A price with the original crossed out in `<s>` |
 | Value | Unit price | canon `#card-value-unit` | `.nds-card-text` (after) | A price with a plain-text unit after it |
 | Checkbox | Checkbox | canon `#card-checkbox` | `div.nds-card` (start) | Lets the user select the card. Sits in the top end corner. Not on a link card, which holds no controls |
-| Status | Status | canon `#card-status` | `.nds-card-header` | A status tag, such as a person's availability. `data-status` sets its color. It sits at the top end, under the avatar in a row card, and over the corner of an image. It moves clear of a checkbox |
-| Status | Status | `.nds-inverted` | `.nds-card-image ~ * .nds-tag` | Over an image, the tag needs a solid background to stay readable, so give it `.nds-inverted` |
+| Status | Status (hint: A status tag at the top end of the card) | canon `#card-status` | `.nds-card-header` | A status tag, such as a person's availability. `data-status` sets its color. It sits at the top end, under the avatar in a row card, and over the corner of an image. It moves clear of a checkbox |
+| Status | Status (hint: A status tag at the top end of the card) | `.nds-inverted` | `.nds-card-image ~ * .nds-tag` | Over an image, the tag needs a solid background to stay readable, so give it `.nds-inverted` |
 | Actions | None (default) | — | — | No actions |
-| Actions | Start | canon `#card-actions` | `div.nds-card` | Buttons after the content, never inside it. Not on a link card, which holds no links or buttons |
+| Actions | Start (hint: Aligned to the start of the row) | canon `#card-actions` | `div.nds-card` | Buttons after the content, never inside it. Not on a link card, which holds no links or buttons |
 | Actions | End (hint: Aligned to the end of the row) | canon `#card-actions` | `div.nds-card` | The same, aligned to the end of the row |
 | Actions | End (hint: Aligned to the end of the row) | `.nds-end` | `.nds-card-actions` | The same, aligned to the end of the row |
 | Actions | Full (hint: The buttons share the width) | canon `#card-actions` | `div.nds-card` | The same, with each button filling the width |
@@ -265,12 +265,12 @@ Pick another component when:
 | Color | Yellow | `.nds-yellow` | `.nds-card` | Tints the title, the icon and the hover border |
 | Color | Red | `.nds-red` | `.nds-card` | Tints the title, the icon and the hover border |
 | Color | Blue | `.nds-blue` | `.nds-card` | Tints the title, the icon and the hover border |
-| Color | On color | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card |
-| Color | On color | `.nds-oncolor` | `.nds-card-actions .nds-btn` | Buttons do not follow the card. Give each action button `.nds-oncolor` too |
-| Color | On color | `.nds-oncolor` | `.nds-tag:not([data-status])` | Tags do not follow the card either. Give each standard tag `.nds-oncolor`. A status tag keeps its colors |
+| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card |
+| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card-actions .nds-btn` | Buttons do not follow the card. Give each action button `.nds-oncolor` too |
+| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-tag:not([data-status])` | Tags do not follow the card either. Give each standard tag `.nds-oncolor`. A status tag keeps its colors |
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
 | Layout | Stacked (default) | — | — | Header above content |
-| Layout | Row | `.nds-rowView` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
+| Layout | Row (hint: Header beside the content) | `.nds-rowView` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
 | Layout | Center | `.nds-center` | `.nds-card:not(.nds-statistic)` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
 | Full width | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
 | Number size | LG (default) | — | `.nds-card-number` | The display size |

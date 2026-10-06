@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 11:58 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="iconsOverview" class="nds-content-section nds-doc-overview">
@@ -98,8 +98,8 @@ Change the glyph name to the one you need: a font name from hugeicons.com, or a 
 | Structure | Font icon (default) | — | — | An icon from the font, for page content: cards, lists, feature grids and text |
 | Structure | UI icon | canon `#icons-ui` | — | An icon from the catalog, for controls and page chrome |
 | Glyph | Search (default) | `.nds-hgi-search-01` | `.nds-icon` | A sample glyph. Write the name you need |
-| Glyph | Next | `.nds-hgi-arrow-next-01` | `.nds-icon` | Points forward: left on an Arabic page, right on an English one |
-| Glyph | Back | `.nds-hgi-arrow-prev-01` | `.nds-icon` | Points back: right on an Arabic page, left on an English one |
+| Glyph | Next (hint: Points forward: left in Arabic, right in English) | `.nds-hgi-arrow-next-01` | `.nds-icon` | Points forward: left on an Arabic page, right on an English one |
+| Glyph | Back (hint: Points back: right in Arabic, left in English) | `.nds-hgi-arrow-prev-01` | `.nds-icon` | Points back: right on an Arabic page, left on an English one |
 | Size | None (default) | — | — | The size of the text around it |
 | Size | 32px | `font-size: 32px;` | `i` | A larger icon. Set it on a parent to size the icon and its text together |
 | Size | 48px | `font-size: 48px;` | `i` | A large icon on its own, such as in an empty state |

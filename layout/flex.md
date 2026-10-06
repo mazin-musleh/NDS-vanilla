@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 09:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="flexOverview" class="nds-content-section nds-doc-overview">
@@ -72,16 +72,16 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 | Justify | Center | `--justify: center` | `.nds-flex:not(.nds-col)` | The children sit in the middle of the row. In a column, use Align: Center |
 | Justify | End | `--justify: flex-end` | `.nds-flex:not(.nds-col)` | The children sit at the end edge, such as the actions under a form |
 | Justify | Space between | `--justify: space-between` | `.nds-flex:not(.nds-col)` | The first child sits at the start and the last at the end. The rest of the space is shared between them. For a title and an action on one line |
-| Align | Stretch (default) | — | — | Each child fills the row height, or the column width. A button keeps its own size |
+| Align | Stretch (default) (hint: Each child fills the row height, or the column width) | — | — | Each child fills the row height, or the column width. A button keeps its own size |
 | Align | Center | `--align: center` | `.nds-flex` | Children of different heights line up on their middles. In a column, each child keeps its own width and sits in the middle |
 | Align | Start | `--align: flex-start` | `.nds-flex` | Each child keeps its own size and sits at the top, or at the start edge in a column |
 | Align | End | `--align: flex-end` | `.nds-flex` | Each child keeps its own size and sits at the bottom, or at the end edge in a column |
-| Gap | XS | `--gap: var(--spacing-xs)` | `.nds-flex` | 4px. Small children close together, such as icon buttons in a table cell |
-| Gap | MD | `--gap: var(--spacing-md)` | `.nds-flex` | 8px. Tags and chips |
-| Gap | XL (default) | — | — | 16px |
-| Gap | 3XL | `--gap: var(--spacing-3xl)` | `.nds-flex` | 24px. Larger children, such as cards in a column |
+| Gap | XS (hint: 4px between the children) | `--gap: var(--spacing-xs)` | `.nds-flex` | 4px. Small children close together, such as icon buttons in a table cell |
+| Gap | MD (hint: 8px between the children) | `--gap: var(--spacing-md)` | `.nds-flex` | 8px. Tags and chips |
+| Gap | XL (default) (hint: 16px between the children) | — | — | 16px |
+| Gap | 3XL (hint: 24px between the children) | `--gap: var(--spacing-3xl)` | `.nds-flex` | 24px. Larger children, such as cards in a column |
 | Wrap | Wrap | `.nds-wrap` | `.nds-flex:not(.nds-col)` | The children flow onto a new line when the row is full. Row only: a column wraps only when it has a fixed height |
-| Reverse | Reverse | `.nds-reverse` | `.nds-flex` | Shows the children in the opposite order. They also move to the other edge: with Justify Start they sit at the end. The keyboard order stays the markup order |
+| Reverse | Reverse (hint: Shows the children in the opposite order, from the other edge) | `.nds-reverse` | `.nds-flex` | Shows the children in the opposite order. They also move to the other edge: with Justify Start they sit at the end. The keyboard order stays the markup order |
 {: #flexVariantsTable .nds-table .nds-responsive}
 
 </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "30/09/2026 - 03:47 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="passwordOverview" class="nds-content-section nds-doc-overview">
@@ -187,7 +187,7 @@ A Min length choice sets `minlength` on the input and swaps the length chip for 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | New password (default) | — | — | One field with its rule chips, for sign-up or a password reset |
-| Structure | Confirm | canon `#password-confirm` | — | A new password and a retype field. The retype field's chip checks that the two values match |
+| Structure | Confirm (hint: A retype field that must match the first) | canon `#password-confirm` | — | A new password and a retype field. The retype field's chip checks that the two values match |
 | Min length | 10 | `[minlength="10"]` | `#new-password` | A longer minimum, for an account that holds sensitive data |
 | Min length | 10 | `[minlength="10"]` | `#first-password` | The same, on the first field of Confirm |
 | Min length | 10 | canon `#password-length-10` | `[data-rule="length"]` (after) | The length chip with the new number |

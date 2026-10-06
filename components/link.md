@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="linkOverview" class="nds-content-section nds-doc-overview">
@@ -56,9 +56,9 @@ Every row goes on the link. Inside a content section, a link is also underlined.
 |---|---|---|---|---|
 | Color | Primary (default) | — | — | The brand color, for links in running text |
 | Color | Neutral | `.nds-neutral` | `.nds-link` | A quiet link that does not draw the eye, such as a secondary link in a list |
-| Color | On color | `.nds-oncolor` | `.nds-link` | For a link on a deep primary or dark background |
+| Color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-link` | For a link on a deep primary or dark background |
 | Icon | None (default) | — | — | Text only. A link to another website gets the external icon from the script |
-| Icon | Link icon | `.nds-icon` | `.nds-link` | A link icon after the text, for an internal link that needs a visual cue |
+| Icon | Link icon (hint: A chain-link icon after the text) | `.nds-icon` | `.nds-link` | A link icon after the text, for an internal link that needs a visual cue |
 | Icon | External icon | `.nds-external` | `.nds-link` | The external icon after the text. The script adds it to links to other websites, so add it yourself only to force it |
 | Underline | Underline | `.nds-underline` | `.nds-link` | Always underlined, for dense text where color alone does not mark the link |
 {: #linkVariantsTable .nds-table .nds-responsive}

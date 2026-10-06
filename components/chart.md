@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 04:22 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="chartOverview" class="nds-content-section nds-doc-overview">
@@ -83,10 +83,10 @@ NDS.Chart.create('#chart-root', {
 | Line style (any) | Point tooltips (limit: 1 dots) (hint: A tooltip per dot, with no crosshair) | `line.crosshair: false` | `create({ type: 'line' })` | Each dot gets its own tooltip, and the crosshair is off. Needs the dots |
 | Axes | Shown (default) | — | `create({ type: 'bar' })` | Value labels on the y axis, category labels on the x axis |
 | Axes | Shown (default) | — | `create({ type: 'line' })` | The same, on a line chart |
-| Axes | Titles | `yaxis: { title: 'Requests' }` | `create({ type: 'bar' })` | Names what the numbers count and what the categories are |
-| Axes | Titles | `yaxis: { title: 'Requests' }` | `create({ type: 'line' })` | The same choice, on a line chart |
-| Axes | Titles | `xaxis: { title: 'Month' }` | `create({ type: 'bar' })` | The same choice: the x axis title |
-| Axes | Titles | `xaxis: { title: 'Month' }` | `create({ type: 'line' })` | The same choice: the x axis title, on a line chart |
+| Axes | Titles (hint: A title on the y axis and on the x axis) | `yaxis: { title: 'Requests' }` | `create({ type: 'bar' })` | Names what the numbers count and what the categories are |
+| Axes | Titles (hint: A title on the y axis and on the x axis) | `yaxis: { title: 'Requests' }` | `create({ type: 'line' })` | The same choice, on a line chart |
+| Axes | Titles (hint: A title on the y axis and on the x axis) | `xaxis: { title: 'Month' }` | `create({ type: 'bar' })` | The same choice: the x axis title |
+| Axes | Titles (hint: A title on the y axis and on the x axis) | `xaxis: { title: 'Month' }` | `create({ type: 'line' })` | The same choice: the x axis title, on a line chart |
 | Axes | No y axis | `yaxis: { show: false }` | `create({ type: 'bar' })` | Hides the value labels. Use it with Values, so the numbers still show |
 | Axes | No y axis | `yaxis: { show: false }` | `create({ type: 'line' })` | Hides the value labels. A line chart then shows its values only in the tooltip |
 | Stacked | Stacked (hint: One bar per category, series on top of each other) | `bar: { stacked: true }` | `create({ type: 'bar' })` | Stacks the series in one bar per category. Use it when the total matters as much as each part |

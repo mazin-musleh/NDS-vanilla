@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 06:57 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="sidemenuOverview" class="nds-content-section nds-doc-overview">
@@ -371,8 +371,8 @@ The Small screens options change the menu below 960px only.
 |---|---|---|---|---|
 | Structure | Two levels (default) | — | — | Links and groups of links. Fits most sites |
 | Structure | Three levels | canon `#sidemenu-grouped` | — | Groups inside a group. Use it only when one group holds many pages |
-| Small screens | Slide-in (default) | — | — | Below 960px, the menu slides in from the side over the page. Fits a long list |
-| Small screens | Top bar | `.nds-top` | `.nds-sidemenu` | Below 960px, a bar above the content shows the current page, and the menu drops down from it. Fits a short list |
+| Small screens | Slide-in (default) (hint: Below 960px, the menu slides in from the side) | — | — | Below 960px, the menu slides in from the side over the page. Fits a long list |
+| Small screens | Top bar (hint: Below 960px, a bar above the content opens the menu) | `.nds-top` | `.nds-sidemenu` | Below 960px, a bar above the content shows the current page, and the menu drops down from it. Fits a short list |
 | Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
 | Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list` | 24 more links. Shows how the list scrolls when it is taller than the screen |
 {: #sidemenuVariantsTable .nds-table .nds-responsive}

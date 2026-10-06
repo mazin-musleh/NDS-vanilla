@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 10:12 PM"
 ---
 
 <section id="checkboxOverview" class="nds-content-section nds-doc-overview">
@@ -121,7 +121,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 | Validation | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-check-container:only-of-type` | A single checkbox must be checked before the form submits. The forms script adds `required` to the input |
 | Validation | Required (hint: Press Validate with nothing checked) | `[data-required]` | `.nds-check-group` | A group needs at least one option checked |
 | Validation | At least 2 | `[data-min-checked="2"]` | `.nds-check-group` | At least 2 options must be checked. Say the rule in the legend |
-| Validation | At most 3 | `[data-max-checked="3"]` | `.nds-check-group` | No more than 3 options may be checked. Say the rule in the legend |
+| Validation | At most 3 (hint: Check all four options, then press Validate) | `[data-max-checked="3"]` | `.nds-check-group` | No more than 3 options may be checked. Say the rule in the legend |
 | Validation | At least 2 + At most 3 | `[data-min-checked="2"]` | `.nds-check-group` | Both together: between 2 and 3 options must be checked |
 | Validation | At least 2 + At most 3 | `[data-max-checked="3"]` | `.nds-check-group` | The same |
 | Disabled | Disabled | `[disabled]` | `.nds-check` | The user cannot change these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
