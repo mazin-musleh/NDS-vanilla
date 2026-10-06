@@ -89,6 +89,8 @@
             this.abortController = new AbortController();
             this.valid = true;
             this.init();
+            // Forms applies an authored disabled through the field's input, and a multiselect's inputs sit in its menu.
+            NDS.State.apply(root, 'disabled');
         }
 
         init() {
