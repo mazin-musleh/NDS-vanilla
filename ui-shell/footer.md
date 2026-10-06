@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.0"
-last_edit: "25/09/2026 - 11:05 PM"
+updated: "1.12.x"
+last_edit: "06/10/2026 - 08:00 AM"
 ---
 
 <section id="footerOverview" class="nds-content-section nds-doc-overview">
@@ -20,7 +20,7 @@ last_edit: "25/09/2026 - 11:05 PM"
 
 The footer ends every page. It holds what people look for last: secondary links, contact details, social profiles, app downloads, legal notices and partner logos. Columns of links sit at the top, and a bottom bar holds the copyright, the policy links and the logos.
 
-The footer is a page shell part, so it is not shown in a demo box. **The live copy is this page's own footer, at the bottom:** the Options change it.
+The footer is a page shell part. The preview shows it in a frame of its own, so it does not clash with this page's own footer.
 
 The main navigation belongs in the [Header](../ui-shell/header), and the navigation inside a section in the [Side Menu](../ui-shell/sidemenu).
 
@@ -28,13 +28,13 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
   </div>
 </section>
 
-<section id="footerMarkup" class="nds-content-section nds-doc-markup">
+<section id="footerMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="footer-canon" data-canon data-preview="none" data-variants="footerVariantsTable" data-live="footer.nds-footer" data-sheet="top">
+<script type="text/html" id="footer-canon" data-canon data-preview="page" data-preview-height="320" data-preview-style="body{display:flex;flex-direction:column;min-height:100vh}.nds-footer{margin-block-start:auto}" data-variants="footerVariantsTable">
 <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer">
   <nav class="nds-footer-content" aria-label="Footer navigation">
     <div class="nds-footer-column">
@@ -150,7 +150,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 | `nav.nds-footer-content` | The columns | No |
 | `.nds-footer-column` | One `.nds-footer-heading` and one `ul.nds-footer-list` of `a.nds-link.nds-footer-link` links. A link can start with an icon | No |
 | `.nds-footer-column.nds-footer-icons` | The social and app groups, side by side | No |
-| `.nds-footer-icon-group` | One `.nds-footer-heading` and one `.nds-footer-icon-row` of icon buttons | No |
+| `.nds-footer-icon-group` | One `.nds-footer-heading` and one `.nds-footer-icon-row` of icon buttons. An app-store button adds `.nds-xl`, with the mark `nds-icon-apple`, `nds-icon-google-play` or `nds-icon-huawei` | No |
 | `hr.nds-divider.nds-lg` | The line between the columns and the bottom bar | No |
 | `.nds-footer-bottom` | `.nds-footer-meta` on the start side and `.nds-footer-logos` on the end side | Yes |
 | `.nds-footer-links` | A row of underlined links, such as a site map | No |
@@ -172,10 +172,9 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Surface | Brand (default) | `.nds-brand` | `.nds-footer` | The deep primary surface with white text. Buttons, links, headings and dividers switch to their on-color versions. `.nds-green` is a deprecated alias |
+| Surface | Brand (default) | `.nds-brand` | `.nds-footer` | The deep primary surface with white text. `.nds-green` is a deprecated alias |
 | Surface | Light | — | — | Leave out `.nds-brand`: a light neutral surface, dark in dark mode |
 | Logo | On color | — | — | Add `.nds-oncolor` to a one-color logo `<img>` so it turns white on the brand footer and in dark mode. It is a choice per logo: leave it off a logo whose colors must stay |
-| App button | App store | — | — | An app-store button is `.nds-xl`, a larger icon button, with the mark `nds-icon-apple`, `nds-icon-google-play` or `nds-icon-huawei` |
 {: #footerVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -208,14 +207,14 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
             <i class="hgi hgi-stroke hgi-paint-board"></i>
             <span class="nds-label">Brand Surface</span>
           </span>
-          <p class="nds-item-desc">On the brand footer, buttons, links, headings and dividers switch to their on-color versions, so no extra class is needed on them.</p>
+          <p class="nds-item-desc">On the brand footer, the text, the headings, the dividers, the links and the <code class="nds-inline-code lang-html">nds-secondary-outline</code> buttons switch to their on-color versions. No extra class is needed on them.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-moon-02"></i>
-            <span class="nds-label">Dark Mode</span>
+            <i class="hgi hgi-stroke hgi-image-01"></i>
+            <span class="nds-label">On-color Logos</span>
           </span>
-          <p class="nds-item-desc">Both surfaces follow dark mode. A logo with <code class="nds-inline-code lang-html">nds-oncolor</code> turns white on the brand footer and in dark mode.</p>
+          <p class="nds-item-desc">A logo with <code class="nds-inline-code lang-html">nds-oncolor</code> turns white on the brand footer and in dark mode.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -243,14 +242,14 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Keep to six columns or fewer. Below 960px they drop to two a row, and more columns make the footer long.
+- Keep to six columns or fewer. More columns make the footer long on tablets and phones.
 - Put the most used links in the first column, and contact and social links last.
 - Do not repeat the main navigation. The footer is for secondary pages, contact details, social profiles and legal notices.
 - Start contact links with an icon (location, phone, email), so they are quick to scan.
 - Always include privacy, terms and accessibility links in `.nds-footer-policy`. Government sites must have them.
 - Give every icon-only button an `aria-label`, and the same text in `title` for its tooltip.
 - Open social profiles, app stores and other external sites in a new tab, with `target="_blank"`.
-- Keep `nds-brand` unless the design asks for the light footer. Leaving it out is a choice, not a reset.
+- Keep `nds-brand` unless the design asks for the light footer.
 - Add `nds-oncolor` only to one-color logos that should turn white. A logo with brand colors stays as it is.
 
 </div>
@@ -272,11 +271,6 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 | `--background-footer` | Theme token | The brand footer's background: the deep primary surface in light mode, a primary wash in dark mode |
 | `--divider-color` | Theme token | The heading underline and the divider line. The brand footer sets `--colors-alpha-white-10` |
 {: .nds-table .nds-responsive}
-
-### JavaScript
-{: .nds-block-title}
-
-The footer has no script, methods or events.
 
 </div>
   </div>

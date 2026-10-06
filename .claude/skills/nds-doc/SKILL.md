@@ -28,7 +28,7 @@ A doc page has two readers. **People** browse it, try options in the builder and
 | `layout/grid.md` | a reference page: one `Example` group of whole examples |
 | `core/refresh.md` | an info page: a `Usage` section of code-only canons, no preview |
 
-**Parked, never convert without their own plan:** `components/tokens.md`, `components/forms.md`, `components/themes.md`, `components/icons.md`, `components/accessibility.md`, `layout/section.md`, `components/filter.md`, `components/tables.md`, `components/chart.md`.
+**Parked, never convert without their own plan:** `components/tokens.md`, `components/accessibility.md`.
 
 ---
 
@@ -177,7 +177,7 @@ The canon is the one copy of the markup. Both readers use it: the build renders 
 - **A stepper** adds `data-harness="stepper"`: Back and Next buttons under the preview move the canon's root id. The code never shows them.
 - **A form that is the component's own markup** (user feedback validates the form it sits in) stays in the canon: add `data-form` to the canon script, and `check-docs.py` allows the `<form>`. Never use it for a demo wrapper.
 - **Dark mode:** every preview card gets Dark mode and Grid lines toggles in its top corner, builder or not. On a builder card, Dark writes `data-theme="dark"` on the markup's outer element, so the copied code carries it; on a plain card it darkens the card only. Dark hides while the site itself is dark: NDS has no light area to switch to. Never add a Dark option to the Variants table. Grid lines changes only the card, never the code.
-- **Shell pages** preview in a frame, Desktop included: `data-preview="page"` with the shell part as the canon (no `<body>`). The frame keeps the part's ids and scripts apart from the doc page's own shell, which has the same ids. `data-live` (change the page's own copy) predates the frame: `ui-shell/footer.md` still uses it and moves to the frame on its next pass. Never use `data-live` on a new page.
+- **Shell pages** preview in a frame, Desktop included: `data-preview="page"` with the shell part as the canon (no `<body>`). The frame keeps the part's ids and scripts apart from the doc page's own shell, which has the same ids.
 - **Options placement:** up to 3 rows sit inline above the preview; 4 or more open in a bottom panel, so the preview stays in view. `data-options="inline"` or `"panel"` on the base canon overrides it. A panel or fab doc needs `inline`: its demo's own panel closes the options panel.
 - **Reference pages:** each example canon opens with an HTML comment that says what it does: `<!-- 3 columns on desktop, 2 on tablets, 1 on phones -->`.
 

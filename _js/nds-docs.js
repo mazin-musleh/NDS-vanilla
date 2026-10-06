@@ -283,9 +283,6 @@
         var script = document.getElementById(bar.getAttribute('data-builder-for'));
         var jsEl = script.hasAttribute('data-js') ? document.getElementById(script.getAttribute('data-js')) : null;
         // The build writes the options, the Preview divider, the preview and the code right after the canon.
-        // A data-live canon changes the page's own copy instead (its footer), rebuilt from a clean clone.
-        var liveEl = script.hasAttribute('data-live') ? document.querySelector(script.getAttribute('data-live')) : null;
-        var liveOrig = liveEl && liveEl.cloneNode(true);
         // The options sit inline or in a panel (4 rows or more).
         var sheet = script.nextElementSibling;
         var preview = sheet.nextElementSibling.nextElementSibling;
@@ -298,15 +295,6 @@
         // header and panel. One that fits is centered there, unless it already shows whole; a taller
         // one goes up under the header, unless 160px of it already shows.
         sheet.addEventListener('nds:panel:opened', function () {
-            // A live copy sits below a top panel: bring it up unless it already shows below the panel.
-            if (liveEl) {
-                var lb = liveEl.getBoundingClientRect();
-                if (lb.top < sheet.getBoundingClientRect().bottom || lb.top > window.innerHeight - 160) {
-                    backTo = window.scrollY;
-                    liveEl.scrollIntoView({ block: 'end', behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
-                }
-                return;
-            }
             // The free space is below a top panel, or between the header and a bottom panel.
             var box = preview.getBoundingClientRect(), top = box.top, s = sheet.getBoundingClientRect();
             var down = sheet.getAttribute('data-panel-side') === 'top';
@@ -315,12 +303,6 @@
             if (top >= head && top + (fits ? box.height : 160) <= head + room) return;
             var at = fits ? head + (room - box.height) / 2 : head + 16;
             window.scrollTo({ top: top + window.scrollY - at, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
-        });
-        // Scrolling away to the live copy on open is undone on close, back to the markup.
-        var backTo = null;
-        sheet.addEventListener('nds:panel:closed', function () {
-            if (backTo != null) window.scrollTo({ top: backTo, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
-            backTo = null;
         });
         var byKey = {}, order = [], active = {}, defaults = {}, sizes = {}, combos = {}, picks = {};
         readTable(script.getAttribute('data-variants')).forEach(function (c) {
@@ -435,7 +417,6 @@
                 if (!html && tabHtml.getAttribute('aria-selected') === 'true' && block.ndsTabs) block.ndsTabs.switchTo(1);
             }
 
-            if (liveEl) return renderLive();
             // The frame goes dark too, so a dark component is not shown on a light card.
             dark ? preview.setAttribute('data-theme', 'dark') : preview.removeAttribute('data-theme');
             if (page) { preview.ndsOut = out; return frame(preview); }
@@ -461,7 +442,8 @@
             order.forEach(function (g) { if (active[g]) apply(slot, active[g], 'prop'); });
             // On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
             // The last tap wins: On color turned on shows primary, Dark turned on after it shows the dark card.
-            var oncolor = !!slot.querySelector('.nds-oncolor');
+            // A page brings its own surfaces: an on-color logo in it is not on-color markup.
+            var oncolor = !page && !!slot.querySelector('.nds-oncolor');
             if (oncolor && !wasOncolor) darkWins = false;
             wasOncolor = oncolor;
             if (oncolor && !darkWins) {
@@ -477,22 +459,6 @@
             preview.ndsOut = out;
             if (script.getAttribute('data-preview') === 'js') preview.ndsJs = js;
             frame(preview);
-        }
-
-        // The live copy is rebuilt from its clean clone, then gets the same choices as the code.
-        function renderLive() {
-            NDS.Init.destroy(liveEl);
-            var fresh = liveOrig.cloneNode(true);
-            liveEl.replaceWith(fresh);
-            liveEl = fresh;
-            var root = {
-                firstElementChild: liveEl,
-                querySelectorAll: function (s) { return [liveEl].concat(Array.prototype.slice.call(liveEl.querySelectorAll(s))).filter(function (e) { return e.matches(s); }); }
-            };
-            order.forEach(function (g) { if (defaults[g] && active[g] !== defaults[g]) unapply(root, defaults[g], active[g]); });
-            order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'insert'); });
-            order.forEach(function (g) { if (active[g] && active[g] !== defaults[g]) apply(root, active[g], 'markup'); });
-            NDS.Init.mount(liveEl);
         }
 
         // A JS-only structure previews as a Run button that runs the code shown:
@@ -796,7 +762,8 @@
             card.appendChild(dev);
         }
         var doc = new DOMParser().parseFromString(card.ndsOut, 'text/html');
-        doc.querySelectorAll('body > header, body > footer').forEach(function (el) { el.remove(); });
+        // Only a whole <body> loses them: a part canon (the footer) is the part itself.
+        if (/<body[\s>]/i.test(card.ndsOut)) doc.querySelectorAll('body > header, body > footer').forEach(function (el) { el.remove(); });
         var f = document.createElement('iframe');
         f.className = 'nds-doc-screen';
         f.title = 'Preview';
@@ -904,16 +871,6 @@
         panel.addEventListener('nds:panel:closed', function () {
             NDS.Init.destroy(stage);
             stage.innerHTML = '';
-        });
-    });
-
-    // A live canon's preview button opens its options, which scroll to the page's own copy;
-    // with them already open it just scrolls (re-queried: a choice replaces the copy).
-    document.querySelectorAll('[data-builder-live]').forEach(function (b) {
-        var id = b.getAttribute('data-builder-live');
-        b.addEventListener('click', function () {
-            if (document.getElementById(id + '-options').hidden) document.querySelector('[data-builder-for="' + id + '"] [data-panel-toggle]').click();
-            else document.querySelector(document.getElementById(id).getAttribute('data-live')).scrollIntoView({ block: 'end', behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
         });
     });
 

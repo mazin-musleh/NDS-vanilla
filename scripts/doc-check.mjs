@@ -102,12 +102,11 @@ for (const md of pages) {
                 const before = errors.length;
                 const r = await page.evaluate((id) => {
                     const script = document.getElementById(id);
-                    const live = script.getAttribute('data-live');
-                    const box = live ? document.querySelector(live) : script.nextElementSibling.nextElementSibling.nextElementSibling;
+                    const box = script.nextElementSibling.nextElementSibling.nextElementSibling;
                     const issues = [];
                     if (!box || !box.offsetHeight) issues.push('empty preview');
                     const inner = box && box.querySelector('[data-demo-slot]') || box;
-                    if (box && !live) {
+                    if (box) {
                         // The preview's width: a form harness's slot shrinks to its content.
                         const w = box.clientWidth;
                         inner.querySelectorAll('.nds-btn, .nds-chip, .nds-tag').forEach((el) => {
@@ -132,13 +131,12 @@ for (const md of pages) {
                     // Crop to the content, so a small part is not lost in a wide card. Measured and
                     // shot on screen: a full-page shot resizes the page and moves the layout.
                     const measure = () => page.evaluate((id) => {
-                        const s = document.getElementById(id), live = s.getAttribute('data-live');
-                        const box = live ? document.querySelector(live) : s.nextElementSibling.nextElementSibling.nextElementSibling;
+                        const s = document.getElementById(id);
+                        const box = s.nextElementSibling.nextElementSibling.nextElementSibling;
                         box.scrollIntoView({ block: 'center' });
                         // An options panel covers the lower screen: hide it for the shot.
                         document.getElementById(id + '-options').style.visibility = 'hidden';
                         const b = box.getBoundingClientRect();
-                        if (live) return { x: b.x, y: b.y, width: b.width, height: b.height };
                         let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
                         // Text by its own box (a block label is full width); a parent only when
                         // it is inline-level or narrower than the preview (a flex parent blockifies
@@ -176,7 +174,7 @@ for (const md of pages) {
                     // A dropmenu is shot open too: the preview plus its menu, which may sit in <body>.
                     const trigger = await page.evaluateHandle((id) => {
                         const s = document.getElementById(id), box = s.nextElementSibling.nextElementSibling.nextElementSibling;
-                        return s.getAttribute('data-live') ? null : box.querySelector('.nds-dropmenu-trigger');
+                        return box.querySelector('.nds-dropmenu-trigger');
                     }, id);
                     if (await trigger.evaluate((t) => !!t)) {
                         // data-delay holds the first open back by its own ms.

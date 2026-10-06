@@ -395,27 +395,24 @@ module DocsCanon
       js = twin&.[](1)
       table = attr(attrs, 'data-variants')
       preview = lang == 'html' && attr(attrs, 'data-preview') != 'none'
-      # data-live: a shell canon changes the page's own copy (its footer); its preview card
-      # holds a button that scrolls there.
-      live = attr(attrs, 'data-live')
-      builder = lang == 'html' && table && (preview || live)
+      builder = lang == 'html' && table && preview
       if builder
         sheet, panel = options(id, rows(html, table), src, js, canons, attr(attrs, 'data-options'), attr(attrs, 'data-sheet'))
         builders << [id, panel]
         out << sheet
       end
-      if preview || (builder && live)
+      if preview
         out << %(<div class="nds-divider nds-xl nds-doc-divider">Preview</div>\n) if table
-        demo = preview ? harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width'), attr(attrs, 'data-demo-size')) : %(<button type="button" class="nds-btn nds-primary nds-lg" data-builder-live="#{id}"><span class="nds-label">View live copy</span><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i></button>)
+        demo = harness(src, attr(attrs, 'data-harness'), attr(attrs, 'data-preview') == 'run' && (attr(attrs, 'data-run-label') || 'Run'), attr(attrs, 'data-demo-width'), attr(attrs, 'data-demo-size'))
         demo, stage_panel = stage(id, attr(attrs, 'data-run-label') || 'Preview', attrs.include?('data-preview-flush')) if attr(attrs, 'data-preview') == 'panel'
         # data-preview="page": the code is a whole <body> (or a part of one), previewed as a page of its own in a frame (nds-docs.js).
         page = attr(attrs, 'data-preview') == 'page'
         demo = '' if page
         # A builder's card names its builder, so Dark reaches the code too.
-        card = preview ? %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}#{' data-preview-page' if page}) : '"'
+        card = %( nds-doc-preview" data-preview-of="#{id}"#{%( data-builder-card="#{id}") if builder}#{' data-preview-page' if page})
         # On-color markup sits on the deep primary surface; data-theme gives the grid and toggles their look on it.
-        oncolor = preview && src.include?('nds-oncolor')
-        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(attr(attrs, 'data-preview') != 'run' && attr(attrs, 'data-screens') != 'none') if preview && !stage_panel}#{demo}\n</div>\n)
+        oncolor = !page && src.include?('nds-oncolor')
+        out << %(<div class="nds-block nds-card nds-doc-frame nds-doc-grid#{' nds-doc-oncolor' if oncolor}#{card}#{' data-theme="dark"' if oncolor}>\n#{view(attr(attrs, 'data-preview') != 'run' && attr(attrs, 'data-screens') != 'none') unless stage_panel}#{demo}\n</div>\n)
         out << "#{stage_panel}\n" if stage_panel
       end
       # data-code="none": a behavior demo, shown with no code.
