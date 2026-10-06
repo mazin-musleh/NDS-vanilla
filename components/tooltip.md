@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="tooltipOverview" class="nds-content-section nds-doc-overview">
@@ -219,6 +219,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
 |---|---|---|
 | `data-tooltip-title` | `.nds-tooltip` | The balloon title. The script builds the balloon from it |
 | `data-tooltip-message` | `.nds-tooltip` | The balloon message. The script builds the balloon from it |
+| `data-tooltip-status` | `.nds-tooltip` | The status of the help icon the script builds, such as info or error. No value gives the help look. It does not change a trigger or balloon you wrote |
 | `title` | `.nds-tooltip` | The message when `data-tooltip-message` is absent |
 | `data-tooltip-hover` | `.nds-tooltip` | Opens on hover and keyboard focus. The value is the wait in milliseconds, 120 by default |
 | `hidden` | `.nds-tooltip-balloon` | Keeps the balloon closed at load. The script removes it on open |
@@ -253,6 +254,8 @@ Set these on `.nds-tooltip-balloon`, or on `:root` for every tooltip. The balloo
 {: .nds-block-title}
 
 Set a token at `:root`, or on a wrapper to reach every tooltip inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+
+Source: the `tooltip` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.tooltip.html }}
 

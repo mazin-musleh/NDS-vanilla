@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 11:39 AM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="sectionOverview" class="nds-content-section nds-doc-overview">
@@ -238,8 +238,8 @@ The standard action goes right after the head. The float action goes first in th
 | Action | Float (not: horizontal, stacked, profile, breakout) | canon `#section-float-action` | `.nds-section-head` (start) | In the head, first. It sits in the end corner, and the title and the description wrap around it |
 | Action | Dual (not: horizontal, stacked, profile, breakout) | canon `#section-float-action` | `.nds-section-head` (start) | A float action and a standard action. The standard action then takes its own row |
 | Action | Dual (not: horizontal, stacked, profile, breakout) | canon `#section-action-secondary` | `.nds-section-head` (after) | A float action and a standard action. The standard action then takes its own row |
-| Float action (any) | Icon only on phones | `.nds-minimal` | `.nds-section-action:first-child` | Hides the button labels below 600px. Each button needs an icon. The label stays as the accessible name |
-| Float action (any) | Own row on phones | `.nds-wrap` | `.nds-section-action:first-child` | Moves the float action under the description below 600px |
+| Float action (any) | Icon only on phones (not: horizontal, stacked, profile, breakout) | `.nds-minimal` | `.nds-section-action:first-child` | Hides the button labels below 600px. Each button needs an icon. The label stays as the accessible name |
+| Float action (any) | Own row on phones (not: horizontal, stacked, profile, breakout) | `.nds-wrap` | `.nds-section-action:first-child` | Moves the float action under the description below 600px |
 | Image | Image (not: horizontal, stacked, profile) | canon `#section-image` | `.nds-section-wrapper` (start) | A small image before the head. Set its size with `width` and `height`. The head centers on it. For a person, use an avatar: see Profile |
 | Layout | Center | `.nds-center` | `.nds-content-section:not(.nds-horizontal)` | Centers the head, the action and the body |
 | Color | None (default) | — | — | The page background |
@@ -441,7 +441,6 @@ Set these on `.nds-content-section`. The block title properties are on the [Bloc
 | `--section-description-FS` | `var(--typo-text-lg-FS)` | Description font size |
 | `--section-description-LH` | `var(--typo-text-lg-LH)` | Description line height |
 | `--section-description-MB` | `var(--spacing-2xl)` | Space under the description |
-| `--section-image-MB` | `var(--spacing-2xl)` | Space under the image |
 | `--gradient-angle` | `-45deg`, `45deg` on an LTR page | Direction of the `nds-gradient-primary` background |
 | `--gap` | `var(--spacing-6xl)` | Gap between the columns of a horizontal section |
 {: .nds-table .nds-responsive}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 02:10 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="filterOverview" class="nds-content-section nds-doc-overview">
@@ -319,10 +319,11 @@ Every card carries two marks: `sector` and `fee`. A group in the menu filters by
 | Menu (any) | Fixed list (hint: The Sector options from data-filter-values) | `[data-filter-values='["Business","Health","Housing","Transport"]']` | `#flt-sector` | The options come from `data-filter-values`, in its order, also when no card has the value (Health). The script reads no cards for them. For a list the server owns |
 | Menu (any) | Collapsible (hint: The Sector group opens and closes) | `[data-filter-accordion]` | `#flt-sector` | The group becomes an [Accordion](../components/accordion) item, closed, with a count of the picked values on its header. For a group with many options |
 | Menu (any) | Option search (hint: A search box above the options) | `[data-search]` | `.nds-filter` | A search box at the top of the menu narrows the options. `data-search="10"` shows it only from 10 options |
+| Menu (any) | Option search (hint: A search box above the options) | `[data-search-item]` | `.nds-check-container` | Only on a Sector group you write yourself: the search finds options that carry it |
 | Menu (any) | No menu (hint: A search box alone is a filter) | remove | `.nds-filter` | Search only. The search box needs no `nds-filter` element |
 | Search box | Search box (default) (id: search) | canon `#filter-part-search` | `.nds-toolbar` (start) | Searches the text of each card. Enter or the Search button applies it |
 | Applied chips | Applied chips (default) | canon `#filter-part-applied` | `.nds-toolbar` | One removable chip per applied value and for the search term. Hidden while nothing is applied |
-| Suggestions | Suggestions (demo: + search) | canon `#filter-part-suggest` | `.nds-toolbar` | Chips that write a search term into the search box. Hidden once a filter is applied |
+| Suggestions | Suggestions (demo: + search) | canon `#filter-part-suggest` | `.nds-toolbar` | Chips that write a search term into the search box. Hidden once a filter is applied. Needs the Search box |
 | Result count | Result count | canon `#filter-part-count` | `.nds-toolbar` | The script writes the number of matching items into `[data-filter-count]` |
 {: #filterVariantsTable .nds-table .nds-responsive}
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="chipOverview" class="nds-content-section nds-doc-overview">
@@ -177,6 +177,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 |---|---|---|
 | `nds-green` | `.nds-chip` | The same as `nds-primary` |
 | `nds-gray` | `.nds-chip` | The same as `nds-neutral` |
+| `nds-md` | `.nds-chip` | The same as no size class: 24px |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -207,6 +208,8 @@ Set these on the chip. The size classes set `--chip-size`, and the color classes
 {: .nds-block-title}
 
 Set a token at `:root`, or on a wrapper to reach every chip inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+
+Source: the `chips` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.chips.html }}
 

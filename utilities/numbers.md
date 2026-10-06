@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 07:01 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="numbersOverview" class="nds-content-section nds-doc-overview">
@@ -61,15 +61,15 @@ Currency and Unit go on `.nds-number-format`. Start and Duration go on `.nds-cou
 | Structure | Number (default) | — | — | Any number on the page: totals, counts, prices |
 | Structure | Counter (hint: Counts up when it scrolls into view) | canon `#numbers-counter` | — | A headline figure that counts up once. Use it for a few key figures, never for live data |
 | Currency | None (default) | — | — | A number with no currency |
-| Currency | SAR | `[data-currency="SAR"]` | `.nds-number-format` | Saudi riyals. Draws the Riyal sign as an icon |
-| Currency | USD | `[data-currency="USD"]` | `.nds-number-format` | US dollars ($) |
-| Currency | EUR | `[data-currency="EUR"]` | `.nds-number-format` | Euros (€) |
-| Currency | GBP | `[data-currency="GBP"]` | `.nds-number-format` | Pounds sterling (£) |
-| Currency | JPY | `[data-currency="JPY"]` | `.nds-number-format` | Japanese yen (¥) |
-| Currency | CNY | `[data-currency="CNY"]` | `.nds-number-format` | Chinese yuan (¥) |
-| Currency | INR | `[data-currency="INR"]` | `.nds-number-format` | Indian rupees (₹) |
-| Currency | KRW | `[data-currency="KRW"]` | `.nds-number-format` | Korean won (₩) |
-| Currency | TRY | `[data-currency="TRY"]` | `.nds-number-format` | Turkish lira (₺) |
+| Currency | SAR | `[data-currency="SAR"]` | `.nds-number-format:not([data-unit])` | Saudi riyals. Draws the Riyal sign as an icon |
+| Currency | USD | `[data-currency="USD"]` | `.nds-number-format:not([data-unit])` | US dollars ($) |
+| Currency | EUR | `[data-currency="EUR"]` | `.nds-number-format:not([data-unit])` | Euros (€) |
+| Currency | GBP | `[data-currency="GBP"]` | `.nds-number-format:not([data-unit])` | Pounds sterling (£) |
+| Currency | JPY | `[data-currency="JPY"]` | `.nds-number-format:not([data-unit])` | Japanese yen (¥) |
+| Currency | CNY | `[data-currency="CNY"]` | `.nds-number-format:not([data-unit])` | Chinese yuan (¥) |
+| Currency | INR | `[data-currency="INR"]` | `.nds-number-format:not([data-unit])` | Indian rupees (₹) |
+| Currency | KRW | `[data-currency="KRW"]` | `.nds-number-format:not([data-unit])` | Korean won (₩) |
+| Currency | TRY | `[data-currency="TRY"]` | `.nds-number-format:not([data-unit])` | Turkish lira (₺) |
 | Unit | Unit (hint: Any text after the number) | `[data-unit="km"]` | `.nds-number-format:not([data-currency])` | A unit such as km, kg, MB or years. Not with a currency |
 | Start | Start From (hint: Counts from 40,000, not from 0) | `[data-start="40000"]` | `.nds-counter-value` | For a large number: the count shows only its last part |
 | Duration | 1000 ms (default) | — | `.nds-counter-value` | One second. Fits most numbers |

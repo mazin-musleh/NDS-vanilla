@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 11:50 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="editorOverview" class="nds-content-section nds-doc-overview">
@@ -87,12 +87,12 @@ Every state row goes on the field's `<textarea>`. The editor reads it from there
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Standard (default) | — | — | Images from a URL only. Uploads nothing |
-| Structure | Image upload | canon `#editor-upload` | — | The image button also takes a file, and sends it to your server. See Image Upload |
-| Structure | Embedded images (hint: Uploaded files are saved inside the text, not on a server) | canon `#editor-embed` | — | The image button also takes a file, and puts it in the value as a `data:` URL. Only for a field with no upload server. See Embedded Images |
+| Structure | Image upload (id: upload) | canon `#editor-upload` | — | The image button also takes a file, and sends it to your server. See Image Upload |
+| Structure | Embedded images (id: embed) (hint: Uploaded files are saved inside the text, not on a server) | canon `#editor-embed` | — | The image button also takes a file, and puts it in the value as a `data:` URL. Only for a field with no upload server. See Embedded Images |
 | Toolbar | Full (default) | — | — | Every command except `h1`. Use it for long articles and page content |
-| Toolbar | Short | `[data-editor-toolbar="bold italic underline \| link \| ul ol \| source"]` | `.nds-editor` | A short set for comments and notes. See Toolbar |
-| Toolbar | None | `[data-editor-toolbar="none"]` | `.nds-editor` | No toolbar. The keyboard shortcuts and paste still work |
-| State (any) | Read-only | `[readonly]` | `textarea:not([disabled])` | The user can read and copy the text, and open the source view, but cannot change it. The value submits. Not with Disabled |
+| Toolbar | Short (not: upload, embed) | `[data-editor-toolbar="bold italic underline \| link \| ul ol \| source"]` | `.nds-editor` | A short set for comments and notes. See Toolbar |
+| Toolbar | None (not: upload, embed) | `[data-editor-toolbar="none"]` | `.nds-editor` | No toolbar. The keyboard shortcuts and paste still work |
+| State (any) | Read-only | `[readonly]` | `textarea:not([disabled])` | The user can read and copy the text, and open the source view if the toolbar has it, but cannot change it. The value submits. Not with Disabled |
 | State (any) | Disabled | `[disabled]` | `textarea:not([readonly])` | The field is off and its value does not submit. Not with Read-only |
 | State (any) | Required (hint: Press Validate with the field empty) | `[required]` | `textarea` | The form needs text in the field. The forms script adds the required mark |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |

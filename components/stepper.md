@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="stepperOverview" class="nds-content-section nds-doc-overview">
@@ -146,7 +146,7 @@ Every class goes on `.nds-stepper`. The Layout row sets the desktop layout. Phon
 | Size | MD (default) | — | — | 32px circles, or a 64px ring in the radial layout |
 | Size | LG | `.nds-lg` | `.nds-stepper:not(.nds-dot)` | 40px circles, or an 80px ring |
 | Size | XL | `.nds-xl` | `.nds-stepper:not(.nds-dot)` | 48px circles, or a 120px ring with a larger title |
-| Dot | Dot (hint: Small dots with no numbers. Not radial) | `.nds-dot` | `.nds-stepper:not(.nds-lg):not(.nds-xl)` | 16px dots with no numbers. For a timeline, or a short flow where the order is plain. A dot has one size, and the radial layout shows no dots |
+| Dot | Dot (hint: Small dots with no numbers. Not radial) | `.nds-dot` | `.nds-stepper:not(.nds-lg):not(.nds-xl):not(.nds-radial)` | 16px dots with no numbers. For a timeline, or a short flow where the order is plain. A dot has one size, and the radial layout shows no dots |
 | Divider | Divider (hint: A label above each step, such as a date. Vertical only) | — | `.nds-stepper.nds-vertical` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. With Dot and Reverse it makes a timeline. See Divider Labels under Behavior |
 | Divider | Divider (hint: A label above each step, such as a date. Vertical only) | — | `.nds-stepper.nds-vertical-sm` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. With Dot and Reverse it makes a timeline. See Divider Labels under Behavior |
 | Divider | Divider (hint: A label above each step, such as a date. Vertical only) | — | `.nds-stepper.nds-vertical-md` | A divider at the start of each step, as its label: a date, a phase name, or a group of steps. Vertical only. With Dot and Reverse it makes a timeline. See Divider Labels under Behavior |
@@ -349,6 +349,8 @@ Set these on `.nds-stepper`. The size classes set `--stepper-size` too, so set i
 {: .nds-block-title}
 
 Set a token at `:root`, or on a wrapper to reach every stepper inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+
+Source: the `stepper` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.stepper.html }}
 

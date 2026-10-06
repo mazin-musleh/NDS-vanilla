@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="radioOverview" class="nds-content-section nds-doc-overview">
@@ -94,7 +94,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 | Size | LG | `.nds-lg` | `.nds-radio-container` | 24px tile. Touch-first screens |
 | Color | Neutral | `.nds-neutral` | `.nds-radio` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked |
 | Checked | Checked (default) | `[checked]` | `#radio-1` | This option is chosen when the page loads. Put it on one option of a group only. Leave every option unchecked when the user must decide |
-| Required | Required | `[data-required]` | `.nds-radio-group` | The user must pick an option before the form submits. A required mark shows before the legend. Use it with no option checked |
+| Required | Required (hint: Turn Checked off: the user must then pick an option) | `[data-required]` | `.nds-radio-group` | The user must pick an option before the form submits. A required mark shows before the legend. Use it with no option checked |
 | Disabled | Disabled | `[disabled]` | `.nds-radio` | The user cannot pick these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-radio-container` | The group shows its value but cannot change, by pointer or by keyboard. Put it on every option's container. The tile outline takes the disabled color, and the fill stays |
 | Layout | Row | `.nds-rowView` | `.nds-radio-group` | The options sit side by side and wrap |
@@ -208,6 +208,8 @@ Set these on `.nds-radio-container`. The size classes set the first one.
 {: .nds-block-title}
 
 Set a token at `:root`, or on a wrapper to reach every radio inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+
+Source: the `radio` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.radio.html }}
 

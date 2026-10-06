@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="btnOverview" class="nds-content-section nds-doc-overview">
@@ -147,7 +147,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Circle | Circle (hint: Not in a group) | `.nds-circle` | `.nds-btn:not(.nds-btn-group > .nds-btn)` | Round ends. An icon-only button becomes a circle. No effect in a group, which owns its corners |
 | Full width | Full width | `.nds-full` | `.nds-btn:not(.nds-btn-group > .nds-btn)` | Fills the width of its container, with the content centered |
 | Full width | Full width | `.nds-full` | `.nds-btn-group` | On a group, the group fills the width and its buttons share it equally. Put it on the group, not on its buttons |
-| Primary text | Primary text (hint: Transparent only) | `.nds-color` | `.nds-transparent` | The text takes the brand primary color, and goes back to the default color on hover |
+| Primary text | Primary text (hint: Transparent only) | `.nds-color` | `.nds-transparent:not(.nds-destructive):not(.nds-oncolor)` | The text takes the brand primary color, and goes back to the default color on hover |
 | Badge | Badge (hint: Needs an icon) | canon `#btn-badge` | `i.nds-icon` | A count over the corner of the icon. It goes inside the `<i>` icon element, never beside it. The icon is `aria-hidden`, so screen readers skip the count: put it in the label too |
 {: #btnVariantsTable .nds-table .nds-responsive}
 
@@ -268,9 +268,10 @@ Set these on the button itself. The size and variant classes set many of them on
 |---|---|---|
 | `--btn-size` | `40px` | Height, and the width of an icon-only button. The label and icon sizes follow it. `nds-md` and `nds-sm` set 32px and 24px |
 | `--btn-height` | `var(--btn-size)` | Height alone, without the label and icon sizes |
-| `--btn-width` | `auto` | Width |
+| `--btn-height-min` | `fit-content` | Minimum height |
+| `--btn-width` | `fit-content` | Width |
 | `--btn-padding` | `(size - 8px) / 2` | Padding on the start and end sides |
-| `--btn-gap` | `var(--spacing-md)` | Space between the icon and the label |
+| `--btn-gap` | `var(--spacing-md)` | Space between the icon and the label. `nds-md` sets `var(--spacing-sm)`, `nds-sm` sets `var(--spacing-xs)` |
 | `--btn-radius` | `var(--radius-sm)` | Corner radius |
 | `--btn-FS`, `--btn-LH` | from `--btn-size` | Label font size and line height |
 | `--btn-icon-size` | `size / 2 + 4px` | Icon size |
@@ -290,6 +291,8 @@ Set these on the button itself. The size and variant classes set many of them on
 {: .nds-block-title}
 
 Set a token at `:root`, or on a wrapper to reach every button inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+
+Source: the `button` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.button.html }}
 

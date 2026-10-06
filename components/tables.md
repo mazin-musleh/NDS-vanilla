@@ -749,6 +749,8 @@ Set these on `.nds-table`.
 
 Set a token at `:root`, or on a wrapper to reach every table inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
+Source: the `table` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.table.html }}
 
 ### JavaScript

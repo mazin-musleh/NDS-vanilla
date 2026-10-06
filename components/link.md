@@ -194,6 +194,8 @@ Set these on the link, or on a container to reach every link inside it. The colo
 
 Set a token at `:root`, or on a wrapper to reach every link inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
+Source: the `link` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.link.html }}
 
 ### JavaScript

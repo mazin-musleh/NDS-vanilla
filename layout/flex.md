@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 11:11 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="flexOverview" class="nds-content-section nds-doc-overview">
@@ -80,7 +80,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 | Gap | MD | `--gap: var(--spacing-md)` | `.nds-flex` | 8px. Tags and chips |
 | Gap | XL (default) | — | — | 16px |
 | Gap | 3XL | `--gap: var(--spacing-3xl)` | `.nds-flex` | 24px. Larger children, such as cards in a column |
-| Wrap | Wrap | `.nds-wrap` | `.nds-flex` | The children flow onto a new line when the row is full |
+| Wrap | Wrap | `.nds-wrap` | `.nds-flex:not(.nds-col)` | The children flow onto a new line when the row is full. Row only: a column wraps only when it has a fixed height |
 | Reverse | Reverse | `.nds-reverse` | `.nds-flex` | Shows the children in the opposite order. They also move to the other edge: with Justify Start they sit at the end. The keyboard order stays the markup order |
 {: #flexVariantsTable .nds-table .nds-responsive}
 

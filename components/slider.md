@@ -235,6 +235,8 @@ The script writes `--slider-fill-start` and `--slider-fill-end` on `.nds-slider-
 
 Set a token at `:root`, or on a wrapper to reach every slider inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The hovered thumb color also shows on keyboard focus.
 
+Source: the `slider` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.slider.html }}
 
 ### JavaScript

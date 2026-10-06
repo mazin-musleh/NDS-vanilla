@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="featuredIconOverview" class="nds-content-section nds-doc-overview">
@@ -66,7 +66,7 @@ Every row goes on the `.nds-featured-icon` element. Pick one option from each gr
 | Size | LG | `.nds-lg` | `.nds-featured-icon` | 48px, for section headers |
 | Size | XL | `.nds-xl` | `.nds-featured-icon` | 56px, for hero sections and landing pages |
 | Shape | Rounded (default) | — | — | A square with rounded corners, for card headers and list items |
-| Shape | Circle | `.nds-circle` | `.nds-featured-icon` | A circle, beside round parts such as avatars. It changes nothing on the Subtle style |
+| Shape | Circle | `.nds-circle` | `.nds-featured-icon:not(.nds-subtle)` | A circle, beside round parts such as avatars |
 | Style | Light (default) | — | — | A light fill in the icon's color |
 | Style | Outline | `.nds-outline` | `.nds-featured-icon` | No fill and a border in the icon's color, for a lighter look |
 | Style | Dark | `.nds-dark` | `.nds-featured-icon` | A solid fill and a white icon, for the strongest emphasis |
@@ -110,7 +110,7 @@ Every row goes on the `.nds-featured-icon` element. Pick one option from each gr
             <i class="hgi hgi-stroke hgi-square-circle"></i>
             <span class="nds-label">Shape and Style Modifiers</span>
           </span>
-          <p class="nds-item-desc">A rounded square or a circle, with a light, outline, dark or subtle style. Each shape and style works with every color and size.</p>
+          <p class="nds-item-desc">A rounded square or a circle, with a light, outline, dark or subtle style. The circle does not apply to the subtle style.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -189,6 +189,8 @@ Set these on the icon, in a `style` attribute or in your stylesheet. On a parent
 {: .nds-block-title}
 
 Set a token at `:root`, or on a wrapper to reach every featured icon inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+
+Source: the `featured-icons` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.featured-icons.html }}
 

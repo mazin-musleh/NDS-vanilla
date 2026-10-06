@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="multiselectOverview" class="nds-content-section nds-doc-overview">
@@ -188,10 +188,10 @@ A row on `.nds-check-container` changes every option row. A Reset or Apply row i
 |---|---|---|---|---|
 | Structure | Manual (default) | — | — | You write one checkbox per option in the menu, in fieldsets with a legend. Use it when the server writes the options |
 | Structure | Data-driven (hint: The script builds the options from JSON) | canon `#multiselect-json` | — | An empty menu with the options as JSON in `data-multiselect-options`. The script builds the checkboxes. Use it for options that come from data |
-| Menu button (any) | Icon only | `[aria-label="Select"]` | `.nds-dropmenu-trigger:has(.nds-icon)` | A narrow button, for a narrow field. The `aria-label` names the button, and the script adds the chosen options to it. Not with Label only |
-| Menu button (any) | Icon only | remove | `.nds-dropmenu-trigger:has(.nds-icon) > .nds-label` | Removes the visible word |
-| Menu button (any) | Label only | `[type="button"]` | `.nds-dropmenu-trigger:has(.nds-label)` | The word with no icon. Not with Icon only |
-| Menu button (any) | Label only | remove | `.nds-dropmenu-trigger:has(.nds-label) > .nds-icon` | Removes the icon |
+| Menu button (any) | Icon only (limit: 1 button content) | `[aria-label="Select"]` | `.nds-dropmenu-trigger:has(.nds-icon)` | A narrow button, for a narrow field. The `aria-label` names the button, and the script adds the chosen options to it. Not with Label only |
+| Menu button (any) | Icon only (limit: 1 button content) | remove | `.nds-dropmenu-trigger:has(.nds-icon) > .nds-label` | Removes the visible word |
+| Menu button (any) | Label only (limit: 1 button content) | `[type="button"]` | `.nds-dropmenu-trigger:has(.nds-label)` | The word with no icon. Not with Icon only |
+| Menu button (any) | Label only (limit: 1 button content) | remove | `.nds-dropmenu-trigger:has(.nds-label) > .nds-icon` | Removes the icon |
 | Menu button (any) | Solid | canon `#multiselect-trigger-solid` | `[data-multiselect-dropmenu]` (start) | A filled button that stands out from the field |
 | Menu button (any) | Solid | remove | `.nds-dropmenu-trigger.nds-subtle` | Removes the subtle button |
 | Menu button (any) | MD | `.nds-md` | `.nds-dropmenu-trigger` | A 32px button with a smaller word and icon |

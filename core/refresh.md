@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 12:09 AM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="refreshOverview" class="nds-content-section nds-doc-overview">
@@ -207,7 +207,7 @@ Call `window.NDS?.Init.mount(view)` after a view mounts, and `window.NDS?.Init.d
 ### Instance Lookup
 {: .nds-block-title}
 
-A component stores its instance on the element it starts, as an `nds{Name}` property: `el.ndsAccordion`, `el.ndsChart`, `el.ndsSort`. `destroy()` reads the same property to find what to release. Filter, Sort and Upload also have `getInstance(el)`, and Filter has `getByTarget(id)` and `whenReady(el, callback)`.
+A component stores its instance on the element it starts, as an `nds{Name}` property: `el.ndsAccordion`, `el.ndsChart`, `el.ndsSort`. `destroy()` releases each one it finds there, and calls `NDS.{Name}.destroy(el)` for the components that keep no such property. Filter, Sort and Upload also have `getInstance(el)`, and Filter has `getByTarget(id)` and `whenReady(el, callback)`.
 
 ### Data Attributes
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 03:23 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="tabsOverview" class="nds-content-section nds-doc-overview">
@@ -230,7 +230,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | Card | Panel only | `.nds-stroke` | `.nds-tab-content` | The same: gives the card its border |
 | Card | Panel only | `.nds-shadow` | `.nds-tab-content` | The same: gives the card its shadow |
 | Divided | Divided | `.nds-divided` | `.nds-tabs` | A line between the tabs and the panels: under the row, or beside a vertical list |
-| Center | Center | `.nds-center` | `.nds-tab-list` | Centers a horizontal tab row while every tab fits. A row that scrolls starts at the edge |
+| Center | Center | `.nds-center` | `.nds-tab-list:not(.nds-vertical .nds-tab-list)` | Horizontal only. Centers a horizontal tab row while every tab fits. A row that scrolls starts at the edge |
 | Loading | Loading | `.nds-loading` | `.nds-tabs` | Gray bars in place of the labels and the panel content while the data loads. On `.nds-tab-list` it bars the labels only |
 {: #tabsVariantsTable .nds-table .nds-responsive}
 

@@ -242,6 +242,8 @@ Set these on `.nds-check-container`. The size classes set the first one.
 
 Set a token at `:root`, or on a wrapper to reach every checkbox inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
+Source: the `checkbox` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.checkbox.html }}
 
 ### JavaScript

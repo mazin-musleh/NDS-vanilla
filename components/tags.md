@@ -212,6 +212,8 @@ Set these on the tag. The size classes set `--tag-height`, `--tag-fs` and `--tag
 
 Set a token at `:root`, or on a wrapper to reach every tag inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
+Source: the `tag` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.tag.html }}
 
 </div>

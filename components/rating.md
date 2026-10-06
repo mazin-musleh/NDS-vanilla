@@ -280,6 +280,8 @@ Set these on `.nds-rating`. The size classes set `--star-size`, and `nds-brand` 
 
 Set a token at `:root`, or on a wrapper to reach every rating inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
+Source: the `rating` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.rating.html }}
 
 ### JavaScript

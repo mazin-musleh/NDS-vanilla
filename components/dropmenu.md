@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="dropmenuOverview" class="nds-content-section nds-doc-overview">
@@ -235,14 +235,14 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Every option goes on the `nds-dropmenu` wrapper, except Center items, which goes on the menu. Search and Required work only with a picker (`data-select-name`).
+Every option goes on the `nds-dropmenu` wrapper, except Center items, which goes on the menu. Required works only with a picker (`data-select-name`).
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Actions (default) | — | — | Actions on the current page |
 | Structure | Links | canon `#dm-links` | — | Links to other pages |
 | Structure | Row menu | canon `#dm-row` | — | The actions of one table row or card, behind a three-dot button. The hidden label names the row |
-| Structure | Settings | canon `#dm-settings` | — | Switches or checkboxes in a group, with a footer of buttons. Copy a checkbox group from [Checkbox](../components/checkbox) and a switch group from [Switch](../components/switch), and add `nds-dropmenu-group` to the `fieldset`. A click on a control never closes the menu |
+| Structure | Settings (id: settings) | canon `#dm-settings` | — | Switches or checkboxes in a group, with a footer of buttons. Copy a checkbox group from [Checkbox](../components/checkbox) and a switch group from [Switch](../components/switch), and add `nds-dropmenu-group` to the `fieldset`. A click on a control never closes the menu |
 | Structure | Picker | canon `#dm-picker` | — | A button that picks one value, in a small slot: an input prefix or a per-page count. The value submits with the form. For a form field, use [Custom Select](../components/custom-select) |
 | Structure | Lazy menu | canon `#dm-lazy` | — | The menu sits in a `<template>` and is built on the first click, so a long menu adds no markup at page load. Only for a menu that no other component reads: not Filter, Share or Multiselect. Search engines and the browser's find do not see the items until then |
 | Anchor | Center (default) | — | — | The menu centers under the trigger |
@@ -252,7 +252,7 @@ Every option goes on the `nds-dropmenu` wrapper, except Center items, which goes
 | Portal | Auto (default) | — | — | The menu moves to `<body>` only when an ancestor would clip it |
 | Portal | Always (hint: The menu moves to the page body when it opens) | `[data-portal]` | `.nds-dropmenu` | The menu always moves to `<body>` when it opens |
 | Portal | Never (hint: The menu stays in its wrapper, even where it is clipped) | `[data-no-portal]` | `.nds-dropmenu` | The menu stays in the wrapper, even where an ancestor clips it. It wins over `data-portal`. Only for CSS or a script that needs the menu inside the wrapper |
-| Search | Search | `[data-search]` | `.nds-dropmenu[data-select-name]` | A search box at the top of the menu. For a long list |
+| Search | Search (not: settings) | `[data-search]` | `.nds-dropmenu` | A search box at the top of the menu. For a long list. It filters `nds-dropmenu-item` rows, so not a settings menu |
 | Required | Required | `[data-required]` | `.nds-dropmenu[data-select-name]` | The form does not submit until a value is picked |
 | Center items | Center items (hint: For short labels) | `.nds-center` | `.nds-dropmenu-menu` | Centers each item's label. For short values, such as numbers |
 | Delay | Delayed open (hint: Waits with a spinner while your script fills the menu) | `[data-delay="800"]` | `.nds-dropmenu` | The first open waits 800 ms, with a spinner on the trigger, while your script fills the menu |

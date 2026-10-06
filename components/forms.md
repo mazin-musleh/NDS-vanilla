@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 lang: en
 direction: ltr
 ---
@@ -273,18 +273,18 @@ Each Structure is one field type. Options stack: a field can be MD, Lighter and 
 | Structure | Email | canon `#field-email` | — | An email address. `type="email"` checks the format at submit |
 | Structure | Password | canon `#field-password` | — | A password the user already has, on a sign-in form. For a new password, use [Password](../components/password) |
 | Structure | Search | canon `#field-search` | — | A search box with a voice button. See [Voice Input](../components/voice-input) |
-| Structure | Number (demo: + affix-solid) (demo: + affix-md) | canon `#field-number` | — | A whole number with minus and plus buttons, between `min` and `max` |
-| Structure | Phone (demo: + affix-solid) | canon `#field-phone` | — | A Saudi mobile number after a fixed `+966` |
-| Structure | Phone with country | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name` |
-| Structure | Textarea | canon `#field-textarea` | — | Several lines of text, such as a message |
-| Structure | Select | canon `#field-select` | — | A native `<select>`, for the phone's own picker. For a choice in a form, use [Custom Select](../components/custom-select) |
+| Structure | Number (id: number) (demo: + affix-solid) (demo: + affix-md) | canon `#field-number` | — | A whole number with minus and plus buttons, between `min` and `max` |
+| Structure | Phone (id: phone) (demo: + affix-solid) | canon `#field-phone` | — | A Saudi mobile number after a fixed `+966` |
+| Structure | Phone with country (id: phone-country) | canon `#field-phone-country` | — | A phone number after a country-code picker. The picker is a [Dropmenu](../components/dropmenu) with `data-select-name` |
+| Structure | Textarea (id: textarea) | canon `#field-textarea` | — | Several lines of text, such as a message |
+| Structure | Select (id: select) | canon `#field-select` | — | A native `<select>`, for the phone's own picker. For a choice in a form, use [Custom Select](../components/custom-select) |
 | Size | LG (default) | — | — | 40px high. It needs no class |
 | Size | MD | `.nds-md` | `.nds-form-container` | 32px high, with smaller text, for a table filter or a side panel |
 | Style | Outline (default) | — | — | A border on the page background |
 | Style | Lighter | `.nds-lighter` | `.nds-form-container` | A light fill and no border, for a field on a white card |
 | Style | Darker | `.nds-darker` | `.nds-form-container` | A darker fill and no border, for a field on a gray surface |
-| Affix (any) | Prefix | canon `#field-prefix` | `.nds-form-control:not(:has(> textarea, > select, .nds-number-decrement, .nds-phone))` (start) | Fixed text before the value, such as a currency or `https://` |
-| Affix (any) | Suffix | canon `#field-suffix` | `input:not(.nds-phone, [inputmode="numeric"], [type="hidden"])` (after) | Fixed text after the value, such as a unit or a domain |
+| Affix (any) | Prefix (not: textarea, select, number, phone, phone-country) | canon `#field-prefix` | `.nds-form-control` (start) | Fixed text before the value, such as a currency or `https://` |
+| Affix (any) | Suffix (not: textarea, select, number, phone, phone-country) | canon `#field-suffix` | `input` (after) | Fixed text after the value, such as a unit or a domain |
 | Affix style | Subtle (default) | `.nds-subtle` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on the field's own background: text, the number buttons and the country picker |
 | Affix style | Solid (id: affix-solid) | `.nds-secondary` | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The prefix and suffix on a light fill, set apart from the value |
 | Affix size | LG (default) | — | `:is(.nds-prefix, .nds-suffix) > .nds-btn` | The affix button's default padding. It needs no class |
@@ -592,6 +592,8 @@ The checks are the browser's own: write these standard attributes on the input. 
 {: .nds-block-title}
 
 Set a token at `:root`, or on a wrapper to reach every field inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+
+Source: the `forms` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.forms.html }}
 

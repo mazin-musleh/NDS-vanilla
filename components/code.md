@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 02:15 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="codeOverview" class="nds-content-section nds-doc-overview">
@@ -131,6 +131,12 @@ Send the request from your **account page**. The review takes up to five working
   <span class="nds-tag nds-green nds-xs"><span class="nds-label">v2</span></span>
 </span>
 </script>
+<script type="text/html" id="code-tags-md" data-canon>
+<span class="nds-code-tags lang-markdown">
+  <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>
+  <span class="nds-tag nds-green nds-xs"><span class="nds-label">v2</span></span>
+</span>
+</script>
     </div>
   </div>
 </section>
@@ -151,6 +157,7 @@ The language of every structure comes from the `lang-*` class on its `<code>`. T
 | Structure | Markdown | canon `#code-markdown` | — | Markdown or a prompt for an AI agent (`lang-markdown`, `lang-prompt`). The lines wrap and have no line numbers |
 | Structure | Inline | canon `#code-inline` | — | A short code reference in a sentence: a class name, a method, a value |
 | Tag strip | Tag strip (hint: More tags beside the language tag, such as a version) | canon `#code-tags` | `.nds-code.nds-expandable` (start) | Extra tags beside the language tag, such as a version |
+| Tag strip | Tag strip (hint: More tags beside the language tag, such as a version) | canon `#code-tags-md` | `div.nds-code:not(.nds-expandable):not(.nds-tabs)` (start) | The same, on a Markdown block. The strip takes the block's `lang-*` class |
 {: #codeVariantsTable .nds-table .nds-responsive}
 
 </div>

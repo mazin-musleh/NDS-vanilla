@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 06:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="swiperOverview" class="nds-content-section nds-doc-overview">
@@ -227,7 +227,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | Per view | 1 (id: per-1) | — | `.nds-swiper.nds-spotlight` | A spotlight always shows one slide in the middle. It needs no knob |
 | Arrows | Beside bullets (default) | — | — | The arrows at the start of the navigation row and the bullets at its end |
 | Arrows | Split (hint: Bullets in the middle, an arrow at each end) | `.nds-center` | `.nds-swiper-navigation` | The bullets in the middle of the row and one arrow at each end |
-| Arrows | Middle (hint: An arrow on each side of the slides, no bullets) | `.nds-middle` | `.nds-swiper` | One arrow on each side of the slides, at their middle, and no bullets. Tablet and wider: a phone shows the navigation row |
+| Arrows | Middle (hint: An arrow on each side of the slides, no bullets) | `.nds-middle` | `.nds-swiper` | One arrow on each side of the slides, at their middle, and no bullets, so the Bullets size has no effect (not on a hero). Tablet and wider: a phone shows the navigation row |
 | Bullets | LG (default) | — | — | 16px bullets. It needs no class |
 | Bullets | MD | `.nds-md` | `.nds-swiper-pagination` | 12px bullets |
 | Bullets | SM | `.nds-sm` | `.nds-swiper-pagination` | 8px bullets |
@@ -433,6 +433,8 @@ Set these in the `style` of `.nds-swiper`. Set the bullet colors on the swiper o
 {: .nds-block-title}
 
 Set a token at `:root`, or on a wrapper to reach every swiper inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
+
+Source: the `swiper` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.swiper.html }}
 

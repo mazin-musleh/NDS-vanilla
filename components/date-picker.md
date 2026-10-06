@@ -263,6 +263,8 @@ Set them in a rule on `.nds-date-picker-dropdown`, the calendar.
 
 Set a token at `:root`, or on a wrapper to reach every date picker inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
+Source: the `date-picker` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.date-picker.html }}
 
 ### Keyboard

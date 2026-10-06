@@ -229,6 +229,8 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 
 Set a token at `:root`, or on a wrapper to reach every autocomplete inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The highlight is the background of the matched text in a suggestion.
 
+Source: the `autocomplete` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.autocomplete.html }}
 
 ### Response Format

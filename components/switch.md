@@ -247,6 +247,8 @@ Set these on `.nds-switch-container`. The size classes set the first five.
 
 Set a token at `:root`, or on a wrapper to reach every switch inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens).
 
+Source: the `switch` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.switch.html }}
 
 ### JavaScript

@@ -347,6 +347,8 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
 
 Set a token at `:root`, or on a wrapper to reach every upload inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../components/tokens). The active drop zone background shows while a file is dragged over it.
 
+Source: the `upload` group in `_sass/tokens/_components.scss`.
+
 {{ site.data.tokens.components.upload.html }}
 
 ### JavaScript

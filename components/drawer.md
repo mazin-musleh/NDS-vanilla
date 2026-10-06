@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="drawerOverview" class="nds-content-section nds-doc-overview">
@@ -421,6 +421,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 
 | Attribute | Element | Effect |
 |---|---|---|
+| `data-state="always-open"` | `.nds-drawer` | Each submenu opens and closes on its own, at every level. Without it, opening a submenu closes the open one beside it |
 | `data-state="active"` | `<li>` | Marks the current page. Its line shows, and every submenu above it opens at load |
 | `data-state="open"` | `<li>` and its submenu `<ul>` | Opens the submenu at load, before the script runs. Set it on both, with `aria-expanded="true"` on the toggle button. The script keeps it in step: `opening` and `closing` during the slide, `open` while the submenu is open |
 | `data-status` | `<li>` | `success`, `info`, `warning`, `error` or `neutral`. Colors the featured icon in the row |

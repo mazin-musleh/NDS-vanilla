@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.0"
-last_edit: "26/09/2026 - 12:17 AM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="gridOverview" class="nds-content-section nds-doc-overview">
@@ -146,7 +146,7 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 | Example | Main and side | canon `#grid-main-side` | — | Columns of different widths, set with a `grid-template-columns` value. `--mid-track: 1fr` stacks them below 960px |
 | Example | Fixed side column | canon `#grid-fixed-side` | — | A side column at a set width and a main column that takes the rest |
 | Example | Gaps | canon `#grid-gaps` | — | Row and column gaps set apart. `--gap` sets both |
-| Example | Centered items | canon `#grid-center` | — | Children at their own width, in the middle of their columns |
+| Example | Centered items | canon `#grid-center` | — | Children at their own width, in the middle of their columns. The text inside is centered too |
 | Example | Container width | canon `#grid-container` | — | A grid inside an `nds-cq` element follows that element's width, not the screen's. The same grid shows more columns in a wide column than in a narrow one. The container steps are 768px and 480px |
 {: #gridVariantsTable .nds-table .nds-responsive}
 
@@ -249,7 +249,7 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 | Class | Element | Effect |
 |---|---|---|
 | `nds-grid` | The element that holds the items | Makes it a full-width grid |
-| `nds-center` | `.nds-grid` | Centers each child in its column. The same as `--justify: center` |
+| `nds-center` | `.nds-grid` | Centers each child in its column and centers the text inside. Sets `--justify: center` |
 | `nds-cq` | Any element around a grid | Makes the grid inside follow this element's width. See the next table |
 {: .nds-table .nds-responsive}
 

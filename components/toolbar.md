@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.6.0"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="toolbarOverview" class="nds-content-section nds-doc-overview">
@@ -229,7 +229,7 @@ The toolbar of the [Editor](../components/editor).
             <i class="hgi hgi-stroke hgi-text-align-left"></i>
             <span class="nds-label">Bar Text</span>
           </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-bar-text</code> aligns with the bottom edge of taller controls beside it. A <code class="nds-inline-code lang-html">&lt;b&gt;</code> in it shows in medium weight. It also works outside a bar.</p>
+          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-bar-text</code> is block text in the paragraph color. A <code class="nds-inline-code lang-html">&lt;b&gt;</code> in it shows in medium weight. It also works outside a bar.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">

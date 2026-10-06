@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/10/2026 - 09:27 PM"
+last_edit: "06/10/2026 - 09:57 PM"
 ---
 
 <section id="tocOverview" class="nds-content-section nds-doc-overview">
@@ -103,8 +103,8 @@ You write the links. Nest a `<ul>` inside an `<li>` for each level.
           <span class="nds-label nds-truncate">Services</span>
         </a>
         <ul>
-          <li data-state="active">
-            <a href="#licenses" class="nds-btn nds-subtle nds-indicator" data-state="active">
+          <li>
+            <a href="#licenses" class="nds-btn nds-subtle nds-indicator">
               <span class="nds-label nds-truncate">Licenses</span>
             </a>
             <ul>
