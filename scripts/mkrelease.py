@@ -220,6 +220,23 @@ def verify(out, version):
         sys.exit('Head script in ui-shell/head.md has drifted from _includes/head-inline-scripts.html. '
                  'Copy it from the served head.')
 
+    # accessibility.md prints the FAB and the built panel for consumers to copy; both are hand copies.
+    def _markup(s):
+        return re.sub(r'\s+', ' ', re.sub(r'<!--.*?-->|\{%-? comment -?%\}.*?\{%-? endcomment -?%\}', '', s, flags=re.S)).replace('> <', '><').strip()
+    def _read(p):
+        with open(os.path.join(ROOT, p), encoding='utf8') as f:
+            return f.read()
+    a11y_doc = _read('components/accessibility.md')
+    def _canon(cid):
+        m = re.search(r'<script type="text/html" id="' + cid + r'"[^>]*>(.*?)</script>', a11y_doc, re.S)
+        return _markup(m.group(1)) if m else ''
+    built = re.search(r'return `(<aside.*?</aside>)`', _read('_js/nds-accessibility.js'), re.S).group(1)
+    if _canon('a11y-panel') != _markup('<template class="nds-panel-template">' + built.replace('${side}', 'end') + '</template>'):
+        sys.exit('Custom Panel in components/accessibility.md has drifted from panelMarkup() in '
+                 '_js/nds-accessibility.js. Copy it from there.')
+    if _canon('a11y-fab') != _markup(_read('_includes/accessibility-panel.html')):
+        sys.exit('FAB in components/accessibility.md has drifted from _includes/accessibility-panel.html.')
+
     # The rules file's checks run against its SOURCE include (the guide
     # renders the same include; raw main and the zip top level serve it
     # byte-identical). The file is universal — no per-project values — so a

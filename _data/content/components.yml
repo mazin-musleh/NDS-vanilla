@@ -28,7 +28,7 @@
 
 - title: "Accessibility"
   description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
-  use_when: "The dev asks for an accessibility widget, a11y toolbar, font-size controls, high contrast mode, colour-blind filters, or a WCAG preferences panel. Site-wide floating panel, shipped as an optional add-on bundle gated by a site flag."
+  use_when: "The dev asks for an accessibility widget, a11y toolbar, font-size controls, high contrast mode, colour-blind filters, or a WCAG preferences panel. Site-wide panel opened by a FAB on every page; its script loads on the first press."
   icon: '<i class="hgi hgi-stroke hgi-accessibility"></i>'
   category: "Add-ons"
   tags: ["JS", "CSS", "Add-on", "API"]

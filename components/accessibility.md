@@ -2,925 +2,689 @@
 layout: page
 title: Accessibility
 hero_title: Accessibility - National Design System
-hero_description: A site-wide floating panel that lets visitors apply accessibility presets, tune typography, and switch visual filters, with every choice persisted across pages.
+hero_description: A site-wide panel where visitors turn on accessibility modes, adjust text and pick a color filter, with every choice kept across pages
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "13/09/2026 - 08:56 AM"
+last_edit: "06/10/2026 - 08:10 AM"
 ---
 
-<!-- Trigger -->
-<section id="accessibilityTrigger" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Floating Action Button</h2>
-            <p class="nds-section-description">A circular FAB in the corner opens the disclosure panel. The button ships with the default layout, so every page on the site exposes the same controls without per-page wiring.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Open the global panel</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo" style="display:flex; flex-direction:column; align-items:center; gap: var(--spacing-md); padding: var(--spacing-2xl);">
-                                <button class="nds-btn nds-primary nds-circle nds-icon-only nds-accessibility-toggle"
-                                        type="button"
-                                        data-accessibility-demo-open
-                                        aria-label="Open accessibility panel"
-                                        style="--btn-size: 56px; box-shadow: var(--shadow-lg);">
-                                    <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
-                                </button>
-                                <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
-                                    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                                    The same button is also pinned to the corner of every page.
-                                </span>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-a11y-trigger-1" id="tab-a11y-trigger-1">
-                                            <span class="nds-tab-label">FAB</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-a11y-trigger-css" id="tab-a11y-trigger-css">
-                                            <span class="nds-tab-label">CSS</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-a11y-trigger-custom" id="tab-a11y-trigger-custom">
-                                            <span class="nds-tab-label">Panel</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-1"
-                                        aria-labelledby="tab-a11y-trigger-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;button class="nds-btn nds-primary nds-circle nds-icon-only nds-fab nds-accessibility-toggle"
+<section id="accessibilityOverview" class="nds-content-section nds-doc-overview">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Overview</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+The accessibility panel is a [Panel](../components/panels) that a [FAB](../components/fab) opens on every page. It has three groups. Accessibility Modes are switches that turn on several settings at once. Readable Experience holds tiles for text size, spacing, alignment, highlights, motion and the reading mask. Visually Pleasing Experience holds the color filters. Each choice writes a token on `<html>`, and CSS changes the page from that token.
+
+Pick another component when:
+
+- the visitor only switches between light and dark: [Themes](../components/themes)
+- the setting belongs to one form or page: [Switch](../components/switch)
+
+</div>
+  </div>
+</section>
+
+<section id="accessibilityMarkup" class="nds-content-section nds-doc-markup nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Markup</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+<script type="text/html" id="a11y-preview" data-canon data-code="none" data-screens="none">
+<button type="button" class="nds-btn nds-secondary-outline" data-accessibility-toggle data-panel-toggle="ndsAccessibilityPanel">
+  <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
+  <span class="nds-label">Open the accessibility panel</span>
+</button>
+</script>
+
+<script type="text/html" id="a11y-fab" data-canon data-preview="none">
+<!-- On every NDS page, after the footer -->
+<button class="nds-btn nds-primary nds-circle nds-icon-only nds-fab nds-accessibility-toggle"
         type="button"
         aria-label="Accessibility settings"
         data-i18n-attr="aria-label:panel_label"
         aria-controls="ndsAccessibilityPanel"
         aria-expanded="false"
         data-fab-pos="auto"
+        data-panel-side="end"
         data-panel-toggle="ndsAccessibilityPanel"
         data-accessibility-toggle
-        hidden&gt;
-    &lt;i class="nds-icon nds-hgi-accessibility" aria-hidden="true"&gt;&lt;/i&gt;
-&lt;/button&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-css"
-                                        aria-labelledby="tab-a11y-trigger-css" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;!-- OPTIONAL. The panel requests this sheet itself when it opens, so most
-     sites add nothing here.
-
-     Add it only to stop a returning visitor's saved modes appearing after the
-     page has already painted. It must be a normal stylesheet link, as below:
-     a preload with data-nds-defer does NOT help, because deferring is the
-     opposite of what stops the flash. This link blocks the first paint for
-     every visitor, which is the cost you are choosing to pay.
-
-     Keep it after the main stylesheet so the mode overrides win. --&gt;
-&lt;link rel="stylesheet" href="assets/css/nds-accessibility.min.css"&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-a11y-trigger-custom"
-                                        aria-labelledby="tab-a11y-trigger-custom" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <div class="nds-expandable-content">
-                                            <code class="lang-html code">
-&lt;!-- OPTIONAL — override the built-in panel markup; resolvePanel() uses this template instead if present. --&gt;
-&lt;template class="nds-panel-template"&gt;
-&lt;aside id="ndsAccessibilityPanel"
-       class="nds-panel nds-accessibility-panel"
-       data-panel-side="end"
-       aria-label="Accessibility settings"
-       data-i18n-attr="aria-label:panel_label"
-       data-accessibility-panel
-       hidden&gt;
-
-    &lt;div class="nds-panel-header"&gt;
-        &lt;span class="nds-featured-icon nds-circle"&gt;
-            &lt;i class="nds-icon nds-hgi-accessibility" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/span&gt;
-        &lt;div class="nds-panel-text"&gt;
-            &lt;h2 class="nds-panel-title" data-i18n="panel_title"&gt;Accessibility Tools&lt;/h2&gt;
-        &lt;/div&gt;
-        &lt;button class="nds-btn nds-subtle nds-icon-only"
-                        data-panel-close
-                type="button"
-                aria-label="Close accessibility panel"
-                data-i18n-attr="aria-label:close_panel"&gt;
-            &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-    &lt;/div&gt;
-
-    &lt;div class="nds-panel-body"&gt;
-        &lt;div class="nds-scroll-more nds-divided"&gt;
-            &lt;div class="nds-scroll-more-content"&gt;
-
-                &lt;div class="nds-sr-only" data-a11y-status role="status" aria-live="polite" aria-atomic="true"&gt;&lt;/div&gt;
-
-                &lt;!-- Display — quick toggle --&gt;
-                &lt;div class="nds-accessibility-quick"&gt;
-                    &lt;button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
-                            data-theme-toggle
-                            type="button"
-                            aria-label="Toggle theme"
-                            data-i18n-attr="aria-label:toggle_theme"&gt;
-                        &lt;i class="nds-icon nds-hgi-moon-02" aria-hidden="true"&gt;&lt;/i&gt;
-                    &lt;/button&gt;
-                &lt;/div&gt;
-
-        &lt;!-- Accessibility settings — one accordion, three items:
-             Modes (switches), Readable Experience (tile grid), Visually
-             Pleasing (tile grid). First item open by default; the other
-             two collapsed to keep the panel compact on first open. --&gt;
-        &lt;div class="nds-accordion nds-lg nds-accessibility-modes" id="a11yAccordion"&gt;
-
-            &lt;!-- Item 1: Accessibility Modes (bundle switches) --&gt;
-            &lt;div class="nds-accordion-item"&gt;
-                &lt;h3 class="nds-accordion-header"&gt;
-                    &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
-                            type="button"
-                            aria-expanded="true"
-                            data-state="open"
-                            aria-controls="a11yModesCollapse"&gt;
-                        &lt;span class="nds-accordion-title"&gt;&lt;span data-i18n="section_modes"&gt;Accessibility Modes&lt;/span&gt; &lt;span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"&gt;&lt;/span&gt;&lt;span class="nds-sr-only" data-a11y-count-sr="modes"&gt;&lt;/span&gt;&lt;/span&gt;
-                    &lt;/button&gt;
-                &lt;/h3&gt;
-                &lt;div class="nds-accordion-collapse"
-                     id="a11yModesCollapse"
-                     data-state="open"&gt;
-                    &lt;div class="nds-accordion-content"&gt;
-                        &lt;div class="nds-accordion-body"&gt;
-                            &lt;fieldset class="nds-form-group nds-switch-group"&gt;
-
-                                &lt;div class="nds-form-container nds-switch-container" data-mode-id="epilepsy-safe"&gt;
-                                    &lt;div class="nds-form-header"&gt;
-                                        &lt;label for="a11y-mode-epilepsy-safe"&gt;
-                                            &lt;span class="nds-label" data-i18n-name&gt;&lt;/span&gt;
-                                            &lt;span class="nds-info"  data-i18n-desc&gt;&lt;/span&gt;
-                                        &lt;/label&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-form-control"&gt;
-                                        &lt;div class="nds-switch"&gt;
-                                            &lt;input type="checkbox" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe"&gt;
-                                            &lt;div class="nds-switch-track"&gt;&lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;&lt;/div&gt;
-                                        &lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
-
-                                &lt;div class="nds-form-container nds-switch-container" data-mode-id="visually-impaired"&gt;
-                                    &lt;div class="nds-form-header"&gt;
-                                        &lt;label for="a11y-mode-visually-impaired"&gt;
-                                            &lt;span class="nds-label" data-i18n-name&gt;&lt;/span&gt;
-                                            &lt;span class="nds-info"  data-i18n-desc&gt;&lt;/span&gt;
-                                        &lt;/label&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-form-control"&gt;
-                                        &lt;div class="nds-switch"&gt;
-                                            &lt;input type="checkbox" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired"&gt;
-                                            &lt;div class="nds-switch-track"&gt;&lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;&lt;/div&gt;
-                                        &lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
-
-                                &lt;div class="nds-form-container nds-switch-container" data-mode-id="cognitive-disability"&gt;
-                                    &lt;div class="nds-form-header"&gt;
-                                        &lt;label for="a11y-mode-cognitive-disability"&gt;
-                                            &lt;span class="nds-label" data-i18n-name&gt;&lt;/span&gt;
-                                            &lt;span class="nds-info"  data-i18n-desc&gt;&lt;/span&gt;
-                                        &lt;/label&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-form-control"&gt;
-                                        &lt;div class="nds-switch"&gt;
-                                            &lt;input type="checkbox" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability"&gt;
-                                            &lt;div class="nds-switch-track"&gt;&lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;&lt;/div&gt;
-                                        &lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
-
-                                &lt;div class="nds-form-container nds-switch-container" data-mode-id="motor-impaired"&gt;
-                                    &lt;div class="nds-form-header"&gt;
-                                        &lt;label for="a11y-mode-motor-impaired"&gt;
-                                            &lt;span class="nds-label" data-i18n-name&gt;&lt;/span&gt;
-                                            &lt;span class="nds-info"  data-i18n-desc&gt;&lt;/span&gt;
-                                        &lt;/label&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-form-control"&gt;
-                                        &lt;div class="nds-switch"&gt;
-                                            &lt;input type="checkbox" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired"&gt;
-                                            &lt;div class="nds-switch-track"&gt;&lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;&lt;/div&gt;
-                                        &lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
-
-                                &lt;div class="nds-form-container nds-switch-container" data-mode-id="colorblind"&gt;
-                                    &lt;div class="nds-form-header"&gt;
-                                        &lt;label for="a11y-mode-colorblind"&gt;
-                                            &lt;span class="nds-label" data-i18n-name&gt;&lt;/span&gt;
-                                            &lt;span class="nds-info"  data-i18n-desc&gt;&lt;/span&gt;
-                                        &lt;/label&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-form-control"&gt;
-                                        &lt;div class="nds-switch"&gt;
-                                            &lt;input type="checkbox" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind"&gt;
-                                            &lt;div class="nds-switch-track"&gt;&lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;&lt;/div&gt;
-                                        &lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
-
-                                &lt;div class="nds-form-container nds-switch-container" data-mode-id="dyslexia-friendly"&gt;
-                                    &lt;div class="nds-form-header"&gt;
-                                        &lt;label for="a11y-mode-dyslexia-friendly"&gt;
-                                            &lt;span class="nds-label" data-i18n-name&gt;&lt;/span&gt;
-                                            &lt;span class="nds-info"  data-i18n-desc&gt;&lt;/span&gt;
-                                        &lt;/label&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-form-control"&gt;
-                                        &lt;div class="nds-switch"&gt;
-                                            &lt;input type="checkbox" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly"&gt;
-                                            &lt;div class="nds-switch-track"&gt;&lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;&lt;/div&gt;
-                                        &lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
-
-                                &lt;div class="nds-form-container nds-switch-container" data-mode-id="adhd-friendly"&gt;
-                                    &lt;div class="nds-form-header"&gt;
-                                        &lt;label for="a11y-mode-adhd-friendly"&gt;
-                                            &lt;span class="nds-label" data-i18n-name&gt;&lt;/span&gt;
-                                            &lt;span class="nds-info"  data-i18n-desc&gt;&lt;/span&gt;
-                                        &lt;/label&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-form-control"&gt;
-                                        &lt;div class="nds-switch"&gt;
-                                            &lt;input type="checkbox" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly"&gt;
-                                            &lt;div class="nds-switch-track"&gt;&lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;&lt;/div&gt;
-                                        &lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
-
-                            &lt;/fieldset&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-
-            &lt;!-- Item 2: Readable Experience (tile grid) --&gt;
-            &lt;div class="nds-accordion-item"&gt;
-                &lt;h3 class="nds-accordion-header"&gt;
-                    &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
-                            type="button"
-                            aria-expanded="false"
-                            aria-controls="a11yReadableCollapse"&gt;
-                        &lt;span class="nds-accordion-title"&gt;&lt;span data-i18n="section_readable"&gt;Readable Experience&lt;/span&gt; &lt;span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"&gt;&lt;/span&gt;&lt;span class="nds-sr-only" data-a11y-count-sr="readable"&gt;&lt;/span&gt;&lt;/span&gt;
-                    &lt;/button&gt;
-                &lt;/h3&gt;
-                &lt;div class="nds-accordion-collapse"
-                     id="a11yReadableCollapse"&gt;
-                    &lt;div class="nds-accordion-content"&gt;
-                        &lt;div class="nds-accordion-body"&gt;
-                            &lt;div class="nds-grid" role="group" aria-label="Readable experience controls" data-i18n-attr="aria-label:aria_readable"&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="font-step" data-a11y-cycle="0,1,2,3" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-text-smallcaps" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="font_sizing"&gt;Font Sizing&lt;/span&gt;
-                                    &lt;span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"&gt;&lt;/span&gt;
-                                    &lt;span class="nds-sr-only" data-a11y-value data-i18n="default"&gt;Default&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="dyslexia" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-glasses" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="dyslexia"&gt;Dyslexia Friendly&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-titles" aria-pressed="false"&gt;
-                                    &lt;i class="nds-icon nds-hgi-highlighter" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="highlight_titles"&gt;Highlight Titles&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-links" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="highlight_links"&gt;Highlight Links&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reading-mask" aria-pressed="false"&gt;
-                                    &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="reading_mask"&gt;Reading Mask&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reduce-motion" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-pause" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="pause_motion"&gt;Pause Motion&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="text-align" data-a11y-cycle="default,end,start,justify" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="text_align"&gt;Text Alignment&lt;/span&gt;
-                                    &lt;span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"&gt;&lt;/span&gt;
-                                    &lt;span class="nds-sr-only" data-a11y-value data-i18n="default"&gt;Default&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="line-height" data-a11y-cycle="normal,1.6,1.8,2.0" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-paragraph-spacing" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="line_height"&gt;Line Height&lt;/span&gt;
-                                    &lt;span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"&gt;&lt;/span&gt;
-                                    &lt;span class="nds-sr-only" data-a11y-value data-i18n="default"&gt;Default&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="letter-spacing" data-a11y-cycle="0,0.04em,0.08em,0.12em" data-a11y-exclude-token="letter-spacing" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-letter-spacing" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="letter_spacing"&gt;Letter Spacing&lt;/span&gt;
-                                    &lt;span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"&gt;&lt;/span&gt;
-                                    &lt;span class="nds-sr-only" data-a11y-value data-i18n="default"&gt;Default&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="word-spacing" data-a11y-cycle="0,0.16em,0.32em,0.48em" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-text-kerning" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n="word_spacing"&gt;Word Spacing&lt;/span&gt;
-                                    &lt;span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"&gt;&lt;/span&gt;
-                                    &lt;span class="nds-sr-only" data-a11y-value data-i18n="default"&gt;Default&lt;/span&gt;
-                                &lt;/button&gt;
-
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-
-            &lt;!-- Item 3: Visually Pleasing Experience (single-pick filters + colorblind primitive) --&gt;
-            &lt;div class="nds-accordion-item"&gt;
-                &lt;h3 class="nds-accordion-header"&gt;
-                    &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
-                            type="button"
-                            aria-expanded="false"
-                            aria-controls="a11yVisualCollapse"&gt;
-                        &lt;span class="nds-accordion-title"&gt;&lt;span data-i18n="section_visual"&gt;Visually Pleasing Experience&lt;/span&gt; &lt;span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"&gt;&lt;/span&gt;&lt;span class="nds-sr-only" data-a11y-count-sr="visual"&gt;&lt;/span&gt;&lt;/span&gt;
-                    &lt;/button&gt;
-                &lt;/h3&gt;
-                &lt;div class="nds-accordion-collapse"
-                     id="a11yVisualCollapse"&gt;
-                    &lt;div class="nds-accordion-content"&gt;
-                        &lt;div class="nds-accordion-body"&gt;
-                            &lt;div class="nds-grid" role="group" aria-label="Visual adjustments" data-i18n-attr="aria-label:aria_visual"&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="boost-contrast" data-visual-id="boost-contrast" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-flash" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n-label&gt;&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="monochrome" data-visual-id="monochrome" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-color-picker" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n-label&gt;&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="high-contrast" data-visual-id="high-contrast" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-blur" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n-label&gt;&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="high-saturation" data-visual-id="high-saturation" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-sparkles" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n-label&gt;&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="low-saturation" data-visual-id="low-saturation" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-droplet" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n-label&gt;&lt;/span&gt;
-                                &lt;/button&gt;
-
-                                &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="cvd-deutan" data-visual-id="cvd-deutan" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-colors" aria-hidden="true"&gt;&lt;/i&gt;
-                                    &lt;span class="nds-label" data-i18n-label&gt;&lt;/span&gt;
-                                &lt;/button&gt;
-
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-
-        &lt;/div&gt;
-
-            &lt;/div&gt;
-            &lt;button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="Scroll panel" data-i18n-attr="aria-label:scroll_panel"&gt;
-                &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;div class="nds-panel-footer"&gt;
-        &lt;button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset"&gt;
-            &lt;span class="nds-label" data-i18n="reset"&gt;Reset Settings&lt;/span&gt;
-            &lt;div class="nds-progress-circle"&gt;
-                &lt;svg width="100%" height="100%" viewBox="0 0 24 24"&gt;
-                    &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"&gt;&lt;/circle&gt;
-                    &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"&gt;&lt;/circle&gt;
-                &lt;/svg&gt;
-            &lt;/div&gt;
-        &lt;/button&gt;
-    &lt;/div&gt;
-&lt;/aside&gt;
-&lt;/template&gt;
-                                        </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Custom Trigger -->
-<section id="accessibilityCustomTrigger" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Custom Trigger</h2>
-            <p class="nds-section-description">Wire a footer link, header menu item, or in-page CTA to open the same panel by calling <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code> from your own click handler, passing the clicked element so the loading state (on first arm) shows on it instead of the FAB. <code class="nds-inline-code lang-html">data-accessibility-toggle</code> works on any element, but only the one that actually arms the panel gets localized — use the JS API for every additional trigger.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-showcase">
-                    <div class="nds-demo-card">
-                        <div class="demo-header">
-                            <div class="demo-label">Programmatic open</div>
-                        </div>
-                        <div class="demo-container">
-                            <div class="state-demo" style="display:flex; align-items:center; gap: var(--spacing-md); padding: var(--spacing-2xl);">
-                                <a href="#" class="nds-link" data-accessibility-demo-open>Accessibility settings</a>
-                            </div>
-                        </div>
-                        <div class="demo-code">
-                            <div class="nds-tabs nds-code nds-divided">
-                                <div class="nds-tab-list-container nds-scroll-more">
-                                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                            aria-controls="panel-a11y-custom-1" id="tab-a11y-custom-1">
-                                            <span class="nds-tab-label">HTML</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                            aria-controls="panel-a11y-custom-js" id="tab-a11y-custom-js">
-                                            <span class="nds-tab-label">JS</span>
-                                        </button>
-                                    </nav>
-                                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-tab-content">
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-a11y-custom-1"
-                                        aria-labelledby="tab-a11y-custom-1">
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-html code">
-&lt;a href="#" class="nds-link" id="open-a11y"&gt;Accessibility settings&lt;/a&gt;
-                                    </code>
-                                    </div>
-                                    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-a11y-custom-js"
-                                        aria-labelledby="tab-a11y-custom-js" hidden>
-                                        <div class="nds-code-action">
-                                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                                <i class="nds-icon nds-hgi-copy-01"></i>
-                                            </button>
-                                        </div>
-                                        <code class="lang-javascript code">document.getElementById('open-a11y').addEventListener('click', (e) =&gt; {
-    e.preventDefault();
-    e.stopPropagation();   // Panel's outside-click-close listener also lives on document.
-    NDS.Accessibility.open(e.currentTarget);   // passes the trigger through to the cold-arm gate
-});</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FAB Position -->
-<section id="accessibilityPosition" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">FAB Position</h2>
-            <p class="nds-section-description">Anchor the FAB and the panel to whichever edge suits the layout, so neither collides with chat widgets, cookie banners, or content already pinned to a corner. Both attributes are set on the FAB — the panel no longer ships in HTML to carry its own — and should name the same side.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Set on</th><th>Behavior</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-fab-pos="auto"</code></td><td>FAB</td><td>The FAB's own dock edge. <code class="nds-inline-code lang-html">auto</code> tries to read it off the live panel, but the panel doesn't exist yet at dock time — pin an edge explicitly instead: <code class="nds-inline-code lang-html">end</code> or <code class="nds-inline-code lang-html">start</code> (logical), or physical <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>FAB</td><td>Which edge the panel slides from — read off the FAB and threaded into the panel when it's built (default <code class="nds-inline-code lang-html">end</code>). Same logical and physical vocabulary as <code class="nds-inline-code lang-html">data-fab-pos</code>, plus <code class="nds-inline-code lang-html">top</code>. Set it to match so the pair reads as one control.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Accessibility Modes -->
-<section id="accessibilityModes" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Accessibility Modes</h2>
-            <p class="nds-section-description">Bundle switches in the first accordion section. Each one is a recipe of primitives plus an optional opening typography stance, so a single tap covers the most common access needs without forcing visitors to compose the controls themselves.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Bundle</th><th>WCAG</th><th>What it activates</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">epilepsy-safe</code></td><td>2.3.1</td><td>Pauses motion and drops saturation to half so flashing media and oversaturated palettes cannot trigger seizures.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">visually-impaired</code></td><td>1.4.6</td><td>Forces a high-contrast palette swap and bumps font sizing to 1.30×, the AAA contrast plus large-text combination.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">cognitive-disability</code></td><td>2.2, 2.3</td><td>Highlights every heading and pauses motion so the page reads as a clear, static outline.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">motor-impaired</code></td><td>2.5.5</td><td>Promotes every button, link, and form control to a 48×48px hit-target.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">colorblind</code></td><td>1.4.1</td><td>Applies a deuteranopia simulation filter for designer empathy QA. Color-deficient users themselves should rely on OS-level daltonization.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">dyslexia-friendly</code></td><td>1.4.8, 1.4.12</td><td>Swaps the font stack to OpenDyslexic plus Maqroo, underlines every link, and applies the WCAG 1.4.8 spacing recipe (1.6 line-height, 0.12em letter-spacing in non-cursive scripts, 0.16em word-spacing).</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">adhd-friendly</code></td><td>2.2, 2.3</td><td>Pauses motion, highlights titles, and turns on the reading mask so the visitor controls focus one paragraph at a time.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Readable Experience -->
-<section id="accessibilityReadable" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Readable Experience</h2>
-            <p class="nds-section-description">Tile grid in the second accordion section. Each tile is an independent control: cycling tiles step through 4 levels (default plus 3) and toggle tiles flip on or off. Every change writes a token onto <code class="nds-inline-code lang-html">&lt;html data-a11y&gt;</code> so author CSS can react.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Tile</th><th>Mechanism</th><th>Effect</th></tr></thead>
-                    <tbody>
-                        <tr><td>Font Sizing</td><td>Cycle: 0, 1, 2, 3</td><td>Scales every <code class="nds-inline-code lang-html">--typo-*</code> token by 1.15×, 1.30×, or 1.50× via <code class="nds-inline-code lang-html">--user-font-scale</code>. Stamps <code class="nds-inline-code lang-html">font-step-N</code>.</td></tr>
-                        <tr><td>Dyslexia Friendly</td><td>Toggle</td><td>Swaps <code class="nds-inline-code lang-js">--nds-font-family</code> to the OpenDyslexic plus Maqroo stack and bumps body-copy weight.</td></tr>
-                        <tr><td>Highlight Titles</td><td>Toggle</td><td>Outlines every <code class="nds-inline-code lang-html">h1</code> through <code class="nds-inline-code lang-html">h6</code> with the warning palette so the document outline becomes scannable.</td></tr>
-                        <tr><td>Highlight Links</td><td>Toggle</td><td>Adds a dashed warning outline plus underline to every text link, leaving button-styled anchors untouched.</td></tr>
-                        <tr><td>Reading Mask</td><td>Toggle</td><td>Activates the draggable focus band described in the next section.</td></tr>
-                        <tr><td>Pause Motion</td><td>Toggle</td><td>Mutes animations and transitions site-wide and pauses every <code class="nds-inline-code lang-html">autoplay</code> media element on activation.</td></tr>
-                        <tr><td>Text Alignment</td><td>Cycle: default, end, start, justify</td><td>Forces alignment on body content via logical <code class="nds-inline-code lang-js">start</code> and <code class="nds-inline-code lang-js">end</code> so RTL and LTR both read naturally.</td></tr>
-                        <tr><td>Line Height</td><td>Cycle: normal, 1.6, 1.8, 2.0</td><td>Sets <code class="nds-inline-code lang-html">--user-line-height</code> on body copy. Headings keep their typographic ratios.</td></tr>
-                        <tr><td>Letter Spacing</td><td>Cycle: 0, 0.04em, 0.08em, 0.12em</td><td>Sets <code class="nds-inline-code lang-html">--user-letter-spacing</code>. Tile is hidden on Arabic pages because letter-spacing breaks cursive ligatures.</td></tr>
-                        <tr><td>Word Spacing</td><td>Cycle: 0, 0.16em, 0.32em, 0.48em</td><td>Sets <code class="nds-inline-code lang-html">--user-word-spacing</code> on body copy.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Visual Filters -->
-<section id="accessibilityVisuals" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Visual Filters</h2>
-            <p class="nds-section-description">Tile grid in the third accordion section. Filters are mutex: turning one on automatically mutes the others, since composing CSS filters multiplicatively never produces what visitors expect. Every filter is wrapped in <code class="nds-inline-code lang-js">@media not (forced-colors: active)</code> so Windows High Contrast users are not double-treated.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Filter</th><th>CSS</th><th>Use case</th></tr></thead>
-                    <tbody>
-                        <tr><td>Boost Contrast</td><td><code class="nds-inline-code lang-js">contrast(1.15)</code></td><td>Sharpens edges across the whole page without swapping the palette.</td></tr>
-                        <tr><td>Monochrome</td><td><code class="nds-inline-code lang-js">grayscale(1)</code></td><td>Removes color cues so the visitor can verify the page still works without them.</td></tr>
-                        <tr><td>High Contrast</td><td>Token-level palette swap</td><td>Replaces every semantic background, text, link, and border token with a black-on-white (or inverted) palette. Independent of the filter pipeline so chrome contrast can be tuned per theme.</td></tr>
-                        <tr><td>High Saturation</td><td><code class="nds-inline-code lang-js">saturate(2)</code></td><td>Doubles vividness for visitors who perceive low-chroma palettes as washed out.</td></tr>
-                        <tr><td>Low Saturation</td><td><code class="nds-inline-code lang-js">saturate(0.5)</code></td><td>Halves vividness for visitors with light sensitivity or migraine triggers.</td></tr>
-                        <tr><td>Deuteranopia</td><td>SVG <code class="nds-inline-code lang-js">feColorMatrix</code></td><td>Machado-Oliveira-Fernandes 2009 simulation matrix at severity 1.0. Matches Chrome DevTools' "Emulate vision deficiencies" panel so QA results align with the on-page filter.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Reading Mask -->
-<section id="accessibilityMask" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Reading Mask</h2>
-            <p class="nds-section-description">A telescope-style focus band that dims everything except a configurable horizontal stripe. The stripe stays where the visitor leaves it: it only moves on grab-handle drag or arrow-key nudge, never on scroll, so cognitively-loaded users never lose their place.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Toolbar</h3>
-                <p>Activated from the Readable Experience tile. A floating toolbar attaches to the band with four icon buttons: decrease band height, drag handle, increase band height, and close. The toolbar flips above the band automatically when there is no room below it.</p>
-            </div>
-            <div class="nds-block">
-                <h3 class="nds-block-title">Keyboard</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Key</th><th>Action</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">Arrow Up</code> / <code class="nds-inline-code lang-html">Arrow Down</code></td><td>Nudge the band by 20px.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">Page Up</code> / <code class="nds-inline-code lang-html">Page Down</code></td><td>Move the band by 100px.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">Home</code> / <code class="nds-inline-code lang-html">End</code></td><td>Jump to the top or bottom of the viewport.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">Escape</code></td><td>Close the mask. Routed through <code class="nds-inline-code lang-js">toggleMode</code> so a bundle-supplied mask lands in <code class="nds-inline-code lang-js">state.excluded</code>.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="nds-block">
-                <h3 class="nds-block-title">Settings</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Setting</th><th>Range</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">mask-band</code></td><td>20px to 160px, 20px steps</td><td>Half-height of the unmasked band. Persists per visitor.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">mask-y</code></td><td>0 to viewport height</td><td>Center Y of the band. Saved on drag-end and on every keyboard nudge so reload restores the same position.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Built-in Features -->
-<section id="accessibilityFeatures" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Built-in Features</h2>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Auto-initialization</span>
-                        </span>
-                        <p class="nds-item-desc">Activates as soon as the markup is on the page. Drop the FAB plus the template-wrapped aside into your base template once and every page picks it up without further wiring. The panel sleeps inside its <code class="nds-inline-code lang-html">&lt;template&gt;</code> and joins the DOM only when a visitor opens it or arrives with saved settings, so pages that never use it carry none of its nodes.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-package"></i>
-                            <span class="nds-label">Seven Accessibility Bundles</span>
-                        </span>
-                        <p class="nds-item-desc">One-tap presets for epilepsy, visual impairment, cognitive load, motor impairment, colorblindness, dyslexia, and ADHD. Activating a bundle composes its primitives without clobbering settings the visitor already tuned by hand.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-text-font"></i>
-                            <span class="nds-label">Ten Readable Tiles</span>
-                        </span>
-                        <p class="nds-item-desc">Cycling and toggle tiles cover font sizing, dyslexia font, link and title highlights, reading mask, motion, alignment, line height, letter spacing, and word spacing.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-color-picker"></i>
-                            <span class="nds-label">Mutex Visual Filters</span>
-                        </span>
-                        <p class="nds-item-desc">Six color treatments behave as a single-pick group: boost contrast, monochrome, high contrast, high saturation, low saturation, and deuteranopia simulation.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-search-01"></i>
-                            <span class="nds-label">Telescope Reading Mask</span>
-                        </span>
-                        <p class="nds-item-desc">A draggable focus band with size controls, pointer-capture dragging, and arrow-key nudging. The position survives reload so visitors can resume reading where they left off.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-database"></i>
-                            <span class="nds-label">Cross-Page Persistence</span>
-                        </span>
-                        <p class="nds-item-desc">Every choice writes to <code class="nds-inline-code lang-html">localStorage['nds-a11y']</code> and a FOUC guard re-applies it before paint, so navigating between pages never reverts the visitor's setup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-browser"></i>
-                            <span class="nds-label">OS Preference Sync</span>
-                        </span>
-                        <p class="nds-item-desc">Honors <code class="nds-inline-code lang-js">prefers-reduced-motion</code> and <code class="nds-inline-code lang-js">prefers-contrast</code> automatically, and re-applies whenever the visitor flips them in their OS mid-session.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-megaphone-01"></i>
-                            <span class="nds-label">Localized Live Announcements</span>
-                        </span>
-                        <p class="nds-item-desc">A polite live region announces every toggle, tile cycle, and reset in the visitor's language. Strings load lazily from <code class="nds-inline-code lang-html">assets/i18n/accessibility/{lang}.json</code>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Usage Guidelines -->
-<section id="accessibilityGuidelines" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Usage Guidelines</h2>
-        </div>
-        <div class="nds-section-body">
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Best Practices</h3>
-                <ul>
-                    <li>Treat the FAB as part of the site chrome. Keep it on every page so visitors who tuned the panel on one page do not lose their entry point on the next</li>
-                    <li>Add a redundant entry point in the footer or main menu (a link that calls <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code>) so keyboard users can reach the panel from the natural tab order without hunting for a corner</li>
-                    <li>Place custom triggers near content visitors are likely to return to. The panel returns focus to the opener on close (W3C APG Disclosure requirement), and the browser scrolls that element into view if it is offscreen, so a trigger high on the page will yank the visitor back to it after they close the panel</li>
-                    <li>Move the pair with <code class="nds-inline-code lang-html">data-fab-pos</code> on the FAB and <code class="nds-inline-code lang-html">data-panel-side</code> on the panel when chat widgets, cookie banners, or sticky CTAs already occupy a corner. Logical <code class="nds-inline-code lang-html">start</code> and <code class="nds-inline-code lang-html">end</code> flip with text direction; physical <code class="nds-inline-code lang-html">left</code> and <code class="nds-inline-code lang-html">right</code> stay put</li>
-                    <li>Do not duplicate the panel markup. The component initializes the first <code class="nds-inline-code lang-html">[data-accessibility-panel]</code> it finds and ignores any siblings, so a second include silently falls back to a dead element</li>
-                    <li>Do not put bundle-equivalent toggles in your own settings page. They will fight the panel's persistence and confuse visitors who tuned modes elsewhere. Link to the panel instead</li>
-                    <li>If your design overrides body typography, scope <code class="nds-inline-code lang-html">--user-line-height</code>, <code class="nds-inline-code lang-html">--user-letter-spacing</code>, and <code class="nds-inline-code lang-html">--user-word-spacing</code> consumers behind the matching <code class="nds-inline-code lang-html">[data-a11y~="has-{prop}"]</code> selectors so untouched pages stay at your defaults</li>
-                    <li>When you ship custom <code class="nds-inline-code lang-html">--typo-*</code> tokens, wrap their values in <code class="nds-inline-code lang-js">calc(value * var(--user-font-scale, 1))</code> so the Font Sizing tile scales them too</li>
-                    <li>Test in <a class="nds-color" href="{{ 'components/themes' | relative_url }}#themesDark">dark mode</a>: every visual filter and the high-contrast palette have dark-aware overrides, and your custom tokens should follow the same pattern</li>
-                    <li>Place dynamic content (modals, drawers, toasts) outside the masked band's host or accept that the reading mask will dim them. The mask sits at <code class="nds-inline-code lang-html">z-index: 850</code>, below the FAB and panel but above page content</li>
-                    <li>Do not rely on the deuteranopia filter as an actual accommodation. It is a designer empathy QA tool. Color-deficient visitors get correct daltonization from their OS settings, not from a CSS filter applied to an already-decoded page</li>
-                </ul>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Modifier Classes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-toggle</code></td><td>Panel-specific chrome for the trigger. Pair with <code class="nds-inline-code lang-html">nds-fab</code> so the <a class="nds-color" href="{{ 'components/fab' | relative_url }}">Fab</a> dock owns its edge, inset and size, plus <code class="nds-inline-code lang-html">nds-btn nds-primary nds-circle</code> for the default visual.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel</code></td><td>Panel-specific chrome. Pair with <code class="nds-inline-code lang-html">nds-panel</code> so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component owns position, width, the header offset and the slide.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-panel-template</code></td><td>Set on a <code class="nds-inline-code lang-html">&lt;template&gt;</code> you author yourself to override the panel's built-in markup — the same lazy-markup convention every <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> supports. By default nothing ships in the page's HTML: <code class="nds-inline-code lang-js">nds-accessibility.js</code> carries the markup and builds this <code class="nds-inline-code lang-html">&lt;template&gt;</code> itself on first arm.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-quick</code></td><td>Inline-flex row of quick-toggle buttons (theme toggle) at the top of the scrollable body.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-modes</code></td><td>Sized accordion modifier used by the Modes section. Adjusts switch-row padding to match the tile grids.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-a11y-count</code></td><td>Tag pill next to each accordion title showing how many controls in that section are active. Hides itself when empty.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-toggle</code></td><td>Marks an element so accessibility's own click handling — not the generic <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> mechanism — builds/arms the panel on first use and applies the loading gate. Works on any element; only the one that arms the panel gets localized, so additional triggers should just call <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code>/<code class="nds-inline-code lang-js">.toggle()</code> instead.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-panel-toggle</code></td><td>Set to the panel's id so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component opens it, tracks <code class="nds-inline-code lang-html">aria-expanded</code>, and returns focus on close.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel</code></td><td>Mark the panel root. Required for auto-init.</td></tr>                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-action="reset"</code></td><td>Mark the reset button. Two-click confirmation with a 5-second arming window is wired automatically.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-fab-pos</code></td><td>Set on the FAB to pick its dock edge. Values: <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>Set on the FAB (not the panel — it isn't in the HTML to carry it) to pick the edge the panel slides from. Read by <code class="nds-inline-code lang-js">resolvePanel()</code> and threaded into the built panel. Set it to the same side as <code class="nds-inline-code lang-html">data-fab-pos</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-a11y-mode</code></td><td>Mark a switch or button as a bundle or primitive toggle. Value matches a key from <code class="nds-inline-code lang-js">MODE_BUNDLES</code> or a primitive token name.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-a11y-visual</code></td><td>Mark a button as a visual-filter selector. Joining the mutex group: clicking it mutes every other filter automatically.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-a11y-setting</code></td><td>Mark a button as a cycling setting. Pair with <code class="nds-inline-code lang-html">data-a11y-cycle</code> to declare the value sequence.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-a11y-cycle</code></td><td>Comma-separated list of values the setting tile cycles through. The first value is "off" and renders no active tile-bars.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-a11y-exclude-token</code></td><td>Drop a tile from the rendered panel when the loaded i18n file lists the token in <code class="nds-inline-code lang-js">exclude_controls</code>. Used to hide letter-spacing on Arabic.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-a11y-status</code></td><td>Place on a <code class="nds-inline-code lang-html">role="status"</code> live region inside the panel body. Used by <code class="nds-inline-code lang-js">NDS.announce()</code> to deliver polite WCAG 4.1.3 announcements for every toggle, cycle, and reset.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state</code> on the panel</td><td>Managed by the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component. Values: <code class="nds-inline-code lang-html">open</code> (slides the panel into view), <code class="nds-inline-code lang-html">opening</code> and <code class="nds-inline-code lang-html">closing</code> (the transition windows; cleared and <code class="nds-inline-code lang-html">hidden</code> re-applied when the slide ends).</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">Tokens Stamped on <code class="nds-inline-code lang-html">&lt;html&gt;</code></h3>
-                <p>Author CSS can react to active modes by reading <code class="nds-inline-code lang-html">[data-a11y~="..."]</code> on the document root. Tokens compose, so multiple values appear space-separated.</p>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Token</th><th>Source</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">epilepsy-safe</code>, <code class="nds-inline-code lang-html">visually-impaired</code>, <code class="nds-inline-code lang-html">cognitive-disability</code>, <code class="nds-inline-code lang-html">motor-impaired</code>, <code class="nds-inline-code lang-html">colorblind</code>, <code class="nds-inline-code lang-html">dyslexia-friendly</code>, <code class="nds-inline-code lang-html">adhd-friendly</code></td><td>Active bundle marker. Stamped while the bundle's switch is on.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">reduce-motion</code>, <code class="nds-inline-code lang-html">high-contrast</code>, <code class="nds-inline-code lang-html">low-saturation</code>, <code class="nds-inline-code lang-html">high-saturation</code>, <code class="nds-inline-code lang-html">monochrome</code>, <code class="nds-inline-code lang-html">boost-contrast</code>, <code class="nds-inline-code lang-html">cvd-deutan</code>, <code class="nds-inline-code lang-html">dyslexia</code>, <code class="nds-inline-code lang-html">highlight-titles</code>, <code class="nds-inline-code lang-html">highlight-links</code>, <code class="nds-inline-code lang-html">reading-mask</code></td><td>Primitive markers. Set by direct toggle, by bundle composition, or by an OS preference for reduce-motion and high-contrast.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">font-step-1</code>, <code class="nds-inline-code lang-html">font-step-2</code>, <code class="nds-inline-code lang-html">font-step-3</code></td><td>Discrete font scaling tier. Maps to 1.15×, 1.30×, and 1.50× via <code class="nds-inline-code lang-html">--user-font-scale</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">text-align-start</code>, <code class="nds-inline-code lang-html">text-align-end</code>, <code class="nds-inline-code lang-html">text-align-justify</code></td><td>Forces alignment on body content.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">has-line-height</code>, <code class="nds-inline-code lang-html">has-letter-spacing</code>, <code class="nds-inline-code lang-html">has-word-spacing</code></td><td>Presence flags for the matching <code class="nds-inline-code lang-html">--user-*</code> CSS variable. Stamped only when the value is non-default so author rules are never clobbered when an unrelated mod is on.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--user-font-scale</code></td><td>1</td><td>Set on <code class="nds-inline-code lang-html">:root</code> by font-step. Wrap your <code class="nds-inline-code lang-html">--typo-*</code> tokens in <code class="nds-inline-code lang-js">calc(value * var(--user-font-scale, 1))</code> to opt in.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--user-line-height</code></td><td>normal</td><td>Visitor-tuned line-height applied to body copy when <code class="nds-inline-code lang-html">has-line-height</code> is on.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--user-letter-spacing</code></td><td>0</td><td>Visitor-tuned letter-spacing applied when <code class="nds-inline-code lang-html">has-letter-spacing</code> is on.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--user-word-spacing</code></td><td>0</td><td>Visitor-tuned word-spacing applied when <code class="nds-inline-code lang-html">has-word-spacing</code> is on.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-offset</code></td><td><code class="nds-inline-code lang-js">calc(var(--nds-viewport-padding) / 2)</code></td><td>Distance from the viewport edge, set on the <a class="nds-color" href="{{ 'components/fab' | relative_url }}">Fab</a> dock. Applies to every FAB sharing that edge, not just this one.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--panel-width</code></td><td><code class="nds-inline-code lang-js">min(420px, 100vw)</code></td><td>Panel width, set on the panel. Falls back to full viewport on narrow screens.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--panel-top</code></td><td><code class="nds-inline-code lang-html">--nds-nav-height</code></td><td>Top inset of the panel. Leave it unset and the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component tracks the live bottom edge of the topbar plus mainnav, so a sticky header is never overlapped.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block nds-prose">
-                <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Accessibility</strong> API exposes the panel's lifecycle, the four state mutators, and a read-only state snapshot. Auto-init runs on first paint via the loader, so most pages never need to call <code class="nds-inline-code lang-js">NDS.Accessibility.init()</code> directly.</p>
-                <div class="nds-code nds-expandable">
-                    <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                            <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                    </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript">
-// ── Lifecycle ────────────────────────────────────────
-NDS.Accessibility.init();    // Idempotent. Re-init tears down listeners + remounts.
-NDS.Accessibility.open();    // Slides the panel in. Saves the opener for focus return.
-NDS.Accessibility.close();   // Slides out. Returns focus to the element that opened it.
-NDS.Accessibility.toggle();  // Open if closed, close if open.
-
-// ── State mutators ───────────────────────────────────
-// Toggle a bundle by name OR a primitive token. Bundles compose
-// their primitives; toggling a primitive separately respects the
-// supply slot (modes / bundle / OS) and never double-counts.
-NDS.Accessibility.toggleMode('dyslexia-friendly'); // bundle
-NDS.Accessibility.toggleMode('reduce-motion');     // primitive
-
-// Pick exactly one visual filter. Mutex: every other filter is
-// muted automatically across user, bundle, and OS supply slots.
-NDS.Accessibility.setVisualFilter('high-contrast');
-// Pass the same name again to turn the filter off.
-NDS.Accessibility.setVisualFilter('high-contrast');
-
-// Cycle a setting key through the supplied value array. The first
-// entry is treated as "off" by syncUI() (no active tile-bars).
-NDS.Accessibility.cycleSetting('font-step', [0, 1, 2, 3]);
-NDS.Accessibility.cycleSetting('text-align', ['default', 'end', 'start', 'justify']);
-NDS.Accessibility.cycleSetting('line-height', ['normal', '1.6', '1.8', '2.0']);
-
-// Wipe everything back to defaults. Bypasses the panel's two-click
-// confirmation, so reserve this for programmatic flows (e.g. a
-// "factory reset" button in your own settings UI).
-NDS.Accessibility.reset();
-
-// ── Read-only state snapshot ─────────────────────────
-// Returns a deep clone, so mutations do not leak back into the panel.
-const snapshot = NDS.Accessibility.state;
-// {
-//   modes: ['highlight-titles'],
-//   bundles: ['dyslexia-friendly'],
-//   excluded: [],
-//   settings: {
-//     'font-step': 2,
-//     'text-align': 'default',
-//     'line-height': '1.6',
-//     'letter-spacing': '0.12em',
-//     'word-spacing': '0.16em',
-//     'mask-band': 60,
-//     'mask-y': 420
-//   },
-//   settingsSnapshots: { 'dyslexia-friendly': { 'line-height': 'normal', ... } }
-// }
-
-// ── Persistence ──────────────────────────────────────
-// State is auto-persisted to localStorage['nds-a11y'] on every mutation.
-// Clearing it manually re-syncs on the next init() or reset() call.
-localStorage.removeItem('nds-a11y');
-NDS.Accessibility.reset();
-</code>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<script>
-    // toggle(), not open(): a second click on the trigger has to close the panel.
-    // Calling open() mid-close would land in the panel's swap queue and reopen it.
-    // No defer needed - close() aborts the panel's outside-click listener during
-    // this same dispatch, and the open path is already behind the FAB's delay.
-    document.addEventListener('click', (e) => {
-        const trigger = e.target.closest('[data-accessibility-demo-open]');
-        if (!trigger) return;
-        e.preventDefault();
-        if (window.NDS && NDS.Accessibility && typeof NDS.Accessibility.toggle === 'function') {
-            NDS.Accessibility.toggle(trigger);
-        }
-    });
+        hidden>
+  <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
+</button>
 </script>
+
+The FAB ships `hidden`, and the FAB script shows it once it is docked. A new page needs its own copy, after the footer.
+
+</div>
+  </div>
+</section>
+
+<section id="accessibilityBehavior" class="nds-content-section nds-doc-behavior">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Behavior</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Triggers
+
+Any button with `data-accessibility-toggle` and `data-panel-toggle` opens the panel, as the FAB does. The first attribute builds the panel on the first press, with a spinner on the button for about one second. The second opens and closes the panel after that. To open it from your own code, call `NDS.Accessibility.open()`, as in the API.
+
+<script type="text/html" id="a11y-trigger" data-canon data-preview="none">
+<button type="button" class="nds-btn nds-secondary-outline" data-accessibility-toggle data-panel-toggle="ndsAccessibilityPanel">
+  <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
+  <span class="nds-label">Accessibility settings</span>
+</button>
+</script>
+
+### Panel Position
+
+The panel slides in from the end edge, and the FAB docks there too. To move both, set `data-fab-pos` and `data-panel-side` to the same side on the FAB. The FAB docks before the panel exists, so `auto` cannot follow the panel's side. The first button pressed builds the panel on its own `data-panel-side`, so give every trigger the same value. A custom panel uses the `data-panel-side` on its `<aside>`.
+
+### Loading
+
+The script loads at page load only for a visitor with saved settings, so their modes apply without a press. Its CSS loads with it, so the page can show without the saved modes for a moment. To stop that flash, add `<link rel="stylesheet" href="assets/css/nds-accessibility.min.css">` in `<head>`, after the main stylesheet. A preload does not stop it. The link blocks the first paint for every visitor.
+
+### Custom Panel
+
+To change the panel, put your own copy in a `<template class="nds-panel-template">` on every page that has the FAB. It replaces the panel the script builds. The copy below is that panel, with its English text. The language file still writes the text of every element that keeps a `data-i18n`, `data-i18n-attr`, `data-i18n-name`, `data-i18n-desc` or `data-i18n-label` attribute. Remove the attribute to keep your own text.
+
+<script type="text/html" id="a11y-panel" data-canon data-preview="none">
+<template class="nds-panel-template">
+  <aside id="ndsAccessibilityPanel"
+     class="nds-panel nds-accessibility-panel"
+     data-panel-side="end"
+     aria-label="Accessibility settings"
+     data-i18n-attr="aria-label:panel_label"
+     data-accessibility-panel
+     hidden>
+
+    <div class="nds-panel-header">
+      <span class="nds-featured-icon nds-circle">
+        <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
+      </span>
+      <div class="nds-panel-text">
+        <h2 class="nds-panel-title" data-i18n="panel_title">Accessibility Tools</h2>
+      </div>
+      <button class="nds-btn nds-subtle nds-icon-only"
+          data-panel-close
+          type="button"
+          aria-label="Close accessibility panel"
+          data-i18n-attr="aria-label:close_panel">
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="nds-panel-body">
+      <div class="nds-scroll-more nds-divided">
+        <div class="nds-scroll-more-content">
+
+          <div class="nds-sr-only" data-a11y-status role="status" aria-live="polite" aria-atomic="true"></div>
+
+          <!-- Display — quick toggle -->
+          <div class="nds-accessibility-quick">
+            <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
+                data-theme-toggle
+                type="button"
+                aria-label="Toggle theme"
+                data-i18n-attr="aria-label:toggle_theme">
+              <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
+            </button>
+          </div>
+
+      <!-- Accessibility settings — one accordion, three items:
+        Modes (switches), Readable Experience (tile grid), Visually
+        Pleasing (tile grid). First item open by default; the other
+        two collapsed to keep the panel compact on first open. -->
+      <div class="nds-accordion nds-lg nds-accessibility-modes" id="a11yAccordion">
+
+        <!-- Item 1: Accessibility Modes (bundle switches) -->
+        <div class="nds-accordion-item">
+          <h3 class="nds-accordion-header">
+            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
+                type="button"
+                aria-expanded="true"
+                data-state="open"
+                aria-controls="a11yModesCollapse">
+              <span class="nds-accordion-title"><span data-i18n="section_modes">Accessibility Modes</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="modes"></span></span>
+            </button>
+          </h3>
+          <div class="nds-accordion-collapse" id="a11yModesCollapse" data-state="open">
+            <div class="nds-accordion-content">
+              <div class="nds-accordion-body">
+                <fieldset class="nds-form-group nds-switch-group">
+
+                  <div class="nds-form-container nds-switch-container" data-mode-id="epilepsy-safe">
+                    <div class="nds-form-header">
+                      <label for="a11y-mode-epilepsy-safe">
+                        <span class="nds-label" data-i18n-name>Epilepsy Safe Mode</span>
+                        <span class="nds-info"  data-i18n-desc>Stops motion and dampens color intensity</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe">
+                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="nds-form-container nds-switch-container" data-mode-id="visually-impaired">
+                    <div class="nds-form-header">
+                      <label for="a11y-mode-visually-impaired">
+                        <span class="nds-label" data-i18n-name>Visually Impaired Mode</span>
+                        <span class="nds-info"  data-i18n-desc>Enlarges text and boosts contrast for clearer reading</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired">
+                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="nds-form-container nds-switch-container" data-mode-id="cognitive-disability">
+                    <div class="nds-form-header">
+                      <label for="a11y-mode-cognitive-disability">
+                        <span class="nds-label" data-i18n-name>Cognitive Disability Mode</span>
+                        <span class="nds-info"  data-i18n-desc>Highlights titles and stops motion to reduce distraction</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability">
+                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="nds-form-container nds-switch-container" data-mode-id="motor-impaired">
+                    <div class="nds-form-header">
+                      <label for="a11y-mode-motor-impaired">
+                        <span class="nds-label" data-i18n-name>Motor Impaired Mode</span>
+                        <span class="nds-info"  data-i18n-desc>Enlarges click targets and emphasizes the focus indicator</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired">
+                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="nds-form-container nds-switch-container" data-mode-id="colorblind">
+                    <div class="nds-form-header">
+                      <label for="a11y-mode-colorblind">
+                        <span class="nds-label" data-i18n-name>Colorblind Mode</span>
+                        <span class="nds-info"  data-i18n-desc>Adjusts colors to distinguish red and green clearly</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind">
+                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="nds-form-container nds-switch-container" data-mode-id="dyslexia-friendly">
+                    <div class="nds-form-header">
+                      <label for="a11y-mode-dyslexia-friendly">
+                        <span class="nds-label" data-i18n-name>Dyslexia Friendly Mode</span>
+                        <span class="nds-info"  data-i18n-desc>Uses a clearer font and widens line and word spacing</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly">
+                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="nds-form-container nds-switch-container" data-mode-id="adhd-friendly">
+                    <div class="nds-form-header">
+                      <label for="a11y-mode-adhd-friendly">
+                        <span class="nds-label" data-i18n-name>ADHD Friendly Mode</span>
+                        <span class="nds-info"  data-i18n-desc>Stops motion, highlights titles, and enables the reading mask</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <div class="nds-switch">
+                        <input type="checkbox" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly">
+                        <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2: Readable Experience (tile grid) -->
+        <div class="nds-accordion-item">
+          <h3 class="nds-accordion-header">
+            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
+                type="button"
+                aria-expanded="false"
+                aria-controls="a11yReadableCollapse">
+              <span class="nds-accordion-title"><span data-i18n="section_readable">Readable Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="readable"></span></span>
+            </button>
+          </h3>
+          <div class="nds-accordion-collapse" id="a11yReadableCollapse">
+            <div class="nds-accordion-content">
+              <div class="nds-accordion-body">
+                <div class="nds-grid" role="group" aria-label="Readable experience controls" data-i18n-attr="aria-label:aria_readable">
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="font-step" data-a11y-cycle="0,1,2,3" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-smallcaps" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="font_sizing">Font Sizing</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="dyslexia" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-glasses" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="dyslexia">Dyslexia Friendly</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-titles" aria-pressed="false">
+                    <i class="nds-icon nds-hgi-highlighter" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="highlight_titles">Highlight Titles</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-links" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-link-04" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="highlight_links">Highlight Links</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reading-mask" aria-pressed="false">
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="reading_mask">Reading Mask</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reduce-motion" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-pause" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="pause_motion">Pause Motion</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="text-align" data-a11y-cycle="default,end,start,justify" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="text_align">Text Alignment</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="line-height" data-a11y-cycle="normal,1.6,1.8,2.0" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-paragraph-spacing" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="line_height">Line Height</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="letter-spacing" data-a11y-cycle="0,0.04em,0.08em,0.12em" data-a11y-exclude-token="letter-spacing" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-letter-spacing" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="letter_spacing">Letter Spacing</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="word-spacing" data-a11y-cycle="0,0.16em,0.32em,0.48em" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-kerning" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n="word_spacing">Word Spacing</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3: Visually Pleasing Experience (single-pick filters + colorblind primitive) -->
+        <div class="nds-accordion-item">
+          <h3 class="nds-accordion-header">
+            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
+                type="button"
+                aria-expanded="false"
+                aria-controls="a11yVisualCollapse">
+              <span class="nds-accordion-title"><span data-i18n="section_visual">Visually Pleasing Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="visual"></span></span>
+            </button>
+          </h3>
+          <div class="nds-accordion-collapse" id="a11yVisualCollapse">
+            <div class="nds-accordion-content">
+              <div class="nds-accordion-body">
+                <div class="nds-grid" role="group" aria-label="Visual adjustments" data-i18n-attr="aria-label:aria_visual">
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="boost-contrast" data-visual-id="boost-contrast" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n-label>Boost Contrast</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="monochrome" data-visual-id="monochrome" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-color-picker" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n-label>Monochrome</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="high-contrast" data-visual-id="high-contrast" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-blur" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n-label>High Contrast</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="high-saturation" data-visual-id="high-saturation" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-sparkles" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n-label>High Saturation</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="low-saturation" data-visual-id="low-saturation" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-droplet" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n-label>Low Saturation</span>
+                  </button>
+
+                  <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="cvd-deutan" data-visual-id="cvd-deutan" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i>
+                    <span class="nds-label" data-i18n-label>Deuteranopia</span>
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+        </div>
+        <button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="Scroll panel" data-i18n-attr="aria-label:scroll_panel">
+          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="nds-panel-footer">
+      <button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset">
+        <span class="nds-label" data-i18n="reset">Reset Settings</span>
+        <div class="nds-progress-circle">
+          <svg width="100%" height="100%" viewBox="0 0 24 24">
+            <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+            <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+          </svg>
+        </div>
+      </button>
+    </div>
+  </aside>
+</template>
+</script>
+
+</div>
+  </div>
+</section>
+
+<section id="accessibilityFeatures" class="nds-content-section nds-doc-features">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Built-in Features</h2>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-definition-list nds-divided nds-grid">
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-plug-socket"></i>
+            <span class="nds-label">Auto-initialization</span>
+          </span>
+          <p class="nds-item-desc">The page carries only the FAB. The script and the panel load on the first press, so a visitor who never opens the panel downloads none of it.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-package"></i>
+            <span class="nds-label">Seven Accessibility Modes</span>
+          </span>
+          <p class="nds-item-desc">One switch each for epilepsy, visual impairment, cognitive load, motor impairment, color blindness, dyslexia and ADHD. A mode changes only the settings the visitor left at default. Turning it off restores each one the visitor did not change since.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-text-font"></i>
+            <span class="nds-label">Ten Readable Tiles</span>
+          </span>
+          <p class="nds-item-desc">Font size, dyslexia font, title and link highlights, reading mask, motion pause, text alignment, line height, letter spacing and word spacing. A tile with levels shows a bar for each one.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-color-picker"></i>
+            <span class="nds-label">One Color Filter at a Time</span>
+          </span>
+          <p class="nds-item-desc">Boost contrast, monochrome, high contrast, high saturation, low saturation and a deuteranopia simulation. Turning one on turns the others off. Except High Contrast, the filters do not apply while a Windows contrast theme is on.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-search-01"></i>
+            <span class="nds-label">Reading Mask</span>
+          </span>
+          <p class="nds-item-desc">Dims the screen except for one band. The band stays put on scroll and moves only by drag or by key. Its toolbar changes the band's height or closes the mask, and moves above the band when there is no room below. The band keeps its place after a reload.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-database"></i>
+            <span class="nds-label">Cross-Page Persistence</span>
+          </span>
+          <p class="nds-item-desc">Every choice is saved in <code class="nds-inline-code lang-js">localStorage['nds-a11y']</code> and applies on every page. When every setting is back at default, the key is removed.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-browser"></i>
+            <span class="nds-label">OS Preference Sync</span>
+          </span>
+          <p class="nds-item-desc">The device's reduced motion and more contrast settings turn on Pause Motion and High Contrast. A change to them during the visit applies at once.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-megaphone-01"></i>
+            <span class="nds-label">Localized Live Announcements</span>
+          </span>
+          <p class="nds-item-desc">A screen reader hears every change and reset in the page's language. The text comes from <code class="nds-inline-code lang-js">assets/i18n/accessibility/{lang}.json</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-refresh"></i>
+            <span class="nds-label">Two-Press Reset</span>
+          </span>
+          <p class="nds-item-desc">The first press on Reset Settings starts a 5-second countdown on the button. A second press within it resets everything.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="accessibilityPractices" class="nds-content-section nds-doc-practices">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Best Practices</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+- Keep the FAB on every page. A visitor who set the panel up on one page expects to find it on the next.
+- Add a second trigger in the footer or the main menu. A keyboard user then reaches the panel in the normal tab order.
+- Put a trigger where the visitor reads. Focus goes back to it when the panel closes, and the browser scrolls to it.
+- Move the FAB and the panel to the start edge when a chat widget or a sticky button holds the end corner.
+- Do not build your own switches for these modes. They would conflict with the saved settings. Link to the panel, or call `NDS.Accessibility.toggleMode()`.
+- Write your own `--typo-*` tokens as `calc(value * var(--user-font-scale, 1))`, so Font Sizing scales them too.
+- Check your own colors with High Contrast on, in light and dark mode. High Contrast swaps the semantic color tokens, so a color that does not use them stays the same.
+- Do not offer the Deuteranopia filter as an aid. It shows what a visitor with deuteranopia sees, for design checks. Visitors get real correction from their device's color filters.
+
+</div>
+  </div>
+</section>
+
+<section id="accessibilityApi" class="nds-content-section nds-doc-api">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">API</h2>
+    </div>
+    <div class="nds-section-body nds-prose" markdown="1">
+
+### Classes
+{: .nds-block-title}
+
+| Class | Element | Effect |
+|---|---|---|
+| `nds-accessibility-toggle` | the FAB | Names the FAB for your own CSS. NDS gives it no styles, and `nds-fab` docks it |
+| `nds-accessibility-panel` | the panel `<aside>` | Fixes the panel's text sizes, so Font Sizing and the dyslexia font do not change the panel. Pair it with `nds-panel` |
+| `nds-panel-template` | a `<template>` | Holds your own panel. See [Panels](../components/panels) |
+| `nds-accessibility-modes` | the accordion in the panel | Sets the padding of the mode switches |
+| `nds-accessibility-quick` | a row in the panel body | The row of quick buttons, such as the theme button |
+| `nds-accessibility-tile-bars` | a span in a tile with levels | Holds the level bars. The script adds one `nds-accessibility-tile-bar` for each level |
+| `nds-a11y-count` | a tag in an accordion title | Shows the number of controls that are on in that group. It hides while empty |
+{: .nds-table .nds-responsive}
+
+### Data Attributes
+{: .nds-block-title}
+
+| Attribute | Element | Effect |
+|---|---|---|
+| `data-accessibility-toggle` | the FAB, or any button outside the panel | The first press loads the script and builds the panel. Pair it with `data-panel-toggle` |
+| `data-panel-toggle` | the same button | `="ndsAccessibilityPanel"`. Opens and closes the built panel and sets `aria-expanded`. See [Panels](../components/panels) |
+| `data-panel-side` | every `data-accessibility-toggle` button | The edge the panel slides from: `end` (default), `start`, `left` or `right`. `start` and `end` flip with the text direction. The script copies it from the first button pressed onto the panel it builds |
+| `data-fab-pos` | the FAB | The FAB's edge: `start`, `end`, `left`, `right` or `bottom`. `auto` docks at `end`. See [FAB](../components/fab) |
+| `data-state~="loading"` | the pressed button | The script sets it while the panel loads, and removes it about one second later |
+| `data-accessibility-panel` | the panel `<aside>` | Marks the panel. A panel already in the page is used instead of a template |
+| `data-armed` | the panel `<aside>` | The script sets it when it builds the panel |
+| `data-a11y-status` | a screen-reader `role="status"` element in the panel | The script writes each announcement in it |
+| `data-a11y-count` | the count tag in an accordion title | `modes`, `readable` or `visual`. The script writes the group's count in it. It counts inside `#a11yModesCollapse`, `#a11yReadableCollapse` and `#a11yVisualCollapse`, so keep those ids |
+| `data-a11y-count-sr` | a screen-reader span next to the tag | The same group names. The script writes the count as text for screen readers |
+| `data-mode-id` | a mode switch container | The mode whose name and description the language file writes in it |
+| `data-a11y-mode` | a mode switch input, or a tile button | The mode or token the control turns on and off: a name from Modes or from Tokens on `<html>` |
+| `data-a11y-setting` | a tile button with levels | The setting the tile changes. The panel's values: `font-step` `0,1,2,3`, `text-align` `default,end,start,justify`, `line-height` `normal,1.6,1.8,2.0`, `letter-spacing` `0,0.04em,0.08em,0.12em`, `word-spacing` `0,0.16em,0.32em,0.48em` |
+| `data-a11y-cycle` | the same tile button | The values a press steps through, separated by commas. The first value is the default |
+| `data-a11y-bars` | a span in that tile | The script adds one bar for each value after the first |
+| `data-a11y-value` | a screen-reader span in that tile | The script writes the current value in it |
+| `data-a11y-visual` | a filter tile button | The filter the tile turns on. Turning it on turns the other filters off |
+| `data-visual-id` | a filter tile button | The filter whose label the language file writes in it |
+| `data-a11y-exclude-token` | a tile button | The script removes the tile when the language file lists this value in `exclude_controls`. The Arabic file lists `letter-spacing`, because letter spacing breaks Arabic's joined letters |
+| `data-state~="selected"` | a tile button | The script sets it, with `aria-pressed="true"`, while the tile is on, and removes it when the tile turns off |
+| `data-accessibility-action` | the reset button | `="reset"`. Two presses within 5 seconds reset every setting |
+| `data-state~="arming"` | the reset button | The script sets it after the first press, and removes it after the second press or after 5 seconds |
+| `data-a11y` | `<html>` | The script writes the tokens that are on, separated by spaces. See Tokens on `<html>` |
+{: .nds-table .nds-responsive}
+
+### Modes
+{: .nds-block-title}
+
+Pass the mode name to `toggleMode()`.
+
+| Mode | Turns on | WCAG |
+|---|---|---|
+| `epilepsy-safe` | `reduce-motion`, `low-saturation` | 2.3.1 |
+| `visually-impaired` | `high-contrast`, `font-step-2` | 1.4.6 |
+| `cognitive-disability` | `highlight-titles`, `reduce-motion` | 2.2, 2.3 |
+| `motor-impaired` | `motor-impaired` | 2.5.5 |
+| `colorblind` | `cvd-deutan` | 1.4.1 |
+| `dyslexia-friendly` | `dyslexia`, `highlight-links`, line height 1.6, letter spacing 0.12em, word spacing 0.16em | 1.4.8, 1.4.12 |
+| `adhd-friendly` | `reduce-motion`, `highlight-titles`, `reading-mask` | 2.2, 2.3 |
+{: .nds-table .nds-responsive}
+
+### Tokens on `<html>`
+{: .nds-block-title}
+
+CSS reads these tokens with `[data-a11y~="…"]`. A mode writes the tokens of the settings it turns on, not its own name. Only Motor Impaired writes its own name.
+
+| Token | Set by | Effect |
+|---|---|---|
+| `reduce-motion` | Pause Motion. The Epilepsy Safe, Cognitive Disability and ADHD Friendly modes. The device's reduced motion setting | Stops animations and transitions, and pauses autoplay video and audio once. Progress bars, progress rings and loading spinners keep moving |
+| `high-contrast` | High Contrast. The Visually Impaired mode. The device's more contrast setting | Swaps the semantic color tokens for black on white, or white on black in dark mode |
+| `boost-contrast` | Boost Contrast | `filter: contrast(1.15)` on the page |
+| `monochrome` | Monochrome | `filter: grayscale(1)` on the page |
+| `high-saturation` | High Saturation | `filter: saturate(2)` on the page |
+| `low-saturation` | Low Saturation. The Epilepsy Safe mode | `filter: saturate(0.5)` on the page |
+| `cvd-deutan` | Deuteranopia. The Colorblind mode | Shows the page as a visitor with deuteranopia sees it. It uses the color matrix of Chrome DevTools' vision deficiency emulation |
+| `dyslexia` | Dyslexia Friendly. The Dyslexia Friendly mode | Changes the font to OpenDyslexic for Latin text and Maqroo for Arabic text, and sets body text to weight 500 |
+| `highlight-titles` | Highlight Titles. The Cognitive Disability and ADHD Friendly modes | Outlines every heading in the warning colors |
+| `highlight-links` | Highlight Links. The Dyslexia Friendly mode | Gives every link a dashed outline, and underlines text links |
+| `reading-mask` | Reading Mask. The ADHD Friendly mode | Shows the reading mask at `z-index: 850`. A layer below that is dimmed with the page |
+| `motor-impaired` | The Motor Impaired mode | Makes every button at least 48 × 48px |
+| `font-step-1`, `font-step-2`, `font-step-3` | Font Sizing. The Visually Impaired mode sets step 2 | Sets `--user-font-scale` to 1.15, 1.30 or 1.50 |
+| `text-align-start`, `text-align-end`, `text-align-justify` | Text Alignment | Aligns paragraphs and list items |
+| `has-line-height`, `has-letter-spacing`, `has-word-spacing` | Line Height, Letter Spacing and Word Spacing. The Dyslexia Friendly mode sets 1.6, 0.12em and 0.16em, with no letter spacing on an Arabic page | Applies the matching `--user-*` value to paragraphs, lists and quotes |
+{: .nds-table .nds-responsive}
+
+The text and highlight rules reach only the page's `header`, `main` and `footer`, so the panel and the FAB keep their look.
+
+### CSS Custom Properties
+{: .nds-block-title}
+
+| Property | Default | Controls |
+|---|---|---|
+| `--user-font-scale` | `1` | The scale of every `--typo-*` token. The `font-step-*` tokens set it |
+| `--user-line-height` | `normal` | The line height of body text. The script writes it on `<html>` |
+| `--user-letter-spacing` | `0` | The letter spacing of body text. The script writes it on `<html>` |
+| `--user-word-spacing` | `0` | The word spacing of body text. The script writes it on `<html>` |
+{: .nds-table .nds-responsive}
+
+The panel's width and top come from [Panels](../components/panels). The FAB's distance from the edge comes from [FAB](../components/fab).
+
+### Reading Mask Keyboard
+{: .nds-block-title}
+
+| Key | Effect |
+|---|---|
+| `Arrow Up`, `Arrow Down` | Moves the band 20px. Focus must be on the move button in the mask toolbar |
+| `Page Up`, `Page Down` | Moves the band 100px |
+| `Home`, `End` | Moves the band to the top or the bottom of the screen |
+| `Escape` | Turns the reading mask off, when the panel is closed |
+{: .nds-table .nds-responsive}
+
+The toolbar's size buttons change the band's height in 40px steps, from 40px to 320px.
+
+### Removal
+{: .nds-block-title}
+
+To remove the panel from a page, delete its FAB and every other `data-accessibility-toggle` button. With none on the page, nothing of the panel loads, even for a visitor with saved settings.
+
+### Text
+{: .nds-block-title}
+
+The panel reads its text from `assets/i18n/accessibility/en.json` and `ar.json`. To use your own text, set `window.NDS_I18N.accessibility` before the NDS scripts. It replaces the file, and a key it leaves out shows in English. Copy every key from `en.json`.
+
+### JavaScript
+{: .nds-block-title}
+
+| Method | Effect |
+|---|---|
+| `NDS.Accessibility.open(trigger)` | Opens the panel. The first call builds it and shows the spinner on `trigger` |
+| `NDS.Accessibility.close()` | Closes the panel |
+| `NDS.Accessibility.toggle(trigger)` | Opens or closes the panel |
+| `NDS.Accessibility.toggleMode(name)` | Turns a mode or a token on or off |
+| `NDS.Accessibility.setVisualFilter(name)` | Turns on one filter and turns off the others. The same name again turns it off |
+| `NDS.Accessibility.cycleSetting(key, values)` | Sets `key` to the value after its current one in `values` |
+| `NDS.Accessibility.reset()` | Resets every setting at once, with no second press |
+| `NDS.Accessibility.state` | A copy of the saved settings. Changing it changes nothing |
+| `NDS.Accessibility.ready` | `true` once the panel is built and wired |
+| `NDS.Accessibility.init(trigger)` | Builds and wires the panel. The first press calls it, so you rarely need it |
+{: .nds-table .nds-responsive}
+
+Before the script loads, `NDS.Accessibility` is a stub. A call to it loads the script, then runs. The component fires no events. Open the panel from a menu link:
+
+<script type="text/html" id="a11y-js" data-canon data-lang="js">
+document.getElementById('menu-a11y').addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation(); // the panel closes on an outside click
+  NDS.Accessibility.open(e.currentTarget);
+});
+</script>
+
+The full API is in the banner of `_js/nds-accessibility.js`.
+
+</div>
+  </div>
+</section>
