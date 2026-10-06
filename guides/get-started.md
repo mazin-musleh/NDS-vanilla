@@ -79,7 +79,7 @@ sidemenu_mode: false
                     </div>
                     <code class="lang-prompt">
 Download the raw file to `NDS-IQ.md` at the project root using `curl` or another direct HTTP client. Do not use a web-fetch tool: it may save a re-rendered copy.
-https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/NDS-IQ.md
+https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/iq/_includes/NDS-IQ.md
 
 Confirm that the file starts with `# NDS IQ`, then read it from top to bottom. This is the project's UI-layer rulebook. All NDS work runs by its rules. Set up NDS IQ in this project as its install section describes.
                     </code>
