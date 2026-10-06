@@ -736,7 +736,8 @@
         var pad = document.getElementById(card.getAttribute('data-preview-of')).hasAttribute('data-preview-flush') ? 0 : GUTTER;
         // base target: a link opens its page in the window, not in the frame.
         f.srcdoc = '<!doctype html><html ' + root + '><head><base target="_top">' + document.head.innerHTML +
-            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + pad + 'px;' + lay + ';justify-content:flex-start}</style>' +
+            // No nav in the frame: a panel or sticky part starts at the screen top.
+            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none;--nds-nav-height:0px}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + pad + 'px;' + lay + ';justify-content:flex-start}</style>' +
             '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
     }
 
