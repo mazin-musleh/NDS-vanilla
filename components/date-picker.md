@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 10:20 AM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -257,6 +257,13 @@ Set them in a rule on `.nds-date-picker-dropdown`, the calendar.
 | `--dropmenu-min-width` | `350px` | The smallest width of the calendar |
 | `--dropmenu-max-width` | `500px` | The largest width of the calendar |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the date picker. Set one at `:root`, or on a wrapper to reach every date picker inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.date-picker.html }}
 
 ### Keyboard
 {: .nds-block-title}

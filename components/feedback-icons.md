@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="feedbackOverview" class="nds-content-section nds-doc-overview">
@@ -213,6 +213,13 @@ Set these on the `.nds-feedback-icon`, on the `.nds-feedback`, or on a parent. E
 | `--feedback-icon-disc` | `var(--nds-icon-disc)` | Shape of the solid disc, as an icon mask |
 | `--feedback-ring-inset` | 6% of the size | Inner edge of the ring, which closes the gap between the disc and the halo. `0` with `nds-outline` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the feedback icon. Set one at `:root`, or on a wrapper to reach every feedback icon inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.feedback.html }}
 
 ### JavaScript
 {: .nds-block-title}

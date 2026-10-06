@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 04:24 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="linkOverview" class="nds-content-section nds-doc-overview">
@@ -189,7 +189,12 @@ Set these on the link, or on a container to reach every link inside it. The colo
 | `--link-decoration` | `none` | Text decoration. Hover, press, `nds-underline` and a content section set `underline` |
 {: .nds-table .nds-responsive}
 
-The theme-wide colors are the `--link-primary-*`, `--link-neutral-*` and `--link-oncolor-*` tokens. See [Tokens](../components/tokens).
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the link. Set one at `:root`, or on a wrapper to reach every link inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.link.html }}
 
 ### JavaScript
 {: .nds-block-title}

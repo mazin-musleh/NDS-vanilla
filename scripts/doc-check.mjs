@@ -104,6 +104,8 @@ for (const md of pages) {
                     const script = document.getElementById(id);
                     const box = script.nextElementSibling.nextElementSibling.nextElementSibling;
                     const issues = [];
+                    // A structure with no preview (data-preview="none") hides the frame: code alone, nothing to check.
+                    if (box && box.hidden) return { issues, rect: null };
                     if (!box || !box.offsetHeight) issues.push('empty preview');
                     const inner = box && box.querySelector('[data-demo-slot]') || box;
                     if (box) {

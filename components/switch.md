@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 01:34 AM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="switchOverview" class="nds-content-section nds-doc-overview">
@@ -241,6 +241,13 @@ Set these on `.nds-switch-container`. The size classes set the first five.
 | `--switch-track-border` | `var(--switch-neutral-default)` | Track border when off |
 | `--switch-thumb-bg` | `var(--switch-neutral-default)` | Thumb color when off |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the switch. Set one at `:root`, or on a wrapper to reach every switch inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.switch.html }}
 
 ### JavaScript
 {: .nds-block-title}

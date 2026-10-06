@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 03:23 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="tooltipOverview" class="nds-content-section nds-doc-overview">
@@ -247,10 +247,14 @@ Set these on `.nds-tooltip-balloon`, or on `:root` for every tooltip. The balloo
 | `--tooltip-padding` | `var(--spacing-md)` | Space inside the balloon |
 | `--tooltip-gap` | `var(--spacing-md)` | Space between the icon and the text, and between the title and the message |
 | `--tooltip-arrow-size` | `10px` | Size of the arrow |
-| `--tooltip-background-default` | `var(--colors-base-white)` | Balloon background. Dark mode: `var(--colors-neutral-800)` |
-| `--tooltip-text-heading-default` | `var(--text-display)` | Title color. Dark mode: `var(--colors-neutral-50)` |
-| `--tooltip-text-paragraph-default` | `var(--text-primary-paragraph)` | Message color. Dark mode: `var(--colors-neutral-100)` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the tooltip. Set one at `:root`, or on a wrapper to reach every tooltip inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.tooltip.html }}
 
 ### JavaScript
 {: .nds-block-title}

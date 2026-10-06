@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="btnOverview" class="nds-content-section nds-doc-overview">
@@ -286,7 +286,12 @@ Set these on the button itself. The size and variant classes set many of them on
 | `--progress-circumference` | `62.83` | Length of the ring for a fixed value. It matches `stroke-dasharray` on the circle: change it only with the circle's radius |
 {: .nds-table .nds-responsive}
 
-The theme-wide button colors are the `--button-*` tokens. See [Tokens](../components/tokens).
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the button. Set one at `:root`, or on a wrapper to reach every button inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.button.html }}
 
 ### JavaScript
 {: .nds-block-title}

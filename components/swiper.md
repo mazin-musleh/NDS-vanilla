@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 03:23 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="swiperOverview" class="nds-content-section nds-doc-overview">
@@ -428,6 +428,13 @@ Set these in the `style` of `.nds-swiper`. Set the bullet colors on the swiper o
 | `--swiper-bullet-active-hovered` | `var(--swiper-bullet-background-active-hovered)` | Color of the current bullet on hover |
 | `--swiper-bullet-border` | `transparent` | Bullet border color |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the swiper. Set one at `:root`, or on a wrapper to reach every swiper inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.swiper.html }}
 
 ### JavaScript
 {: .nds-block-title}

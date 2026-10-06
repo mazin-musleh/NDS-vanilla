@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="sliderOverview" class="nds-content-section nds-doc-overview">
@@ -228,18 +228,14 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set them on `:root` to change every slider.
-
-| Property | Default | Controls |
-|---|---|---|
-| `--slider-track-bg` | `--colors-neutral-100`, dark `--colors-alpha-white-10` | The empty part of the bar |
-| `--slider-track-fill` | `--background-primary` | The filled part of the bar |
-| `--slider-thumb-bg` | `--background-primary` | The thumb |
-| `--slider-thumb-bg-hovered` | `--controls-primary-hovered`, dark `--colors-primary-400` | The thumb on hover and on keyboard focus |
-| `--slider-thumb-border` | `--colors-alpha-black-10` | The ring around the thumb |
-{: .nds-table .nds-responsive}
-
 The script writes `--slider-fill-start` and `--slider-fill-end` on `.nds-slider-track` on every move. Do not set them.
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the slider. Set one at `:root`, or on a wrapper to reach every slider inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token. The hovered thumb color also shows on keyboard focus.
+
+{{ site.data.tokens.components.slider.html }}
 
 ### JavaScript
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 12:47 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="uploadOverview" class="nds-content-section nds-doc-overview">
@@ -340,10 +340,14 @@ The token `disabled` in `data-state` on `.nds-file-upload` stops the user from a
 | Property | Default | Controls |
 |---|---|---|
 | `--progress-size` | `24px` | The size of the progress ring in a row. Set it on `.nds-file-upload` |
-| `--upload-background-dropbox-default` | `var(--colors-neutral-100)` | The background of the drop zone |
-| `--upload-background-dropbox-active` | `var(--background-success-faint)` | The background of the drop zone while a file is dragged over it |
-| `--upload-background-file-item` | `var(--colors-neutral-100)` | The background of a file row |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the upload. Set one at `:root`, or on a wrapper to reach every upload inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token. The active drop zone background shows while a file is dragged over it.
+
+{{ site.data.tokens.components.upload.html }}
 
 ### JavaScript
 {: .nds-block-title}

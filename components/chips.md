@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 12:45 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="chipOverview" class="nds-content-section nds-doc-overview">
@@ -203,7 +203,12 @@ Set these on the chip. The size classes set `--chip-size`, and the color classes
 | `--truncate` | `1` | Lines the label shows before the ellipsis |
 {: .nds-table .nds-responsive}
 
-The theme-wide chip colors are the `--chip-background-*` and `--chip-text-*` tokens. See [Tokens](../components/tokens).
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the chip. Set one at `:root`, or on a wrapper to reach every chip inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.chips.html }}
 
 ### JavaScript
 {: .nds-block-title}

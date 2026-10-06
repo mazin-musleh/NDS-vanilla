@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 01:33 AM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="checkboxOverview" class="nds-content-section nds-doc-overview">
@@ -237,7 +237,12 @@ Set these on `.nds-check-container`. The size classes set the first one.
 | `--checkbox-glyph-bg` | `var(--background-default)` | Color of the check mark or the dash |
 {: .nds-table .nds-responsive}
 
-The checked colors are the `--checkbox-primary-*` and `--checkbox-neutral-*` tokens (`checked`, `hovered`, `pressed`). See [Tokens](../components/tokens).
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the checkbox. Set one at `:root`, or on a wrapper to reach every checkbox inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.checkbox.html }}
 
 ### JavaScript
 {: .nds-block-title}

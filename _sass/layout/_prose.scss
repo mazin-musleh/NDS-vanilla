@@ -103,9 +103,14 @@
 }
 
 .nds-prose {
-    // A long URL from a CMS breaks instead of widening the page; `anywhere`
-    // (not break-word) also lets a table cell holding one shrink.
-    overflow-wrap: anywhere;
+    // A long word breaks instead of widening the page. Not `anywhere`: that lets
+    // a table column shrink below its words next to nowrap code ("Componen t").
+    overflow-wrap: break-word;
+
+    // A long URL from a CMS is a link: `anywhere` lets a table cell holding one shrink.
+    :where(a) {
+        overflow-wrap: anywhere;
+    }
 
     @include prose-flow;
 

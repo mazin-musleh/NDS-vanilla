@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:39 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="ratingOverview" class="nds-content-section nds-doc-overview">
@@ -274,6 +274,13 @@ Set these on `.nds-rating`. The size classes set `--star-size`, and `nds-brand` 
 | `--star-pressed` | `var(--rating-star-default-pressed)` | Color of a star while pressed |
 | `--star-hovered` | `var(--rating-star-default-hovered)` | Color of a star on hover, interactive only |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the rating. Set one at `:root`, or on a wrapper to reach every rating inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.rating.html }}
 
 ### JavaScript
 {: .nds-block-title}

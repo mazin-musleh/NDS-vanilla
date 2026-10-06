@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 12:45 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="tagOverview" class="nds-content-section nds-doc-overview">
@@ -207,7 +207,12 @@ Set these on the tag. The size classes set `--tag-height`, `--tag-fs` and `--tag
 | `--tag-label-max` | `160px` | Widest the label gets before it ends with an ellipsis |
 {: .nds-table .nds-responsive}
 
-The theme-wide tag colors are the `--tag-background-*`, `--tag-text-*`, `--tag-border-*` and `--tag-icon-*` tokens, and `--tag-dot` for the dot of an inverted tag. See [Tokens](../components/tokens).
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the tag. Set one at `:root`, or on a wrapper to reach every tag inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.tag.html }}
 
 </div>
   </div>

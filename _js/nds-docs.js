@@ -377,6 +377,10 @@
             var sg = order.filter(function (g) { return STRUCT.test(g); })[0];
             var struct = sg && active[sg] && active[sg].structure;
             var srcEl = struct ? document.getElementById(struct) : script;
+            // A structure with no preview (a token pack of palette aliases) shows its code alone.
+            var none = srcEl.getAttribute('data-preview') === 'none';
+            preview.hidden = none;
+            if (preview.previousElementSibling) preview.previousElementSibling.hidden = none;
             // A JS-only structure (a toast) has no HTML form.
             html = srcEl.getAttribute('data-lang') !== 'js';
             var callEl = html ? jsEl : srcEl;

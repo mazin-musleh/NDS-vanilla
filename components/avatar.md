@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/09/2026 - 07:48 AM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="avatarOverview" class="nds-content-section nds-doc-overview">
@@ -230,14 +230,9 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
 ### Tokens
 {: .nds-block-title}
 
-Each token has a dark mode value. See [Tokens](../components/tokens).
+The theme-wide tokens of the avatar. Set one at `:root`, or on a wrapper to reach every avatar inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token. The border is the ring of a 3XL avatar and of each avatar in a stacked group.
 
-| Token | Default | Controls |
-|---|---|---|
-| `--avatar-background` | `var(--colors-neutral-100)` | Fill behind initials and icons |
-| `--avatar-color` | `var(--icon-default)` | Color of the initials and the icon |
-| `--avatar-border` | `var(--colors-base-white)` | Color of the 3XL ring and the stacked ring |
-{: .nds-table .nds-responsive}
+{{ site.data.tokens.components.avatar.html }}
 
 </div>
   </div>

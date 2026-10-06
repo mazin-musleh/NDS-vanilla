@@ -26,6 +26,23 @@ module DocsCanon
               '.nds-doc-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:var(--spacing-xs);margin-block-start:var(--spacing-xs)}' \
               '.nds-doc-step{display:grid;gap:var(--spacing-xxs);text-align:center;font-size:var(--typo-text-xs-FS)}' \
               '.nds-doc-step .nds-doc-swatch{inline-size:100%}' \
+              '.nds-doc-name{display:inline-flex;align-items:center;gap:var(--spacing-xs);font-size:var(--typo-text-sm-FS);line-height:var(--typo-text-sm-LH);font-weight:var(--font-weight-medium);color:var(--text-display);overflow-wrap:anywhere}' \
+              '.nds-doc-name .nds-btn{--btn-size:24px}' \
+              '.nds-doc-value{font-size:var(--typo-text-xs-FS);line-height:var(--typo-text-xs-LH);color:var(--text-secondary-paragraph)}' \
+              '.nds-doc-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--spacing-xl);inline-size:100%}' \
+              '.nds-doc-tile{display:grid;gap:var(--spacing-xs);align-content:start;justify-items:start}' \
+              '.nds-doc-tile .nds-doc-swatch{inline-size:100%;block-size:48px}' \
+              '.nds-doc-tile .nds-doc-radius{block-size:64px}' \
+              '.nds-doc-elevation{inline-size:100%;padding:var(--spacing-3xl);border-radius:var(--radius-md);background:var(--background-surface-sunken)}' \
+              '.nds-doc-elevation .nds-doc-swatch{block-size:96px}' \
+              '.nds-doc-ruler{display:grid;grid-template-columns:auto auto 1fr;gap:var(--spacing-sm) var(--spacing-lg);align-items:center;inline-size:100%}' \
+              '.nds-doc-specimen{display:grid;gap:var(--spacing-2xl);inline-size:100%}' \
+              '.nds-doc-size,.nds-doc-face{display:grid;gap:var(--spacing-xs)}' \
+              '.nds-doc-size .nds-doc-sample{display:block;overflow:hidden;text-overflow:ellipsis;color:var(--text-display)}' \
+              '.nds-doc-glyph{font-size:var(--typo-display-2xl-FS);line-height:var(--typo-display-2xl-LH);color:var(--text-display)}' \
+              '.nds-doc-alphabet{font-size:var(--typo-text-lg-FS);line-height:var(--typo-text-lg-LH);overflow-wrap:anywhere}' \
+              '.nds-doc-weights{display:grid;grid-template-columns:auto 1fr;gap:var(--spacing-sm) var(--spacing-lg);align-items:baseline}' \
+              '.nds-doc-weight{font-size:var(--typo-display-sm-FS);line-height:var(--typo-display-sm-LH);color:var(--text-display)}' \
               '[data-builder-group]{--divider-line-start:24px}' \
               '.nds-chip[data-builder-option][aria-disabled]{pointer-events:auto}' \
               '.nds-doc-grid{--_grid-line:color-mix(in srgb,var(--divider-color) 50%,transparent);background-image:linear-gradient(var(--_grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--_grid-line) 1px,transparent 1px);background-size:24px 24px;background-position:right 12px top 12px}' \

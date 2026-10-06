@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 03:40 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="tableOverview" class="nds-content-section nds-doc-overview">
@@ -731,7 +731,7 @@ Delete the count line (`.nds-bar-text`) when neither Selection nor Pages stays. 
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on `.nds-table`. The colors come from the `--table-*` tokens: see [Tokens](../components/tokens).
+Set these on `.nds-table`.
 
 | Property | Default | Controls |
 |---|---|---|
@@ -743,6 +743,13 @@ Set these on `.nds-table`. The colors come from the `--table-*` tokens: see [Tok
 | `--min-width` | none | The smallest width of the table. Below it, the box scrolls |
 | `--max-width` | `100%` | The widest the scroll box gets. Set it in the table's `style` attribute: the script copies it to the box |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the table. Set one at `:root`, or on a wrapper to reach every table inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.table.html }}
 
 ### JavaScript
 {: .nds-block-title}

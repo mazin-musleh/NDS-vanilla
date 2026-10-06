@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/10/2026 - 08:59 AM"
+last_edit: "06/10/2026 - 11:32 AM"
 lang: en
 direction: ltr
 ---
@@ -587,6 +587,13 @@ The checks are the browser's own: write these standard attributes on the input. 
 | `--input-radius` | `var(--radius-sm)` | The corner radius of `.nds-form-control` and of its prefix and suffix buttons |
 | `--actions-margin-top` | `var(--spacing-2xl)` | The space above `.nds-form-actions` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the field. Set one at `:root`, or on a wrapper to reach every field inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.forms.html }}
 
 ### JavaScript
 {: .nds-block-title}

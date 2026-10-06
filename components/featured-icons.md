@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 09:37 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="featuredIconOverview" class="nds-content-section nds-doc-overview">
@@ -185,7 +185,12 @@ Set these on the icon, in a `style` attribute or in your stylesheet. On a parent
 | `--featuredicon-bg-forced`, `--featuredicon-color-forced`, `--featuredicon-dark-bg-forced` | — | The same three colors, set on a parent that must win over a color class on the icon. A plain knob set on a parent loses to the icon's own class |
 {: .nds-table .nds-responsive}
 
-The theme-wide colors are the `--featuredicons-background-*` and `--featuredicons-icon-*` tokens. See [Tokens](../components/tokens).
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the featured icon. Set one at `:root`, or on a wrapper to reach every featured icon inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.featured-icons.html }}
 
 </div>
   </div>

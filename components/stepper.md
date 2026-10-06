@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/10/2026 - 02:37 AM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="stepperOverview" class="nds-content-section nds-doc-overview">
@@ -345,7 +345,12 @@ Set these on `.nds-stepper`. The size classes set `--stepper-size` too, so set i
 | `--stepper-description-FS`, `--stepper-description-LH` | set by the size class | Font size and line height of the description and the next-step line in the radial layout |
 {: .nds-table .nds-responsive}
 
-The theme-wide stepper colors are the `--stepper-button-*`, `--stepper-text-*` and `--stepper-line-*` tokens. See [Tokens](../components/tokens).
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the stepper. Set one at `:root`, or on a wrapper to reach every stepper inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.stepper.html }}
 
 ### JavaScript
 {: .nds-block-title}

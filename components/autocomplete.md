@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/10/2026 - 11:45 PM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="autocompleteOverview" class="nds-content-section nds-doc-overview">
@@ -224,13 +224,12 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 | `data-state~="active"` | a result in the menu | The script sets it on the result that the arrow keys reach, and removes it when they move on |
 {: .nds-table .nds-responsive}
 
-### CSS Custom Properties
+### Tokens
 {: .nds-block-title}
 
-| Property | Default | Controls |
-|---|---|---|
-| `--autocomplete-highlight` | `var(--colors-primary-100)` | Background of the marked text. A token: set it on `:root`. In dark mode it is `var(--colors-primary-alpha-50)` |
-{: .nds-table .nds-responsive}
+The theme-wide tokens of the autocomplete. Set one at `:root`, or on a wrapper to reach every autocomplete inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token. The highlight is the background of the matched text in a suggestion.
+
+{{ site.data.tokens.components.autocomplete.html }}
 
 ### Response Format
 {: .nds-block-title}

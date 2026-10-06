@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/09/2026 - 01:32 AM"
+last_edit: "06/10/2026 - 11:32 AM"
 ---
 
 <section id="radioOverview" class="nds-content-section nds-doc-overview">
@@ -204,7 +204,12 @@ Set these on `.nds-radio-container`. The size classes set the first one.
 | `--radio-tile-border` | `var(--controls-border)` | Tile outline color |
 {: .nds-table .nds-responsive}
 
-The checked colors are the `--radio-primary-*` and `--radio-neutral-*` tokens (`checked`, `hovered`, `pressed`). See [Tokens](../components/tokens).
+### Tokens
+{: .nds-block-title}
+
+The theme-wide tokens of the radio. Set one at `:root`, or on a wrapper to reach every radio inside it. A token with a dark value changes in dark mode: give your override one too. [Tokens](../components/tokens) lists every token.
+
+{{ site.data.tokens.components.radio.html }}
 
 ### JavaScript
 {: .nds-block-title}
