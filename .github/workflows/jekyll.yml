@@ -11,9 +11,8 @@ on:
   # `exclude:` entries in _config.yml — files Jekyll never copies into _site,
   # so a push touching only these can't change what's deployed. Gemfile* and
   # .github/workflows/ stay out of it: they change the build itself.
-  # `iq` is the NDS IQ publish branch: moving it republishes the rules.
   push:
-    branches: ["main", "iq"]
+    branches: ["main"]
     paths-ignore:
       - 'CHANGELOG.md'
       - 'README.md'
@@ -69,18 +68,6 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
-        with:
-          ref: main
-      - name: Checkout the published NDS IQ
-        # Underscore folder: Jekyll skips it when building main.
-        uses: actions/checkout@v4
-        with:
-          ref: iq
-          path: _iq
-          sparse-checkout: |
-            _includes/NDS-IQ.md
-            guides/integration-quality.md
-          sparse-checkout-cone-mode: false
       - name: Find the latest release
         id: release
         run: echo "tag=$(gh release view --json tagName -q .tagName)" >> "$GITHUB_OUTPUT"
@@ -89,7 +76,7 @@ jobs:
       - name: Name the saved release site
         # One saved build per tag + NDS IQ revision; a new release, an IQ edit or a forced rebuild misses it.
         id: key
-        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ hashFiles('_iq/_includes/NDS-IQ.md', '_iq/guides/integration-quality.md') }}-" >> "$GITHUB_OUTPUT"
+        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ hashFiles('_includes/NDS-IQ.md', 'guides/integration-quality.md') }}-" >> "$GITHUB_OUTPUT"
       - name: Restore the saved release site
         id: saved
         if: ${{ !inputs.rebuild_release }}
@@ -117,10 +104,10 @@ jobs:
         with:
           ref: ${{ steps.release.outputs.tag }}
           path: _release
-      - name: Take the published NDS IQ
-        # IQ versions apart from the template: the site shows the rules the `iq` branch serves.
+      - name: Take NDS IQ from main
+        # IQ versions apart from the template: the site shows the rules the raw main link serves.
         if: ${{ !steps.saved.outputs.cache-matched-key }}
-        run: cp _iq/_includes/NDS-IQ.md _release/_includes/ && cp _iq/guides/integration-quality.md _release/guides/
+        run: cp _includes/NDS-IQ.md _release/_includes/ && cp guides/integration-quality.md _release/guides/
       - name: Setup Ruby (release)
         if: ${{ !steps.saved.outputs.cache-matched-key }}
         uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8

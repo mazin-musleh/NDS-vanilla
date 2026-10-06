@@ -274,6 +274,8 @@ A row carries the dead name, its replacement, when it was deprecated, and where 
 
 **`_includes/NDS-IQ.md` is the single source of the consumer rules (NDS IQ). Load the `nds-iq-eval` skill before editing it** — it holds the versioning, growth-control and floor-gate policy.
 
+**Raw main publishes NDS IQ, so never edit `_includes/NDS-IQ.md` on main.** Draft on a branch; publish = squash into main + tag `IQvX.Y`. `scripts/hooks/pre-push` blocks a main push whose rules file differs from the newest `IQv` tag — install it once per clone: `git config core.hooksPath scripts/hooks`.
+
 **HARD CONSTRAINT: `_includes/NDS-IQ.md` may never contain literal Liquid delimiters** (curly-brace-percent or double-curly). It is a Jekyll include — the topbar and both guides render it — so the build parses them and dies pointing at topbar. Write around them; `verify()` guards it.
 
 **The rules file names no template version** — `verify()` fails the build on any `x.y.z` literal in it.
