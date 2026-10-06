@@ -344,7 +344,7 @@
             // A `—` row with a target (a default that fits only some structures) is checked too.
             var ops = c.ops.filter(function (o) { return o.op || (o.target && o.target !== '—'); });
             // Like the build, a descendant target never gates when the choice has a one-element target.
-            var own = ops.filter(function (o) { return !/[\s>+~]/.test((o.target || '').replace(/\([^)]*\)/g, '')); });
+            var own = ops.filter(function (o) { return !/[\s>+~]/.test((o.target || '').replace(/\([^)]*\)|\[[^\]]*\]/g, '')); });
             if (own.length) ops = own;
             return !ops.length || ops.some(function (o) {
                 if (isJs(o.target)) return !!call && callMatches(call, o.target);

@@ -212,7 +212,7 @@ A short paragraph above the table explains any target that is not obvious (what 
 
 **On element cell:**
 - A selector for the element the change goes on. A row whose element is not in the current markup is disabled, and its row label says why ("Needs Structure: Group", "Not on Structure: Progress").
-- **The build reads only a target on one element:** a tag, classes, pseudo-classes, `:not(.cls)`, or an `#id`. A descendant target (`.a .b`) works in the browser, but the build cannot read it, so its chip starts disabled. Use a descendant target only as the second row of a choice whose first row the build can read.
+- **Prefer a target on one element:** a tag, classes, pseudo-classes, `:not(.cls)`, `:not(:has(…))`, or an `#id`. A descendant target (`.a > .b`) is read loosely: `.b` must be in the markup and `.a` anywhere in it. When a choice also has a one-element target, the build and the browser ignore its descendant targets, so a descendant row is best as the second row of a choice.
 - **One item of a repeated set** (the first radio in a group): target it by its canon id (`#radio-1`), or by `:first-of-type` / `:first-child` on the element itself. Say in the paragraph above the table that the option goes on the item the user means.
 - A `(default)` row with `—` in Markup and a target in On element is disabled where the target is missing: `Click (default)` on `.nds-tooltip:not(.nds-btn)` is off on the Button structure. Pair it with a `demo` marker on that structure so it starts on its own default.
 - `(start)`, `(after)`: where a part is inserted. The default is the end.
@@ -262,7 +262,8 @@ In this order, each only when the source has it:
 1. **Classes** or **Other Classes:** classes the builder does not show. Class \| Element \| Effect.
 2. **Data Attributes:** Attribute \| Element \| Effect. Skip internal init stamps.
 3. **CSS Custom Properties:** Property \| Default \| Controls. Say where to set them when that matters.
-4. **JavaScript:** a Method \| Effect table, an Option \| Default \| Effect table for `create()`, an Event \| Fired on \| Detail table, then one `data-lang="js"` canon example, then "The full API is in the banner of `_js/nds-x.js`."
+4. **Tokens:** the component's group in `_sass/tokens/_components.scss` gets `### Tokens` with `{{ site.data.tokens.components.<name>.html }}`, the generated Token \| Preview \| Value table. Never hand-written. A line above it names the source, since an agent reading the `.md` sees only the Liquid tag: `Source: the \`<name>\` group in \`_sass/tokens/_components.scss\`.` A knob whose default is a token names it in its Default cell: that is not a duplicate.
+5. **JavaScript:** a Method \| Effect table, an Option \| Default \| Effect table for `create()`, an Event \| Fired on \| Detail table, then one `data-lang="js"` canon example, then "The full API is in the banner of `_js/nds-x.js`."
 
 The Effect, Controls, Holds, Detail and Use columns keep 320px on a phone: the build sets it from those header names, so use those names for a prose column.
 

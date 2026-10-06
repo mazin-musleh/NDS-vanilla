@@ -116,6 +116,8 @@ module DocsCanon
       end
       c[:live] ||= markup != '—'
       (c[:adds] ||= []) << markup if markup =~ /\A(\.[\w-]+|\[[\w-]+(~?="[^"]*"|='[^']*')?\])\z/
+      # A `create()` option this choice sets, for a `create({ k: v })` target that needs it.
+      (c[:sets] ||= []) << markup.gsub(/\s+/, '') if target.start_with?('create(') && markup.include?(':')
       # A `—` row with a target (a default that fits only some structures) is checked too.
       (c[:targets] ||= []) << target if (markup != '—' || !['—', ''].include?(target)) && !c[:structure]
     end
@@ -126,7 +128,8 @@ module DocsCanon
   # element of that tag (and that `#id`, when named); x counts by name only, y by its `="v"` or `~="v"` too, a descendant part as present.
   # `:not(.anc .x)` skips an element inside `.anc`.
   # `:has(> tag)` needs that tag anywhere in the markup, `:has(.cls)` an element with that class.
-  # Upgrade to a real parser if a table needs x's value or descendants.
+  # `:not(:has(a, b))` fails on any of them in the markup; `.anc > .x` checks x, with .anc anywhere.
+  # Upgrade to a real parser if a table needs x's value or a true ancestor check.
   def self.matches?(src, sel, js = nil)
     return true if sel == '—'
     # A `create()` row changes the JS form; `create({ k: v })` only one with that option,
@@ -140,6 +143,17 @@ module DocsCanon
     tag = sel[/\A([a-z][\w-]*)\./, 1]
     excluded = sel.scan(/:not\(\.([\w-]+)\)/).flatten
     no_attrs = sel.scan(/:not\(\[([\w-]+)(?:(~?=)"([^"]*)")?/)
+    present = ->(p) { p.start_with?('.') ? src.scan(/\sclass="([^"]*)"/).flatten.any? { |v| v.split.include?(p[1..]) } : src.include?("<#{p}") }
+    sel.scan(/:not\(:has\(([^)]*)\)\)/).flatten.each do |list|
+      return false if list.split(',').map { |p| p.strip.sub(/\A>\s*/, '') }.any?(&present)
+    end
+    sel = sel.gsub(/:not\(:has\([^)]*\)\)/, '').strip
+    depth = 0
+    cut = sel.each_char.with_index.select { |ch, _| depth += { '(' => 1, ')' => -1, '[' => 1, ']' => -1 }.fetch(ch, 0); depth.zero? && ' >+~'.include?(ch) }.last&.last
+    if cut
+      return false unless sel[0...cut].scan(/\.([\w-]+)/).flatten.then { |cs| cs.empty? || cs.any? { |c| present[".#{c}"] } }
+      sel = sel[(cut + 1)..].strip
+    end
     has_tags = sel.scan(/:has\(>?\s*([a-z][\w-]*)\)/).flatten
     return false unless has_tags.all? { |t| src.include?("<#{t}") }
     has_classes = sel.scan(/:has\(>?\s*\.([\w-]+)\)/).flatten
@@ -169,24 +183,45 @@ module DocsCanon
 
   # A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
   def self.applies?(choice, src, js = nil)
-    choice[:structure] || !choice[:targets] || choice[:targets].any? { |t| matches?(src, t, js) }
+    choice[:structure] || !choice[:targets] || gating(choice[:targets]).any? { |t| matches?(src, t, js) }
+  end
+
+  # A structure that only sets `create()` options (Line, Cycle) meets `create()`, `create({ its option })`
+  # and `create():not({ another })`.
+  def self.sets?(sets, t)
+    return false unless t.start_with?('create(')
+
+    cond, neg = [/\Acreate\(\{\s*(.+?)\s*\}\)\z/, /:not\(\{\s*(.+?)\s*\}\)\z/].map { |re| t[re, 1]&.gsub(/\s+/, '') }
+    (cond.nil? || sets.include?(cond)) && !(neg && sets.include?(neg))
+  end
+
+  # Like nds-docs.js: a descendant target never gates when the choice has a one-element target.
+  def self.gating(targets)
+    own = targets.reject { |t| t.gsub(/\([^)]*\)|\[[^\]]*\]/, '') =~ /[\s>+~]/ }
+    own.empty? ? targets : own
   end
 
   # "Needs Actions": the choices whose structure or part canon holds the element a choice changes.
   # The default structure's canon is the base markup.
-  def self.needs(choice, rows, canons, base)
-    return '' unless choice[:targets]
+  def self.needs(choice, rows, canons, base, js = nil)
+    # A structure chip is never off, so it never needs a reason.
+    return '' if !choice[:targets] || structure?(choice[:group])
+
+    gated = choice.merge(targets: gating(choice[:targets]))
 
     providers = rows.reject { |r| r.equal?(choice) || (structure?(r[:group]) && choice[:not]&.include?(r[:option][/\(id:\s*([\w-]+)\)/, 1])) }.select do |r|
       # A JS part is a run of options inside a call, not a call, so it never provides a create() target.
       own = [r[:structure], *r[:inserts]].compact.map { |cid| canons[cid] }
       own.reject! { |lang, _| lang == 'js' } unless r[:structure]
       own << ['html', base] if structure?(r[:group]) && !r[:structure]
+      # The default structure is the base call too (Bar on the chart page).
+      own << ['js', js] if structure?(r[:group]) && !r[:live] && js
       own.any? do |lang, text|
-        choice[:targets].any? { |t| t != '—' && (lang == 'js' ? matches?('', t, text) : matches?(text, t)) }
-      end || adds?(r, choice) ||
+        gated[:targets].any? { |t| t != '—' && (lang == 'js' ? matches?('', t, text) : matches?(text, t)) }
+      end || adds?(r, gated) ||
+        (structure?(r[:group]) && r[:sets] && gated[:targets].any? { |t| sets?(r[:sets], t) }) ||
         # Any value meets a bare `[attr]`; a sibling or a chip that is off itself is no way in.
-        (adds?(r, choice, bare: true) && r[:group] != choice[:group] && applies?(r, base))
+        (adds?(r, gated, bare: true) && r[:group] != choice[:group] && applies?(r, base))
     end
     # Every structure holds it: the control can never be disabled, so it needs no hint.
     structures = rows.select { |r| structure?(r[:group]) }
@@ -199,6 +234,13 @@ module DocsCanon
         sizes[group] == 1 ? opts.first : "#{group.sub(' (any)', '')}: #{opts.size > 1 ? "#{opts[0..-2].join(', ')} or #{opts.last}" : opts.first}"
       end
     end
+    # `(not: x)` is all that keeps it off: name the shorter list, the structures it is on or off.
+    banned = structures.select { |r| choice[:not]&.include?(r[:option][/\(id:\s*([\w-]+)\)/, 1]) }
+    if banned.any? && (structures - banned - providers).empty?
+      allowed = structures - banned
+      return allowed.size <= banned.size ? "Needs #{names[allowed].join(' or ')}" : "Not on #{names[banned].join(' or ')}"
+    end
+
     # Most structures hold it: name the few that do not ("Not on Structure: Link card").
     missing = structures - providers
     return "Not on #{names[missing].join(' or ')}" if providers.all? { |r| structure?(r[:group]) } && missing.size < providers.size
@@ -207,7 +249,7 @@ module DocsCanon
     return "Needs #{list.join(' or ')}" unless list.empty?
 
     # Options a target's `:not()` names turn this one off ("Range" is not with Format: Month).
-    blockers = rows.reject { |r| r.equal?(choice) }.select { |r| adds?(r, choice, negated: true) }
+    blockers = rows.reject { |r| r.equal?(choice) }.select { |r| adds?(r, gated, negated: true) }
     blockers.empty? ? '' : "Not with #{names[blockers].join(' or ')}"
   end
 
@@ -332,15 +374,16 @@ module DocsCanon
     # aria-disabled, not disabled: a disabled button gets no hover, focus or tap.
     chip = lambda do |group, r, sel, tone = 'neutral'|
       tip = hint(r[:option]).to_s
-      need = needs(r, rows, canons, src)
+      need = needs(r, rows, canons, src, js)
       # `(limit: 2 widgets)`: once that many chips sharing it start on, the others start off.
       lim = r[:option][/\(limit:\s*([^)]+)\)/, 1]
       # A limit of 1 makes the chips exclusive: name the other one, like any blocker.
-      if lim && need.empty?
+      if lim
         others = rows.select { |x| !x.equal?(r) && x[:option].include?("(limit: #{lim})") }.map do |x|
           rows.count { |y| y[:group] == x[:group] } == 1 ? label(x[:option]) : "#{x[:group].delete_suffix(' (any)')}: #{label(x[:option])}"
         end
-        need = lim.to_i == 1 ? "Not with #{others.join(' or ')}" : "Up to #{lim}"
+        limit = lim.to_i == 1 ? "Not with #{others.join(' or ')}" : "Up to #{lim}"
+        need = need.empty? ? limit : "#{need}. #{limit}"
       end
       full = lim && !sel && rows.count { |x| x[:option].include?("(limit: #{lim})") && x[:option].include?('(default)') } >= lim.to_i
       off = !applies?(r, src, js) || full
