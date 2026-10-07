@@ -356,7 +356,8 @@
     function removeSlide() {
         var swiper = document.querySelector(SWIPER_SEL);
         if (!swiper) return;
-        var slide = swiper.querySelector('.nds-swiper-slide.' + SLIDE_CLASS);
+        // A loop's head clones copy the class and come first; reinit drops them.
+        var slide = swiper.querySelector('.nds-swiper-slide.' + SLIDE_CLASS + ':not(.nds-swiper-clone)');
         if (!slide) return;
         slide.remove();
         var total = parseInt(swiper.style.getPropertyValue('--total'), 10) || (swiper.querySelectorAll('.nds-swiper-slide').length + 1);
@@ -369,7 +370,7 @@
     // (.nds-deck, drawn by the pack's stylesheet). The section carries nds-nd96 + the active
     // slide's theme class, which is all the stylesheet keys on.
     var DECK_CLASS = 'nds-nd96';
-    var _siteSlides = [], _siteTotal = '', _navHadCenter = false, _pageHadMd = false;
+    var _siteSlides = [], _siteTotal = '', _navHadCenter = false, _pageHadMd = false, _siteLoop = false;
     var _deckAbort = null, _typeTimer = 0, _holdTimer = 0, _current = -1, _paused = false, _wordDone = false;
 
     function fullTitle(s) { return t(LEAD) + ' ' + t(s.word); }
@@ -426,6 +427,8 @@
         // Snapshot: removing from the live collection while walking it skips every other child.
         Array.prototype.slice.call(wrapper.children).forEach(function (el) {
             if (el.classList.contains(DECK_SLIDE)) return;
+            // A live loop's clones would come back as real slides; the swiper re-clones.
+            if (el.classList.contains('nds-swiper-clone')) { el.remove(); return; }
             _siteSlides.push(el);
             el.remove();
         });
@@ -449,6 +452,7 @@
         });
         wrapper.parentNode.insertBefore(deck, wrapper.nextSibling);
         swiper.classList.add('nds-deck');
+        _siteLoop = swiper.hasAttribute('data-swiper-loop');
         swiper.setAttribute('data-swiper-loop', '');   // the deck wraps, so the track does too
         swiper.style.setProperty('--total', String(SLIDES.length));
         var nav = swiper.querySelector('.nds-swiper-navigation'), page = swiper.querySelector('.nds-swiper-pagination');
@@ -611,7 +615,7 @@
         _siteSlides.forEach(function (s) { wrapper.appendChild(s); });
         _siteSlides = [];
         swiper.classList.remove('nds-deck');
-        swiper.removeAttribute('data-swiper-loop');
+        if (!_siteLoop) swiper.removeAttribute('data-swiper-loop');
         var nav = swiper.querySelector('.nds-swiper-navigation'), page = swiper.querySelector('.nds-swiper-pagination');
         if (nav && !_navHadCenter) nav.classList.remove('nds-center');
         if (page && !_pageHadMd) page.classList.remove('nds-md');

@@ -242,7 +242,8 @@
     function removeSlide() {
         var swiper = document.querySelector(SWIPER_SEL);
         if (!swiper) return;
-        var slide = swiper.querySelector('.nds-swiper-slide.' + SLIDE_CLASS);
+        // A loop's head clones copy the class and come first; reinit drops them.
+        var slide = swiper.querySelector('.nds-swiper-slide.' + SLIDE_CLASS + ':not(.nds-swiper-clone)');
         if (!slide) return;
         slide.remove();
         var total = parseInt(swiper.style.getPropertyValue('--total'), 10) || (swiper.querySelectorAll('.nds-swiper-slide').length + 1);
