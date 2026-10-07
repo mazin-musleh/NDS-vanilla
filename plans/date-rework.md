@@ -34,22 +34,26 @@ Core, not a chunk: Date Picker (extras) and the date widget (delegated) call it 
 | Call | Returns |
 |---|---|
 | `NDS.date.parse(text, { format, calendar })` | a `Date` at local midnight of that day, or `null` |
-| `NDS.date.format(date, { format, calendar, locale, numerals, timeZone, ...Intl options })` | a string |
+| `NDS.date.format(date, { format, calendar, locale, numerals, ...Intl options })` | a string |
 | `NDS.date.convert(text, from, to)` | `format(parse(text, from), to)`; `from` and `to` are option objects |
+| `NDS.date.today()` | today in the site's timezone (the visitor's when unset), as a local-midnight `Date` |
 | `NDS.date.site` | `{ timeZone, format }` from `<html>`, defaults applied (a getter) |
 
+**A date is a calendar day, never an instant (found while building, 2026-10-07).** `parse` returns local midnight, and `format` reads the day in local time. Neither applies the site timezone: a Tokyo visitor's local midnight is the previous day in Riyadh, so formatting a parsed day "in Riyadh" would move it. The site timezone enters only through `today()`. A `timeZone` passed to `format`'s Intl path goes to `Intl` as-is, for a caller that formats an instant (the clock).
+
 - **`calendar`:** any `Intl` calendar id; `hijri` is an alias for `islamic-umalqura`, the Saudi official calendar. Default `gregory`.
-- **`format`:** with `format` set, the result is the token string filled from `formatToParts` in the chosen calendar and timeZone. Without it, the options go to `Intl.DateTimeFormat` as-is (`locale` defaults to `NDS.lang`). `numerals` sets `-u-nu-` (default `latn`, as `NDS.formatNumber` does).
+- **`format`:** with `format` set, the result is the token string filled from the day's Y/M/D in the chosen calendar, in ASCII digits. With Intl options and no `format`, they go to `Intl.DateTimeFormat` (`locale` defaults to the page `lang`; `calendar` and `numerals` become its `calendar` and `numberingSystem`, default `gregory` and `latn`, as `NDS.formatNumber` does). Neither → the site format.
 - **`parse`:** maps Arabic-Indic (`٠-٩`) and Persian (`۰-۹`) digits to ASCII and strips the bidi marks `Intl` writes in Arabic output (U+200E, U+200F, U+061C) first. The caller always names the format (default: `NDS.date.site.format`): `03/04/2026` is ambiguous, so it never guesses. A day that does not exist (31/04, Hijri 30 in a 29-day month) returns `null`. `YY` keeps the picker's 20xx reading.
 - **Non-Gregorian → Date: search, not math.** Estimate the day from the mean month length (29.53 days from 1/1/1 AH), read it back with `formatToParts` in that calendar, step by the difference, repeat until it matches (2–3 reads). If it never matches, the date does not exist: `null`. Work at UTC noon with `timeZone: 'UTC'` so no local offset can move the day.
 - **Formatter cache:** the `dtf(locale, opts)` memo moves from `nds-timeDate.js` into core, and every call goes through it (an `Intl.DateTimeFormat` costs ICU init; `format` on an existing one is cheap).
 - `ponytail:` calendars with 12 numbered months only (gregory, islamic-*, persian). Hebrew (leap month) and Japanese (era years) are out; add when a site asks. ICU's Umm al-Qura table covers 1300–1600 AH; outside it ICU falls back to `islamic-civil`.
 
-**Check:** `scripts/check-date.mjs` (node, loads the `NDS.date` block with a stub `<html>`): every day 2018–2037 round-trips `gregory ↔ hijri` and matches `Intl` exactly; Arabic-Indic digits and bidi marks parse; nonexistent days return `null`; every token format round-trips. Ships in `scripts/`, runs before a release.
+**Check:** `node scripts/check-date.mjs` (`ENGINE=webkit` for Safari) loads `_js/nds-core.js` into a blank page under Tokyo and Los Angeles clocks: every day 2018–2037 round-trips `gregory ↔ hijri` and matches `Intl` exactly; Arabic-Indic and Persian digits and bidi marks parse; nonexistent days (31/04, Hijri 30/03/1448) return `null`; `today()` follows `data-timezone`; a bad zone falls back. Done 2026-10-07: 0 failures in Chrome and WebKit; main bundle +1.2 KB gz.
 
 ## Step 2: date widget (`_js/nds-timeDate.js`)
 
 - Delete `getSaudiDate`, `getHijriParts`, `dtf` and `_fmtCache`. The date reads `NDS.date.format(new Date(), …)` in the site timezone. The cache key holds the site's date and its timezone, so both use one zone.
+- Arabic Gregorian text changes digits: it was `ar-SA` (Arabic-Indic); `NDS.date` defaults to Latin digits, like the Hijri line and `NDS.formatNumber`. Pass `numerals: 'arab'` only if the owner wants the old look.
 - The clock follows `data-timezone` too, or near midnight the date and the clock show different days. One `formatToParts` per minute (`hourCycle: 'h23'`).
 - Delete `getHijriDate` (owner: removed in v2). `HIJRI_MONTHS` stays: Android ICU still prints Gregorian month names for the Islamic calendar (comment at :74).
 - Update the banner Gotchas: "only the cache key follows Riyadh" goes.
@@ -61,7 +65,7 @@ Delete:
 - The Hijri engine: `gregorianToHijri`, `hijriToGregorian`, `convertUsingReference`, `gregorianToHijriUsingReference`, `hijriDateToDays`, `addDaysToHijriDate`, the Julian helpers, `isHijriLeapYear`, `_hijriCache`. Month length comes from `NDS.date` (the last day that parses), not from alternation.
 - The async today-reference chain: `_accurateTodays*`, `getTodaysHijriDate`'s `.then`, `initializeHijriCalendarWithParsing`, `fetchAccurateHijriReference`, `storeAccurateHijriData`. Conversion is exact and synchronous, so the picker no longer depends on `NDS.TimeDate`, and a Hijri picker opens without the re-render.
 - `createHijriDate` (owner: removed in v2).
-- `getSaudiDateObject` → a local `siteToday()`: `NDS.date.parse(NDS.date.format(new Date(), { format: 'YYYY-MM-DD' }), { format: 'YYYY-MM-DD' })`.
+- `getSaudiDateObject` → `NDS.date.today()`.
 - `DEFAULT_DATE_FORMAT` → `NDS.date.site.format`.
 
 Keep: `CalendarConfig.gregorian` / `.hijri` with `formatDate`, `parseDate`, `generateCalendarData` and `monthNames` (the picker's own engines, now thin), the `_hijri*` stamp on a `Date` (the picker's data contract, `stampHijri`), and the 1400–1500 year guess that picks the calendar from a prefilled value.
@@ -72,7 +76,7 @@ Verify: `node scripts/doc-check.mjs components/date-picker.md` (owner's go-ahead
 
 ## Step 4: Export (`_js/nds-export.js`)
 
-The file name date (:409, :415) uses `toISOString()`, which is the UTC date: between 00:00 and 03:00 Riyadh time it names yesterday. Use `NDS.date.format(new Date(), { format: 'YYYY-MM-DD' })`. Export reads no dates in the table: a cell exports its text or `data-export-value`. That does not change.
+The file name date (:409, :415) uses `toISOString()`, which is the UTC date: between 00:00 and 03:00 Riyadh time it names yesterday. Use `NDS.date.format(NDS.date.today(), { format: 'YYYY-MM-DD' })`. Export reads no dates in the table: a cell exports its text or `data-export-value`. That does not change.
 
 ## Step 5: docs and records
 

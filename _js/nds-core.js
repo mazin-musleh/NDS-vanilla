@@ -30,6 +30,9 @@
  *     NDS.request(url, opts) → Promise<{isJson, data}>     the shared fetch wrapper
  *     NDS.cache.get / .set (key, value, minutes)           localStorage with expiry
  *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
+ *     NDS.date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
+ *                                      calendar days in any 12-month Intl calendar (hijri =
+ *                                      Umm al-Qura); <html data-timezone / data-date-format>
  *     NDS.announce(text)               say something in the shared live region
  *     NDS.i18n.load(component, scopes) fetch + apply a component's string table (en
  *                                      fallback; stamps data-i18n / data-i18n-attr in scope)
@@ -374,6 +377,136 @@
         try { return n.toLocaleString(`${document.documentElement.lang || 'en'}-u-nu-latn`, opts); }
         catch { return n.toLocaleString('en', opts); }
     };
+
+    // ── Dates ────────────────────────────────────────────────────────
+    // THE date rule: Date Picker, the topbar date and Export parse and print here.
+    // A date is a calendar day: a Date at local midnight, never shifted by a timezone.
+    // The site's timezone (<html data-timezone>) enters only through today().
+    // ponytail: 12 numbered months only (gregory, islamic-*, persian); hebrew/japanese when a site asks.
+    NDS.date = (() => {
+        const TOKENS = /YYYY|YY|MM|M|DD|D/g;
+        const fmts = new Map();
+        const regs = new Map();
+        const warned = new Set();
+        const warnOnce = (msg) => { if (!warned.has(msg)) { warned.add(msg); console.warn('[NDS.date] ' + msg); } };
+        // An Intl.DateTimeFormat costs ICU init; format() on a built one is cheap.
+        const dtf = (locale, opts) => {
+            const key = locale + JSON.stringify(opts);
+            let f = fmts.get(key);
+            if (!f) fmts.set(key, f = new Intl.DateTimeFormat(locale, opts));
+            return f;
+        };
+        const calOf = (c) => (c === 'hijri' ? 'islamic-umalqura' : c || 'gregory');
+        const partsOf = (f, t) => {
+            const p = {};
+            for (const { type, value } of f.formatToParts(t)) p[type] = +value;
+            return { y: p.year, m: p.month, d: p.day };
+        };
+        const local = (t) => { const g = new Date(t); return new Date(g.getUTCFullYear(), g.getUTCMonth(), g.getUTCDate()); };
+        const ymdIn = (cal) => {
+            const f = dtf('en', { calendar: cal, numberingSystem: 'latn', timeZone: 'UTC', year: 'numeric', month: 'numeric', day: 'numeric' });
+            // An unknown calendar silently resolves to gregory: say so.
+            if (f.resolvedOptions().calendar !== cal) warnOnce(`calendar "${cal}" is not supported here`);
+            return f;
+        };
+
+        // Local day → {y, m, d} in cal. Read at UTC noon, so no offset moves the day.
+        function toCal(date, cal) {
+            if (cal === 'gregory') return { y: date.getFullYear(), m: date.getMonth() + 1, d: date.getDate() };
+            return partsOf(ymdIn(cal), Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12));
+        }
+
+        // {y, m, d} in cal → local day, or null when that day does not exist.
+        // Non-gregory: estimate by the mean month, read the guess back in cal, step by the miss.
+        function fromCal(y, m, d, cal) {
+            if (cal === 'gregory') {
+                const t = new Date(y, m - 1, d);
+                return t.getFullYear() === y && t.getMonth() === m - 1 && t.getDate() === d ? t : null;
+            }
+            if (!(m >= 1 && m <= 12 && d >= 1 && d <= 31)) return null;
+            const f = ymdIn(cal);
+            let t = Date.UTC(2000, 0, 1, 12);
+            for (let i = 0; i < 8; i++) {
+                const p = partsOf(f, t);
+                const miss = Math.round(((y - p.y) * 12 + m - p.m) * 29.53) + d - p.d;
+                if (!miss) return p.y === y && p.m === m && p.d === d ? local(t) : null;
+                t += miss * 864e5;
+            }
+            return null; // a day past the month's end never lands
+        }
+
+        function zone() {
+            const tz = document.documentElement.dataset.timezone;
+            if (!tz) return undefined;
+            try { dtf('en', { timeZone: tz }); return tz; }
+            catch { warnOnce(`data-timezone "${tz}" is not a timezone; using the visitor's`); return undefined; }
+        }
+
+        const siteFormat = () => document.documentElement.dataset.dateFormat || 'DD/MM/YYYY';
+
+        const api = {
+            // Live: a script that sets the attributes after load still applies.
+            get site() { return { timeZone: zone(), format: siteFormat() }; },
+
+            // Today in the site's timezone (the visitor's when unset), as a local day.
+            today() {
+                const tz = zone();
+                if (!tz) { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+                const p = partsOf(dtf('en', { timeZone: tz, numberingSystem: 'latn', year: 'numeric', month: 'numeric', day: 'numeric' }), new Date());
+                return new Date(p.y, p.m - 1, p.d);
+            },
+
+            // The caller names the format: 03/04/2026 is ambiguous, so nothing is guessed.
+            parse(text, opts = {}) {
+                const format = opts.format || siteFormat();
+                let re = regs.get(format);
+                if (!re) {
+                    const order = [];
+                    const src = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(TOKENS, (t) => {
+                        order.push(t);
+                        return t === 'YYYY' ? '(\\d{4})' : t.length === 2 ? '(\\d{2})' : '(\\d{1,2})';
+                    });
+                    regs.set(format, re = { rx: new RegExp('^' + src + '$'), order });
+                }
+                // Arabic-Indic and Persian digits → ASCII (low nibble), bidi marks Intl writes in Arabic out.
+                const s = String(text ?? '').replace(/[‎‏؜]/g, '')
+                    .replace(/[٠-٩۰-۹]/g, (c) => c.charCodeAt(0) & 15).trim();
+                const match = s.match(re.rx);
+                if (!match) return null;
+                let y = null, m = 1, d = 1;
+                re.order.forEach((t, i) => {
+                    const v = +match[i + 1];
+                    if (t[0] === 'Y') y = t === 'YY' ? 2000 + v : v; // ponytail: YY reads 20xx; add a year window if 19xx/21xx dates need it
+                    else if (t[0] === 'M') m = v;
+                    else d = v;
+                });
+                return y === null ? null : fromCal(y, m, d, calOf(opts.calendar));
+            },
+
+            // { format } fills the tokens (ASCII digits). Without it, Intl options print the day
+            // in the page language; neither → the site format.
+            format(date, opts = {}) {
+                if (!(date instanceof Date) || isNaN(date)) return '';
+                const { format, calendar, locale, numerals, ...intl } = opts;
+                const cal = calOf(calendar);
+                if (format || !Object.keys(intl).length) {
+                    const { y, m, d } = toCal(date, cal);
+                    return (format || siteFormat()).replace(TOKENS, (t) =>
+                        t === 'YYYY' ? String(y) : t === 'YY' ? String(y).slice(-2)
+                        : String(t[0] === 'M' ? m : d).padStart(t.length, '0'));
+                }
+                const o = { ...intl, calendar: cal, numberingSystem: numerals || 'latn' };
+                try { return dtf(locale || document.documentElement.lang || 'en', o).format(date); }
+                catch { return dtf('en', o).format(date); }
+            },
+
+            convert(text, from, to) {
+                const date = api.parse(text, from);
+                return date && api.format(date, to);
+            }
+        };
+        return api;
+    })();
 
     // ── Run-When-Idle ────────────────────────────────────────────────
     // Defers work to a browser-idle slot via requestIdleCallback, with a
