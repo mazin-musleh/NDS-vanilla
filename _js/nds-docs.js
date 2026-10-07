@@ -674,7 +674,7 @@
     // so the media queries behind breakpoint classes fire on a desktop too, and a popup has a real
     // screen to open in. The screen loads the page's own head and runtime scripts, gets the code
     // shown in its slot, and keeps the card's other parts (a harness).
-    var GUTTER = 24, BEZEL = 12, RADIUS = 36;
+    var BEZEL = 12, RADIUS = 36;
     function frame(card) {
         // A plain card shows its canon as written; a builder's render keeps ndsOut current.
         var canon = document.getElementById(card.getAttribute('data-preview-of'));
@@ -732,12 +732,13 @@
         // The body lays the demo out as the card does, over the whole screen: a longer demo scrolls in it.
         var cs = getComputedStyle(card), lay = ['display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap']
             .map(function (k) { return k + ':' + cs.getPropertyValue(k); }).join(';');
+        // The template's own page gutter, so a screen is as wide as a real page at that size.
         // data-preview-flush: the markup brings its own padding (a section), so it meets the screen edges.
-        var pad = document.getElementById(card.getAttribute('data-preview-of')).hasAttribute('data-preview-flush') ? 0 : GUTTER;
+        var pad = document.getElementById(card.getAttribute('data-preview-of')).hasAttribute('data-preview-flush') ? '0' : 'var(--nds-viewport-padding)';
         // base target: a link opens its page in the window, not in the frame.
         f.srcdoc = '<!doctype html><html ' + root + '><head><base target="_top">' + document.head.innerHTML +
             // No nav in the frame: a panel or sticky part starts at the screen top.
-            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none;--nds-nav-height:0px}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + pad + 'px;' + lay + ';justify-content:flex-start}</style>' +
+            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none;--nds-nav-height:0px}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + pad + ';' + lay + ';justify-content:flex-start}</style>' +
             '</head><body class="nds-doc-preview">' + parts + runtime + '</body></html>';
     }
 
