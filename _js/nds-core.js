@@ -535,18 +535,24 @@
         }
     };
 
+    // ── Subscriber lists (the pooled buses below) ────────────────────
+    const subscribe = (list, sub) => {
+        list.push(sub);
+        return () => { const i = list.indexOf(sub); if (i !== -1) list.splice(i, 1); };
+    };
+    // A callback that calls its own off() shifts the list: step back, or the next subscriber is skipped.
+    const each = (list, call) => {
+        for (let i = 0; i < list.length; i++) { const sub = list[i]; call(sub); if (list[i] !== sub) i--; }
+    };
+
     // ── Window Resize Bus ────────────────────────────────────────────
     // Single listener, 150ms debounce, fan-out to subscribers
     // Usage: const off = NDS.onResize(handler)
     NDS.onResize = (() => {
         const subs = [];
-        const fire = NDS.debounce(() => { for (let i = 0; i < subs.length; i++) subs[i](); }, 150);
+        const fire = NDS.debounce(() => each(subs, fn => fn()), 150);
         window.addEventListener('resize', fire, { passive: true });
-
-        return fn => {
-            subs.push(fn);
-            return () => { const i = subs.indexOf(fn); if (i !== -1) subs.splice(i, 1); };
-        };
+        return fn => subscribe(subs, fn);
     })();
 
     // ── Element Resize Observer ──────────────────────────────────────
@@ -578,7 +584,7 @@
             if (!fns) { fns = new Set(); map.set(el, fns); ro.observe(el); }
             fns.add(fn);
             return () => {
-                fns.delete(fn);
+                if (!fns.delete(fn)) return; // a repeat off() must not unobserve a newer subscriber
                 if (!fns.size) { map.delete(el); ro.unobserve(el); }
             };
         };
@@ -636,23 +642,24 @@
         let started = false;
 
         function dispatch(nodes, subs) {
-            for (let s = 0; s < subs.length; s++) {
-                const hits = [];
+            each(subs, sub => {
+                // A Set: a parent and its child added in one batch both reach the child.
+                const hits = new Set();
                 for (let i = 0; i < nodes.length; i++) {
-                    if (nodes[i].matches(subs[s].sel)) hits.push(nodes[i]);
-                    const ch = nodes[i].querySelectorAll(subs[s].sel);
-                    for (let c = 0; c < ch.length; c++) hits.push(ch[c]);
+                    if (nodes[i].matches(sub.sel)) hits.add(nodes[i]);
+                    const ch = nodes[i].querySelectorAll(sub.sel);
+                    for (let c = 0; c < ch.length; c++) hits.add(ch[c]);
                 }
-                if (hits.length) subs[s].fn(hits);
-            }
+                if (hits.size) sub.fn([...hits]);
+            });
         }
 
         function dispatchParents(parents, subs) {
-            for (let s = 0; s < subs.length; s++) {
+            each(subs, sub => {
                 const hits = [];
-                parents.forEach(p => { if (p.matches(subs[s].sel)) hits.push(p); });
-                if (hits.length) subs[s].fn(hits);
-            }
+                parents.forEach(p => { if (p.matches(sub.sel)) hits.push(p); });
+                if (hits.length) sub.fn(hits);
+            });
         }
 
         function start() {
@@ -691,24 +698,10 @@
         return { addSubs, removeSubs, childrenSubs, start };
     })();
 
-    NDS.onDOMAdd = (sel, fn) => {
-        const sub = { sel, fn };
-        domBus.addSubs.push(sub);
-        domBus.start();
-        return () => { const i = domBus.addSubs.indexOf(sub); if (i !== -1) domBus.addSubs.splice(i, 1); };
-    };
-    NDS.onDOMRemove = (sel, fn) => {
-        const sub = { sel, fn };
-        domBus.removeSubs.push(sub);
-        domBus.start();
-        return () => { const i = domBus.removeSubs.indexOf(sub); if (i !== -1) domBus.removeSubs.splice(i, 1); };
-    };
-    NDS.onChildrenChange = (sel, fn) => {
-        const sub = { sel, fn };
-        domBus.childrenSubs.push(sub);
-        domBus.start();
-        return () => { const i = domBus.childrenSubs.indexOf(sub); if (i !== -1) domBus.childrenSubs.splice(i, 1); };
-    };
+    const onDOM = (list) => (sel, fn) => { domBus.start(); return subscribe(list, { sel, fn }); };
+    NDS.onDOMAdd = onDOM(domBus.addSubs);
+    NDS.onDOMRemove = onDOM(domBus.removeSubs);
+    NDS.onChildrenChange = onDOM(domBus.childrenSubs);
 
     // ── Attribute Change Observer ────────────────────────────────────
     // Single MutationObserver on <html> for attribute changes, selector-based dispatch.
@@ -722,8 +715,6 @@
     const attrNames = new Set();
     let attrMo;
     NDS.onAttrChange = (sel, attrs, fn) => {
-        const sub = { sel, attrs: new Set(attrs), fn };
-        attrSubs.push(sub);
         if (!attrMo) {
             attrMo = new MutationObserver(mutations => {
                 const changed = new Map();
@@ -732,17 +723,17 @@
                     if (!changed.has(el)) changed.set(el, new Set());
                     changed.get(el).add(mutations[i].attributeName);
                 }
-                for (let s = 0; s < attrSubs.length; s++) {
+                each(attrSubs, sub => {
                     const hits = [];
                     changed.forEach((attrs, el) => {
                         // Attribute check before matches(): this observer sees every
                         // attribute write on the page, and matches() is the expensive half.
                         let watched = false;
-                        for (const a of attrs) { if (attrSubs[s].attrs.has(a)) { watched = true; break; } }
-                        if (watched && el.matches(attrSubs[s].sel)) hits.push(el);
+                        for (const a of attrs) { if (sub.attrs.has(a)) { watched = true; break; } }
+                        if (watched && el.matches(sub.sel)) hits.push(el);
                     });
-                    if (hits.length) attrSubs[s].fn(hits);
-                }
+                    if (hits.length) sub.fn(hits);
+                });
             });
         }
         // attributeFilter = the union of every subscriber's names, re-observed as it
@@ -753,7 +744,7 @@
         if (attrNames.size !== before) {
             attrMo.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: [...attrNames] });
         }
-        return () => { const i = attrSubs.indexOf(sub); if (i !== -1) attrSubs.splice(i, 1); };
+        return subscribe(attrSubs, { sel, attrs: new Set(attrs), fn });
     };
 
     // ── State Management (data-state) ─────────────────────────────────
@@ -768,15 +759,13 @@
     //        NDS.State.onAdd(state, scope, fn)    → register hook: fn(el) fires when state added on el matching scope; returns off()
     //        NDS.State.onRemove(state, scope, fn) → register hook: fn(el) fires when state removed; returns off()
     NDS.State = (() => {
-        const _onAdd = {};    // { 'disabled': [{ scope, fn }, ...] }
-        const _onRemove = {};
+        // Null prototype: a token named like an Object.prototype key ('constructor') has no hooks.
+        const _onAdd = Object.create(null);    // { 'disabled': [{ scope, fn }, ...] }
+        const _onRemove = Object.create(null);
 
         function _fire(hooks, token, el) {
             const fns = hooks[token];
-            if (!fns) return;
-            for (let i = 0; i < fns.length; i++) {
-                if (el.matches(fns[i].scope)) fns[i].fn(el, token);
-            }
+            if (fns) each(fns, sub => { if (el.matches(sub.scope)) sub.fn(el, token); });
         }
 
         const parse = el => new Set((el.getAttribute('data-state') || '').split(/\s+/).filter(Boolean));
@@ -830,19 +819,8 @@
             }
         };
 
-        const onAdd = (state, scope, fn) => {
-            const sub = { scope, fn };
-            const list = (_onAdd[state] || (_onAdd[state] = []));
-            list.push(sub);
-            return () => { const i = list.indexOf(sub); if (i !== -1) list.splice(i, 1); };
-        };
-
-        const onRemove = (state, scope, fn) => {
-            const sub = { scope, fn };
-            const list = (_onRemove[state] || (_onRemove[state] = []));
-            list.push(sub);
-            return () => { const i = list.indexOf(sub); if (i !== -1) list.splice(i, 1); };
-        };
+        const onAdd = (state, scope, fn) => subscribe(_onAdd[state] ||= [], { scope, fn });
+        const onRemove = (state, scope, fn) => subscribe(_onRemove[state] ||= [], { scope, fn });
 
         return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove };
     })();
@@ -861,9 +839,10 @@
     const MIRRORS = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
     const _mirrored = new WeakMap();
     const mirrorTokens = (el) => {
+        const cur = NDS.State.parse(el);
+        let mine = _mirrored.get(el);
         for (const token in MIRRORS) {
-            const cls = MIRRORS[token], on = NDS.State.has(el, token);
-            let mine = _mirrored.get(el);
+            const cls = MIRRORS[token], on = cur.has(token);
             if (on && !el.classList.contains(cls)) {
                 el.classList.add(cls);
                 if (!mine) _mirrored.set(el, mine = new Set());
@@ -1193,9 +1172,10 @@
     // Shift+Tab traversal will land on. Excludes [tabindex="-1"] (unreachable
     // by Tab) and disabled form controls. Exposed so component code can
     // reuse the same coverage when querying focusables.
-    NDS.focusableSel =
-        'a[href], button:not([disabled]), textarea:not([disabled]), ' +
-        'input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    NDS.focusableSel = [
+        'a[href]', 'button:not([disabled])', 'textarea:not([disabled])',
+        'input:not([disabled]):not([type="hidden"])', 'select:not([disabled])', '[tabindex]'
+    ].map(s => s + ':not([tabindex="-1"])').join(', ');
 
     // Build a keydown handler that traps Tab/Shift+Tab inside `containerFn()`'s
     // returned element. Pass either a function (re-evaluated on every Tab —
@@ -1338,7 +1318,7 @@
         },
         unlock() {
             if (!document.body.style.top) return;
-            const scrollY = parseInt(document.body.style.top, 10) * -1;
+            const scrollY = -parseFloat(document.body.style.top); // fractional under zoom
             document.body.style.top = '';
             document.body.removeAttribute('data-nds-scroll-lock');
             window.scrollTo(0, scrollY);
@@ -1526,6 +1506,18 @@
         delete el._ndsPortal;
     };
 
+    // Highest z-index on el's ancestor chain: the layer a popup portaled to <body>
+    // must match, or a trigger in the nav, a panel or a modal paints over it.
+    // Usage: const z = NDS.stackingZ(trigger);
+    NDS.stackingZ = (el) => {
+        let z = 0;
+        for (let n = el; n && n !== document.body; n = n.parentElement) {
+            const v = parseInt(getComputedStyle(n).zIndex, 10);
+            if (v > z) z = v;
+        }
+        return z;
+    };
+
     // ── Place `position: fixed` element at viewport coords ─────────────
     // Writes `top`/`left` then measures and corrects. The CSS spec says
     // top/left on a `position: fixed` element resolve against the
@@ -1540,32 +1532,11 @@
     // The transform back-out handles in-flight slide animations on the
     // element itself (e.g. dropmenu's opening translateY).
     // Usage: NDS.placeFixed(menu, top, leftPx);
-    // Highest z-index on el's ancestor chain: the layer a popup portaled to <body>
-    // must match, or a trigger in the nav, a panel or a modal paints over it.
-    // Usage: const z = NDS.stackingZ(trigger);
-    NDS.stackingZ = (el) => {
-        let z = 0;
-        for (let n = el; n && n !== document.body; n = n.parentElement) {
-            const v = parseInt(getComputedStyle(n).zIndex, 10);
-            if (v > z) z = v;
-        }
-        return z;
-    };
-
     NDS.placeFixed = (el, top, left) => {
         el.style.top = top + 'px';
         el.style.left = left + 'px';
         const r = el.getBoundingClientRect();
-        const tm = getComputedStyle(el).transform;
-        let tx = 0, ty = 0;
-        if (tm && tm !== 'none') {
-            const m = tm.match(/matrix\(([^)]+)\)/);
-            if (m) {
-                const parts = m[1].split(',');
-                tx = parseFloat(parts[4]) || 0;
-                ty = parseFloat(parts[5]) || 0;
-            }
-        }
+        const { m41: tx, m42: ty } = new DOMMatrixReadOnly(getComputedStyle(el).transform);
         const dx = (r.left - tx) - left;
         const dy = (r.top  - ty) - top;
         if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
@@ -1573,6 +1544,14 @@
             el.style.left = (left - dx) + 'px';
         }
     };
+
+    // Cached lookup for `.nds-main-nav` — flipPosition fires on every popup
+    // open, so avoiding the repeated qS adds up. `undefined` = never looked up,
+    // null = looked up and absent, element = cached. SPA consumers that swap
+    // the nav DOM on route changes leave a detached element in the cache;
+    // isConnected re-lookups in that case (null stays sticky to avoid
+    // re-querying on every popup when no nav is present).
+    let _navEl;
 
     // ── Viewport Flip-Position Measurement ─────────────────────────────
     // Measures available space around a trigger so popup-like components
@@ -1591,14 +1570,6 @@
     // Usage: const p = NDS.flipPosition(trigger, menu);
     //        const flipUp = p.spaceBelow < p.menuRect.height && p.spaceAbove > p.spaceBelow;
     //        const top = flipUp ? p.triggerRect.top - p.menuRect.height - 4 : p.triggerRect.bottom + 4;
-    // Cached lookup for `.nds-main-nav` — flipPosition fires on every popup
-    // open, so avoiding the repeated qS adds up. `undefined` = never looked up,
-    // null = looked up and absent, element = cached. SPA consumers that swap
-    // the nav DOM on route changes leave a detached element in the cache;
-    // isConnected re-lookups in that case (null stays sticky to avoid
-    // re-querying on every popup when no nav is present).
-    let _navEl;
-
     NDS.flipPosition = (trigger, menuEl, opts = {}) => {
         const { respectNav = true, navGap = 16 } = opts;
         const triggerRect = trigger.getBoundingClientRect();
@@ -1750,7 +1721,7 @@
         history.scrollRestoration = 'auto';
         let pending = 0;
         window.addEventListener('pagehide', () => {
-            try { sessionStorage.setItem(KEY, window.scrollY || pending); } catch {}
+            try { sessionStorage.setItem(KEY, pending || window.scrollY); } catch {}
         });
         const navType = (performance.getEntriesByType('navigation')[0] || {}).type;
         if (navType === 'reload' || navType === 'back_forward') {
@@ -1765,10 +1736,9 @@
                 };
                 if (root.hasAttribute('data-nds-loaded')) restore();
                 else {
-                    const mo = new MutationObserver(() => {
-                        if (root.hasAttribute('data-nds-loaded')) { mo.disconnect(); restore(); }
+                    const off = NDS.onAttrChange('html', ['data-nds-loaded'], () => {
+                        if (root.hasAttribute('data-nds-loaded')) { off(); restore(); }
                     });
-                    mo.observe(root, { attributes: true, attributeFilter: ['data-nds-loaded'] });
                 }
                 window.addEventListener('load', restore);                   // fallback
             }
