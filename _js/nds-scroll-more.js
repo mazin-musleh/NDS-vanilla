@@ -81,10 +81,10 @@
         const content = wrapper._content || wrapper.querySelector(CONFIG.selectors.content);
         if (!content) return;
         const axis = detectAxis(content);
-        if (!axis) return () => {
+        if (!axis) return wrapper.hasAttribute('data-axis') ? Object.assign(() => {
             wrapper.removeAttribute('data-axis');
             removeState(wrapper, CONFIG.overflow.hasMore, CONFIG.overflow.atStart, CONFIG.overflow.atEnd);
-        };
+        }, { clears: true }) : undefined;
         const pos = scrollPos(content, axis), maxScroll = maxScrollOf(content, axis);
         return () => {
             wrapper.setAttribute('data-axis', axis);
@@ -181,7 +181,12 @@
         // initial callback runs the first measure, so init stays free of
         // forced layout and hidden (display:none) instances measure on reveal.
         // Watch the wrapper: the button and padding measure() stamps shrink the content, a self-resize (RO loop error).
-        wrapper._offResizeObs = NDS.onElementResize(wrapper, () => measure(wrapper));
+        // Clearing them shrinks a wrapper its content sizes, so that write lands next frame, re-checked.
+        wrapper._offResizeObs = NDS.onElementResize(wrapper, () => {
+            const write = measure(wrapper);
+            if (!write?.clears) return write;
+            requestAnimationFrame(() => { if (wrapper._offResizeObs) checkOverflow(wrapper); });
+        });
         wrapper.setAttribute('data-nds-scroll-more-initialized', 'true');
     }
 
