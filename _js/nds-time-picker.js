@@ -115,9 +115,10 @@
 
     // Per-format regex + capture order, cached. Literals between tokens are
     // escaped so a format like "hh.mm A" can't smuggle in regex syntax.
-    const _parseCache = {};
+    // A Map, not an object: a format named "constructor" would hit the prototype.
+    const _parseCache = new Map();
     function getParseConfig(format) {
-        if (_parseCache[format]) return _parseCache[format];
+        if (_parseCache.has(format)) return _parseCache.get(format);
         const order = [];
         let source = '';
         let last = 0;
@@ -129,7 +130,9 @@
             return token;
         });
         source += format.slice(last).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        return (_parseCache[format] = { re: new RegExp('^\\s*' + source + '\\s*$'), order });
+        const config = { re: new RegExp('^\\s*' + source + '\\s*$'), order };
+        _parseCache.set(format, config);
+        return config;
     }
 
     // Typed text → seconds since midnight, or null. Accepts either language's
@@ -177,7 +180,7 @@
 
     // No .nds-select-value carrier on purpose — see the banner. The picks live
     // in JS; these selects are the view.
-    // nds-darker: the filled form-container variant (_forms.scss:522). The units
+    // nds-darker: the filled form-container variant (.nds-darker in _forms.scss). The units
     // sit on the panel's own surface, so a bordered field on it reads as a box in
     // a box — the filled style separates them without extra CSS.
     // The id is not decoration: a form field with neither id nor name trips HTML
@@ -362,16 +365,15 @@
 
             const signal = this.panelAbortController.signal;
             this.unitEls = {};
+            // Custom-select's delegated option-click listener installs in ITS init(),
+            // which the loader skips when the page's only .nds-select-inputs are the
+            // ones we just generated (it gates on a live querySelector). Idempotent.
+            NDS.CustomSelect.init();
             this.units.forEach((u) => {
                 const el = panel.querySelector('[data-time-picker-unit="' + u + '"]');
                 this.unitEls[u] = el;
                 // Before create(): custom-select reads the input while building.
                 el.querySelector('.nds-select-input').id = this.uid + '-' + u;
-                // Custom-select's delegated option-click listener installs in ITS
-                // init(), which the loader skips when the page's only
-                // .nds-select-inputs are the ones we just generated (it gates on a
-                // live querySelector). Idempotent — it guards on its own _initDone.
-                NDS.CustomSelect.init();
                 NDS.CustomSelect.create(el);
                 // nds:customselect:change fires on the form-control and does NOT
                 // bubble, so it binds per unit, never on the panel.
@@ -483,15 +485,15 @@
             const input = this.elements.input;
             const carrier = this.elements.carrier;
 
-            if (input.value !== display) {
-                input.value = display;
-                NDS.triggerEvents(input);
-            }
-            if (carrier && carrier.value !== stable) {
-                carrier.value = stable;
-                NDS.triggerEvents(carrier);
-            }
+            const inputChanged = input.value !== display;
+            const carrierChanged = carrier && carrier.value !== stable;
+            if (inputChanged) input.value = display;
+            if (carrierChanged) carrier.value = stable;
+            // Before the events: forms' input handler reads the validity, and a stale
+            // message would keep an error painted on a value that is now valid.
             this._validateInput();
+            if (inputChanged) NDS.triggerEvents(input);
+            if (carrierChanged) NDS.triggerEvents(carrier);
         }
 
         // A hand-typed edit: parse it, adopt it, and let the panel catch up.
@@ -501,7 +503,6 @@
             const secs = parseTyped(raw, this.format);
             if (secs === null || !this._inBounds(secs, secs)) { this._validateInput(); return; }
             this._adopt(secs);
-            this._validateInput();
         }
 
         getValue() {
@@ -513,7 +514,6 @@
             const secs = parse24(value);
             if (secs === null || !this._inBounds(secs, secs)) return false;
             this._adopt(secs);
-            this._validateInput();
             return true;
         }
 
@@ -523,7 +523,6 @@
                 this.syncUnits();
                 this.updateInput();
             });
-            this._validateInput();
             return true;
         }
 
@@ -695,6 +694,13 @@
             fc.removeAttribute('data-dropmenu-no-keys');
             fc.removeAttribute('data-anchor');
             NDS.State.remove(this.elements.container, 'open');
+            // Nothing is left to clear the picker's own error, so it would block submit for good.
+            // Only that one: a status forms or the page set stays.
+            if (this.elements.input.validity.customError) {
+                this.elements.input.setCustomValidity('');
+                // Soft dependency — as in _validateInput.
+                NDS.Forms?.clearStatus?.(this.elements.container);
+            }
             this.elements.container.removeAttribute('data-nds-time-picker-initialized');
             delete this.elements.input._ndsTimePicker;
         }
