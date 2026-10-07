@@ -171,7 +171,7 @@
             : target instanceof Date ? target.getTime() : parseIso(target);
         if (!Number.isFinite(t)) {
             console.warn('NDS Countdown: target is not a date or a number of seconds', el);
-            return;
+            return false;
         }
         const swap = endedSwap.get(el);
         if (swap) {
@@ -204,11 +204,11 @@
         items.set(el, it);
         render(el, it);
         if (items.has(el)) schedule();
+        return true;
     }
 
     function wire(el) {
         if (el.hasAttribute(WIRED_ATTR) || el.closest('code, .code-example')) return;
-        el.setAttribute(WIRED_ATTR, '');
         const src = el.closest('[data-countdown-now]');
         if (src) {
             const t = parseIso(src.getAttribute('data-countdown-now'));
@@ -217,7 +217,8 @@
         }
         if (!el.querySelector('[data-unit]')) el.insertAdjacentHTML('afterbegin', DEFAULT_MARKUP);
         const seconds = el.getAttribute('data-countdown-seconds');
-        track(el, seconds !== null ? parseInt(seconds, 10) : el.getAttribute('data-countdown'));
+        // Stamped only on success, so reinit() retries a target filled in later.
+        if (track(el, seconds !== null ? parseInt(seconds, 10) : el.getAttribute('data-countdown'))) el.setAttribute(WIRED_ATTR, '');
     }
 
     function init() {

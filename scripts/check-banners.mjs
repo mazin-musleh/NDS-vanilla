@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-// The single source of truth for which files carry a banner: 54 components + core, loader,
+// The single source of truth for which files carry a banner: 55 components + core, loader,
 // accessibility, theme. ns = the NDS.<Name> namespace Methods verify against; null =
 // multi-namespace file (core) — its banner Methods verify existence-only.
 // Exclusions live in EXCLUDED below, not in this comment: --all asserts SCOPE ∪ EXCLUDED
@@ -39,6 +39,7 @@ const SCOPE = [
     ['nds-cookies.js', 'Cookies'],
     ['nds-cooldown-button.js', 'CooldownButton'],
     ['nds-copy.js', 'Copy'],
+    ['nds-countdown.js', 'Countdown'],
     ['nds-core.js', null],
     ['nds-customselect.js', 'CustomSelect'],
     ['nds-date-picker.js', 'DatePicker'],
