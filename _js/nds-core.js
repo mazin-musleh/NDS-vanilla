@@ -1683,12 +1683,32 @@
         function watch(grid) {
             if (offs.has(grid)) return;
             const first = grid.firstElementChild;
-            offs.set(grid, first ? NDS.onElementResize(first, () => mark(grid)) : () => {});
+            offs.set(grid, first ? NDS.onElementResize(first, () => (held(grid) ? undefined : mark(grid))) : () => {});
             if (releasing) return;
             releasing = true;
             NDS.onDOMRemove(SEL, (grids) => grids.forEach(unwatch));
             // A re-observed first item delivers again, so the grid re-marks in the observer without forcing layout.
             NDS.onChildrenChange(SEL, (grids) => grids.forEach((g) => { if (offs.has(g)) { unwatch(g); watch(g); } }));
+        }
+
+        // Before the reveal, off-screen sections are content-visibility:auto, and Chrome
+        // tracks their size with its own observer: a mark that resizes one raises the
+        // "ResizeObserver loop" error. Those grids mark once data-nds-loaded drops cv, still off-screen.
+        const root = document.documentElement;
+        const waiting = new Set();
+        function held(grid) {
+            if (root.hasAttribute('data-nds-loaded')) return false;
+            const sec = grid.closest('.nds-content-section');
+            if (!sec || sec.getBoundingClientRect().top < innerHeight || getComputedStyle(sec).contentVisibility !== 'auto') return false;
+            if (!waiting.size) {
+                const off = NDS.onAttrChange('html', ['data-nds-loaded'], () => {
+                    off();
+                    waiting.forEach((g) => { if (g.isConnected) { unwatch(g); watch(g); } });
+                    waiting.clear();
+                });
+            }
+            waiting.add(grid);
+            return true;
         }
 
         function gridsIn(container) {
