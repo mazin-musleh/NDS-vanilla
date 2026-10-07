@@ -102,7 +102,7 @@ Cleared at the 1.12.0 release (2026-09-05). That release shipped the swiper loop
 
 - **Release notes, Definition list — Fixed:** `nds-md` and `nds-sm` titles no longer shrink on phones (to 12px and 10px, below their values); they keep 16px and 14px on every screen.
 
-- **Release notes, Tabs — Fixed:** a tab set in a card no longer doubles the panel padding; Home and End go to the first and the last tab in RTL too (Content Switcher shares this); a tab set in a column that centers its items keeps its full width; a vertical divided tab keeps its icon before the label and starts at the edge.
+- **Release notes, Tabs — Fixed:** a tab set in a card no longer doubles the panel padding; Home and End go to the first and the last tab in RTL too (Content Switcher shares this); a tab set in a column that centers its items keeps its full width; a vertical divided tab keeps its icon before the label and starts at the edge. A tab set inside a tab panel, or inside a Content Switcher panel, keeps its own look; it took the outer set's direction, size, divider and joined-button skin.
 
 - **Release notes, Scroll More — Changed:** `--scroll-max-width` defaults to `100%` (was `none`), so a wrapper never grows wider than its container and wide content scrolls; set `none` to restore the old behavior.
 

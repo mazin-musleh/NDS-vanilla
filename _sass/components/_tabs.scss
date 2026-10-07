@@ -19,6 +19,10 @@
 
 @use '../mixins' as *;
 
+// A tab set reaches its own parts with `>`, so a tab set nested in a panel takes
+// none of its parent's layout. The strip: in its scroll wrapper, or bare (content switcher).
+$strip: ':is(.nds-tab-list-container, .nds-tab-list)';
+
 // ==============================================
 // TAB CONTAINER
 // ==============================================
@@ -42,7 +46,7 @@
   // the geometry (inset-inline-end / height / width) to render a full-height
   // rail at the inline-end edge instead of a 3px bar at the bottom.
   &.nds-divided {
-    .nds-tab-list-container::after {
+    > .nds-tab-list-container::after {
       content: '';
       position: absolute;
       bottom: 0;
@@ -53,7 +57,7 @@
       z-index: -1;
     }
 
-    .nds-tab {
+    > #{$strip} .nds-tab {
       margin-bottom: var(--btn-indicator-size);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 
@@ -67,7 +71,8 @@
   &.nds-vertical {
     flex-direction: row;
 
-    .nds-tab-list {
+    > .nds-tab-list-container > .nds-tab-list,
+    > .nds-tab-list {
       flex-direction: column;
       flex-wrap: nowrap;
       min-width: fit-content;
@@ -77,11 +82,11 @@
       top: var(--nds-nav-height);
     }
 
-    .nds-show-more {
+    > .nds-tab-list-container .nds-show-more {
       display: none !important;
     }
 
-    .nds-tab {
+    > #{$strip} .nds-tab {
       border-radius: var(--radius-sm);
       width: 100%;
       justify-content: start;
@@ -89,7 +94,7 @@
     }
 
     &.nds-divided {
-      .nds-tab {
+      > #{$strip} .nds-tab {
         margin-bottom: unset;
         border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 
@@ -108,7 +113,7 @@
         }
       }
 
-      .nds-tab-list-container::after {
+      > .nds-tab-list-container::after {
         inset-inline-end: 0;
         height: 100%;
         width: var(--btn-indicator-size);
@@ -126,13 +131,14 @@
   // fall back to the base start-align.
   // Centering rides the --_tabs-fit-* hooks from the scroll-more host: a `.nds-center`
   // tail after [data-state] would join the shared invalidation set (PERF-06).
-  .nds-scroll-more:not([data-state~="has-more"]) {
+  > .nds-scroll-more:not([data-state~="has-more"]) {
     --_tabs-fit-justify: center;
     --_tabs-fit-width: fit-content;
     --_tabs-fit-margin: auto;
   }
 
-  .nds-tab-list:is(.nds-center, .center) {
+  > .nds-tab-list-container > .nds-tab-list:is(.nds-center, .center),
+  > .nds-tab-list:is(.nds-center, .center) {
     justify-content: var(--_tabs-fit-justify, normal);
     width: var(--_tabs-fit-width, auto);
     margin-inline: var(--_tabs-fit-margin, 0);
@@ -190,7 +196,7 @@
   // against the button's 24 / 32 / 40. .nds-md needs no rule — 40px is already
   // the button default. Set on the tab, not the root: a root declaration would
   // leak --btn-size into every button inside the panels.
-  .nds-tabs.nds-sm & {
+  .nds-tabs.nds-sm > #{$strip} & {
     --btn-size: 32px;
     // Same reason as the button's own 32px rung: pin to text-sm so LH lands on
     // the design system's 20, not the calc's 21.
@@ -198,7 +204,7 @@
     --btn-LH: var(--typo-text-sm-LH);
   }
 
-  .nds-tabs.nds-lg & {
+  .nds-tabs.nds-lg > #{$strip} & {
     --btn-size: 48px;
   }
 
@@ -233,7 +239,8 @@
 // ==============================================
 
 .nds-tabs:not(.nds-vertical) {
-  .nds-tab-list {
+  > .nds-tab-list-container > .nds-tab-list,
+  > .nds-tab-list {
     flex-wrap: nowrap !important;
     max-width: 100%;
     scroll-behavior: smooth;
@@ -314,14 +321,14 @@
     border: 0;
   }
 
-  .nds-tab-content {
+  > .nds-tab-content {
     padding-inline: var(--_card-padding-inline);
     padding-block: var(--spacing-2xl);
 
     // Card variant zeroes the panel padding (the tab-content already
     // supplies the card gutter). Overrides still route through the knobs
     // so a consumer's --tab-panel-padding{,-inline,-block} still wins.
-    .nds-tab-panel {
+    > .nds-tab-panel {
       --_tab-panel-padding-inline: var(--tab-panel-padding-inline, var(--tab-panel-padding, 0));
       --_tab-panel-padding-block: var(--tab-panel-padding-block, var(--tab-panel-padding, 0));
     }
@@ -332,12 +339,12 @@
     padding: 0;
     overflow: hidden;
 
-    .nds-tab {
+    > #{$strip} .nds-tab {
       --btn-height: calc(var(--btn-size) * 1.25);
     }
   }
 
-  &.nds-vertical .nds-tab-content {
+  &.nds-vertical > .nds-tab-content {
     padding-inline-end: 0;
     padding-block: 0;
   }
@@ -348,7 +355,7 @@
   --card-width: 100%;
   margin-block-start: var(--spacing-xl);
 
-  .nds-vertical>& {
+  .nds-tabs.nds-vertical>& {
     margin-block-start: 0;
     margin-inline-start: var(--spacing-xl);
   }
@@ -360,7 +367,7 @@
 
   // Same shape as the .nds-tabs.nds-card branch — zero by default
   // (tab-content owns the gutter), but consumer's public knobs still win.
-  .nds-tab-panel {
+  > .nds-tab-panel {
     --_tab-panel-padding-inline: var(--tab-panel-padding-inline, var(--tab-panel-padding, 0));
     --_tab-panel-padding-block: var(--tab-panel-padding-block, var(--tab-panel-padding, 0));
   }
@@ -370,7 +377,7 @@
 // FULL-WIDTH RESPONSIVE OVERRIDES
 // ==============================================
 
-.nds-content-layout.nds-cardView .nds-ghost,
+.nds-content-layout.nds-card-view .nds-ghost,
 section>.nds-max-width {
   .nds-tabs:not(.nds-card) {
     @include tablet(max) {
@@ -393,7 +400,7 @@ section>.nds-max-width {
 // so the tab strip lays out horizontally before scroll-more JS initializes.
 // ==============================================
 
-.nds-tabs:not(.nds-vertical) .nds-tab-list-container {
+.nds-tabs:not(.nds-vertical) > .nds-tab-list-container {
   --scroll-fade: 48px;
   --scroll-divider: var(--divider-color);
   width: 100%;
