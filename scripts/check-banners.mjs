@@ -98,9 +98,12 @@ const EXCLUDED = new Set([
     'nds-theme-hajj.js',
 ]);
 
-// Event literals a file dispatches that its banner deliberately omits, keyed by file name.
+// Event literals the scan counts as dispatched that the banner rightly omits, keyed by file name.
 // Every shipped event now carries the nds: prefix, so verifyFile's gate covers them all.
-const EVENT_EXCEPTIONS = {};
+const EVENT_EXCEPTIONS = {
+    // Listened for through a name array, so clause 1 of extractEvents can't see the listener.
+    'nds-forms.js': ['nds:upload:selected', 'nds:upload:success', 'nds:upload:error'],
+};
 
 // A dispatched literal ending in ':' is a concatenation prefix, not an event name —
 // tables builds its sub-row events as 'nds:table:' + verb. It stands in for every banner
@@ -175,17 +178,12 @@ function keysFromBlock(lines, start) {
         }
         if (depth <= 0) break;
         if (depthAtStart !== 1) continue;
-        const m = line.match(/^\s*(?:async\s+)?(?:get\s+|set\s+)?([A-Za-z_$][\w$]*)\s*[:(]/);
-        if (m) {
-            if (!RESERVED.has(m[1])) keys.add(m[1]);
-            continue;
-        }
-        // Shorthand keys, one or several to a line: `reset,` or `open, close, toggle,`.
-        const shorthand = line.match(/^\s*([A-Za-z_$][\w$]*(?:\s*,\s*[A-Za-z_$][\w$]*)*)\s*,?\s*$/);
-        if (!shorthand) continue;
-        for (const name of shorthand[1].split(',')) {
-            const key = name.trim();
-            if (key && !RESERVED.has(key)) keys.add(key);
+        // Every key on the line, one or several: `reset,` · `init, reinit: x, refresh: () => {…},`.
+        // Inner (…) and {…} are blanked first so their commas don't split a value.
+        const flat = line.replace(/\([^()]*\)/g, '()').replace(/\{[^{}]*\}/g, '{}');
+        for (const part of flat.split(',')) {
+            const m = part.match(/^\s*(?:async\s+)?(?:get\s+|set\s+)?([A-Za-z_$][\w$]*)\s*(?:[:(]|$)/);
+            if (m && !RESERVED.has(m[1])) keys.add(m[1]);
         }
     }
     return keys;
