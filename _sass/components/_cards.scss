@@ -121,7 +121,7 @@
     border: 1px solid var(--_card-border);
   }
 
-  &.nds-rowView {
+  &.nds-horizontal {
     flex-direction: row;
     // Actions are a SIBLING of the content, so a row card would line them up
     // beside it — squeezing the text and pushing the buttons past the card
@@ -228,7 +228,7 @@
     display: flex;
     gap: var(--spacing-xl);
 
-    &:is(:has(.nds-close), .nds-rowView) {
+    &:is(:has(.nds-close), .nds-horizontal) {
       width: 100%;
       flex-direction: row;
       justify-content: space-between;
@@ -433,12 +433,12 @@
     margin-inline-end: var(--_card-status-shift, 0);
   }
 
-  &.nds-rowView .nds-card-status {
+  &.nds-horizontal .nds-card-status {
     margin-inline: 0;
   }
 
-  // A narrow row card stacks again (see .nds-rowView), so the tag returns to the end.
-  &.nds-rowView {
+  // A narrow row card stacks again (see .nds-horizontal), so the tag returns to the end.
+  &.nds-horizontal {
     @container (width < 324px) {
       .nds-card-status {
         margin-inline-start: auto;
@@ -456,7 +456,7 @@
 
   // A row header is only a column around the icon, so the tag stays under it.
   // Once a narrow row card stacks, the header spans the card again: back out.
-  &.nds-rowView:is(.nds-center, .nds-statistic) {
+  &.nds-horizontal:is(.nds-center, .nds-statistic) {
     .nds-card-status {
       position: static;
     }

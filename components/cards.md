@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="cardOverview" class="nds-content-section nds-doc-overview">
@@ -270,7 +270,7 @@ Pick another component when:
 | Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-tag:not([data-status])` | Tags do not follow the card either. Give each standard tag `.nds-oncolor`. A status tag keeps its colors |
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
 | Layout | Stacked (default) | — | — | Header above content |
-| Layout | Row (hint: Header beside the content) | `.nds-rowView` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
+| Layout | Row (hint: Header beside the content) | `.nds-horizontal` | `.nds-card` | Header beside content. The card stacks again when it is narrower than 324px |
 | Layout | Center | `.nds-center` | `.nds-card:not(.nds-statistic)` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
 | Full width | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
 | Number size | LG (default) | — | `.nds-card-number` | The display size |

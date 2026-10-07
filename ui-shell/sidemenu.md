@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="sidemenuOverview" class="nds-content-section nds-doc-overview">
@@ -42,7 +42,7 @@ The main links of the site belong in the [Main Navigation](../ui-shell/mainnav),
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="sidemenu-canon" data-canon data-preview="page" data-preview-height="520" data-variants="sidemenuVariantsTable">
-<div class="nds-content-layout nds-wSideMenu">
+<div class="nds-content-layout nds-has-sidemenu">
   <aside class="nds-sidemenu" aria-label="Sidebar">
     <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden>
       <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
@@ -122,7 +122,7 @@ The main links of the site belong in the [Main Navigation](../ui-shell/mainnav),
 </div>
 </script>
 <script type="text/html" id="sidemenu-grouped" data-canon>
-<div class="nds-content-layout nds-wSideMenu">
+<div class="nds-content-layout nds-has-sidemenu">
   <aside class="nds-sidemenu" aria-label="Sidebar">
     <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden>
       <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
@@ -344,7 +344,7 @@ The main links of the site belong in the [Main Navigation](../ui-shell/mainnav),
 
 | Part | Holds | Required |
 |---|---|---|
-| `.nds-content-layout.nds-wSideMenu` | The side menu, then `.nds-content`. Without `nds-wSideMenu`, the layout hides the side menu. See [Page Layout](../layout/page-layout) | Yes |
+| `.nds-content-layout.nds-has-sidemenu` | The side menu, then `.nds-content`. Without `nds-has-sidemenu`, the layout hides the side menu. See [Page Layout](../layout/page-layout) | Yes |
 | `aside.nds-sidemenu` | The menu button and the drawer. Give it an `aria-label`. One per page | Yes |
 | `button.nds-sidemenu-toggle` | The button that opens the menu below 960px: an icon and a `.nds-label`. Write it with `hidden` and an `aria-label` | Yes |
 | `nav.nds-drawer` | The list: a `.nds-scroll-more` with the `ul.nds-drawer-list` and the show more button. See [Drawer](../components/drawer) | Yes |
@@ -483,7 +483,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 - Use two levels for most sites. A third level hides pages two clicks deep.
 - Pick Top bar for a short list, and Slide-in for a long one that people scroll.
 - Do not write color classes on the menu button. Each mode styles it.
-- On a page with no side menu, remove the `aside` and `nds-wSideMenu` together.
+- On a page with no side menu, remove the `aside` and `nds-has-sidemenu` together.
 
 </div>
   </div>

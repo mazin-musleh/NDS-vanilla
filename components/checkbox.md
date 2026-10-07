@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="checkboxOverview" class="nds-content-section nds-doc-overview">
@@ -126,7 +126,7 @@ A row on `.nds-check` (every `<input>`) or `.nds-check-container` changes every 
 | Validation | At least 2 + At most 3 | `[data-max-checked="3"]` | `.nds-check-group` | The same |
 | Disabled | Disabled | `[disabled]` | `.nds-check` | The user cannot change these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-check-container` | The options show their value but cannot change, by pointer or by keyboard. The tile shows a border only, and a checked tile keeps its mark |
-| Layout | Row | `.nds-rowView` | `.nds-check-group` | The options sit side by side and wrap |
+| Layout | Row | `.nds-horizontal` | `.nds-check-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #checkboxVariantsTable .nds-table .nds-responsive}
 

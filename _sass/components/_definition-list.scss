@@ -121,22 +121,22 @@
     }
 
     // Always-on tableView
-    &.nds-tableView:not([class*="nds-tableView-"]) {
+    &.nds-table-view:not([class*="nds-table-view-"]) {
         @include dl-tableView;
     }
 
     // Responsive variants
-    &.nds-tableView-sm {
+    &.nds-table-view-sm {
         @include mobile { @include dl-tableView; }
     }
-    &.nds-tableView-md {
+    &.nds-table-view-md {
         @include tablet { @include dl-tableView; }
     }
-    &.nds-tableView-lg {
+    &.nds-table-view-lg {
         @include desktop('min') { @include dl-tableView; }
     }
 
-    &.nds-rowView {
+    &.nds-horizontal {
         @include dl-rowView;
     }
 }
@@ -216,16 +216,16 @@
     @include dl-divided-stacked;
 
     // TableView divided overrides
-    &.nds-tableView:not([class*="nds-tableView-"]) {
+    &.nds-table-view:not([class*="nds-table-view-"]) {
         @include dl-divided-tableView;
     }
-    &.nds-tableView-sm {
+    &.nds-table-view-sm {
         @include mobile { @include dl-divided-tableView; }
     }
-    &.nds-tableView-md {
+    &.nds-table-view-md {
         @include tablet { @include dl-divided-tableView; }
     }
-    &.nds-tableView-lg {
+    &.nds-table-view-lg {
         @include desktop('min') { @include dl-divided-tableView; }
     }
 }

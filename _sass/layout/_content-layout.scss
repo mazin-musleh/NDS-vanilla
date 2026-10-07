@@ -27,7 +27,7 @@ main {
     width: 100%;
 
     @include desktop(min) {
-        &.nds-wSideMenu {
+        &.nds-has-sidemenu {
             grid-template-columns: var(--nds-sidemenu-width) 1fr;
         }
     }
@@ -35,7 +35,7 @@ main {
     // Row 1 holds a top bar side menu at its own height (empty for the fixed slide-in
     // one); stretched auto rows would grow the bar on a short page.
     @include tablet(max) {
-        &.nds-wSideMenu {
+        &.nds-has-sidemenu {
             grid-template-rows: auto 1fr;
             row-gap: 0;
 
@@ -90,13 +90,13 @@ main {
 
     // cardView is exempt: its gutters and card gaps ARE the presentation, so
     // full-width widens the page around it without flattening the cards.
-    body.nds-full-width &:not(.nds-cardView) {
+    body.nds-full-width &:not(.nds-card-view) {
         padding: 0;
 
         // The knobs sit on .nds-content, so they beat cardView's
         // root-level values by inheritance proximity — hence the exemption
         // has to repeat here, not just on the padding above.
-        &:is(.nds-wSideMenu, .nds-wSideInfo) .nds-content {
+        &:is(.nds-has-sidemenu, .nds-has-sideinfo) .nds-content {
             --content-padding-block: 0;
             --content-padding-inline: 0;
             --content-gap: 0;
@@ -105,12 +105,12 @@ main {
 
     /* ── No sidebar ── */
 
-    &:not(.nds-wSideMenu, .nds-wSideInfo) {
+    &:not(.nds-has-sidemenu, .nds-has-sideinfo) {
         @include desktop(min) {
             --section-padding-block: var(--spacing-7xl);
         }
 
-        &:not(.nds-cardView) .nds-user-feedback-section {
+        &:not(.nds-card-view) .nds-user-feedback-section {
             --section-padding-block: var(--spacing-5xl);
         }
 
@@ -128,7 +128,7 @@ main {
 
     /* ── Card view ── */
 
-    &.nds-cardView {
+    &.nds-card-view {
         --section-padding-block: var(--nds-viewport-padding);
         --layout-gap: var(--spacing-xl);
         --content-padding-block: var(--spacing-xl);
@@ -185,7 +185,7 @@ main {
 
     /* ── Side menu layout ── */
 
-    &.nds-wSideMenu {
+    &.nds-has-sidemenu {
         .nds-content-section {
             @include desktop(min) {
                 --_section-shadow-base: var(--shadow-md);
@@ -204,7 +204,7 @@ main {
     }
 
     @include desktop(min) {
-        &.nds-wSideMenu {
+        &.nds-has-sidemenu {
             margin-inline: auto;
             padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
         }
@@ -212,7 +212,7 @@ main {
         // Edge-to-edge wins over the centring gutter above — higher specificity
         // (0,3,1), so it holds regardless of source order. cardView keeps its
         // own gutter, same exemption as the padding reset.
-        body.nds-full-width &.nds-wSideMenu:not(.nds-cardView) {
+        body.nds-full-width &.nds-has-sidemenu:not(.nds-card-view) {
             margin-inline: 0;
             padding-inline: 0;
         }
@@ -236,7 +236,7 @@ main {
     // Opt-in: .nds-stripe on .nds-content, at every width and with or
     // without a side menu. The :not() list is the per-section opt-out.
     // .nds-odd flips the parity, for pages whose first section should be tinted.
-    &:not(.nds-cardView) .nds-content.nds-stripe {
+    &:not(.nds-card-view) .nds-content.nds-stripe {
         &:not(.nds-odd) {
             @include _section-striping(even, odd);
         }

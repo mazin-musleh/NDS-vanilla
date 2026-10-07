@@ -257,7 +257,7 @@
 // it, and a carded step gets its alignment from the card's own lift and padding, so
 // nudging the divider as well would double it. Both re-read the public knob rather
 // than hardcoding, so a consumer's value still wins.
-.nds-stepper:is(.nds-dot, .nds-cardView) .nds-stepper-content {
+.nds-stepper:is(.nds-dot, .nds-card-view) .nds-stepper-content {
     --_divider-lift: var(--divider-lift, 0);
 }
 
@@ -444,7 +444,7 @@
     // Carded steps carry their own height and padding, so they need far less
     // air between them. A dot is small enough that the roomy default still
     // reads right, so it keeps it.
-    &.nds-cardView:not(.nds-dot) {
+    &.nds-card-view:not(.nds-dot) {
         --_stepper-gap: var(--stepper-gap, calc(var(--stepper-size) / 2));
     }
 
@@ -530,7 +530,7 @@
     // would otherwise drop that row below it. Transform, not margin: the connector
     // line is measured on .nds-stepper-base, so moving the box in layout would leave
     // the line short of the next circle.
-    &.nds-cardView {
+    &.nds-card-view {
         // Scales with the circle, so the size classes carry it for free. A dot is half
         // the diameter of a numbered circle yet needs the larger lift: the circle's own
         // height already covers most of the box padding, a dot's does not.
@@ -552,7 +552,7 @@
 
     // On a colored background the surface takes the same translucent white as
     // .nds-card.nds-oncolor, so a carded step and a real card read alike.
-    &.nds-oncolor.nds-cardView .nds-stepper-content {
+    &.nds-oncolor.nds-card-view .nds-stepper-content {
         background-color: var(--colors-alpha-white-10);
         border-color: var(--colors-alpha-white-20);
     }
@@ -703,11 +703,11 @@
     // base, so carding the lone content box would leave the ring outside it. No lift:
     // there is no circle to line up with. Horizontal has no card view: its content
     // sits under the circle in a row of equal columns, and boxing each one fights the line.
-    &.nds-cardView {
+    &.nds-card-view {
         @include stepper-card-surface;
     }
 
-    &.nds-oncolor.nds-cardView {
+    &.nds-oncolor.nds-card-view {
         background-color: var(--colors-alpha-white-10);
         border-color: var(--colors-alpha-white-20);
     }

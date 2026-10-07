@@ -272,8 +272,8 @@
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/topbar.html#dgaDigitalStamp"
-  js: _js/nds-digitalStamp.js
-  scss: _sass/components/_DGAdigitalStamp.scss
+  js: _js/nds-digital-stamp.js
+  scss: _sass/components/_digital-stamp.scss
 
 - title: "Divider"
   description: "Horizontal or vertical rule with optional centered label"

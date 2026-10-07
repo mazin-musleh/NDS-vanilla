@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="dlOverview" class="nds-content-section nds-doc-overview">
@@ -143,14 +143,14 @@ The Layout, Style, Size and Loading rows go on the list. The two Cards rows are 
 | Structure | Feature list | canon `#dl-features` | — | Plain elements with `nds-item-title` and `nds-item-desc`, for feature lists and highlights |
 | Structure | With actions | canon `#dl-actions` | — | Values with buttons after them, such as copy and share. `nds-item-action` holds the value and its buttons in one row |
 | Layout | Stacked (default) | — | — | Each value under its title, for long values |
-| Layout | Table | `.nds-tableView` | `.nds-definition-list` | Titles in one column and values in the next, aligned across every item |
-| Layout | Table on phones (hint: Below 600px only) | `.nds-tableView-sm` | `.nds-definition-list` | The table layout below 600px only. Stacked on wider screens |
-| Layout | Table on tablets (hint: From 600px to 959px only) | `.nds-tableView-md` | `.nds-definition-list` | The table layout from 600px to 959px only. Stacked on other screens |
-| Layout | Table on tablets and up (hint: From 600px up) | `.nds-tableView-md` | `.nds-definition-list` | The table layout from 600px up. Stacked on phones |
-| Layout | Table on tablets and up (hint: From 600px up) | `.nds-tableView-lg` | `.nds-definition-list` | The same |
-| Layout | Table on desktops (hint: From 960px up) | `.nds-tableView-lg` | `.nds-definition-list` | The table layout from 960px up. Stacked on smaller screens |
-| Layout | Row (hint: Title and value on one line that wraps) | `.nds-rowView` | `.nds-definition-list` | Each title and value on one row that wraps, with no shared columns. For compact card details |
-| Grid | Grid | `.nds-grid` | `.nds-definition-list:not(.nds-tableView):not(.nds-tableView-sm):not(.nds-tableView-md):not(.nds-tableView-lg)` | Items in columns. `--max-col`, `--mid-col` and `--min-col` set the columns, see [Grid](../layout/grid) |
+| Layout | Table | `.nds-table-view` | `.nds-definition-list` | Titles in one column and values in the next, aligned across every item |
+| Layout | Table on phones (hint: Below 600px only) | `.nds-table-view-sm` | `.nds-definition-list` | The table layout below 600px only. Stacked on wider screens |
+| Layout | Table on tablets (hint: From 600px to 959px only) | `.nds-table-view-md` | `.nds-definition-list` | The table layout from 600px to 959px only. Stacked on other screens |
+| Layout | Table on tablets and up (hint: From 600px up) | `.nds-table-view-md` | `.nds-definition-list` | The table layout from 600px up. Stacked on phones |
+| Layout | Table on tablets and up (hint: From 600px up) | `.nds-table-view-lg` | `.nds-definition-list` | The same |
+| Layout | Table on desktops (hint: From 960px up) | `.nds-table-view-lg` | `.nds-definition-list` | The table layout from 960px up. Stacked on smaller screens |
+| Layout | Row (hint: Title and value on one line that wraps) | `.nds-horizontal` | `.nds-definition-list` | Each title and value on one row that wraps, with no shared columns. For compact card details |
+| Grid | Grid | `.nds-grid` | `.nds-definition-list:not(.nds-table-view):not(.nds-table-view-sm):not(.nds-table-view-md):not(.nds-table-view-lg)` | Items in columns. `--max-col`, `--mid-col` and `--min-col` set the columns, see [Grid](../layout/grid) |
 | Style | Plain (default) | — | — | No lines between items |
 | Style | Divided | `.nds-divided` | `.nds-definition-list` | A line between items. In a table layout, the lines span both columns |
 | Style | Cards | `.nds-card` | `.nds-definition-item` | Each item in its own card |
@@ -236,7 +236,7 @@ The Layout, Style, Size and Loading rows go on the list. The two Cards rows are 
 - Use `dl`, `dt` and `dd` when each title names its value, such as a profile or the details of a service. Screen readers read them as pairs.
 - Use the plain elements with `nds-item-title` and `nds-item-desc` for feature lists and highlights.
 - Keep the stacked layout when values are long or wrap to more lines.
-- Use the table layout for short values side by side. For tablets and wider, add both `nds-tableView-md` and `nds-tableView-lg`.
+- Use the table layout for short values side by side. For tablets and wider, add both `nds-table-view-md` and `nds-table-view-lg`.
 - Use the row layout for compact details inside a card.
 - Give every title icon `aria-hidden="true"`. The label names the item.
 - Keep the label inside an icon-only action button. Screen readers read it as the button's name.

@@ -1,10 +1,10 @@
 <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities">
-    <button class="nds-btn nds-menu-btn nds-digitalStamp-tab" role="button" aria-expanded="false" aria-controls="nds-digitalStamp">
+    <button class="nds-btn nds-menu-btn nds-digital-stamp-tab" role="button" aria-expanded="false" aria-controls="nds-digital-stamp">
         <img class="nds-flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
             loading="lazy" alt="Logo of Saudi Arabia Flag">
-        <span class="nds-digitalStamp-lg-text nds-truncate" id="big-screen-text">{{ site.digital_stamp[page.lang].tab_text_lg }}</span>
-        <span class="nds-digitalStamp-sm-text nds-truncate" id="small-screen-text">{{ site.digital_stamp[page.lang].tab_text_sm }}</span>
-        <span id="nds-digitalStamp-verify-text" class="nds-link nds-primary">{{ site.digital_stamp[page.lang].tab_verify_text }}</span>
+        <span class="nds-digital-stamp-lg-text nds-truncate" id="big-screen-text">{{ site.digital_stamp[page.lang].tab_text_lg }}</span>
+        <span class="nds-digital-stamp-sm-text nds-truncate" id="small-screen-text">{{ site.digital_stamp[page.lang].tab_text_sm }}</span>
+        <span id="nds-digital-stamp-verify-text" class="nds-link nds-primary">{{ site.digital_stamp[page.lang].tab_verify_text }}</span>
     </button>
     <div class="nds-topbar-info">
         <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
@@ -49,43 +49,43 @@
         {% endif %}
     </div>
 </div>
-<div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
+<div id="nds-digital-stamp" role="region" aria-label="Digital government stamp" hidden>
     <div class="nds-content-wrapper">
-        <div class="nds-digitalStamp-notices">
-            <div class="nds-digitalStamp-card">
-                <div class="nds-digitalStamp-icon">
+        <div class="nds-digital-stamp-notices">
+            <div class="nds-digital-stamp-card">
+                <div class="nds-digital-stamp-icon">
                     <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
                 </div>
-                <div class="nds-digitalStamp-content">
-                    <div class="nds-digitalStamp-heading" id="domain-title">
+                <div class="nds-digital-stamp-content">
+                    <div class="nds-digital-stamp-heading" id="domain-title">
                         {{ site.digital_stamp[page.lang].domain_title }}
                     </div>
-                    <div class="nds-digitalStamp-description" id="domain-desc">
+                    <div class="nds-digital-stamp-description" id="domain-desc">
                         {{ site.digital_stamp[page.lang].domain_desc }}
                     </div>
                 </div>
             </div>
-            <div class="nds-digitalStamp-card">
-                <div class="nds-digitalStamp-icon">
+            <div class="nds-digital-stamp-card">
+                <div class="nds-digital-stamp-icon">
                     <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
                 </div>
-                <div class="nds-digitalStamp-content">
-                    <div class="nds-digitalStamp-heading" id="https-title">
+                <div class="nds-digital-stamp-content">
+                    <div class="nds-digital-stamp-heading" id="https-title">
                         {{ site.digital_stamp[page.lang].https_title }}
                     </div>
-                    <div class="nds-digitalStamp-description" id="https-desc">
+                    <div class="nds-digital-stamp-description" id="https-desc">
                         {{ site.digital_stamp[page.lang].https_desc }}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="nds-digitalStamp-register">
+        <div class="nds-digital-stamp-register">
             <img src="{{ 'assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31" alt="هيئة الحكومة الرقمية" loading="lazy">
             <div>
                 <span id="register-text">
                     {{ site.digital_stamp[page.lang].register_text }}
                 </span>
-                <a class="nds-digitalStamp-registration nds-primary nds-underline"
+                <a class="nds-digital-stamp-registration nds-primary nds-underline"
                     href="{{ page.dga_registration_url | default: site.dga_registration_url }}"
                     target="_blank">{{ page.dga_registration_number | default: site.dga_registration_number }}</a>
             </div>

@@ -10,7 +10,7 @@
  *   nds:digitalStamp:opened   detail (none)
  *   nds:digitalStamp:closed   detail (none) — after the collapse animation
  * Hooks:
- *   (none — class and id markup: .nds-digitalStamp-tab is the trigger, #nds-digitalStamp
+ *   (none — class and id markup: .nds-digital-stamp-tab is the trigger, #nds-digital-stamp
  *    is the panel)
  * Gotchas:
  *   - One per page, resolved by id at init. A re-init after the tab or panel is replaced
@@ -24,7 +24,7 @@
  *
  * Saudi government trust banner that expands from the topbar. Fully standalone:
  * owns its own open/close, dismisses on outside-click or Escape, and animates via
- * the grid-template-rows lifecycle in _DGAdigitalStamp.scss. No shared animation
+ * the grid-template-rows lifecycle in _digital-stamp.scss. No shared animation
  * lock with the nav — mutual exclusion with the nav drawer/dropdowns falls out of
  * each surface's own outside-click handler (clicking the tab is "outside" the nav,
  * so the nav closes whatever it has open; clicking the hamburger is "outside" the
@@ -88,8 +88,8 @@
     }
 
     function init() {
-        const t = document.querySelector('.nds-digitalStamp-tab');
-        const p = document.getElementById('nds-digitalStamp');
+        const t = document.querySelector('.nds-digital-stamp-tab');
+        const p = document.getElementById('nds-digital-stamp');
         // Re-wire only when the tab or panel was replaced.
         if (!t || !p || (t === tab && p === panel)) return;
         tab = t;

@@ -10,7 +10,7 @@ hero_style: nds-flat
 hero_description: "The instruction system AI coding agents use to build with NDS: how it is made, tested, versioned, and updated."
 breadcrumb:
   - ["Guides", "/guides"]
-layout_class: nds-wSideInfo
+layout_class: nds-has-sideinfo
 sidemenu_mode: false
 ---
 

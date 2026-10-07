@@ -14,7 +14,7 @@ hero_actions:
   - share
 hero_float_actions: []
 # layout + layout_class render the page-level wrapper — it exists only in the built twin under _site/. Copy the full <body> structure from the twin; this file's body is only the inner content.
-layout_class: nds-wSideInfo
+layout_class: nds-has-sideinfo
 sidemenu_mode: false
 ---
 
@@ -231,7 +231,7 @@ sidemenu_mode: false
                 <div class="nds-section-body">
                     <!-- --gap is set here, not inherited, so an ancestor can never retune this list -->
                     <div class="nds-flex nds-col" style="--gap: var(--spacing-xl);">
-                        <div class="nds-card nds-stroke nds-rowView" style="--card-width: 100%;">
+                        <div class="nds-card nds-stroke nds-horizontal" style="--card-width: 100%;">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon">
@@ -251,7 +251,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-card nds-stroke nds-rowView" style="--card-width: 100%;">
+                        <div class="nds-card nds-stroke nds-horizontal" style="--card-width: 100%;">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon">
@@ -271,7 +271,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-card nds-stroke nds-rowView" style="--card-width: 100%;">
+                        <div class="nds-card nds-stroke nds-horizontal" style="--card-width: 100%;">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon">

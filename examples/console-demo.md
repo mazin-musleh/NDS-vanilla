@@ -550,7 +550,7 @@ hideFeedback: true
             <div class="nds-cq">
                 <div class="nds-grid nds-paged-content" id="teamDirectoryGrid" data-filter-items="nds-card" style="--per-page:6;--max-col:3;--mid-col:2;--min-col:1;">
                     {% for user in site.data.content.users %}
-                    <div class="nds-card nds-stroke nds-rowView nds-page-item">
+                    <div class="nds-card nds-stroke nds-horizontal nds-page-item">
                         <div class="nds-card-header">
                             <div class="nds-avatar nds-2xl">
                                 {% if user.avatar %}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="sideinfoOverview" class="nds-content-section nds-doc-overview">
@@ -55,7 +55,7 @@ The side info is the side column of a standard page. The other page columns are 
     </div>
   </div>
 </section>
-<div class="nds-content-layout nds-wSideInfo">
+<div class="nds-content-layout nds-has-sideinfo">
   <div class="nds-content" id="main-content">
     <section class="nds-content-section nds-sideinfo-section">
       <div class="nds-section-body">
@@ -119,7 +119,7 @@ The side info is the side column of a standard page. The other page columns are 
 | Part | Holds | Required |
 |---|---|---|
 | `section.nds-hero-section.nds-sub` | The page hero. With `nds-aside`, the column moves up beside its title. See [Hero](../ui-shell/hero) | No |
-| `.nds-content-layout.nds-wSideInfo` | The page content. `nds-wSideInfo` sets the section padding of a page with a side column. See [Page Layout](../layout/page-layout) | Yes |
+| `.nds-content-layout.nds-has-sideinfo` | The page content. `nds-has-sideinfo` sets the section padding of a page with a side column. See [Page Layout](../layout/page-layout) | Yes |
 | `section.nds-sideinfo-section` | A `.nds-section-body` with the content and the column | Yes |
 | `.nds-info-content` | The content of the section, usually an `article` | Yes |
 | `aside.nds-sideinfo` | The column. Give it an `aria-label` that names what it holds | Yes |

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="personaOverview" class="nds-content-section nds-doc-overview">
@@ -117,7 +117,7 @@ The Actions and Details parts go at the end of `.nds-persona`, after the info bl
 | Size | MD | `.nds-md` | `.nds-persona` | A 64px avatar and smaller text. For a side panel, a drawer or a list |
 | Size | SM | `.nds-sm` | `.nds-persona` | A 48px avatar and the smallest text. For a menu or a narrow card. The site header's user menu uses it |
 | Layout | Row (default) | — | — | The avatar beside the text |
-| Layout | Column (hint: Avatar above the text, aligned to the start) | `.nds-colView` | `.nds-persona` | The avatar above the text, aligned to the start |
+| Layout | Column (hint: Avatar above the text, aligned to the start) | `.nds-vertical` | `.nds-persona` | The avatar above the text, aligned to the start |
 | Layout | Center (hint: Avatar above the text, everything centered) | `.nds-center` | `.nds-persona` | The avatar above the text, everything centered. For a profile header or a greeting |
 | Avatar | No avatar | `remove` | `.nds-avatar` | Text only. For a menu where the user's photo is already on the trigger |
 | Extra | None (default) | — | — | Identity only |

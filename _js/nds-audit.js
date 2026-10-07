@@ -153,7 +153,7 @@
         }
 
         // .nds-content-layout is a grid — one column, or side-menu + content under
-        // nds-wSideMenu. A component that returns a wrapper <div> instead of a
+        // nds-has-sidemenu. A component that returns a wrapper <div> instead of a
         // fragment lands an extra element in it, which takes a column of its own.
         document.querySelectorAll('.nds-content-layout').forEach(layout => {
             if (layout.closest('code, .code-example')) return;

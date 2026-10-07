@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="pageLayoutOverview" class="nds-content-section nds-doc-overview">
@@ -199,7 +199,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
         </div>
       </div>
     </section>
-    <div class="nds-content-layout nds-wSideInfo">
+    <div class="nds-content-layout nds-has-sideinfo">
       <div class="nds-content" id="main-content">
         <section id="passport-guide" class="nds-content-section nds-sideinfo-section">
           <div class="nds-section-body">
@@ -276,7 +276,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
     <!-- Copy the header whole from the built HTML of a live page: ../ui-shell/header -->
   </header>
   <main>
-    <div class="nds-content-layout nds-wSideMenu">
+    <div class="nds-content-layout nds-has-sidemenu">
       <aside class="nds-sidemenu" aria-label="Sidebar">
         <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" hidden>
           <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
@@ -434,7 +434,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
 | `main` | The hero, the content layout, and the page feedback after it | Yes |
 | `section.nds-hero-section` | The page hero: [Hero](../ui-shell/hero). A standard page uses the sub hero (`nds-sub`), and the home page the hero slider. An article adds `nds-flat`, and a service page with side info adds `nds-aside`. A console puts the hero in `nds-content` | No |
 | `.nds-content-layout` | The side menu, if any, and `nds-content`. The shape classes go on it | Yes |
-| `aside.nds-sidemenu` | The side menu, as the first child: [Side Menu](../ui-shell/sidemenu). It needs `nds-wSideMenu` on the content layout | No |
+| `aside.nds-sidemenu` | The side menu, as the first child: [Side Menu](../ui-shell/sidemenu). It needs `nds-has-sidemenu` on the content layout | No |
 | `.nds-content` | The page sections, with `id="main-content"` for the skip link. The stripe classes go on it | Yes |
 | `section.nds-content-section` | One page section: [Section](../layout/section) | Yes |
 | `section.nds-last-edit.nds-content-section` | The last modified date, as the last section of `nds-content` | No |
@@ -463,15 +463,15 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 | Structure | Minimal (id: minimal) | `canon #layout-minimal` | — | Sign in, a one-time code and other focused steps. No header, hero or footer. The content centers in the screen, over an optional page image |
 | Structure | Console (id: console) | `canon #layout-console` | — | An admin or back-office page. `nds-full-width` on `body` takes the page to the screen edges, and the hero sits in `nds-content` beside the side menu |
 | Side column | None (default) | — | — | No side column |
-| Side column | Side menu (not: home, article, minimal, console) | `.nds-wSideMenu` | `.nds-content-layout` | A menu of the pages in this part of the site, beside the content on a desktop |
-| Side column | Side menu (not: home, article, minimal, console) | `canon #layout-sidemenu` | `.nds-content-layout` (start) | The side menu aside. Written with `nds-wSideMenu` |
-| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `.nds-wSideInfo` | `.nds-content-layout` | A service page: facts such as the fee and the duration beside the first section's text |
-| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `.nds-aside` | `.nds-hero-section.nds-sub` | Narrows the hero title, so the side info moves up beside it on a desktop. Written with `nds-wSideInfo` |
-| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `canon #layout-sideinfo` | `.nds-content` (start) | The first section, which holds the text and the side info. Write the service description in it, not in a second section. Written with `nds-wSideInfo` |
+| Side column | Side menu (not: home, article, minimal, console) | `.nds-has-sidemenu` | `.nds-content-layout` | A menu of the pages in this part of the site, beside the content on a desktop |
+| Side column | Side menu (not: home, article, minimal, console) | `canon #layout-sidemenu` | `.nds-content-layout` (start) | The side menu aside. Written with `nds-has-sidemenu` |
+| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `.nds-has-sideinfo` | `.nds-content-layout` | A service page: facts such as the fee and the duration beside the first section's text |
+| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `.nds-aside` | `.nds-hero-section.nds-sub` | Narrows the hero title, so the side info moves up beside it on a desktop. Written with `nds-has-sideinfo` |
+| Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `canon #layout-sideinfo` | `.nds-content` (start) | The first section, which holds the text and the side info. Write the service description in it, not in a second section. Written with `nds-has-sideinfo` |
 | Hero | Flat hero (not: article, minimal, home) (hint: No background or shadow, so the text starts right under the title) | `.nds-flat` | `.nds-hero-section.nds-sub` | A page with long text. The hero loses its background and shadow |
-| Card view | Card view (not: home, article, minimal) (hint: Each section shows as a raised card) | `.nds-cardView` | `.nds-content-layout` | Each section shows as a raised card, for record and profile pages. |
-| Stripe | Stripe (id: stripe) (not: article, minimal) | `.nds-stripe` | `.nds-content:not(.nds-cardView .nds-content)` | Every second section gets the stripe color, from the second one |
-| Odd | Odd (hint: The stripe starts on the first section) | `.nds-odd` | `.nds-content.nds-stripe:not(.nds-cardView .nds-content)` | The stripe starts on the first section. Needs Stripe |
+| Card view | Card view (not: home, article, minimal) (hint: Each section shows as a raised card) | `.nds-card-view` | `.nds-content-layout` | Each section shows as a raised card, for record and profile pages. |
+| Stripe | Stripe (id: stripe) (not: article, minimal) | `.nds-stripe` | `.nds-content:not(.nds-card-view .nds-content)` | Every second section gets the stripe color, from the second one |
+| Odd | Odd (hint: The stripe starts on the first section) | `.nds-odd` | `.nds-content.nds-stripe:not(.nds-card-view .nds-content)` | The stripe starts on the first section. Needs Stripe |
 {: #pageLayoutVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -487,11 +487,11 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 
 ### Side Menu
 
-`nds-wSideMenu` on the content layout makes two columns at 960px and wider: the side menu, then the content. The menu column is `--nds-sidemenu-width` wide. Below 960px the layout has one column, and the side menu shows as a compact control. `nds-top` on the `aside` shows the menu as a bar above the content: see [Side Menu](../ui-shell/sidemenu). Without `nds-wSideMenu` or `nds-wSideInfo`, the layout hides an `aside` that is its direct child.
+`nds-has-sidemenu` on the content layout makes two columns at 960px and wider: the side menu, then the content. The menu column is `--nds-sidemenu-width` wide. Below 960px the layout has one column, and the side menu shows as a compact control. `nds-top` on the `aside` shows the menu as a bar above the content: see [Side Menu](../ui-shell/sidemenu). Without `nds-has-sidemenu` or `nds-has-sideinfo`, the layout hides an `aside` that is its direct child.
 
 ### Side Info
 
-Side info is not a layout column. Its `aside` sits in a `nds-sideinfo-section`, beside the text it describes. `nds-wSideInfo` on the content layout adds no column: it tells the layout that the page has a side column, so the larger section padding of a page without one does not apply. On a service page the side info section is the first section, and `nds-aside` on the sub hero narrows the hero title on a desktop. The side info then moves up beside the title. The `aside` markup is on the [Side Info](../ui-shell/sideinfo) page.
+Side info is not a layout column. Its `aside` sits in a `nds-sideinfo-section`, beside the text it describes. `nds-has-sideinfo` on the content layout adds no column: it tells the layout that the page has a side column, so the larger section padding of a page without one does not apply. On a service page the side info section is the first section, and `nds-aside` on the sub hero narrows the hero title on a desktop. The side info then moves up beside the title. The `aside` markup is on the [Side Info](../ui-shell/sideinfo) page.
 
 ### Article
 
@@ -499,7 +499,7 @@ An article is one side info section that holds the whole text. The `aside` holds
 
 ### Card View
 
-`nds-cardView` shows each section as a raised card at the content width, with smaller section titles and a gap between the cards. The hero and a section with `nds-ghost` stay flat. Card view never stripes, and it keeps its gutters on a console page.
+`nds-card-view` shows each section as a raised card at the content width, with smaller section titles and a gap between the cards. The hero and a section with `nds-ghost` stay flat. Card view never stripes, and it keeps its gutters on a console page.
 
 ### Section Stripes
 
@@ -631,9 +631,9 @@ For AI agents. Copy the built HTML once for each chrome. For every page after th
 | `layout` | `console` | A console: the content layout with a side menu, the sub hero first in `nds-content`, then the page feedback. The page also sets `body_class: nds-full-width` |
 | `layout` | `minimal` | A minimal page: no header, hero or footer, and `nds-content-wrapper` on the content layout |
 | `layout` | `shell` | The page writes its whole body itself, as the [Home Page Template](../templates/home-template) does |
-| `layout_class` | Classes | Added to `.nds-content-layout`: `nds-wSideInfo`, `nds-cardView`, `nds-middle` |
+| `layout_class` | Classes | Added to `.nds-content-layout`: `nds-has-sideinfo`, `nds-card-view`, `nds-middle` |
 | `body_class` | Classes | Added to `body`: `nds-full-width` |
-| `sidemenu_mode` | `false` | No side menu, and no `nds-wSideMenu` |
+| `sidemenu_mode` | `false` | No side menu, and no `nds-has-sidemenu` |
 | `sidemenu_mode` | `top` | `nds-top` on the side menu `aside` |
 | `hero_style` | Classes | Added to the sub hero section: `nds-flat`, `nds-aside` |
 | `page_bg` | Image path | On a minimal page: `nds-page-bg` on `body`, with the image in `--bg-img` |

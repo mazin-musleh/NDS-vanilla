@@ -22,7 +22,7 @@ breadcrumb: [["Examples", "/examples"]]
       <div class="nds-block nds-flex nds-col" style="--align: center;">
         <!-- Step 1: Account Details -->
         <div class="nds-card nds-shadow nds-stroke" id="registration-step-1">
-          <div class="nds-card-header nds-rowView">
+          <div class="nds-card-header nds-horizontal">
             <!-- The logo is the way home: the minimal layout ships no site chrome -->
             <a href="{{ '/' | relative_url }}" class="nds-brand">
               <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"

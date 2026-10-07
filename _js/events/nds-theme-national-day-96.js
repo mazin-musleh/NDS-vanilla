@@ -45,9 +45,9 @@
     var LINK_ID = 'nds-theme-stylesheet';   // shared slot: nds-theme.js LINK_ID + head.html brand path
     var SWIPER_SEL = '.nds-hero-section .nds-swiper.nds-hero';
     // Both are injection/teardown hooks only — the stylesheet styles neither.
-    var SLIDE_CLASS = 'nds-nationalDay';      // the type 1 slide
+    var SLIDE_CLASS = 'nds-national-day';      // the type 1 slide
     var DECK_SLIDE = 'nds-nd96-slide';         // a type 2 slide
-    var LOGO_CLASS = 'nds-nationalDay-logo';
+    var LOGO_CLASS = 'nds-national-day-logo';
 
     // This script ships beside its assets (…/docs-assets/events/national_day_96/), so
     // its own folder is the asset base. Captured at load — currentScript is null

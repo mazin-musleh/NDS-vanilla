@@ -3,11 +3,11 @@
 /* ========================================
    DGA DROPDOWN STYLES
    ======================================== */
-#nds-digitalStamp-verify-text {
+#nds-digital-stamp-verify-text {
     line-height: normal;
 }
 
-.nds-digitalStamp-tab {
+.nds-digital-stamp-tab {
     z-index: 10;
     cursor: pointer;
     font-size: var(--typo-text-clamp-sm-FS);
@@ -18,7 +18,7 @@
     gap: var(--spacing-xs);
 }
 
-.nds-digitalStamp-tab {
+.nds-digital-stamp-tab {
     .nds-flag {
         width: 20px;
         margin-inline-end: var(--spacing-xs);
@@ -27,20 +27,20 @@
 }
 
 @include desktop(min) {
-    .nds-digitalStamp-tab>.nds-digitalStamp-sm-text {
+    .nds-digital-stamp-tab>.nds-digital-stamp-sm-text {
         display: none!important;
     }
 }
 
 @include tablet(max) {
-    .nds-digitalStamp-tab>.nds-digitalStamp-lg-text {
+    .nds-digital-stamp-tab>.nds-digital-stamp-lg-text {
         display: none!important;
     }
 
 }
 
 
-#nds-digitalStamp {
+#nds-digital-stamp {
     background-color: var(--background-topbar);
     position: relative;
     transition: grid-template-rows var(--nds-transition);
@@ -63,14 +63,14 @@
 
 }
 
-.nds-digitalStamp-notices {
+.nds-digital-stamp-notices {
     margin-block: var(--spacing-5xl);
     display: flex;
     gap: var(--spacing-xl);
     flex-wrap: wrap;
 }
 
-.nds-digitalStamp-card {
+.nds-digital-stamp-card {
     flex: 1;
     min-width: 300px;
     display: flex;
@@ -78,7 +78,7 @@
     gap: var(--spacing-xl);
 }
 
-.nds-digitalStamp-register {
+.nds-digital-stamp-register {
     width: 100%;
     margin: 0 auto;
     background-color: var(--background-card);
@@ -94,12 +94,12 @@
     align-items: center;
 }
 
-.nds-digitalStamp-register>img {
+.nds-digital-stamp-register>img {
     height: 30px;
     margin-inline-end: var(--spacing-2xl);
 }
 
-.nds-digitalStamp-icon {
+.nds-digital-stamp-icon {
     position: relative;
     border: 1px solid var(--border-primary);
     border-radius: 50%;
@@ -119,15 +119,15 @@
 
 }
 
-.nds-digitalStamp-icon>:is(.nds-icon, i) {
+.nds-digital-stamp-icon>:is(.nds-icon, i) {
     color: var(--icon-primary);
 }
 
-.nds-digitalStamp-content {
+.nds-digital-stamp-content {
     flex: 1;
 }
 
-.nds-digitalStamp-heading {
+.nds-digital-stamp-heading {
     font-size: var(--typo-text-clamp-lg-FS);
     line-height: var(--typo-text-clamp-lg-LH);
     font-weight: var(--font-weight-semibold);
@@ -135,39 +135,39 @@
     margin-bottom: var(--spacing-md);
 }
 
-.nds-digitalStamp-description {
+.nds-digital-stamp-description {
     color: var(--text-default);
     line-height: 1.5;
 }
 
 @include mobile {
 
-    .nds-digitalStamp-notices {
+    .nds-digital-stamp-notices {
         flex-direction: column;
         gap: var(--spacing-lg);
     }
 
-    .nds-digitalStamp-card {
+    .nds-digital-stamp-card {
         gap: var(--spacing-lg);
     }
 
-    .nds-digitalStamp-heading {
+    .nds-digital-stamp-heading {
         font-size: var(--typo-text-md-FS);
         line-height: var(--typo-text-md-LH);
     }
 
-    .nds-digitalStamp-description {
+    .nds-digital-stamp-description {
         font-size: var(--typo-text-sm-FS);
         line-height: var(--typo-text-sm-LH);
     }
 
 }
 
-#nds-digitalStamp-verify-text{
+#nds-digital-stamp-verify-text{
     color: var(--text-primary-strong);
 }
 
-.nds-digitalStamp-highlight {
+.nds-digital-stamp-highlight {
     color: var(--text-primary);
     font-weight: var(--font-weight-bold);
 }

@@ -192,7 +192,7 @@ hero_float_actions:
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div class="nds-swiper-slide nds-content-wrapper nds-nationalDay"&gt;
+&lt;div class="nds-swiper-slide nds-content-wrapper nds-national-day"&gt;
   &lt;div class="nds-hero-image-wrapper" style="--overlay:0;"&gt;
     &lt;picture&gt;
       &lt;img src="/assets/events/national_day_96/hero_bg.webp" class="nds-hero-image" alt="" fetchpriority="high"&gt;

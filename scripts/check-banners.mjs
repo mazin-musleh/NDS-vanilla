@@ -42,7 +42,7 @@ const SCOPE = [
     ['nds-core.js', null],
     ['nds-customselect.js', 'CustomSelect'],
     ['nds-date-picker.js', 'DatePicker'],
-    ['nds-digitalStamp.js', 'DigitalStamp'],
+    ['nds-digital-stamp.js', 'DigitalStamp'],
     ['nds-drawer.js', 'Drawer'],
     ['nds-dropmenu.js', 'Dropmenu'],
     ['nds-editor.js', 'Editor'],

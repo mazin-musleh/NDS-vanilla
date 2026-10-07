@@ -1884,8 +1884,8 @@
         const card = demoCard.querySelector('.demo-container .nds-card');
         if (!card) return;
 
-        card.classList.remove('nds-rowView', 'nds-center');
-        if (layout === 'rowView') card.classList.add('nds-rowView');
+        card.classList.remove('nds-horizontal', 'nds-center');
+        if (layout === 'rowView') card.classList.add('nds-horizontal');
         else if (layout === 'center') card.classList.add('nds-center');
 
         rebuildCardCode(demoCard);

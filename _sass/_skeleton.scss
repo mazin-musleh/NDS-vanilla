@@ -95,7 +95,7 @@ html {
         width: 100%;
 
         @include desktop(min) {
-            &:where(.nds-wSideMenu) {
+            &:where(.nds-has-sidemenu) {
                 grid-template-columns: var(--nds-sidemenu-width) 1fr;
             }
         }

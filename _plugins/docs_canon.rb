@@ -351,7 +351,7 @@ module DocsCanon
     reset = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-reset aria-label="Reset"><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button>)
     toggle = panel ? %(data-panel-toggle="#{id}-options") : %(data-builder-toggle aria-controls="#{id}-options" aria-expanded="false")
     options = %(<button type="button" class="nds-btn nds-secondary-outline nds-md" #{toggle}><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
-    %(<div class="nds-section-action nds-btn-group nds-rowView nds-minimal" data-builder-for="#{id}">#{options}#{reset}</div>)
+    %(<div class="nds-section-action nds-btn-group nds-horizontal nds-minimal" data-builder-for="#{id}">#{options}#{reset}</div>)
   end
 
   # The options: one labeled row of chips per group, single options last under "More". Up to 3

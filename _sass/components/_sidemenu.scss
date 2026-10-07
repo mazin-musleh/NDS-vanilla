@@ -35,7 +35,7 @@
 }
 
 @include desktop(min) {
-    .nds-content-layout.nds-cardView .nds-sidemenu {
+    .nds-content-layout.nds-card-view .nds-sidemenu {
         border-radius: var(--radius-md);
     }
 }

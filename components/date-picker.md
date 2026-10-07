@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 10:20 AM"
+last_edit: "07/10/2026 - 03:02 PM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -68,15 +68,15 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Selection | Single date (default) | — | — | The user picks one day |
-| Selection | Range | `.dateRange` | `.nds-date-picker:not([data-format="MM/YYYY"]):not([data-format="YYYY"])` | The user picks a start day and an end day. Not with the Month or Year picker. See Date Range |
+| Selection | Range | `.nds-date-range` | `.nds-date-picker:not([data-format="MM/YYYY"]):not([data-format="YYYY"])` | The user picks a start day and an end day. Not with the Month or Year picker. See Date Range |
 | Calendar | Gregorian (default) | — | — | The calendar shows Gregorian months |
 | Calendar | Hijri | `.nds-hijri` | `.nds-date-picker` | The calendar shows Hijri months, and the field holds a Hijri date. See Hijri Calendar |
 | Picker | Day (default) | — | — | The calendar shows a grid of days. The field holds `DD/MM/YYYY` |
-| Picker | Month (hint: A grid of months, for a card expiry) | `[data-format="MM/YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of months, for a month such as a card expiry. Not with Range. See Date Format |
-| Picker | Month (hint: A grid of months, for a card expiry) | `[placeholder="MM/YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
-| Picker | Year (hint: A grid of years, for a graduation year) | `[data-format="YYYY"]` | `.nds-date-picker:not(.dateRange)` | The calendar shows a grid of years, for a year such as a graduation year. Not with Range. See Date Format |
-| Picker | Year (hint: A grid of years, for a graduation year) | `[placeholder="YYYY"]` | `.nds-date-input:not(.dateRange *)` | |
-| Clear button | Clear button | `[data-clearable]` | `.nds-date-picker:not(.dateRange)` | Adds Clear to the calendar. Range has it already. See Clear Button |
+| Picker | Month (hint: A grid of months, for a card expiry) | `[data-format="MM/YYYY"]` | `.nds-date-picker:not(.nds-date-range)` | The calendar shows a grid of months, for a month such as a card expiry. Not with Range. See Date Format |
+| Picker | Month (hint: A grid of months, for a card expiry) | `[placeholder="MM/YYYY"]` | `.nds-date-input:not(.nds-date-range *)` | |
+| Picker | Year (hint: A grid of years, for a graduation year) | `[data-format="YYYY"]` | `.nds-date-picker:not(.nds-date-range)` | The calendar shows a grid of years, for a year such as a graduation year. Not with Range. See Date Format |
+| Picker | Year (hint: A grid of years, for a graduation year) | `[placeholder="YYYY"]` | `.nds-date-input:not(.nds-date-range *)` | |
+| Clear button | Clear button | `[data-clearable]` | `.nds-date-picker:not(.nds-date-range)` | Adds Clear to the calendar. Range has it already. See Clear Button |
 | Size | LG (default) | — | — | 40px high. It needs no class |
 | Size | MD | `.nds-md` | `.nds-form-container` | 32px high, with smaller text, for a table filter or a side panel |
 | Style | Outline (default) | — | — | A border on the page background |
@@ -109,7 +109,7 @@ A pick shows in the calendar, but the field does not change until the user press
 ### Date Range
 {: .nds-block-title}
 
-The class `dateRange` on `.nds-date-picker` makes the user pick two days. The first click picks the start, and the second picks the end. A second day before the start becomes the new start. The field holds both days, such as `01/03/2026 - 15/03/2026`. Save after one day writes it as the start and the end.
+The class `nds-date-range` on `.nds-date-picker` makes the user pick two days. The first click picks the start, and the second picks the end. A second day before the start becomes the new start. The field holds both days, such as `01/03/2026 - 15/03/2026`. Save after one day writes it as the start and the end.
 
 ### Hijri Calendar
 {: .nds-block-title}

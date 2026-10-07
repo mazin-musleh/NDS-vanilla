@@ -179,7 +179,7 @@ This is an independent implementation, based on the public DGA design specificat
 
 - **Logos and marks**: [`assets/img/dga-logo-icon.svg`](assets/img/dga-logo-icon.svg), [`2030-vision.svg`](assets/img/2030-vision.svg), and [`palm_swords.svg`](assets/img/palm_swords.svg) are official government trademarks.
 - **Design tokens**: the DGA brand in [`_sass/themes/_dga.scss`](_sass/themes/_dga.scss) and the typography and spacing primitives in [`_sass/tokens/_primitives.scss`](_sass/tokens/_primitives.scss) are the DGA identity. Re-theme them to your brand through the 4-tier token system (see [AGENTS.md](AGENTS.md#design-tokens-critical)).
-- **Digital-stamp component**: the DGA digital stamp in the top bar ([`_includes/topbar.html`](_includes/topbar.html), styled in [`_sass/components/_DGAdigitalStamp.scss`](_sass/components/_DGAdigitalStamp.scss)) is a Saudi government compliance feature. Remove it, or replace it with your own.
+- **Digital-stamp component**: the DGA digital stamp in the top bar ([`_includes/topbar.html`](_includes/topbar.html), styled in [`_sass/components/_digital-stamp.scss`](_sass/components/_digital-stamp.scss)) is a Saudi government compliance feature. Remove it, or replace it with your own.
 - **Copy**: `.gov.sa` email domains, "Digital Government Authority" labels, and Saudi-specific demo content in `_data/` and the demo pages.
 
 A non-government site that keeps these defaults can look like an official Saudi government service. That is not permitted.

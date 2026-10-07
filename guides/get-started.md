@@ -10,7 +10,7 @@ hero_style: nds-flat
 hero_description: "How to install NDS, build UI with an AI coding agent, verify the result, and upgrade to new releases."
 breadcrumb:
   - ["Guides", "/guides"]
-layout_class: nds-wSideInfo
+layout_class: nds-has-sideinfo
 sidemenu_mode: false
 ---
 

@@ -8,7 +8,7 @@ breadcrumb: ["Faculty Members"]
 hero_title: "Dr. Mohammed Ahmed Al-Salem"
 hero_description: "Associate Professor - College of Computer Science"
 # layout + layout_class render the page-level wrapper — it exists only in the built twin under _site/. Copy the full <body> structure from the twin; this file's body is only the inner content.
-layout_class: nds-cardView
+layout_class: nds-card-view
 sidemenu_mode: top
 ---
 
@@ -27,7 +27,7 @@ sidemenu_mode: top
 
         <div class="nds-section-body">
             <div class="nds-block">
-                <dl class="nds-definition-list nds-tableView-lg nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
+                <dl class="nds-definition-list nds-table-view-lg nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
                     <div class="nds-definition-item">
                         <dt>
                             <i class="hgi hgi-stroke hgi-school"></i>
@@ -155,7 +155,7 @@ sidemenu_mode: top
                     aria-labelledby="tab-education" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-block">
                         <h3 class="nds-block-title">Academic Qualifications</h3>
-                        <dl class="nds-definition-list nds-tableView">
+                        <dl class="nds-definition-list nds-table-view">
                         <div class="nds-definition-item">
                             <dt><span class="nds-label">Ph.D.</span></dt>
                             <dd>Computer Science (Artificial Intelligence) - Stanford University, USA (2010)</dd>
@@ -176,7 +176,7 @@ sidemenu_mode: top
                     aria-labelledby="tab-contact" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-block">
                         <h3 class="nds-block-title">Contact Information</h3>
-                        <dl class="nds-definition-list nds-tableView">
+                        <dl class="nds-definition-list nds-table-view">
                             <div class="nds-definition-item">
                                 <dt><span class="nds-label">Email</span></dt>
                                 <dd>m.alsalem@university.edu.sa</dd>

@@ -61,7 +61,7 @@
 :is(.nds-hero-section, .nds-content-section)>.nds-section-head~.nds-section-body {
     margin-block-start: var(--spacing-4xl);
 
-    .nds-content-layout.nds-cardView & {
+    .nds-content-layout.nds-card-view & {
         margin-block-start: var(--spacing-2xl);
     }
 }
@@ -76,7 +76,7 @@
 .nds-section-wrapper + .nds-section-body {
     margin-block-start: var(--spacing-4xl);
 
-    .nds-content-layout.nds-cardView & {
+    .nds-content-layout.nds-card-view & {
         margin-block-start: var(--spacing-2xl);
     }
 }
@@ -348,11 +348,11 @@
     --btn-width: 100%;
 
     // The column aligns to the start, so a dropmenu stretches to fill it like the buttons.
-    &:not(.nds-rowView) > .nds-dropmenu {
+    &:not(.nds-horizontal) > .nds-dropmenu {
         align-self: stretch;
     }
 
-    &.nds-rowView {
+    &.nds-horizontal {
         flex-direction: row;
         --btn-width: unset;
     }
@@ -364,7 +364,7 @@
     --btn-width: unset;
 }
 
-:is(.nds-center, .nds-status-section, .nds-horizontal)>.nds-section-wrapper>.nds-section-head>.nds-section-action {
+:is(.nds-center, .nds-status-section, :is(.nds-hero-section, .nds-content-section).nds-horizontal)>.nds-section-wrapper>.nds-section-head>.nds-section-action {
     float: none;
     order: 1;
     margin-inline-start: 0;

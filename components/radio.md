@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="radioOverview" class="nds-content-section nds-doc-overview">
@@ -97,7 +97,7 @@ A row on `.nds-radio` (every `<input>`) or `.nds-radio-container` changes every 
 | Required | Required (hint: Turn Checked off: the user must then pick an option) | `[data-required]` | `.nds-radio-group` | The user must pick an option before the form submits. A required mark shows before the legend. Use it with no option checked |
 | Disabled | Disabled | `[disabled]` | `.nds-radio` | The user cannot pick these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-radio-container` | The group shows its value but cannot change, by pointer or by keyboard. Put it on every option's container. The tile outline takes the disabled color, and the fill stays |
-| Layout | Row | `.nds-rowView` | `.nds-radio-group` | The options sit side by side and wrap |
+| Layout | Row | `.nds-horizontal` | `.nds-radio-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #radioVariantsTable .nds-table .nds-responsive}
 

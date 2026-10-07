@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.11.0"
-last_edit: "04/10/2026 - 05:06 PM"
+updated: "1.12.x"
+last_edit: "07/10/2026 - 03:02 PM"
 ---
 
 <section id="headerOverview" class="nds-content-section nds-doc-overview">
@@ -40,7 +40,7 @@ The code shows the outer element of each part. Copy each part whole from its own
   <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities">
     <!-- The stamp tab, the widgets and the dark mode button: ../ui-shell/topbar -->
   </div>
-  <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
+  <div id="nds-digital-stamp" role="region" aria-label="Digital government stamp" hidden>
     <!-- The stamp panel: ../ui-shell/topbar -->
   </div>
   <nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation">
@@ -64,7 +64,7 @@ The code shows the outer element of each part. Copy each part whole from its own
 |---|---|---|
 | `header` | The three parts below | Yes |
 | `.nds-topbar` | The top bar: the stamp tab, the widgets and the dark mode button. See [Top Bar](../ui-shell/topbar) | Yes, on a government site |
-| `#nds-digitalStamp` | The stamp panel, right after the top bar. The stamp tab opens it. See [Top Bar](../ui-shell/topbar#dgaDigitalStamp) | Yes, with the stamp tab |
+| `#nds-digital-stamp` | The stamp panel, right after the top bar. The stamp tab opens it. See [Top Bar](../ui-shell/topbar#dgaDigitalStamp) | Yes, with the stamp tab |
 | `nav.nds-main-nav` | The main navigation: the brand, the links, the dropdowns and the actions. See [Main Navigation](../ui-shell/mainnav) | Yes |
 {: .nds-table .nds-responsive}
 

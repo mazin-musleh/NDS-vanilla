@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:17 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="switchOverview" class="nds-content-section nds-doc-overview">
@@ -131,7 +131,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 | Validation (any) | At least 2 (hint: Press Validate with one switch on) | `[data-min-checked="2"]` | `.nds-switch-group` | At least 2 switches must be on. Group only. Say the rule in the legend |
 | Validation (any) | At most 2 (hint: Turn on all three switches, then press Validate) | `[data-max-checked="2"]` | `.nds-switch-group` | No more than 2 switches may be on. Group only. Say the rule in the legend |
 | Disabled | Disabled | `[disabled]` | `.nds-switch-input` | The user cannot change the setting now |
-| Layout | Row | `.nds-rowView` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
+| Layout | Row | `.nds-horizontal` | `.nds-switch-group` | Group only. The switches sit side by side and wrap |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/forms) |
 {: #switchVariantsTable .nds-table .nds-responsive}
 

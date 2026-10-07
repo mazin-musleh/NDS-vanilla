@@ -8,7 +8,7 @@ breadcrumb: ["College of Computer Science","Artificial Intelligence"]
 lang: en
 direction: ltr
 # layout + layout_class render the page-level wrapper — it exists only in the built twin under _site/. Copy the full <body> structure from the twin; this file's body is only the inner content.
-layout_class: nds-cardView
+layout_class: nds-card-view
 ---
 
 <!--Section 1: About the Program - Expandable Content -->

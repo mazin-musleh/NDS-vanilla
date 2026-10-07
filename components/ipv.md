@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/10/2026 - 09:46 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 ---
 
 <section id="ipvOverview" class="nds-content-section nds-doc-overview">
@@ -72,7 +72,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Zoom badge | Zoom badge | `.showZoom` | `.nds-ipv-image-card` | A magnifier in the corner of the image. Add it when nothing else shows that the image opens |
+| Zoom badge | Zoom badge | `.nds-zoom-badge` | `.nds-ipv-image-card` | A magnifier in the corner of the image. Add it when nothing else shows that the image opens |
 {: #ipvVariantsTable .nds-table .nds-responsive}
 
 </div>
@@ -195,7 +195,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 |---|---|---|
 | `nds-ipv-thumbnail` | `<img>` | Opens the viewer on a click. A block image 200px tall that fills its width and crops to fit. Required |
 | `nds-ipv-image-card` | the thumbnail's parent | Holds the zoom badge. Optional: a thumbnail without it looks and works the same |
-| `showZoom` | `.nds-ipv-image-card` | Shows a magnifier in the bottom start corner |
+| `nds-zoom-badge` | `.nds-ipv-image-card` | Shows a magnifier in the bottom start corner |
 | `nds-ipv-image-title` | an element after the card | A caption under the image. Optional |
 {: .nds-table .nds-responsive}
 

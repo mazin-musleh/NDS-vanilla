@@ -41,7 +41,7 @@
   --stepper-button-current: var(--colors-primary-400);
 }
 
-.nds-swiper-slide.nds-foundingDay .nds-section-body {
+.nds-swiper-slide.nds-founding-day .nds-section-body {
   position: relative;
   z-index: 3;
   justify-content: flex-end !important;
@@ -52,18 +52,18 @@
   background-color: #493530;
 
   @include tablet(max) {
-    .nds-swiper-slide.nds-foundingDay .nds-section-title {
+    .nds-swiper-slide.nds-founding-day .nds-section-title {
       width: fit-content;
       margin-inline: auto;
     }
   }
 }
 
-.nds-swiper:not([data-nds-swiper-initialized]) .nds-swiper-slide.nds-foundingDay .nds-block {
+.nds-swiper:not([data-nds-swiper-initialized]) .nds-swiper-slide.nds-founding-day .nds-block {
   display: none;
 }
 
-.nds-swiper-slide.nds-foundingDay .nds-block {
+.nds-swiper-slide.nds-founding-day .nds-block {
   background-color: #271C19;
   background-image: url(Banner.webp);
   background-position: bottom center;
@@ -75,7 +75,7 @@
   position: relative;
 }
 
-.nds-swiper-slide.nds-foundingDay .nds-section-action {
+.nds-swiper-slide.nds-founding-day .nds-section-action {
   padding-inline: var(--_wrapper-padding);
   inset-block-end: 50%;
   inset-inline-end: 0;
@@ -83,7 +83,7 @@
   transform: translateY(50%);
 }
 
-.nds-content-layout:not(.nds-wSideMenu, .nds-cardView) .nds-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
+.nds-content-layout:not(.nds-has-sidemenu, .nds-card-view) .nds-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
  &::before{
   content: "";
   position: absolute;
@@ -154,22 +154,22 @@
     background-size: auto;
   }
 
-  .nds-swiper-slide.nds-foundingDay .nds-block {
+  .nds-swiper-slide.nds-founding-day .nds-block {
     text-align: center;
     align-items: center;
     justify-items: center;
   }
 
-  .nds-swiper-slide.nds-foundingDay .nds-section-action {
+  .nds-swiper-slide.nds-founding-day .nds-section-action {
     display: none;
   }
 }
 
-.nds-swiper-slide.nds-foundingDay .nds-block .nds-section-title {
+.nds-swiper-slide.nds-founding-day .nds-block .nds-section-title {
   color: #E9DFCF;
 }
 
-.nds-swiper-slide.nds-foundingDay .nds-block .nds-section-description {
+.nds-swiper-slide.nds-founding-day .nds-block .nds-section-description {
   color: #D6CDCB;
 }
 

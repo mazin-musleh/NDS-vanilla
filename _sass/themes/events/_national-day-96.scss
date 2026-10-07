@@ -17,7 +17,7 @@
 // ── Hero slide — the photo runs light on its start side and deep on its end
 //    side, and the slide text sits on the reading edge. Mirror it in LTR so the
 //    deep side stays behind the text. A transform, so no logical property covers it. ──
-.nds-swiper-slide.nds-nationalDay .nds-hero-image {
+.nds-swiper-slide.nds-national-day .nds-hero-image {
   @include ltr {
     transform: scaleX(-1);
   }
@@ -201,7 +201,7 @@ $plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradien
 //    gradients, so it needs no CSS opacity on top. It is near-black, hence the
 //    dark-mode invert; no background-color here, so the filter has nothing but
 //    the artwork to act on. ──
-.nds-content-layout:not(.nds-wSideMenu, .nds-cardView) .nds-content .nds-content-section#{$plain}:nth-of-type(even) {
+.nds-content-layout:not(.nds-has-sidemenu, .nds-card-view) .nds-content .nds-content-section#{$plain}:nth-of-type(even) {
   &::before {
     content: "";
     position: absolute;

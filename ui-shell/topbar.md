@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 09:45 AM"
+last_edit: "07/10/2026 - 03:02 PM"
 ---
 
 <section id="topbarOverview" class="nds-content-section nds-doc-overview">
@@ -36,11 +36,11 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
     <div class="nds-section-body">
 <script type="text/html" id="topbar-canon" data-canon data-preview="page" data-preview-height="304" data-variants="topbarVariantsTable">
 <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities">
-  <button class="nds-btn nds-menu-btn nds-digitalStamp-tab" role="button" aria-expanded="false" aria-controls="nds-digitalStamp">
+  <button class="nds-btn nds-menu-btn nds-digital-stamp-tab" role="button" aria-expanded="false" aria-controls="nds-digital-stamp">
     <img class="nds-flag" src="../assets/icon/SAflag.min.svg" width="20" height="14" loading="lazy" alt="Saudi Arabia flag">
-    <span class="nds-digitalStamp-lg-text nds-truncate">A government website registered with the Digital Government Authority.</span>
-    <span class="nds-digitalStamp-sm-text nds-truncate">Government website registered with DGA</span>
-    <span id="nds-digitalStamp-verify-text" class="nds-link nds-primary">How you know?</span>
+    <span class="nds-digital-stamp-lg-text nds-truncate">A government website registered with the Digital Government Authority.</span>
+    <span class="nds-digital-stamp-sm-text nds-truncate">Government website registered with DGA</span>
+    <span id="nds-digital-stamp-verify-text" class="nds-link nds-primary">How you know?</span>
   </button>
   <div class="nds-topbar-info">
     <span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"></span>
@@ -50,90 +50,90 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
     </button>
   </div>
 </div>
-<div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
+<div id="nds-digital-stamp" role="region" aria-label="Digital government stamp" hidden>
   <div class="nds-content-wrapper">
-    <div class="nds-digitalStamp-notices">
-      <div class="nds-digitalStamp-card">
-        <div class="nds-digitalStamp-icon">
+    <div class="nds-digital-stamp-notices">
+      <div class="nds-digital-stamp-card">
+        <div class="nds-digital-stamp-icon">
           <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
         </div>
-        <div class="nds-digitalStamp-content">
-          <div class="nds-digitalStamp-heading">
-            Official Saudi Government website URL ends with <span class="nds-digitalStamp-highlight">gov.sa</span>
+        <div class="nds-digital-stamp-content">
+          <div class="nds-digital-stamp-heading">
+            Official Saudi Government website URL ends with <span class="nds-digital-stamp-highlight">gov.sa</span>
           </div>
-          <div class="nds-digitalStamp-description">
+          <div class="nds-digital-stamp-description">
             Website belongs to an official government organization in the Kingdom of Saudi Arabia always ends with .gov.sa .
           </div>
         </div>
       </div>
-      <div class="nds-digitalStamp-card">
-        <div class="nds-digitalStamp-icon">
+      <div class="nds-digital-stamp-card">
+        <div class="nds-digital-stamp-icon">
           <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
         </div>
-        <div class="nds-digitalStamp-content">
-          <div class="nds-digitalStamp-heading">
-            Official Secure websites use <span class="nds-digitalStamp-highlight">HTTPS</span>
+        <div class="nds-digital-stamp-content">
+          <div class="nds-digital-stamp-heading">
+            Official Secure websites use <span class="nds-digital-stamp-highlight">HTTPS</span>
           </div>
-          <div class="nds-digitalStamp-description">
+          <div class="nds-digital-stamp-description">
             Secured governments websites in the Kingdom of Saudi Arabia use Https encryption.
           </div>
         </div>
       </div>
     </div>
-    <div class="nds-digitalStamp-register">
+    <div class="nds-digital-stamp-register">
       <img src="../assets/img/dga-logo-icon.svg" width="21" height="31" alt="Digital Government Authority" loading="lazy">
       <div>
         <span>Registered on Digital Government Authority:</span>
-        <a class="nds-digitalStamp-registration nds-primary nds-underline" href="#" target="_blank">00000000000</a>
+        <a class="nds-digital-stamp-registration nds-primary nds-underline" href="#" target="_blank">00000000000</a>
       </div>
     </div>
   </div>
 </div>
 </script>
 <script type="text/html" id="topbar-stamp-tab" data-canon>
-<button class="nds-btn nds-menu-btn nds-digitalStamp-tab" role="button" aria-expanded="false" aria-controls="nds-digitalStamp">
+<button class="nds-btn nds-menu-btn nds-digital-stamp-tab" role="button" aria-expanded="false" aria-controls="nds-digital-stamp">
   <img class="nds-flag" src="../assets/icon/SAflag.min.svg" width="20" height="14" loading="lazy" alt="Saudi Arabia flag">
-  <span class="nds-digitalStamp-lg-text nds-truncate">A government website registered with the Digital Government Authority.</span>
-  <span class="nds-digitalStamp-sm-text nds-truncate">Government website registered with DGA</span>
-  <span id="nds-digitalStamp-verify-text" class="nds-link nds-primary">How you know?</span>
+  <span class="nds-digital-stamp-lg-text nds-truncate">A government website registered with the Digital Government Authority.</span>
+  <span class="nds-digital-stamp-sm-text nds-truncate">Government website registered with DGA</span>
+  <span id="nds-digital-stamp-verify-text" class="nds-link nds-primary">How you know?</span>
 </button>
 </script>
 <script type="text/html" id="topbar-stamp-panel" data-canon>
-<div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
+<div id="nds-digital-stamp" role="region" aria-label="Digital government stamp" hidden>
   <div class="nds-content-wrapper">
-    <div class="nds-digitalStamp-notices">
-      <div class="nds-digitalStamp-card">
-        <div class="nds-digitalStamp-icon">
+    <div class="nds-digital-stamp-notices">
+      <div class="nds-digital-stamp-card">
+        <div class="nds-digital-stamp-icon">
           <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
         </div>
-        <div class="nds-digitalStamp-content">
-          <div class="nds-digitalStamp-heading">
-            Official Saudi Government website URL ends with <span class="nds-digitalStamp-highlight">gov.sa</span>
+        <div class="nds-digital-stamp-content">
+          <div class="nds-digital-stamp-heading">
+            Official Saudi Government website URL ends with <span class="nds-digital-stamp-highlight">gov.sa</span>
           </div>
-          <div class="nds-digitalStamp-description">
+          <div class="nds-digital-stamp-description">
             Website belongs to an official government organization in the Kingdom of Saudi Arabia always ends with .gov.sa .
           </div>
         </div>
       </div>
-      <div class="nds-digitalStamp-card">
-        <div class="nds-digitalStamp-icon">
+      <div class="nds-digital-stamp-card">
+        <div class="nds-digital-stamp-icon">
           <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
         </div>
-        <div class="nds-digitalStamp-content">
-          <div class="nds-digitalStamp-heading">
-            Official Secure websites use <span class="nds-digitalStamp-highlight">HTTPS</span>
+        <div class="nds-digital-stamp-content">
+          <div class="nds-digital-stamp-heading">
+            Official Secure websites use <span class="nds-digital-stamp-highlight">HTTPS</span>
           </div>
-          <div class="nds-digitalStamp-description">
+          <div class="nds-digital-stamp-description">
             Secured governments websites in the Kingdom of Saudi Arabia use Https encryption.
           </div>
         </div>
       </div>
     </div>
-    <div class="nds-digitalStamp-register">
+    <div class="nds-digital-stamp-register">
       <img src="../assets/img/dga-logo-icon.svg" width="21" height="31" alt="Digital Government Authority" loading="lazy">
       <div>
         <span>Registered on Digital Government Authority:</span>
-        <a class="nds-digitalStamp-registration nds-primary nds-underline" href="#" target="_blank">00000000000</a>
+        <a class="nds-digital-stamp-registration nds-primary nds-underline" href="#" target="_blank">00000000000</a>
       </div>
     </div>
   </div>
@@ -168,14 +168,14 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
 | Part | Holds | Required |
 |---|---|---|
 | `.nds-topbar` | The whole bar. Add `nds-content-wrapper` to keep its content at the page width | Yes |
-| `button.nds-digitalStamp-tab` | The stamp tab: the flag, the long text (`.nds-digitalStamp-lg-text`), the short text (`.nds-digitalStamp-sm-text`) and `#nds-digitalStamp-verify-text`. `aria-controls` names the panel | Yes, on a government site |
+| `button.nds-digital-stamp-tab` | The stamp tab: the flag, the long text (`.nds-digital-stamp-lg-text`), the short text (`.nds-digital-stamp-sm-text`) and `#nds-digital-stamp-verify-text`. `aria-controls` names the panel | Yes, on a government site |
 | `.nds-topbar-info` | The widgets and the buttons, on the end side. Never put it on the stamp tab: its wide gap stretches the tab's contents apart | No |
 | `span.nds-text-icon` with a widget id | One widget, empty in the markup. The script writes its icon and text | No |
 | `button[data-theme-toggle]` | The dark mode button | No |
-| `#nds-digitalStamp` | The stamp panel, right after the bar. It ships `hidden` | Yes, with the tab |
-| `.nds-digitalStamp-notices` | Two `.nds-digitalStamp-card` notices: the `gov.sa` address and HTTPS | Yes, with the tab |
-| `.nds-digitalStamp-card` | `.nds-digitalStamp-icon`, then `.nds-digitalStamp-content` with a `.nds-digitalStamp-heading` and a `.nds-digitalStamp-description`. `.nds-digitalStamp-highlight` marks the key word in a heading | Yes, with the tab |
-| `.nds-digitalStamp-register` | The DGA logo and the registration number, a link `a.nds-digitalStamp-registration` | Yes, with the tab |
+| `#nds-digital-stamp` | The stamp panel, right after the bar. It ships `hidden` | Yes, with the tab |
+| `.nds-digital-stamp-notices` | Two `.nds-digital-stamp-card` notices: the `gov.sa` address and HTTPS | Yes, with the tab |
+| `.nds-digital-stamp-card` | `.nds-digital-stamp-icon`, then `.nds-digital-stamp-content` with a `.nds-digital-stamp-heading` and a `.nds-digital-stamp-description`. `.nds-digital-stamp-highlight` marks the key word in a heading | Yes, with the tab |
+| `.nds-digital-stamp-register` | The DGA logo and the registration number, a link `a.nds-digital-stamp-registration` | Yes, with the tab |
 {: .nds-table .nds-responsive}
 
 </div>
@@ -347,10 +347,10 @@ The script writes each widget's icon and text. The date changes with the page la
 | `data-city-en` | `#nds-cityName` | The English city name, shown when `<html lang>` is not `ar` |
 | `data-latitude`, `data-longitude` | `#nds-weatherInfo` | The coordinates for the weather, and for the city lookup. The default is Riyadh (24.7136, 46.6753) |
 | `data-theme-toggle` | A button | Makes it the dark mode button. See [Themes](../components/themes) |
-| `aria-expanded` | `.nds-digitalStamp-tab` | Write `false` in the markup. The script sets `true` when the panel opens, and `false` when it closes |
-| `data-state="expanded"` | `.nds-digitalStamp-tab` | The script sets it when the panel opens, and removes it when the panel closes |
-| `hidden` | `#nds-digitalStamp` | Write it in the markup. The script removes it when the panel opens, and sets it again after the panel closes |
-| `data-state` | `#nds-digitalStamp` | The script sets `open` and `opening` when the panel opens, adds `closing` when it closes, and removes all three after the close |
+| `aria-expanded` | `.nds-digital-stamp-tab` | Write `false` in the markup. The script sets `true` when the panel opens, and `false` when it closes |
+| `data-state="expanded"` | `.nds-digital-stamp-tab` | The script sets it when the panel opens, and removes it when the panel closes |
+| `hidden` | `#nds-digital-stamp` | Write it in the markup. The script removes it when the panel opens, and sets it again after the panel closes |
+| `data-state` | `#nds-digital-stamp` | The script sets `open` and `opening` when the panel opens, adds `closing` when it closes, and removes all three after the close |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
@@ -380,8 +380,8 @@ The script writes each widget's icon and text. The date changes with the page la
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:digitalStamp:opened` | `#nds-digitalStamp` | None. Fires when the panel starts to open |
-| `nds:digitalStamp:closed` | `#nds-digitalStamp` | None. Fires after the panel has closed |
+| `nds:digitalStamp:opened` | `#nds-digital-stamp` | None. Fires when the panel starts to open |
+| `nds:digitalStamp:closed` | `#nds-digital-stamp` | None. Fires after the panel has closed |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="topbar-js" data-canon data-lang="js" data-preview="none">
@@ -394,7 +394,7 @@ document.querySelector('#stamp-link').addEventListener('click', (e) => {
 
 For today's Hijri date in your own code, use [Date](../core/date).
 
-The full API is in the banners of `_js/nds-digitalStamp.js`, `_js/nds-timeDate.js` and `_js/nds-cityWeather.js`.
+The full API is in the banners of `_js/nds-digital-stamp.js`, `_js/nds-timeDate.js` and `_js/nds-cityWeather.js`.
 
 </div>
   </div>

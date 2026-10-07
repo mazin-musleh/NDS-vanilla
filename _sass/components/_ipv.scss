@@ -11,16 +11,16 @@
 
 
 .nds-ipv-image-card {
-  // Anchor the showZoom badge to the card; without it the absolute badge
+  // Anchor the nds-zoom-badge badge to the card; without it the absolute badge
   // escaped to the nearest positioned ancestor (section) instead of the corner.
   position: relative;
 
-  // showZoom badge = dark chip (::before) + white masked magnifier (::after).
+  // nds-zoom-badge badge = dark chip (::before) + white masked magnifier (::after).
   // --nds-icon-* vars are MASK sources: the glyph is masked over a solid fill,
   // not used as background-image (which would paint the icon's own dark fill).
   // Mirrors the masked-pseudo convention in _icons.scss, incl. the opacity gate.
-  &.showZoom::before,
-  &.showZoom::after {
+  &.nds-zoom-badge::before,
+  &.nds-zoom-badge::after {
     content: "";
     position: absolute;
     z-index: 1;
@@ -31,12 +31,12 @@
     pointer-events: none;
   }
 
-  &.showZoom::before {
+  &.nds-zoom-badge::before {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: var(--radius-md);
   }
 
-  &.showZoom::after {
+  &.nds-zoom-badge::after {
     background: white;
     mask: var(--nds-icon-zoom-in-area) center / 24px no-repeat;
     opacity: var(--nds-icons-opacity, 1);

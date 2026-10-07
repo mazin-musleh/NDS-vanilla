@@ -2,7 +2,7 @@
 exclude_showcase: true
 layout: page
 # layout + layout_class render the page-level wrapper — it exists only in the built twin under _site/. Copy the full <body> structure from the twin; this file's body is only the inner content.
-layout_class: nds-wSideInfo
+layout_class: nds-has-sideinfo
 title: Contact Us Template
 hero_style: "nds-aside"
 hero_title: Contact us
@@ -413,7 +413,7 @@ sidemenu_mode: false
 
             <div class="nds-sideinfo-group">
                 <span class="nds-sideinfo-title">Emergency contacts</span>
-                <dl class="nds-definition-list nds-tableView">
+                <dl class="nds-definition-list nds-table-view">
                     <div class="nds-definition-item">
                         <dt>
                             <i class="hgi hgi-stroke hgi-fire-security"></i>

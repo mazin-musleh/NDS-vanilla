@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/10/2026 - 10:12 PM"
+last_edit: "07/10/2026 - 03:20 PM"
 hideFeedback: true
 ---
 
@@ -139,7 +139,7 @@ Pick another component when:
               </div>
               <div class="nds-form-footer" data-feedback-target hidden></div>
             </fieldset>
-            <fieldset class="nds-form-group nds-radio-group nds-rowView nds-gender" data-required>
+            <fieldset class="nds-form-group nds-radio-group nds-horizontal nds-gender" data-required>
               <legend class="nds-label">I'm</legend>
               <div class="nds-form-container nds-radio-container">
                 <div class="nds-form-header">

@@ -14,7 +14,7 @@
  *   on the .nds-form-container:  data-format (YYYY YY MM M DD D — also picks the
  *                                day/month/year mode; default: the nearest
  *                                data-date-format, else DD/MM/YYYY) · data-clearable (automatic
- *                                in range mode) · .dateRange · .nds-hijri (a prefilled
+ *                                in range mode) · .nds-date-range · .nds-hijri (a prefilled
  *                                value's year overrides it: 1400-1500 reads as Hijri)
  *   .date-picker-toggle:         the button that opens the calendar (none: a click on the
  *                                input opens it)
@@ -22,7 +22,7 @@
  *                                data-year-before · data-year-after
  *   written by the picker:       data-picker-mode (container) · data-converted-date (input)
  * Gotchas:
- *   - Range mode is the `dateRange` class on the container; its value reads "start - end".
+ *   - Range mode is the `nds-date-range` class on the container; its value reads "start - end".
  *     Bounds are day-precision and use the picker's own format.
  *   - Hijri and Gregorian: the picker stamps the OTHER calendar's value in
  *     data-converted-date on the input.
@@ -424,7 +424,7 @@
             // range mode. Removed here (not hidden via CSS) so the shared
             // cache/handler paths simply see no element.
             var container = this.elements.container;
-            var clearable = container.hasAttribute('data-clearable') || container.classList.contains('dateRange');
+            var clearable = container.hasAttribute('data-clearable') || container.classList.contains('nds-date-range');
             if (!clearable) {
                 var clearBtn = dropdown.querySelector('.clear-btn');
                 if (clearBtn) clearBtn.remove();
@@ -695,7 +695,7 @@
         },
 
         isRangeMode: function () {
-            return this.elements.container.classList.contains('dateRange');
+            return this.elements.container.classList.contains('nds-date-range');
         },
 
         // Simple helper methods

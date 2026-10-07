@@ -350,7 +350,7 @@
         {
             // Delegated: the panel ships [hidden]; CSS owns the expand.
             name: 'DigitalStamp',
-            selector: '.nds-digitalStamp-tab',
+            selector: '.nds-digital-stamp-tab',
         },
         {
             name: 'CityWeather',
