@@ -13,7 +13,7 @@
  *   ids, not attributes: #nds-date (the date line) · #nds-realTimeClock (the clock)
  *   data-calendar   on #nds-date: hijri | gregorian. Default follows the page language
  * Gotchas:
- *   - Both widgets read the visitor's clock. Only the date's cache key follows Riyadh (GMT+3).
+ *   - The date and the clock follow <html data-timezone>; without it, the visitor's clock.
  *   - init() re-renders on every call, so a replaced widget element fills in again.
  *   - getHijriDate() stays a Promise because the date picker chains on it, even though
  *     the value is computed locally.
@@ -25,10 +25,6 @@
 (() => {
     'use strict';
 
-    // Intl.DateTimeFormat construction does the expensive ICU locale init;
-    // format()/formatToParts() on an existing instance is cheap. Memoize one
-    // formatter per (locale, options) so repeated renders never rebuild it.
-    const _fmtCache = new Map();
     // The topbar hides the date on sm/md and the clock on sm (data-hidden), so a
     // phone paid the Hijri/ICU formatter for text it never shows. Mirror the
     // data-hidden bands of _utilities.scss from matchMedia — no layout read, so
@@ -42,19 +38,6 @@
         const band = mq('mobile') ? 'sm' : mq('tablet-max') ? 'md' : mq('desktop-max') ? 'lg' : 'xl';
         return !tokens.includes(band) && !tokens.includes(BAND_ALIAS[band]);
     }
-    function dtf(locale, opts) {
-        const key = locale + '|' + JSON.stringify(opts);
-        let f = _fmtCache.get(key);
-        if (!f) _fmtCache.set(key, f = new Intl.DateTimeFormat(locale, opts));
-        return f;
-    }
-
-    // Saudi Arabia (Riyadh, GMT+3) date as YYYY-MM-DD — embedded into the cache
-    // key below so a tab that crosses midnight reads the new day's entry.
-    function getSaudiDate() {
-        return dtf('en-CA', { timeZone: 'Asia/Riyadh' }).format(new Date());
-    }
-
     // Cached payloads live in localStorage, which any same-origin script can
     // overwrite. Cache primitives only; render imperatively at the consumer
     // so attacker-controlled bytes can't reach the HTML parser. Pattern
@@ -82,39 +65,32 @@
         ar: ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة']
     };
 
-    // Numeric Hijri Y/M/D via Intl's Umm al-Qura calendar (latin digits so
-    // parseInt is safe). The formatter is memoized by dtf(), so repeat calls
-    // don't rebuild the costly ICU data.
-    function getHijriParts(date) {
-        const parts = dtf('en-US-u-ca-islamic-umalqura', {
-            day: 'numeric', month: 'numeric', year: 'numeric'
-        }).formatToParts(date);
-        const num = type => parseInt(parts.find(p => p.type === type).value, 10);
-        return { day: num('day'), month: num('month'), year: num('year') };
+    function hijriText(day, isArabic) {
+        const [d, m, y] = NDS.date.format(day, { calendar: 'hijri', format: 'D M YYYY' }).split(' ');
+        const monthName = (isArabic ? HIJRI_MONTHS.ar : HIJRI_MONTHS.en)[m - 1];
+        return isArabic ? `${d} ${monthName} ${y} هـ` : `${monthName} ${d}, ${y} AH`;
     }
 
     // Stays async to preserve the Promise contract consumers rely on
     // (date-picker calls .then on it).
     async function getHijriDate(isArabic, returnStructured = false) {
-        const parts = getHijriParts(new Date());
-        if (returnStructured) return parts;
-
-        const monthName = (isArabic ? HIJRI_MONTHS.ar : HIJRI_MONTHS.en)[parts.month - 1];
-        return isArabic
-            ? `${parts.day} ${monthName} ${parts.year} هـ`
-            : `${monthName} ${parts.day}, ${parts.year} AH`;
+        const today = NDS.date.today();
+        if (!returnStructured) return hijriText(today, isArabic);
+        const [day, month, year] = NDS.date.format(today, { calendar: 'hijri', format: 'D M YYYY' }).split(' ').map(Number);
+        return { day, month, year };
     }
 
     // Date function with caching
-    async function updateDate() {
+    function updateDate() {
         const el = document.getElementById('nds-date');
         if (!el || !rendered(el)) return;
 
         const isArabic = NDS.isArabic;
-        const today = getSaudiDate();
+        const today = NDS.date.today();
         const type = el.dataset?.calendar || (isArabic ? 'hijri' : 'gregorian');
-        // v2 key: cache shape changed from HTML string to primitive content.
-        const cacheKey = `date_v2_${type}_${isArabic}_${today}`;
+        // v3 key: Arabic Gregorian text moved to Latin digits. The day in the key
+        // fixes the text, whatever the timezone, so a tab that crosses midnight re-renders.
+        const cacheKey = `date_v3_${type}_${isArabic}_${NDS.date.format(today, { format: 'YYYY-MM-DD' })}`;
 
         // Check cache first (24 hours)
         const cached = NDS.cache.get(cacheKey);
@@ -127,13 +103,12 @@
         let content;
 
         if (type === 'hijri') {
-            content = await getHijriDate(isArabic);
+            content = hijriText(today, isArabic);
         } else {
-            // Gregorian date
-            const locale = isArabic ? 'ar-SA' : 'en-US';
-            content = dtf(locale, {
+            content = NDS.date.format(today, {
+                locale: isArabic ? 'ar-SA' : 'en-US',
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-            }).format(new Date());
+            });
         }
 
         if (content) {
@@ -173,9 +148,9 @@
 
     function updateClock() {
         if (!ensureClockDOM()) return;
-        const now = new Date();
-        const h = now.getHours();
-        const m = now.getMinutes();
+        const [h, m] = NDS.date.format(new Date(), {
+            locale: 'en', timeZone: NDS.date.site.timeZone, hour: 'numeric', minute: 'numeric', hourCycle: 'h23'
+        }).split(':').map(Number);
         clockText.nodeValue = `${h % 12 || 12}:${m.toString().padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
     }
 
