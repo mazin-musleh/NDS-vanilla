@@ -1665,21 +1665,30 @@
 
         // Each grid marks itself from the ResizeObserver, which delivers after
         // layout: the offsetTop reads never force one, the first delivery is the
-        // initial scan, and a grid that reflows (items paged out, viewport
-        // resized) re-marks on its own. A scheduled first scan (idle, DCL, after
+        // initial scan, and a grid that reflows (viewport resized, items added
+        // or removed) re-marks on its own. A scheduled first scan (idle, DCL, after
         // the reveal paint) always raced the time-sliced inits and forced a
         // full-page layout (~1–2s on a table page at 6.6×).
+        // The FIRST ITEM is observed, not the grid: the mark shrinks the grid (and
+        // the last row's items) inside its own callback, the "ResizeObserver loop"
+        // error. Rows depend only on column width and order, which the first item's
+        // width tracks, and its content box never moves with the mark.
+        // ponytail: fixed-width tracks (a consumer --_tracks) change columns without resizing it; observe the grid too if one needs it.
         // A grid that leaves the DOM releases its observer entry, else an SPA
         // that remounts grids retains every discarded one. Subscribed on the
         // first watch so a page without grids never starts the DOM bus for it.
         const offs = new WeakMap();
         let releasing = false;
+        function unwatch(grid) { offs.get(grid)?.(); offs.delete(grid); }
         function watch(grid) {
             if (offs.has(grid)) return;
-            offs.set(grid, NDS.onElementResize(grid, () => mark(grid)));
+            const first = grid.firstElementChild;
+            offs.set(grid, first ? NDS.onElementResize(first, () => mark(grid)) : () => {});
             if (releasing) return;
             releasing = true;
-            NDS.onDOMRemove(SEL, (grids) => grids.forEach((g) => { offs.get(g)?.(); offs.delete(g); }));
+            NDS.onDOMRemove(SEL, (grids) => grids.forEach(unwatch));
+            // A re-observed first item delivers again, so the grid re-marks in the observer without forcing layout.
+            NDS.onChildrenChange(SEL, (grids) => grids.forEach((g) => { if (offs.has(g)) { unwatch(g); watch(g); } }));
         }
 
         function gridsIn(container) {

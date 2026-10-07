@@ -180,7 +180,8 @@
         // Cold init: no synchronous checkOverflow() here — this observer's
         // initial callback runs the first measure, so init stays free of
         // forced layout and hidden (display:none) instances measure on reveal.
-        wrapper._offResizeObs = NDS.onElementResize(content, () => measure(wrapper));
+        // Watch the wrapper: the button and padding measure() stamps shrink the content, a self-resize (RO loop error).
+        wrapper._offResizeObs = NDS.onElementResize(wrapper, () => measure(wrapper));
         wrapper.setAttribute('data-nds-scroll-more-initialized', 'true');
     }
 
