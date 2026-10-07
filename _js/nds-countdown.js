@@ -68,19 +68,20 @@
         return Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
     }
 
-    // ISO text → epoch ms, or NaN. With an offset the browser parses it; without one it is a wall
+    // ISO text → epoch ms, or NaN. An offset is read as written; without one it is a wall
     // time in the site timezone (the visitor's when <html data-timezone> is unset).
     // ponytail: lives here until a second component reads a wall time in the site timezone, then it moves to NDS.date.
     function parseIso(text) {
         const s = String(text ?? '').trim();
-        const m = /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2}))?)?(Z|[+-]\d{2}:?\d{2})?$/.exec(s);
+        const m = /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2}))?)?(Z|([+-])(\d{2}):?(\d{2}))?$/.exec(s);
         if (!m) return NaN;
-        if (m[7]) return Date.parse(s.replace(' ', 'T'));
         const [y, mo, d] = [+m[1], +m[2], +m[3]];
         const [h, mi, sec] = [+m[4] || 0, +m[5] || 0, +m[6] || 0];
+        const wall = Date.UTC(y, mo - 1, d, h, mi, sec);
+        // Not Date.parse: it rejects a date-only offset (Chrome) and +0300 (Safari).
+        if (m[7]) return m[7] === 'Z' ? wall : wall - (m[8] === '-' ? -1 : 1) * (m[9] * 60 + +m[10]) * 6e4;
         const tz = NDS.date.site.timeZone;
         if (!tz) return new Date(y, mo - 1, d, h, mi, sec).getTime();
-        const wall = Date.UTC(y, mo - 1, d, h, mi, sec);
         // Shift by the zone's offset at the guess, then once more in case the guess sat across a DST edge.
         let t = wall;
         for (let i = 0; i < 2; i++) t = wall - (wallOf(t, tz) - t);
