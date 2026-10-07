@@ -45,6 +45,14 @@ for (const timezoneId of ['Asia/Tokyo', 'America/Los_Angeles']) {
         eq('site format default', D.format(new Date(2026, 3, 3)), '03/04/2026');
         document.documentElement.dataset.dateFormat = 'YYYY/MM/DD';
         eq('site format attribute', D.format(new Date(2026, 3, 3)), '2026/04/03');
+        // formatFor: the nearest data-date-format wins, <html> is the fallback.
+        const area = document.createElement('section');
+        area.dataset.dateFormat = 'MM/DD/YYYY';
+        area.innerHTML = '<div><span></span></div>';
+        document.body.append(area, document.createElement('p'));
+        eq('formatFor scoped', D.formatFor(area.querySelector('span')), 'MM/DD/YYYY');
+        eq('formatFor outside', D.formatFor(document.body.lastChild), 'YYYY/MM/DD');
+        eq('formatFor null', D.formatFor(null), 'DD/MM/YYYY');
         eq('intl path', D.format(new Date(2026, 3, 3), { locale: 'en', year: 'numeric', month: 'long', day: 'numeric' }), 'April 3, 2026');
         // today(): the visitor's day when unset, the site zone's day when set.
         const now = new Date();

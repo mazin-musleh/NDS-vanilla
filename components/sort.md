@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 09:56 AM"
+last_edit: "07/10/2026 - 10:20 AM"
 ---
 
 <section id="sortOverview" class="nds-content-section nds-doc-overview">
@@ -300,7 +300,7 @@ In `create()`, set `urlSync: { keyParam, dirParam }` and the sort key and direct
             <i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical"></i>
             <span class="nds-label">Type Detection</span>
           </span>
-          <p class="nds-item-desc">Sort reads the values at sort time and picks number, date or text. A value such as <code class="nds-inline-code lang-html">9,375 SAR</code> sorts as a number. A date in the site's format sorts as a date: <code class="nds-inline-code lang-html">data-date-format</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, or <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, in Latin or Arabic digits. So do <code class="nds-inline-code lang-html">YYYY-MM-DD</code> and ISO dates with a time. Other text with <code class="nds-inline-code lang-html">/</code> or <code class="nds-inline-code lang-html">:</code> between digits sorts as text, never as a number. Text sorts in the language of the browser, and numbers inside text stay in order: item 2 comes before item 10.</p>
+          <p class="nds-item-desc">Sort reads the values at sort time and picks number, date or text. A value such as <code class="nds-inline-code lang-html">9,375 SAR</code> sorts as a number. A date in the list's date format sorts as a date: the nearest <code class="nds-inline-code lang-html">data-date-format</code> around the list, such as on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, or <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, in Latin or Arabic digits. So do <code class="nds-inline-code lang-html">YYYY-MM-DD</code> and ISO dates with a time. Other text with <code class="nds-inline-code lang-html">/</code> or <code class="nds-inline-code lang-html">:</code> between digits sorts as text, never as a number. Text sorts in the language of the browser, and numbers inside text stay in order: item 2 comes before item 10.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -411,9 +411,9 @@ Markup wiring is a `create()` call on the list with the defaults below: `items` 
 | `NDS.Sort.refresh(root)` | Wires new lists, then sorts again each list that markup wired inside `root`, or that holds `root`. An instance from your own `create()` call needs its `refresh()`. `NDS.Init.refresh()` calls it. |
 | `NDS.Sort.create(root, options)` | Returns the instance of the root. A root that already has one returns it and ignores `options`. |
 | `NDS.Sort.getInstance(root)` | Returns the instance of the root, or `null`. `root` is an element or a selector. |
-| `NDS.Sort.detectType(values)` | Returns `'number'`, `'date'` or `'string'`. |
-| `NDS.Sort.parseValue(raw, type)` | Returns the value as the type sorts it. |
-| `NDS.Sort.compare(a, b, type, dir)` | Returns a negative, zero or positive number. |
+| `NDS.Sort.detectType(values, dateFormat)` | Returns `'number'`, `'date'` or `'string'`. `dateFormat` is the format a date in the values uses: the site's when you leave it out. |
+| `NDS.Sort.parseValue(raw, type, dateFormat)` | Returns the value as the type sorts it. |
+| `NDS.Sort.compare(a, b, type, dir, dateFormat)` | Returns a negative, zero or positive number. |
 | `sort.apply(key, dir)` | Sorts now. A `null` key restores the original order. |
 | `sort.reset()` | Restores the original order. |
 | `sort.refresh()` | Sorts the items again by the active key. Does nothing when no sort is active. |

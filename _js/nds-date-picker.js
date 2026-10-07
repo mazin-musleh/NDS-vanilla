@@ -12,8 +12,8 @@
  *   (none — a pick writes the input and dispatches a native `change`; listen on the input)
  * Hooks:
  *   on the .nds-form-container:  data-format (YYYY YY MM M DD D — also picks the
- *                                day/month/year mode; default <html data-date-format>,
- *                                else DD/MM/YYYY) · data-clearable (automatic
+ *                                day/month/year mode; default: the nearest
+ *                                data-date-format, else DD/MM/YYYY) · data-clearable (automatic
  *                                in range mode) · .dateRange · .nds-hijri (a prefilled
  *                                value's year overrides it: 1400-1500 reads as Hijri)
  *   .date-picker-toggle:         the button that opens the calendar (none: a click on the
@@ -512,7 +512,7 @@
 
         // Initialize calendar state
         initializeState: function () {
-            var format = (this.elements.container && this.elements.container.getAttribute('data-format')) || NDS.date.site.format;
+            var format = (this.elements.container && this.elements.container.getAttribute('data-format')) || NDS.date.formatFor(this.elements.container);
             var mode = detectFormatMode(format);
             // Expose the mode as an attribute so CSS can gate the day grid /
             // month controls without JS reaching into the dropdown.

@@ -6,9 +6,9 @@
  *   NDS.Sort.refresh(root)              wire new lists, re-sort the wired ones inside root
  *   NDS.Sort.create(root, options)      factory → instance (one per root, reused)
  *   NDS.Sort.getInstance(rootOrSel)     the existing instance, or null
- *   NDS.Sort.detectType(sampleValues)   'number' | 'date' | 'string'
- *   NDS.Sort.parseValue(raw, type)      pure helper
- *   NDS.Sort.compare(a, b, type, dir)   pure helper
+ *   NDS.Sort.detectType(sampleValues, dateFormat)   'number' | 'date' | 'string'
+ *   NDS.Sort.parseValue(raw, type, dateFormat)      pure helper
+ *   NDS.Sort.compare(a, b, type, dir, dateFormat)   pure helper
  *   instance.apply(key, dir)            sort now (null key resets to the authored order)
  *   instance.reset()                    back to the authored order
  *   instance.refresh()                  re-run the active sort over the items as they stand
@@ -25,7 +25,7 @@
  *   data-state         sorted-asc | sorted-desc on the state host (a11yTarget in
  *                      a11y 'sort', else the trigger). Authored, it seeds the state.
  * Gotchas:
- *   - Auto-detect reads a date in <html data-date-format> (NDS.date.parse) or YYYY-MM-DD.
+ *   - Auto-detect reads a date in the root's nearest data-date-format (NDS.date) or YYYY-MM-DD.
  *     Other date text sorts as text: write YYYY-MM-DD in the sort attribute.
  *   - Markup wiring sorts the list's children with the defaults. types, accessor, urlSync
  *     and onChange need create(). Filter and Tables create their own, and init() skips a
@@ -54,9 +54,9 @@
  * Public API:
  *   NDS.Sort.create(root, options)      — factory → NDSSort instance
  *   NDS.Sort.getInstance(root)          — retrieve existing instance
- *   NDS.Sort.detectType(sampleValues)   — pure helper
- *   NDS.Sort.parseValue(raw, type)      — pure helper
- *   NDS.Sort.compare(a, b, type, dir)   — pure helper
+ *   NDS.Sort.detectType(sampleValues, dateFormat)   — pure helper
+ *   NDS.Sort.parseValue(raw, type, dateFormat)      — pure helper
+ *   NDS.Sort.compare(a, b, type, dir, dateFormat)   — pure helper
  *
  * Options (passed to create):
  *   items          — selector | NodeList | Array | () => NodeList  (required)
@@ -99,26 +99,26 @@
     // Digits joined by / or : are a date or a time: never a number ("12/31/2026" is not 12).
     const DATE_LIKE = /\d\s*[\/:]\s*\d/;
 
-    // A day in the site's format or YYYY-MM-DD, as local midnight; NaN otherwise.
-    function siteDay(s) {
-        const d = NDS.date.parse(s) || NDS.date.parse(s, { format: 'YYYY-MM-DD' });
+    // A day in `format` (default: the site's) or YYYY-MM-DD, as local midnight; NaN otherwise.
+    function day(s, format) {
+        const d = NDS.date.parse(s, { format }) || NDS.date.parse(s, { format: 'YYYY-MM-DD' });
         return d ? d.getTime() : NaN;
     }
 
     // new Date() last: ISO with a time, and a column create() forces to 'date'.
-    function dateTime(str) {
+    function dateTime(str, format) {
         const s = String(str).trim();
-        const t = siteDay(s);
+        const t = day(s, format);
         return isNaN(t) ? new Date(s).getTime() : t;
     }
 
-    function isDateString(str) {
+    function isDateString(str, format) {
         const s = String(str).trim();
         // Not Date.parse alone: it also takes "1995" and "Item 2"
-        return ISO.test(s) ? !isNaN(new Date(s).getTime()) : !isNaN(siteDay(s));
+        return ISO.test(s) ? !isNaN(new Date(s).getTime()) : !isNaN(day(s, format));
     }
 
-    function detectType(sampleValues) {
+    function detectType(sampleValues, dateFormat) {
         const values = (sampleValues || []).filter(v => v !== null && v !== undefined && v !== '');
         if (!values.length) return 'string';
 
@@ -127,7 +127,7 @@
         // so every same-year row would collapse to the same numeric value.
         let dates = 0, nums = 0;
         for (let i = 0; i < values.length; i++) {
-            if (isDateString(values[i])) dates++;
+            if (isDateString(values[i], dateFormat)) dates++;
             else if (!DATE_LIKE.test(values[i]) && !isNaN(unwrapNumber(values[i]))) nums++;
         }
         if (dates === values.length) return 'date';
@@ -135,21 +135,21 @@
         return 'string';
     }
 
-    function parseValue(raw, type) {
+    function parseValue(raw, type, dateFormat) {
         if (type === 'number') {
             const n = unwrapNumber(raw);
             return isNaN(n) ? 0 : n;
         }
         if (type === 'date') {
-            const t = dateTime(raw);
+            const t = dateTime(raw, dateFormat);
             return isNaN(t) ? 0 : t;
         }
         return String(raw == null ? '' : raw);
     }
 
-    function compare(a, b, type, dir) {
-        const av = parseValue(a, type);
-        const bv = parseValue(b, type);
+    function compare(a, b, type, dir, dateFormat) {
+        const av = parseValue(a, type, dateFormat);
+        const bv = parseValue(b, type, dateFormat);
         let cmp;
         if (type === 'string') {
             cmp = av.localeCompare(bv, undefined, { numeric: true, sensitivity: 'base' });
@@ -327,9 +327,10 @@
             if (hasKey) {
                 const accessor = this.opts.accessor;
                 const sample = items.map(i => accessor(i, key));
-                const type = (this.opts.types && this.opts.types[key]) || detectType(sample);
+                const dateFormat = NDS.date.formatFor(this.root);
+                const type = (this.opts.types && this.opts.types[key]) || detectType(sample, dateFormat);
                 ordered = [...items].sort((a, b) =>
-                    compare(accessor(a, key), accessor(b, key), type, dir || 'asc')
+                    compare(accessor(a, key), accessor(b, key), type, dir || 'asc', dateFormat)
                 );
             } else {
                 // Drop snapshot entries the container no longer holds. appendChild

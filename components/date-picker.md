@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 09:45 AM"
+last_edit: "07/10/2026 - 10:20 AM"
 ---
 
 <section id="datePickerOverview" class="nds-content-section nds-doc-overview">
@@ -119,7 +119,7 @@ The class `nds-hijri` on `.nds-date-picker` shows Hijri months and years, and th
 ### Date Format
 {: .nds-block-title}
 
-`data-format` on `.nds-date-picker` sets how the field writes and reads a date. The default is the site's format, `data-date-format` on `<html>`, or `DD/MM/YYYY` without it. Write the same format as the placeholder: with `data-format="YYYY-MM-DD"` and `placeholder="YYYY-MM-DD"`, the field holds `2026-03-15`. The tokens are `YYYY`, `YY`, `MM`, `M`, `DD` and `D`, and any other character stays as written. `YY` reads as a year from 2000 to 2099. One format applies to both calendars and to both days of a range.
+`data-format` on `.nds-date-picker` sets how the field writes and reads a date. The default is the nearest `data-date-format`, on the picker or an element around it such as `<html>`, or `DD/MM/YYYY` without one. Write the same format as the placeholder: with `data-format="YYYY-MM-DD"` and `placeholder="YYYY-MM-DD"`, the field holds `2026-03-15`. The tokens are `YYYY`, `YY`, `MM`, `M`, `DD` and `D`, and any other character stays as written. `YY` reads as a year from 2000 to 2099. One format applies to both calendars and to both days of a range.
 
 A format with no day token shows a grid of months, and a format with only year tokens shows a grid of years. The picker then takes the first day of the month, or the first month of the year, as the date.
 
@@ -239,7 +239,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-format` | `.nds-date-picker` | How the field writes and reads a date. The default is `data-date-format` on `<html>`, or `DD/MM/YYYY`. See Date Format |
+| `data-format` | `.nds-date-picker` | How the field writes and reads a date. The default is the nearest `data-date-format`, or `DD/MM/YYYY`. See Date Format |
 | `data-clearable` | `.nds-date-picker` | Adds a Clear button to the calendar. See Clear Button |
 | `data-required` | `.nds-date-picker` | The form needs a date. See Validation |
 | `data-state~="disabled"`, `data-state~="readonly"` | `.nds-date-picker` | Set it yourself. See Disabled and Read-only |

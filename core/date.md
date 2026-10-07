@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 09:45 AM"
+last_edit: "07/10/2026 - 10:20 AM"
 ---
 
 <section id="dateOverview" class="nds-content-section nds-doc-overview">
@@ -42,8 +42,16 @@ Pick another component when:
 
 Set the site's timezone and date format on `<html>`. Without `data-timezone`, today is the visitor's day. Without `data-date-format`, the format is `DD/MM/YYYY`.
 
+Give one part of the page its own date format with `data-date-format` on any element. The nearest one wins: inside this section, Date Picker and Sort read dates month first, and the rest of the site reads them day first.
+
 <script type="text/html" id="date-site" data-canon data-preview="none">
 <html lang="ar" dir="rtl" data-timezone="Asia/Riyadh" data-date-format="DD/MM/YYYY">
+</script>
+
+<script type="text/html" id="date-scoped" data-canon data-preview="none">
+<section data-date-format="MM/DD/YYYY">
+  <!-- A table here sorts 12/31/2026 as 31 December -->
+</section>
 </script>
 
 Read a Hijri date from a field, and send it to the server as `YYYY-MM-DD`.
@@ -160,7 +168,8 @@ NDS.date.convert('05/03/2026', { format: 'DD/MM/YYYY' }, { calendar: 'hijri', fo
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-timezone` | `<html>` | The site's timezone, as an IANA name such as `Asia/Riyadh`. It sets today in `today()`, Date Picker, the top bar date and clock, and the date in an Export file name. Without it, the visitor's timezone applies |
-| `data-date-format` | `<html>` | The site's date format, in the tokens below. `parse` and `format` use it when you name no format, and so does a Date Picker without its own `data-format`. The default is `DD/MM/YYYY` |
+| `data-date-format` | `<html>` | The site's date format, in the tokens below. `parse` and `format` use it when you name no format. The default is `DD/MM/YYYY` |
+| `data-date-format` | any element | The date format of the content inside it. The nearest one wins over the one on `<html>`. A Date Picker without its own `data-format`, and Sort when it reads a date from text, use it |
 {: .nds-table .nds-responsive}
 
 ### Format Tokens
@@ -199,6 +208,7 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.date.format(date, options)` | Returns the date as text. With `format`, it fills the tokens. With other options and no `format`, the browser writes the text. With neither, it uses the site's format. An invalid date returns `''` |
 | `NDS.date.convert(text, from, to)` | Parses `text` with the options in `from` and formats it with the options in `to`. Returns `null` when `text` does not parse |
 | `NDS.date.today()` | Returns today, in the site's timezone, as a `Date` at local midnight |
+| `NDS.date.formatFor(element)` | Returns the nearest `data-date-format` around `element`, the element's own included, or `DD/MM/YYYY` when there is none. Pass it as `format` for content in that part of the page |
 | `NDS.date.site` | Returns `{ timeZone, format }` from `<html>`. `timeZone` is `undefined` when the attribute is missing or invalid |
 {: .nds-table .nds-responsive}
 

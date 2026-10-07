@@ -31,6 +31,7 @@
  *     NDS.cache.get / .set (key, value, minutes)           localStorage with expiry
  *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.date.parse(text, opts) · .format(date, opts) · .convert(text, from, to) · .today() · .site
+ *     NDS.date.formatFor(el)           the nearest data-date-format (<html> is the site's)
  *                                      calendar days, Gregorian or Hijri (Umm al-Qura);
  *                                      <html data-timezone / data-date-format>
  *     NDS.announce(text)               say something in the shared live region
@@ -442,11 +443,15 @@
             catch { warnOnce(`data-timezone "${tz}" is not a timezone; using the visitor's`); return undefined; }
         }
 
-        const siteFormat = () => document.documentElement.dataset.dateFormat || 'DD/MM/YYYY';
+        // The nearest data-date-format wins, like a dark area; <html> holds the site's.
+        const formatFor = (el) => el?.closest?.('[data-date-format]')?.dataset.dateFormat || 'DD/MM/YYYY';
+        const siteFormat = () => formatFor(document.documentElement);
 
         const api = {
             // Live: a script that sets the attributes after load still applies.
             get site() { return { timeZone: zone(), format: siteFormat() }; },
+
+            formatFor,
 
             // Today in the site's timezone (the visitor's when unset), as a local day.
             today() {
