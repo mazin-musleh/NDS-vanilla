@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 08:03 AM"
+last_edit: "07/10/2026 - 09:56 AM"
 ---
 
 <section id="tableOverview" class="nds-content-section nds-doc-overview">
@@ -664,7 +664,7 @@ Delete the count line (`.nds-bar-text`) when neither Selection nor Pages stays. 
 - Put the identifier in the first column, and the status and actions in the last columns.
 - Keep header labels short. A long label widens its column on every row.
 - Add sort buttons only to columns that users compare, such as dates, amounts and status.
-- Write `data-sort-value` on a cell whose text sorts wrong: a date written with a month name, an amount with a currency, a status that has an order.
+- Write `data-sort-value` on a cell whose text sorts wrong: a date that is not in the site's date format (one with a month name, or a Hijri date), an amount with a currency, a status that has an order. Write a date there as `YYYY-MM-DD`.
 - Use selection only with a bulk action that acts on the selected rows.
 - Give each row checkbox an `aria-label` that names the row: "Select REQ-2026-118".
 - Give each icon-only button an `aria-label`, such as the sub-row toggle and the row menu.

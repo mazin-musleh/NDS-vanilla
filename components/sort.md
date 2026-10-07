@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/10/2026 - 08:03 AM"
+last_edit: "07/10/2026 - 09:56 AM"
 ---
 
 <section id="sortOverview" class="nds-content-section nds-doc-overview">
@@ -300,7 +300,7 @@ In `create()`, set `urlSync: { keyParam, dirParam }` and the sort key and direct
             <i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical"></i>
             <span class="nds-label">Type Detection</span>
           </span>
-          <p class="nds-item-desc">Sort reads the values at sort time and picks number, date or text. A value such as <code class="nds-inline-code lang-html">9,375 SAR</code> sorts as a number. <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, <code class="nds-inline-code lang-html">YYYY-MM-DD</code> and ISO dates sort as dates. Text sorts in the language of the browser, and numbers inside text stay in order: item 2 comes before item 10.</p>
+          <p class="nds-item-desc">Sort reads the values at sort time and picks number, date or text. A value such as <code class="nds-inline-code lang-html">9,375 SAR</code> sorts as a number. A date in the site's format sorts as a date: <code class="nds-inline-code lang-html">data-date-format</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, or <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, in Latin or Arabic digits. So do <code class="nds-inline-code lang-html">YYYY-MM-DD</code> and ISO dates with a time. Other text with <code class="nds-inline-code lang-html">/</code> or <code class="nds-inline-code lang-html">:</code> between digits sorts as text, never as a number. Text sorts in the language of the browser, and numbers inside text stay in order: item 2 comes before item 10.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -355,6 +355,7 @@ In `create()`, set `urlSync: { keyParam, dirParam }` and the sort key and direct
 - Use cycle mode when one control carries one key. Users expect the third click to undo the sort. Write `data-sort-mode="cycle"` on every trigger of the list.
 - Give each trigger a text label, or an `aria-label` when it shows only an icon.
 - Keep display text and the sort value apart when they differ. A card that reads "Free" carries `data-sort-price="0"`, so it sorts as the cheapest.
+- Write a date in its sort attribute as `YYYY-MM-DD`, such as `data-sort-added="2026-03-15"`. The text can show any format or calendar.
 - Set `types: { key: 'string' }` in `create()` for codes that start with a number, such as `10-B`. Detection reads them as the number 10, so `10-A` and `10-B` tie and keep their order.
 - In `create()`, put the triggers and the items under the root: a selector string resolves inside it. Pass a function for elements outside it.
 - Keep the `accessor` fast and free of side effects: Sort calls it on every comparison.

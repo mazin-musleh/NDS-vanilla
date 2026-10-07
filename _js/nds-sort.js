@@ -25,6 +25,8 @@
  *   data-state         sorted-asc | sorted-desc on the state host (a11yTarget in
  *                      a11y 'sort', else the trigger). Authored, it seeds the state.
  * Gotchas:
+ *   - Auto-detect reads a date in <html data-date-format> (NDS.date.parse) or YYYY-MM-DD.
+ *     Other date text sorts as text: write YYYY-MM-DD in the sort attribute.
  *   - Markup wiring sorts the list's children with the defaults. types, accessor, urlSync
  *     and onChange need create(). Filter and Tables create their own, and init() skips a
  *     list that already has an instance.
@@ -93,32 +95,27 @@
         return m ? parseFloat(m[0]) : NaN;
     }
 
-    const DMY = /^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/;   // DD/MM/YYYY, DD-MM-YY, etc.
-    const YMD = /^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/;     // YYYY-MM-DD
-    const ISO = /^\d{4}-\d{2}-\d{2}T/;                           // ISO 8601 with a time
+    const ISO = /^\d{4}-\d{2}-\d{2}T/;   // ISO 8601 with a time
+    // Digits joined by / or : are a date or a time: never a number ("12/31/2026" is not 12).
+    const DATE_LIKE = /\d\s*[\/:]\s*\d/;
 
-    // Local midnight, or NaN when the day or month is out of range (31/02 does not roll over).
-    function ymd(y, m, d) {
-        const t = new Date(y, m - 1, d);
-        return t.getMonth() === m - 1 && t.getDate() === d ? t.getTime() : NaN;
+    // A day in the site's format or YYYY-MM-DD, as local midnight; NaN otherwise.
+    function siteDay(s) {
+        const d = NDS.date.parse(s) || NDS.date.parse(s, { format: 'YYYY-MM-DD' });
+        return d ? d.getTime() : NaN;
     }
 
-    // `new Date()` reads 03/04/2026 month first and a bare YYYY-MM-DD as UTC, so both
-    // short forms are split by hand: day first, local time.
-    // ponytail: fixed D/M/Y and local time; the date rework (TODO.md) makes both site settings.
+    // new Date() last: ISO with a time, and a column create() forces to 'date'.
     function dateTime(str) {
         const s = String(str).trim();
-        let m = s.match(DMY);
-        if (m) return ymd(m[3] < 100 ? 2000 + +m[3] : +m[3], +m[2], +m[1]);
-        m = s.match(YMD);
-        if (m) return ymd(+m[1], +m[2], +m[3]);
-        return new Date(s).getTime();
+        const t = siteDay(s);
+        return isNaN(t) ? new Date(s).getTime() : t;
     }
 
     function isDateString(str) {
         const s = String(str).trim();
-        // Only the three shapes: Date.parse also takes "1995" and "Item 2"
-        return (DMY.test(s) || YMD.test(s) || ISO.test(s)) && !isNaN(dateTime(s));
+        // Not Date.parse alone: it also takes "1995" and "Item 2"
+        return ISO.test(s) ? !isNaN(new Date(s).getTime()) : !isNaN(siteDay(s));
     }
 
     function detectType(sampleValues) {
@@ -131,7 +128,7 @@
         let dates = 0, nums = 0;
         for (let i = 0; i < values.length; i++) {
             if (isDateString(values[i])) dates++;
-            else if (!isNaN(unwrapNumber(values[i]))) nums++;
+            else if (!DATE_LIKE.test(values[i]) && !isNaN(unwrapNumber(values[i]))) nums++;
         }
         if (dates === values.length) return 'date';
         if (nums === values.length) return 'number';
